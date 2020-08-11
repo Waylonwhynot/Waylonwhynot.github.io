@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/nodeport.jpg">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/ingress.jpg">
 <meta property="article:published_time" content="2020-08-11T15:34:55.000Z">
-<meta property="article:modified_time" content="2020-08-11T19:28:06.931Z">
+<meta property="article:modified_time" content="2020-08-11T20:08:38.698Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta property="article:tag" content="kubernetes">
@@ -229,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-12 03:28:06" itemprop="dateModified" datetime="2020-08-12T03:28:06+08:00">2020-08-12</time>
+                <time title="修改时间：2020-08-12 04:08:38" itemprop="dateModified" datetime="2020-08-12T04:08:38+08:00">2020-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,14 +247,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.5k</span>
+              <span>13k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>22 分钟</span>
             </span>
 
         </div>
@@ -315,6 +315,22 @@
 <p>简单说来，flannel的用户态进程flanneld会为每个node节点创建一个flannel.1的网桥，根据etcd或apiserver的全局统一的集群信息为每个node分配全局唯一的网段，避免地址冲突。同时会为docker0和flannel.1创建veth对，docker0将报文丢给flannel.1,。</p>
 <p>Flanneld维护了一份全局node的网络表，通过flannel.1接收到请求后，根据node表，将请求二次封装为UDP包，扔给eth0，由eth0出口进入物理网路发送给目的node。</p>
 <p>在另一端以相反的流程。Flanneld解包并发往docker0，进而发往目的Pod中的容器</p>
+<p>两个节点上的pod可以借助flannel隧道进行通信。默认使用的VxLAN协议，因为它有额外开销，所以性能有点低。</p>
+<p>flannel第二种协议叫host-gw(host gateway)，即Node节点把自己的网络接口当做pod的网关使用，从而使不同节点上的node进行通信，这个性能比VxLAN高，因为它没有额外开销。不过他有个缺点， 就是各node节点必须在同一个网段中 。</p>
+<p>另外，如果两个pod所在节点在同一个网段中 ，可以让VxLAN也支持host-gw的功能， 即直接通过物理网卡的网关路由转发，而不用隧道flannel叠加，从而提高了VxLAN的性能，这种flannel的功能叫directrouting。<br>flannel支持多种后端：<br>    1.Vxlan<br>        1.1 vxlan<br>        1.2 Dirextrouting<br>    2.host-gw：Host Gateway  #不推荐，只能在二层网络中，不支持跨网络，如果有成千上万的Pod，容易产生广播风暴<br>    3.UDP：性能差</p>
+<p>[root@master ~]# kubectl get pods -o wide<br>NAME                             READY     STATUS             RESTARTS   AGE       IP             NODE<br>myapp-deploy-69b47bc96d-79fqh    1/1       Running            4          7d        10.244.1.97    node1<br>myapp-deploy-69b47bc96d-tc54k    1/1       Running            4          7d        10.244.2.88    node2<br>[root@master ~]# kubectl exec -it myapp-deploy-69b47bc96d-79fqh – /bin/sh<br>/ # ping 10.244.2.88 #ping对方Node上容器的ip<br>PING 10.244.2.88 (10.244.2.88): 56 data bytes<br>64 bytes from 10.244.2.88: seq=0 ttl=62 time=0.459 ms<br>64 bytes from 10.244.2.88: seq=0 ttl=62 time=0.377 ms<br>64 bytes from 10.244.2.88: seq=1 ttl=62 time=0.252 ms<br>64 bytes from 10.244.2.88: seq=2 ttl=62 time=0.261 ms<br>在其他节点上抓包，发现根本就在ens192上抓不到包。</p>
+<p>[root@master ~]# tcpdump -i ens192 -nn icmp<br>[root@master ~]# yum install bridge-utils -y<br>[root@master ~]# brctl show docker0<br>bridge namebridge idSTP enabledinterfaces<br>docker08000.024283f8b8ffno<br>[root@master ~]# brctl show cni0<br>bridge namebridge idSTP enabledinterfaces<br>cni08000.0a580af40001noveth6ec94aab<br>vethf703483a<br>vethff579703<br> 可以看到veth这些接口都是桥接到cni0上的。</p>
+<pre><code>brctl show表示查看已有网桥。</code></pre>
+<p>[root@node1 ~]#  tcpdump -i cni0 -nn icmp<br>tcpdump: verbose output suppressed, use -v or -vv for full protocol decode<br>listening on cni0, link-type EN10MB (Ethernet), capture size 262144 bytes<br>23:40:11.370754 IP 10.244.1.97 &gt; 10.244.2.88: ICMP echo request, id 4864, seq 96, length 64<br>23:40:11.370988 IP 10.244.2.88 &gt; 10.244.1.97: ICMP echo reply, id 4864, seq 96, length 64<br>23:40:12.370888 IP 10.244.1.97 &gt; 10.244.2.88: ICMP echo request, id 4864, seq 97, length 64<br>23:40:12.371090 IP 10.244.2.88 &gt; 10.244.1.97: ICMP echo reply, id 4864, seq 97, length 64<br>^X23:40:13.371015 IP 10.244.1.97 &gt; 10.244.2.88: ICMP echo request, id 4864, seq 98, length 64<br>23:40:13.371239 IP 10.244.2.88 &gt; 10.244.1.97: ICMP echo reply, id 4864, seq 98, length 64<br>23:40:14.371128 IP 10.244.1.97 &gt; 10.244.2.88: ICMP echo request, id 4864, seq 99, length 64<br>可以看到，在node节点，可以在cni0端口上抓到容器里面的Ping时的包。</p>
+<pre><code>其实，上面ping时的数据流是先从cni0进来，然后从flannel.1出去，最后借助物理网卡ens32发出去。所以，我们在flannel.1上也能抓到包：</code></pre>
+<p>[root@node1 ~]#  tcpdump -i flannel.1 -nn icmp<br>tcpdump: verbose output suppressed, use -v or -vv for full protocol decode<br>listening on flannel.1, link-type EN10MB (Ethernet), capture size 262144 bytes<br>03:12:36.823315 IP 10.244.1.97 &gt; 10.244.2.88: ICMP echo request, id 4864, seq 12840, length 64<br>03:12:36.823496 IP 10.244.2.88 &gt; 10.244.1.97: ICMP echo reply, id 4864, seq 12840, length 64<br>03:12:37.823490 IP 10.244.1.97 &gt; 10.244.2.88: ICMP echo request, id 4864, seq 12841, length 64<br>03:12:37.823634 IP 10.244.2.88 &gt; 10.244.1.97: ICMP echo reply, id 4864, seq 12841, length 64<br>同样，在ens192物理网卡上也能抓到包：</p>
+<p>[root@node1 ~]# tcpdump -i ens192 -nn host 172.16.1.102  #172.16.1.102是node2的物理ip<br>tcpdump: verbose output suppressed, use -v or -vv for full protocol decode<br>listening on ens192, link-type EN10MB (Ethernet), capture size 262144 bytes<br>10:59:24.234174 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1<br>IP 10.244.1.97 &gt; 10.244.2.88: ICMP echo request, id 7168, seq 0, length 64<br>10:59:24.234434 IP 172.16.1.102.54894 &gt; 172.16.1.101.8472: OTV, flags [I] (0x08), overlay 0, instance 1<br>IP 10.244.2.88 &gt; 10.244.1.97: ICMP echo reply, id 7168, seq 0, length 64<br>10:59:25.234301 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1<br>IP 10.244.1.97 &gt; 10.244.2.88: ICMP echo request, id 7168, seq 1, length 64<br>10:59:25.234469 IP 172.16.1.102.54894 &gt; 172.16.1.101.8472: OTV, flags [I] (0x08), overlay 0, instance 1<br>IP 10.244.2.88 &gt; 10.244.1.97: ICMP echo reply, id 7168, seq 1, length 64<br>10:59:26.234415 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1<br>IP 10.244.1.97 &gt; 10.244.2.88: ICMP echo request, id 7168, seq 2, length 64<br>10:59:26.234592 IP 172.16.1.102.54894 &gt; 172.16.1.101.8472: OTV, flags [I] (0x08), overlay 0, instance 1<br>IP 10.244.2.88 &gt; 10.244.1.97: ICMP echo reply, id 7168, seq 2, length 64<br>10:59:27.234528 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1<br>IP 10.244.1.97 &gt; 10.244.2.88: ICMP echo request, id 7168, seq 3, length 64<br>    下面我们把flannel的通信模式改成directrouting的方式</p>
+<p>[root@master flannel]# cd /root/manifests/flannel<br>[root@master flannel]# kubectl edit configmap kube-flannel-cfg -n kube-system<br>{<br>      “Network”: “10.244.0.0/16”,<br>      “Backend”: {<br>        “Type”: “vxlan”,<br>        “Directrouting”: true #加一行这个<br>      }<br>    }<br>[root@master flannel]# ip route show<br>default via 172.16.1.254 dev ens192 proto static metric 100<br>10.244.0.0/24 dev cni0 proto kernel scope link src 10.244.0.1 #访问10.244.0.0/24要通过10.244.0.1<br>10.244.1.0/24 via 10.244.1.0 dev flannel.1 onlink #10.244.1.0是配置在flannel上的地址，表示访问10.244.1.0/24通过本机flannel.1上的10.244.1.0送出去，下同<br>10.244.2.0/24 via 10.244.2.0 dev flannel.1 onlink  #10.244.2.0是配置在flannel上的地址<br>172.16.1.0/24 dev ens192 proto kernel scope link src 172.16.1.100 metric 100</p>
+<p>[root@master flannel]# kubectl get configmap kube-flannel-cfg -o json -n kube-system<br>　　　　　　“net-conf.json”: “{\n &quot;Network&quot;: &quot;10.244.0.0/16&quot;,\n &quot;Backend&quot;: {\n &quot;Type&quot;: &quot;vxlan&quot;,\n &quot;Directrouting&quot;: true\n }\n}\n”</p>
+<p>看到有Directrouting，说明生效了。</p>
+<pre><code>重启整个k8s，然后再看：</code></pre>
+<p>[root@master ~]# ip route show<br>default via 172.16.1.254 dev ens192 proto static metric 100<br>10.244.0.0/24 dev cni0 proto kernel scope link src 10.244.0.1 #访问本机直接在本机直接转发，而不需要其他接口，这就是directrouting<br>10.244.1.0/24 via 172.16.1.101 dev ens192 #看到现在访问10.244.1.0，通过本地物理网卡ens192上的172.16.1.101送出去，即通过物理网卡通信了，而不再通过隧道flannel通信。<br>10.244.2.0/24 via 172.16.1.102 dev ens192<br>172.16.1.0/24 dev ens192 proto kernel scope link src 172.16.1.100 metric 100<br>172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1<br>继续登录到一个pod中进行ping测试：</p>
+<p>[root@master ~]# kubectl get pods -o wide<br>NAME                             READY     STATUS             RESTARTS   AGE       IP             NODE<br>myapp-deploy-69b47bc96d-75g2b    1/1       Running            0          12m       10.244.1.124   node1<br>myapp-deploy-69b47bc96d-jwgwm    1/1       Running            0          3s        10.244.2.100   node2<br>[root@master ~]# kubectl exec  -it myapp-deploy-69b47bc96d-75g2b – /bin/sh<br>/ # ping 10.244.2.100<br>PING 10.244.2.100 (10.244.2.100): 56 data bytes<br>64 bytes from 10.244.2.100: seq=0 ttl=62 time=0.536 ms<br>64 bytes from 10.244.2.100: seq=1 ttl=62 time=0.206 ms<br>64 bytes from 10.244.2.100: seq=2 ttl=62 time=0.206 ms<br>64 bytes from 10.244.2.100: seq=3 ttl=62 time=0.203 ms<br>64 bytes from 10.244.2.100: seq=4 ttl=62 time=0.210 ms<br>[root@node1 ~]# tcpdump -i ens192 -nn icmp<br>tcpdump: verbose output suppressed, use -v or -vv for full protocol decode<br>listening on ens192, link-type EN10MB (Ethernet), capture size 262144 bytes<br>12:31:10.899403 IP 10.244.1.124 &gt; 10.244.2.100: ICMP echo request, id 8960, seq 24, length 64<br>12:31:10.899546 IP 10.244.2.100 &gt; 10.244.1.124: ICMP echo reply, id 8960, seq 24, length 64<br>12:31:11.899505 IP 10.244.1.124 &gt; 10.244.2.100: ICMP echo request, id 8960, seq 25, length 64<br>12:31:11.899639 IP 10.244.2.100 &gt; 10.244.1.124: ICMP echo reply, id 8960, seq 25, length 64<br>通过抓包可以看到，现在在pod中进行互ping，是从物理网卡ens192进出的，这就是directrouting，这种性能比默认vxlan高。</p>
 <h2 id="外部访问集群"><a href="#外部访问集群" class="headerlink" title="外部访问集群"></a>外部访问集群</h2><p>从集群外访问集群有多种方式，比如loadbalancer，Ingress，nodeport，nodeport和loadbalancer是service的两个基本类型，是将service直接对外暴露的方式，ingress则是提供了七层负载均衡，其基本原理将外部流量转发到内部的service，再转发到后端endpoints，在平时的使用中，我们可以依据具体的业务需求选用不同的方式。这里主要介绍nodeport和ingress方式。</p>
 <h3 id="Nodeport"><a href="#Nodeport" class="headerlink" title="Nodeport"></a>Nodeport</h3><p>通过将Service的类型设置为NodePort，就可以在Cluster中的主机上通过一个指定端口暴露服务。注意通过Cluster中每台主机上的该指定端口都可以访问到该服务，发送到该主机端口的请求会被kubernetes路由到提供服务的Pod上。采用这种服务类型，可以在kubernetes cluster网络外通过主机IP：端口的方式访问到服务。</p>
 <img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/nodeport.jpg" class title="kubernetes网络通信原理">
@@ -328,6 +344,11 @@
 <p>这里我们定义了一个ingress模板，定义通过<a target="_blank" rel="noopener" href="http://test.name.com来访问服务,在虚拟主机http//test.name.com%E4%B8%8B%E9%9D%A2%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%A4%E4%B8%AAPath%EF%BC%8C%E5%85%B6%E4%B8%AD/test%E8%A2%AB%E5%88%86%E5%8F%91%E5%88%B0%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1s1%EF%BC%8C/name%E8%A2%AB%E5%88%86%E5%8F%91%E5%88%B0%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1s2%E3%80%82">http://test.name.com来访问服务，在虚拟主机http://test.name.com下面定义了两个Path，其中/test被分发到后端服务s1，/name被分发到后端服务s2。</a><br>集群中可以定义多个ingress，来完成不同服务的转发，这里需要一个ingress controller来管理集群中的Ingress规则。Ingress Contronler 通过与 Kubernetes API 交互，动态的去感知集群中 Ingress 规则变化，然后读取它，按照自定义的规则，规则就是写明了哪个域名对应哪个service，生成一段 Nginx 配置，再写到 Nginx-ingress-control的 Pod 里，这个 Ingress Contronler 的pod里面运行着一个nginx服务，控制器会把生成的nginx配置写入/etc/nginx.conf文件中，然后 reload使用配置生效。</p>
 <p>Kubernetes提供的Ingress Controller模板如下：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"> <span class="attr">name:</span> <span class="string">test</span></span><br><span class="line"> <span class="attr">annotations:</span></span><br><span class="line"> <span class="attr">ingress.kubernetes.io/rewrite-target:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"> <span class="attr">rules:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">foo.bar.com</span></span><br><span class="line"> <span class="attr">http:</span></span><br><span class="line"> <span class="attr">paths:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/foo</span></span><br><span class="line"> <span class="attr">backend:</span></span><br><span class="line"> <span class="attr">serviceName:</span> <span class="string">s1</span></span><br><span class="line"> <span class="attr">servicePort:</span> <span class="number">80</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/bar</span></span><br><span class="line"> <span class="attr">backend:</span></span><br><span class="line"> <span class="attr">serviceName:</span> <span class="string">s2</span></span><br><span class="line"> <span class="attr">servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/liuzhengwei521/2427495">https://blog.51cto.com/liuzhengwei521/2427495</a></p>
+
     </div>
 
     
@@ -481,12 +502,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">19k</span>
+    <span title="站点总字数">26k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">32 分钟</span>
+    <span title="站点阅读时长">43 分钟</span>
 </div>
 
 <!--
