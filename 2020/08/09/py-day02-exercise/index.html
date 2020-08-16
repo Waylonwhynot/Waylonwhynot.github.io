@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1.根据需求写代码1234567891011121314dic &#x3D; &amp;#123;&amp;#x27;k1&amp;#x27;: &quot;v1&quot;, &quot;k2&quot;: &quot;v2&quot;, &quot;k3&quot;: [11,22,33]&amp;#125;# 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典dic[&amp;#x27;">
+  <meta name="description" content="温故知新">
 <meta property="og:type" content="article">
-<meta property="og:title" content="py_day01_exercise">
+<meta property="og:title" content="py_day02_exercise">
 <meta property="og:url" content="https://waylon.whatyouneed.site/2020/08/09/py-day02-exercise/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="1.根据需求写代码1234567891011121314dic &#x3D; &amp;#123;&amp;#x27;k1&amp;#x27;: &quot;v1&quot;, &quot;k2&quot;: &quot;v2&quot;, &quot;k3&quot;: [11,22,33]&amp;#125;# 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典dic[&amp;#x27;">
+<meta property="og:description" content="温故知新">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-09T15:11:58.000Z">
-<meta property="article:modified_time" content="2020-08-15T17:06:05.952Z">
+<meta property="article:modified_time" content="2020-08-16T01:37:43.199Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="python_exercise">
 <meta name="twitter:card" content="summary">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>py_day01_exercise | YouNeed</title>
+  <title>py_day02_exercise | YouNeed</title>
   
 
 
@@ -204,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          py_day01_exercise
+          py_day02_exercise
         </h1>
 
         <div class="post-meta">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-16 01:06:05" itemprop="dateModified" datetime="2020-08-16T01:06:05+08:00">2020-08-16</time>
+                <time title="修改时间：2020-08-16 09:37:43" itemprop="dateModified" datetime="2020-08-16T09:37:43+08:00">2020-08-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,7 +258,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="1-根据需求写代码"><a href="#1-根据需求写代码" class="headerlink" title="1.根据需求写代码"></a>1.根据需求写代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;k1&#x27;</span>: <span class="string">&quot;v1&quot;</span>, <span class="string">&quot;k2&quot;</span>: <span class="string">&quot;v2&quot;</span>, <span class="string">&quot;k3&quot;</span>: [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k4&#x27;</span>] = <span class="string">&#x27;v4&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在修改字典中 &quot;k1&quot; 对应的值为 &quot;alex&quot;，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k1&#x27;</span>] = <span class="string">&#x27;alex&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值中追加一个元素 44，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].append(<span class="number">44</span>)</span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值的第 1 个位置插入个元素 18，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].insert(<span class="number">0</span>,<span class="number">18</span>)</span><br><span class="line">print(dic)</span><br></pre></td></tr></table></figure>
+        <p>温故知新</p>
+<a id="more"></a>
+<h3 id="1-根据需求写代码"><a href="#1-根据需求写代码" class="headerlink" title="1.根据需求写代码"></a>1.根据需求写代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;k1&#x27;</span>: <span class="string">&quot;v1&quot;</span>, <span class="string">&quot;k2&quot;</span>: <span class="string">&quot;v2&quot;</span>, <span class="string">&quot;k3&quot;</span>: [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k4&#x27;</span>] = <span class="string">&#x27;v4&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在修改字典中 &quot;k1&quot; 对应的值为 &quot;alex&quot;，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k1&#x27;</span>] = <span class="string">&#x27;alex&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值中追加一个元素 44，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].append(<span class="number">44</span>)</span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值的第 1 个位置插入个元素 18，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].insert(<span class="number">0</span>,<span class="number">18</span>)</span><br><span class="line">print(dic)</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-根据需求写代码"><a href="#2-根据需求写代码" class="headerlink" title="2.根据需求写代码"></a>2.根据需求写代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">dic1 = &#123;</span><br><span class="line"> <span class="string">&#x27;name&#x27;</span>:[<span class="string">&#x27;pounds&#x27;</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>],</span><br><span class="line"> <span class="string">&#x27;job&#x27;</span>:<span class="string">&#x27;teacher&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;51devops&#x27;</span>:&#123;<span class="string">&#x27;szk&#x27;</span>:[<span class="string">&#x27;python1&#x27;</span>,<span class="string">&#x27;python2&#x27;</span>,<span class="number">100</span>]&#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1，将name对应的列表追加⼀个元素’xxx’。</span></span><br><span class="line">dic1[<span class="string">&#x27;name&#x27;</span>].append(<span class="string">&#x27;xxx&#x27;</span>)</span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 2，将name对应的列表中的 pounds ⾸字⺟⼤写。</span></span><br><span class="line">(<span class="number">1</span>)转成大写后upadte</span><br><span class="line">new_words = dic1[<span class="string">&#x27;name&#x27;</span>][<span class="number">0</span>].capitalize()</span><br><span class="line">dic1.update(&#123;<span class="string">&#x27;name&#x27;</span>:[new_words,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>]&#125;)</span><br><span class="line">(<span class="number">2</span>)直接赋值更改</span><br><span class="line">dic1[<span class="string">&#x27;name&#x27;</span>][<span class="number">0</span>] = <span class="string">&#x27;Pounds&#x27;</span></span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 3，51devops 对应的字典加⼀个键值对 ’haoda’,’linux’。</span></span><br><span class="line">dic1[<span class="string">&#x27;51devops&#x27;</span>][<span class="string">&#x27;haoda&#x27;</span>] = <span class="string">&#x27;linux&#x27;</span></span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 4，将51devops对应的字典中的szk对应的列表中的python2删除</span></span><br><span class="line">dic1[<span class="string">&#x27;51devops&#x27;</span>][<span class="string">&#x27;szk&#x27;</span>].remove(<span class="string">&#x27;python2&#x27;</span>)</span><br><span class="line">print(dic1)</span><br></pre></td></tr></table></figure>
 
