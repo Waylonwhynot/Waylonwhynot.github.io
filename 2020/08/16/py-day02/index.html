@@ -28,7 +28,7 @@
 <meta property="og:description" content="python基础列表 字典 集合 函数(位置参数， 关键字参数， 默认参数) 对文件操作">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-15T17:06:36.000Z">
-<meta property="article:modified_time" content="2020-08-15T17:12:03.444Z">
+<meta property="article:modified_time" content="2020-08-23T17:05:39.369Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -213,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-08-16 01:06:36 / 修改时间：01:12:03" itemprop="dateCreated datePublished" datetime="2020-08-16T01:06:36+08:00">2020-08-16</time>
+              <time title="创建时间：2020-08-16 01:06:36" itemprop="dateCreated datePublished" datetime="2020-08-16T01:06:36+08:00">2020-08-16</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-24 01:05:39" itemprop="dateModified" datetime="2020-08-24T01:05:39+08:00">2020-08-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -233,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.4k</span>
+              <span>4.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>8 分钟</span>
             </span>
 
         </div>
@@ -399,8 +405,7 @@
 </blockquote>
 <p>函数的定义：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">shell:</span><br><span class="line">    func test()&#123;</span><br><span class="line">        函数体</span><br><span class="line">    &#125;</span><br><span class="line">    test() <span class="comment">### 函数的调用</span></span><br><span class="line">python:</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span>():</span></span><br><span class="line">        函数体</span><br><span class="line">    test() <span class="comment">### 函数调用</span></span><br></pre></td></tr></table></figure>
-
-<ul>
+<h5 id="4-函数的参数"><a href="#4-函数的参数" class="headerlink" title="4.函数的参数"></a>4.函数的参数</h5><ul>
 <li>参数的分类<ul>
 <li>位置参数</li>
 <li>关键字参数</li>
@@ -411,8 +416,15 @@
 <p>参数组合：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">第一种：</span><br><span class="line">位置参数， 关键字参数， 默认参数</span><br><span class="line">test(a, b, c=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">第二种：</span><br><span class="line">动态接收位置参数， 动态接收关键字参数配合起来使用</span><br><span class="line">test(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
 
-
-
+<blockquote>
+<p>总结:位置参数 &gt; args(动态位置参数) &gt; 默认值参数 &gt; *kwargs(动态默认参数)，这四种参数可以任意的使用</p>
+</blockquote>
+<p>如果想接收所有的参数:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args,**kwargs</span>):</span></span><br><span class="line">    print(args,kwargs)</span><br><span class="line">func(<span class="number">1</span>,<span class="number">23</span>,<span class="number">5</span>,a=<span class="number">1</span>,b=<span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+<p>动态参数还可以这样传参:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>]</span><br><span class="line"><span class="comment"># 方法一</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(lst[<span class="number">0</span>],lst[<span class="number">1</span>],lst[<span class="number">2</span>])</span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(*lst)  </span><br><span class="line"><span class="comment"># 在实参的位置上用*将lst(可迭代对象)按照顺序打散</span></span><br><span class="line"><span class="comment"># 在形参的位置上用*把收到的参数组合成一个元祖</span></span><br></pre></td></tr></table></figure>
+<p>字典也可以进行打散,不过需要**</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -496,7 +508,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E5%86%85%E5%AE%B9"><span class="nav-number">1.</span> <span class="nav-text">今日内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-python%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84"><span class="nav-number">1.1.</span> <span class="nav-text">1. python基础数据类型之列表和元组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-python%E7%9A%84%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%AD%97%E5%85%B8%E5%92%8C%E9%9B%86%E5%90%88"><span class="nav-number">1.2.</span> <span class="nav-text">2. python的基础数据类型之字典和集合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-python%E5%AF%B9%E6%96%87%E4%BB%B6%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">3. python对文件的操作</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E5%86%85%E5%AE%B9"><span class="nav-number">1.</span> <span class="nav-text">今日内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-python%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84"><span class="nav-number">1.1.</span> <span class="nav-text">1. python基础数据类型之列表和元组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-python%E7%9A%84%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%AD%97%E5%85%B8%E5%92%8C%E9%9B%86%E5%90%88"><span class="nav-number">1.2.</span> <span class="nav-text">2. python的基础数据类型之字典和集合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-python%E5%AF%B9%E6%96%87%E4%BB%B6%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">3. python对文件的操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">4.函数的参数</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -569,12 +581,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">44k</span>
+    <span title="站点总字数">53k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:13</span>
+    <span title="站点阅读时长">1:28</span>
 </div>
 
 <!--
