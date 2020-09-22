@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/09/19/py-day07/jQuery.png">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/09/19/py-day07/jQuery-dom.png">
 <meta property="article:published_time" content="2020-09-19T15:34:06.000Z">
-<meta property="article:modified_time" content="2020-09-19T16:32:31.632Z">
+<meta property="article:modified_time" content="2020-09-22T19:23:36.221Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-20 00:32:31" itemprop="dateModified" datetime="2020-09-20T00:32:31+08:00">2020-09-20</time>
+                <time title="修改时间：2020-09-23 03:23:36" itemprop="dateModified" datetime="2020-09-23T03:23:36+08:00">2020-09-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -248,14 +248,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.4k</span>
+              <span>6.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -377,17 +377,47 @@
 <h4 id="本周内容"><a href="#本周内容" class="headerlink" title="本周内容"></a>本周内容</h4><h5 id="css完结"><a href="#css完结" class="headerlink" title="css完结"></a>css完结</h5><ol>
 <li><p>定位 position 和 定位属性坐标配合使用  top, right, left, bottom</p>
 <ol>
-<li><p>Fixed : 固定位置 </p>
-<figure class="highlight htmlbars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span></span><br><span class="line"><span class="xml">        #i1&#123;</span></span><br><span class="line"><span class="xml">            width: 100px;</span></span><br><span class="line"><span class="xml">            height: 100px;</span></span><br><span class="line"><span class="xml">            border: 1px solid red;</span></span><br><span class="line"><span class="xml">            background-color: red;</span></span><br><span class="line"><span class="xml">            position: fixed;</span></span><br><span class="line"><span class="xml">            right: 10px;</span></span><br><span class="line"><span class="xml">            bottom: 15px;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">        body&#123;</span></span><br><span class="line"><span class="xml">            height: 10000px;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<li><p>fixed:固定位置;相对于body定位;将某个元素固定在页面的某个位置<br>特点：</p>
+<blockquote>
+<p>相对于浏览器窗口来进行定位的<br>固定到窗口的某个位置上，不随内容而滚动<br>如果不设置定位坐标，就在原来的位置，否则反之</p>
+</blockquote>
+<figure class="highlight htmlbars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span></span><br><span class="line"><span class="xml">        #i1&#123;</span></span><br><span class="line"><span class="xml">            width: 100px;</span></span><br><span class="line"><span class="xml">            height: 100px;</span></span><br><span class="line"><span class="xml">            border: 1px solid red;</span></span><br><span class="line"><span class="xml">            background-color: red;</span></span><br><span class="line"><span class="xml">            position: fixed;</span></span><br><span class="line"><span class="xml">            right: 10px;</span></span><br><span class="line"><span class="xml">            bottom: 15px;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">        body&#123;</span></span><br><span class="line"><span class="xml">            height: 10000px;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure></li>
+<li><p>releative: 相对定位<br>特点：</p>
+<blockquote>
+<p>相对定位是相对于，自身的左上角为坐标点</p>
+</blockquote>
 </li>
-<li><p>Releative: 相对定位</p>
-</li>
-<li><p>Absloute：绝对定位</p>
+<li><p>absloute：绝对定位<br>特点：</p>
+<blockquote>
+<p>相对于（祖先元素的定位方式（relative）来进行定位）<br>找祖先元素是否有定位，如果没有定位，，找到<body>，就相对于body来定位<br>如果找到祖先元素有定位，相对祖先祖先元素来定位</body></p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;position:releative&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;position:absolute&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
 <p>总结：releative和absolute搭配使用</p>
+</blockquote>
 </li>
 </ol>
 </li>
 </ol>
+<p>position之input输入框</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;width: 300px; height: 30px; position: relative&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width: 300px; height: 30px;padding-right: 16px;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;i_pwd.jpg&quot;</span> <span class="attr">style</span>=<span class="string">&quot;position: absolute; top: 9px;right: -18px;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<ol start="2">
+<li>z-index<blockquote>
+<p>设置对象的层叠顺序</p>
+</blockquote>
+</li>
+</ol>
+<p><strong>特点</strong></p>
+<blockquote>
+<p>较大的number值的对象会覆盖在较小number值得对象之上</p>
+</blockquote>
+<p>浮层的效果</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.one</span>&#123;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">height</span><span class="selector-pseudo">:2000px</span>;</span></span><br><span class="line">            background-color: wheat;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.two</span>&#123;</span></span><br><span class="line">            background-color: black;</span><br><span class="line"><span class="css">            <span class="selector-tag">height</span><span class="selector-pseudo">:2050px</span>;</span></span><br><span class="line">            position: absolute;</span><br><span class="line"><span class="css">            <span class="selector-tag">top</span><span class="selector-pseudo">:0</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">right</span><span class="selector-pseudo">:0</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">left</span><span class="selector-pseudo">:0</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">bottom</span><span class="selector-pseudo">:0</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">opacity</span>: 0<span class="selector-class">.5</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">z-index</span><span class="selector-pseudo">:10</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.three</span>&#123;</span></span><br><span class="line">            background-color: white;</span><br><span class="line"><span class="css">            <span class="selector-tag">width</span><span class="selector-pseudo">:300px</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">height</span><span class="selector-pseudo">:200px</span>;</span></span><br><span class="line">            position: absolute;</span><br><span class="line"><span class="css">            <span class="selector-tag">top</span><span class="selector-pseudo">:100px</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">left</span><span class="selector-pseudo">:40</span>%;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">z-index</span><span class="selector-pseudo">:12</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;one&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;展示模态框&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;three&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;two&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
 <h5 id="javascript介绍"><a href="#javascript介绍" class="headerlink" title="javascript介绍"></a>javascript介绍</h5><p>1.js的简单介绍</p>
 <ul>
 <li>为啥js叫做javascript？</li>
@@ -398,19 +428,37 @@
 <p>2.js的初识</p>
 <ul>
 <li><p>js的写法</p>
+<ul>
+<li>head头中：<br>文件引入：<code>&lt;script src=&quot;xxx.js&quot;&gt;&lt;/script&gt;</code><br>代码：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    alert(<span class="string">&#x27;dsadsadsa&#x27;</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>body后面</li>
+</ul>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>dsbadbshabdhsabdsha<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    /**推荐大家讲js的代码放在body的后面**/</span><br><span class="line">    /**js的代码**/</span><br><span class="line"><span class="javascript">    $(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        alert(<span class="string">&#x27;dsadsa&#x27;</span>);</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在开发者平台的console中，也可以写js的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alert（‘dsadsadsa’）</span><br><span class="line">console.log(&#39;dsadsadsadsa&#39;)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>3.js的基础数据类型</p>
+<ol start="3">
+<li><p>js的注释：<br>单行注释： //<br>多行注释： /**/</p>
+</li>
+<li><p>js代码后面加分号</p>
+</li>
+<li><p>变量声明<br>python<br> name = ‘zhansgan’<br>js</p>
+<p> 局部变量 var name = ‘zhansan’;<br> 全部变量 name = ‘zhansagn’;<br> var age = 12;<br> 变量名区分大小写str和Str不是一个变量，也就是js对变量名的大小写是敏感的<br>ps:<br> 代码的书写</p>
+</li>
+<li><p>JS变量类型</p>
+</li>
+<li><p>js的基础数据类型</p>
+</li>
+</ol>
 <ul>
-<li><p>数值</p>
-<ul>
+<li>数值<ul>
 <li>parseInt</li>
 <li>ParseFloat</li>
 </ul>
 </li>
+</ul>
+<ul>
 <li><p><strong>字符串</strong></p>
 <ul>
 <li>加法： console.log(‘hello’  + “world”)</li>
@@ -667,12 +715,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">106k</span>
+    <span title="站点总字数">115k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:57</span>
+    <span title="站点阅读时长">3:12</span>
 </div>
 
 <!--
