@@ -27,7 +27,6 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="前端基础基础class(html、css、jQuery)">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://waylon.whatyouneed.site/2020/09/19/py-day07/objsort.png">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/09/19/py-day07/%E5%AF%B9%E8%B1%A1.png">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/09/19/py-day07/%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F.png">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/09/19/py-day07/%E5%BA%8F%E5%88%97%E5%8C%96%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96.png">
@@ -36,11 +35,11 @@
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/09/19/py-day07/jQuery.png">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/09/19/py-day07/jQuery-dom.png">
 <meta property="article:published_time" content="2020-09-19T15:34:06.000Z">
-<meta property="article:modified_time" content="2020-09-22T19:23:36.221Z">
+<meta property="article:modified_time" content="2020-09-25T17:18:30.905Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://waylon.whatyouneed.site/2020/09/19/py-day07/objsort.png">
+<meta name="twitter:image" content="https://waylon.whatyouneed.site/2020/09/19/py-day07/%E5%AF%B9%E8%B1%A1.png">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2020/09/19/py-day07/">
 
@@ -230,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-23 03:23:36" itemprop="dateModified" datetime="2020-09-23T03:23:36+08:00">2020-09-23</time>
+                <time title="修改时间：2020-09-26 01:18:30" itemprop="dateModified" datetime="2020-09-26T01:18:30+08:00">2020-09-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -248,14 +247,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.6k</span>
+              <span>8.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>15 分钟</span>
             </span>
 
         </div>
@@ -418,7 +417,7 @@
 
 
 
-<h5 id="javascript介绍"><a href="#javascript介绍" class="headerlink" title="javascript介绍"></a>javascript介绍</h5><p>1.js的简单介绍</p>
+<h4 id="javascript介绍"><a href="#javascript介绍" class="headerlink" title="javascript介绍"></a>javascript介绍</h4><h5 id="一、JS如何引入及基本语法规范"><a href="#一、JS如何引入及基本语法规范" class="headerlink" title="一、JS如何引入及基本语法规范"></a>一、JS如何引入及基本语法规范</h5><p>1.js的简单介绍</p>
 <ul>
 <li>为啥js叫做javascript？</li>
 <li>html, css, python,php,java,javascript</li>
@@ -442,56 +441,93 @@
 <li><p>js的注释：<br>单行注释： //<br>多行注释： /**/</p>
 </li>
 <li><p>js代码后面加分号</p>
-</li>
+<h5 id="二、变量声明"><a href="#二、变量声明" class="headerlink" title="二、变量声明"></a>二、变量声明</h5></li>
 <li><p>变量声明<br>python<br> name = ‘zhansgan’<br>js</p>
 <p> 局部变量 var name = ‘zhansan’;<br> 全部变量 name = ‘zhansagn’;<br> var age = 12;<br> 变量名区分大小写str和Str不是一个变量，也就是js对变量名的大小写是敏感的<br>ps:<br> 代码的书写</p>
 </li>
-<li><p>JS变量类型</p>
-</li>
-<li><p>js的基础数据类型</p>
-</li>
+</ol>
+<h5 id="三、变量类型"><a href="#三、变量类型" class="headerlink" title="三、变量类型"></a>三、变量类型</h5><ol>
+<li>JS变量类型</li>
+</ol>
+<p>python：<br>    num(int  float)<br>    字符串<br>    列表<br>    字典<br>    元组<br>    集合<br>js：<br>    num<br>        var age = 12;<br>        var age = 1.1;</p>
+<ol start="2">
+<li>常用方法</li>
 </ol>
 <ul>
-<li>数值<ul>
-<li>parseInt</li>
-<li>ParseFloat</li>
-</ul>
-</li>
-</ul>
+<li><p>数值</p>
 <ul>
-<li><p><strong>字符串</strong></p>
-<ul>
-<li>加法： console.log(‘hello’  + “world”)</li>
-<li>获取长度：obj.length </li>
-<li>去除空格：obj.trim</li>
-<li>获取某个元素的位置： a.charAt(6)</li>
-<li>获取某一个子序列的位置：a.indexOf(‘owo’)</li>
-<li>切片： a.slice(2,6)</li>
-<li>转大写：toUpperCase()</li>
-<li>转小写：toLowerCase()</li>
-<li>将字符串转换成数组：s.split(‘-‘)   *****</li>
+<li>parseInt 将某值转换成数字，不成功则NAN</li>
+<li>ParseFloat 将某值转换成浮点数，不成功则NAN</li>
 </ul>
-</li>
-<li><p>布尔 true / false</p>
-</li>
-<li><p>undefined</p>
-</li>
-<li><p><strong>数组</strong> ,下面的方法都比较常用</p>
-<ul>
-<li>obj.length 数组的大小</li>
-<li>obj.push(ele) 尾部追加元素</li>
-<li>obj.pop() 尾部获取一个元素</li>
-<li>obj.unshift(ele) 头部插入元素</li>
-<li>obj.shift() 头部移除元素</li>
-<li>obj.slice( ) 切片</li>
-<li>obj.reverse( ) 反转</li>
-<li>obj.join(sep) 将数组元素连接起来以构建一个字符串</li>
-<li>obj.sort( ) 对数组元素进行排序<img src="/2020/09/19/py-day07/objsort.png" class title="objsort">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">parseInt(<span class="string">&#x27;3.5&#x27;</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line">parseInt(<span class="string">&#x27;3.6&#x27;</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line">parseFloat(<span class="string">&#x27;3.6&#x27;</span>)</span><br><span class="line"><span class="number">3.6</span></span><br></pre></td></tr></table></figure>
+
+<p>  字符串</p>
+<pre><code>  var name = &#39;zhansgan&#39;;
+  相关的方法：
+      **obj.length　　　　　　　　　　　　　　　长度
+      **obj.trim()　　　　　　　　　　　　　　　移除空白
+      obj.trimLeft()
+      obj.trimRight()
+      obj.charAt(n)　　　　　　　　　　　　　返回字符串中的第n个字符
+      obj.concat(value, …)　　　　　　　　 拼接
+      obj.indexOf(substring,start)　　　　子序列位置
+      **obj.substring(from, to)　　　　　　　根据索引获取子序列
+      **obj.slice(start, end)　　　　　　　　切片
+      obj.toLowerCase()　　　　　　　　　　大写
+      obj.toUpperCase()　　　　　　　　　　小写
+      **obj.split(delimiter, limit)　　　　　分割</code></pre>
+<p>  数组</p>
+<pre><code>  var arr = [1,2,4,&#39;zhansgan&#39;]; array()
+  常用的方法
+      obj.length 数组的大小
+      obj.push(ele) 尾部追加元素
+      obj.pop() 尾部获取一个元素
+      obj.unshift(ele) 头部插入元素
+      obj.shift() 头部移除元素
+      obj.slice( ) 切片
+
+      obj.reverse( ) 反转
+      obj.join(sep) 将数组元素连接起来以构建一个字符串
+      obj.concat(val,..) 连接数组
+      obj.sort( ) 对数组元素进行排序</code></pre>
+<p>  字典（json）</p>
+<pre><code>  mydict = &#123;&#39;name&#39;:&#39;zhansgan&#39;,&#39;age&#39;:12&#125;</code></pre>
+<p>  循环：</p>
+<pre><code>  第一种：
+      var arr = [&#39;zhansgan&#39;, &#39;lisi&#39;, &#39;wangwu&#39;];
+      mydict = &#123;&#39;name&#39;:&#39;zhansgan&#39;,&#39;age&#39;:12&#125;
+
+      for(var i in arr)&#123;
+          console.log(arr[i]);
+      &#125;
+
+  第二种：
+      var arr = [&#39;zhansgan&#39;, &#39;lisi&#39;, &#39;wangwu&#39;];
+
+      for(var i=0; i&lt;arr.length; i = i+1)&#123;
+          console.log(i + &#39;,&#39; +arr[i]);
+      &#125;
+
+      字典不适于第二种循环；
+
+  // 最好的注释就是代码的命名规范</code></pre>
+<p>  布尔：</p>
+<pre><code>  True False (python)
+  true false (js)</code></pre>
 </li>
 </ul>
-</li>
-<li><p>对象</p>
-<img src="/2020/09/19/py-day07/%E5%AF%B9%E8%B1%A1.png" class title="objsort">
+<pre><code>null      变量的值是null
+undefined 变量声明但是未给值
+
+
+索引为什么从0开始：住的地方地下室，从0开始
+  z  h  a  n  g  s  a  n
+0  1  2  3  4
+ &#123;% asset_img objsort.png objsort %&#125;</code></pre>
+<ul>
+<li>对象<img src="/2020/09/19/py-day07/%E5%AF%B9%E8%B1%A1.png" class title="objsort">
+
+
 
 </li>
 </ul>
@@ -499,9 +535,45 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">     * 循环数组</span><br><span class="line">     * **/</span><br><span class="line">    var arr = [&#x27;pounds&#x27;, &#x27;szk&#x27;, &#x27;chenshunyang&#x27;];</span><br><span class="line">    var len = arr.length;</span><br><span class="line">    </span><br><span class="line">    for(var i=0; i<span class="tag">&lt;<span class="name">len;</span> <span class="attr">i</span>++) &#123;</span></span><br><span class="line"><span class="tag">        <span class="attr">console.log</span>(<span class="attr">arr</span>[<span class="attr">i</span>]);</span></span><br><span class="line"><span class="tag">    &#125;</span></span><br><span class="line"><span class="tag"></span></span><br><span class="line"><span class="tag">    <span class="attr">for</span>(<span class="attr">var</span> <span class="attr">i</span> <span class="attr">in</span> <span class="attr">arr</span>)&#123;</span></span><br><span class="line"><span class="tag">        <span class="attr">console.log</span>(<span class="attr">i</span>, <span class="attr">arr</span>[<span class="attr">i</span>]);</span></span><br><span class="line"><span class="tag">    &#125;</span></span><br><span class="line"><span class="tag"></span></span><br><span class="line"><span class="tag">    /***</span></span><br><span class="line"><span class="tag">     * 循环对象</span></span><br><span class="line"><span class="tag">     */</span></span><br><span class="line"><span class="tag">    <span class="attr">var</span> <span class="attr">a</span> = <span class="string">&#123;</span>&quot;<span class="attr">name</span>&quot;<span class="attr">:</span>&#x27;<span class="attr">szk</span>&#x27;, &quot;<span class="attr">age</span>&quot;<span class="attr">:12</span>&#125;;</span></span><br><span class="line"><span class="tag"></span></span><br><span class="line"><span class="tag">    <span class="attr">for</span>(<span class="attr">var</span> <span class="attr">i</span> <span class="attr">in</span> <span class="attr">a</span>)&#123;</span></span><br><span class="line"><span class="tag">        <span class="attr">console.log</span>(<span class="attr">i</span>, <span class="attr">a</span>[<span class="attr">i</span>]);</span></span><br><span class="line"><span class="tag">    &#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>总结：数组的循环可以使用上面两种方式，但是对象的循环，必须使用 for … in 的方式来进行循环.</p>
-<p>分支控制</p>
-<p>函数</p>
-<p>函数定义：</p>
+<h5 id="四、运算符介绍"><a href="#四、运算符介绍" class="headerlink" title="四、运算符介绍"></a>四、运算符介绍</h5><p>. 运算符介绍</p>
+<ul>
+<li><ol>
+<li>算数运算符<br><code>+   -    *    /     %       ++        --</code></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>比较运算符（==判断值，===判断值和类型）<br><code>&gt;   &gt;=   &lt;    &lt;=    !=    ==    ===   !==</code></li>
+</ol>
+</li>
+<li><ol start="3">
+<li>逻辑运算符<br><code>&amp;&amp;   ||   ！</code></li>
+</ol>
+</li>
+<li><ol start="4">
+<li>赋值运算符<br><code>=  +=   -=  *=   /=</code></li>
+</ol>
+</li>
+</ul>
+<h5 id="五、流程控制"><a href="#五、流程控制" class="headerlink" title="五、流程控制"></a>五、流程控制</h5><ol>
+<li><p>if-else语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (条件)&#123;</span><br><span class="line">  当条件为 true 时执行的代码</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  当条件不为 true 时执行的代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>if–else if–else语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (条件 1)&#123;</span><br><span class="line">  当条件 1 为 true 时执行的代码</span><br><span class="line">&#125;else if (条件 2)&#123;</span><br><span class="line">  当条件 2 为 true 时执行的代码</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  当条件 1 和 条件 2 都不为 true 时执行的代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>switch语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var day&#x3D;new Date().getDay();</span><br><span class="line">switch (day)&#123;</span><br><span class="line">case 0:</span><br><span class="line">  x&#x3D;&quot;Today it&#39;s Sunday&quot;;</span><br><span class="line">  break;</span><br><span class="line">case 1:</span><br><span class="line">  x&#x3D;&quot;Today it&#39;s Monday&quot;;</span><br><span class="line">  break;</span><br><span class="line">case 2:</span><br><span class="line">  x&#x3D;&quot;Today it&#39;s Tuesday&quot;;</span><br><span class="line">  break;</span><br><span class="line">case 3:</span><br><span class="line">  x&#x3D;&quot;Today it&#39;s Wednesday&quot;;</span><br><span class="line">  break;</span><br><span class="line">default:</span><br><span class="line">  x&#x3D;&quot;Looking forward to the Weekend&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>while循环语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while (i&lt;5)&#123;</span><br><span class="line">  x&#x3D;x + &quot;The number is &quot; + i + &quot;&lt;br&gt;&quot;;</span><br><span class="line">  i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>三元运算符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var a &#x3D; 3;</span><br><span class="line">var b &#x3D; 5;</span><br><span class="line"></span><br><span class="line">c &#x3D; a &gt; b ? a : b</span><br><span class="line">console.log(c);</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<h5 id="六、函数"><a href="#六、函数" class="headerlink" title="六、函数"></a>六、函数</h5><p>函数定义：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**1.普通函数定义方式</span><br><span class="line">     * **/</span><br><span class="line">    function test()&#123;</span><br><span class="line">        console.log(&#x27;dsadsa&#x27;);</span><br><span class="line">        var a = 100;</span><br><span class="line"></span><br><span class="line">        return a;</span><br><span class="line">    &#125;</span><br><span class="line">    // test()</span><br><span class="line"></span><br><span class="line">    /***</span><br><span class="line">     * 2. 匿名函数</span><br><span class="line">     */</span><br><span class="line"></span><br><span class="line">    var a = function()&#123;</span><br><span class="line">        console.log(&#x27;dsadsa&#x27;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>函数的局部变量和全局变量</p>
@@ -530,9 +602,28 @@
 
 
 
-
-<p>4.DOM 和 jquery</p>
-<p>DOM: Document Object Modal ： 文档对象模型</p>
+<h5 id="七、DOM-和-jquery"><a href="#七、DOM-和-jquery" class="headerlink" title="七、DOM 和 jquery"></a>七、DOM 和 jquery</h5><p>DOM: Document Object Modal ： 文档对象模型</p>
+<ol>
+<li><ul>
+<li><p>直接查找</p>
+<p>  document.getElementById 　　　　　　　根据ID获取一个标签<br>  document.getElementsByName　　　　　　根据name属性获取标签集合<br>  document.getElementsByClassName　　　根据class属性获取标签集合<br>  document.getElementsByTagName　　　　根据标签名获取标签集合</p>
+</li>
+<li><p>间接查找<br>  parentElement 　　　　　父节点标签元素<br>  children 　　　　　　　　所有子标签<br>  firstElementChild　　　第一个子标签元素<br>  lastElementChild 　　　最后一个子标签元素<br>  nextElementtSibling 　下一个兄弟标签元素<br>  previousElementSibling 上一个兄弟标签元素</p>
+</li>
+</ul>
+</li>
+<li><p>操作内容<br> innerText　　　文本<br> innerHTML　　　HTML内容<br> value 　　　　　值</p>
+<pre><code> &lt;input type=&#39;text&#39; value=&#39;1234&#39; /&gt;</code></pre>
+</li>
+<li><p>css的操作 </p>
+<ul>
+<li>操作整块类：<br>  classList add  remove<br>  例：模态对话框显示和隐藏</li>
+<li>操作单个类：<br>  obj.style.css属性</li>
+</ul>
+</li>
+<li><p>事件：<br> onclick  — 点击事件<br> onchange — 适用于select</p>
+</li>
+</ol>
 <p>Jquery: 对DOM中各种方法的封装，是一个js的第三方库</p>
  <img src="/2020/09/19/py-day07/jQuery.png" class title="jQuery">
 
@@ -642,7 +733,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8A%E5%91%A8%E5%9B%9E%E9%A1%BE"><span class="nav-number">1.</span> <span class="nav-text">上周回顾</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A"><span class="nav-number">2.</span> <span class="nav-text">作业</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E5%86%85%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">本周内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#css%E5%AE%8C%E7%BB%93"><span class="nav-number">3.1.</span> <span class="nav-text">css完结</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#javascript%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.2.</span> <span class="nav-text">javascript介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ajax"><span class="nav-number">3.3.</span> <span class="nav-text">ajax</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bootstrap"><span class="nav-number">3.4.</span> <span class="nav-text">Bootstrap</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E7%BD%91%E7%AB%99%E7%9A%84%E6%A8%A1%E6%9D%BF"><span class="nav-number">4.</span> <span class="nav-text">各种网站的模板</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8A%E5%91%A8%E5%9B%9E%E9%A1%BE"><span class="nav-number">1.</span> <span class="nav-text">上周回顾</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A"><span class="nav-number">2.</span> <span class="nav-text">作业</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E5%86%85%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">本周内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#css%E5%AE%8C%E7%BB%93"><span class="nav-number">3.1.</span> <span class="nav-text">css完结</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#javascript%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.</span> <span class="nav-text">javascript介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%80%E3%80%81JS%E5%A6%82%E4%BD%95%E5%BC%95%E5%85%A5%E5%8F%8A%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83"><span class="nav-number">4.1.</span> <span class="nav-text">一、JS如何引入及基本语法规范</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="nav-number">4.2.</span> <span class="nav-text">二、变量声明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.3.</span> <span class="nav-text">三、变量类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.4.</span> <span class="nav-text">四、运算符介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="nav-number">4.5.</span> <span class="nav-text">五、流程控制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">4.6.</span> <span class="nav-text">六、函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%83%E3%80%81DOM-%E5%92%8C-jquery"><span class="nav-number">4.7.</span> <span class="nav-text">七、DOM 和 jquery</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ajax"><span class="nav-number">4.8.</span> <span class="nav-text">ajax</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bootstrap"><span class="nav-number">4.9.</span> <span class="nav-text">Bootstrap</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E7%BD%91%E7%AB%99%E7%9A%84%E6%A8%A1%E6%9D%BF"><span class="nav-number">5.</span> <span class="nav-text">各种网站的模板</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -715,12 +806,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">115k</span>
+    <span title="站点总字数">118k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:16</span>
 </div>
 
 <!--
