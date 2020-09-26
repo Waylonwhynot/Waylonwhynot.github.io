@@ -28,8 +28,10 @@
 <meta property="og:description" content="第十九章 Django的路由和视图Django的路由路由简单的来说就是根据用户请求的 URL 链接来判断对应的处理程序，并返回处理结果，也就是 URL 与 Django 的视图建立映射关系。 Django 路由在 urls.py 配置，urls.py 中的每一条配置对应相应的处理方法。 Django 不同版本 urls.py 配置有点不一样： 路由匹配 Django1.1.x 版本  url()">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2020/05/Django-env4.png">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2020/05/Django-env8.png">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2020/05/Django-env8.png">
 <meta property="article:published_time" content="2020-09-26T17:25:04.000Z">
-<meta property="article:modified_time" content="2020-09-26T17:43:21.236Z">
+<meta property="article:modified_time" content="2020-09-26T17:43:47.819Z">
 <meta property="article:author" content="Waylon Yan">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.runoob.com/wp-content/uploads/2020/05/Django-env4.png">
@@ -216,7 +218,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-09-27 01:25:04 / 修改时间：01:43:21" itemprop="dateCreated datePublished" datetime="2020-09-27T01:25:04+08:00">2020-09-27</time>
+              <time title="创建时间：2020-09-27 01:25:04 / 修改时间：01:43:47" itemprop="dateCreated datePublished" datetime="2020-09-27T01:25:04+08:00">2020-09-27</time>
             </span>
 
           <br>
@@ -225,14 +227,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>8.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>14 分钟</span>
             </span>
 
         </div>
@@ -279,7 +281,118 @@
 <p>反向解析一般用在模板中的超链接。</p>
 <p>例子2：</p>
 <p>在模板 templates 中的 HTML 文件中，利用 <code>&#123;% url "路由别名" %&#125;</code> 反向解析。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;&#123;% url &#x27;test&#x27; %&#125;&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt; </span><br></pre></td></tr></table></figure>
+<p><img src="https://www.runoob.com/wp-content/uploads/2020/05/Django-env8.png" alt="aa"></p>
+<h3 id="Django的视图"><a href="#Django的视图" class="headerlink" title="Django的视图"></a>Django的视图</h3><p>一个视图函数，简称视图，是一个简单的 Python 函数，它接受 Web 请求并且返回 Web 响应。</p>
+<p>响应可以是一个 HTML 页面、一个 404 错误页面、重定向页面、XML 文档、或者一张图片…</p>
+<p>无论视图本身包含什么逻辑，都要返回响应。代码写在哪里都可以，只要在 Python 目录下面，一般放在项目的 views.py 文件中。</p>
+<p>每个视图函数都负责返回一个 HttpResponse 对象，对象中包含生成的响应。</p>
+<p>视图层中有两个重要的对象：请求对象(request)与响应对象(HttpResponse)。</p>
+<h4 id="请求对象-HttpRequest-对象（简称-request-对象）"><a href="#请求对象-HttpRequest-对象（简称-request-对象）" class="headerlink" title="请求对象: HttpRequest 对象（简称 request 对象）"></a>请求对象: HttpRequest 对象（简称 request 对象）</h4><p>以下介绍几个常用的 request 属性。</p>
+<h5 id="1、GET"><a href="#1、GET" class="headerlink" title="1、GET"></a>1、GET</h5><p>数据类型是 QueryDict，一个类似于字典的对象，包含 HTTP GET 的所有参数。<br>有相同的键，就把所有的值放到对应的列表里。<br>取值格式：对象.方法。</p>
+<blockquote>
+<p>get()：返回字符串，如果该键对应有多个值，取出该键的最后一个值。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    name = request.GET.get(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;姓名：&#123;&#125;&#x27;</span>.format(name))</span><br></pre></td></tr></table></figure>
 
+<h5 id="2、POST"><a href="#2、POST" class="headerlink" title="2、POST"></a>2、POST</h5><p>数据类型是 QueryDict，一个类似于字典的对象，包含 HTTP POST 的所有参数。</p>
+<p>常用于 form 表单，form 表单里的标签 name 属性对应参数的键，value 属性对应参数的值。</p>
+<p>取值格式： 对象.方法。</p>
+<blockquote>
+<p>get()：返回字符串，如果该键对应有多个值，取出该键的最后一个值。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    name = request.POST.get(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;姓名：&#123;&#125;&#x27;</span>.format(name))</span><br></pre></td></tr></table></figure>
+
+<h5 id="3、body"><a href="#3、body" class="headerlink" title="3、body"></a>3、body</h5><p>数据类型是二进制字节流，是原生请求体里的参数内容，在 HTTP 中用于 POST，因为 GET 没有请求体。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    name = request.body</span><br><span class="line">    print(name)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;51aiops&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="4、method"><a href="#4、method" class="headerlink" title="4、method"></a>4、method</h5><p>获取当前请求的方式，数据类型是字符串，且结果为大写。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    name = request.method</span><br><span class="line">    print(name)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;51aiops&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="响应对象：HttpResponse-对象"><a href="#响应对象：HttpResponse-对象" class="headerlink" title="响应对象：HttpResponse 对象"></a>响应对象：HttpResponse 对象</h4><p>响应对象主要形式：HttpResponse()、render()</p>
+<p>HttpResponse(): 返回文本，参数为字符串，字符串中写文本内容。如果参数为字符串里含有 html 标签，也可以渲染。</p>
+<p>render(): 返回文本，第一个参数为 request，第二个参数为字符串（页面名称），第三个参数为字典（可选参数，向页面传递的参数：键为页面参数名，值为views参数名）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    name =<span class="string">&quot;test&quot;</span></span><br><span class="line">    <span class="keyword">return</span> render(request,<span class="string">&quot;aaa.html&quot;</span>,&#123;<span class="string">&quot;name&quot;</span>:name&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>JsonResponse对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 前后端真正能够分离的关键</span></span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> JsonResponse</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">request</span>):</span></span><br><span class="line">  dic = &#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;jason&#x27;</span>,<span class="string">&#x27;age&#x27;</span>:<span class="number">18</span>&#125;  <span class="comment"># 等价于用json转json.dumps(),再发送！</span></span><br><span class="line">  <span class="comment"># import json</span></span><br><span class="line">  <span class="comment"># return HttpResponse(json.dumps(dic))</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment"># 如果不是字典类型，会报错,看源码需要指定safe=False</span></span><br><span class="line">  <span class="comment"># l1 = [1,2,3]</span></span><br><span class="line">  <span class="comment"># return JsonResponse(l1,safe=False)</span></span><br><span class="line">  <span class="keyword">return</span> JsonResponse(dic)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 编码问题  jason在序列话数据的时候默认以ascill码编码中文数据</span></span><br><span class="line">    <span class="comment"># res = &#123;&#x27;name&#x27;:&#x27;元少&#x27;&#125;</span></span><br><span class="line">    <span class="comment"># ret = json.dumps(res)         ### 中文被编码</span></span><br><span class="line">    <span class="comment"># ret = json.dumps(res,ensure_ascill=False)</span></span><br><span class="line">    <span class="keyword">return</span> JsonResponse(dic,json_dumps_params=&#123;<span class="string">&#x27;ensure_ascill&#x27;</span>:<span class="literal">False</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="FBV-与-CBV"><a href="#FBV-与-CBV" class="headerlink" title="FBV 与 CBV"></a>FBV 与 CBV</h4><p>FBV（function base views） 基于函数的视图，就是在视图里使用函数处理请求。<br>CBV（class base views） 基于类的视图，就是在视图里使用类处理请求。</p>
+<p>FBV</p>
+<p>基于函数的视图其实我们前面章节一直在使用，就是使用了函数来处理用户的请求，查看以下实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render,HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&quot;GET 方法&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;POST&quot;</span>:</span><br><span class="line">        user = request.POST.get(<span class="string">&quot;user&quot;</span>)</span><br><span class="line">        pwd = request.POST.get(<span class="string">&quot;pwd&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> user == <span class="string">&quot;test&quot;</span> <span class="keyword">and</span> pwd == <span class="string">&quot;123456&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&quot;POST 方法&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&quot;POST 方法1&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p>CBV</p>
+<blockquote>
+<p>基于类的视图，就是使用了类来处理用户的请求，不同的请求我们可以在类中使用不同方法来处理，这样大大的提高了代码的可读性。</p>
+</blockquote>
+<p>定义的类要继承父类 View，所以需要先引入库：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.views <span class="keyword">import</span> View</span><br></pre></td></tr></table></figure>
+
+<p>执行对应请求的方法前会优先执行 dispatch 方法(在get/post/put…方法前执行)，dispatch() 方法会根据请求的不同调用相应的方法来处理。</p>
+<p>其实，在我们前面学到的知识都知道 Django 的 url 是将一个请求分配给可调用的函数的，而不是一个类，那是如何实现基于类的视图的呢？ 主要还是通过父类 View 提供的一个静态方法 as_view() ，as_view 方法是基于类的外部接口， 他返回一个视图函数，调用后请求会传递给 dispatch 方法，dispatch 方法再根据不同请求来处理不同的方法。</p>
+<p>路由配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&quot;login/&quot;</span>, views.Login.as_view()),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>views文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render,HttpResponse</span><br><span class="line"><span class="keyword">from</span> django.views <span class="keyword">import</span> View</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Login</span>(<span class="params">View</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span>(<span class="params">self,request</span>):</span></span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&quot;GET 方法&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span>(<span class="params">self,request</span>):</span></span><br><span class="line">        user = request.POST.get(<span class="string">&quot;user&quot;</span>)</span><br><span class="line">        pwd = request.POST.get(<span class="string">&quot;pwd&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> user == <span class="string">&quot;test&quot;</span> <span class="keyword">and</span> pwd == <span class="string">&quot;123456&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&quot;POST 方法&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&quot;POST 方法 1&quot;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;&#123;% url &#x27;test&#x27; %&#125;&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt; </span><br></pre></td></tr></table></figure>
+<p><img src="https://www.runoob.com/wp-content/uploads/2020/05/Django-env8.png" alt="aa"></p>
+<h3 id="Django的视图-1"><a href="#Django的视图-1" class="headerlink" title="Django的视图"></a>Django的视图</h3><p>一个视图函数，简称视图，是一个简单的 Python 函数，它接受 Web 请求并且返回 Web 响应。</p>
+<p>响应可以是一个 HTML 页面、一个 404 错误页面、重定向页面、XML 文档、或者一张图片…</p>
+<p>无论视图本身包含什么逻辑，都要返回响应。代码写在哪里都可以，只要在 Python 目录下面，一般放在项目的 views.py 文件中。</p>
+<p>每个视图函数都负责返回一个 HttpResponse 对象，对象中包含生成的响应。</p>
+<p>视图层中有两个重要的对象：请求对象(request)与响应对象(HttpResponse)。</p>
+<h4 id="请求对象-HttpRequest-对象（简称-request-对象）-1"><a href="#请求对象-HttpRequest-对象（简称-request-对象）-1" class="headerlink" title="请求对象: HttpRequest 对象（简称 request 对象）"></a>请求对象: HttpRequest 对象（简称 request 对象）</h4><p>以下介绍几个常用的 request 属性。</p>
+<h5 id="1、GET-1"><a href="#1、GET-1" class="headerlink" title="1、GET"></a>1、GET</h5><p>数据类型是 QueryDict，一个类似于字典的对象，包含 HTTP GET 的所有参数。<br>有相同的键，就把所有的值放到对应的列表里。<br>取值格式：对象.方法。</p>
+<blockquote>
+<p>get()：返回字符串，如果该键对应有多个值，取出该键的最后一个值。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    name = request.GET.get(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;姓名：&#123;&#125;&#x27;</span>.format(name))</span><br></pre></td></tr></table></figure>
+
+<h5 id="2、POST-1"><a href="#2、POST-1" class="headerlink" title="2、POST"></a>2、POST</h5><p>数据类型是 QueryDict，一个类似于字典的对象，包含 HTTP POST 的所有参数。</p>
+<p>常用于 form 表单，form 表单里的标签 name 属性对应参数的键，value 属性对应参数的值。</p>
+<p>取值格式： 对象.方法。</p>
+<blockquote>
+<p>get()：返回字符串，如果该键对应有多个值，取出该键的最后一个值。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    name = request.POST.get(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;姓名：&#123;&#125;&#x27;</span>.format(name))</span><br></pre></td></tr></table></figure>
+
+<h5 id="3、body-1"><a href="#3、body-1" class="headerlink" title="3、body"></a>3、body</h5><p>数据类型是二进制字节流，是原生请求体里的参数内容，在 HTTP 中用于 POST，因为 GET 没有请求体。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    name = request.body</span><br><span class="line">    print(name)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;51aiops&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="4、method-1"><a href="#4、method-1" class="headerlink" title="4、method"></a>4、method</h5><p>获取当前请求的方式，数据类型是字符串，且结果为大写。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    name = request.method</span><br><span class="line">    print(name)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;51aiops&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="响应对象：HttpResponse-对象-1"><a href="#响应对象：HttpResponse-对象-1" class="headerlink" title="响应对象：HttpResponse 对象"></a>响应对象：HttpResponse 对象</h4><p>响应对象主要形式：HttpResponse()、render()</p>
+<p>HttpResponse(): 返回文本，参数为字符串，字符串中写文本内容。如果参数为字符串里含有 html 标签，也可以渲染。</p>
+<p>render(): 返回文本，第一个参数为 request，第二个参数为字符串（页面名称），第三个参数为字典（可选参数，向页面传递的参数：键为页面参数名，值为views参数名）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    name =<span class="string">&quot;test&quot;</span></span><br><span class="line">    <span class="keyword">return</span> render(request,<span class="string">&quot;aaa.html&quot;</span>,&#123;<span class="string">&quot;name&quot;</span>:name&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>JsonResponse对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 前后端真正能够分离的关键</span></span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> JsonResponse</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">request</span>):</span></span><br><span class="line">  dic = &#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;jason&#x27;</span>,<span class="string">&#x27;age&#x27;</span>:<span class="number">18</span>&#125;  <span class="comment"># 等价于用json转json.dumps(),再发送！</span></span><br><span class="line">  <span class="comment"># import json</span></span><br><span class="line">  <span class="comment"># return HttpResponse(json.dumps(dic))</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment"># 如果不是字典类型，会报错,看源码需要指定safe=False</span></span><br><span class="line">  <span class="comment"># l1 = [1,2,3]</span></span><br><span class="line">  <span class="comment"># return JsonResponse(l1,safe=False)</span></span><br><span class="line">  <span class="keyword">return</span> JsonResponse(dic)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 编码问题  jason在序列话数据的时候默认以ascill码编码中文数据</span></span><br><span class="line">    <span class="comment"># res = &#123;&#x27;name&#x27;:&#x27;元少&#x27;&#125;</span></span><br><span class="line">    <span class="comment"># ret = json.dumps(res)         ### 中文被编码</span></span><br><span class="line">    <span class="comment"># ret = json.dumps(res,ensure_ascill=False)</span></span><br><span class="line">    <span class="keyword">return</span> JsonResponse(dic,json_dumps_params=&#123;<span class="string">&#x27;ensure_ascill&#x27;</span>:<span class="literal">False</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="FBV-与-CBV-1"><a href="#FBV-与-CBV-1" class="headerlink" title="FBV 与 CBV"></a>FBV 与 CBV</h4><p>FBV（function base views） 基于函数的视图，就是在视图里使用函数处理请求。<br>CBV（class base views） 基于类的视图，就是在视图里使用类处理请求。</p>
+<p>FBV</p>
+<p>基于函数的视图其实我们前面章节一直在使用，就是使用了函数来处理用户的请求，查看以下实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render,HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&quot;GET 方法&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;POST&quot;</span>:</span><br><span class="line">        user = request.POST.get(<span class="string">&quot;user&quot;</span>)</span><br><span class="line">        pwd = request.POST.get(<span class="string">&quot;pwd&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> user == <span class="string">&quot;test&quot;</span> <span class="keyword">and</span> pwd == <span class="string">&quot;123456&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&quot;POST 方法&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&quot;POST 方法1&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p>CBV</p>
+<blockquote>
+<p>基于类的视图，就是使用了类来处理用户的请求，不同的请求我们可以在类中使用不同方法来处理，这样大大的提高了代码的可读性。</p>
+</blockquote>
+<p>定义的类要继承父类 View，所以需要先引入库：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.views <span class="keyword">import</span> View</span><br></pre></td></tr></table></figure>
+
+<p>执行对应请求的方法前会优先执行 dispatch 方法(在get/post/put…方法前执行)，dispatch() 方法会根据请求的不同调用相应的方法来处理。</p>
+<p>其实，在我们前面学到的知识都知道 Django 的 url 是将一个请求分配给可调用的函数的，而不是一个类，那是如何实现基于类的视图的呢？ 主要还是通过父类 View 提供的一个静态方法 as_view() ，as_view 方法是基于类的外部接口， 他返回一个视图函数，调用后请求会传递给 dispatch 方法，dispatch 方法再根据不同请求来处理不同的方法。</p>
+<p>路由配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&quot;login/&quot;</span>, views.Login.as_view()),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>views文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render,HttpResponse</span><br><span class="line"><span class="keyword">from</span> django.views <span class="keyword">import</span> View</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Login</span>(<span class="params">View</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span>(<span class="params">self,request</span>):</span></span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&quot;GET 方法&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span>(<span class="params">self,request</span>):</span></span><br><span class="line">        user = request.POST.get(<span class="string">&quot;user&quot;</span>)</span><br><span class="line">        pwd = request.POST.get(<span class="string">&quot;pwd&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> user == <span class="string">&quot;test&quot;</span> <span class="keyword">and</span> pwd == <span class="string">&quot;123456&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&quot;POST 方法&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&quot;POST 方法 1&quot;</span>)</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -356,7 +469,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B9%9D%E7%AB%A0-Django%E7%9A%84%E8%B7%AF%E7%94%B1%E5%92%8C%E8%A7%86%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">第十九章 Django的路由和视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Django%E7%9A%84%E8%B7%AF%E7%94%B1"><span class="nav-number">1.1.</span> <span class="nav-text">Django的路由</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">路由匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%88%86%E5%8F%91"><span class="nav-number">1.1.2.</span> <span class="nav-text">路由分发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E8%A7%A3%E6%9E%90"><span class="nav-number">1.1.3.</span> <span class="nav-text">反向解析</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B9%9D%E7%AB%A0-Django%E7%9A%84%E8%B7%AF%E7%94%B1%E5%92%8C%E8%A7%86%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">第十九章 Django的路由和视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Django%E7%9A%84%E8%B7%AF%E7%94%B1"><span class="nav-number">1.1.</span> <span class="nav-text">Django的路由</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">路由匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%88%86%E5%8F%91"><span class="nav-number">1.1.2.</span> <span class="nav-text">路由分发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E8%A7%A3%E6%9E%90"><span class="nav-number">1.1.3.</span> <span class="nav-text">反向解析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Django%E7%9A%84%E8%A7%86%E5%9B%BE"><span class="nav-number">1.2.</span> <span class="nav-text">Django的视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1-HttpRequest-%E5%AF%B9%E8%B1%A1%EF%BC%88%E7%AE%80%E7%A7%B0-request-%E5%AF%B9%E8%B1%A1%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">请求对象: HttpRequest 对象（简称 request 对象）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%E3%80%81GET"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">1、GET</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%E3%80%81POST"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">2、POST</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3%E3%80%81body"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">3、body</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4%E3%80%81method"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">4、method</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E5%AF%B9%E8%B1%A1%EF%BC%9AHttpResponse-%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.2.2.</span> <span class="nav-text">响应对象：HttpResponse 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FBV-%E4%B8%8E-CBV"><span class="nav-number">1.2.3.</span> <span class="nav-text">FBV 与 CBV</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Django%E7%9A%84%E8%A7%86%E5%9B%BE-1"><span class="nav-number">1.3.</span> <span class="nav-text">Django的视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1-HttpRequest-%E5%AF%B9%E8%B1%A1%EF%BC%88%E7%AE%80%E7%A7%B0-request-%E5%AF%B9%E8%B1%A1%EF%BC%89-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">请求对象: HttpRequest 对象（简称 request 对象）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%E3%80%81GET-1"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">1、GET</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%E3%80%81POST-1"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">2、POST</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3%E3%80%81body-1"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">3、body</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4%E3%80%81method-1"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">4、method</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E5%AF%B9%E8%B1%A1%EF%BC%9AHttpResponse-%E5%AF%B9%E8%B1%A1-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">响应对象：HttpResponse 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FBV-%E4%B8%8E-CBV-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">FBV 与 CBV</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -429,12 +542,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">123k</span>
+    <span title="站点总字数">130k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:25</span>
+    <span title="站点阅读时长">3:36</span>
 </div>
 
 <!--
