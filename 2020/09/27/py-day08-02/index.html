@@ -28,7 +28,7 @@
 <meta property="og:description" content="第十九章 Django的路由和视图Django的路由路由简单的来说就是根据用户请求的 URL 链接来判断对应的处理程序，并返回处理结果，也就是 URL 与 Django 的视图建立映射关系。 Django 路由在 urls.py 配置，urls.py 中的每一条配置对应相应的处理方法。 Django 不同版本 urls.py 配置有点不一样： 路由匹配 Django1.1.x 版本  url()">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-26T17:25:04.000Z">
-<meta property="article:modified_time" content="2020-09-26T17:40:49.450Z">
+<meta property="article:modified_time" content="2020-09-26T17:41:18.992Z">
 <meta property="article:author" content="Waylon Yan">
 <meta name="twitter:card" content="summary">
 
@@ -214,7 +214,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-09-27 01:25:04 / 修改时间：01:40:49" itemprop="dateCreated datePublished" datetime="2020-09-27T01:25:04+08:00">2020-09-27</time>
+              <time title="创建时间：2020-09-27 01:25:04 / 修改时间：01:41:18" itemprop="dateCreated datePublished" datetime="2020-09-27T01:25:04+08:00">2020-09-27</time>
             </span>
 
           <br>
@@ -223,14 +223,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>429</span>
+              <span>909</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -250,6 +250,18 @@
 </ul>
 <p>url() 方法：普通路径和正则路径均可使用，需要自己手动添加正则首位限制符号。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url <span class="comment"># 用 url 需要引入 </span></span><br><span class="line"></span><br><span class="line">urlpatterns = [ </span><br><span class="line">    url(<span class="string">r&#x27;^admin/$&#x27;</span>, admin.site.urls), </span><br><span class="line">    url(<span class="string">r&#x27;^index/$&#x27;</span>, views.index), <span class="comment"># 普通路径 </span></span><br><span class="line">    url(<span class="string">r&#x27;^articles/([0-9]&#123;4&#125;)/$&#x27;</span>, views.articles), <span class="comment"># 正则路径 </span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Django 2.2.x 之后的版本</li>
+</ul>
+<p>path：用于普通路径<br>re_path：用于正则路径，需要自己手动添加正则首位限制符号。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> re_path <span class="comment"># 用re_path 需要引入 </span></span><br><span class="line">urlpatterns = [ </span><br><span class="line">    path(<span class="string">&#x27;admin/&#x27;</span>, admin.site.urls), </span><br><span class="line">    path(<span class="string">&#x27;index/&#x27;</span>, views.index), <span class="comment"># 普通路径 </span></span><br><span class="line">    re_path(<span class="string">r&#x27;^articles/([0-9]&#123;4&#125;)/$&#x27;</span>, views.articles), <span class="comment"># 正则路径 </span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>总结：Django1.1.x 版本中的 url 和 Django 2.2.x 版本中的 re_path 用法相同。</p>
+</blockquote>
+<h4 id="路由分发"><a href="#路由分发" class="headerlink" title="路由分发"></a>路由分发</h4><p>存在问题：Django 项目里多个app目录共用一个 urls 容易造成混淆，后期维护也不方便。<br>解决：使用路由分发（include），让每个app目录都单独拥有自己的 urls。</p>
+<p>步骤：<br>1、在每个 app 目录里都创建一个 urls.py 文件。<br>2、在项目名称目录下的 urls 文件里，统一将路径分发给各个 app 目录。</p>
+
     </div>
 
     
@@ -326,7 +338,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B9%9D%E7%AB%A0-Django%E7%9A%84%E8%B7%AF%E7%94%B1%E5%92%8C%E8%A7%86%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">第十九章 Django的路由和视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Django%E7%9A%84%E8%B7%AF%E7%94%B1"><span class="nav-number">1.1.</span> <span class="nav-text">Django的路由</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">路由匹配</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B9%9D%E7%AB%A0-Django%E7%9A%84%E8%B7%AF%E7%94%B1%E5%92%8C%E8%A7%86%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">第十九章 Django的路由和视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Django%E7%9A%84%E8%B7%AF%E7%94%B1"><span class="nav-number">1.1.</span> <span class="nav-text">Django的路由</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">路由匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%88%86%E5%8F%91"><span class="nav-number">1.1.2.</span> <span class="nav-text">路由分发</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -404,7 +416,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:23</span>
+    <span title="站点阅读时长">3:24</span>
 </div>
 
 <!--

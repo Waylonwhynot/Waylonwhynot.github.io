@@ -1,207 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>py_day01</title>
-    <url>/2020/08/09/py-day01/</url>
-    <content><![CDATA[<p>python基础<br>变量·字符串·常用操作</p>
-<a id="more"></a>
-<h5 id="1-编译型语言和解释型语言的区别"><a href="#1-编译型语言和解释型语言的区别" class="headerlink" title="1. 编译型语言和解释型语言的区别"></a>1. 编译型语言和解释型语言的区别</h5><p>编译型语言(强类型语言) :  一次编译，到处运行 例：c, c++, java等<br>解释型语言(弱类型语言)：不需要编译，直接调用解释器执行 例：php，python， shell</p>
-<p>解释型语言修改完后，不需要编译，执行流程是从上到下依次解释执行。shell</p>
-<h6 id="1-1-python的优势和劣势"><a href="#1-1-python的优势和劣势" class="headerlink" title="1.1 python的优势和劣势"></a>1.1 python的优势和劣势</h6><p>优势：</p>
-<ul>
-<li>简单易上手</li>
-<li>大量的第三方的安装包  jekins, k8s api包  胶水语言</li>
-</ul>
-<p>劣势：</p>
-<ul>
-<li>速度慢 和c, c++, java比</li>
-</ul>
-<h5 id="2-演示python的安装和pycharm安装"><a href="#2-演示python的安装和pycharm安装" class="headerlink" title="2. 演示python的安装和pycharm安装"></a>2. 演示python的安装和pycharm安装</h5><h5 id="3-python的入门程序"><a href="#3-python的入门程序" class="headerlink" title="3. python的入门程序"></a>3. python的入门程序</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="string">&#x27;hellowrold!&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>执行原理：</p>
-<blockquote>
-<p>右键执行的时候，会自动调用python解释器从上到下依次执行python代码。类比 shell。</p>
-</blockquote>
-<p>ps: 交互式命令行的执行方式  python3  —-》 ipython</p>
-<p>编辑器和命令行式的写法的区别和应用场景：</p>
-<blockquote>
-<p>编辑器适用于大型的项目，命令行适用于小的测试</p>
-</blockquote>
-<h5 id="4-python的变量"><a href="#4-python的变量" class="headerlink" title="4. python的变量"></a>4. python的变量</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = <span class="number">1</span>+<span class="number">2</span>+<span class="number">3</span>+<span class="number">4</span>+<span class="number">5</span>  </span><br><span class="line">y = x*<span class="number">5</span> + <span class="number">6</span></span><br><span class="line">z = y*<span class="number">7</span></span><br><span class="line">print(z)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>变量就是将中间的结果暂存到内存,以便后续程序调用</p>
-</blockquote>
-<p>类比shell， 和shell中的变量的定义是一致的。<br>但是和shell中不一样的地方的是：shell的等号两边不允许有空格，但是python等号两边也可以没有空格。那为啥必须要有空格？</p>
-<ul>
-<li>从视觉上会好看一些，调试代码比较舒服</li>
-<li>写代码，需要遵循 PEP8 规范  <ul>
-<li>变量的等号两边必须是有空格的，各大公司code review</li>
-<li><strong>变量名必须要有意义</strong> shell</li>
-<li>变量名只能是 字母、数字或下划线的任意组合</li>
-<li>变量名建议不使用拼音和中文</li>
-<li>变量的要具有意义</li>
-<li>变量名不要过长</li>
-</ul>
-</li>
-</ul>
-<p><strong>编程语言的三种风格</strong></p>
-<ul>
-<li><p>大驼峰法    单词的首字母一定是大写的。</p>
-<blockquote>
-<p>UserName,   GetInfo, 等</p>
-</blockquote>
-</li>
-<li><p>小驼峰法   单词的首字母小写，其余大写 </p>
-<blockquote>
-<p>userName </p>
-</blockquote>
-</li>
-<li><p>下划线法  单词和单词之间使用下划线拼接</p>
-<blockquote>
-<p>user_name</p>
-</blockquote>
-</li>
-</ul>
-<p>在代码 code review (代码评审) , 我们要求三种风格你可以随便选择一种你喜欢的风格，但是大家在选择完成之后，一定要主要的是，千万别中途换风格。</p>
-<h5 id="4-1-中午分享"><a href="#4-1-中午分享" class="headerlink" title="4.1 中午分享"></a>4.1 中午分享</h5><ul>
-<li>基础都会，就是让你自己写的时候，写不出来？<blockquote>
-<p>前提要多练，应该带着项目练。练完一两个项目之后，自然就熟悉了。如果说，你们公司正在建设自动化运维平台，希望大家勇敢点，去做一些核心的模块。</p>
-</blockquote>
-</li>
-</ul>
-<h5 id="5-python的基础数据类型"><a href="#5-python的基础数据类型" class="headerlink" title="5. python的基础数据类型"></a>5. python的基础数据类型</h5><ul>
-<li><p>整型</p>
-<blockquote>
-<p>表示一个整数的</p>
-</blockquote>
-</li>
-<li><p>字符串</p>
-<blockquote>
-<p> 字符串会嵌套<br>name = “dj’sa’b”  ## 外层双引号，内层要求是单引号<br>name2 = ‘ds”ad”sa’ ## 外层单引号，内层要求是双引号<br>hhh = “dvshavhhhhhhhhhhhhhhh” \</p>
-<pre><code>&quot;dsadsadsadsa&quot;</code></pre>
-<p>使用三引号<br>kkk = ‘’’<br>dnsajndsandjansdnas<br>曾老师<br>boduo老师<br>‘’’<br>print(kkk, type(kkk))</p>
-</blockquote>
-</li>
-<li><p>布尔</p>
-</li>
-</ul>
-<h6 id="5-1-注释"><a href="#5-1-注释" class="headerlink" title="5.1 注释"></a>5.1 注释</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">### : python 注释，unix的注释方式</span><br><span class="line">&#x2F;&#x2F;  : java， c, c++ 的注释方式</span><br><span class="line">&#39;&#39;&#39;&#39;&#39;&#39;&#39;: python多行注释</span><br><span class="line">&#x2F;*</span><br><span class="line">这是多行注释</span><br><span class="line">*&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h5 id="6-输入"><a href="#6-输入" class="headerlink" title="6. 输入"></a>6. 输入</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">###交互程序</span></span><br><span class="line"><span class="comment"># name = input(&quot;请输入名字：&quot;) ### 输入的值的类型是字符串类型的，input程序交互获取到的内容是字符串</span></span><br><span class="line"></span><br><span class="line">num = input(<span class="string">&#x27;请输入数字:&#x27;</span>)</span><br><span class="line">print(type(num)) <span class="comment">### &lt;class &#x27;str&#x27;&gt;</span></span><br><span class="line"></span><br><span class="line">print(int(num) + <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
-
-<p>int(‘12’) : 会将字符串类型的整肃转换成整型</p>
-<h4 id="7-流程控制"><a href="#7-流程控制" class="headerlink" title="7. 流程控制"></a>7. 流程控制</h4><h5 id="7-1-分支"><a href="#7-1-分支" class="headerlink" title="7. 1 分支"></a>7. 1 分支</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 表达式:</span><br><span class="line">    开始写逻辑代码  <span class="comment">### 必须要4个空格</span></span><br><span class="line"></span><br><span class="line">num = <span class="number">234</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> num == <span class="number">123</span>:</span><br><span class="line">    print(<span class="string">&#x27;dsadsa&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">&#x27;kkkkkk&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意： if.. else的语句只能执行一个</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#### if elif else   只要满足一个条件，那就会立即执行相应的代码，执行完毕之后立即退出</span></span><br><span class="line"></span><br><span class="line">num = input(<span class="string">&#x27;请输入要比较的数字:&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> int(num) &gt;= <span class="number">22</span>:</span><br><span class="line">    print(<span class="string">&#x27;可以扯证了&#x27;</span>)</span><br><span class="line"><span class="keyword">elif</span> int(num) &gt;= <span class="number">18</span>:</span><br><span class="line">    print(<span class="string">&#x27;成年了,可以干一些成年的事了&#x27;</span>)</span><br><span class="line"><span class="keyword">elif</span> int(num) &lt; <span class="number">18</span>:</span><br><span class="line">    print(<span class="string">&#x27;还是小屁孩&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p><strong>只要满足一个条件，那就会立即执行相应的代码，执行完毕之后立即退出</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = input(<span class="string">&#x27;请输入名字:&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> name == <span class="string">&#x27;meet&#x27;</span>:</span><br><span class="line">    age = input(<span class="string">&#x27;请输入年龄:&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> int(age) == <span class="number">18</span>:</span><br><span class="line">        print(<span class="string">&#x27;输入全部正确&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> int(age) &gt;= <span class="number">22</span>:</span><br><span class="line">        print(<span class="string">&#x27;xxxxxxxx&#x27;</span>)   </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&#x27;年龄输入错误!&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">&#x27;名字输入错误!&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p><strong>if else 我们只能写一个，而elif可以写多个条件表达</strong></p>
-<h5 id="7-2-循环控制"><a href="#7-2-循环控制" class="headerlink" title="7.2 循环控制"></a>7.2 循环控制</h5><ul>
-<li>while 循环</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 基本款</span></span><br><span class="line"><span class="keyword">while</span> 条件:</span><br><span class="line">    <span class="comment"># 循环体</span></span><br><span class="line">    <span class="comment"># 如果条件为真，那么循环则执行</span></span><br><span class="line">    <span class="comment"># 如果条件为假，那么循环不执行</span></span><br><span class="line"></span><br><span class="line">例子：</span><br><span class="line">num = int(input(<span class="string">&#x27;请输入数字:&#x27;</span>))  <span class="comment">## 12</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> num &gt; <span class="number">0</span>: <span class="comment">### 每次循环num和0会进行比较，没如果为True,则执行代码块中的内容</span></span><br><span class="line">    print(<span class="string">&#x27;dsadsadasdsasa&#x27;</span>)</span><br><span class="line">    num = num - <span class="number">1</span></span><br><span class="line"><span class="keyword">else</span>:   <span class="comment">#### 循环退出之后，都会执行else中的代码</span></span><br><span class="line">    print(<span class="string">&#x27;last line.....&#x27;</span>)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-<p>两大关键字：<br>break 和 continue：</p>
-<ul>
-<li>break：    退出整个循环，循环已经退出</li>
-<li>continue:  跳出本次循环， 循环并没有退出</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#### break ： 当警察抓到犯人的时候，后面即便有人，也不会做任何操作，直接退出</span></span><br><span class="line"><span class="comment"># num = int(input(&#x27;请输入数字:&#x27;))  ## 12</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># while num &gt; 0: ### 每次循环num和0会进行比较，没如果为True,则执行代码块中的内容</span></span><br><span class="line"><span class="comment">#     num = num - 1  ## 第一次：num=11 第二次：num=10 第三次：num=9，，当num=5</span></span><br><span class="line"><span class="comment">#     if num == 5:</span></span><br><span class="line"><span class="comment">#         break   ### 退出整个循环</span></span><br><span class="line"><span class="comment">#     print(&#x27;后续代码...&#x27;) ## 第一次打印，第二次打印，第三次打印，。。。。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### continue ： 警察查身份证，</span></span><br><span class="line">num = int(input(<span class="string">&#x27;请输入数字:&#x27;</span>))  <span class="comment">## 12</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> num &gt; <span class="number">0</span>:  <span class="comment">### 每次循环num和0会进行比较，没如果为True,则执行代码块中的内容</span></span><br><span class="line">    num = num - <span class="number">1</span>  <span class="comment">## 第一次：num=11 第二次：num=10 第三次：num=9，，当num=5</span></span><br><span class="line">    <span class="keyword">if</span> num == <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">continue</span>  <span class="comment">### 跳出当前循环， 循环并没与退出</span></span><br><span class="line">    print(<span class="string">&#x27;后续代码...&#x27;</span>)  <span class="comment">## 第一次打印，第二次打印，第三次打印，。。。。</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>for 循环<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### kkk 代表的是每一次循环的时候，目标对象s中的每一个元素</span></span><br><span class="line"><span class="comment">### 当循环到最后一个元素的时候，会自动退出</span></span><br><span class="line">s = <span class="string">&#x27;pounds&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> kkk <span class="keyword">in</span> s:</span><br><span class="line">    print(kkk)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>总结：任何语言无外乎三大流程控制结构</strong></p>
-<ul>
-<li>顺序</li>
-<li>分支</li>
-<li>循环</li>
-</ul>
-<p>是 姚期智 提出的</p>
-<p>能够触类旁通，意思就是python学完之后， 在学go的时候，应该是没没任何压力的。<br>前年，参加校招。西安交大，西安大学<br>java， c++， 但是他们的数据结构和算法的功底非常的深厚</p>
-<hr>
-<h5 id="8-格式化输出"><a href="#8-格式化输出" class="headerlink" title="8. 格式化输出"></a>8. 格式化输出</h5><p>% , format</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 第一种写法：字符串使用+ 不断的进行拼接</span></span><br><span class="line"><span class="comment"># name = input(&#x27;请输入姓名:&#x27;)</span></span><br><span class="line"><span class="comment"># age = input(&#x27;请输入年龄:&#x27;)</span></span><br><span class="line"><span class="comment"># job = input(&#x27;请输入职业:&#x27;)</span></span><br><span class="line"><span class="comment"># hobby = input(&#x27;请输入爱好:&#x27;)</span></span><br><span class="line"><span class="comment"># a = &#x27;------------ info of 51devops ----------&#x27;</span></span><br><span class="line"><span class="comment"># b = &#x27;Name:&#x27;</span></span><br><span class="line"><span class="comment"># c = &#x27;Age:&#x27;</span></span><br><span class="line"><span class="comment"># d = &#x27;Job:&#x27;</span></span><br><span class="line"><span class="comment"># e = &#x27;Hobby:&#x27;</span></span><br><span class="line"><span class="comment"># f = &#x27;------------- end ----------------&#x27;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># print(a+&#x27;\n&#x27;+b+name+&#x27;\n&#x27;+c+age+&#x27;\n&#x27;+d+job+&#x27;\n&#x27;+e+hobby+&#x27;\n&#x27;+f)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 第二种方法, 也有人用，用的还挺多。但是要求格式化传入的值和占位符的值需要一一对应</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># name = input(&#x27;请输入姓名:&#x27;)</span></span><br><span class="line"><span class="comment"># age = input(&#x27;请输入年龄:&#x27;)</span></span><br><span class="line"><span class="comment"># job = input(&#x27;请输入职业:&#x27;)</span></span><br><span class="line"><span class="comment"># hobby = input(&#x27;请输入爱好:&#x27;)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># msg = &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># ------------ info of 51devops ----------</span></span><br><span class="line"><span class="comment"># Name  : %s</span></span><br><span class="line"><span class="comment"># Age   : %s</span></span><br><span class="line"><span class="comment"># job   : %s</span></span><br><span class="line"><span class="comment"># Hobbie: %s</span></span><br><span class="line"><span class="comment"># ------------- end ----------------</span></span><br><span class="line"><span class="comment"># &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># ### % 格式化的  而msg中的%s叫字符串占位符，</span></span><br><span class="line"><span class="comment"># print(msg % (age, name, job, hobby))</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### 第三种方法， 使用format函数来进行格式化</span></span><br><span class="line">name = input(<span class="string">&#x27;请输入姓名:&#x27;</span>)</span><br><span class="line">age = input(<span class="string">&#x27;请输入年龄:&#x27;</span>)</span><br><span class="line">job = input(<span class="string">&#x27;请输入职业:&#x27;</span>)</span><br><span class="line">hobby = input(<span class="string">&#x27;请输入爱好:&#x27;</span>)</span><br><span class="line"></span><br><span class="line">msg = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">------------ info of 51devops ----------</span></span><br><span class="line"><span class="string">Name  : &#123;name1&#125;</span></span><br><span class="line"><span class="string">Age   : &#123;age1&#125;</span></span><br><span class="line"><span class="string">job   : &#123;job1&#125;</span></span><br><span class="line"><span class="string">Hobbie: &#123;hobby1&#125;</span></span><br><span class="line"><span class="string">------------- end ----------------</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">print(msg.format(age1=age, name1=name, job1=job, hobby1=hobby))</span><br></pre></td></tr></table></figure>
-
-<h5 id="9-运算符"><a href="#9-运算符" class="headerlink" title="9. 运算符"></a>9. 运算符</h5><ul>
-<li>算数运算</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">% ： 取余数</span><br><span class="line">// : 取整数</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>赋值运算</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">10</span></span><br><span class="line">a = a - <span class="number">1</span></span><br><span class="line">a = a / <span class="number">2</span></span><br><span class="line">a = a * <span class="number">2</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>逻辑运算</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">and</span> : 与的意思 ， 要求<span class="keyword">and</span>的左右两边的表达式的值都是<span class="literal">True</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="10-索引"><a href="#10-索引" class="headerlink" title="10. 索引"></a>10. 索引</h5><p>提到索引，立马想到的一个概念是：索引都是从 0 开始计数的的</p>
-<p>10.1索引的取值</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">print(name[<span class="number">0</span>])  <span class="comment">### h</span></span><br><span class="line"><span class="comment"># print(name[6])  ### 报错</span></span><br><span class="line">print(name[<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
-
-<p>10.2 切片 </p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># name = &#x27;h e l l o w o r l d&#x27;</span></span><br><span class="line"><span class="comment">#         0 1 2 3 4 5 6 7 8 9</span></span><br><span class="line">name = <span class="string">&#x27;helloworld&#x27;</span></span><br><span class="line">print(name[<span class="number">4</span>:<span class="number">7</span>]) <span class="comment">### 前包后不包， 或者叫 左闭右开</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string"># name = &#x27;h e l l o w o r l d&#x27;</span></span><br><span class="line"><span class="string">#         0 1 2 3 4 5 6 7 8 9</span></span><br><span class="line"><span class="string">                       -3 -2 -1</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">name = <span class="string">&#x27;helloworld&#x27;</span></span><br><span class="line"><span class="comment"># print(name[4:7]) ### 前包后不包， 或者叫 左闭右开</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(name[:]) ### 从头切到尾</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(name[:5])  ### hello  从开始切刀5</span></span><br><span class="line"><span class="comment"># print(name[2:])  ### 从2开始切刀最后</span></span><br><span class="line"></span><br><span class="line">print(name[<span class="number">2</span>:<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
-
-<hr>
-<ul>
-<li>字典</li>
-<li>列表</li>
-<li>集合</li>
-</ul>
-<p>给数据结构和算法<br><a href="https://www.bilibili.com/video/BV1HA411b7ik">https://www.bilibili.com/video/BV1HA411b7ik</a></p>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>py_day02_exercise</title>
-    <url>/2020/08/09/py-day02-exercise/</url>
-    <content><![CDATA[<p>温故知新</p>
-<a id="more"></a>
-<h3 id="1-根据需求写代码"><a href="#1-根据需求写代码" class="headerlink" title="1.根据需求写代码"></a>1.根据需求写代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;k1&#x27;</span>: <span class="string">&quot;v1&quot;</span>, <span class="string">&quot;k2&quot;</span>: <span class="string">&quot;v2&quot;</span>, <span class="string">&quot;k3&quot;</span>: [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k4&#x27;</span>] = <span class="string">&#x27;v4&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在修改字典中 &quot;k1&quot; 对应的值为 &quot;alex&quot;，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k1&#x27;</span>] = <span class="string">&#x27;alex&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值中追加一个元素 44，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].append(<span class="number">44</span>)</span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值的第 1 个位置插入个元素 18，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].insert(<span class="number">0</span>,<span class="number">18</span>)</span><br><span class="line">print(dic)</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-根据需求写代码"><a href="#2-根据需求写代码" class="headerlink" title="2.根据需求写代码"></a>2.根据需求写代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic1 = &#123;</span><br><span class="line"> <span class="string">&#x27;name&#x27;</span>:[<span class="string">&#x27;pounds&#x27;</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>],</span><br><span class="line"> <span class="string">&#x27;job&#x27;</span>:<span class="string">&#x27;teacher&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;51devops&#x27;</span>:&#123;<span class="string">&#x27;szk&#x27;</span>:[<span class="string">&#x27;python1&#x27;</span>,<span class="string">&#x27;python2&#x27;</span>,<span class="number">100</span>]&#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1，将name对应的列表追加⼀个元素’xxx’。</span></span><br><span class="line">dic1[<span class="string">&#x27;name&#x27;</span>].append(<span class="string">&#x27;xxx&#x27;</span>)</span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 2，将name对应的列表中的 pounds ⾸字⺟⼤写。</span></span><br><span class="line">(<span class="number">1</span>)转成大写后upadte</span><br><span class="line">new_words = dic1[<span class="string">&#x27;name&#x27;</span>][<span class="number">0</span>].capitalize()</span><br><span class="line">dic1.update(&#123;<span class="string">&#x27;name&#x27;</span>:[new_words,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>]&#125;)</span><br><span class="line">(<span class="number">2</span>)直接赋值更改</span><br><span class="line">dic1[<span class="string">&#x27;name&#x27;</span>][<span class="number">0</span>] = <span class="string">&#x27;Pounds&#x27;</span></span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 3，51devops 对应的字典加⼀个键值对 ’haoda’,’linux’。</span></span><br><span class="line">dic1[<span class="string">&#x27;51devops&#x27;</span>][<span class="string">&#x27;haoda&#x27;</span>] = <span class="string">&#x27;linux&#x27;</span></span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 4，将51devops对应的字典中的szk对应的列表中的python2删除</span></span><br><span class="line">dic1[<span class="string">&#x27;51devops&#x27;</span>][<span class="string">&#x27;szk&#x27;</span>].remove(<span class="string">&#x27;python2&#x27;</span>)</span><br><span class="line">print(dic1)</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-判断以下值那个能做字典的key-？那个能做集合的元素？"><a href="#3-判断以下值那个能做字典的key-？那个能做集合的元素？" class="headerlink" title="3.判断以下值那个能做字典的key ？那个能做集合的元素？"></a>3.判断以下值那个能做字典的key ？那个能做集合的元素？</h3><ul>
-<li>1       ✅</li>
-<li>-1      ✅</li>
-<li>“”      ✅</li>
-<li>None    ✅</li>
-<li>[1,2]   ❌</li>
-<li>(1,)    ✅</li>
-<li>{11,22,33,4} ❌</li>
-<li>{‘name’:’szk’,’age’:18} ❌</li>
-</ul>
-<h3 id="4-将字典的键和值分别追加到-key-list-和-value-list-两个列表中，如："><a href="#4-将字典的键和值分别追加到-key-list-和-value-list-两个列表中，如：" class="headerlink" title="4.将字典的键和值分别追加到 key_list 和 value_list 两个列表中，如："></a>4.将字典的键和值分别追加到 key_list 和 value_list 两个列表中，如：</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">key_list = []</span><br><span class="line">value_list = []</span><br><span class="line">info = &#123;<span class="string">&#x27;k1&#x27;</span>:<span class="string">&#x27;v1&#x27;</span>,<span class="string">&#x27;k2&#x27;</span>:<span class="string">&#x27;v2&#x27;</span>,<span class="string">&#x27;k3&#x27;</span>:<span class="string">&#x27;v3&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> info.items():</span><br><span class="line">    key_list.append(k)</span><br><span class="line">    value_list.append(v)</span><br><span class="line">print(key_list)</span><br><span class="line">print(value_list)</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-字典dic-‘k1’-“v1”-“k2”-“v2”-“k3”-11-22-33"><a href="#5-字典dic-‘k1’-“v1”-“k2”-“v2”-“k3”-11-22-33" class="headerlink" title="5.字典dic = {‘k1’: “v1”, “k2”: “v2”, “k3”: [11,22,33]}"></a>5.字典dic = {‘k1’: “v1”, “k2”: “v2”, “k3”: [11,22,33]}</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;k1&#x27;</span>: <span class="string">&quot;v1&quot;</span>, <span class="string">&quot;k2&quot;</span>: <span class="string">&quot;v2&quot;</span>, <span class="string">&quot;k3&quot;</span>: [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>]&#125;</span><br><span class="line"><span class="comment"># a. 请循环输出所有的key</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> dic.keys():</span><br><span class="line">    print(k)</span><br><span class="line"><span class="comment"># b. 请循环输出所有的value</span></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> dic.values():</span><br><span class="line">    print(v)</span><br><span class="line"><span class="comment"># c. 请循环输出所有的key和value</span></span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> dic.items():</span><br><span class="line">    print(k,v)</span><br><span class="line"><span class="comment"># d. 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k4&#x27;</span>] = <span class="string">&#x27;v4&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># e. 请在修改字典中 &quot;k1&quot; 对应的值为 &quot;szk&quot;，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k1&#x27;</span>] = <span class="string">&#x27;szk&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># f. 请在k3对应的值中追加一个元素 44，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].append(<span class="number">44</span>)</span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># g. 请在k3对应的值的第 1 个位置插入个元素 18，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].insert(<span class="number">0</span>,<span class="number">18</span>)</span><br><span class="line">print(dic)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="6-请循环打印k2对应的值中的每个元素。"><a href="#6-请循环打印k2对应的值中的每个元素。" class="headerlink" title="6.请循环打印k2对应的值中的每个元素。"></a>6.请循环打印k2对应的值中的每个元素。</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">info = &#123;</span><br><span class="line">    <span class="string">&#x27;k1&#x27;</span>:<span class="string">&#x27;v1&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;k2&#x27;</span>:[(<span class="string">&#x27;pounds&#x27;</span>),(<span class="string">&#x27;szk&#x27;</span>),(<span class="string">&#x27;51devops&#x27;</span>)],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> values <span class="keyword">in</span> info[<span class="string">&#x27;k2&#x27;</span>]:</span><br><span class="line">    print(values)</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-输出商品列表，用户输入序号，显示用户选中的商品"><a href="#7-输出商品列表，用户输入序号，显示用户选中的商品" class="headerlink" title="7.输出商品列表，用户输入序号，显示用户选中的商品"></a>7.输出商品列表，用户输入序号，显示用户选中的商品</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tag = <span class="literal">True</span></span><br><span class="line"><span class="comment">#购物车</span></span><br><span class="line">bag = []</span><br><span class="line"><span class="comment">#购物车商品总价格</span></span><br><span class="line">bag_price = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> tag:</span><br><span class="line">    <span class="keyword">for</span> inx,value <span class="keyword">in</span> enumerate(goods):</span><br><span class="line">          print(inx,value[<span class="string">&#x27;name&#x27;</span>],value[<span class="string">&#x27;price&#x27;</span>])</span><br><span class="line">    choice = input(<span class="string">&quot;请输入商品编号(退出输入Q/q):&quot;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> choice == <span class="string">&#x27;q&#x27;</span> <span class="keyword">or</span> choice == <span class="string">&#x27;Q&#x27;</span>:</span><br><span class="line">        print(<span class="string">&quot;您购买的商品列表:%s,一共消费:%s&quot;</span> %(bag,bag_price))</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span>  choice.isdigit():</span><br><span class="line">        choice = int(choice)</span><br><span class="line">        <span class="keyword">if</span> choice &gt;= <span class="number">0</span> <span class="keyword">and</span> choice &lt; len(goods):</span><br><span class="line">            print(<span class="string">&#x27;商品:%s  价格:%s&#x27;</span> % (goods[choice][<span class="string">&#x27;name&#x27;</span>], goods[choice][<span class="string">&#x27;price&#x27;</span>]))</span><br><span class="line">            bag.append(goods[choice][<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">            bag_price += goods[choice][<span class="string">&#x27;price&#x27;</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">&quot;输入的编号不存在，请重新输入&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&quot;请输入正确的产品编号&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<hr>
-]]></content>
-      <categories>
-        <category>python_exercise</category>
-      </categories>
-      <tags>
-        <tag>python_exercise</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>py-day02</title>
     <url>/2020/08/16/py-day02/</url>
     <content><![CDATA[<p>python基础<br>列表 字典 集合 函数(位置参数， 关键字参数， 默认参数) 对文件操作</p>
@@ -371,6 +170,207 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lst = [<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>]</span><br><span class="line"><span class="comment"># 方法一</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(lst[<span class="number">0</span>],lst[<span class="number">1</span>],lst[<span class="number">2</span>])</span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(*lst)  </span><br><span class="line"><span class="comment"># 在实参的位置上用*将lst(可迭代对象)按照顺序打散</span></span><br><span class="line"><span class="comment"># 在形参的位置上用*把收到的参数组合成一个元祖</span></span><br></pre></td></tr></table></figure>
 <p>字典也可以进行打散,不过需要**</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>py_day02_exercise</title>
+    <url>/2020/08/09/py-day02-exercise/</url>
+    <content><![CDATA[<p>温故知新</p>
+<a id="more"></a>
+<h3 id="1-根据需求写代码"><a href="#1-根据需求写代码" class="headerlink" title="1.根据需求写代码"></a>1.根据需求写代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;k1&#x27;</span>: <span class="string">&quot;v1&quot;</span>, <span class="string">&quot;k2&quot;</span>: <span class="string">&quot;v2&quot;</span>, <span class="string">&quot;k3&quot;</span>: [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k4&#x27;</span>] = <span class="string">&#x27;v4&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在修改字典中 &quot;k1&quot; 对应的值为 &quot;alex&quot;，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k1&#x27;</span>] = <span class="string">&#x27;alex&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值中追加一个元素 44，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].append(<span class="number">44</span>)</span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值的第 1 个位置插入个元素 18，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].insert(<span class="number">0</span>,<span class="number">18</span>)</span><br><span class="line">print(dic)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-根据需求写代码"><a href="#2-根据需求写代码" class="headerlink" title="2.根据需求写代码"></a>2.根据需求写代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic1 = &#123;</span><br><span class="line"> <span class="string">&#x27;name&#x27;</span>:[<span class="string">&#x27;pounds&#x27;</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>],</span><br><span class="line"> <span class="string">&#x27;job&#x27;</span>:<span class="string">&#x27;teacher&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;51devops&#x27;</span>:&#123;<span class="string">&#x27;szk&#x27;</span>:[<span class="string">&#x27;python1&#x27;</span>,<span class="string">&#x27;python2&#x27;</span>,<span class="number">100</span>]&#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1，将name对应的列表追加⼀个元素’xxx’。</span></span><br><span class="line">dic1[<span class="string">&#x27;name&#x27;</span>].append(<span class="string">&#x27;xxx&#x27;</span>)</span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 2，将name对应的列表中的 pounds ⾸字⺟⼤写。</span></span><br><span class="line">(<span class="number">1</span>)转成大写后upadte</span><br><span class="line">new_words = dic1[<span class="string">&#x27;name&#x27;</span>][<span class="number">0</span>].capitalize()</span><br><span class="line">dic1.update(&#123;<span class="string">&#x27;name&#x27;</span>:[new_words,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>]&#125;)</span><br><span class="line">(<span class="number">2</span>)直接赋值更改</span><br><span class="line">dic1[<span class="string">&#x27;name&#x27;</span>][<span class="number">0</span>] = <span class="string">&#x27;Pounds&#x27;</span></span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 3，51devops 对应的字典加⼀个键值对 ’haoda’,’linux’。</span></span><br><span class="line">dic1[<span class="string">&#x27;51devops&#x27;</span>][<span class="string">&#x27;haoda&#x27;</span>] = <span class="string">&#x27;linux&#x27;</span></span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 4，将51devops对应的字典中的szk对应的列表中的python2删除</span></span><br><span class="line">dic1[<span class="string">&#x27;51devops&#x27;</span>][<span class="string">&#x27;szk&#x27;</span>].remove(<span class="string">&#x27;python2&#x27;</span>)</span><br><span class="line">print(dic1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-判断以下值那个能做字典的key-？那个能做集合的元素？"><a href="#3-判断以下值那个能做字典的key-？那个能做集合的元素？" class="headerlink" title="3.判断以下值那个能做字典的key ？那个能做集合的元素？"></a>3.判断以下值那个能做字典的key ？那个能做集合的元素？</h3><ul>
+<li>1       ✅</li>
+<li>-1      ✅</li>
+<li>“”      ✅</li>
+<li>None    ✅</li>
+<li>[1,2]   ❌</li>
+<li>(1,)    ✅</li>
+<li>{11,22,33,4} ❌</li>
+<li>{‘name’:’szk’,’age’:18} ❌</li>
+</ul>
+<h3 id="4-将字典的键和值分别追加到-key-list-和-value-list-两个列表中，如："><a href="#4-将字典的键和值分别追加到-key-list-和-value-list-两个列表中，如：" class="headerlink" title="4.将字典的键和值分别追加到 key_list 和 value_list 两个列表中，如："></a>4.将字典的键和值分别追加到 key_list 和 value_list 两个列表中，如：</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">key_list = []</span><br><span class="line">value_list = []</span><br><span class="line">info = &#123;<span class="string">&#x27;k1&#x27;</span>:<span class="string">&#x27;v1&#x27;</span>,<span class="string">&#x27;k2&#x27;</span>:<span class="string">&#x27;v2&#x27;</span>,<span class="string">&#x27;k3&#x27;</span>:<span class="string">&#x27;v3&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> info.items():</span><br><span class="line">    key_list.append(k)</span><br><span class="line">    value_list.append(v)</span><br><span class="line">print(key_list)</span><br><span class="line">print(value_list)</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-字典dic-‘k1’-“v1”-“k2”-“v2”-“k3”-11-22-33"><a href="#5-字典dic-‘k1’-“v1”-“k2”-“v2”-“k3”-11-22-33" class="headerlink" title="5.字典dic = {‘k1’: “v1”, “k2”: “v2”, “k3”: [11,22,33]}"></a>5.字典dic = {‘k1’: “v1”, “k2”: “v2”, “k3”: [11,22,33]}</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;k1&#x27;</span>: <span class="string">&quot;v1&quot;</span>, <span class="string">&quot;k2&quot;</span>: <span class="string">&quot;v2&quot;</span>, <span class="string">&quot;k3&quot;</span>: [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>]&#125;</span><br><span class="line"><span class="comment"># a. 请循环输出所有的key</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> dic.keys():</span><br><span class="line">    print(k)</span><br><span class="line"><span class="comment"># b. 请循环输出所有的value</span></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> dic.values():</span><br><span class="line">    print(v)</span><br><span class="line"><span class="comment"># c. 请循环输出所有的key和value</span></span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> dic.items():</span><br><span class="line">    print(k,v)</span><br><span class="line"><span class="comment"># d. 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k4&#x27;</span>] = <span class="string">&#x27;v4&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># e. 请在修改字典中 &quot;k1&quot; 对应的值为 &quot;szk&quot;，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k1&#x27;</span>] = <span class="string">&#x27;szk&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># f. 请在k3对应的值中追加一个元素 44，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].append(<span class="number">44</span>)</span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># g. 请在k3对应的值的第 1 个位置插入个元素 18，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].insert(<span class="number">0</span>,<span class="number">18</span>)</span><br><span class="line">print(dic)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-请循环打印k2对应的值中的每个元素。"><a href="#6-请循环打印k2对应的值中的每个元素。" class="headerlink" title="6.请循环打印k2对应的值中的每个元素。"></a>6.请循环打印k2对应的值中的每个元素。</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">info = &#123;</span><br><span class="line">    <span class="string">&#x27;k1&#x27;</span>:<span class="string">&#x27;v1&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;k2&#x27;</span>:[(<span class="string">&#x27;pounds&#x27;</span>),(<span class="string">&#x27;szk&#x27;</span>),(<span class="string">&#x27;51devops&#x27;</span>)],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> values <span class="keyword">in</span> info[<span class="string">&#x27;k2&#x27;</span>]:</span><br><span class="line">    print(values)</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-输出商品列表，用户输入序号，显示用户选中的商品"><a href="#7-输出商品列表，用户输入序号，显示用户选中的商品" class="headerlink" title="7.输出商品列表，用户输入序号，显示用户选中的商品"></a>7.输出商品列表，用户输入序号，显示用户选中的商品</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tag = <span class="literal">True</span></span><br><span class="line"><span class="comment">#购物车</span></span><br><span class="line">bag = []</span><br><span class="line"><span class="comment">#购物车商品总价格</span></span><br><span class="line">bag_price = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> tag:</span><br><span class="line">    <span class="keyword">for</span> inx,value <span class="keyword">in</span> enumerate(goods):</span><br><span class="line">          print(inx,value[<span class="string">&#x27;name&#x27;</span>],value[<span class="string">&#x27;price&#x27;</span>])</span><br><span class="line">    choice = input(<span class="string">&quot;请输入商品编号(退出输入Q/q):&quot;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> choice == <span class="string">&#x27;q&#x27;</span> <span class="keyword">or</span> choice == <span class="string">&#x27;Q&#x27;</span>:</span><br><span class="line">        print(<span class="string">&quot;您购买的商品列表:%s,一共消费:%s&quot;</span> %(bag,bag_price))</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span>  choice.isdigit():</span><br><span class="line">        choice = int(choice)</span><br><span class="line">        <span class="keyword">if</span> choice &gt;= <span class="number">0</span> <span class="keyword">and</span> choice &lt; len(goods):</span><br><span class="line">            print(<span class="string">&#x27;商品:%s  价格:%s&#x27;</span> % (goods[choice][<span class="string">&#x27;name&#x27;</span>], goods[choice][<span class="string">&#x27;price&#x27;</span>]))</span><br><span class="line">            bag.append(goods[choice][<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">            bag_price += goods[choice][<span class="string">&#x27;price&#x27;</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">&quot;输入的编号不存在，请重新输入&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&quot;请输入正确的产品编号&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+]]></content>
+      <categories>
+        <category>python_exercise</category>
+      </categories>
+      <tags>
+        <tag>python_exercise</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>py_day01</title>
+    <url>/2020/08/09/py-day01/</url>
+    <content><![CDATA[<p>python基础<br>变量·字符串·常用操作</p>
+<a id="more"></a>
+<h5 id="1-编译型语言和解释型语言的区别"><a href="#1-编译型语言和解释型语言的区别" class="headerlink" title="1. 编译型语言和解释型语言的区别"></a>1. 编译型语言和解释型语言的区别</h5><p>编译型语言(强类型语言) :  一次编译，到处运行 例：c, c++, java等<br>解释型语言(弱类型语言)：不需要编译，直接调用解释器执行 例：php，python， shell</p>
+<p>解释型语言修改完后，不需要编译，执行流程是从上到下依次解释执行。shell</p>
+<h6 id="1-1-python的优势和劣势"><a href="#1-1-python的优势和劣势" class="headerlink" title="1.1 python的优势和劣势"></a>1.1 python的优势和劣势</h6><p>优势：</p>
+<ul>
+<li>简单易上手</li>
+<li>大量的第三方的安装包  jekins, k8s api包  胶水语言</li>
+</ul>
+<p>劣势：</p>
+<ul>
+<li>速度慢 和c, c++, java比</li>
+</ul>
+<h5 id="2-演示python的安装和pycharm安装"><a href="#2-演示python的安装和pycharm安装" class="headerlink" title="2. 演示python的安装和pycharm安装"></a>2. 演示python的安装和pycharm安装</h5><h5 id="3-python的入门程序"><a href="#3-python的入门程序" class="headerlink" title="3. python的入门程序"></a>3. python的入门程序</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="string">&#x27;hellowrold!&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>执行原理：</p>
+<blockquote>
+<p>右键执行的时候，会自动调用python解释器从上到下依次执行python代码。类比 shell。</p>
+</blockquote>
+<p>ps: 交互式命令行的执行方式  python3  —-》 ipython</p>
+<p>编辑器和命令行式的写法的区别和应用场景：</p>
+<blockquote>
+<p>编辑器适用于大型的项目，命令行适用于小的测试</p>
+</blockquote>
+<h5 id="4-python的变量"><a href="#4-python的变量" class="headerlink" title="4. python的变量"></a>4. python的变量</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = <span class="number">1</span>+<span class="number">2</span>+<span class="number">3</span>+<span class="number">4</span>+<span class="number">5</span>  </span><br><span class="line">y = x*<span class="number">5</span> + <span class="number">6</span></span><br><span class="line">z = y*<span class="number">7</span></span><br><span class="line">print(z)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>变量就是将中间的结果暂存到内存,以便后续程序调用</p>
+</blockquote>
+<p>类比shell， 和shell中的变量的定义是一致的。<br>但是和shell中不一样的地方的是：shell的等号两边不允许有空格，但是python等号两边也可以没有空格。那为啥必须要有空格？</p>
+<ul>
+<li>从视觉上会好看一些，调试代码比较舒服</li>
+<li>写代码，需要遵循 PEP8 规范  <ul>
+<li>变量的等号两边必须是有空格的，各大公司code review</li>
+<li><strong>变量名必须要有意义</strong> shell</li>
+<li>变量名只能是 字母、数字或下划线的任意组合</li>
+<li>变量名建议不使用拼音和中文</li>
+<li>变量的要具有意义</li>
+<li>变量名不要过长</li>
+</ul>
+</li>
+</ul>
+<p><strong>编程语言的三种风格</strong></p>
+<ul>
+<li><p>大驼峰法    单词的首字母一定是大写的。</p>
+<blockquote>
+<p>UserName,   GetInfo, 等</p>
+</blockquote>
+</li>
+<li><p>小驼峰法   单词的首字母小写，其余大写 </p>
+<blockquote>
+<p>userName </p>
+</blockquote>
+</li>
+<li><p>下划线法  单词和单词之间使用下划线拼接</p>
+<blockquote>
+<p>user_name</p>
+</blockquote>
+</li>
+</ul>
+<p>在代码 code review (代码评审) , 我们要求三种风格你可以随便选择一种你喜欢的风格，但是大家在选择完成之后，一定要主要的是，千万别中途换风格。</p>
+<h5 id="4-1-中午分享"><a href="#4-1-中午分享" class="headerlink" title="4.1 中午分享"></a>4.1 中午分享</h5><ul>
+<li>基础都会，就是让你自己写的时候，写不出来？<blockquote>
+<p>前提要多练，应该带着项目练。练完一两个项目之后，自然就熟悉了。如果说，你们公司正在建设自动化运维平台，希望大家勇敢点，去做一些核心的模块。</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="5-python的基础数据类型"><a href="#5-python的基础数据类型" class="headerlink" title="5. python的基础数据类型"></a>5. python的基础数据类型</h5><ul>
+<li><p>整型</p>
+<blockquote>
+<p>表示一个整数的</p>
+</blockquote>
+</li>
+<li><p>字符串</p>
+<blockquote>
+<p> 字符串会嵌套<br>name = “dj’sa’b”  ## 外层双引号，内层要求是单引号<br>name2 = ‘ds”ad”sa’ ## 外层单引号，内层要求是双引号<br>hhh = “dvshavhhhhhhhhhhhhhhh” \</p>
+<pre><code>&quot;dsadsadsadsa&quot;</code></pre>
+<p>使用三引号<br>kkk = ‘’’<br>dnsajndsandjansdnas<br>曾老师<br>boduo老师<br>‘’’<br>print(kkk, type(kkk))</p>
+</blockquote>
+</li>
+<li><p>布尔</p>
+</li>
+</ul>
+<h6 id="5-1-注释"><a href="#5-1-注释" class="headerlink" title="5.1 注释"></a>5.1 注释</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">### : python 注释，unix的注释方式</span><br><span class="line">&#x2F;&#x2F;  : java， c, c++ 的注释方式</span><br><span class="line">&#39;&#39;&#39;&#39;&#39;&#39;&#39;: python多行注释</span><br><span class="line">&#x2F;*</span><br><span class="line">这是多行注释</span><br><span class="line">*&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="6-输入"><a href="#6-输入" class="headerlink" title="6. 输入"></a>6. 输入</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">###交互程序</span></span><br><span class="line"><span class="comment"># name = input(&quot;请输入名字：&quot;) ### 输入的值的类型是字符串类型的，input程序交互获取到的内容是字符串</span></span><br><span class="line"></span><br><span class="line">num = input(<span class="string">&#x27;请输入数字:&#x27;</span>)</span><br><span class="line">print(type(num)) <span class="comment">### &lt;class &#x27;str&#x27;&gt;</span></span><br><span class="line"></span><br><span class="line">print(int(num) + <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>int(‘12’) : 会将字符串类型的整肃转换成整型</p>
+<h4 id="7-流程控制"><a href="#7-流程控制" class="headerlink" title="7. 流程控制"></a>7. 流程控制</h4><h5 id="7-1-分支"><a href="#7-1-分支" class="headerlink" title="7. 1 分支"></a>7. 1 分支</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 表达式:</span><br><span class="line">    开始写逻辑代码  <span class="comment">### 必须要4个空格</span></span><br><span class="line"></span><br><span class="line">num = <span class="number">234</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> num == <span class="number">123</span>:</span><br><span class="line">    print(<span class="string">&#x27;dsadsa&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">&#x27;kkkkkk&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意： if.. else的语句只能执行一个</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#### if elif else   只要满足一个条件，那就会立即执行相应的代码，执行完毕之后立即退出</span></span><br><span class="line"></span><br><span class="line">num = input(<span class="string">&#x27;请输入要比较的数字:&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> int(num) &gt;= <span class="number">22</span>:</span><br><span class="line">    print(<span class="string">&#x27;可以扯证了&#x27;</span>)</span><br><span class="line"><span class="keyword">elif</span> int(num) &gt;= <span class="number">18</span>:</span><br><span class="line">    print(<span class="string">&#x27;成年了,可以干一些成年的事了&#x27;</span>)</span><br><span class="line"><span class="keyword">elif</span> int(num) &lt; <span class="number">18</span>:</span><br><span class="line">    print(<span class="string">&#x27;还是小屁孩&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>只要满足一个条件，那就会立即执行相应的代码，执行完毕之后立即退出</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = input(<span class="string">&#x27;请输入名字:&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> name == <span class="string">&#x27;meet&#x27;</span>:</span><br><span class="line">    age = input(<span class="string">&#x27;请输入年龄:&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> int(age) == <span class="number">18</span>:</span><br><span class="line">        print(<span class="string">&#x27;输入全部正确&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> int(age) &gt;= <span class="number">22</span>:</span><br><span class="line">        print(<span class="string">&#x27;xxxxxxxx&#x27;</span>)   </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&#x27;年龄输入错误!&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">&#x27;名字输入错误!&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>if else 我们只能写一个，而elif可以写多个条件表达</strong></p>
+<h5 id="7-2-循环控制"><a href="#7-2-循环控制" class="headerlink" title="7.2 循环控制"></a>7.2 循环控制</h5><ul>
+<li>while 循环</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 基本款</span></span><br><span class="line"><span class="keyword">while</span> 条件:</span><br><span class="line">    <span class="comment"># 循环体</span></span><br><span class="line">    <span class="comment"># 如果条件为真，那么循环则执行</span></span><br><span class="line">    <span class="comment"># 如果条件为假，那么循环不执行</span></span><br><span class="line"></span><br><span class="line">例子：</span><br><span class="line">num = int(input(<span class="string">&#x27;请输入数字:&#x27;</span>))  <span class="comment">## 12</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> num &gt; <span class="number">0</span>: <span class="comment">### 每次循环num和0会进行比较，没如果为True,则执行代码块中的内容</span></span><br><span class="line">    print(<span class="string">&#x27;dsadsadasdsasa&#x27;</span>)</span><br><span class="line">    num = num - <span class="number">1</span></span><br><span class="line"><span class="keyword">else</span>:   <span class="comment">#### 循环退出之后，都会执行else中的代码</span></span><br><span class="line">    print(<span class="string">&#x27;last line.....&#x27;</span>)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+<p>两大关键字：<br>break 和 continue：</p>
+<ul>
+<li>break：    退出整个循环，循环已经退出</li>
+<li>continue:  跳出本次循环， 循环并没有退出</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#### break ： 当警察抓到犯人的时候，后面即便有人，也不会做任何操作，直接退出</span></span><br><span class="line"><span class="comment"># num = int(input(&#x27;请输入数字:&#x27;))  ## 12</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># while num &gt; 0: ### 每次循环num和0会进行比较，没如果为True,则执行代码块中的内容</span></span><br><span class="line"><span class="comment">#     num = num - 1  ## 第一次：num=11 第二次：num=10 第三次：num=9，，当num=5</span></span><br><span class="line"><span class="comment">#     if num == 5:</span></span><br><span class="line"><span class="comment">#         break   ### 退出整个循环</span></span><br><span class="line"><span class="comment">#     print(&#x27;后续代码...&#x27;) ## 第一次打印，第二次打印，第三次打印，。。。。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### continue ： 警察查身份证，</span></span><br><span class="line">num = int(input(<span class="string">&#x27;请输入数字:&#x27;</span>))  <span class="comment">## 12</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> num &gt; <span class="number">0</span>:  <span class="comment">### 每次循环num和0会进行比较，没如果为True,则执行代码块中的内容</span></span><br><span class="line">    num = num - <span class="number">1</span>  <span class="comment">## 第一次：num=11 第二次：num=10 第三次：num=9，，当num=5</span></span><br><span class="line">    <span class="keyword">if</span> num == <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">continue</span>  <span class="comment">### 跳出当前循环， 循环并没与退出</span></span><br><span class="line">    print(<span class="string">&#x27;后续代码...&#x27;</span>)  <span class="comment">## 第一次打印，第二次打印，第三次打印，。。。。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>for 循环<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### kkk 代表的是每一次循环的时候，目标对象s中的每一个元素</span></span><br><span class="line"><span class="comment">### 当循环到最后一个元素的时候，会自动退出</span></span><br><span class="line">s = <span class="string">&#x27;pounds&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> kkk <span class="keyword">in</span> s:</span><br><span class="line">    print(kkk)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>总结：任何语言无外乎三大流程控制结构</strong></p>
+<ul>
+<li>顺序</li>
+<li>分支</li>
+<li>循环</li>
+</ul>
+<p>是 姚期智 提出的</p>
+<p>能够触类旁通，意思就是python学完之后， 在学go的时候，应该是没没任何压力的。<br>前年，参加校招。西安交大，西安大学<br>java， c++， 但是他们的数据结构和算法的功底非常的深厚</p>
+<hr>
+<h5 id="8-格式化输出"><a href="#8-格式化输出" class="headerlink" title="8. 格式化输出"></a>8. 格式化输出</h5><p>% , format</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 第一种写法：字符串使用+ 不断的进行拼接</span></span><br><span class="line"><span class="comment"># name = input(&#x27;请输入姓名:&#x27;)</span></span><br><span class="line"><span class="comment"># age = input(&#x27;请输入年龄:&#x27;)</span></span><br><span class="line"><span class="comment"># job = input(&#x27;请输入职业:&#x27;)</span></span><br><span class="line"><span class="comment"># hobby = input(&#x27;请输入爱好:&#x27;)</span></span><br><span class="line"><span class="comment"># a = &#x27;------------ info of 51devops ----------&#x27;</span></span><br><span class="line"><span class="comment"># b = &#x27;Name:&#x27;</span></span><br><span class="line"><span class="comment"># c = &#x27;Age:&#x27;</span></span><br><span class="line"><span class="comment"># d = &#x27;Job:&#x27;</span></span><br><span class="line"><span class="comment"># e = &#x27;Hobby:&#x27;</span></span><br><span class="line"><span class="comment"># f = &#x27;------------- end ----------------&#x27;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># print(a+&#x27;\n&#x27;+b+name+&#x27;\n&#x27;+c+age+&#x27;\n&#x27;+d+job+&#x27;\n&#x27;+e+hobby+&#x27;\n&#x27;+f)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 第二种方法, 也有人用，用的还挺多。但是要求格式化传入的值和占位符的值需要一一对应</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># name = input(&#x27;请输入姓名:&#x27;)</span></span><br><span class="line"><span class="comment"># age = input(&#x27;请输入年龄:&#x27;)</span></span><br><span class="line"><span class="comment"># job = input(&#x27;请输入职业:&#x27;)</span></span><br><span class="line"><span class="comment"># hobby = input(&#x27;请输入爱好:&#x27;)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># msg = &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># ------------ info of 51devops ----------</span></span><br><span class="line"><span class="comment"># Name  : %s</span></span><br><span class="line"><span class="comment"># Age   : %s</span></span><br><span class="line"><span class="comment"># job   : %s</span></span><br><span class="line"><span class="comment"># Hobbie: %s</span></span><br><span class="line"><span class="comment"># ------------- end ----------------</span></span><br><span class="line"><span class="comment"># &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># ### % 格式化的  而msg中的%s叫字符串占位符，</span></span><br><span class="line"><span class="comment"># print(msg % (age, name, job, hobby))</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### 第三种方法， 使用format函数来进行格式化</span></span><br><span class="line">name = input(<span class="string">&#x27;请输入姓名:&#x27;</span>)</span><br><span class="line">age = input(<span class="string">&#x27;请输入年龄:&#x27;</span>)</span><br><span class="line">job = input(<span class="string">&#x27;请输入职业:&#x27;</span>)</span><br><span class="line">hobby = input(<span class="string">&#x27;请输入爱好:&#x27;</span>)</span><br><span class="line"></span><br><span class="line">msg = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">------------ info of 51devops ----------</span></span><br><span class="line"><span class="string">Name  : &#123;name1&#125;</span></span><br><span class="line"><span class="string">Age   : &#123;age1&#125;</span></span><br><span class="line"><span class="string">job   : &#123;job1&#125;</span></span><br><span class="line"><span class="string">Hobbie: &#123;hobby1&#125;</span></span><br><span class="line"><span class="string">------------- end ----------------</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">print(msg.format(age1=age, name1=name, job1=job, hobby1=hobby))</span><br></pre></td></tr></table></figure>
+
+<h5 id="9-运算符"><a href="#9-运算符" class="headerlink" title="9. 运算符"></a>9. 运算符</h5><ul>
+<li>算数运算</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">% ： 取余数</span><br><span class="line">// : 取整数</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>赋值运算</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">10</span></span><br><span class="line">a = a - <span class="number">1</span></span><br><span class="line">a = a / <span class="number">2</span></span><br><span class="line">a = a * <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>逻辑运算</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">and</span> : 与的意思 ， 要求<span class="keyword">and</span>的左右两边的表达式的值都是<span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="10-索引"><a href="#10-索引" class="headerlink" title="10. 索引"></a>10. 索引</h5><p>提到索引，立马想到的一个概念是：索引都是从 0 开始计数的的</p>
+<p>10.1索引的取值</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">print(name[<span class="number">0</span>])  <span class="comment">### h</span></span><br><span class="line"><span class="comment"># print(name[6])  ### 报错</span></span><br><span class="line">print(name[<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
+
+<p>10.2 切片 </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># name = &#x27;h e l l o w o r l d&#x27;</span></span><br><span class="line"><span class="comment">#         0 1 2 3 4 5 6 7 8 9</span></span><br><span class="line">name = <span class="string">&#x27;helloworld&#x27;</span></span><br><span class="line">print(name[<span class="number">4</span>:<span class="number">7</span>]) <span class="comment">### 前包后不包， 或者叫 左闭右开</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string"># name = &#x27;h e l l o w o r l d&#x27;</span></span><br><span class="line"><span class="string">#         0 1 2 3 4 5 6 7 8 9</span></span><br><span class="line"><span class="string">                       -3 -2 -1</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">name = <span class="string">&#x27;helloworld&#x27;</span></span><br><span class="line"><span class="comment"># print(name[4:7]) ### 前包后不包， 或者叫 左闭右开</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(name[:]) ### 从头切到尾</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(name[:5])  ### hello  从开始切刀5</span></span><br><span class="line"><span class="comment"># print(name[2:])  ### 从2开始切刀最后</span></span><br><span class="line"></span><br><span class="line">print(name[<span class="number">2</span>:<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li>字典</li>
+<li>列表</li>
+<li>集合</li>
+</ul>
+<p>给数据结构和算法<br><a href="https://www.bilibili.com/video/BV1HA411b7ik">https://www.bilibili.com/video/BV1HA411b7ik</a></p>
 ]]></content>
       <categories>
         <category>python</category>
@@ -1062,7 +1062,19 @@ undefined 变量声明但是未给值
 <li>Django1.1.x 版本</li>
 </ul>
 <p>url() 方法：普通路径和正则路径均可使用，需要自己手动添加正则首位限制符号。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url <span class="comment"># 用 url 需要引入 </span></span><br><span class="line"></span><br><span class="line">urlpatterns = [ </span><br><span class="line">    url(<span class="string">r&#x27;^admin/$&#x27;</span>, admin.site.urls), </span><br><span class="line">    url(<span class="string">r&#x27;^index/$&#x27;</span>, views.index), <span class="comment"># 普通路径 </span></span><br><span class="line">    url(<span class="string">r&#x27;^articles/([0-9]&#123;4&#125;)/$&#x27;</span>, views.articles), <span class="comment"># 正则路径 </span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url <span class="comment"># 用 url 需要引入 </span></span><br><span class="line"></span><br><span class="line">urlpatterns = [ </span><br><span class="line">    url(<span class="string">r&#x27;^admin/$&#x27;</span>, admin.site.urls), </span><br><span class="line">    url(<span class="string">r&#x27;^index/$&#x27;</span>, views.index), <span class="comment"># 普通路径 </span></span><br><span class="line">    url(<span class="string">r&#x27;^articles/([0-9]&#123;4&#125;)/$&#x27;</span>, views.articles), <span class="comment"># 正则路径 </span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Django 2.2.x 之后的版本</li>
+</ul>
+<p>path：用于普通路径<br>re_path：用于正则路径，需要自己手动添加正则首位限制符号。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> re_path <span class="comment"># 用re_path 需要引入 </span></span><br><span class="line">urlpatterns = [ </span><br><span class="line">    path(<span class="string">&#x27;admin/&#x27;</span>, admin.site.urls), </span><br><span class="line">    path(<span class="string">&#x27;index/&#x27;</span>, views.index), <span class="comment"># 普通路径 </span></span><br><span class="line">    re_path(<span class="string">r&#x27;^articles/([0-9]&#123;4&#125;)/$&#x27;</span>, views.articles), <span class="comment"># 正则路径 </span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>总结：Django1.1.x 版本中的 url 和 Django 2.2.x 版本中的 re_path 用法相同。</p>
+</blockquote>
+<h4 id="路由分发"><a href="#路由分发" class="headerlink" title="路由分发"></a>路由分发</h4><p>存在问题：Django 项目里多个app目录共用一个 urls 容易造成混淆，后期维护也不方便。<br>解决：使用路由分发（include），让每个app目录都单独拥有自己的 urls。</p>
+<p>步骤：<br>1、在每个 app 目录里都创建一个 urls.py 文件。<br>2、在项目名称目录下的 urls 文件里，统一将路径分发给各个 app 目录。</p>
+]]></content>
   </entry>
   <entry>
     <title>py-day08</title>
