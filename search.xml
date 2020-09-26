@@ -655,18 +655,6 @@
       </tags>
   </entry>
   <entry>
-    <title>py-day08-02</title>
-    <url>/2020/09/27/py-day08-02/</url>
-    <content><![CDATA[<h2 id="第十九章-Django的路由和视图"><a href="#第十九章-Django的路由和视图" class="headerlink" title="第十九章 Django的路由和视图"></a>第十九章 Django的路由和视图</h2><h3 id="Django的路由"><a href="#Django的路由" class="headerlink" title="Django的路由"></a>Django的路由</h3><p>路由简单的来说就是根据用户请求的 URL 链接来判断对应的处理程序，并返回处理结果，也就是 URL 与 Django 的视图建立映射关系。</p>
-<p>Django 路由在 urls.py 配置，urls.py 中的每一条配置对应相应的处理方法。</p>
-<p>Django 不同版本 urls.py 配置有点不一样：</p>
-<h4 id="路由匹配"><a href="#路由匹配" class="headerlink" title="路由匹配"></a>路由匹配</h4><ul>
-<li>Django1.1.x 版本</li>
-</ul>
-<p>url() 方法：普通路径和正则路径均可使用，需要自己手动添加正则首位限制符号。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url <span class="comment"># 用 url 需要引入 </span></span><br><span class="line"></span><br><span class="line">urlpatterns = [ </span><br><span class="line">    url(<span class="string">r&#x27;^admin/$&#x27;</span>, admin.site.urls), </span><br><span class="line">    url(<span class="string">r&#x27;^index/$&#x27;</span>, views.index), <span class="comment"># 普通路径 </span></span><br><span class="line">    url(<span class="string">r&#x27;^articles/([0-9]&#123;4&#125;)/$&#x27;</span>, views.articles), <span class="comment"># 正则路径 </span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>]]></content>
-  </entry>
-  <entry>
     <title>py-day07</title>
     <url>/2020/09/19/py-day07/</url>
     <content><![CDATA[<p>前端基础基础<br>class(html、css、jQuery)</p>
@@ -1063,6 +1051,18 @@ undefined 变量声明但是未给值
       <tags>
         <tag>note</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>py-day08-02</title>
+    <url>/2020/09/27/py-day08-02/</url>
+    <content><![CDATA[<h2 id="第十九章-Django的路由和视图"><a href="#第十九章-Django的路由和视图" class="headerlink" title="第十九章 Django的路由和视图"></a>第十九章 Django的路由和视图</h2><h3 id="Django的路由"><a href="#Django的路由" class="headerlink" title="Django的路由"></a>Django的路由</h3><p>路由简单的来说就是根据用户请求的 URL 链接来判断对应的处理程序，并返回处理结果，也就是 URL 与 Django 的视图建立映射关系。</p>
+<p>Django 路由在 urls.py 配置，urls.py 中的每一条配置对应相应的处理方法。</p>
+<p>Django 不同版本 urls.py 配置有点不一样：</p>
+<h4 id="路由匹配"><a href="#路由匹配" class="headerlink" title="路由匹配"></a>路由匹配</h4><ul>
+<li>Django1.1.x 版本</li>
+</ul>
+<p>url() 方法：普通路径和正则路径均可使用，需要自己手动添加正则首位限制符号。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url <span class="comment"># 用 url 需要引入 </span></span><br><span class="line"></span><br><span class="line">urlpatterns = [ </span><br><span class="line">    url(<span class="string">r&#x27;^admin/$&#x27;</span>, admin.site.urls), </span><br><span class="line">    url(<span class="string">r&#x27;^index/$&#x27;</span>, views.index), <span class="comment"># 普通路径 </span></span><br><span class="line">    url(<span class="string">r&#x27;^articles/([0-9]&#123;4&#125;)/$&#x27;</span>, views.articles), <span class="comment"># 正则路径 </span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>py-day08</title>
