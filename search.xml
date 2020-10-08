@@ -2684,7 +2684,8 @@
     <url>/2020/09/19/py-day07/</url>
     <content><![CDATA[<p>前端基础基础<br>class(html、css、jQuery)</p>
 <a id="more"></a>
-<h4 id="上周回顾"><a href="#上周回顾" class="headerlink" title="上周回顾"></a>上周回顾</h4><ol start="0">
+
+<h3 id="上周回顾"><a href="#上周回顾" class="headerlink" title="上周回顾"></a>上周回顾</h3><ol start="0">
 <li><p>前端初识</p>
 <blockquote>
 <p>三剑客：html， css， js</p>
@@ -2782,14 +2783,14 @@
 </ol>
 </li>
 </ol>
-<h4 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h4><ol>
+<h3 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h3><ol>
 <li>网站的商品展示页面<ol>
 <li>把整个框架搭起来，然后再这个框架中填充内容</li>
 </ol>
 </li>
 <li>登录页面</li>
 </ol>
-<h4 id="本周内容"><a href="#本周内容" class="headerlink" title="本周内容"></a>本周内容</h4><h5 id="css完结"><a href="#css完结" class="headerlink" title="css完结"></a>css完结</h5><ol>
+<h3 id="本周内容"><a href="#本周内容" class="headerlink" title="本周内容"></a>本周内容</h3><h4 id="css完结"><a href="#css完结" class="headerlink" title="css完结"></a>css完结</h4><ol>
 <li><p>定位 position 和 定位属性坐标配合使用  top, right, left, bottom</p>
 <ol>
 <li><p>fixed:固定位置;相对于body定位;将某个元素固定在页面的某个位置<br>特点：</p>
@@ -2833,7 +2834,7 @@
 
 
 
-<h4 id="javascript介绍"><a href="#javascript介绍" class="headerlink" title="javascript介绍"></a>javascript介绍</h4><h5 id="一、JS如何引入及基本语法规范"><a href="#一、JS如何引入及基本语法规范" class="headerlink" title="一、JS如何引入及基本语法规范"></a>一、JS如何引入及基本语法规范</h5><p>1.js的简单介绍</p>
+<h3 id="javascript介绍"><a href="#javascript介绍" class="headerlink" title="javascript介绍"></a>javascript介绍</h3><h4 id="一、JS如何引入及基本语法规范"><a href="#一、JS如何引入及基本语法规范" class="headerlink" title="一、JS如何引入及基本语法规范"></a>一、JS如何引入及基本语法规范</h4><p>1.js的简单介绍</p>
 <ul>
 <li>为啥js叫做javascript？</li>
 <li>html, css, python,php,java,javascript</li>
@@ -2857,12 +2858,12 @@
 <li><p>js的注释：<br>单行注释： //<br>多行注释： /**/</p>
 </li>
 <li><p>js代码后面加分号</p>
-<h5 id="二、变量声明"><a href="#二、变量声明" class="headerlink" title="二、变量声明"></a>二、变量声明</h5></li>
+<h4 id="二、变量声明"><a href="#二、变量声明" class="headerlink" title="二、变量声明"></a>二、变量声明</h4></li>
 <li><p>变量声明<br>python<br> name = ‘zhansgan’<br>js</p>
 <p> 局部变量 var name = ‘zhansan’;<br> 全部变量 name = ‘zhansagn’;<br> var age = 12;<br> 变量名区分大小写str和Str不是一个变量，也就是js对变量名的大小写是敏感的<br>ps:<br> 代码的书写</p>
 </li>
 </ol>
-<h5 id="三、变量类型"><a href="#三、变量类型" class="headerlink" title="三、变量类型"></a>三、变量类型</h5><ol>
+<h4 id="三、变量类型"><a href="#三、变量类型" class="headerlink" title="三、变量类型"></a>三、变量类型</h4><ol>
 <li>JS变量类型</li>
 </ol>
 <p>python：<br>    num(int  float)<br>    字符串<br>    列表<br>    字典<br>    元组<br>    集合<br>js：<br>    num<br>        var age = 12;<br>        var age = 1.1;</p>
@@ -2951,7 +2952,7 @@ undefined 变量声明但是未给值
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">     * 循环数组</span><br><span class="line">     * **/</span><br><span class="line">    var arr = [&#x27;pounds&#x27;, &#x27;szk&#x27;, &#x27;chenshunyang&#x27;];</span><br><span class="line">    var len = arr.length;</span><br><span class="line">    </span><br><span class="line">    for(var i=0; i<span class="tag">&lt;<span class="name">len;</span> <span class="attr">i</span>++) &#123;</span></span><br><span class="line"><span class="tag">        <span class="attr">console.log</span>(<span class="attr">arr</span>[<span class="attr">i</span>]);</span></span><br><span class="line"><span class="tag">    &#125;</span></span><br><span class="line"><span class="tag"></span></span><br><span class="line"><span class="tag">    <span class="attr">for</span>(<span class="attr">var</span> <span class="attr">i</span> <span class="attr">in</span> <span class="attr">arr</span>)&#123;</span></span><br><span class="line"><span class="tag">        <span class="attr">console.log</span>(<span class="attr">i</span>, <span class="attr">arr</span>[<span class="attr">i</span>]);</span></span><br><span class="line"><span class="tag">    &#125;</span></span><br><span class="line"><span class="tag"></span></span><br><span class="line"><span class="tag">    /***</span></span><br><span class="line"><span class="tag">     * 循环对象</span></span><br><span class="line"><span class="tag">     */</span></span><br><span class="line"><span class="tag">    <span class="attr">var</span> <span class="attr">a</span> = <span class="string">&#123;</span>&quot;<span class="attr">name</span>&quot;<span class="attr">:</span>&#x27;<span class="attr">szk</span>&#x27;, &quot;<span class="attr">age</span>&quot;<span class="attr">:12</span>&#125;;</span></span><br><span class="line"><span class="tag"></span></span><br><span class="line"><span class="tag">    <span class="attr">for</span>(<span class="attr">var</span> <span class="attr">i</span> <span class="attr">in</span> <span class="attr">a</span>)&#123;</span></span><br><span class="line"><span class="tag">        <span class="attr">console.log</span>(<span class="attr">i</span>, <span class="attr">a</span>[<span class="attr">i</span>]);</span></span><br><span class="line"><span class="tag">    &#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>总结：数组的循环可以使用上面两种方式，但是对象的循环，必须使用 for … in 的方式来进行循环.</p>
-<h5 id="四、运算符介绍"><a href="#四、运算符介绍" class="headerlink" title="四、运算符介绍"></a>四、运算符介绍</h5><p>. 运算符介绍</p>
+<h4 id="四、运算符介绍"><a href="#四、运算符介绍" class="headerlink" title="四、运算符介绍"></a>四、运算符介绍</h4><p>. 运算符介绍</p>
 <ul>
 <li><ol>
 <li>算数运算符<br><code>+   -    *    /     %       ++        --</code></li>
@@ -2970,7 +2971,7 @@ undefined 变量声明但是未给值
 </ol>
 </li>
 </ul>
-<h5 id="五、流程控制"><a href="#五、流程控制" class="headerlink" title="五、流程控制"></a>五、流程控制</h5><ol>
+<h4 id="五、流程控制"><a href="#五、流程控制" class="headerlink" title="五、流程控制"></a>五、流程控制</h4><ol>
 <li><p>if-else语句</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if (条件)&#123;</span><br><span class="line">  当条件为 true 时执行的代码</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  当条件不为 true 时执行的代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
@@ -2989,7 +2990,7 @@ undefined 变量声明但是未给值
 
 </li>
 </ol>
-<h5 id="六、函数"><a href="#六、函数" class="headerlink" title="六、函数"></a>六、函数</h5><p>函数定义：</p>
+<h4 id="六、函数"><a href="#六、函数" class="headerlink" title="六、函数"></a>六、函数</h4><p>函数定义：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">/**1.普通函数定义方式</span><br><span class="line">     * **/</span><br><span class="line">    function test()&#123;</span><br><span class="line">        console.log(&#x27;dsadsa&#x27;);</span><br><span class="line">        var a = 100;</span><br><span class="line"></span><br><span class="line">        return a;</span><br><span class="line">    &#125;</span><br><span class="line">    // test()</span><br><span class="line"></span><br><span class="line">    /***</span><br><span class="line">     * 2. 匿名函数</span><br><span class="line">     */</span><br><span class="line"></span><br><span class="line">    var a = function()&#123;</span><br><span class="line">        console.log(&#x27;dsadsa&#x27;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>函数的局部变量和全局变量</p>
@@ -3019,7 +3020,7 @@ undefined 变量声明但是未给值
  <img src="/2020/09/19/py-day07/%E5%BA%8F%E5%88%97%E5%8C%96%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96.png" class title="序列化反序列化">
 
 
-<h5 id="七、常见的模块和常用方法"><a href="#七、常见的模块和常用方法" class="headerlink" title="七、常见的模块和常用方法"></a>七、常见的模块和常用方法</h5><ol>
+<h4 id="七、常见的模块和常用方法"><a href="#七、常见的模块和常用方法" class="headerlink" title="七、常见的模块和常用方法"></a>七、常见的模块和常用方法</h4><ol>
 <li><p>日期类Date</p>
 <p> <strong>var d = new Date();　　　返回当日的日期和时间</strong></p>
 <ul>
@@ -3065,7 +3066,7 @@ undefined 变量声明但是未给值
 <blockquote>
 <p>var str = JSON.stringify(obj); // 反序列化</p>
 </blockquote>
-<h5 id="八、面向对象"><a href="#八、面向对象" class="headerlink" title="八、面向对象"></a>八、面向对象</h5><ol>
+<h4 id="八、面向对象"><a href="#八、面向对象" class="headerlink" title="八、面向对象"></a>八、面向对象</h4><ol>
 <li>JS创建对象三种方式<img src="/2020/09/19/py-day07/JS%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A13%E7%A7%8D%E6%96%B9%E5%BC%8F.png" class title="JS创建对象3种方式"></li>
 <li>JS面向对象之封装 <img src="/2020/09/19/py-day07/JS-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E4%B9%8B%E5%B0%81%E8%A3%85.png" class title="JS-面向对象之封装"></li>
 <li>JS面向对象之继承 <img src="/2020/09/19/py-day07/JS-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E4%B9%8B%E7%BB%A7%E6%89%BF.png" class title="JS-面向对象之继承">
@@ -3079,7 +3080,7 @@ undefined 变量声明但是未给值
 
 </li>
 </ol>
-<h5 id="七、DOM"><a href="#七、DOM" class="headerlink" title="七、DOM"></a>七、DOM</h5><p>DOM: Document Object Modal ： 文档对象模型</p>
+<h4 id="九、DOM"><a href="#九、DOM" class="headerlink" title="九、DOM"></a>九、DOM</h4><p>DOM: Document Object Modal ： 文档对象模型</p>
 <ol>
 <li><ul>
 <li><p>直接查找</p>
@@ -3145,15 +3146,29 @@ undefined 变量声明但是未给值
 <p>即：.onclick = fn1, .onclick=fn2;<br>最终的效果是.onclick=fn2 执行</p>
 </blockquote>
 <ul>
-<li>2.3 addEventListener方式(了解)<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var i0 &#x3D; document.getElementById(&#39;i1&#39;);</span><br><span class="line">i0.addEventListener(&#39;click&#39;, function()&#123;console.log(&#39;a&#39;);&#125;)</span><br><span class="line">i0.addEventListener(&#39;click&#39;, function()&#123;console.log(&#39;b&#39;);&#125;)</span><br></pre></td></tr></table></figure>
-
+<li>2.3 addEventListener方式(了解)<blockquote>
+<p>格式: addEventListener(‘事件’ ,绑定的函数, true/fase)</p>
+<ol>
+<li>如果添加了多个事件处理函数，则按添加时的先后顺序来执行。</li>
+<li>时间处理函数中的this指代的是DOM对象本身(w3c标准)</li>
+<li>第一个时间函数，一律把事件名的”on”去掉<br>优点：能为同一种时间，如onclick，绑定多个函数中的this指向该DOM对象，操作方便<br>缺点：IE8以下版本不支持此方法</li>
+</ol>
+</blockquote>
 </li>
 </ul>
+<p>通过第三个参数：<br>     // false 默认 捕捉<br>     // true  冒泡</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var i0 &#x3D; document.getElementById(&#39;i1&#39;);</span><br><span class="line">i0.addEventListener(&#39;click&#39;, function()&#123;console.log(&#39;a&#39;);&#125;,true)</span><br><span class="line">i0.addEventListener(&#39;click&#39;, function()&#123;console.log(&#39;b&#39;);&#125;,true)</span><br></pre></td></tr></table></figure>
+
 <p><strong>面试题</strong></p>
 <ul>
-<li>写一个行为 结构 样式 相分离的页面<br>表格换色<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">&quot;1px&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;jquery.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> trs = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&#x27;tr&#x27;</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;trs.length; i++)&#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// i = 0 1 2 3 4</span></span></span><br><span class="line"><span class="javascript">        trs[i].onmouseover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript"><span class="comment">//            trs[i] 不能指一个对象</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.style.backgroundColor = <span class="string">&#x27;red&#x27;</span>;</span></span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"><span class="javascript">        trs[i].onmouseout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript"><span class="comment">//            trs[i] 不能指一个对象</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.style.backgroundColor = <span class="string">&#x27;white&#x27;</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>写一个行为 结构 样式 相分离的页面<br>表格换色<details>
+<summary>展开查看</summary>
+
+</details></li>
 </ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">&quot;1px&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1234<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;jquery.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> trs = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&#x27;tr&#x27;</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;trs.length; i++)&#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// i = 0 1 2 3 4</span></span></span><br><span class="line"><span class="javascript">        trs[i].onmouseover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript"><span class="comment">//            trs[i] 不能指一个对象</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.style.backgroundColor = <span class="string">&#x27;red&#x27;</span>;</span></span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"><span class="javascript">        trs[i].onmouseout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript"><span class="comment">//            trs[i] 不能指一个对象</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.style.backgroundColor = <span class="string">&#x27;white&#x27;</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
 <ol start="7">
 <li>window对象</li>
 </ol>
@@ -3178,6 +3193,8 @@ undefined 变量声明但是未给值
 </ul>
 </blockquote>
 </blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">function test() &#123;</span><br><span class="line">    console.log(11);</span><br><span class="line">&#125;</span><br><span class="line">myTimer = setInterval(&quot;test()&quot;, 1000)   //setInterval有一个返回值，定义为myTimer</span><br><span class="line">clearInterval(myTimer)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>clearInterval()</p>
 <blockquote>
@@ -3287,7 +3304,7 @@ undefined 变量声明但是未给值
 
 
 
-<h5 id="八、BOM"><a href="#八、BOM" class="headerlink" title="八、BOM"></a>八、BOM</h5> <img src="/2020/09/19/py-day07/BOM%E6%A6%82%E5%BF%B5.png" class title="BOM概念">
+<h4 id="十-BOM"><a href="#十-BOM" class="headerlink" title="十.BOM"></a>十.BOM</h4> <img src="/2020/09/19/py-day07/BOM%E6%A6%82%E5%BF%B5.png" class title="BOM概念">
  <img src="/2020/09/19/py-day07/BOM%E6%A8%A1%E5%9E%8B.png" class title="BOM模型">
  <img src="/2020/09/19/py-day07/BOM%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A11.png" class title="BOM中的对象1">
  <img src="/2020/09/19/py-day07/BOM%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A12.png" class title="BOM中的对象2">
@@ -3298,7 +3315,7 @@ undefined 变量声明但是未给值
  <img src="/2020/09/19/py-day07/BOM%E6%A8%A1%E5%9E%8B7.png" class title="BOM模型7">
 
 
-<h5 id="九、this指向问题"><a href="#九、this指向问题" class="headerlink" title="九、this指向问题"></a>九、this指向问题</h5><p>在python面向对象中， 谁调用改方法，self就是那个实例</p>
+<h4 id="十一-this指向问题"><a href="#十一-this指向问题" class="headerlink" title="十一.this指向问题"></a>十一.this指向问题</h4><p>在python面向对象中， 谁调用改方法，self就是那个实例</p>
 <p>this指向window对象</p>
  <img src="/2020/09/19/py-day07/window%E5%AF%B9%E8%B1%A1.png" class title="window对象">
 
@@ -3313,7 +3330,90 @@ undefined 变量声明但是未给值
 
 </li>
 </ol>
-<h5 id="八、Jquery-对DOM中各种方法的封装，是一个js的第三方库"><a href="#八、Jquery-对DOM中各种方法的封装，是一个js的第三方库" class="headerlink" title="八、Jquery: 对DOM中各种方法的封装，是一个js的第三方库"></a>八、Jquery: 对DOM中各种方法的封装，是一个js的第三方库</h5> <img src="/2020/09/19/py-day07/jQuery.png" class title="jQuery">
+<h4 id="十三、Jquery-对DOM中各种方法的封装，是一个js的第三方库"><a href="#十三、Jquery-对DOM中各种方法的封装，是一个js的第三方库" class="headerlink" title="十三、Jquery: 对DOM中各种方法的封装，是一个js的第三方库"></a>十三、Jquery: 对DOM中各种方法的封装，是一个js的第三方库</h4><h5 id="JQuery的介绍及其优势"><a href="#JQuery的介绍及其优势" class="headerlink" title="JQuery的介绍及其优势"></a>JQuery的介绍及其优势</h5><ol>
+<li>Jquery介绍<blockquote>
+<p>JQuery的宗旨是——WRITE LESS,DO MORE,写更少的代码,做更多的事情。它是轻量级的js库，这是其它的js库所不及的，它兼容CSS3，还兼容各种常用浏览器。</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>JQuery是一个快速的，简洁的JavaScript库，使用户能更方便地处理HTML documents、events、实现动画效果，并且方便地为网站提供AJAX交互。</p>
+</blockquote>
+<blockquote>
+<p>JQuery还有一个比较大的优势是，它的文档说明很全，而且各种应用也说得很详细，同时还有许多成熟的插件可供选择。JQuery能够使用户的html页保持代码和html内容分离，也就是说，不用再在html里面插入一堆js来调用命令了，只需定义id即可</p>
+</blockquote>
+<ol start="2">
+<li>JQuery的优势</li>
+</ol>
+<ul>
+<li>一款轻量级的js框架。JQuery核心js文件才几十kb，不会影响页面加载速度</li>
+<li>丰富的DOM选择器,JQuery的选择器用起来很方便，比如要找到某个dom对象的相邻元素，js可能要写好几行代码，而JQuery一行代码就搞定了，再比如要将一个表格的隔行变色，JQuery也是一行代码搞定</li>
+<li>链式表达式。JQuery的链式操作可以把多个操作写在一行代码里，更加简洁</li>
+<li>事件、样式、动画支持。JQuery还简化了js操作css的代码，并且代码的可读性也比js要强</li>
+<li>Ajax操作支持。JQuery简化了AJAX操作，后台只需返回一个JSON格式的字符串就能完成与前台的通信</li>
+<li>跨浏览器兼容。JQuery基本兼容了现在主流的浏览器，不用再为浏览器的兼容问题而伤透脑筋</li>
+<li>插件扩展开发。JQuery有着丰富的第三方的插件，例如：树形菜单、日期控件、图片切换插件、弹出窗口等等基本前台页面上的组件都有对应插件，并且用JQuery插件做出来的效果很炫，并且可以根据自己需要去改写和封装插件，简单实用</li>
+</ul>
+<h5 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h5><ol>
+<li>id选择器：<br><code>$(&quot;#id&quot;)</code></li>
+<li>class选择器：<br><code>$(&quot;.classname&quot;)</code></li>
+<li>标签选择器<br><code>$(&quot;tagname&quot;)</code></li>
+<li>组合选择器<br><code>$(&quot;#id, .classname, tagname&quot;)</code></li>
+<li>层级选择器<br><code>$(&quot;#id a&quot;) ----&gt; 所有的后代a元素</code><br><code>$(&quot;#id &gt; a&quot;)---&gt; 第一个儿子元素</code></li>
+<li>基本选择器<br><code>:first :eq() :last</code><blockquote>
+<p><code>$(&quot;:first&quot;)  ---&gt;第一个元素</code><br><code>$(&quot;tr:eq(1)&quot;)  ---&gt;根据索引获取元素</code><br><code>$(&quot;:last&quot;) ---&gt; 最后一个元素</code></p>
+</blockquote>
+</li>
+</ol>
+<ol start="7">
+<li>属性选择器<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;input type&#x3D;&#39;text&#39;&gt;</span><br><span class="line">&lt;input type&#x3D;&#39;checkbox&#39;&gt;</span><br><span class="line">&lt;input type&#x3D;&#39;password&#39;&gt;</span><br><span class="line"></span><br><span class="line">$(&quot;input[type&#x3D;&#39;checkbox&#39;]&quot;)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>实例：表格的全选和反选以及取消</strong></p>
+<h5 id="样式操作"><a href="#样式操作" class="headerlink" title="样式操作"></a><strong>样式操作</strong></h5><ol>
+<li>添加整块样式<br><code>addClass()</code></li>
+<li>删除整块样式<br><code>removeClass()</code></li>
+<li>判断样式存不存在<br><code>hasClass()</code></li>
+<li>相当于开关，有这个样式则去掉，没有则添加<br><code>toggleClass()</code></li>
+</ol>
+<h5 id="文本操作"><a href="#文本操作" class="headerlink" title="文本操作"></a><strong>文本操作</strong></h5><ol>
+<li>对纯文本操作<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&quot;#one&quot;).text(); --- 获取值</span><br><span class="line">$(&quot;#one&quot;).text(&#39;fuck&#39;); --- 设置值</span><br></pre></td></tr></table></figure></li>
+<li>对HTML操作<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&quot;xxx&quot;).html()</span><br><span class="line">$(&quot;xxx&quot;).html(&#39;&lt;a href&#x3D;&quot;&quot;&gt;&lt;&#x2F;a&gt;&#39;)  </span><br></pre></td></tr></table></figure></li>
+<li>对val操作（针对input系列）<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&quot;xxx&quot;).val()</span><br><span class="line">$(&quot;xxx&quot;).val(&#39;123&#39;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h5 id="属性操作"><a href="#属性操作" class="headerlink" title="属性操作"></a>属性操作</h5><ol>
+<li>用于自定义属性<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&#39;xxx&#39;).attr(&#39;n&#39;)</span><br><span class="line">$(&#39;xxx&#39;).attr(&#39;n&#39;,&#39;v&#39;)</span><br><span class="line">$(&#39;xxx&#39;).removeAttr(&#39;n&#39;)</span><br></pre></td></tr></table></figure></li>
+<li>用于checkbox，radio<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&#39;xxx&#39;).prop(&#39;checked&#39;)</span><br><span class="line">$(&#39;xxx&#39;).prop(&#39;checked&#39;, true)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>注意：</strong></p>
+<blockquote>
+<p><code>&lt;input type=&#39;checkbox&#39; id=&#39;i1&#39; checked=checked /&gt;</code><br>此处选中复选框的时候，我们可以直接使用attr来进行赋值操作，但是在1以及2版本的jquery中会出错，在3版本的jquery中没有任何问题</p>
+</blockquote>
+<blockquote>
+<p>因此，我们在处理checkbox，radio等标签的时候，我们尽量使用特定的prop，不要使用attr(“checked”,”checked”)</p>
+</blockquote>
+<h5 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h5><ol>
+<li><p>常见的事件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&#39;xxx&#39;).click(function()&#123;&#125;)</span><br><span class="line">$(&#39;xxx&#39;).mouseout(function()&#123;&#125;)</span><br><span class="line">$(&#39;xxx&#39;).mouseover(function()&#123;&#125;)</span><br><span class="line">$(&#39;xxx&#39;).hover(function()&#123;&#125;)</span><br><span class="line">$(&#39;xxx&#39;).blur(function()&#123;&#125;)          </span><br><span class="line">$(&#39;xxx&#39;).focus(function()&#123;&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>页面加载完成之后，执行函数体中的内容</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(function()&#123;&#125;)</span><br><span class="line">$(document).ready(function()&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><strong>案例</strong></p>
+<details>
+<summary>展开查看</summary>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span>   <span class="attr">onclick</span>=<span class="string">&quot;selectAll();&quot;</span> <span class="attr">value</span>=<span class="string">&quot;全选&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span>  <span class="attr">onclick</span>=<span class="string">&quot;cancelAll();&quot;</span> <span class="attr">value</span>=<span class="string">&quot;取消&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span>  <span class="attr">onclick</span>=<span class="string">&quot;reverseAll();&quot;</span> <span class="attr">value</span>=<span class="string">&quot;反选&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">&quot;1px&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>192.168.1.1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>80<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>111111<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">class</span>=<span class="string">&quot;check&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>192.168.1.2<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>81<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>222222<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">class</span>=<span class="string">&quot;check&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>192.168.1.3<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>82<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>333333<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">class</span>=<span class="string">&quot;check&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://code.jquery.com/jquery-3.5.1.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">selectAll</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 1. 找到所有的checkbox</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> inpts = $(<span class="string">&#x27;.check&#x27;</span>);</span></span><br><span class="line"><span class="javascript">       <span class="comment">// console.log(inpts);</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">        <span class="comment">// 2. 对找到的checkbox进行打钩</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; inpts.length; i++)&#123;</span></span><br><span class="line"><span class="javascript"><span class="comment">//            console.log(inpts[i].checked);</span></span></span><br><span class="line"><span class="javascript">            inpts[i].checked = <span class="literal">true</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">cancelAll</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 1. 找到所有的checkbox</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> inpts = $(<span class="string">&#x27;.check&#x27;</span>);</span></span><br><span class="line"><span class="javascript"><span class="comment">//        console.log(inpts);</span></span></span><br><span class="line"><span class="javascript">        <span class="comment">// 2. 对找到的checkbox进行打钩</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; inpts.length; i++)&#123;</span></span><br><span class="line"><span class="javascript"><span class="comment">//            console.log(inpts[i].checked);</span></span></span><br><span class="line"><span class="javascript">            inpts[i].checked = <span class="literal">false</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">reverseAll</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> inpts = $(<span class="string">&#x27;.check&#x27;</span>);</span></span><br><span class="line"><span class="javascript"><span class="comment">//        console.log(inpts);</span></span></span><br><span class="line"><span class="javascript">        <span class="comment">// 2. 对找到的checkbox进行打钩</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; inpts.length; i++)&#123;</span></span><br><span class="line">           if (inpts[i].checked)&#123;</span><br><span class="line"><span class="javascript">               inpts[i].checked = <span class="literal">false</span>;</span></span><br><span class="line"><span class="javascript">           &#125;<span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="javascript">               inpts[i].checked = <span class="literal">true</span>;</span></span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</details>
+
+
+
+
+
+ <img src="/2020/09/19/py-day07/jQuery.png" class title="jQuery">
 
 
 
@@ -3324,13 +3424,6 @@ undefined 变量声明但是未给值
 
 <p>jquery —&gt; DOM ： $(‘#i1’)[0]</p>
 <p>DOM —&gt; jquery: $(inpt[0])</p>
-<p>作业：</p>
-<ol>
-<li><p>css作业</p>
-</li>
-<li><p>上面的内容过一遍</p>
-</li>
-</ol>
 <h5 id="ajax"><a href="#ajax" class="headerlink" title="ajax"></a>ajax</h5><ol>
 <li>不刷新页面请求服务端的数据</li>
 </ol>
