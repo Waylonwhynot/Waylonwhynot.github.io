@@ -3354,20 +3354,34 @@ undefined 变量声明但是未给值
 <li>插件扩展开发。JQuery有着丰富的第三方的插件，例如：树形菜单、日期控件、图片切换插件、弹出窗口等等基本前台页面上的组件都有对应插件，并且用JQuery插件做出来的效果很炫，并且可以根据自己需要去改写和封装插件，简单实用</li>
 </ul>
 <h5 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h5><ol>
-<li>id选择器：<br><code>$(&quot;#id&quot;)</code></li>
-<li>class选择器：<br><code>$(&quot;.classname&quot;)</code></li>
-<li>标签选择器<br><code>$(&quot;tagname&quot;)</code></li>
-<li>组合选择器<br><code>$(&quot;#id, .classname, tagname&quot;)</code></li>
-<li>层级选择器<br><code>$(&quot;#id a&quot;) ----&gt; 所有的后代a元素</code><br><code>$(&quot;#id &gt; a&quot;)---&gt; 第一个儿子元素</code></li>
-<li>基本选择器<br><code>:first :eq() :last</code><blockquote>
+<li><p>id选择器：<br><code>$(&quot;#id&quot;)</code></p>
+</li>
+<li><p>class选择器：<br><code>$(&quot;.classname&quot;)</code></p>
+</li>
+<li><p>标签选择器<br><code>$(&quot;tagname&quot;)</code></p>
+</li>
+<li><p>组合选择器<br><code>$(&quot;#id, .classname, tagname&quot;)</code></p>
+</li>
+<li><p>层级选择器<br><code>$(&quot;#id a&quot;) ----&gt; 所有的后代a元素</code><br><code>$(&quot;#id &gt; a&quot;)---&gt; 第一个儿子元素</code></p>
+</li>
+<li><p>基本选择器<br><code>:first :eq() :last</code></p>
+<blockquote>
 <p><code>$(&quot;:first&quot;)  ---&gt;第一个元素</code><br><code>$(&quot;tr:eq(1)&quot;)  ---&gt;根据索引获取元素</code><br><code>$(&quot;:last&quot;) ---&gt; 最后一个元素</code></p>
 </blockquote>
 </li>
-</ol>
-<ol start="7">
-<li>属性选择器<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;input type&#x3D;&#39;text&#39;&gt;</span><br><span class="line">&lt;input type&#x3D;&#39;checkbox&#39;&gt;</span><br><span class="line">&lt;input type&#x3D;&#39;password&#39;&gt;</span><br><span class="line"></span><br><span class="line">$(&quot;input[type&#x3D;&#39;checkbox&#39;]&quot;)</span><br></pre></td></tr></table></figure></li>
+<li><p>属性选择器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;input type&#x3D;&#39;text&#39;&gt;</span><br><span class="line">&lt;input type&#x3D;&#39;checkbox&#39;&gt;</span><br><span class="line">&lt;input type&#x3D;&#39;password&#39;&gt;</span><br><span class="line"></span><br><span class="line">$(&quot;input[type&#x3D;&#39;checkbox&#39;]&quot;)</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p><strong>实例：表格的全选和反选以及取消</strong></p>
+<details>
+<summary>展开查看</summary>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;全选&quot;</span> <span class="attr">id</span>=<span class="string">&quot;i1&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;chooseAll();&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;取消&quot;</span> <span class="attr">id</span>=<span class="string">&quot;i2&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;cancelAll();&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;反选&quot;</span> <span class="attr">id</span>=<span class="string">&quot;i3&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;reverseAll();&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">&quot;1px&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>操作<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>IP地址<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>端口<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1.1.1.1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>8080<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1.1.1.2<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>8081<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>1.1.1.3<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>8082<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;jquery.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">chooseAll</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        $(<span class="string">&quot;input[type=&#x27;checkbox&#x27;]&quot;</span>).prop(<span class="string">&quot;checked&quot;</span>,<span class="literal">true</span>)</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">cancelAll</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        $(<span class="string">&quot;input[type=&#x27;checkbox&#x27;]&quot;</span>).prop(<span class="string">&quot;checked&quot;</span>,<span class="literal">false</span>)</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">reverseAll</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        $(<span class="string">&quot;input[type=&#x27;checkbox&#x27;]&quot;</span>).each(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span>(<span class="built_in">this</span>.checked)&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.checked = <span class="literal">false</span>;</span></span><br><span class="line"><span class="javascript">            &#125;<span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.checked = <span class="literal">true</span>;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</details>
+
+
+
+
 <h5 id="样式操作"><a href="#样式操作" class="headerlink" title="样式操作"></a><strong>样式操作</strong></h5><ol>
 <li>添加整块样式<br><code>addClass()</code></li>
 <li>删除整块样式<br><code>removeClass()</code></li>
@@ -3384,13 +3398,21 @@ undefined 变量声明但是未给值
 <h5 id="属性操作"><a href="#属性操作" class="headerlink" title="属性操作"></a>属性操作</h5><ol>
 <li>用于自定义属性<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&#39;xxx&#39;).attr(&#39;n&#39;)</span><br><span class="line">$(&#39;xxx&#39;).attr(&#39;n&#39;,&#39;v&#39;)</span><br><span class="line">$(&#39;xxx&#39;).removeAttr(&#39;n&#39;)</span><br></pre></td></tr></table></figure></li>
 <li>用于checkbox，radio<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$(&#39;xxx&#39;).prop(&#39;checked&#39;)</span><br><span class="line">$(&#39;xxx&#39;).prop(&#39;checked&#39;, true)</span><br></pre></td></tr></table></figure></li>
+<li>each 方法<br>each()函数是基本上所有的框架都提供了的一个工具类函数，通过它，你可以遍历对象、数组的属性值并进行处理。</li>
 </ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$.each(Object, function(p1, p2) &#123;</span><br><span class="line">     this;       &#x2F;&#x2F;这里的this指向每次遍历中Object的当前属性值</span><br><span class="line">     p1; p2;     &#x2F;&#x2F;访问附加参数</span><br><span class="line">&#125;, [&#39;参数1&#39;, &#39;参数2&#39;]);</span><br></pre></td></tr></table></figure>
+
+
+
 <p><strong>注意：</strong></p>
 <blockquote>
 <p><code>&lt;input type=&#39;checkbox&#39; id=&#39;i1&#39; checked=checked /&gt;</code><br>此处选中复选框的时候，我们可以直接使用attr来进行赋值操作，但是在1以及2版本的jquery中会出错，在3版本的jquery中没有任何问题</p>
 </blockquote>
 <blockquote>
 <p>因此，我们在处理checkbox，radio等标签的时候，我们尽量使用特定的prop，不要使用attr(“checked”,”checked”)</p>
+</blockquote>
+<blockquote>
+<p>prop()是 jQuery 1.6 开始新增了一个方法，官方建议具有 true 和 false 两个属性的属性，如 checked, selected 或者 disabled 使用prop()，其他的使用 attr()。</p>
 </blockquote>
 <h5 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h5><ol>
 <li><p>常见的事件</p>
