@@ -202,184 +202,6 @@
       </tags>
   </entry>
   <entry>
-    <title>py-day02</title>
-    <url>/2020/08/16/py-day02/</url>
-    <content><![CDATA[<p>python基础<br>列表 字典 集合 函数(位置参数， 关键字参数， 默认参数) 对文件操作</p>
-<a id="more"></a>
-
-<ul>
-<li><p>python的基础数据结构</p>
-<ul>
-<li>整型     1，2，3，</li>
-<li>字符串  <ul>
-<li>单引号  ‘hello’</li>
-<li>双引号  “hello”</li>
-<li>三引号  “”””””</li>
-</ul>
-</li>
-<li>布尔类型<ul>
-<li>True  </li>
-<li>False  注意的是：js true false</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>python的变量</p>
-<ul>
-<li>变量的作用：保存中间结果    num = 1+2+3    </li>
-<li>变量的命名规范：<ul>
-<li>PEP8规范</li>
-<li>等于号的左右两边是要有空格的</li>
-<li><strong>变量名一定要有意义</strong>  name = “szk”</li>
-<li>变量的几种风格  ： 大驼峰，小驼峰，下划线</li>
-<li>变量命名规范：不能使用关键字命名，不能以数字开头</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>字符串的用法</p>
-<ul>
-<li>split(‘:’) :   name = “szk_age”  name.split(‘_’)   非常重要的一个字符串用法</li>
-<li>字符串的格式化： <ul>
-<li>%  例子： “曾老师是一个 %s” % （‘大萨达撒‘）</li>
-<li>format 例子： “今天天气不错， 看电影 {}”.format(‘xxxxx’)</li>
-<li>format 例子： “曾老师性别{sex}, 年龄 {age}”.format(sex=’男’, age=73)</li>
-</ul>
-</li>
-<li>索引：任何语言中的索引，都是从0开始的  name = ‘szk’</li>
-<li>切片：就是从一整个元素中切出想要的元素 name = ‘51aiops’ , 可以根据索引来进行切割 <ul>
-<li>name[2:6]  索引的原则：前包后不包 </li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>流程控制</p>
-<ul>
-<li>顺序<ul>
-<li>代码从上到下依次执行</li>
-</ul>
-</li>
-<li>分支<ul>
-<li>if elif else</li>
-<li>elif 可以写多个，而if和else只能写一次</li>
-<li><strong>如果有多个分支条件的话，当命中一个条件之后，就会退出整个分支语句</strong></li>
-</ul>
-</li>
-<li>循环<ul>
-<li>while  条件: 项目中，用的比较少，算法的时候比较多</li>
-<li>for  项目中用的比较多<ul>
-<li>for i in ’abcd‘</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>其他</p>
-<ul>
-<li>input</li>
-<li>条件语句和运算符</li>
-<li>赋值运算符 ： <ul>
-<li>a = 10   a = a - 1 a += 1   a += 1 ===&gt; a = a - 1</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="今日内容"><a href="#今日内容" class="headerlink" title="今日内容"></a><div id="title">今日内容</div></h4><h5 id="1-python基础数据类型之列表和元组"><a href="#1-python基础数据类型之列表和元组" class="headerlink" title="1. python基础数据类型之列表和元组"></a>1. python基础数据类型之列表和元组</h5><ul>
-<li><p>列表   其他语言叫数组</p>
-<ul>
-<li><p>定义：用来存储比较复杂的数据 </p>
-</li>
-<li><p>用法：name_list = [‘老陈’, ‘老赵’,  ‘文亮’] </p>
-</li>
-<li><p>定义2： name_list = list() </p>
-</li>
-<li><p>增删改查  常用的方法： remove， pop， append，for循环 改索引</p>
-<p>pop, remove，和del的区别：</p>
-</li>
-<li><p>pop弹出，弹出之后的元素是可以赋值给其他变量用的</p>
-</li>
-<li><p>remove和del, 直接删除元素</p>
-</li>
-<li><p>remove就是通过值删除这个元素</p>
-</li>
-<li><p>del 通过索引来删除值</p>
-<p>pop 是弹出，后面可以引用，remove，del好像是直接删除    </p>
-</li>
-</ul>
-</li>
-<li><p>列表的切片：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">user_list = [<span class="string">&quot;王宝强&quot;</span>,<span class="string">&quot;陈羽凡&quot;</span>,<span class="string">&quot;贾乃亮&quot;</span>, <span class="string">&#x27;xxxx&#x27;</span>, <span class="string">&#x27;波多老师&#x27;</span>]</span><br><span class="line">                <span class="comment"># 0      1       2        3       4</span></span><br><span class="line">                <span class="comment"># -5    -4       -3      -2       -1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 通过索引下标来获取子列表</span></span><br><span class="line"><span class="comment">### 符合前包后不包的原则</span></span><br><span class="line">users = user_list[<span class="number">1</span>:<span class="number">4</span>]</span><br><span class="line">print(users)</span><br><span class="line">users = user_list[:]  <span class="comment">### 表示的是 从头切到尾</span></span><br><span class="line">users = user_list[<span class="number">2</span>:] <span class="comment">### 表示的是 从2 开始切到结尾</span></span><br><span class="line">users = user_list[:<span class="number">4</span>] <span class="comment">## 从头开始切</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列表的循环</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">### for循环打印</span></span><br><span class="line">user_list = [<span class="string">&quot;范德彪&quot;</span>,<span class="string">&quot;刘华强&quot;</span>,<span class="string">&#x27;尼古拉斯赵四&#x27;</span>,<span class="string">&quot;宋小宝&quot;</span>,<span class="string">&quot;刘能&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> user_list:</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, v <span class="keyword">in</span> enumerate(user_list):</span><br><span class="line">    print(i, v)</span><br></pre></td></tr></table></figure>
-<p><strong>只需要元素，则使用第一种循环， 若需要索引下标，则使用第二种循环</strong></p>
-<ul>
-<li>列表和字符串的互相转换<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 1.字符串转列表</span></span><br><span class="line">name = <span class="string">&quot;hello_world&quot;</span></span><br><span class="line">names = name.split(<span class="string">&#x27;_&#x27;</span>)</span><br><span class="line"></span><br><span class="line">print(names)<span class="comment">#### [&#x27;hello&#x27;, &#x27;world&#x27;]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 2. 列表转字符串</span></span><br><span class="line">names_list = [<span class="string">&quot;范德彪&quot;</span>,<span class="string">&quot;刘华强&quot;</span>,<span class="string">&#x27;尼古拉斯赵四&#x27;</span>,<span class="string">&quot;宋小宝&quot;</span>,<span class="string">&quot;刘能&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">### 将上述元素通过下划线拼接成字符串</span></span><br><span class="line">res = <span class="string">&#x27;_&#x27;</span>.join(names_list)</span><br><span class="line">print(res, type(res))</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>列表的增删改查，下去复习列表的基本操作的时候，遵循这个增删改查的原则</strong></p>
-<h5 id="2-python的基础数据类型之字典和集合"><a href="#2-python的基础数据类型之字典和集合" class="headerlink" title="2. python的基础数据类型之字典和集合"></a>2. python的基础数据类型之字典和集合</h5><p><strong>字典和列表一样的重要</strong></p>
-<p>python里叫字典，而其他语言java： 哈希table   hashtable</p>
-<p>定义方式：</p>
-<p>最长用的两种</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">第一种：</span><br><span class="line"><span class="comment"># info = &#123;</span></span><br><span class="line"><span class="comment">#     &quot;name&quot;: &#x27;szk&#x27;,</span></span><br><span class="line"><span class="comment">#     &quot;age&quot; : 18,</span></span><br><span class="line"><span class="comment">#     &quot;height&quot;: 180</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line"></span><br><span class="line">第二种</span><br><span class="line">user_info = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;陈顺阳&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">30</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;杜峰&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">32</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;pounds&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">32</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>字典的增删改查（crud）：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">info = &#123;<span class="string">&quot;age&quot;</span>:<span class="number">12</span>, <span class="string">&quot;status&quot;</span>:<span class="literal">True</span>, <span class="string">&quot;name&quot;</span>:<span class="string">&quot;szk&quot;</span>,<span class="string">&quot;email&quot;</span>:<span class="string">&quot;xx@live.com&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">### 1.获取字典的键</span></span><br><span class="line"><span class="comment"># keys = info.keys()</span></span><br><span class="line"><span class="comment"># for k in keys:</span></span><br><span class="line"><span class="comment">#     print(k)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ### 2. 获取字典的所有值</span></span><br><span class="line"><span class="comment"># values = info.values()</span></span><br><span class="line"><span class="comment"># for v in values:</span></span><br><span class="line"><span class="comment">#     print(v)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 3.要获取字典的值又要获取字典的key, 非常重要的方法</span></span><br><span class="line"><span class="comment"># for k, v in info.items():</span></span><br><span class="line"><span class="comment">#     print(k, v)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 根据键来获取值  重要</span></span><br><span class="line"><span class="comment"># print(info[&#x27;height&#x27;])</span></span><br><span class="line">data = info.get(<span class="string">&quot;height&quot;</span>, <span class="string">&#x27;&#x27;</span>) <span class="comment"># 根据name为键去info字典中获取对应的值，如果不存在则返回None，存在则返回值。</span></span><br><span class="line">print(data) <span class="comment"># 输出：None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 4.更新键值对</span></span><br><span class="line"><span class="comment"># info2 = &#123;&quot;age&quot;:12, &quot;status&quot;:True&#125;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># # info2.update(age=14, name=&#x27;szk&#x27;) ### 如果key存在的话，就会更新原有的值，若不存在，将这个name值加入info2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### 5.增加</span></span><br><span class="line"><span class="comment"># info2[&#x27;name&#x27;] = &#x27;szk&#x27; ###向字典中添加一个元素</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># print(info2)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 6.删除</span></span><br><span class="line">info2 = &#123;<span class="string">&quot;age&quot;</span>:<span class="number">12</span>, <span class="string">&quot;status&quot;</span>:<span class="literal">True</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;szk&quot;</span>&#125;</span><br><span class="line"><span class="comment"># data = info2.pop(&quot;age&quot;) ### 根据键来删除元素</span></span><br><span class="line"><span class="comment"># print(info2) # &#123;&#x27;status&#x27;: True, &#x27;name&#x27;: &#x27;szk&#x27;&#125;</span></span><br><span class="line"><span class="comment"># print(data) # 12</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> info2[<span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">print(info2)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>集合的特性<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 2.交集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 &amp; s2                 <span class="comment"># 方式一：取两个集合的交集</span></span><br><span class="line">s4 = s1.intersection(s2) <span class="comment"># 方</span></span><br><span class="line"></span><br><span class="line">print(s3, s4)</span><br><span class="line"></span><br><span class="line"><span class="comment">### 3.并集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 | s2               <span class="comment"># 方式一：取两个集合的并集</span></span><br><span class="line">s4 = s1.union(s2)</span><br><span class="line"></span><br><span class="line">print(s3, s4)</span><br><span class="line"></span><br><span class="line"><span class="comment">### 4.差集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 - s2                       <span class="comment"># 方式一：差集，s1中有且s2中没有的值</span></span><br><span class="line">s4 = s1.difference(s2)         <span class="comment"># 方式二：差集，s1中有且s2中没有的值</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>列表和集合的转换：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">v1 = [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">99</span>,<span class="number">22</span>]</span><br><span class="line">s1 = set(v1)</span><br><span class="line">l1 = list(s1)</span><br><span class="line">print(l1)</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-python对文件的操作"><a href="#3-python对文件的操作" class="headerlink" title="3. python对文件的操作"></a>3. python对文件的操作</h5><blockquote>
-<p>主要学习就是文件打开的几种模式，，项目中涉及到就是文件上传和下载</p>
-</blockquote>
-<p>主要的文件打开方式：</p>
-<p>模式： w, r, r+<br>方法： open, close, read, write<br>上下文管理器：推崇的方式</p>
-<p>#####4. python的函数 基础入门</p>
-<blockquote>
-<p>重点：函数的参数</p>
-</blockquote>
-<p>函数的定义：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">shell:</span><br><span class="line">    func test()&#123;</span><br><span class="line">        函数体</span><br><span class="line">    &#125;</span><br><span class="line">    test() <span class="comment">### 函数的调用</span></span><br><span class="line">python:</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span>():</span></span><br><span class="line">        函数体</span><br><span class="line">    test() <span class="comment">### 函数调用</span></span><br></pre></td></tr></table></figure>
-<h5 id="4-函数的参数"><a href="#4-函数的参数" class="headerlink" title="4.函数的参数"></a>4.函数的参数</h5><ul>
-<li>参数的分类<ul>
-<li>位置参数</li>
-<li>关键字参数</li>
-<li>动态接收参数</li>
-</ul>
-</li>
-</ul>
-<p>参数组合：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">第一种：</span><br><span class="line">位置参数， 关键字参数， 默认参数</span><br><span class="line">test(a, b, c=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">第二种：</span><br><span class="line">动态接收位置参数， 动态接收关键字参数配合起来使用</span><br><span class="line">test(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>总结:位置参数 &gt; args(动态位置参数) &gt; 默认值参数 &gt; *kwargs(动态默认参数)，这四种参数可以任意的使用</p>
-</blockquote>
-<p>如果想接收所有的参数:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args,**kwargs</span>):</span></span><br><span class="line">    print(args,kwargs)</span><br><span class="line">func(<span class="number">1</span>,<span class="number">23</span>,<span class="number">5</span>,a=<span class="number">1</span>,b=<span class="number">6</span>)</span><br></pre></td></tr></table></figure>
-<p>动态参数还可以这样传参:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lst = [<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>]</span><br><span class="line"><span class="comment"># 方法一</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(lst[<span class="number">0</span>],lst[<span class="number">1</span>],lst[<span class="number">2</span>])</span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(*lst)  </span><br><span class="line"><span class="comment"># 在实参的位置上用*将lst(可迭代对象)按照顺序打散</span></span><br><span class="line"><span class="comment"># 在形参的位置上用*把收到的参数组合成一个元祖</span></span><br></pre></td></tr></table></figure>
-<p>字典也可以进行打散,不过需要**</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>py-day04</title>
     <url>/2020/08/29/py-day04/</url>
     <content><![CDATA[<p>python基础<br>函数高级操作(生成器、迭代器、装饰器)+模块(request json)</p>
@@ -646,6 +468,184 @@
 <li>ATM作业</li>
 <li>python操作 docker， k8s， saltstack， ansible</li>
 </ul>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>py-day02</title>
+    <url>/2020/08/16/py-day02/</url>
+    <content><![CDATA[<p>python基础<br>列表 字典 集合 函数(位置参数， 关键字参数， 默认参数) 对文件操作</p>
+<a id="more"></a>
+
+<ul>
+<li><p>python的基础数据结构</p>
+<ul>
+<li>整型     1，2，3，</li>
+<li>字符串  <ul>
+<li>单引号  ‘hello’</li>
+<li>双引号  “hello”</li>
+<li>三引号  “”””””</li>
+</ul>
+</li>
+<li>布尔类型<ul>
+<li>True  </li>
+<li>False  注意的是：js true false</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>python的变量</p>
+<ul>
+<li>变量的作用：保存中间结果    num = 1+2+3    </li>
+<li>变量的命名规范：<ul>
+<li>PEP8规范</li>
+<li>等于号的左右两边是要有空格的</li>
+<li><strong>变量名一定要有意义</strong>  name = “szk”</li>
+<li>变量的几种风格  ： 大驼峰，小驼峰，下划线</li>
+<li>变量命名规范：不能使用关键字命名，不能以数字开头</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>字符串的用法</p>
+<ul>
+<li>split(‘:’) :   name = “szk_age”  name.split(‘_’)   非常重要的一个字符串用法</li>
+<li>字符串的格式化： <ul>
+<li>%  例子： “曾老师是一个 %s” % （‘大萨达撒‘）</li>
+<li>format 例子： “今天天气不错， 看电影 {}”.format(‘xxxxx’)</li>
+<li>format 例子： “曾老师性别{sex}, 年龄 {age}”.format(sex=’男’, age=73)</li>
+</ul>
+</li>
+<li>索引：任何语言中的索引，都是从0开始的  name = ‘szk’</li>
+<li>切片：就是从一整个元素中切出想要的元素 name = ‘51aiops’ , 可以根据索引来进行切割 <ul>
+<li>name[2:6]  索引的原则：前包后不包 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>流程控制</p>
+<ul>
+<li>顺序<ul>
+<li>代码从上到下依次执行</li>
+</ul>
+</li>
+<li>分支<ul>
+<li>if elif else</li>
+<li>elif 可以写多个，而if和else只能写一次</li>
+<li><strong>如果有多个分支条件的话，当命中一个条件之后，就会退出整个分支语句</strong></li>
+</ul>
+</li>
+<li>循环<ul>
+<li>while  条件: 项目中，用的比较少，算法的时候比较多</li>
+<li>for  项目中用的比较多<ul>
+<li>for i in ’abcd‘</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>其他</p>
+<ul>
+<li>input</li>
+<li>条件语句和运算符</li>
+<li>赋值运算符 ： <ul>
+<li>a = 10   a = a - 1 a += 1   a += 1 ===&gt; a = a - 1</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="今日内容"><a href="#今日内容" class="headerlink" title="今日内容"></a><div id="title">今日内容</div></h4><h5 id="1-python基础数据类型之列表和元组"><a href="#1-python基础数据类型之列表和元组" class="headerlink" title="1. python基础数据类型之列表和元组"></a>1. python基础数据类型之列表和元组</h5><ul>
+<li><p>列表   其他语言叫数组</p>
+<ul>
+<li><p>定义：用来存储比较复杂的数据 </p>
+</li>
+<li><p>用法：name_list = [‘老陈’, ‘老赵’,  ‘文亮’] </p>
+</li>
+<li><p>定义2： name_list = list() </p>
+</li>
+<li><p>增删改查  常用的方法： remove， pop， append，for循环 改索引</p>
+<p>pop, remove，和del的区别：</p>
+</li>
+<li><p>pop弹出，弹出之后的元素是可以赋值给其他变量用的</p>
+</li>
+<li><p>remove和del, 直接删除元素</p>
+</li>
+<li><p>remove就是通过值删除这个元素</p>
+</li>
+<li><p>del 通过索引来删除值</p>
+<p>pop 是弹出，后面可以引用，remove，del好像是直接删除    </p>
+</li>
+</ul>
+</li>
+<li><p>列表的切片：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">user_list = [<span class="string">&quot;王宝强&quot;</span>,<span class="string">&quot;陈羽凡&quot;</span>,<span class="string">&quot;贾乃亮&quot;</span>, <span class="string">&#x27;xxxx&#x27;</span>, <span class="string">&#x27;波多老师&#x27;</span>]</span><br><span class="line">                <span class="comment"># 0      1       2        3       4</span></span><br><span class="line">                <span class="comment"># -5    -4       -3      -2       -1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 通过索引下标来获取子列表</span></span><br><span class="line"><span class="comment">### 符合前包后不包的原则</span></span><br><span class="line">users = user_list[<span class="number">1</span>:<span class="number">4</span>]</span><br><span class="line">print(users)</span><br><span class="line">users = user_list[:]  <span class="comment">### 表示的是 从头切到尾</span></span><br><span class="line">users = user_list[<span class="number">2</span>:] <span class="comment">### 表示的是 从2 开始切到结尾</span></span><br><span class="line">users = user_list[:<span class="number">4</span>] <span class="comment">## 从头开始切</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列表的循环</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">### for循环打印</span></span><br><span class="line">user_list = [<span class="string">&quot;范德彪&quot;</span>,<span class="string">&quot;刘华强&quot;</span>,<span class="string">&#x27;尼古拉斯赵四&#x27;</span>,<span class="string">&quot;宋小宝&quot;</span>,<span class="string">&quot;刘能&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> user_list:</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, v <span class="keyword">in</span> enumerate(user_list):</span><br><span class="line">    print(i, v)</span><br></pre></td></tr></table></figure>
+<p><strong>只需要元素，则使用第一种循环， 若需要索引下标，则使用第二种循环</strong></p>
+<ul>
+<li>列表和字符串的互相转换<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 1.字符串转列表</span></span><br><span class="line">name = <span class="string">&quot;hello_world&quot;</span></span><br><span class="line">names = name.split(<span class="string">&#x27;_&#x27;</span>)</span><br><span class="line"></span><br><span class="line">print(names)<span class="comment">#### [&#x27;hello&#x27;, &#x27;world&#x27;]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 2. 列表转字符串</span></span><br><span class="line">names_list = [<span class="string">&quot;范德彪&quot;</span>,<span class="string">&quot;刘华强&quot;</span>,<span class="string">&#x27;尼古拉斯赵四&#x27;</span>,<span class="string">&quot;宋小宝&quot;</span>,<span class="string">&quot;刘能&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">### 将上述元素通过下划线拼接成字符串</span></span><br><span class="line">res = <span class="string">&#x27;_&#x27;</span>.join(names_list)</span><br><span class="line">print(res, type(res))</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>列表的增删改查，下去复习列表的基本操作的时候，遵循这个增删改查的原则</strong></p>
+<h5 id="2-python的基础数据类型之字典和集合"><a href="#2-python的基础数据类型之字典和集合" class="headerlink" title="2. python的基础数据类型之字典和集合"></a>2. python的基础数据类型之字典和集合</h5><p><strong>字典和列表一样的重要</strong></p>
+<p>python里叫字典，而其他语言java： 哈希table   hashtable</p>
+<p>定义方式：</p>
+<p>最长用的两种</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">第一种：</span><br><span class="line"><span class="comment"># info = &#123;</span></span><br><span class="line"><span class="comment">#     &quot;name&quot;: &#x27;szk&#x27;,</span></span><br><span class="line"><span class="comment">#     &quot;age&quot; : 18,</span></span><br><span class="line"><span class="comment">#     &quot;height&quot;: 180</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line"></span><br><span class="line">第二种</span><br><span class="line">user_info = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;陈顺阳&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">30</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;杜峰&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">32</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;pounds&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">32</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>字典的增删改查（crud）：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">info = &#123;<span class="string">&quot;age&quot;</span>:<span class="number">12</span>, <span class="string">&quot;status&quot;</span>:<span class="literal">True</span>, <span class="string">&quot;name&quot;</span>:<span class="string">&quot;szk&quot;</span>,<span class="string">&quot;email&quot;</span>:<span class="string">&quot;xx@live.com&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">### 1.获取字典的键</span></span><br><span class="line"><span class="comment"># keys = info.keys()</span></span><br><span class="line"><span class="comment"># for k in keys:</span></span><br><span class="line"><span class="comment">#     print(k)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ### 2. 获取字典的所有值</span></span><br><span class="line"><span class="comment"># values = info.values()</span></span><br><span class="line"><span class="comment"># for v in values:</span></span><br><span class="line"><span class="comment">#     print(v)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 3.要获取字典的值又要获取字典的key, 非常重要的方法</span></span><br><span class="line"><span class="comment"># for k, v in info.items():</span></span><br><span class="line"><span class="comment">#     print(k, v)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 根据键来获取值  重要</span></span><br><span class="line"><span class="comment"># print(info[&#x27;height&#x27;])</span></span><br><span class="line">data = info.get(<span class="string">&quot;height&quot;</span>, <span class="string">&#x27;&#x27;</span>) <span class="comment"># 根据name为键去info字典中获取对应的值，如果不存在则返回None，存在则返回值。</span></span><br><span class="line">print(data) <span class="comment"># 输出：None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 4.更新键值对</span></span><br><span class="line"><span class="comment"># info2 = &#123;&quot;age&quot;:12, &quot;status&quot;:True&#125;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># # info2.update(age=14, name=&#x27;szk&#x27;) ### 如果key存在的话，就会更新原有的值，若不存在，将这个name值加入info2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### 5.增加</span></span><br><span class="line"><span class="comment"># info2[&#x27;name&#x27;] = &#x27;szk&#x27; ###向字典中添加一个元素</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># print(info2)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 6.删除</span></span><br><span class="line">info2 = &#123;<span class="string">&quot;age&quot;</span>:<span class="number">12</span>, <span class="string">&quot;status&quot;</span>:<span class="literal">True</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;szk&quot;</span>&#125;</span><br><span class="line"><span class="comment"># data = info2.pop(&quot;age&quot;) ### 根据键来删除元素</span></span><br><span class="line"><span class="comment"># print(info2) # &#123;&#x27;status&#x27;: True, &#x27;name&#x27;: &#x27;szk&#x27;&#125;</span></span><br><span class="line"><span class="comment"># print(data) # 12</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> info2[<span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">print(info2)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>集合的特性<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 2.交集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 &amp; s2                 <span class="comment"># 方式一：取两个集合的交集</span></span><br><span class="line">s4 = s1.intersection(s2) <span class="comment"># 方</span></span><br><span class="line"></span><br><span class="line">print(s3, s4)</span><br><span class="line"></span><br><span class="line"><span class="comment">### 3.并集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 | s2               <span class="comment"># 方式一：取两个集合的并集</span></span><br><span class="line">s4 = s1.union(s2)</span><br><span class="line"></span><br><span class="line">print(s3, s4)</span><br><span class="line"></span><br><span class="line"><span class="comment">### 4.差集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 - s2                       <span class="comment"># 方式一：差集，s1中有且s2中没有的值</span></span><br><span class="line">s4 = s1.difference(s2)         <span class="comment"># 方式二：差集，s1中有且s2中没有的值</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>列表和集合的转换：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">v1 = [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">99</span>,<span class="number">22</span>]</span><br><span class="line">s1 = set(v1)</span><br><span class="line">l1 = list(s1)</span><br><span class="line">print(l1)</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-python对文件的操作"><a href="#3-python对文件的操作" class="headerlink" title="3. python对文件的操作"></a>3. python对文件的操作</h5><blockquote>
+<p>主要学习就是文件打开的几种模式，，项目中涉及到就是文件上传和下载</p>
+</blockquote>
+<p>主要的文件打开方式：</p>
+<p>模式： w, r, r+<br>方法： open, close, read, write<br>上下文管理器：推崇的方式</p>
+<p>#####4. python的函数 基础入门</p>
+<blockquote>
+<p>重点：函数的参数</p>
+</blockquote>
+<p>函数的定义：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">shell:</span><br><span class="line">    func test()&#123;</span><br><span class="line">        函数体</span><br><span class="line">    &#125;</span><br><span class="line">    test() <span class="comment">### 函数的调用</span></span><br><span class="line">python:</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span>():</span></span><br><span class="line">        函数体</span><br><span class="line">    test() <span class="comment">### 函数调用</span></span><br></pre></td></tr></table></figure>
+<h5 id="4-函数的参数"><a href="#4-函数的参数" class="headerlink" title="4.函数的参数"></a>4.函数的参数</h5><ul>
+<li>参数的分类<ul>
+<li>位置参数</li>
+<li>关键字参数</li>
+<li>动态接收参数</li>
+</ul>
+</li>
+</ul>
+<p>参数组合：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">第一种：</span><br><span class="line">位置参数， 关键字参数， 默认参数</span><br><span class="line">test(a, b, c=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">第二种：</span><br><span class="line">动态接收位置参数， 动态接收关键字参数配合起来使用</span><br><span class="line">test(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>总结:位置参数 &gt; args(动态位置参数) &gt; 默认值参数 &gt; *kwargs(动态默认参数)，这四种参数可以任意的使用</p>
+</blockquote>
+<p>如果想接收所有的参数:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args,**kwargs</span>):</span></span><br><span class="line">    print(args,kwargs)</span><br><span class="line">func(<span class="number">1</span>,<span class="number">23</span>,<span class="number">5</span>,a=<span class="number">1</span>,b=<span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+<p>动态参数还可以这样传参:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lst = [<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>]</span><br><span class="line"><span class="comment"># 方法一</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(lst[<span class="number">0</span>],lst[<span class="number">1</span>],lst[<span class="number">2</span>])</span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(*lst)  </span><br><span class="line"><span class="comment"># 在实参的位置上用*将lst(可迭代对象)按照顺序打散</span></span><br><span class="line"><span class="comment"># 在形参的位置上用*把收到的参数组合成一个元祖</span></span><br></pre></td></tr></table></figure>
+<p>字典也可以进行打散,不过需要**</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>python</category>
