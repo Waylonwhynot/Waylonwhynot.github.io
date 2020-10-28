@@ -28,7 +28,7 @@
 <meta property="og:description" content="Django day 1 Django基础      (1) web服务的本质      (2) Django的介绍，下载，示例      (3) MTV(MVC)      (4) URL      (5) View      (6) Template      (7) ORM(单表操作)    day2 Django          ORM多表操作          Django组件">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-18T04:40:34.000Z">
-<meta property="article:modified_time" content="2020-10-24T18:09:25.314Z">
+<meta property="article:modified_time" content="2020-10-27T17:58:05.700Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-25 02:09:25" itemprop="dateModified" datetime="2020-10-25T02:09:25+08:00">2020-10-25</time>
+                <time title="修改时间：2020-10-28 01:58:05" itemprop="dateModified" datetime="2020-10-28T01:58:05+08:00">2020-10-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.6k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>18 分钟</span>
             </span>
 
         </div>
@@ -363,7 +363,119 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;% block menu %&#125;</span><br><span class="line">　　&#123;&#123; block.super &#125;&#125;</span><br><span class="line">　`<span class="tag">&lt;<span class="name">p</span>&gt;</span>！！！<span class="tag">&lt;/<span class="name">p</span>&gt;</span>`       #先继承父类的，后插入数据</span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
 
 
-<p>五、 ORM</p>
+<h3 id="五-ORM"><a href="#五-ORM" class="headerlink" title="五. ORM"></a>五. ORM</h3><h4 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h4><ul>
+<li>QuerySet<ul>
+<li>是Django封装的一个数据类型，本质是一个列表，每个元素是一个book对象</li>
+<li>print(ret.query) 打印查询的SQL语句</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>查询所有内容 all — 列表套对象的格式</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ret = models.Book.objects.all()</span><br><span class="line">&lt;QuerySet [&lt;Book: Book object (<span class="number">1</span>)&gt;, &lt;Book: Book object (<span class="number">2</span>)&gt;, &lt;Book: Book object (<span class="number">3</span>)&gt;]&gt;</span><br><span class="line"><span class="keyword">for</span> obj <span class="keyword">in</span> ret:</span><br><span class="line">    print(obj.title, obj.publish, obj.pub_date)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>指定具体字段 values — 列表套字典的格式</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.values(<span class="string">&quot;title&quot;</span>, <span class="string">&quot;publish&quot;</span>)</span><br><span class="line">&lt;QuerySet [&#123;<span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;武林外传&#x27;</span>, <span class="string">&#x27;publish&#x27;</span>: <span class="string">&#x27;人民出版社&#x27;</span>&#125;, &#123;<span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;金庸群侠传&#x27;</span>, <span class="string">&#x27;publish&#x27;</span>: <span class="string">&#x27;51aiops&#x27;</span>&#125;, &#123;<span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;金庸群侠传2&#x27;</span>, <span class="string">&#x27;publish&#x27;</span>: <span class="string">&#x27;51aiops&#x27;</span>&#125;]&gt;</span><br><span class="line"><span class="keyword">for</span> obj <span class="keyword">in</span> ret:</span><br><span class="line">    print(obj.get(<span class="string">&quot;title&quot;</span>), obj.get(<span class="string">&quot;publish&quot;</span>))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>查询符合条件的数据 get — 列表套字典的格式</p>
+<blockquote>
+<p>返回的对象只能为一个,超出一个都会抛出错误</p>
+</blockquote>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ret = models.Book.objects.get(id=<span class="number">2</span>)</span><br><span class="line">print(ret.title, ret.publish)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>first 第一条数据</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ret = models.Book.objects.first()</span><br><span class="line">print(ret.title, ret.publish)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>last() 最后一条数据</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ret = models.Book.objects.last()</span><br><span class="line">print(ret.title, ret.publish)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>filter() 用于查询符合条件的数据—相当于where条件</p>
+<blockquote>
+<p>得到的还是queryset类型的数据，列表套对象的格式</p>
+</blockquote>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ret = models.Book.objects.filter(id=<span class="number">3</span>)</span><br><span class="line"><span class="keyword">for</span> obj <span class="keyword">in</span> ret:</span><br><span class="line">        print(obj.title)</span><br><span class="line"></span><br><span class="line">ret = models.Book.objects.filter(publish=<span class="string">&quot;51aiops&quot;</span>, price=<span class="number">50</span>) <span class="comment">##相当于and ,Q()方法相当于or</span></span><br><span class="line">    <span class="keyword">for</span> obj <span class="keyword">in</span> ret:</span><br><span class="line">        print(obj.title)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">##like 基于双下划线的模糊查询</span></span><br><span class="line">ret = models.Book.objects.filter(price__in=[<span class="number">50</span>,<span class="number">70</span>])</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>exclude()查询不符合条件的数据</p>
+<blockquote>
+<p>得到的还是queryset类型的数据，列表套对象的格式</p>
+</blockquote>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ret = models.Book.objects.exclude(publish=<span class="string">&#x27;51aiops&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>order_by() 用于对查询结果进行排序</p>
+<blockquote>
+<p>得到的还是queryset类型的数据，列表套对象的格式</p>
+</blockquote>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ret = models.Book.objects.order_by(<span class="string">&quot;price&quot;</span>) <span class="comment">###升序</span></span><br><span class="line">ret = models.Book.objects.order_by(<span class="string">&quot;-price&quot;</span>) <span class="comment">###降序</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>count() 数据数量 返回数据是整数</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ret = models.Book.objects.count()</span><br><span class="line">ret = models.Book.objects.filter(price=<span class="number">200</span>).count()</span><br><span class="line">print(ret)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>exists() 方法用于判断查询的结果QuerySet列表里是否有数据</p>
+</blockquote>
+<blockquote>
+<p>values_list() — 列表套元祖的格式</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ret &#x3D; models.Book.objects.values_list(&quot;price&quot;, &quot;publish&quot;)</span><br><span class="line">&lt;QuerySet [(Decimal(&#39;55.00&#39;), &#39;人民出版社&#39;), (Decimal(&#39;50.00&#39;), &#39;51aiops&#39;), (Decimal(&#39;60.00&#39;), &#39;51aiops&#39;)]&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>distinct 去重复</p>
+<blockquote>
+<p>返回是queryset类型数据<br>注意：<br>对模型类的对象去重没有意义，因为每个对象都是不一样的存在<br>distinct()一般是联合values 或者values_list 联合使用</p>
+</blockquote>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ret = models.Book.objects.values_list(<span class="string">&quot;publish&quot;</span>).distinct()</span><br><span class="line">print(ret)</span><br><span class="line">ret = models.Book.objects.distinct()</span><br><span class="line">print(ret)</span><br></pre></td></tr></table></figure>
+
+<h5 id="需要注意"><a href="#需要注意" class="headerlink" title="需要注意:"></a>需要注意:</h5><h5 id="上述方法可以连着用"><a href="#上述方法可以连着用" class="headerlink" title="上述方法可以连着用"></a>上述方法可以连着用</h5><h5 id="链式写法"><a href="#链式写法" class="headerlink" title="链式写法"></a>链式写法</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ret = models.Book.objects.filter(price__gt=<span class="number">50</span>).distinct()</span><br><span class="line">ret = models.Book.objects.filter(price__gt=<span class="number">50</span>).values(<span class="string">&#x27;price&#x27;</span>,<span class="string">&#x27;title&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">books = models.Book.objects.filter(id=<span class="number">3</span>).update(price=<span class="number">80</span>)</span><br><span class="line">print(books)  <span class="comment"># 返回1代表城管科，0代表失败</span></span><br><span class="line">books = models.Book.objects.filter(id=<span class="number">3</span>).first()</span><br><span class="line">print(books)</span><br><span class="line"></span><br><span class="line">books.price = <span class="number">111</span></span><br><span class="line">books.save()</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.filter(id=<span class="number">3</span>).delete()</span><br><span class="line"><span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">删除数据的两种方式：</span></span><br><span class="line"><span class="string">1.物理删除</span></span><br><span class="line"><span class="string">2.逻辑删除 另外增加一个字段来控制 status=0，1</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="高级查询"><a href="#高级查询" class="headerlink" title="高级查询"></a>高级查询</h4><h4 id="F查询"><a href="#F查询" class="headerlink" title="F查询"></a>F查询</h4><blockquote>
+</blockquote>
+<pre><code># F() 的实例可以在查询中引用字段，来比较同一个 model 实例中两个不同字段的值。之前构造的过滤器都只是将字段值与某个常量做比较，如果想要对两个字段的值做比较，就需要用到 F()。</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</span><br><span class="line">res = models.Book.objects.update(price=F(<span class="string">&quot;price&quot;</span>)+<span class="number">100</span>)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+<h4 id="Q查询"><a href="#Q查询" class="headerlink" title="Q查询"></a>Q查询</h4><p>使用前要先从 django.db.models 引入 Q:</p>
+<blockquote>
+<p>from django.db.models import Q<br>Q(条件判断)<br>之前构造的过滤器里的多个条件的关系都是 and，如果需要执行更复杂的查询（例如 or 语句），就可以使用 Q 。<br>Q 对象可以使用 &amp; | ~ （与 或 非）操作符进行组合。<br>优先级从高到低：~ &amp; |。<br>可以混合使用 Q 对象和关键字参数，Q 对象和关键字参数是用”and”拼在一起的（即将逗号看成 and ），但是 Q 对象必须位于所有关键字参数的前面。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> Q</span><br><span class="line"></span><br><span class="line"><span class="comment">## 1. 查询价格大于 350 或者名称以菜开头的书籍的名称和价格。</span></span><br><span class="line">res=models.Book.objects.filter(Q(price__gt=<span class="number">350</span>)|Q(title__startswith=<span class="string">&quot;菜&quot;</span>)).values(<span class="string">&quot;title&quot;</span>,<span class="string">&quot;price&quot;</span>)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 2. 查询出版日期是 2004 或者 1999 年，并且书名中包含有&quot;菜&quot;的书籍。</span></span><br><span class="line">Q 对象和关键字混合使用，Q 对象要在所有关键字的前面:</span><br><span class="line"></span><br><span class="line">res = models.Book.objects.filter(Q(pub_date__year=<span class="number">2004</span>) | Q(pub_date__year=<span class="number">1999</span>), title__contains=<span class="string">&quot;菜&quot;</span>)</span><br><span class="line">print(res)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>1.聚合查询（aggregate）<br>聚合查询函数是对一组值执行计算，并返回单个值。</p>
+<p>Django 使用聚合查询前要先从 django.db.models 引入 Avg、Max、Min、Count、Sum（首字母大写）。</p>
+<p>from django.db.models import Avg,Max,Min,Count,Sum # 引入函数</p>
+<p>聚合查询返回值的数据类型是字典。</p>
+<p>聚合函数 aggregate() 是 QuerySet 的一个终止子句， 生成的一个汇总值，相当于 count()。</p>
+<p>使用 aggregate() 后，数据类型就变为字典，不能再使用 QuerySet 数据类型的一些 API 了。</p>
+<p>返回的字典中：键的名称默认是（属性名称加上__聚合函数名），值是计算出来的聚合值。</p>
+<p>如果要自定义返回字典的键的名称，可以起别名：</p>
+<blockquote>
+<p>aggregate(别名 = 聚合函数名(“属性名称”))</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from django.db.models import Avg,Max,Min,Count,Sum  #   引入函数</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">### 1.计算所有图书的平均价格:</span><br><span class="line">res &#x3D; models.Book.objects.aggregate(Avg(&quot;price&quot;))</span><br><span class="line">print(res, type(res))</span><br><span class="line"></span><br><span class="line">### 2.计算所有图书的数量、最贵价格和最便宜价格:</span><br><span class="line">res&#x3D;models.Book.objects.aggregate(c&#x3D;Count(&quot;id&quot;),max&#x3D;Max(&quot;price&quot;),min&#x3D;Min(&quot;price&quot;)) </span><br><span class="line">print(res,type(res)</span><br></pre></td></tr></table></figure>
+
+
+<p>分组查询（annotate）<br>分组查询一般会用到聚合函数，所以使用前要先从 django.db.models 引入 Avg,Max,Min,Count,Sum（首字母大写）。</p>
+<hr>
 <blockquote>
 <p>一对多，多的一方设置外键<br>一对多查询<br>关键字段在A中 book表 —&gt; publish<br>               A           B<br>A –&gt; B 正向 : 正向查询按字段<br>B –&gt; A 反向 : 反向查按表名小写_set</p>
 </blockquote>
@@ -384,8 +496,11 @@
 一对一
 一对多
 多对多</code></pre>
-<p>```</p>
 </blockquote>
+</blockquote>
+<p>```</p>
+<blockquote>
+<p>为什么要加上first<br><code>filter(id=5).first()</code><br>默认返回的是queryset类型数据，加上first()返回的才是对象</p>
 </blockquote>
 
     </div>
@@ -470,6 +585,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94-ORM"><span class="nav-number">1.</span> <span class="nav-text">五. ORM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.</span> <span class="nav-text">查询数据</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">需要注意:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8A%E8%BF%B0%E6%96%B9%E6%B3%95%E5%8F%AF%E4%BB%A5%E8%BF%9E%E7%9D%80%E7%94%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">上述方法可以连着用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%93%BE%E5%BC%8F%E5%86%99%E6%B3%95"><span class="nav-number">1.1.3.</span> <span class="nav-text">链式写法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.4.</span> <span class="nav-text">高级查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#F%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.5.</span> <span class="nav-text">F查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.6.</span> <span class="nav-text">Q查询</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -542,12 +658,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">172k</span>
+    <span title="站点总字数">176k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:46</span>
+    <span title="站点阅读时长">4:53</span>
 </div>
 
 <!--
