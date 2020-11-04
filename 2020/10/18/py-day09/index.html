@@ -28,7 +28,7 @@
 <meta property="og:description" content="ORM相关">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-18T04:40:34.000Z">
-<meta property="article:modified_time" content="2020-10-30T19:22:59.489Z">
+<meta property="article:modified_time" content="2020-11-04T19:30:56.516Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-31 03:22:59" itemprop="dateModified" datetime="2020-10-31T03:22:59+08:00">2020-10-31</time>
+                <time title="修改时间：2020-11-05 03:30:56" itemprop="dateModified" datetime="2020-11-05T03:30:56+08:00">2020-11-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
+              <span>14k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>18 分钟</span>
+              <span>24 分钟</span>
             </span>
 
         </div>
@@ -453,11 +453,11 @@
 
 <h4 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.filter(id=<span class="number">3</span>).delete()</span><br><span class="line"><span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">删除数据的两种方式：</span></span><br><span class="line"><span class="string">1.物理删除</span></span><br><span class="line"><span class="string">2.逻辑删除 另外增加一个字段来控制 status=0，1</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="高级查询"><a href="#高级查询" class="headerlink" title="高级查询"></a>高级查询</h4><h4 id="F查询"><a href="#F查询" class="headerlink" title="F查询"></a>F查询</h4><blockquote>
+<h4 id="高级查询"><a href="#高级查询" class="headerlink" title="高级查询"></a>高级查询</h4><h4 id="F查询（两个字段比较）"><a href="#F查询（两个字段比较）" class="headerlink" title="F查询（两个字段比较）"></a>F查询（两个字段比较）</h4><blockquote>
 </blockquote>
 <pre><code># F() 的实例可以在查询中引用字段，来比较同一个 model 实例中两个不同字段的值。之前构造的过滤器都只是将字段值与某个常量做比较，如果想要对两个字段的值做比较，就需要用到 F()。</code></pre>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</span><br><span class="line">res = models.Book.objects.update(price=F(<span class="string">&quot;price&quot;</span>)+<span class="number">100</span>)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
-<h4 id="Q查询"><a href="#Q查询" class="headerlink" title="Q查询"></a>Q查询</h4><p>使用前要先从 django.db.models 引入 Q:</p>
+<h4 id="Q查询（或）"><a href="#Q查询（或）" class="headerlink" title="Q查询（或）"></a>Q查询（或）</h4><p>使用前要先从 django.db.models 引入 Q:</p>
 <blockquote>
 <p>from django.db.models import Q<br>Q(条件判断)<br>之前构造的过滤器里的多个条件的关系都是 and，如果需要执行更复杂的查询（例如 or 语句），就可以使用 Q 。<br>Q 对象可以使用 &amp; | ~ （与 或 非）操作符进行组合。<br>优先级从高到低：~ &amp; |。<br>可以混合使用 Q 对象和关键字参数，Q 对象和关键字参数是用”and”拼在一起的（即将逗号看成 and ），但是 Q 对象必须位于所有关键字参数的前面。</p>
 </blockquote>
@@ -501,10 +501,57 @@
 多对多</code></pre>
 </blockquote>
 </blockquote>
-<p>```</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; 为什么要加上first</span><br><span class="line">&#96;filter(id&#x3D;5).first()&#96;</span><br><span class="line">默认返回的是queryset类型数据，加上first()返回的才是对象</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; orm中定义表的时候 加上 &#96;def __str__(self):  return self.name&#96; 打印对象本身的名字</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; 套模型 eg: 查询每个出版社的名称和书籍个数</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line">ret &#x3D; models.Publish.objects.values(&#39;nid&#39;).annotate(c&#x3D;Count(&#39;book_name&#39;)).values(&#39;name&#39;,&#39;add&#39;,&#39;c&#39;)</span><br><span class="line"># 模型：values后面是groupby的字段models.Publish.objects.values(group_by).annotate(c&#x3D;Count(&#39;连表，要计算的字段&#39;)).values(&#39;name&#39;,&#39;add&#39;,&#39;c&#39;)</span><br></pre></td></tr></table></figure>
+
+
+<p>一对多添加</p>
+<ol>
+<li>可通过对象添加</li>
+<li>通过外键关联ID添加<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Book.objects.create(name=<span class="string">&#x27;海燕3&#x27;</span>,price=<span class="number">333.123</span>,publish_date=now,publish_id=<span class="number">2</span>)</span><br><span class="line">Book.objects.create(name=<span class="string">&#x27;海3燕3&#x27;</span>,price=<span class="number">35.123</span>,publish_date=<span class="string">&#x27;2018/02/28&#x27;</span>,publish=pub)</span><br><span class="line">pub=Publish.objects.filter(nid=<span class="number">1</span>).first()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>多对多添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 当前生成的书籍对象</span><br><span class="line">    book_obj&#x3D;Book.objects.create(title&#x3D;&quot;追风筝的人&quot;,price&#x3D;200,publishDate&#x3D;&quot;2012-11-12&quot;,publish_id&#x3D;1)</span><br><span class="line">    # 为书籍绑定的做作者对象</span><br><span class="line">    yuan&#x3D;Author.objects.filter(name&#x3D;&quot;yuan&quot;).first() # 在Author表中主键为2的纪录</span><br><span class="line">    egon&#x3D;Author.objects.filter(name&#x3D;&quot;alex&quot;).first() # 在Author表中主键为1的纪录</span><br><span class="line"></span><br><span class="line">    # 绑定多对多关系,即向关系表book_authors中添加纪录</span><br><span class="line">    book_obj.authors.add(yuan,egon)    #  将某些特定的 model 对象添加到被关联对象集合中。   &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;    book_obj.authors.add(*[])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>多对多关系其它常用API：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">book_obj.authors.remove()      # 将某个特定的对象从被关联对象集合中去除。    &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;   book_obj.authors.remove(*[])</span><br><span class="line">book_obj.authors.clear()       #清空被关联对象集合</span><br><span class="line">book_obj.authors.set()         #先清空再设置　</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>一对多查询（publish与book）<br>正向查询（按字段：publish）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询主键为1的书籍的出版社所在的城市</span></span><br><span class="line">book_obj=Book.objects.filter(pk=<span class="number">1</span>).first()</span><br><span class="line"><span class="comment"># book_obj.publish 是主键为1的书籍对象关联的出版社对象</span></span><br><span class="line">print(book_obj.publish.city)</span><br></pre></td></tr></table></figure>
+
+<p>反向查询（按表名：book_set）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">publish=Publish.objects.get(name=<span class="string">&quot;苹果出版社&quot;</span>)</span><br><span class="line"><span class="comment">#publish.book_set.all() : 与苹果出版社关联的所有书籍对象集合</span></span><br><span class="line">book_list=publish.book_set.all()    </span><br><span class="line"><span class="keyword">for</span> book_obj <span class="keyword">in</span> book_list:</span><br><span class="line">       print(book_obj.title)</span><br></pre></td></tr></table></figure>
+
+<p>一对一查询（Author 与 AuthorDetail）<br>正向查询(按字段：authorDetail)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">egon=Author.objects.filter(name=<span class="string">&quot;egon&quot;</span>).first()</span><br><span class="line">print(egon.authorDetail.telephone)</span><br></pre></td></tr></table></figure>
+
+<p>反向查询(按表名：author)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询所有住址在北京的作者的姓名</span></span><br><span class="line"> </span><br><span class="line">authorDetail_list=AuthorDetail.objects.filter(addr=<span class="string">&quot;beijing&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> obj <span class="keyword">in</span> authorDetail_list:</span><br><span class="line">     print(obj.author.name)</span><br></pre></td></tr></table></figure>
+
+
+<p>多对多查询 (Author 与 Book)</p>
+<p>正向查询(按字段：authors)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 眉所有作者的名字以及手机号</span></span><br><span class="line"> </span><br><span class="line">book_obj=Book.objects.filter(title=<span class="string">&quot;眉&quot;</span>).first()</span><br><span class="line">authors=book_obj.authors.all()</span><br><span class="line"><span class="keyword">for</span> author_obj <span class="keyword">in</span> authors:</span><br><span class="line">     print(author_obj.name,author_obj.authorDetail.telephone)</span><br></pre></td></tr></table></figure>
+
+<p>反向查询(按表名：book_set)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询egon出过的所有书籍的名字</span></span><br><span class="line"> </span><br><span class="line">    author_obj=Author.objects.get(name=<span class="string">&quot;egon&quot;</span>)</span><br><span class="line">    book_list=author_obj.book_set.all()        <span class="comment">#与egon作者相关的所有书籍</span></span><br><span class="line">    <span class="keyword">for</span> book_obj <span class="keyword">in</span> book_list:</span><br><span class="line">        print(book_obj.title)</span><br></pre></td></tr></table></figure>
+
+
+<p>基于双下划线的跨表查询</p>
 <blockquote>
-<p>为什么要加上first<br><code>filter(id=5).first()</code><br>默认返回的是queryset类型数据，加上first()返回的才是对象</p>
+<p>正向查询按字段,反向查询按表名小写用来告诉ORM引擎join哪张表</p>
 </blockquote>
+<p>一对多查询</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># 正向查询 按字段:publish</span></span><br><span class="line"></span><br><span class="line">    queryResult=Book.objects</span><br><span class="line">　　　　　　　　　　　　.filter(publish__name=<span class="string">&quot;苹果出版社&quot;</span>)</span><br><span class="line">　　　　　　　　　　　　.values_list(<span class="string">&quot;title&quot;</span>,<span class="string">&quot;price&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 反向查询 按表名:book</span></span><br><span class="line"></span><br><span class="line">    queryResult=Publish.objects</span><br><span class="line">　　　　　　　　　　　　　　.filter(name=<span class="string">&quot;苹果出版社&quot;</span>)</span><br><span class="line">　　　　　　　　　　　　　　.values_list(<span class="string">&quot;book__title&quot;</span>,<span class="string">&quot;book__price&quot;</span>)</span><br><span class="line">查询的本质一样，就是select <span class="keyword">from</span>的表不一样</span><br></pre></td></tr></table></figure>
+
+<p>多对多查询</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 练习: 查询alex出过的所有书籍的名字(多对多)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 正向查询 按字段:authors:</span></span><br><span class="line">    queryResult=Book.objects</span><br><span class="line">　　　　　　　　　　　　.filter(authors__name=<span class="string">&quot;yuan&quot;</span>)</span><br><span class="line">　　　　　　　　　　　　.values_list(<span class="string">&quot;title&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 反向查询 按表名:book</span></span><br><span class="line">    queryResult=Author.objects</span><br><span class="line">　　　　　　　　　　　　　　.filter(name=<span class="string">&quot;yuan&quot;</span>)</span><br><span class="line">　　　　　　　　　　　　　　.values_list(<span class="string">&quot;book__title&quot;</span>,<span class="string">&quot;book__price&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>一对一查询</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询alex的手机号</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 正向查询</span></span><br><span class="line">    ret=Author.objects.filter(name=<span class="string">&quot;alex&quot;</span>).values(<span class="string">&quot;authordetail__telephone&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 反向查询</span></span><br><span class="line">    ret=AuthorDetail.objects.filter(author__name=<span class="string">&quot;alex&quot;</span>).values(<span class="string">&quot;telephone&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
 
     </div>
 
@@ -588,7 +635,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94-ORM"><span class="nav-number">1.</span> <span class="nav-text">五. ORM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.</span> <span class="nav-text">查询数据</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">需要注意:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8A%E8%BF%B0%E6%96%B9%E6%B3%95%E5%8F%AF%E4%BB%A5%E8%BF%9E%E7%9D%80%E7%94%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">上述方法可以连着用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%93%BE%E5%BC%8F%E5%86%99%E6%B3%95"><span class="nav-number">1.1.3.</span> <span class="nav-text">链式写法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.4.</span> <span class="nav-text">高级查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#F%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.5.</span> <span class="nav-text">F查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.6.</span> <span class="nav-text">Q查询</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94-ORM"><span class="nav-number">1.</span> <span class="nav-text">五. ORM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.</span> <span class="nav-text">查询数据</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">需要注意:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8A%E8%BF%B0%E6%96%B9%E6%B3%95%E5%8F%AF%E4%BB%A5%E8%BF%9E%E7%9D%80%E7%94%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">上述方法可以连着用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%93%BE%E5%BC%8F%E5%86%99%E6%B3%95"><span class="nav-number">1.1.3.</span> <span class="nav-text">链式写法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.4.</span> <span class="nav-text">高级查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#F%E6%9F%A5%E8%AF%A2%EF%BC%88%E4%B8%A4%E4%B8%AA%E5%AD%97%E6%AE%B5%E6%AF%94%E8%BE%83%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">F查询（两个字段比较）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q%E6%9F%A5%E8%AF%A2%EF%BC%88%E6%88%96%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">Q查询（或）</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -661,12 +708,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">187k</span>
+    <span title="站点总字数">193k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:12</span>
+    <span title="站点阅读时长">5:22</span>
 </div>
 
 <!--

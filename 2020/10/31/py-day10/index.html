@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="django的模型字段介绍cookie-sessionAuth模块">
+  <meta name="description" content="Django 分页django的模型字段介绍cookie-sessionAuth模块">
 <meta property="og:type" content="article">
 <meta property="og:title" content="py-day10">
 <meta property="og:url" content="https://waylon.whatyouneed.site/2020/10/31/py-day10/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="django的模型字段介绍cookie-sessionAuth模块">
+<meta property="og:description" content="Django 分页django的模型字段介绍cookie-sessionAuth模块">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/10/31/py-day10/cookie-session.png">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/10/31/py-day10/session-cookie2.png">
 <meta property="article:published_time" content="2020-10-30T19:27:33.000Z">
-<meta property="article:modified_time" content="2020-11-01T14:54:18.406Z">
+<meta property="article:modified_time" content="2020-11-01T15:01:01.222Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-01 22:54:18" itemprop="dateModified" datetime="2020-11-01T22:54:18+08:00">2020-11-01</time>
+                <time title="修改时间：2020-11-01 23:01:01" itemprop="dateModified" datetime="2020-11-01T23:01:01+08:00">2020-11-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,14 +242,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
+              <span>14k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>18 分钟</span>
+              <span>23 分钟</span>
             </span>
 
         </div>
@@ -261,7 +261,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>django的模型字段介绍<br>cookie-session<br>Auth模块</p>
+        <p>Django 分页<br>django的模型字段介绍<br>cookie-session<br>Auth模块</p>
 <a id="more"></a>
 
 
@@ -353,7 +353,24 @@ session 删除，删除整条记录（包括 session_key、session_data、expire
 <p>常⻅见的参数:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1、null&#x3D;True 数据库中字段是否可以为空</span><br><span class="line">4、auto_now 和 auto_now_add</span><br><span class="line">  auto_now ⾃自动创建---⽆无论添加或修改，都是当前操作的时间   auto_now_add ⾃自动创建---永远是创建时的时间</span><br><span class="line">5、choices</span><br><span class="line">GENDER_CHOICE &#x3D; (</span><br><span class="line">(u&#39;M&#39;, u&#39;Male&#39;),</span><br><span class="line">(u&#39;F&#39;, u&#39;Female&#39;), )</span><br><span class="line">gender &#x3D; models.CharField(max_length&#x3D;2,choices &#x3D; GENDER_CHOICE)   这⾥里里我们⽤用在内存创建⼀一个关联,来取代再创建⼀一个简单的表来关联 6、max_length</span><br><span class="line">7、default  默认值</span><br><span class="line">9、unique&#x3D;True  不不允许重复 例例如⽤用户名注册时候是不不允许重复的,在username字段⾥里里设置, 不不让重复</span><br><span class="line">10、db_index &#x3D; True  数据库索引</span><br></pre></td></tr></table></figure>
 
+<h3 id="Django-分页"><a href="#Django-分页" class="headerlink" title="Django 分页"></a>Django 分页</h3><ul>
+<li><p>导入分页模块<br><code>from django.core.paginator import Paginator</code></p>
+</li>
+<li><p>查询所有数据列表queryset对象<br><code>book_list = BorrotBook.objects.all()</code></p>
+</li>
+<li><p>实例化对象<br><code>paginator = Paginator(book_list, 10)</code></p>
+</li>
+<li><p>Paginator类对象的属性<br>序号    属性名    说明<br>1    num_pages    返回分页之后的总页数<br>2    page_range    返回分页后的页码列表</p>
+</li>
+</ul>
+<p>Paginator类对象的方法</p>
+<p>序号    方法名    说明<br>1    page(self, number)    返回第number页的page类实例对象</p>
+<p>Page实例对象的属性<br>序号    属性名    说明<br>1    number    返回当前页的页码<br>2    object_list    返回当前页的数据查询集<br>3    paginator    返回对应的Paginator类对象</p>
+<p>page实例对象的方法</p>
+<p>序号    方法名    说明<br>1    has_previous    判断当前页是否有前一页<br>2    has_next    判断当前页是否有下一页<br>3    previous_page_number    返回前一页的页码<br>4    next_page_number    返回下一页的页码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Views.py</span><br><span class="line">bookinfo = models.Book.objects.all() <span class="comment">## [&lt;Book: Book object (1)&gt;, &lt;Book: Book object (2)&gt;, &lt;Book: Book object (3)&gt;]&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> django.core.paginator <span class="keyword">import</span> Paginator</span><br><span class="line">    paginator = Paginator(bookinfo, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">    print(paginator)</span><br><span class="line">    pindex = request.GET.get(<span class="string">&#x27;pindex&#x27;</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    pindex = int(pindex)</span><br><span class="line">    page = paginator.page(pindex)  <span class="comment"># 传递当前页的实例对象到前端</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">## 3. 展示从数据库中获取的内容，美化展示</span></span><br><span class="line">    <span class="comment"># books = models.Book.objects.create(title=&quot;如来神掌&quot;,price=200,publish=&quot;功夫出版社&quot;,pub_date=&quot;2010-10-10&quot;)</span></span><br><span class="line">    print(pindex , page)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&quot;booklist.html&quot;</span>, &#123; <span class="string">&quot;page&quot;</span>: page, <span class="string">&quot;pindex&quot;</span>: pindex&#125;)</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for obj in page %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.id &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.title &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.publish &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.price &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.pub_date &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>删除 | 更新&#123;&#123; obj.id &#125;&#125; <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line">&#123;#    <span class="tag">&lt;<span class="name">--底部分页按钮显示--</span>&gt;</span>#&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">nav</span> <span class="attr">aria-label</span>=<span class="string">&quot;Page navigation&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;pagination&quot;</span>&gt;</span></span><br><span class="line">        &#123;#            # 判断当前页是否有上一页#&#125;</span><br><span class="line">        &#123;% if page.has_previous %&#125;</span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/booklist/?pindex=&#123;&#123;page.previous_page_number&#125;&#125;&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;Previous&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="symbol">&amp;laquo;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &#123;% endif %&#125;</span><br><span class="line">        &#123;#    # 循环遍历页码列表，并展示到底部#&#125;</span><br><span class="line">        &#123;% for num in page.paginator.page_range%&#125;</span><br><span class="line">            &#123;%if pindex == num %&#125;</span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;active&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> &gt;</span>&#123;&#123; num &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            &#123;%else%&#125;</span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/booklist/?pindex=&#123;&#123;num&#125;&#125;&quot;</span>&gt;</span>&#123;&#123; num &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            &#123;%endif%&#125;</span><br><span class="line">         &#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line">&#123;#            # 判断当前页是否有下一页#&#125;</span><br><span class="line">         &#123;% if page.has_next %&#125;</span><br><span class="line">             <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/booklist/?pindex=&#123;&#123;page.next_page_number&#125;&#125;&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;Next&quot;</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">span</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="symbol">&amp;raquo;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          &#123;% endif %&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="auth模块"><a href="#auth模块" class="headerlink" title="auth模块"></a>auth模块</h3><p>Django 用户认证（Auth）组件一般用在用户的登录注册上，用于判断当前的用户是否合法，并跳转到登陆成功或失败页面。</p>
 <p>Django 用户认证（Auth）组件需要导入 auth 模块:<br>导入模块</p>
@@ -445,7 +462,7 @@ session 删除，删除整条记录（包括 session_key、session_data、expire
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-django%E7%9A%84admin"><span class="nav-number">1.</span> <span class="nav-text">0. django的admin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie-session"><span class="nav-number">2.</span> <span class="nav-text">cookie session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-django%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%AD%97%E6%AE%B5%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text">二. django的模型字段介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auth%E6%A8%A1%E5%9D%97"><span class="nav-number">4.</span> <span class="nav-text">auth模块</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-django%E7%9A%84admin"><span class="nav-number">1.</span> <span class="nav-text">0. django的admin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie-session"><span class="nav-number">2.</span> <span class="nav-text">cookie session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-django%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%AD%97%E6%AE%B5%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text">二. django的模型字段介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Django-%E5%88%86%E9%A1%B5"><span class="nav-number">4.</span> <span class="nav-text">Django 分页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auth%E6%A8%A1%E5%9D%97"><span class="nav-number">5.</span> <span class="nav-text">auth模块</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -518,12 +535,12 @@ session 删除，删除整条记录（包括 session_key、session_data、expire
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">187k</span>
+    <span title="站点总字数">193k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:12</span>
+    <span title="站点阅读时长">5:22</span>
 </div>
 
 <!--
