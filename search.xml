@@ -1,6 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>py-cmdb</title>
+    <url>/2020/11/15/py-cmdb/</url>
+    <content><![CDATA[<p>一、为什么要做cmdb？</p>
+<pre><code>1. 项目上线的流程：</code></pre>
+<p>​<br>        调研需求分析 —》 开会确定日期 —》 开发程序 —》 项目测试人员 —》代码上线（运维来负责）</p>
+<pre><code>    传统上线方式：
+        直接代码解压 ，启服务， 访问项目， 进行测试
+
+        弊端：
+
+            - 手工上线  运维来干预 
+            - 加机器， 需要重复进行代码的部署
+
+        优化策略：
+            代码上线系统 
+
+            必要条件：需要知道服务器的信息 （服务器的主机名， 硬盘大小。。。）</code></pre>
+<p>​<br>    2. 一个公司即将上市， 审查公司的资产 </p>
+<pre><code>    传统方式,统计公司服务器资产的方式：
+        excel表格 
+            最后信息会变得不准确
+            导致年底进行审计的时候，资产变得无法进行准确的统计</code></pre>
+<p>​<br>    CMDB：</p>
+<pre><code>    配置管理数据库
+
+    记录服务器的资产信息（包括 机架位置， 主机名，硬盘， 网卡， 产品线， 管理员等）的
+
+    位置：
+        是自动化运维的基石</code></pre>
+<p>​<br>二、cmdb实现的方案：<br>​        核心的代码：<br>​            1. linux相关的命令   megacli<br>​            2. Python的代码执行linux命令， 得到结果返回给服务端<br>​<br>        业内：<br>            4套实现方案</p>
+<p>​<br>        三套方案全部实现</p>
+<p>​<br>        目标：</p>
+<pre><code>        写一份代码， 通过改变配置实现三套方案
+
+        客户端的采集</code></pre>
+<p> 三、代码实现：</p>
+<pre><code>    目录结构：
+
+        bin  ： 核心的启动文件  start.py 
+        conf : 配置文件夹  
+        lib  ：库文件 
+        log  : 不建议将日志文件夹放在项目中   /var/log  mkidr /logs/cmdb/
+        src  : 核心的源代码目录
+        test : 开发的过程中， 需要进行代码的调试 </code></pre>
+<p>​<br>        1. 高级配置文件的实现 ：</p>
+<pre><code>        django的配置：
+            from django.conf import global_settings, settings
+            settings.TIME_ZONE
+
+            将自定制的配置和全局的配置集成在一个对象上， 之后想要使用任何属性的时候， 直接可以通过此对象获得
+
+        技术要点：
+
+            getattr : 反射获取 对应的值
+            setattr : 反射设置</code></pre>
+<p>​<br>        2.  编程思想：</p>
+<pre><code>            高内聚低耦合
+
+                写一个类或者一个函数的时候， 我们需要明确一下次函数或者此类主要负责干啥的
+
+                class User():
+                    #### 和用户相关的一些逻辑
+
+                    def getUserInfo():
+                        #### 获取用户的信息
+
+                        ### 处理订单相关的业务逻辑</code></pre>
+<p>​<br>​<br>                可插拔式的配置：<br>                    settings.py:<br>                        PLUGINS_DICT = {<br>                            “basic” : ‘src.plugins.basic.Basic’,<br>                            “disk” : ‘src.plugins.disk.Disk’,<br>                            “memory” : ‘src.plugins.memory.Memory’,<br>                            “nic” : ‘src.plugins.nic.Nic’,<br>                            “cpu” : ‘src.plugins.cpu.Cpu’<br>                        }<br>                        参考django的中间件</p>
+<pre><code>                    def execute(self):
+
+                        for k, v in self.plugins_dict.items():
+                            &#39;&#39;&#39;
+                            k: basic 
+                            v: src.plugins.basic.Basic  字符串
+                            &#39;&#39;&#39;
+                            module_path, cls_name = v.rsplit(&#39;.&#39;, 1)
+                            module = importlib.import_module(module_path)  #### 导入路径
+                            cls = getattr(module, cls_name)   ##### 获取对应的类名
+                            cls().process()    #### 执行该类对应的方法
+
+                    插件的代码：
+
+
+                        class Memory():
+
+                            def process(self):
+                                print(&#39;memory&#39;)</code></pre>
+<p>​<br>​<br>        3. 插件代码重复：</p>
+<pre><code>        解决的方法：
+            1. base.py 写一个基类， 所有的插件继承这个基类， 只需要执行该基类中的方法
+
+            2. </code></pre>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>cmdb</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>py_day01</title>
     <url>/2020/08/09/py-day01/</url>
     <content><![CDATA[<p>python基础<br>变量·字符串·常用操作</p>
@@ -157,6 +258,184 @@
 <li>集合</li>
 </ul>
 <p>给数据结构和算法<br><a href="https://www.bilibili.com/video/BV1HA411b7ik">https://www.bilibili.com/video/BV1HA411b7ik</a></p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>py-day02</title>
+    <url>/2020/08/16/py-day02/</url>
+    <content><![CDATA[<p>python基础<br>列表 字典 集合 函数(位置参数， 关键字参数， 默认参数) 对文件操作</p>
+<a id="more"></a>
+
+<ul>
+<li><p>python的基础数据结构</p>
+<ul>
+<li>整型     1，2，3，</li>
+<li>字符串  <ul>
+<li>单引号  ‘hello’</li>
+<li>双引号  “hello”</li>
+<li>三引号  “”””””</li>
+</ul>
+</li>
+<li>布尔类型<ul>
+<li>True  </li>
+<li>False  注意的是：js true false</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>python的变量</p>
+<ul>
+<li>变量的作用：保存中间结果    num = 1+2+3    </li>
+<li>变量的命名规范：<ul>
+<li>PEP8规范</li>
+<li>等于号的左右两边是要有空格的</li>
+<li><strong>变量名一定要有意义</strong>  name = “szk”</li>
+<li>变量的几种风格  ： 大驼峰，小驼峰，下划线</li>
+<li>变量命名规范：不能使用关键字命名，不能以数字开头</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>字符串的用法</p>
+<ul>
+<li>split(‘:’) :   name = “szk_age”  name.split(‘_’)   非常重要的一个字符串用法</li>
+<li>字符串的格式化： <ul>
+<li>%  例子： “曾老师是一个 %s” % （‘大萨达撒‘）</li>
+<li>format 例子： “今天天气不错， 看电影 {}”.format(‘xxxxx’)</li>
+<li>format 例子： “曾老师性别{sex}, 年龄 {age}”.format(sex=’男’, age=73)</li>
+</ul>
+</li>
+<li>索引：任何语言中的索引，都是从0开始的  name = ‘szk’</li>
+<li>切片：就是从一整个元素中切出想要的元素 name = ‘51aiops’ , 可以根据索引来进行切割 <ul>
+<li>name[2:6]  索引的原则：前包后不包 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>流程控制</p>
+<ul>
+<li>顺序<ul>
+<li>代码从上到下依次执行</li>
+</ul>
+</li>
+<li>分支<ul>
+<li>if elif else</li>
+<li>elif 可以写多个，而if和else只能写一次</li>
+<li><strong>如果有多个分支条件的话，当命中一个条件之后，就会退出整个分支语句</strong></li>
+</ul>
+</li>
+<li>循环<ul>
+<li>while  条件: 项目中，用的比较少，算法的时候比较多</li>
+<li>for  项目中用的比较多<ul>
+<li>for i in ’abcd‘</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>其他</p>
+<ul>
+<li>input</li>
+<li>条件语句和运算符</li>
+<li>赋值运算符 ： <ul>
+<li>a = 10   a = a - 1 a += 1   a += 1 ===&gt; a = a - 1</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="今日内容"><a href="#今日内容" class="headerlink" title="今日内容"></a><div id="title">今日内容</div></h4><h5 id="1-python基础数据类型之列表和元组"><a href="#1-python基础数据类型之列表和元组" class="headerlink" title="1. python基础数据类型之列表和元组"></a>1. python基础数据类型之列表和元组</h5><ul>
+<li><p>列表   其他语言叫数组</p>
+<ul>
+<li><p>定义：用来存储比较复杂的数据 </p>
+</li>
+<li><p>用法：name_list = [‘老陈’, ‘老赵’,  ‘文亮’] </p>
+</li>
+<li><p>定义2： name_list = list() </p>
+</li>
+<li><p>增删改查  常用的方法： remove， pop， append，for循环 改索引</p>
+<p>pop, remove，和del的区别：</p>
+</li>
+<li><p>pop弹出，弹出之后的元素是可以赋值给其他变量用的</p>
+</li>
+<li><p>remove和del, 直接删除元素</p>
+</li>
+<li><p>remove就是通过值删除这个元素</p>
+</li>
+<li><p>del 通过索引来删除值</p>
+<p>pop 是弹出，后面可以引用，remove，del好像是直接删除    </p>
+</li>
+</ul>
+</li>
+<li><p>列表的切片：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">user_list = [<span class="string">&quot;王宝强&quot;</span>,<span class="string">&quot;陈羽凡&quot;</span>,<span class="string">&quot;贾乃亮&quot;</span>, <span class="string">&#x27;xxxx&#x27;</span>, <span class="string">&#x27;波多老师&#x27;</span>]</span><br><span class="line">                <span class="comment"># 0      1       2        3       4</span></span><br><span class="line">                <span class="comment"># -5    -4       -3      -2       -1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 通过索引下标来获取子列表</span></span><br><span class="line"><span class="comment">### 符合前包后不包的原则</span></span><br><span class="line">users = user_list[<span class="number">1</span>:<span class="number">4</span>]</span><br><span class="line">print(users)</span><br><span class="line">users = user_list[:]  <span class="comment">### 表示的是 从头切到尾</span></span><br><span class="line">users = user_list[<span class="number">2</span>:] <span class="comment">### 表示的是 从2 开始切到结尾</span></span><br><span class="line">users = user_list[:<span class="number">4</span>] <span class="comment">## 从头开始切</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列表的循环</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">### for循环打印</span></span><br><span class="line">user_list = [<span class="string">&quot;范德彪&quot;</span>,<span class="string">&quot;刘华强&quot;</span>,<span class="string">&#x27;尼古拉斯赵四&#x27;</span>,<span class="string">&quot;宋小宝&quot;</span>,<span class="string">&quot;刘能&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> user_list:</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, v <span class="keyword">in</span> enumerate(user_list):</span><br><span class="line">    print(i, v)</span><br></pre></td></tr></table></figure>
+<p><strong>只需要元素，则使用第一种循环， 若需要索引下标，则使用第二种循环</strong></p>
+<ul>
+<li>列表和字符串的互相转换<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 1.字符串转列表</span></span><br><span class="line">name = <span class="string">&quot;hello_world&quot;</span></span><br><span class="line">names = name.split(<span class="string">&#x27;_&#x27;</span>)</span><br><span class="line"></span><br><span class="line">print(names)<span class="comment">#### [&#x27;hello&#x27;, &#x27;world&#x27;]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 2. 列表转字符串</span></span><br><span class="line">names_list = [<span class="string">&quot;范德彪&quot;</span>,<span class="string">&quot;刘华强&quot;</span>,<span class="string">&#x27;尼古拉斯赵四&#x27;</span>,<span class="string">&quot;宋小宝&quot;</span>,<span class="string">&quot;刘能&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">### 将上述元素通过下划线拼接成字符串</span></span><br><span class="line">res = <span class="string">&#x27;_&#x27;</span>.join(names_list)</span><br><span class="line">print(res, type(res))</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>列表的增删改查，下去复习列表的基本操作的时候，遵循这个增删改查的原则</strong></p>
+<h5 id="2-python的基础数据类型之字典和集合"><a href="#2-python的基础数据类型之字典和集合" class="headerlink" title="2. python的基础数据类型之字典和集合"></a>2. python的基础数据类型之字典和集合</h5><p><strong>字典和列表一样的重要</strong></p>
+<p>python里叫字典，而其他语言java： 哈希table   hashtable</p>
+<p>定义方式：</p>
+<p>最长用的两种</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">第一种：</span><br><span class="line"><span class="comment"># info = &#123;</span></span><br><span class="line"><span class="comment">#     &quot;name&quot;: &#x27;szk&#x27;,</span></span><br><span class="line"><span class="comment">#     &quot;age&quot; : 18,</span></span><br><span class="line"><span class="comment">#     &quot;height&quot;: 180</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line"></span><br><span class="line">第二种</span><br><span class="line">user_info = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;陈顺阳&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">30</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;杜峰&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">32</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;pounds&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">32</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>字典的增删改查（crud）：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">info = &#123;<span class="string">&quot;age&quot;</span>:<span class="number">12</span>, <span class="string">&quot;status&quot;</span>:<span class="literal">True</span>, <span class="string">&quot;name&quot;</span>:<span class="string">&quot;szk&quot;</span>,<span class="string">&quot;email&quot;</span>:<span class="string">&quot;xx@live.com&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">### 1.获取字典的键</span></span><br><span class="line"><span class="comment"># keys = info.keys()</span></span><br><span class="line"><span class="comment"># for k in keys:</span></span><br><span class="line"><span class="comment">#     print(k)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ### 2. 获取字典的所有值</span></span><br><span class="line"><span class="comment"># values = info.values()</span></span><br><span class="line"><span class="comment"># for v in values:</span></span><br><span class="line"><span class="comment">#     print(v)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 3.要获取字典的值又要获取字典的key, 非常重要的方法</span></span><br><span class="line"><span class="comment"># for k, v in info.items():</span></span><br><span class="line"><span class="comment">#     print(k, v)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 根据键来获取值  重要</span></span><br><span class="line"><span class="comment"># print(info[&#x27;height&#x27;])</span></span><br><span class="line">data = info.get(<span class="string">&quot;height&quot;</span>, <span class="string">&#x27;&#x27;</span>) <span class="comment"># 根据name为键去info字典中获取对应的值，如果不存在则返回None，存在则返回值。</span></span><br><span class="line">print(data) <span class="comment"># 输出：None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 4.更新键值对</span></span><br><span class="line"><span class="comment"># info2 = &#123;&quot;age&quot;:12, &quot;status&quot;:True&#125;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># # info2.update(age=14, name=&#x27;szk&#x27;) ### 如果key存在的话，就会更新原有的值，若不存在，将这个name值加入info2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### 5.增加</span></span><br><span class="line"><span class="comment"># info2[&#x27;name&#x27;] = &#x27;szk&#x27; ###向字典中添加一个元素</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># print(info2)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 6.删除</span></span><br><span class="line">info2 = &#123;<span class="string">&quot;age&quot;</span>:<span class="number">12</span>, <span class="string">&quot;status&quot;</span>:<span class="literal">True</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;szk&quot;</span>&#125;</span><br><span class="line"><span class="comment"># data = info2.pop(&quot;age&quot;) ### 根据键来删除元素</span></span><br><span class="line"><span class="comment"># print(info2) # &#123;&#x27;status&#x27;: True, &#x27;name&#x27;: &#x27;szk&#x27;&#125;</span></span><br><span class="line"><span class="comment"># print(data) # 12</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> info2[<span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">print(info2)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>集合的特性<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 2.交集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 &amp; s2                 <span class="comment"># 方式一：取两个集合的交集</span></span><br><span class="line">s4 = s1.intersection(s2) <span class="comment"># 方</span></span><br><span class="line"></span><br><span class="line">print(s3, s4)</span><br><span class="line"></span><br><span class="line"><span class="comment">### 3.并集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 | s2               <span class="comment"># 方式一：取两个集合的并集</span></span><br><span class="line">s4 = s1.union(s2)</span><br><span class="line"></span><br><span class="line">print(s3, s4)</span><br><span class="line"></span><br><span class="line"><span class="comment">### 4.差集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 - s2                       <span class="comment"># 方式一：差集，s1中有且s2中没有的值</span></span><br><span class="line">s4 = s1.difference(s2)         <span class="comment"># 方式二：差集，s1中有且s2中没有的值</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>列表和集合的转换：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">v1 = [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">99</span>,<span class="number">22</span>]</span><br><span class="line">s1 = set(v1)</span><br><span class="line">l1 = list(s1)</span><br><span class="line">print(l1)</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-python对文件的操作"><a href="#3-python对文件的操作" class="headerlink" title="3. python对文件的操作"></a>3. python对文件的操作</h5><blockquote>
+<p>主要学习就是文件打开的几种模式，，项目中涉及到就是文件上传和下载</p>
+</blockquote>
+<p>主要的文件打开方式：</p>
+<p>模式： w, r, r+<br>方法： open, close, read, write<br>上下文管理器：推崇的方式</p>
+<p>#####4. python的函数 基础入门</p>
+<blockquote>
+<p>重点：函数的参数</p>
+</blockquote>
+<p>函数的定义：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">shell:</span><br><span class="line">    func test()&#123;</span><br><span class="line">        函数体</span><br><span class="line">    &#125;</span><br><span class="line">    test() <span class="comment">### 函数的调用</span></span><br><span class="line">python:</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span>():</span></span><br><span class="line">        函数体</span><br><span class="line">    test() <span class="comment">### 函数调用</span></span><br></pre></td></tr></table></figure>
+<h5 id="4-函数的参数"><a href="#4-函数的参数" class="headerlink" title="4.函数的参数"></a>4.函数的参数</h5><ul>
+<li>参数的分类<ul>
+<li>位置参数</li>
+<li>关键字参数</li>
+<li>动态接收参数</li>
+</ul>
+</li>
+</ul>
+<p>参数组合：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">第一种：</span><br><span class="line">位置参数， 关键字参数， 默认参数</span><br><span class="line">test(a, b, c=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">第二种：</span><br><span class="line">动态接收位置参数， 动态接收关键字参数配合起来使用</span><br><span class="line">test(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>总结:位置参数 &gt; args(动态位置参数) &gt; 默认值参数 &gt; *kwargs(动态默认参数)，这四种参数可以任意的使用</p>
+</blockquote>
+<p>如果想接收所有的参数:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args,**kwargs</span>):</span></span><br><span class="line">    print(args,kwargs)</span><br><span class="line">func(<span class="number">1</span>,<span class="number">23</span>,<span class="number">5</span>,a=<span class="number">1</span>,b=<span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+<p>动态参数还可以这样传参:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lst = [<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>]</span><br><span class="line"><span class="comment"># 方法一</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(lst[<span class="number">0</span>],lst[<span class="number">1</span>],lst[<span class="number">2</span>])</span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(*lst)  </span><br><span class="line"><span class="comment"># 在实参的位置上用*将lst(可迭代对象)按照顺序打散</span></span><br><span class="line"><span class="comment"># 在形参的位置上用*把收到的参数组合成一个元祖</span></span><br></pre></td></tr></table></figure>
+<p>字典也可以进行打散,不过需要**</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>python</category>
@@ -477,184 +756,6 @@
       </tags>
   </entry>
   <entry>
-    <title>py-day02</title>
-    <url>/2020/08/16/py-day02/</url>
-    <content><![CDATA[<p>python基础<br>列表 字典 集合 函数(位置参数， 关键字参数， 默认参数) 对文件操作</p>
-<a id="more"></a>
-
-<ul>
-<li><p>python的基础数据结构</p>
-<ul>
-<li>整型     1，2，3，</li>
-<li>字符串  <ul>
-<li>单引号  ‘hello’</li>
-<li>双引号  “hello”</li>
-<li>三引号  “”””””</li>
-</ul>
-</li>
-<li>布尔类型<ul>
-<li>True  </li>
-<li>False  注意的是：js true false</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>python的变量</p>
-<ul>
-<li>变量的作用：保存中间结果    num = 1+2+3    </li>
-<li>变量的命名规范：<ul>
-<li>PEP8规范</li>
-<li>等于号的左右两边是要有空格的</li>
-<li><strong>变量名一定要有意义</strong>  name = “szk”</li>
-<li>变量的几种风格  ： 大驼峰，小驼峰，下划线</li>
-<li>变量命名规范：不能使用关键字命名，不能以数字开头</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>字符串的用法</p>
-<ul>
-<li>split(‘:’) :   name = “szk_age”  name.split(‘_’)   非常重要的一个字符串用法</li>
-<li>字符串的格式化： <ul>
-<li>%  例子： “曾老师是一个 %s” % （‘大萨达撒‘）</li>
-<li>format 例子： “今天天气不错， 看电影 {}”.format(‘xxxxx’)</li>
-<li>format 例子： “曾老师性别{sex}, 年龄 {age}”.format(sex=’男’, age=73)</li>
-</ul>
-</li>
-<li>索引：任何语言中的索引，都是从0开始的  name = ‘szk’</li>
-<li>切片：就是从一整个元素中切出想要的元素 name = ‘51aiops’ , 可以根据索引来进行切割 <ul>
-<li>name[2:6]  索引的原则：前包后不包 </li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>流程控制</p>
-<ul>
-<li>顺序<ul>
-<li>代码从上到下依次执行</li>
-</ul>
-</li>
-<li>分支<ul>
-<li>if elif else</li>
-<li>elif 可以写多个，而if和else只能写一次</li>
-<li><strong>如果有多个分支条件的话，当命中一个条件之后，就会退出整个分支语句</strong></li>
-</ul>
-</li>
-<li>循环<ul>
-<li>while  条件: 项目中，用的比较少，算法的时候比较多</li>
-<li>for  项目中用的比较多<ul>
-<li>for i in ’abcd‘</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>其他</p>
-<ul>
-<li>input</li>
-<li>条件语句和运算符</li>
-<li>赋值运算符 ： <ul>
-<li>a = 10   a = a - 1 a += 1   a += 1 ===&gt; a = a - 1</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="今日内容"><a href="#今日内容" class="headerlink" title="今日内容"></a><div id="title">今日内容</div></h4><h5 id="1-python基础数据类型之列表和元组"><a href="#1-python基础数据类型之列表和元组" class="headerlink" title="1. python基础数据类型之列表和元组"></a>1. python基础数据类型之列表和元组</h5><ul>
-<li><p>列表   其他语言叫数组</p>
-<ul>
-<li><p>定义：用来存储比较复杂的数据 </p>
-</li>
-<li><p>用法：name_list = [‘老陈’, ‘老赵’,  ‘文亮’] </p>
-</li>
-<li><p>定义2： name_list = list() </p>
-</li>
-<li><p>增删改查  常用的方法： remove， pop， append，for循环 改索引</p>
-<p>pop, remove，和del的区别：</p>
-</li>
-<li><p>pop弹出，弹出之后的元素是可以赋值给其他变量用的</p>
-</li>
-<li><p>remove和del, 直接删除元素</p>
-</li>
-<li><p>remove就是通过值删除这个元素</p>
-</li>
-<li><p>del 通过索引来删除值</p>
-<p>pop 是弹出，后面可以引用，remove，del好像是直接删除    </p>
-</li>
-</ul>
-</li>
-<li><p>列表的切片：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">user_list = [<span class="string">&quot;王宝强&quot;</span>,<span class="string">&quot;陈羽凡&quot;</span>,<span class="string">&quot;贾乃亮&quot;</span>, <span class="string">&#x27;xxxx&#x27;</span>, <span class="string">&#x27;波多老师&#x27;</span>]</span><br><span class="line">                <span class="comment"># 0      1       2        3       4</span></span><br><span class="line">                <span class="comment"># -5    -4       -3      -2       -1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 通过索引下标来获取子列表</span></span><br><span class="line"><span class="comment">### 符合前包后不包的原则</span></span><br><span class="line">users = user_list[<span class="number">1</span>:<span class="number">4</span>]</span><br><span class="line">print(users)</span><br><span class="line">users = user_list[:]  <span class="comment">### 表示的是 从头切到尾</span></span><br><span class="line">users = user_list[<span class="number">2</span>:] <span class="comment">### 表示的是 从2 开始切到结尾</span></span><br><span class="line">users = user_list[:<span class="number">4</span>] <span class="comment">## 从头开始切</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列表的循环</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">### for循环打印</span></span><br><span class="line">user_list = [<span class="string">&quot;范德彪&quot;</span>,<span class="string">&quot;刘华强&quot;</span>,<span class="string">&#x27;尼古拉斯赵四&#x27;</span>,<span class="string">&quot;宋小宝&quot;</span>,<span class="string">&quot;刘能&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> user_list:</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, v <span class="keyword">in</span> enumerate(user_list):</span><br><span class="line">    print(i, v)</span><br></pre></td></tr></table></figure>
-<p><strong>只需要元素，则使用第一种循环， 若需要索引下标，则使用第二种循环</strong></p>
-<ul>
-<li>列表和字符串的互相转换<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 1.字符串转列表</span></span><br><span class="line">name = <span class="string">&quot;hello_world&quot;</span></span><br><span class="line">names = name.split(<span class="string">&#x27;_&#x27;</span>)</span><br><span class="line"></span><br><span class="line">print(names)<span class="comment">#### [&#x27;hello&#x27;, &#x27;world&#x27;]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 2. 列表转字符串</span></span><br><span class="line">names_list = [<span class="string">&quot;范德彪&quot;</span>,<span class="string">&quot;刘华强&quot;</span>,<span class="string">&#x27;尼古拉斯赵四&#x27;</span>,<span class="string">&quot;宋小宝&quot;</span>,<span class="string">&quot;刘能&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">### 将上述元素通过下划线拼接成字符串</span></span><br><span class="line">res = <span class="string">&#x27;_&#x27;</span>.join(names_list)</span><br><span class="line">print(res, type(res))</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>列表的增删改查，下去复习列表的基本操作的时候，遵循这个增删改查的原则</strong></p>
-<h5 id="2-python的基础数据类型之字典和集合"><a href="#2-python的基础数据类型之字典和集合" class="headerlink" title="2. python的基础数据类型之字典和集合"></a>2. python的基础数据类型之字典和集合</h5><p><strong>字典和列表一样的重要</strong></p>
-<p>python里叫字典，而其他语言java： 哈希table   hashtable</p>
-<p>定义方式：</p>
-<p>最长用的两种</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">第一种：</span><br><span class="line"><span class="comment"># info = &#123;</span></span><br><span class="line"><span class="comment">#     &quot;name&quot;: &#x27;szk&#x27;,</span></span><br><span class="line"><span class="comment">#     &quot;age&quot; : 18,</span></span><br><span class="line"><span class="comment">#     &quot;height&quot;: 180</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line"></span><br><span class="line">第二种</span><br><span class="line">user_info = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;陈顺阳&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">30</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;杜峰&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">32</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;pounds&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>:<span class="number">32</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>字典的增删改查（crud）：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">info = &#123;<span class="string">&quot;age&quot;</span>:<span class="number">12</span>, <span class="string">&quot;status&quot;</span>:<span class="literal">True</span>, <span class="string">&quot;name&quot;</span>:<span class="string">&quot;szk&quot;</span>,<span class="string">&quot;email&quot;</span>:<span class="string">&quot;xx@live.com&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">### 1.获取字典的键</span></span><br><span class="line"><span class="comment"># keys = info.keys()</span></span><br><span class="line"><span class="comment"># for k in keys:</span></span><br><span class="line"><span class="comment">#     print(k)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ### 2. 获取字典的所有值</span></span><br><span class="line"><span class="comment"># values = info.values()</span></span><br><span class="line"><span class="comment"># for v in values:</span></span><br><span class="line"><span class="comment">#     print(v)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 3.要获取字典的值又要获取字典的key, 非常重要的方法</span></span><br><span class="line"><span class="comment"># for k, v in info.items():</span></span><br><span class="line"><span class="comment">#     print(k, v)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 根据键来获取值  重要</span></span><br><span class="line"><span class="comment"># print(info[&#x27;height&#x27;])</span></span><br><span class="line">data = info.get(<span class="string">&quot;height&quot;</span>, <span class="string">&#x27;&#x27;</span>) <span class="comment"># 根据name为键去info字典中获取对应的值，如果不存在则返回None，存在则返回值。</span></span><br><span class="line">print(data) <span class="comment"># 输出：None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 4.更新键值对</span></span><br><span class="line"><span class="comment"># info2 = &#123;&quot;age&quot;:12, &quot;status&quot;:True&#125;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># # info2.update(age=14, name=&#x27;szk&#x27;) ### 如果key存在的话，就会更新原有的值，若不存在，将这个name值加入info2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### 5.增加</span></span><br><span class="line"><span class="comment"># info2[&#x27;name&#x27;] = &#x27;szk&#x27; ###向字典中添加一个元素</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># print(info2)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 6.删除</span></span><br><span class="line">info2 = &#123;<span class="string">&quot;age&quot;</span>:<span class="number">12</span>, <span class="string">&quot;status&quot;</span>:<span class="literal">True</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;szk&quot;</span>&#125;</span><br><span class="line"><span class="comment"># data = info2.pop(&quot;age&quot;) ### 根据键来删除元素</span></span><br><span class="line"><span class="comment"># print(info2) # &#123;&#x27;status&#x27;: True, &#x27;name&#x27;: &#x27;szk&#x27;&#125;</span></span><br><span class="line"><span class="comment"># print(data) # 12</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> info2[<span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">print(info2)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>集合的特性<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 2.交集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 &amp; s2                 <span class="comment"># 方式一：取两个集合的交集</span></span><br><span class="line">s4 = s1.intersection(s2) <span class="comment"># 方</span></span><br><span class="line"></span><br><span class="line">print(s3, s4)</span><br><span class="line"></span><br><span class="line"><span class="comment">### 3.并集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 | s2               <span class="comment"># 方式一：取两个集合的并集</span></span><br><span class="line">s4 = s1.union(s2)</span><br><span class="line"></span><br><span class="line">print(s3, s4)</span><br><span class="line"></span><br><span class="line"><span class="comment">### 4.差集</span></span><br><span class="line">s1 = &#123;<span class="string">&quot;刘能&quot;</span>, <span class="string">&quot;赵四&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s2 = &#123;<span class="string">&quot;刘科⻓&quot;</span>, <span class="string">&quot;冯乡⻓&quot;</span>, <span class="string">&quot;⽪⻓⼭&quot;</span>&#125;</span><br><span class="line">s3 = s1 - s2                       <span class="comment"># 方式一：差集，s1中有且s2中没有的值</span></span><br><span class="line">s4 = s1.difference(s2)         <span class="comment"># 方式二：差集，s1中有且s2中没有的值</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>列表和集合的转换：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">v1 = [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">99</span>,<span class="number">22</span>]</span><br><span class="line">s1 = set(v1)</span><br><span class="line">l1 = list(s1)</span><br><span class="line">print(l1)</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-python对文件的操作"><a href="#3-python对文件的操作" class="headerlink" title="3. python对文件的操作"></a>3. python对文件的操作</h5><blockquote>
-<p>主要学习就是文件打开的几种模式，，项目中涉及到就是文件上传和下载</p>
-</blockquote>
-<p>主要的文件打开方式：</p>
-<p>模式： w, r, r+<br>方法： open, close, read, write<br>上下文管理器：推崇的方式</p>
-<p>#####4. python的函数 基础入门</p>
-<blockquote>
-<p>重点：函数的参数</p>
-</blockquote>
-<p>函数的定义：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">shell:</span><br><span class="line">    func test()&#123;</span><br><span class="line">        函数体</span><br><span class="line">    &#125;</span><br><span class="line">    test() <span class="comment">### 函数的调用</span></span><br><span class="line">python:</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span>():</span></span><br><span class="line">        函数体</span><br><span class="line">    test() <span class="comment">### 函数调用</span></span><br></pre></td></tr></table></figure>
-<h5 id="4-函数的参数"><a href="#4-函数的参数" class="headerlink" title="4.函数的参数"></a>4.函数的参数</h5><ul>
-<li>参数的分类<ul>
-<li>位置参数</li>
-<li>关键字参数</li>
-<li>动态接收参数</li>
-</ul>
-</li>
-</ul>
-<p>参数组合：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">第一种：</span><br><span class="line">位置参数， 关键字参数， 默认参数</span><br><span class="line">test(a, b, c=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">第二种：</span><br><span class="line">动态接收位置参数， 动态接收关键字参数配合起来使用</span><br><span class="line">test(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>总结:位置参数 &gt; args(动态位置参数) &gt; 默认值参数 &gt; *kwargs(动态默认参数)，这四种参数可以任意的使用</p>
-</blockquote>
-<p>如果想接收所有的参数:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args,**kwargs</span>):</span></span><br><span class="line">    print(args,kwargs)</span><br><span class="line">func(<span class="number">1</span>,<span class="number">23</span>,<span class="number">5</span>,a=<span class="number">1</span>,b=<span class="number">6</span>)</span><br></pre></td></tr></table></figure>
-<p>动态参数还可以这样传参:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lst = [<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>]</span><br><span class="line"><span class="comment"># 方法一</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(lst[<span class="number">0</span>],lst[<span class="number">1</span>],lst[<span class="number">2</span>])</span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(*lst)  </span><br><span class="line"><span class="comment"># 在实参的位置上用*将lst(可迭代对象)按照顺序打散</span></span><br><span class="line"><span class="comment"># 在形参的位置上用*把收到的参数组合成一个元祖</span></span><br></pre></td></tr></table></figure>
-<p>字典也可以进行打散,不过需要**</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>py-day08-02</title>
     <url>/2020/09/27/py-day08-02/</url>
     <content><![CDATA[<p>Django day-01</p>
@@ -961,6 +1062,11 @@
       </tags>
   </entry>
   <entry>
+    <title>py-skill</title>
+    <url>/2020/11/06/py-skill/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>pycharm使用</title>
     <url>/2020/10/25/pycharm%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<p>Pycharm使用</p>
@@ -1224,105 +1330,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>kubernetes网络通信原理</title>
-    <url>/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<p>了解通信原理</p>
-<a id="more"></a>
-<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><p>1、网络的命名空间：Linux在网络栈中引入网络命名空间，将独立的网络协议栈隔离到不同的命令空间中，彼此间无法通信；docker利用这一特性，实现不容器间的网络隔离。</p>
-<p>2、Veth设备对：也叫虚拟网络接口对。Veth设备对的引入是为了实现在不同网络命名空间的通信。</p>
-<p>3、Iptables/Netfilter：Netfilter负责在内核中执行各种挂接的规则(过滤、修改、丢弃等)，运行在内核 模式中；Iptables模式是在用户模式下运行的进程，负责协助维护内核中Netfilter的各种规则表；通过二者的配合来实现整个Linux网络协议栈中灵活的数据包处理机制。</p>
-<p>4、网桥：网桥是一个二层网络设备,通过网桥可以将linux支持的不同的端口连接起来,并实现类似交换机那样的多对多的通信。</p>
-<p>5、路由：Linux系统包含一个完整的路由功能，当IP层在处理数据发送或转发的时候，会使用路由表来决定发往哪里。</p>
-<h2 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h2><p>Kubernetes对集群内部的网络进行了重新抽象，以实现整个集群网络扁平化。我们可以理解网络模型时，可以完全抽离物理节点去理解，我们用图说话，先有基本印象。</p>
-<img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/kubernetes-proxy-model.jpg" class title="kubernetes网络通信原理">
-
-<h3 id="一个Service"><a href="#一个Service" class="headerlink" title="一个Service"></a>一个Service</h3><p>Service是Kubernetes为为屏蔽这些后端实例（Pod）的动态变化和对多实例的负载均衡而引入的资源对象。Service通常与deployment绑定，定义了服务的访问入口地址，应用(Pod)可以通过这个入口地址访问其背后的一组由Pod副本组成的集群实例。Service与其后端Pod副本集群之间则是通过Label Selector来实现映射。</p>
-<p>Service的类型(Type)决定了Service如何对外提供服务，根据类型不同，服务可以只在Kubernetes cluster中可见，也可以暴露到集群外部。Service有三种类型，ClusterIP，NodePort和LoadBalancer。具体的使用场景会在下文中进行阐述。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ kubectl get svc --selector app&#x3D;nginx</span><br><span class="line">NAME   TYPE     CLUSTER-IP  EXTERNAL-IP PORT(S) AGE</span><br><span class="line">nginx ClusterIP 172.19.0.166   &lt;none&gt;    80&#x2F;TCP  1m</span><br></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">kubectl</span> <span class="string">describe</span> <span class="string">svc</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">Name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">Namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">Labels:</span> <span class="string">app=nginx</span></span><br><span class="line"><span class="attr">Annotations:</span> <span class="string">&lt;none&gt;</span></span><br><span class="line"><span class="attr">Selector:</span> <span class="string">app=nginx</span></span><br><span class="line"><span class="attr">Type:</span> <span class="string">ClusterIP</span></span><br><span class="line"><span class="attr">IP:</span> <span class="number">172.19</span><span class="number">.0</span><span class="number">.166</span></span><br><span class="line"><span class="attr">Port:</span> <span class="string">&lt;unset&gt;</span> <span class="number">80</span><span class="string">/TCP</span></span><br><span class="line"><span class="attr">TargetPort:</span> <span class="number">80</span><span class="string">/TCP</span></span><br><span class="line"><span class="attr">Endpoints:</span> <span class="number">172.16</span><span class="number">.2</span><span class="number">.125</span><span class="string">:80,172.16.2.229:80</span></span><br><span class="line"><span class="attr">Session Affinity:</span> <span class="string">None</span></span><br><span class="line"><span class="attr">Events:</span> <span class="string">&lt;none&gt;</span></span><br></pre></td></tr></table></figure>
-<p>该svc后端代理了2个Pod实例:172.16.2.125:80,172.16.2.229:80</p>
-<h3 id="三个IP"><a href="#三个IP" class="headerlink" title="三个IP"></a>三个IP</h3><p>Kubernetes为描述其网络模型的IP对象，抽象出Cluster IP和Pod IP的概念。</p>
-<p>PodIP是Kubernetes集群中每个Pod的IP地址。它是Docker Engine 根据docker0网桥的IP地址段进行分配的，是一个虚拟的二层网络。Kubernetes中Pod间能够彼此直接通讯，Pod里的容器访问另外一个Pod里的容器，是通过Pod IP所在进行通信。</p>
-<p>Cluster IP仅作用于Service，其没有实体对象所对应，因此Cluster IP无法被ping通。它的作用是为Service后端的实例提供统一的访问入口。当访问ClusterIP时，请求将被转发到后端的实例上，默认是轮询方式。Cluster IP和Service一样由kube-proxy组件维护，其实现方式主要有两种，<strong>iptables</strong>和<strong>IPVS</strong>。在<strong>1.8版本后kubeproxy开始支持IPVS方式</strong>。在上例中，SVC的信息中包含了Cluster IP。</p>
-<p>这里未列出nodeip概念，由于其本身是物理机的网卡IP。因此可理解为nodeip就是物理机IP。</p>
-<h3 id="三个Port"><a href="#三个Port" class="headerlink" title="三个Port"></a>三个Port</h3><p>在Kubernetes中，涉及容器，Pod，Service，集群各等多个层级的对象间的通信，为在网络模型中区分各层级的通信端口，这里对Port进行了抽象。</p>
-<h4 id="Port"><a href="#Port" class="headerlink" title="Port"></a>Port</h4><p>该Port非一般意义上的TCP/IP中的Port概念，它是特指Kubernetes中Service的port，是Service间的访问端口，例如Mysql的Service默认3306端口。它仅对进群内容器提供访问权限，而无法从集群外部通过该端口访问服务。</p>
-<h4 id="nodePort"><a href="#nodePort" class="headerlink" title="nodePort"></a>nodePort</h4><p>nodePort为外部机器提供了访问集群内服务的方式。比如一个Web应用需要被其他用户访问，那么需要配置type=NodePort，而且配置nodePort=30001，那么其他机器就可以通过浏览器访问scheme://node:30001访问到该服务，例如</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;node:30001</span><br></pre></td></tr></table></figure>
-<h4 id="targetPort"><a href="#targetPort" class="headerlink" title="targetPort"></a>targetPort</h4><p>targetPort是容器的端口（最根本的端口入口），与制作容器时暴露的端口一致（DockerFile中EXPOSE），例如<a href="http://docker.io官方的nginx暴露的是80端口./">http://docker.io官方的nginx暴露的是80端口。</a></p>
-<p>eg:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">mallh5-service</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">abcdocker</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">  <span class="attr">app:</span> <span class="string">mallh5web</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line"> <span class="attr">ports:</span></span><br><span class="line">   <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">     <span class="attr">port:</span> <span class="number">3017</span></span><br><span class="line">     <span class="attr">targetPort:</span> <span class="number">5003</span></span><br><span class="line">     <span class="attr">nodePort:</span> <span class="number">31122</span></span><br></pre></td></tr></table></figure>
-<p>举出了一个service的yaml，其部署在abcdocker的namespace中。这里配置了nodePort，因此其类型Type就是NodePort，注意大小写。若没有配置nodePort，那这里需要填写ClusterIP，即表示只支持集群内部服务访问。</p>
-<h2 id="集群内部通信"><a href="#集群内部通信" class="headerlink" title="集群内部通信"></a>集群内部通信</h2><h3 id="单节点通信"><a href="#单节点通信" class="headerlink" title="单节点通信"></a>单节点通信</h3><p>集群单节点内的通信，主要包括两种情况，同一个pod内的多容器间通信以及同一节点不同pod间的通信。由于不涉及跨节点访问，因此流量不会经过物理网卡进行转发。</p>
-<p>查看路由表</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@node-1:&#x2F;opt&#x2F;bin# route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination Gateway Genmask Flags Metric Ref Use Iface</span><br><span class="line">0.0.0.0 172.23.100.1 0.0.0.0 UG 0 0 0 eth0</span><br><span class="line">10.1.0.0 0.0.0.0 255.255.0.0 U 0 0 0 flannel.1 #flannel 网络内跨节点的通信会交给 flannel.1 处理</span><br><span class="line">10.1.1.0 0.0.0.0 255.255.255.0 U 0 0 0 docker0 #flannel 网络内节点内的通信会走 docker0</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-Pod内通信"><a href="#1-Pod内通信" class="headerlink" title="1 Pod内通信"></a>1 Pod内通信</h3><img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/pod%E5%86%85%E9%80%9A%E4%BF%A1.jpg" class title="kubernetes网络通信原理">
-<p>同一个pod内共享网络命名空间，容器之间通过访问127.0.0.1:（端口）即可。图中的veth<em>即指veth对的一端（另一端未标注，但实际上是成对出现），该veth对是由Docker Daemon挂载在docker0网桥上，另一端添加到容器所属的网络命名空间，图上显示是容器中的eth0。<br>图中演示了bridge模式下的容器间通信。docker1向docker2发送请求，docker1，docker2均与docker0建立了veth对进行通讯。<br>当请求经过docker0时，由于容器和docker0同属于一个子网，因此请求经过docker2与docker0的veth</em>对，转发到docker2，该过程并未跨节点，因此不经过eth0。</p>
-<p>总结：同一个pod内的多个容器间的通信，通过lo即可实现；</p>
-<h3 id="Pod间通信"><a href="#Pod间通信" class="headerlink" title="Pod间通信"></a>Pod间通信</h3><p>同节点pod间通信<br>由于Pod内共享网络命名空间（由pause容器创建），所以本质上也是同节点容器间的通信。同时，同一Node中Pod的默认路由都是docker0的地址，由于它们关联在同一个docker0网桥上，地址网段相同，所有它们之间应当是能直接通信的。来看看实际上这一过程如何实现。如上图，Pod1中容器1和容器2共享网络命名空间，因此对pod外的请求通过pod1和Docker0网桥的veth对（图中挂在eth0和ethx上）实现。</p>
-<p>总结：<br>同一Node中Pod的默认路由都是docker0的地址<br>pod ip &lt;—&gt; pod ip，pod和pod之间要不经过任何转换即可通信；</p>
-<img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/%E5%90%8C%E8%8A%82%E7%82%B9pod%E9%97%B4%E9%80%9A%E4%BF%A1.jpg" class title="kubernetes网络通信原理">
-
-<h3 id="pod和service通信"><a href="#pod和service通信" class="headerlink" title="pod和service通信"></a>pod和service通信</h3><p>pod ip &lt;—-&gt; cluster ip（即service ip）&lt;—-&gt;pod ip，他们通过iptables或ipvs实现通信，另外大家要注意ipvs取代不了iptables，因为ipvs只能做负载均衡，而做不了nat转换；</p>
-<h3 id="跨节点通信"><a href="#跨节点通信" class="headerlink" title="跨节点通信"></a>跨节点通信</h3><h4 id="CNI：容器网络接口"><a href="#CNI：容器网络接口" class="headerlink" title="CNI：容器网络接口"></a>CNI：容器网络接口</h4><p>CNI 是一种标准，它旨在为容器平台提供网络的标准化。不同的容器平台（比如目前的 kubernetes、mesos 和 rkt）能够通过相同的接口调用不同的网络组件。</p>
-<p>目前kubernetes支持的CNI组件种类很多，例如：flannel，callco，canel，kube-router。</p>
-<p>flanel只支持网络通讯，但是不支持网络策略。<br>callco网络通讯和网络策略都支持。<br>canel：flanel+callco合起来的功能。</p>
-<p>主流的跨主机通信方案主要有一下几种：<br>1）基于隧道的overlay网络：按隧道类型来说，不同的公司或者组织有不同的实现方案。docker原生的overlay网络就是基于vxlan隧道实现的。ovn则需要通过geneve或者stt隧道来实现的。flannel最新版本也开始默认基于vxlan实现overlay网络。</p>
-<p>2）基于包封装的overlay网络：基于UDP封装等数据包包装方式，在docker集群上实现跨主机网络。典型实现方案有weave、flannel的早期版本。</p>
-<p>3）基于三层实现SDN网络：基于三层协议和路由，直接在三层上实现跨主机网络，并且通过iptables实现网络的安全隔离。典型的方案为Project Calico。同时对不支持三层路由的环境，Project Calico还提供了基于IPIP封装的跨主机网络实现</p>
-<p>总结：<br>    1）虚拟网桥，虚拟网卡，多个容器共用一个虚拟网卡进行通信；<br>    2）多路复用：MacVLAN，多个容器共用一个物理网卡进行通信；<br>    3）硬件交换：SR-LOV，一个物理网卡可以虚拟出多个接口，这个性能最好。</p>
-<h4 id="通信方式"><a href="#通信方式" class="headerlink" title="通信方式"></a>通信方式</h4><img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/flannel1.jpg" class title="kubernetes网络通信原理">
-<p>集群内跨节点通信涉及到不同的子网间通信，仅靠docker0无法实现，这里需要借助CNI网络插件来实现。图中展示了使用flannel实现跨节点通信的方式。</p>
-<p>简单说来，flannel的用户态进程flanneld会为每个node节点创建一个flannel.1的网桥，根据etcd或apiserver的全局统一的集群信息为每个node分配全局唯一的网段，避免地址冲突。同时会为docker0和flannel.1创建veth对，docker0将报文丢给flannel.1,。</p>
-<p>Flanneld维护了一份全局node的网络表，通过flannel.1接收到请求后，根据node表，将请求二次封装为UDP包，扔给eth0，由eth0出口进入物理网路发送给目的node。</p>
-<p>在另一端以相反的流程。Flanneld解包并发往docker0，进而发往目的Pod中的容器</p>
-<p>两个节点上的pod可以借助flannel隧道进行通信。默认使用的VxLAN协议，因为它有额外开销，所以性能有点低。</p>
-<p>flannel第二种协议叫host-gw(host gateway)，即Node节点把自己的网络接口当做pod的网关使用，从而使不同节点上的node进行通信，这个性能比VxLAN高，因为它没有额外开销。不过他有个缺点， 就是各node节点必须在同一个网段中 。</p>
-<p>另外，如果两个pod所在节点在同一个网段中 ，可以让VxLAN也支持host-gw的功能， 即直接通过物理网卡的网关路由转发，而不用隧道flannel叠加，从而提高了VxLAN的性能，这种flannel的功能叫directrouting。<br>flannel支持多种后端：<br>    1.Vxlan<br>        1.1 vxlan<br>        1.2 Dirextrouting<br>    2.host-gw：Host Gateway  #不推荐，只能在二层网络中，不支持跨网络，如果有成千上万的Pod，容易产生广播风暴<br>    3.UDP：性能差</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@master ~]<span class="comment"># kubectl get pods -o wide</span></span><br><span class="line">NAME                             READY     STATUS             RESTARTS   AGE       IP             NODE</span><br><span class="line">myapp-deploy-69b47bc96d-79fqh    1/1       Running            4          7d        10.244.1.97    node1</span><br><span class="line">myapp-deploy-69b47bc96d-tc54k    1/1       Running            4          7d        10.244.2.88    node2</span><br><span class="line">[root@master ~]<span class="comment"># kubectl exec -it myapp-deploy-69b47bc96d-79fqh -- /bin/sh</span></span><br><span class="line">/ <span class="comment"># ping 10.244.2.88 #ping对方Node上容器的ip</span></span><br><span class="line">PING 10.244.2.88 (10.244.2.88): 56 data bytes</span><br><span class="line">64 bytes from 10.244.2.88: seq=0 ttl=62 time=0.459 ms</span><br><span class="line">64 bytes from 10.244.2.88: seq=0 ttl=62 time=0.377 ms</span><br><span class="line">64 bytes from 10.244.2.88: seq=1 ttl=62 time=0.252 ms</span><br><span class="line">64 bytes from 10.244.2.88: seq=2 ttl=62 time=0.261 ms</span><br></pre></td></tr></table></figure>
-<p>在其他节点上抓包，发现根本就在ens192上抓不到包。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@master ~]<span class="comment"># tcpdump -i ens192 -nn icmp</span></span><br><span class="line">[root@master ~]<span class="comment"># yum install bridge-utils -y</span></span><br><span class="line">[root@master ~]<span class="comment"># brctl show docker0</span></span><br><span class="line">bridge namebridge idSTP enabledinterfaces</span><br><span class="line">docker08000.024283f8b8ffno</span><br><span class="line">[root@master ~]<span class="comment"># brctl show cni0</span></span><br><span class="line">bridge namebridge idSTP enabledinterfaces</span><br><span class="line">cni08000.0a580af40001noveth6ec94aab</span><br><span class="line">vethf703483a</span><br><span class="line">vethff579703</span><br></pre></td></tr></table></figure>
-<p> 可以看到veth这些接口都是桥接到cni0上的。</p>
-<pre><code>brctl show表示查看已有网桥。</code></pre>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt;[root@node1 ~]<span class="comment">#  tcpdump -i cni0 -nn icmp</span></span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on cni0, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">23:40:11.370754 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 96, length 64</span><br><span class="line">23:40:11.370988 IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 4864, seq 96, length 64</span><br><span class="line">23:40:12.370888 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 97, length 64</span><br><span class="line">23:40:12.371090 IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 4864, seq 97, length 64</span><br><span class="line">^X23:40:13.371015 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 98, length 64</span><br><span class="line">23:40:13.371239 IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 4864, seq 98, length 64</span><br><span class="line">23:40:14.371128 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 99, length 64</span><br></pre></td></tr></table></figure>
-<p>可以看到，在node节点，可以在cni0端口上抓到容器里面的Ping时的包。</p>
-<pre><code>其实，上面ping时的数据流是先从cni0进来，然后从flannel.1出去，最后借助物理网卡ens32发出去。所以，我们在flannel.1上也能抓到包：</code></pre>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@node1 ~]<span class="comment">#  tcpdump -i flannel.1 -nn icmp</span></span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on flannel.1, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">03:12:36.823315 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 12840, length 64</span><br><span class="line">03:12:36.823496 IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 4864, seq 12840, length 64</span><br><span class="line">03:12:37.823490 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 12841, length 64</span><br><span class="line">03:12:37.823634 IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 4864, seq 12841, length 64</span><br></pre></td></tr></table></figure>
-<p>同样，在ens192物理网卡上也能抓到包：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@node1 ~]<span class="comment"># tcpdump -i ens192 -nn host 172.16.1.102  #172.16.1.102是node2的物理ip</span></span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on ens192, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">10:59:24.234174 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 7168, seq 0, length 64</span><br><span class="line">10:59:24.234434 IP 172.16.1.102.54894 &gt; 172.16.1.101.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 7168, seq 0, length 64</span><br><span class="line">10:59:25.234301 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 7168, seq 1, length 64</span><br><span class="line">10:59:25.234469 IP 172.16.1.102.54894 &gt; 172.16.1.101.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 7168, seq 1, length 64</span><br><span class="line">10:59:26.234415 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 7168, seq 2, length 64</span><br><span class="line">10:59:26.234592 IP 172.16.1.102.54894 &gt; 172.16.1.101.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 7168, seq 2, length 64</span><br><span class="line">10:59:27.234528 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 7168, seq 3, length 64</span><br></pre></td></tr></table></figure>
-<pre><code>下面我们把flannel的通信模式改成directrouting的方式</code></pre>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@master flannel]<span class="comment"># cd /root/manifests/flannel</span></span><br><span class="line">[root@master flannel]<span class="comment"># kubectl edit configmap kube-flannel-cfg -n kube-system</span></span><br><span class="line">&#123;</span><br><span class="line">      <span class="string">&quot;Network&quot;</span>: <span class="string">&quot;10.244.0.0/16&quot;</span>,</span><br><span class="line">      <span class="string">&quot;Backend&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;Type&quot;</span>: <span class="string">&quot;vxlan&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Directrouting&quot;</span>: <span class="literal">true</span> <span class="comment">#加一行这个</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">[root@master flannel]<span class="comment"># ip route show</span></span><br><span class="line">default via 172.16.1.254 dev ens192 proto static metric 100 </span><br><span class="line">10.244.0.0/24 dev cni0 proto kernel scope link src 10.244.0.1 <span class="comment">#访问10.244.0.0/24要通过10.244.0.1</span></span><br><span class="line">10.244.1.0/24 via 10.244.1.0 dev flannel.1 onlink <span class="comment">#10.244.1.0是配置在flannel上的地址，表示访问10.244.1.0/24通过本机flannel.1上的10.244.1.0送出去，下同</span></span><br><span class="line">10.244.2.0/24 via 10.244.2.0 dev flannel.1 onlink  <span class="comment">#10.244.2.0是配置在flannel上的地址</span></span><br><span class="line">172.16.1.0/24 dev ens192 proto kernel scope link src 172.16.1.100 metric 100</span><br><span class="line"></span><br><span class="line">[root@master flannel]<span class="comment"># kubectl get configmap kube-flannel-cfg -o json -n kube-system</span></span><br><span class="line">　　　　　　<span class="string">&quot;net-conf.json&quot;</span>: <span class="string">&quot;&#123;\n \&quot;Network\&quot;: \&quot;10.244.0.0/16\&quot;,\n \&quot;Backend\&quot;: &#123;\n \&quot;Type\&quot;: \&quot;vxlan\&quot;,\n \&quot;Directrouting\&quot;: true\n &#125;\n&#125;\n&quot;</span></span><br></pre></td></tr></table></figure>
-<p>看到有Directrouting，说明生效了。</p>
-<pre><code>重启整个k8s，然后再看：</code></pre>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@master ~]<span class="comment"># ip route show</span></span><br><span class="line">default via 172.16.1.254 dev ens192 proto static metric 100 </span><br><span class="line">10.244.0.0/24 dev cni0 proto kernel scope link src 10.244.0.1 <span class="comment">#访问本机直接在本机直接转发，而不需要其他接口，这就是directrouting</span></span><br><span class="line">10.244.1.0/24 via 172.16.1.101 dev ens192 <span class="comment">#看到现在访问10.244.1.0，通过本地物理网卡ens192上的172.16.1.101送出去，即通过物理网卡通信了，而不再通过隧道flannel通信。</span></span><br><span class="line">10.244.2.0/24 via 172.16.1.102 dev ens192 </span><br><span class="line">172.16.1.0/24 dev ens192 proto kernel scope link src 172.16.1.100 metric 100 </span><br><span class="line">172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1</span><br><span class="line">继续登录到一个pod中进行ping测试：</span><br><span class="line"></span><br><span class="line">[root@master ~]<span class="comment"># kubectl get pods -o wide</span></span><br><span class="line">NAME                             READY     STATUS             RESTARTS   AGE       IP             NODE</span><br><span class="line">myapp-deploy-69b47bc96d-75g2b    1/1       Running            0          12m       10.244.1.124   node1</span><br><span class="line">myapp-deploy-69b47bc96d-jwgwm    1/1       Running            0          3s        10.244.2.100   node2</span><br><span class="line">[root@master ~]<span class="comment"># kubectl exec  -it myapp-deploy-69b47bc96d-75g2b -- /bin/sh</span></span><br><span class="line">/ <span class="comment"># ping 10.244.2.100</span></span><br><span class="line">PING 10.244.2.100 (10.244.2.100): 56 data bytes</span><br><span class="line">64 bytes from 10.244.2.100: seq=0 ttl=62 time=0.536 ms</span><br><span class="line">64 bytes from 10.244.2.100: seq=1 ttl=62 time=0.206 ms</span><br><span class="line">64 bytes from 10.244.2.100: seq=2 ttl=62 time=0.206 ms</span><br><span class="line">64 bytes from 10.244.2.100: seq=3 ttl=62 time=0.203 ms</span><br><span class="line">64 bytes from 10.244.2.100: seq=4 ttl=62 time=0.210 ms</span><br><span class="line">[root@node1 ~]<span class="comment"># tcpdump -i ens192 -nn icmp</span></span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on ens192, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">12:31:10.899403 IP 10.244.1.124 &gt; 10.244.2.100: ICMP <span class="built_in">echo</span> request, id 8960, seq 24, length 64</span><br><span class="line">12:31:10.899546 IP 10.244.2.100 &gt; 10.244.1.124: ICMP <span class="built_in">echo</span> reply, id 8960, seq 24, length 64</span><br><span class="line">12:31:11.899505 IP 10.244.1.124 &gt; 10.244.2.100: ICMP <span class="built_in">echo</span> request, id 8960, seq 25, length 64</span><br><span class="line">12:31:11.899639 IP 10.244.2.100 &gt; 10.244.1.124: ICMP <span class="built_in">echo</span> reply, id 8960, seq 25, length 64</span><br><span class="line">通过抓包可以看到，现在在pod中进行互ping，是从物理网卡ens192进出的，这就是directrouting，这种性能比默认vxlan高。</span><br></pre></td></tr></table></figure>
-<h2 id="外部访问集群"><a href="#外部访问集群" class="headerlink" title="外部访问集群"></a>外部访问集群</h2><p>从集群外访问集群有多种方式，比如loadbalancer，Ingress，nodeport，nodeport和loadbalancer是service的两个基本类型，是将service直接对外暴露的方式，ingress则是提供了七层负载均衡，其基本原理将外部流量转发到内部的service，再转发到后端endpoints，在平时的使用中，我们可以依据具体的业务需求选用不同的方式。这里主要介绍nodeport和ingress方式。</p>
-<h3 id="Nodeport"><a href="#Nodeport" class="headerlink" title="Nodeport"></a>Nodeport</h3><p>通过将Service的类型设置为NodePort，就可以在Cluster中的主机上通过一个指定端口暴露服务。注意通过Cluster中每台主机上的该指定端口都可以访问到该服务，发送到该主机端口的请求会被kubernetes路由到提供服务的Pod上。采用这种服务类型，可以在kubernetes cluster网络外通过主机IP：端口的方式访问到服务。</p>
-<img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/nodeport.jpg" class title="kubernetes网络通信原理">
-<p>这里给出一个influxdb的例子，我们也可以针对这个模板去修改成其他的类型：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line">  <span class="attr">spec:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8086</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">31112</span></span><br><span class="line">      <span class="attr">selector:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">influxdb</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Ingress"><a href="#Ingress" class="headerlink" title="Ingress"></a>Ingress</h3><img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/ingress.jpg" class title="kubernetes网络通信原理">
-<p>Ingress是推荐在生产环境使用的方式，它起到了七层负载均衡器和Http方向代理的作用，可以根据不同的url把入口流量分发到不同的后端Service。外部客户端只看到<a href="http://foo.bar.com这个服务器,屏蔽了内部多个service的实现方式.采用这种方式,简化了客户端的访问,并增加了后端实现和部署的灵活性,可以在不影响客户端的情况下对后端的服务部署进行调整./">http://foo.bar.com这个服务器，屏蔽了内部多个Service的实现方式。采用这种方式，简化了客户端的访问，并增加了后端实现和部署的灵活性，可以在不影响客户端的情况下对后端的服务部署进行调整。</a></p>
-<p>其部署的yaml可以参考如下模板：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"> <span class="attr">name:</span> <span class="string">test</span></span><br><span class="line"> <span class="attr">annotations:</span></span><br><span class="line"> <span class="attr">ingress.kubernetes.io/rewrite-target:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"> <span class="attr">rules:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">test.name.com</span></span><br><span class="line"> <span class="attr">http:</span></span><br><span class="line"> <span class="attr">paths:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/test</span></span><br><span class="line"> <span class="attr">backend:</span></span><br><span class="line"> <span class="attr">serviceName:</span> <span class="string">service-1</span></span><br><span class="line"> <span class="attr">servicePort:</span> <span class="number">8118</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/name</span></span><br><span class="line"> <span class="attr">backend:</span></span><br><span class="line"> <span class="attr">serviceName:</span> <span class="string">service-2</span></span><br><span class="line"> <span class="attr">servicePort:</span> <span class="number">8228</span></span><br></pre></td></tr></table></figure>
-<p>这里我们定义了一个ingress模板，定义通过<a href="http://test.name.com来访问服务,在虚拟主机http//test.name.com%E4%B8%8B%E9%9D%A2%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%A4%E4%B8%AAPath%EF%BC%8C%E5%85%B6%E4%B8%AD/test%E8%A2%AB%E5%88%86%E5%8F%91%E5%88%B0%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1s1%EF%BC%8C/name%E8%A2%AB%E5%88%86%E5%8F%91%E5%88%B0%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1s2%E3%80%82">http://test.name.com来访问服务，在虚拟主机http://test.name.com下面定义了两个Path，其中/test被分发到后端服务s1，/name被分发到后端服务s2。</a><br>集群中可以定义多个ingress，来完成不同服务的转发，这里需要一个ingress controller来管理集群中的Ingress规则。Ingress Contronler 通过与 Kubernetes API 交互，动态的去感知集群中 Ingress 规则变化，然后读取它，按照自定义的规则，规则就是写明了哪个域名对应哪个service，生成一段 Nginx 配置，再写到 Nginx-ingress-control的 Pod 里，这个 Ingress Contronler 的pod里面运行着一个nginx服务，控制器会把生成的nginx配置写入/etc/nginx.conf文件中，然后 reload使用配置生效。</p>
-<p>Kubernetes提供的Ingress Controller模板如下：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"> <span class="attr">name:</span> <span class="string">test</span></span><br><span class="line"> <span class="attr">annotations:</span></span><br><span class="line"> <span class="attr">ingress.kubernetes.io/rewrite-target:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"> <span class="attr">rules:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">foo.bar.com</span></span><br><span class="line"> <span class="attr">http:</span></span><br><span class="line"> <span class="attr">paths:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/foo</span></span><br><span class="line"> <span class="attr">backend:</span></span><br><span class="line"> <span class="attr">serviceName:</span> <span class="string">s1</span></span><br><span class="line"> <span class="attr">servicePort:</span> <span class="number">80</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/bar</span></span><br><span class="line"> <span class="attr">backend:</span></span><br><span class="line"> <span class="attr">serviceName:</span> <span class="string">s2</span></span><br><span class="line"> <span class="attr">servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p><a href="https://blog.51cto.com/liuzhengwei521/2427495">https://blog.51cto.com/liuzhengwei521/2427495</a></p>
-]]></content>
-      <categories>
-        <category>kubernetes</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-        <tag>kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>py_day01_exercise</title>
     <url>/2020/08/09/py-day01-exercise/</url>
     <content><![CDATA[<p>温故知新</p>
@@ -1442,6 +1449,105 @@
       </categories>
       <tags>
         <tag>python_exercise</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kubernetes网络通信原理</title>
+    <url>/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<p>了解通信原理</p>
+<a id="more"></a>
+<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><p>1、网络的命名空间：Linux在网络栈中引入网络命名空间，将独立的网络协议栈隔离到不同的命令空间中，彼此间无法通信；docker利用这一特性，实现不容器间的网络隔离。</p>
+<p>2、Veth设备对：也叫虚拟网络接口对。Veth设备对的引入是为了实现在不同网络命名空间的通信。</p>
+<p>3、Iptables/Netfilter：Netfilter负责在内核中执行各种挂接的规则(过滤、修改、丢弃等)，运行在内核 模式中；Iptables模式是在用户模式下运行的进程，负责协助维护内核中Netfilter的各种规则表；通过二者的配合来实现整个Linux网络协议栈中灵活的数据包处理机制。</p>
+<p>4、网桥：网桥是一个二层网络设备,通过网桥可以将linux支持的不同的端口连接起来,并实现类似交换机那样的多对多的通信。</p>
+<p>5、路由：Linux系统包含一个完整的路由功能，当IP层在处理数据发送或转发的时候，会使用路由表来决定发往哪里。</p>
+<h2 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h2><p>Kubernetes对集群内部的网络进行了重新抽象，以实现整个集群网络扁平化。我们可以理解网络模型时，可以完全抽离物理节点去理解，我们用图说话，先有基本印象。</p>
+<img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/kubernetes-proxy-model.jpg" class title="kubernetes网络通信原理">
+
+<h3 id="一个Service"><a href="#一个Service" class="headerlink" title="一个Service"></a>一个Service</h3><p>Service是Kubernetes为为屏蔽这些后端实例（Pod）的动态变化和对多实例的负载均衡而引入的资源对象。Service通常与deployment绑定，定义了服务的访问入口地址，应用(Pod)可以通过这个入口地址访问其背后的一组由Pod副本组成的集群实例。Service与其后端Pod副本集群之间则是通过Label Selector来实现映射。</p>
+<p>Service的类型(Type)决定了Service如何对外提供服务，根据类型不同，服务可以只在Kubernetes cluster中可见，也可以暴露到集群外部。Service有三种类型，ClusterIP，NodePort和LoadBalancer。具体的使用场景会在下文中进行阐述。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ kubectl get svc --selector app&#x3D;nginx</span><br><span class="line">NAME   TYPE     CLUSTER-IP  EXTERNAL-IP PORT(S) AGE</span><br><span class="line">nginx ClusterIP 172.19.0.166   &lt;none&gt;    80&#x2F;TCP  1m</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">kubectl</span> <span class="string">describe</span> <span class="string">svc</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">Name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">Namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">Labels:</span> <span class="string">app=nginx</span></span><br><span class="line"><span class="attr">Annotations:</span> <span class="string">&lt;none&gt;</span></span><br><span class="line"><span class="attr">Selector:</span> <span class="string">app=nginx</span></span><br><span class="line"><span class="attr">Type:</span> <span class="string">ClusterIP</span></span><br><span class="line"><span class="attr">IP:</span> <span class="number">172.19</span><span class="number">.0</span><span class="number">.166</span></span><br><span class="line"><span class="attr">Port:</span> <span class="string">&lt;unset&gt;</span> <span class="number">80</span><span class="string">/TCP</span></span><br><span class="line"><span class="attr">TargetPort:</span> <span class="number">80</span><span class="string">/TCP</span></span><br><span class="line"><span class="attr">Endpoints:</span> <span class="number">172.16</span><span class="number">.2</span><span class="number">.125</span><span class="string">:80,172.16.2.229:80</span></span><br><span class="line"><span class="attr">Session Affinity:</span> <span class="string">None</span></span><br><span class="line"><span class="attr">Events:</span> <span class="string">&lt;none&gt;</span></span><br></pre></td></tr></table></figure>
+<p>该svc后端代理了2个Pod实例:172.16.2.125:80,172.16.2.229:80</p>
+<h3 id="三个IP"><a href="#三个IP" class="headerlink" title="三个IP"></a>三个IP</h3><p>Kubernetes为描述其网络模型的IP对象，抽象出Cluster IP和Pod IP的概念。</p>
+<p>PodIP是Kubernetes集群中每个Pod的IP地址。它是Docker Engine 根据docker0网桥的IP地址段进行分配的，是一个虚拟的二层网络。Kubernetes中Pod间能够彼此直接通讯，Pod里的容器访问另外一个Pod里的容器，是通过Pod IP所在进行通信。</p>
+<p>Cluster IP仅作用于Service，其没有实体对象所对应，因此Cluster IP无法被ping通。它的作用是为Service后端的实例提供统一的访问入口。当访问ClusterIP时，请求将被转发到后端的实例上，默认是轮询方式。Cluster IP和Service一样由kube-proxy组件维护，其实现方式主要有两种，<strong>iptables</strong>和<strong>IPVS</strong>。在<strong>1.8版本后kubeproxy开始支持IPVS方式</strong>。在上例中，SVC的信息中包含了Cluster IP。</p>
+<p>这里未列出nodeip概念，由于其本身是物理机的网卡IP。因此可理解为nodeip就是物理机IP。</p>
+<h3 id="三个Port"><a href="#三个Port" class="headerlink" title="三个Port"></a>三个Port</h3><p>在Kubernetes中，涉及容器，Pod，Service，集群各等多个层级的对象间的通信，为在网络模型中区分各层级的通信端口，这里对Port进行了抽象。</p>
+<h4 id="Port"><a href="#Port" class="headerlink" title="Port"></a>Port</h4><p>该Port非一般意义上的TCP/IP中的Port概念，它是特指Kubernetes中Service的port，是Service间的访问端口，例如Mysql的Service默认3306端口。它仅对进群内容器提供访问权限，而无法从集群外部通过该端口访问服务。</p>
+<h4 id="nodePort"><a href="#nodePort" class="headerlink" title="nodePort"></a>nodePort</h4><p>nodePort为外部机器提供了访问集群内服务的方式。比如一个Web应用需要被其他用户访问，那么需要配置type=NodePort，而且配置nodePort=30001，那么其他机器就可以通过浏览器访问scheme://node:30001访问到该服务，例如</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;node:30001</span><br></pre></td></tr></table></figure>
+<h4 id="targetPort"><a href="#targetPort" class="headerlink" title="targetPort"></a>targetPort</h4><p>targetPort是容器的端口（最根本的端口入口），与制作容器时暴露的端口一致（DockerFile中EXPOSE），例如<a href="http://docker.io官方的nginx暴露的是80端口./">http://docker.io官方的nginx暴露的是80端口。</a></p>
+<p>eg:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">mallh5-service</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">abcdocker</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">  <span class="attr">app:</span> <span class="string">mallh5web</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line"> <span class="attr">ports:</span></span><br><span class="line">   <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">     <span class="attr">port:</span> <span class="number">3017</span></span><br><span class="line">     <span class="attr">targetPort:</span> <span class="number">5003</span></span><br><span class="line">     <span class="attr">nodePort:</span> <span class="number">31122</span></span><br></pre></td></tr></table></figure>
+<p>举出了一个service的yaml，其部署在abcdocker的namespace中。这里配置了nodePort，因此其类型Type就是NodePort，注意大小写。若没有配置nodePort，那这里需要填写ClusterIP，即表示只支持集群内部服务访问。</p>
+<h2 id="集群内部通信"><a href="#集群内部通信" class="headerlink" title="集群内部通信"></a>集群内部通信</h2><h3 id="单节点通信"><a href="#单节点通信" class="headerlink" title="单节点通信"></a>单节点通信</h3><p>集群单节点内的通信，主要包括两种情况，同一个pod内的多容器间通信以及同一节点不同pod间的通信。由于不涉及跨节点访问，因此流量不会经过物理网卡进行转发。</p>
+<p>查看路由表</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@node-1:&#x2F;opt&#x2F;bin# route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination Gateway Genmask Flags Metric Ref Use Iface</span><br><span class="line">0.0.0.0 172.23.100.1 0.0.0.0 UG 0 0 0 eth0</span><br><span class="line">10.1.0.0 0.0.0.0 255.255.0.0 U 0 0 0 flannel.1 #flannel 网络内跨节点的通信会交给 flannel.1 处理</span><br><span class="line">10.1.1.0 0.0.0.0 255.255.255.0 U 0 0 0 docker0 #flannel 网络内节点内的通信会走 docker0</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-Pod内通信"><a href="#1-Pod内通信" class="headerlink" title="1 Pod内通信"></a>1 Pod内通信</h3><img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/pod%E5%86%85%E9%80%9A%E4%BF%A1.jpg" class title="kubernetes网络通信原理">
+<p>同一个pod内共享网络命名空间，容器之间通过访问127.0.0.1:（端口）即可。图中的veth<em>即指veth对的一端（另一端未标注，但实际上是成对出现），该veth对是由Docker Daemon挂载在docker0网桥上，另一端添加到容器所属的网络命名空间，图上显示是容器中的eth0。<br>图中演示了bridge模式下的容器间通信。docker1向docker2发送请求，docker1，docker2均与docker0建立了veth对进行通讯。<br>当请求经过docker0时，由于容器和docker0同属于一个子网，因此请求经过docker2与docker0的veth</em>对，转发到docker2，该过程并未跨节点，因此不经过eth0。</p>
+<p>总结：同一个pod内的多个容器间的通信，通过lo即可实现；</p>
+<h3 id="Pod间通信"><a href="#Pod间通信" class="headerlink" title="Pod间通信"></a>Pod间通信</h3><p>同节点pod间通信<br>由于Pod内共享网络命名空间（由pause容器创建），所以本质上也是同节点容器间的通信。同时，同一Node中Pod的默认路由都是docker0的地址，由于它们关联在同一个docker0网桥上，地址网段相同，所有它们之间应当是能直接通信的。来看看实际上这一过程如何实现。如上图，Pod1中容器1和容器2共享网络命名空间，因此对pod外的请求通过pod1和Docker0网桥的veth对（图中挂在eth0和ethx上）实现。</p>
+<p>总结：<br>同一Node中Pod的默认路由都是docker0的地址<br>pod ip &lt;—&gt; pod ip，pod和pod之间要不经过任何转换即可通信；</p>
+<img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/%E5%90%8C%E8%8A%82%E7%82%B9pod%E9%97%B4%E9%80%9A%E4%BF%A1.jpg" class title="kubernetes网络通信原理">
+
+<h3 id="pod和service通信"><a href="#pod和service通信" class="headerlink" title="pod和service通信"></a>pod和service通信</h3><p>pod ip &lt;—-&gt; cluster ip（即service ip）&lt;—-&gt;pod ip，他们通过iptables或ipvs实现通信，另外大家要注意ipvs取代不了iptables，因为ipvs只能做负载均衡，而做不了nat转换；</p>
+<h3 id="跨节点通信"><a href="#跨节点通信" class="headerlink" title="跨节点通信"></a>跨节点通信</h3><h4 id="CNI：容器网络接口"><a href="#CNI：容器网络接口" class="headerlink" title="CNI：容器网络接口"></a>CNI：容器网络接口</h4><p>CNI 是一种标准，它旨在为容器平台提供网络的标准化。不同的容器平台（比如目前的 kubernetes、mesos 和 rkt）能够通过相同的接口调用不同的网络组件。</p>
+<p>目前kubernetes支持的CNI组件种类很多，例如：flannel，callco，canel，kube-router。</p>
+<p>flanel只支持网络通讯，但是不支持网络策略。<br>callco网络通讯和网络策略都支持。<br>canel：flanel+callco合起来的功能。</p>
+<p>主流的跨主机通信方案主要有一下几种：<br>1）基于隧道的overlay网络：按隧道类型来说，不同的公司或者组织有不同的实现方案。docker原生的overlay网络就是基于vxlan隧道实现的。ovn则需要通过geneve或者stt隧道来实现的。flannel最新版本也开始默认基于vxlan实现overlay网络。</p>
+<p>2）基于包封装的overlay网络：基于UDP封装等数据包包装方式，在docker集群上实现跨主机网络。典型实现方案有weave、flannel的早期版本。</p>
+<p>3）基于三层实现SDN网络：基于三层协议和路由，直接在三层上实现跨主机网络，并且通过iptables实现网络的安全隔离。典型的方案为Project Calico。同时对不支持三层路由的环境，Project Calico还提供了基于IPIP封装的跨主机网络实现</p>
+<p>总结：<br>    1）虚拟网桥，虚拟网卡，多个容器共用一个虚拟网卡进行通信；<br>    2）多路复用：MacVLAN，多个容器共用一个物理网卡进行通信；<br>    3）硬件交换：SR-LOV，一个物理网卡可以虚拟出多个接口，这个性能最好。</p>
+<h4 id="通信方式"><a href="#通信方式" class="headerlink" title="通信方式"></a>通信方式</h4><img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/flannel1.jpg" class title="kubernetes网络通信原理">
+<p>集群内跨节点通信涉及到不同的子网间通信，仅靠docker0无法实现，这里需要借助CNI网络插件来实现。图中展示了使用flannel实现跨节点通信的方式。</p>
+<p>简单说来，flannel的用户态进程flanneld会为每个node节点创建一个flannel.1的网桥，根据etcd或apiserver的全局统一的集群信息为每个node分配全局唯一的网段，避免地址冲突。同时会为docker0和flannel.1创建veth对，docker0将报文丢给flannel.1,。</p>
+<p>Flanneld维护了一份全局node的网络表，通过flannel.1接收到请求后，根据node表，将请求二次封装为UDP包，扔给eth0，由eth0出口进入物理网路发送给目的node。</p>
+<p>在另一端以相反的流程。Flanneld解包并发往docker0，进而发往目的Pod中的容器</p>
+<p>两个节点上的pod可以借助flannel隧道进行通信。默认使用的VxLAN协议，因为它有额外开销，所以性能有点低。</p>
+<p>flannel第二种协议叫host-gw(host gateway)，即Node节点把自己的网络接口当做pod的网关使用，从而使不同节点上的node进行通信，这个性能比VxLAN高，因为它没有额外开销。不过他有个缺点， 就是各node节点必须在同一个网段中 。</p>
+<p>另外，如果两个pod所在节点在同一个网段中 ，可以让VxLAN也支持host-gw的功能， 即直接通过物理网卡的网关路由转发，而不用隧道flannel叠加，从而提高了VxLAN的性能，这种flannel的功能叫directrouting。<br>flannel支持多种后端：<br>    1.Vxlan<br>        1.1 vxlan<br>        1.2 Dirextrouting<br>    2.host-gw：Host Gateway  #不推荐，只能在二层网络中，不支持跨网络，如果有成千上万的Pod，容易产生广播风暴<br>    3.UDP：性能差</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@master ~]<span class="comment"># kubectl get pods -o wide</span></span><br><span class="line">NAME                             READY     STATUS             RESTARTS   AGE       IP             NODE</span><br><span class="line">myapp-deploy-69b47bc96d-79fqh    1/1       Running            4          7d        10.244.1.97    node1</span><br><span class="line">myapp-deploy-69b47bc96d-tc54k    1/1       Running            4          7d        10.244.2.88    node2</span><br><span class="line">[root@master ~]<span class="comment"># kubectl exec -it myapp-deploy-69b47bc96d-79fqh -- /bin/sh</span></span><br><span class="line">/ <span class="comment"># ping 10.244.2.88 #ping对方Node上容器的ip</span></span><br><span class="line">PING 10.244.2.88 (10.244.2.88): 56 data bytes</span><br><span class="line">64 bytes from 10.244.2.88: seq=0 ttl=62 time=0.459 ms</span><br><span class="line">64 bytes from 10.244.2.88: seq=0 ttl=62 time=0.377 ms</span><br><span class="line">64 bytes from 10.244.2.88: seq=1 ttl=62 time=0.252 ms</span><br><span class="line">64 bytes from 10.244.2.88: seq=2 ttl=62 time=0.261 ms</span><br></pre></td></tr></table></figure>
+<p>在其他节点上抓包，发现根本就在ens192上抓不到包。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@master ~]<span class="comment"># tcpdump -i ens192 -nn icmp</span></span><br><span class="line">[root@master ~]<span class="comment"># yum install bridge-utils -y</span></span><br><span class="line">[root@master ~]<span class="comment"># brctl show docker0</span></span><br><span class="line">bridge namebridge idSTP enabledinterfaces</span><br><span class="line">docker08000.024283f8b8ffno</span><br><span class="line">[root@master ~]<span class="comment"># brctl show cni0</span></span><br><span class="line">bridge namebridge idSTP enabledinterfaces</span><br><span class="line">cni08000.0a580af40001noveth6ec94aab</span><br><span class="line">vethf703483a</span><br><span class="line">vethff579703</span><br></pre></td></tr></table></figure>
+<p> 可以看到veth这些接口都是桥接到cni0上的。</p>
+<pre><code>brctl show表示查看已有网桥。</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt;[root@node1 ~]<span class="comment">#  tcpdump -i cni0 -nn icmp</span></span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on cni0, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">23:40:11.370754 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 96, length 64</span><br><span class="line">23:40:11.370988 IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 4864, seq 96, length 64</span><br><span class="line">23:40:12.370888 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 97, length 64</span><br><span class="line">23:40:12.371090 IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 4864, seq 97, length 64</span><br><span class="line">^X23:40:13.371015 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 98, length 64</span><br><span class="line">23:40:13.371239 IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 4864, seq 98, length 64</span><br><span class="line">23:40:14.371128 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 99, length 64</span><br></pre></td></tr></table></figure>
+<p>可以看到，在node节点，可以在cni0端口上抓到容器里面的Ping时的包。</p>
+<pre><code>其实，上面ping时的数据流是先从cni0进来，然后从flannel.1出去，最后借助物理网卡ens32发出去。所以，我们在flannel.1上也能抓到包：</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@node1 ~]<span class="comment">#  tcpdump -i flannel.1 -nn icmp</span></span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on flannel.1, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">03:12:36.823315 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 12840, length 64</span><br><span class="line">03:12:36.823496 IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 4864, seq 12840, length 64</span><br><span class="line">03:12:37.823490 IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 4864, seq 12841, length 64</span><br><span class="line">03:12:37.823634 IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 4864, seq 12841, length 64</span><br></pre></td></tr></table></figure>
+<p>同样，在ens192物理网卡上也能抓到包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@node1 ~]<span class="comment"># tcpdump -i ens192 -nn host 172.16.1.102  #172.16.1.102是node2的物理ip</span></span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on ens192, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">10:59:24.234174 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 7168, seq 0, length 64</span><br><span class="line">10:59:24.234434 IP 172.16.1.102.54894 &gt; 172.16.1.101.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 7168, seq 0, length 64</span><br><span class="line">10:59:25.234301 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 7168, seq 1, length 64</span><br><span class="line">10:59:25.234469 IP 172.16.1.102.54894 &gt; 172.16.1.101.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 7168, seq 1, length 64</span><br><span class="line">10:59:26.234415 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 7168, seq 2, length 64</span><br><span class="line">10:59:26.234592 IP 172.16.1.102.54894 &gt; 172.16.1.101.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.2.88 &gt; 10.244.1.97: ICMP <span class="built_in">echo</span> reply, id 7168, seq 2, length 64</span><br><span class="line">10:59:27.234528 IP 172.16.1.101.60617 &gt; 172.16.1.102.8472: OTV, flags [I] (0x08), overlay 0, instance 1</span><br><span class="line">IP 10.244.1.97 &gt; 10.244.2.88: ICMP <span class="built_in">echo</span> request, id 7168, seq 3, length 64</span><br></pre></td></tr></table></figure>
+<pre><code>下面我们把flannel的通信模式改成directrouting的方式</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@master flannel]<span class="comment"># cd /root/manifests/flannel</span></span><br><span class="line">[root@master flannel]<span class="comment"># kubectl edit configmap kube-flannel-cfg -n kube-system</span></span><br><span class="line">&#123;</span><br><span class="line">      <span class="string">&quot;Network&quot;</span>: <span class="string">&quot;10.244.0.0/16&quot;</span>,</span><br><span class="line">      <span class="string">&quot;Backend&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;Type&quot;</span>: <span class="string">&quot;vxlan&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Directrouting&quot;</span>: <span class="literal">true</span> <span class="comment">#加一行这个</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">[root@master flannel]<span class="comment"># ip route show</span></span><br><span class="line">default via 172.16.1.254 dev ens192 proto static metric 100 </span><br><span class="line">10.244.0.0/24 dev cni0 proto kernel scope link src 10.244.0.1 <span class="comment">#访问10.244.0.0/24要通过10.244.0.1</span></span><br><span class="line">10.244.1.0/24 via 10.244.1.0 dev flannel.1 onlink <span class="comment">#10.244.1.0是配置在flannel上的地址，表示访问10.244.1.0/24通过本机flannel.1上的10.244.1.0送出去，下同</span></span><br><span class="line">10.244.2.0/24 via 10.244.2.0 dev flannel.1 onlink  <span class="comment">#10.244.2.0是配置在flannel上的地址</span></span><br><span class="line">172.16.1.0/24 dev ens192 proto kernel scope link src 172.16.1.100 metric 100</span><br><span class="line"></span><br><span class="line">[root@master flannel]<span class="comment"># kubectl get configmap kube-flannel-cfg -o json -n kube-system</span></span><br><span class="line">　　　　　　<span class="string">&quot;net-conf.json&quot;</span>: <span class="string">&quot;&#123;\n \&quot;Network\&quot;: \&quot;10.244.0.0/16\&quot;,\n \&quot;Backend\&quot;: &#123;\n \&quot;Type\&quot;: \&quot;vxlan\&quot;,\n \&quot;Directrouting\&quot;: true\n &#125;\n&#125;\n&quot;</span></span><br></pre></td></tr></table></figure>
+<p>看到有Directrouting，说明生效了。</p>
+<pre><code>重启整个k8s，然后再看：</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@master ~]<span class="comment"># ip route show</span></span><br><span class="line">default via 172.16.1.254 dev ens192 proto static metric 100 </span><br><span class="line">10.244.0.0/24 dev cni0 proto kernel scope link src 10.244.0.1 <span class="comment">#访问本机直接在本机直接转发，而不需要其他接口，这就是directrouting</span></span><br><span class="line">10.244.1.0/24 via 172.16.1.101 dev ens192 <span class="comment">#看到现在访问10.244.1.0，通过本地物理网卡ens192上的172.16.1.101送出去，即通过物理网卡通信了，而不再通过隧道flannel通信。</span></span><br><span class="line">10.244.2.0/24 via 172.16.1.102 dev ens192 </span><br><span class="line">172.16.1.0/24 dev ens192 proto kernel scope link src 172.16.1.100 metric 100 </span><br><span class="line">172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1</span><br><span class="line">继续登录到一个pod中进行ping测试：</span><br><span class="line"></span><br><span class="line">[root@master ~]<span class="comment"># kubectl get pods -o wide</span></span><br><span class="line">NAME                             READY     STATUS             RESTARTS   AGE       IP             NODE</span><br><span class="line">myapp-deploy-69b47bc96d-75g2b    1/1       Running            0          12m       10.244.1.124   node1</span><br><span class="line">myapp-deploy-69b47bc96d-jwgwm    1/1       Running            0          3s        10.244.2.100   node2</span><br><span class="line">[root@master ~]<span class="comment"># kubectl exec  -it myapp-deploy-69b47bc96d-75g2b -- /bin/sh</span></span><br><span class="line">/ <span class="comment"># ping 10.244.2.100</span></span><br><span class="line">PING 10.244.2.100 (10.244.2.100): 56 data bytes</span><br><span class="line">64 bytes from 10.244.2.100: seq=0 ttl=62 time=0.536 ms</span><br><span class="line">64 bytes from 10.244.2.100: seq=1 ttl=62 time=0.206 ms</span><br><span class="line">64 bytes from 10.244.2.100: seq=2 ttl=62 time=0.206 ms</span><br><span class="line">64 bytes from 10.244.2.100: seq=3 ttl=62 time=0.203 ms</span><br><span class="line">64 bytes from 10.244.2.100: seq=4 ttl=62 time=0.210 ms</span><br><span class="line">[root@node1 ~]<span class="comment"># tcpdump -i ens192 -nn icmp</span></span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on ens192, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">12:31:10.899403 IP 10.244.1.124 &gt; 10.244.2.100: ICMP <span class="built_in">echo</span> request, id 8960, seq 24, length 64</span><br><span class="line">12:31:10.899546 IP 10.244.2.100 &gt; 10.244.1.124: ICMP <span class="built_in">echo</span> reply, id 8960, seq 24, length 64</span><br><span class="line">12:31:11.899505 IP 10.244.1.124 &gt; 10.244.2.100: ICMP <span class="built_in">echo</span> request, id 8960, seq 25, length 64</span><br><span class="line">12:31:11.899639 IP 10.244.2.100 &gt; 10.244.1.124: ICMP <span class="built_in">echo</span> reply, id 8960, seq 25, length 64</span><br><span class="line">通过抓包可以看到，现在在pod中进行互ping，是从物理网卡ens192进出的，这就是directrouting，这种性能比默认vxlan高。</span><br></pre></td></tr></table></figure>
+<h2 id="外部访问集群"><a href="#外部访问集群" class="headerlink" title="外部访问集群"></a>外部访问集群</h2><p>从集群外访问集群有多种方式，比如loadbalancer，Ingress，nodeport，nodeport和loadbalancer是service的两个基本类型，是将service直接对外暴露的方式，ingress则是提供了七层负载均衡，其基本原理将外部流量转发到内部的service，再转发到后端endpoints，在平时的使用中，我们可以依据具体的业务需求选用不同的方式。这里主要介绍nodeport和ingress方式。</p>
+<h3 id="Nodeport"><a href="#Nodeport" class="headerlink" title="Nodeport"></a>Nodeport</h3><p>通过将Service的类型设置为NodePort，就可以在Cluster中的主机上通过一个指定端口暴露服务。注意通过Cluster中每台主机上的该指定端口都可以访问到该服务，发送到该主机端口的请求会被kubernetes路由到提供服务的Pod上。采用这种服务类型，可以在kubernetes cluster网络外通过主机IP：端口的方式访问到服务。</p>
+<img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/nodeport.jpg" class title="kubernetes网络通信原理">
+<p>这里给出一个influxdb的例子，我们也可以针对这个模板去修改成其他的类型：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line">  <span class="attr">spec:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8086</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">31112</span></span><br><span class="line">      <span class="attr">selector:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">influxdb</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Ingress"><a href="#Ingress" class="headerlink" title="Ingress"></a>Ingress</h3><img src="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/ingress.jpg" class title="kubernetes网络通信原理">
+<p>Ingress是推荐在生产环境使用的方式，它起到了七层负载均衡器和Http方向代理的作用，可以根据不同的url把入口流量分发到不同的后端Service。外部客户端只看到<a href="http://foo.bar.com这个服务器,屏蔽了内部多个service的实现方式.采用这种方式,简化了客户端的访问,并增加了后端实现和部署的灵活性,可以在不影响客户端的情况下对后端的服务部署进行调整./">http://foo.bar.com这个服务器，屏蔽了内部多个Service的实现方式。采用这种方式，简化了客户端的访问，并增加了后端实现和部署的灵活性，可以在不影响客户端的情况下对后端的服务部署进行调整。</a></p>
+<p>其部署的yaml可以参考如下模板：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"> <span class="attr">name:</span> <span class="string">test</span></span><br><span class="line"> <span class="attr">annotations:</span></span><br><span class="line"> <span class="attr">ingress.kubernetes.io/rewrite-target:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"> <span class="attr">rules:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">test.name.com</span></span><br><span class="line"> <span class="attr">http:</span></span><br><span class="line"> <span class="attr">paths:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/test</span></span><br><span class="line"> <span class="attr">backend:</span></span><br><span class="line"> <span class="attr">serviceName:</span> <span class="string">service-1</span></span><br><span class="line"> <span class="attr">servicePort:</span> <span class="number">8118</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/name</span></span><br><span class="line"> <span class="attr">backend:</span></span><br><span class="line"> <span class="attr">serviceName:</span> <span class="string">service-2</span></span><br><span class="line"> <span class="attr">servicePort:</span> <span class="number">8228</span></span><br></pre></td></tr></table></figure>
+<p>这里我们定义了一个ingress模板，定义通过<a href="http://test.name.com来访问服务,在虚拟主机http//test.name.com%E4%B8%8B%E9%9D%A2%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%A4%E4%B8%AAPath%EF%BC%8C%E5%85%B6%E4%B8%AD/test%E8%A2%AB%E5%88%86%E5%8F%91%E5%88%B0%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1s1%EF%BC%8C/name%E8%A2%AB%E5%88%86%E5%8F%91%E5%88%B0%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1s2%E3%80%82">http://test.name.com来访问服务，在虚拟主机http://test.name.com下面定义了两个Path，其中/test被分发到后端服务s1，/name被分发到后端服务s2。</a><br>集群中可以定义多个ingress，来完成不同服务的转发，这里需要一个ingress controller来管理集群中的Ingress规则。Ingress Contronler 通过与 Kubernetes API 交互，动态的去感知集群中 Ingress 规则变化，然后读取它，按照自定义的规则，规则就是写明了哪个域名对应哪个service，生成一段 Nginx 配置，再写到 Nginx-ingress-control的 Pod 里，这个 Ingress Contronler 的pod里面运行着一个nginx服务，控制器会把生成的nginx配置写入/etc/nginx.conf文件中，然后 reload使用配置生效。</p>
+<p>Kubernetes提供的Ingress Controller模板如下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"> <span class="attr">name:</span> <span class="string">test</span></span><br><span class="line"> <span class="attr">annotations:</span></span><br><span class="line"> <span class="attr">ingress.kubernetes.io/rewrite-target:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"> <span class="attr">rules:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">foo.bar.com</span></span><br><span class="line"> <span class="attr">http:</span></span><br><span class="line"> <span class="attr">paths:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/foo</span></span><br><span class="line"> <span class="attr">backend:</span></span><br><span class="line"> <span class="attr">serviceName:</span> <span class="string">s1</span></span><br><span class="line"> <span class="attr">servicePort:</span> <span class="number">80</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/bar</span></span><br><span class="line"> <span class="attr">backend:</span></span><br><span class="line"> <span class="attr">serviceName:</span> <span class="string">s2</span></span><br><span class="line"> <span class="attr">servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><a href="https://blog.51cto.com/liuzhengwei521/2427495">https://blog.51cto.com/liuzhengwei521/2427495</a></p>
+]]></content>
+      <categories>
+        <category>kubernetes</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+        <tag>kubernetes</tag>
       </tags>
   </entry>
   <entry>

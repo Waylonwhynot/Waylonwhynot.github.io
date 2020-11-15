@@ -187,6 +187,248 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2020/11/15/py-cmdb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/15/py-cmdb/" class="post-title-link" itemprop="url">py-cmdb</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-15 19:24:02 / 修改时间：19:25:04" itemprop="dateCreated datePublished" datetime="2020-11-15T19:24:02+08:00">2020-11-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一、为什么要做cmdb？</p>
+<pre><code>1. 项目上线的流程：</code></pre>
+<p>​<br>        调研需求分析 —》 开会确定日期 —》 开发程序 —》 项目测试人员 —》代码上线（运维来负责）</p>
+<pre><code>    传统上线方式：
+        直接代码解压 ，启服务， 访问项目， 进行测试
+
+        弊端：
+
+            - 手工上线  运维来干预 
+            - 加机器， 需要重复进行代码的部署
+
+        优化策略：
+            代码上线系统 
+
+            必要条件：需要知道服务器的信息 （服务器的主机名， 硬盘大小。。。）</code></pre>
+<p>​<br>    2. 一个公司即将上市， 审查公司的资产 </p>
+<pre><code>    传统方式,统计公司服务器资产的方式：
+        excel表格 
+            最后信息会变得不准确
+            导致年底进行审计的时候，资产变得无法进行准确的统计</code></pre>
+<p>​<br>    CMDB：</p>
+<pre><code>    配置管理数据库
+
+    记录服务器的资产信息（包括 机架位置， 主机名，硬盘， 网卡， 产品线， 管理员等）的
+
+    位置：
+        是自动化运维的基石</code></pre>
+<p>​<br>二、cmdb实现的方案：<br>​        核心的代码：<br>​            1. linux相关的命令   megacli<br>​            2. Python的代码执行linux命令， 得到结果返回给服务端<br>​<br>        业内：<br>            4套实现方案</p>
+<p>​<br>        三套方案全部实现</p>
+<p>​<br>        目标：</p>
+<pre><code>        写一份代码， 通过改变配置实现三套方案
+
+        客户端的采集</code></pre>
+<p> 三、代码实现：</p>
+<pre><code>    目录结构：
+
+        bin  ： 核心的启动文件  start.py 
+        conf : 配置文件夹  
+        lib  ：库文件 
+        log  : 不建议将日志文件夹放在项目中   /var/log  mkidr /logs/cmdb/
+        src  : 核心的源代码目录
+        test : 开发的过程中， 需要进行代码的调试 </code></pre>
+<p>​<br>        1. 高级配置文件的实现 ：</p>
+<pre><code>        django的配置：
+            from django.conf import global_settings, settings
+            settings.TIME_ZONE
+
+            将自定制的配置和全局的配置集成在一个对象上， 之后想要使用任何属性的时候， 直接可以通过此对象获得
+
+        技术要点：
+
+            getattr : 反射获取 对应的值
+            setattr : 反射设置</code></pre>
+<p>​<br>        2.  编程思想：</p>
+<pre><code>            高内聚低耦合
+
+                写一个类或者一个函数的时候， 我们需要明确一下次函数或者此类主要负责干啥的
+
+                class User():
+                    #### 和用户相关的一些逻辑
+
+                    def getUserInfo():
+                        #### 获取用户的信息
+
+                        ### 处理订单相关的业务逻辑</code></pre>
+<p>​<br>​<br>                可插拔式的配置：<br>                    settings.py:<br>                        PLUGINS_DICT = {<br>                            “basic” : ‘src.plugins.basic.Basic’,<br>                            “disk” : ‘src.plugins.disk.Disk’,<br>                            “memory” : ‘src.plugins.memory.Memory’,<br>                            “nic” : ‘src.plugins.nic.Nic’,<br>                            “cpu” : ‘src.plugins.cpu.Cpu’<br>                        }<br>                        参考django的中间件</p>
+<pre><code>                    def execute(self):
+
+                        for k, v in self.plugins_dict.items():
+                            &#39;&#39;&#39;
+                            k: basic 
+                            v: src.plugins.basic.Basic  字符串
+                            &#39;&#39;&#39;
+                            module_path, cls_name = v.rsplit(&#39;.&#39;, 1)
+                            module = importlib.import_module(module_path)  #### 导入路径
+                            cls = getattr(module, cls_name)   ##### 获取对应的类名
+                            cls().process()    #### 执行该类对应的方法
+
+                    插件的代码：
+
+
+                        class Memory():
+
+                            def process(self):
+                                print(&#39;memory&#39;)</code></pre>
+<p>​<br>​<br>        3. 插件代码重复：</p>
+<pre><code>        解决的方法：
+            1. base.py 写一个基类， 所有的插件继承这个基类， 只需要执行该基类中的方法
+
+            2. </code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2020/11/06/py-skill/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/06/py-skill/" class="post-title-link" itemprop="url">py-skill</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-06 06:45:35" itemprop="dateCreated datePublished" datetime="2020-11-06T06:45:35+08:00">2020-11-06</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2020/10/31/py-day10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -928,190 +1170,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2020/09/06/py-day05/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/06/py-day05/" class="post-title-link" itemprop="url">py-day05</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-06 16:35:49" itemprop="dateCreated datePublished" datetime="2020-09-06T16:35:49+08:00">2020-09-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-12 01:52:29" itemprop="dateModified" datetime="2020-09-12T01:52:29+08:00">2020-09-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>22k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>37 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>python基础<br>class(封装、多态、继承)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/09/06/py-day05/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2020/08/29/py-day04/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/29/py-day04/" class="post-title-link" itemprop="url">py-day04</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-08-29 20:34:34 / 修改时间：20:38:11" itemprop="dateCreated datePublished" datetime="2020-08-29T20:34:34+08:00">2020-08-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>15 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>python基础<br>函数高级操作(生成器、迭代器、装饰器)+模块(request json)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/29/py-day04/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1183,7 +1241,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1196,7 +1254,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1240,12 +1298,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">193k</span>
+    <span title="站点总字数">195k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:22</span>
+    <span title="站点阅读时长">5:24</span>
 </div>
 
 <!--
