@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="一、为什么要做cmdb？ 1. 项目上线的流程： ​        调研需求分析 —》 开会确定日期 —》 开发程序 —》 项目测试人员 —》代码上线（运维来负责）     传统上线方式：         直接代码解压 ，启服务， 访问项目， 进行测试          弊端：              - 手工上线  运维来干预              - 加机器， 需要重复进行代码的部署">
+  <meta name="description" content="一. 为什么要做cmdb？1. 项目上线的流程：      调研需求分析 ---》 开会确定日期 ---》 开发程序 ---》 项目测试人员 ---》代码上线（运维来负责）      传统上线方式：         直接代码解压 ，启服务， 访问项目， 进行测试          弊端：              - 手工上线  运维来干预              - 加机器， 需要重复进行代码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="py-cmdb">
 <meta property="og:url" content="https://waylon.whatyouneed.site/2020/11/15/py-cmdb/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="一、为什么要做cmdb？ 1. 项目上线的流程： ​        调研需求分析 —》 开会确定日期 —》 开发程序 —》 项目测试人员 —》代码上线（运维来负责）     传统上线方式：         直接代码解压 ，启服务， 访问项目， 进行测试          弊端：              - 手工上线  运维来干预              - 加机器， 需要重复进行代码的部署">
+<meta property="og:description" content="一. 为什么要做cmdb？1. 项目上线的流程：      调研需求分析 ---》 开会确定日期 ---》 开发程序 ---》 项目测试人员 ---》代码上线（运维来负责）      传统上线方式：         直接代码解压 ，启服务， 访问项目， 进行测试          弊端：              - 手工上线  运维来干预              - 加机器， 需要重复进行代码">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-15T11:24:02.000Z">
-<meta property="article:modified_time" content="2020-11-15T11:25:04.039Z">
+<meta property="article:modified_time" content="2020-11-17T19:01:27.278Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="cmdb">
 <meta name="twitter:card" content="summary">
@@ -213,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-11-15 19:24:02 / 修改时间：19:25:04" itemprop="dateCreated datePublished" datetime="2020-11-15T19:24:02+08:00">2020-11-15</time>
+              <time title="创建时间：2020-11-15 19:24:02" itemprop="dateCreated datePublished" datetime="2020-11-15T19:24:02+08:00">2020-11-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-18 03:01:27" itemprop="dateModified" datetime="2020-11-18T03:01:27+08:00">2020-11-18</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -233,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
+              <span>4.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>8 分钟</span>
             </span>
 
         </div>
@@ -252,10 +258,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>一、为什么要做cmdb？</p>
-<pre><code>1. 项目上线的流程：</code></pre>
-<p>​<br>        调研需求分析 —》 开会确定日期 —》 开发程序 —》 项目测试人员 —》代码上线（运维来负责）</p>
-<pre><code>    传统上线方式：
+        <h4 id="一-为什么要做cmdb？"><a href="#一-为什么要做cmdb？" class="headerlink" title="一. 为什么要做cmdb？"></a>一. 为什么要做cmdb？</h4><pre><code>1. 项目上线的流程： 
+    调研需求分析 ---》 开会确定日期 ---》 开发程序 ---》 项目测试人员 ---》代码上线（运维来负责）
+
+    传统上线方式：
         直接代码解压 ，启服务， 访问项目， 进行测试
 
         弊端：
@@ -266,82 +272,146 @@
         优化策略：
             代码上线系统 
 
-            必要条件：需要知道服务器的信息 （服务器的主机名， 硬盘大小。。。）</code></pre>
-<p>​<br>    2. 一个公司即将上市， 审查公司的资产 </p>
-<pre><code>    传统方式,统计公司服务器资产的方式：
+            必要条件：需要知道服务器的信息 （服务器的主机名， 硬盘大小。。。）
+
+2. 一个公司即将上市， 审查公司的资产 
+
+    传统方式,统计公司服务器资产的方式：
         excel表格 
             最后信息会变得不准确
             导致年底进行审计的时候，资产变得无法进行准确的统计</code></pre>
 <p>​<br>    CMDB：</p>
-<pre><code>    配置管理数据库
-
-    记录服务器的资产信息（包括 机架位置， 主机名，硬盘， 网卡， 产品线， 管理员等）的
-
+<pre><code>    配置管理数据库      
+    记录服务器的资产信息（包括 机架位置， 主机名，硬盘， 网卡， 产品线， 管理员等）的      
     位置：
         是自动化运维的基石</code></pre>
-<p>​<br>二、cmdb实现的方案：<br>​        核心的代码：<br>​            1. linux相关的命令   megacli<br>​            2. Python的代码执行linux命令， 得到结果返回给服务端<br>​<br>        业内：<br>            4套实现方案</p>
-<p>​<br>        三套方案全部实现</p>
-<p>​<br>        目标：</p>
-<pre><code>        写一份代码， 通过改变配置实现三套方案
+<p>​            </p>
+<h4 id="二-cmdb实现的方案："><a href="#二-cmdb实现的方案：" class="headerlink" title="二. cmdb实现的方案："></a>二. cmdb实现的方案：</h4><pre><code> 核心的代码：</code></pre>
+<ul>
+<li><ol>
+<li>linux相关的命令   megacli </li>
+</ol>
+</li>
+<li><ol start="2">
+<li>Python的代码执行linux命令， 得到结果返回给服务端<br>​            </li>
+</ol>
+</li>
+<li><p>业内：</p>
+<ul>
+<li>agent方案<ul>
+<li>优点：速度快</li>
+<li>缺点：每一台机器都需要部署，维护</li>
+</ul>
+</li>
+<li>ssh类方案<ul>
+<li>优点：只需要在中控机上部署</li>
+<li>缺点：速度慢</li>
+</ul>
+</li>
+<li>salt方案<br>  使用场景：公司正在使用saltstack</li>
+</ul>
+</li>
+<li><p>目标：    </p>
+<pre><code>  写一份代码， 通过改变配置实现三套方案       
+  客户端的采集</code></pre>
+</li>
+</ul>
+<h4 id="三-代码实现："><a href="#三-代码实现：" class="headerlink" title="三. 代码实现："></a>三. 代码实现：</h4><ul>
+<li>开发过程中遇到的问题<br>  解决的方案：<pre><code>  - 采用的是高内聚低耦合的思想，对代码进行高度的封装和抽离
+  - 集成了默认的全局配置文件以及自定制配置文件
+  - Django 中间件的写法，对插件进行可插拔式的采集23</code></pre>
+</li>
+</ul>
+<p>目录结构：<br>    bin  ： 核心的启动文件  start.py<br>    conf : 配置文件夹<br>    lib  ：库文件<br>    log  : 不建议将日志文件夹放在项目中   /var/log  mkidr /logs/cmdb/<br>    src  : 核心的源代码目录<br>    test : 开发的过程中， 需要进行代码的调试<br>​            </p>
+<ol>
+<li>高级配置文件的实现 ： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">    django的配置：</span><br><span class="line">        <span class="keyword">from</span> django.conf <span class="keyword">import</span> global_settings, settings</span><br><span class="line">        settings.TIME_ZONE</span><br><span class="line">    ```    </span><br><span class="line">        将自定制的配置和全局的配置集成在一个对象上， 之后想要使用任何属性的时候， 直接可以通过此对象获得</span><br><span class="line">    </span><br><span class="line">    技术要点：</span><br><span class="line">        getattr : 反射获取 对应的值</span><br><span class="line">        setattr : 反射设置</span><br><span class="line">​        </span><br><span class="line"><span class="number">2.</span> 编程思想：</span><br><span class="line">    </span><br><span class="line">高内聚低耦合</span><br><span class="line">    </span><br><span class="line">写一个类或者一个函数的时候， 我们需要明确一下次函数或者此类主要负责干啥的</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span>():</span></span><br><span class="line">    <span class="comment">#### 和用户相关的一些逻辑</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getUserInfo</span>():</span></span><br><span class="line">        <span class="comment">#### 获取用户的信息</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">### 处理订单相关的业务逻辑</span></span><br><span class="line">        </span><br><span class="line">​            </span><br><span class="line">可插拔式的配置：</span><br><span class="line">```python</span><br><span class="line">settings.py:</span><br><span class="line">    PLUGINS_DICT = &#123;</span><br><span class="line">        <span class="string">&quot;basic&quot;</span> : <span class="string">&#x27;src.plugins.basic.Basic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;disk&quot;</span> : <span class="string">&#x27;src.plugins.disk.Disk&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;memory&quot;</span> : <span class="string">&#x27;src.plugins.memory.Memory&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;nic&quot;</span> : <span class="string">&#x27;src.plugins.nic.Nic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;cpu&quot;</span> : <span class="string">&#x27;src.plugins.cpu.Cpu&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    参考django的中间件</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">execute</span>(<span class="params">self</span>):</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.plugins_dict.items():</span><br><span class="line">            <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">            k: basic </span></span><br><span class="line"><span class="string">            v: src.plugins.basic.Basic  字符串</span></span><br><span class="line"><span class="string">            &#x27;&#x27;&#x27;</span></span><br><span class="line">            module_path, cls_name = v.rsplit(<span class="string">&#x27;.&#x27;</span>, <span class="number">1</span>)</span><br><span class="line">            module = importlib.import_module(module_path)  <span class="comment">#### 导入路径</span></span><br><span class="line">            cls = getattr(module, cls_name)   <span class="comment">##### 获取对应的类名</span></span><br><span class="line">            cls().process()    <span class="comment">#### 执行该类对应的方法</span></span><br></pre></td></tr></table></figure>
+插件的代码：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Memory</span>():</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;memory&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
-        客户端的采集</code></pre>
-<p> 三、代码实现：</p>
-<pre><code>    目录结构：
+<p>​<br>​<br>3. 插件代码重复：</p>
+<ul>
+<li>解决的方法：<ul>
+<li><ol>
+<li>base.py 写一个基类， 所有的插件继承这个基类， 只需要执行该基类中的方法</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>cmd_func 抽离出去，当做参数传给execute函数</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>并发采集服务器信息(agent方式不需要考虑，ssh方式需要考虑)</li>
+</ol>
+<ul>
+<li>并发采集<ul>
+<li>并发采集，采用线程池<ul>
+<li>Python2：线程池 无；进程池 有；</li>
+<li>Python3：线程池 有；进程池 有；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>from concurrent.futures import ThreadPoolExecutor，ProcessPoolExecutor</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment">### 线程池</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor，ProcessPoolExecutor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">i</span>):</span></span><br><span class="line"></span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line">    print(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p = ThreadPoolExecutor(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    <span class="comment"># run(i)</span></span><br><span class="line">    p.submit(run, i)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-        bin  ： 核心的启动文件  start.py 
-        conf : 配置文件夹  
-        lib  ：库文件 
-        log  : 不建议将日志文件夹放在项目中   /var/log  mkidr /logs/cmdb/
-        src  : 核心的源代码目录
-        test : 开发的过程中， 需要进行代码的调试 </code></pre>
-<p>​<br>        1. 高级配置文件的实现 ：</p>
-<pre><code>        django的配置：
-            from django.conf import global_settings, settings
-            settings.TIME_ZONE
+<ol start="5">
+<li><p>遇到的问题</p>
+<ul>
+<li>唯一标识的问题<ul>
+<li>需要选出一个唯一的字段，作为唯一标识来进行区分服务器信息</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>sn 主板序列号</li>
+<li>问题，虚拟机和物理机一个sn号，导致服务器信息采集不完整</li>
+<li>hostname</li>
+<li>规范</li>
+<li><ol start="0">
+<li>1000台服务器，需要唯一的主机名</li>
+</ol>
+</li>
+<li><ol>
+<li>将服务器主机名，录入到后台管理数据库中（登记服务器）</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>再分配给技术之前，需要运行一下采集的程序，此时收集上来的数据都是最原始的。可以将原始数据中过的hostname保存到一个文件当中，以后，我们再向后端post数据的时候，以文件中的hostname为一个标准<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Agent</span>(<span class="params">Base</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">collect</span>(<span class="params">self</span>):</span></span><br><span class="line">        res = PluginsManager().execute()</span><br><span class="line">        <span class="comment">###唯一标识的问题</span></span><br><span class="line">        hostname = res[<span class="string">&#x27;basic&#x27;</span>][<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;hostname&#x27;</span>]</span><br><span class="line">        info = open(os.path.join(settings.BASEDIR, <span class="string">&#x27;conf/cert&#x27;</span>), <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>).read()</span><br><span class="line"></span><br><span class="line">        <span class="comment">###第一次运行，需要将原始的主机名写入到文件中</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> info.strip():</span><br><span class="line">            <span class="keyword">with</span> open(os.path.join(settings.BASEDIR, <span class="string">&#x27;conf/cert&#x27;</span>), <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">                fp.write(hostname)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            res[<span class="string">&#x27;basic&#x27;</span>][<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;hostname&#x27;</span>] = info</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> res.items():</span><br><span class="line">            print(k, v)</span><br><span class="line">        self.postInfo(res)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>API验证</p>
+</li>
+</ol>
+<ul>
+<li><p>自定义的验证</p>
+</li>
+<li><p>对称加密</p>
+<ul>
+<li>缺点：key是明文传输的<ul>
+<li>解决方法：发过去的key加密</li>
+<li>要求每次加密的key都是动态的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>非对称加密</p>
+</li>
+</ul>
+<p>第一种方式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">对称加密</span><br><span class="line">client</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">key = <span class="string">&#x27;asdasdasd&#x27;</span></span><br><span class="line">res = requests.get(<span class="string">&#x27;http://127.0.0.1:8000/testapi&#x27;</span>, headers=&#123;<span class="string">&#x27;key&#x27;</span>:key&#125;)</span><br><span class="line">print(res.text)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">server</span><br><span class="line">server_key = <span class="string">&#x27;asdasdasds&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">testapi</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        clent_key = request.META[<span class="string">&#x27;HTTP_KEY&#x27;</span>]</span><br><span class="line">        <span class="keyword">if</span> server_key != clent_key:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;非法请求&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(request.body)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-            将自定制的配置和全局的配置集成在一个对象上， 之后想要使用任何属性的时候， 直接可以通过此对象获得
+<p>第二种方式，堆成加密，密文（1.时间，2.加密出错）<br>3.连接redis，设置key的过期时间 20s</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib,time</span><br><span class="line">client_time = time.time()</span><br><span class="line">tmp = <span class="string">&quot;%s|%s&quot;</span> %(key, client_time)</span><br><span class="line">m = hashlib.md5()</span><br><span class="line">m.update(bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">res = m.hexdigest()</span><br><span class="line">print(res)</span><br><span class="line">info = <span class="string">&quot;%s|%s&quot;</span> %(res, client_time)</span><br><span class="line">print(info)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = requests.get(<span class="string">&#x27;http://127.0.0.1:8000/testapi&#x27;</span>, headers=&#123;<span class="string">&#x27;key&#x27;</span>:info&#125;)</span><br><span class="line">print(res.text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hashlib,time</span><br><span class="line">server_key = <span class="string">&#x27;asdasdasd&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">testapi</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        client_key = request.META.get(<span class="string">&#x27;HTTP_KEY&#x27;</span>)</span><br><span class="line">        print(client_key)</span><br><span class="line">        client_md5_key, client_time = client_key.split(<span class="string">&#x27;|&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        server_time = time.time()</span><br><span class="line">        client_time = float(client_time)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> server_time - client_time &gt; <span class="number">10</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;第一关，时间失效&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        tmp = <span class="string">&quot;%s|%s&quot;</span> % (server_key, client_time)</span><br><span class="line"></span><br><span class="line">        m = hashlib.md5()</span><br><span class="line">        m.update(bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">        server_md5_key = m.hexdigest()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> server_md5_key != client_md5_key:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;第二关，加密出错&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(request.body)</span><br></pre></td></tr></table></figure>
 
-        技术要点：
-
-            getattr : 反射获取 对应的值
-            setattr : 反射设置</code></pre>
-<p>​<br>        2.  编程思想：</p>
-<pre><code>            高内聚低耦合
-
-                写一个类或者一个函数的时候， 我们需要明确一下次函数或者此类主要负责干啥的
-
-                class User():
-                    #### 和用户相关的一些逻辑
-
-                    def getUserInfo():
-                        #### 获取用户的信息
-
-                        ### 处理订单相关的业务逻辑</code></pre>
-<p>​<br>​<br>                可插拔式的配置：<br>                    settings.py:<br>                        PLUGINS_DICT = {<br>                            “basic” : ‘src.plugins.basic.Basic’,<br>                            “disk” : ‘src.plugins.disk.Disk’,<br>                            “memory” : ‘src.plugins.memory.Memory’,<br>                            “nic” : ‘src.plugins.nic.Nic’,<br>                            “cpu” : ‘src.plugins.cpu.Cpu’<br>                        }<br>                        参考django的中间件</p>
-<pre><code>                    def execute(self):
-
-                        for k, v in self.plugins_dict.items():
-                            &#39;&#39;&#39;
-                            k: basic 
-                            v: src.plugins.basic.Basic  字符串
-                            &#39;&#39;&#39;
-                            module_path, cls_name = v.rsplit(&#39;.&#39;, 1)
-                            module = importlib.import_module(module_path)  #### 导入路径
-                            cls = getattr(module, cls_name)   ##### 获取对应的类名
-                            cls().process()    #### 执行该类对应的方法
-
-                    插件的代码：
-
-
-                        class Memory():
-
-                            def process(self):
-                                print(&#39;memory&#39;)</code></pre>
-<p>​<br>​<br>        3. 插件代码重复：</p>
-<pre><code>        解决的方法：
-            1. base.py 写一个基类， 所有的插件继承这个基类， 只需要执行该基类中的方法
-
-            2. </code></pre>
 
     </div>
 
@@ -422,6 +492,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9Acmdb%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一. 为什么要做cmdb？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C-cmdb%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">二. cmdb实现的方案：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">三. 代码实现：</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -494,12 +565,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">195k</span>
+    <span title="站点总字数">198k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:24</span>
+    <span title="站点阅读时长">5:30</span>
 </div>
 
 <!--
