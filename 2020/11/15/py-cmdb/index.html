@@ -28,7 +28,7 @@
 <meta property="og:description" content="一. 为什么要做cmdb？1. 项目上线的流程：      调研需求分析 ---》 开会确定日期 ---》 开发程序 ---》 项目测试人员 ---》代码上线（运维来负责）      传统上线方式：         直接代码解压 ，启服务， 访问项目， 进行测试          弊端：              - 手工上线  运维来干预              - 加机器， 需要重复进行代码">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-15T11:24:02.000Z">
-<meta property="article:modified_time" content="2020-11-17T19:01:27.278Z">
+<meta property="article:modified_time" content="2020-11-20T12:22:57.671Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="cmdb">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-18 03:01:27" itemprop="dateModified" datetime="2020-11-18T03:01:27+08:00">2020-11-18</time>
+                <time title="修改时间：2020-11-20 20:22:57" itemprop="dateModified" datetime="2020-11-20T20:22:57+08:00">2020-11-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.6k</span>
+              <span>6.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -413,6 +413,57 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib,time</span><br><span class="line">client_time = time.time()</span><br><span class="line">tmp = <span class="string">&quot;%s|%s&quot;</span> %(key, client_time)</span><br><span class="line">m = hashlib.md5()</span><br><span class="line">m.update(bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">res = m.hexdigest()</span><br><span class="line">print(res)</span><br><span class="line">info = <span class="string">&quot;%s|%s&quot;</span> %(res, client_time)</span><br><span class="line">print(info)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = requests.get(<span class="string">&#x27;http://127.0.0.1:8000/testapi&#x27;</span>, headers=&#123;<span class="string">&#x27;key&#x27;</span>:info&#125;)</span><br><span class="line">print(res.text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hashlib,time</span><br><span class="line">server_key = <span class="string">&#x27;asdasdasd&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">testapi</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        client_key = request.META.get(<span class="string">&#x27;HTTP_KEY&#x27;</span>)</span><br><span class="line">        print(client_key)</span><br><span class="line">        client_md5_key, client_time = client_key.split(<span class="string">&#x27;|&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        server_time = time.time()</span><br><span class="line">        client_time = float(client_time)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> server_time - client_time &gt; <span class="number">10</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;第一关，时间失效&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        tmp = <span class="string">&quot;%s|%s&quot;</span> % (server_key, client_time)</span><br><span class="line"></span><br><span class="line">        m = hashlib.md5()</span><br><span class="line">        m.update(bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">        server_md5_key = m.hexdigest()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> server_md5_key != client_md5_key:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;第二关，加密出错&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(request.body)</span><br></pre></td></tr></table></figure>
 
 
+
+<ul>
+<li>JWT</li>
+</ul>
+<ol start="7">
+<li>数据入库<br>新的数据：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#39;0&#39;: &#123;&#39;slot&#39;: &#39;0&#39;, &#39;pd_type&#39;: &#39;SAS&#39;, &#39;capacity&#39;: &#39;279.396&#39;, &#39;model&#39;: &#39;SEAGATE ST300MM0006     LS08S0K2B5NV&#39;&#125;, </span><br><span class="line">    &#39;1&#39;: &#123;&#39;slot&#39;: &#39;1&#39;, &#39;pd_type&#39;: &#39;SAS&#39;, &#39;capacity&#39;: &#39;279.396&#39;, &#39;model&#39;: &#39;SEAGATE ST300MM0006     LS08S0K2B5AH&#39;&#125;, &#39;2&#39;: &#123;&#39;slot&#39;: &#39;2&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1SZNSAFA01085L     Samsung SSD 850 PRO 512GB               EXM01B6Q&#39;&#125;, </span><br><span class="line">    &#39;3&#39;: &#123;&#39;slot&#39;: &#39;3&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAF912433K     Samsung SSD 840 PRO Series              DXM06B0Q&#39;&#125;, </span><br><span class="line">    &#39;4&#39;: &#123;&#39;slot&#39;: &#39;4&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAF303909M     Samsung SSD 840 PRO Series              DXM05B0Q&#39;&#125;, </span><br><span class="line">    &#39;5&#39;: &#123;&#39;slot&#39;: &#39;5&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAFB00549A     Samsung SSD 840 PRO Series              DXM06B0Q&#39;&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>老数据：<br>    数据库中获取</p>
+<ol start="8">
+<li>页面展示</li>
+</ol>
+<ul>
+<li><p>分为两大块：<br>前后端不分离<br>  后端的程序和前端的Html页面全部放在一个项目之下</p>
+<p>  两种方式：</p>
+<pre><code>  - 纯粹的去手写html页面  加入Bootstrap美化页面
+  - 用别人写好的第三方框架
+      - layui
+      - xadmin admin的加强版</code></pre>
+<p>  图表：</p>
+<pre><code>  PC时代：
+      highcharts               
+      Echarts  
+  移动端：
+      antv</code></pre>
+<p>  前后端分离</p>
+<pre><code>  前端： vue、react、angular js
+      - vueAdmin-template
+      - iview-admin
+  后端：
+      - DRF </code></pre>
+</li>
+<li><p>redis：</p>
+<ol start="0">
+<li><p>非关系型数据库<br> mongodb memcache</p>
+<p> 国内用redis比较多的公司是：weibo</p>
+</li>
+<li><p>5大数据类型 </p>
+<p> 字符串类型<br> 列表<br> 集合<br> 有序集合<br> 哈希</p>
+</li>
+<li><p>python操作redis</p>
+<ul>
+<li>django连接redis</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>问题：<br>业务线调整，变换主机名，我需要提前注册到数据库里吗？<br>如果没有提前注册，数据库中没有我的这个hostname，就不会接收我的消息</p>
+
     </div>
 
     
@@ -433,7 +484,10 @@
     <a href="/2020/11/06/py-skill/" rel="prev" title="py-skill">
       <i class="fa fa-chevron-left"></i> py-skill
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/20/py-xadmin/" rel="next" title="py-xadmin">
+      py-xadmin <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -508,7 +562,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -565,12 +619,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">198k</span>
+    <span title="站点总字数">204k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:30</span>
+    <span title="站点阅读时长">5:41</span>
 </div>
 
 <!--
