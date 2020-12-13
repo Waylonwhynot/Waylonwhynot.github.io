@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://images2015.cnblogs.com/blog/997599/201701/997599-20170113091806338-1978303584.png">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/11/06/py-skill/jwt%E4%BB%8B%E7%BB%8D.png">
 <meta property="article:published_time" content="2020-11-05T22:45:35.000Z">
-<meta property="article:modified_time" content="2020-12-05T06:51:03.306Z">
+<meta property="article:modified_time" content="2020-12-06T17:26:51.197Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-05 14:51:03" itemprop="dateModified" datetime="2020-12-05T14:51:03+08:00">2020-12-05</time>
+                <time title="修改时间：2020-12-07 01:26:51" itemprop="dateModified" datetime="2020-12-07T01:26:51+08:00">2020-12-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,14 +242,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.3k</span>
+              <span>7.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -433,6 +433,27 @@
 <ul>
 <li>过程:浏览器请求静态页面(不是Django转发的);看到页面后,里面写了一些JS的代码,可以向后端发起请求;返回Json/XML格式的数据,前端就可以渲染页面了.</li>
 </ul>
+<ol start="16">
+<li><p>api接口<br>通过网络,规定了前后台信息交互规则的url连接,也就是前后台交互的媒介。</p>
+</li>
+<li><p>RESTful API规范<br>10条<br>最终要2条</p>
+</li>
+<li><p>1 数据的安全保障<br>url链接一般都采用https协议进行传输</p>
+</li>
+</ol>
+<p>注：采用https协议，可以提高数据交互过程中的安全性</p>
+<p>4.2 接口特征表现<br>用api关键字标识接口url：</p>
+<p><a target="_blank" rel="noopener" href="https://api.baidu.com/">https://api.baidu.com</a><br><a target="_blank" rel="noopener" href="https://www.baidu.com/api">https://www.baidu.com/api</a><br>注：看到api字眼，就代表该请求url链接是完成前后台数据交互的</p>
+<p>4.3 多数据版本共存<br>在url链接中标识数据版本</p>
+<p><a target="_blank" rel="noopener" href="https://api.baidu.com/v1">https://api.baidu.com/v1</a><br><a target="_blank" rel="noopener" href="https://api.baidu.com/v2">https://api.baidu.com/v2</a><br>注：url链接中的v1、v2就是不同数据版本的体现（只有在一种数据资源有多版本情况下）</p>
+<p>4.4 数据即是资源，均使用名词（可复数）<br>接口一般都是完成前后台数据的交互，交互的数据我们称之为资源</p>
+<p><a target="_blank" rel="noopener" href="https://api.baidu.com/users">https://api.baidu.com/users</a><br><a target="_blank" rel="noopener" href="https://api.baidu.com/books">https://api.baidu.com/books</a><br><a target="_blank" rel="noopener" href="https://api.baidu.com/book">https://api.baidu.com/book</a><br>注：一般提倡用资源的复数形式，在url链接中奖励不要出现操作资源的动词，错误示范：<a target="_blank" rel="noopener" href="https://api.baidu.com/delete-user">https://api.baidu.com/delete-user</a></p>
+<p>特殊的接口可以出现动词，因为这些接口一般没有一个明确的资源，或是动词就是接口的核心含义</p>
+<p><a target="_blank" rel="noopener" href="https://api.baidu.com/place/search">https://api.baidu.com/place/search</a><br><a target="_blank" rel="noopener" href="https://api.baidu.com/login">https://api.baidu.com/login</a><br>4.5 资源操作由请求方式决定（method）<br>操作资源一般都会涉及到增删改查，我们提供请求方式来标识增删改查动作<br><a target="_blank" rel="noopener" href="https://api.baidu.com/books">https://api.baidu.com/books</a> - get请求：获取所有书<br><a target="_blank" rel="noopener" href="https://api.baidu.com/books/1">https://api.baidu.com/books/1</a> - get请求：获取主键为1的书<br><a target="_blank" rel="noopener" href="https://api.baidu.com/books">https://api.baidu.com/books</a> - post请求：新增一本书书<br><a target="_blank" rel="noopener" href="https://api.baidu.com/books/1">https://api.baidu.com/books/1</a> - put请求：整体修改主键为1的书<br><a target="_blank" rel="noopener" href="https://api.baidu.com/books/1">https://api.baidu.com/books/1</a> - patch请求：局部修改主键为1的书<br><a target="_blank" rel="noopener" href="https://api.baidu.com/books/1">https://api.baidu.com/books/1</a> - delete请求：删除主键为1的书<br>4.6 过滤，通过在url上传参的形式传递搜索条件<br><a target="_blank" rel="noopener" href="https://api.example.com/v1/zoos?limit=10%EF%BC%9A%E6%8C%87%E5%AE%9A%E8%BF%94%E5%9B%9E%E8%AE%B0%E5%BD%95%E7%9A%84%E6%95%B0%E9%87%8F">https://api.example.com/v1/zoos?limit=10：指定返回记录的数量</a><br><a target="_blank" rel="noopener" href="https://api.example.com/v1/zoos?offset=10%EF%BC%9A%E6%8C%87%E5%AE%9A%E8%BF%94%E5%9B%9E%E8%AE%B0%E5%BD%95%E7%9A%84%E5%BC%80%E5%A7%8B%E4%BD%8D%E7%BD%AE">https://api.example.com/v1/zoos?offset=10：指定返回记录的开始位置</a><br><a target="_blank" rel="noopener" href="https://api.example.com/v1/zoos?page=2&amp;per_page=100%EF%BC%9A%E6%8C%87%E5%AE%9A%E7%AC%AC%E5%87%A0%E9%A1%B5%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%AF%8F%E9%A1%B5%E7%9A%84%E8%AE%B0%E5%BD%95%E6%95%B0">https://api.example.com/v1/zoos?page=2&amp;per_page=100：指定第几页，以及每页的记录数</a><br><a target="_blank" rel="noopener" href="https://api.example.com/v1/zoos?sortby=name&amp;order=asc%EF%BC%9A%E6%8C%87%E5%AE%9A%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C%E6%8C%89%E7%85%A7%E5%93%AA%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%8E%92%E5%BA%8F%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%8E%92%E5%BA%8F%E9%A1%BA%E5%BA%8F">https://api.example.com/v1/zoos?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序</a><br><a target="_blank" rel="noopener" href="https://api.example.com/v1/zoos?animal_type_id=1%EF%BC%9A%E6%8C%87%E5%AE%9A%E7%AD%9B%E9%80%89%E6%9D%A1%E4%BB%B6">https://api.example.com/v1/zoos?animal_type_id=1：指定筛选条件</a><br>4.7 响应状态码<br>4.7.1 正常响应<br>响应状态码2xx<br>200：常规请求<br>201：创建成功<br>4.7.2 重定向响应<br>响应状态码3xx<br>301：永久重定向<br>302：暂时重定向<br>4.7.3 客户端异常<br>响应状态码4xx<br>403：请求无权限<br>404：请求路径不存在<br>405：请求方法不存在<br>4.7.4 服务器异常<br>响应状态码5xx<br>500：服务器异常<br>4.8 错误处理，应返回错误信息，error当做key</p>
+<p>{<br>    error: “无权限操作”<br>}<br>4.9 返回结果，针对不同操作，服务器向用户返回的结果应该符合以下规范</p>
+<p>GET /collection：返回资源对象的列表（数组）<br>GET /collection/resource：返回单个资源对象<br>POST /collection：返回新生成的资源对象<br>PUT /collection/resource：返回完整的资源对象<br>PATCH /collection/resource：返回完整的资源对象<br>DELETE /collection/resource：返回一个空文档<br>4.10 需要url请求的资源需要访问资源的请求链接</p>
+<h1 id="Hypermedia-API，RESTful-API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么"><a href="#Hypermedia-API，RESTful-API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么" class="headerlink" title="Hypermedia API，RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么"></a>Hypermedia API，RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么</h1><p>{<br>      “status”: 0,<br>      “msg”: “ok”,<br>      “results”:[<br>        {<br>            “name”:”肯德基(罗餐厅)”,<br>            “img”: “<a target="_blank" rel="noopener" href="https://image.baidu.com/kfc/001.png&quot;">https://image.baidu.com/kfc/001.png&quot;</a><br>        }<br>          …<br>        ]<br>}<br>比较好的接口返回</p>
+<h1 id="响应数据要有状态码、状态信息以及数据本身"><a href="#响应数据要有状态码、状态信息以及数据本身" class="headerlink" title="响应数据要有状态码、状态信息以及数据本身"></a>响应数据要有状态码、状态信息以及数据本身</h1><p>{<br>      “status”: 0,<br>      “msg”: “ok”,<br>      “results”:[<br>        {<br>            “name”:”肯德基(罗餐厅)”,<br>            “location”:{<br>                “lat”:31.415354,<br>                “lng”:121.357339<br>            },<br>            “address”:”月罗路2380号”,<br>            “province”:”上海市”,<br>            “city”:”上海市”,<br>            “area”:”宝山区”,<br>            “street_id”:”339ed41ae1d6dc320a5cb37c”,<br>            “telephone”:”(021)56761006”,<br>            “detail”:1,<br>            “uid”:”339ed41ae1d6dc320a5cb37c”<br>        }<br>          …<br>        ]<br>}</p>
 
     </div>
 
@@ -516,6 +537,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hypermedia-API%EF%BC%8CRESTful-API%E6%9C%80%E5%A5%BD%E5%81%9A%E5%88%B0Hypermedia%EF%BC%8C%E5%8D%B3%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C%E4%B8%AD%E6%8F%90%E4%BE%9B%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%9E%E5%90%91%E5%85%B6%E4%BB%96API%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BD%BF%E5%BE%97%E7%94%A8%E6%88%B7%E4%B8%8D%E6%9F%A5%E6%96%87%E6%A1%A3%EF%BC%8C%E4%B9%9F%E7%9F%A5%E9%81%93%E4%B8%8B%E4%B8%80%E6%AD%A5%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">Hypermedia API，RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E6%95%B0%E6%8D%AE%E8%A6%81%E6%9C%89%E7%8A%B6%E6%80%81%E7%A0%81%E3%80%81%E7%8A%B6%E6%80%81%E4%BF%A1%E6%81%AF%E4%BB%A5%E5%8F%8A%E6%95%B0%E6%8D%AE%E6%9C%AC%E8%BA%AB"><span class="nav-number">2.</span> <span class="nav-text">响应数据要有状态码、状态信息以及数据本身</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -531,7 +553,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -588,12 +610,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">216k</span>
+    <span title="站点总字数">224k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:01</span>
+    <span title="站点阅读时长">6:14</span>
 </div>
 
 <!--
