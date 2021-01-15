@@ -28,7 +28,7 @@
 <meta property="og:description" content="DRF-day02">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-27T18:37:50.000Z">
-<meta property="article:modified_time" content="2020-12-27T19:23:03.408Z">
+<meta property="article:modified_time" content="2020-12-29T19:09:31.432Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -213,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-12-28 02:37:50 / 修改时间：03:23:03" itemprop="dateCreated datePublished" datetime="2020-12-28T02:37:50+08:00">2020-12-28</time>
+              <time title="创建时间：2020-12-28 02:37:50" itemprop="dateCreated datePublished" datetime="2020-12-28T02:37:50+08:00">2020-12-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-30 03:09:31" itemprop="dateModified" datetime="2020-12-30T03:09:31+08:00">2020-12-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -233,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
+              <span>3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -255,6 +261,9 @@
         <p>DRF-day02</p>
 <a id="more"></a>
 <h2 id="1-复习"><a href="#1-复习" class="headerlink" title="1. 复习"></a>1. 复习</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.Serializer类，需要序列化什么，必须要写一个继承，想序列化什么字段，就在里面写字段，source的作用（很多字段类）</span></span><br><span class="line"><span class="comment"># 2.序列化queryset(列表)对象和真正的对象，many=True的作用，instance=要序列化的对象</span></span><br><span class="line"><span class="comment"># 3.反序列化，instance要序列化的对象，data=request.data</span></span><br><span class="line"><span class="comment"># 4.字段验证，序列化类中，给字段加属性，局部和全局钩子函数，字段属性的validators=[check_author]</span></span><br><span class="line"><span class="comment"># 5.当在视图中调用序列化对象.is_valid() boo_ser.is_valid(raise_exception=True)，只要验证不通过，直接抛异常</span></span><br><span class="line"><span class="comment"># 6.修改保存-&gt;调用序列化对象.save()，重写Serializer类的update方法</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span>(<span class="params">self, instance, validated_data</span>):</span></span><br><span class="line">        <span class="comment"># instance是book这个对象</span></span><br><span class="line">        <span class="comment"># validated_data是校验后的数据</span></span><br><span class="line">        instance.name = validated_data.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">        instance.price = validated_data.get(<span class="string">&#x27;price&#x27;</span>)</span><br><span class="line">        instance.author = validated_data.get(<span class="string">&#x27;author&#x27;</span>)</span><br><span class="line">        instance.publish = validated_data.get(<span class="string">&#x27;publish&#x27;</span>)</span><br><span class="line">        instance.save()  <span class="comment"># book.save() django的orm提供的</span></span><br><span class="line">        <span class="keyword">return</span> instance</span><br><span class="line"><span class="comment"># 7.序列化得到字典，序列化对象.data</span></span><br><span class="line"><span class="comment"># 8.自定义了Response对象</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Myresponse</span>():</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.status = <span class="number">100</span></span><br><span class="line">        self.msg = <span class="string">&#x27;成功&#x27;</span></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_dict</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.__dict__</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    res = Myresponse()</span><br><span class="line">    res.status = <span class="number">101</span></span><br><span class="line">    res.msg = <span class="string">&#x27;失败&#x27;</span></span><br><span class="line">    res.data = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;lqz&#x27;</span>&#125;</span><br><span class="line">    print(res.get_dict)</span><br><span class="line"><span class="comment"># 9.反序列化的新增 序列化类(data=request.data),序列化对象.save(),如果只传了data，当调用 序列化对象.save()，会触发序列化类的craete方法执行;当传了instance和data，当调用 序列化对象.save()，会触发序列化类的update方法执行;当</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 10.重写create方法(可以很复杂)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span>(<span class="params">self, validated_data</span>):</span></span><br><span class="line">        instance = Book.objects.create(**validated_data)</span><br><span class="line">        <span class="keyword">return</span> instance</span><br><span class="line"><span class="comment"># 11.ModelSerializer 跟model模型对应</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookModelSerializer</span>(<span class="params">serializers.ModelSerializer</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate_price</span>(<span class="params">self, data</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    publish=seriliazers.CharField(source=<span class="string">&#x27;publish.name&#x27;</span>)</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = Book  <span class="comment"># 对应上model.py中的模型</span></span><br><span class="line">        fields = <span class="string">&#x27;__all__&#x27;</span></span><br><span class="line">        <span class="comment"># fields = (&#x27;name&#x27;,&#x27;price&#x27;,&#x27;publish&#x27;) # 只序列化指定的字段</span></span><br><span class="line">        <span class="comment"># exclude = (&#x27;name&#x27;,) #跟fields不能都写，写谁，就表示排除谁</span></span><br><span class="line">        <span class="comment"># read_only_fields = (&#x27;id&#x27;, )    #</span></span><br><span class="line">        <span class="comment"># write_only_fields = (&#x27;price&#x27;)  # 弃用了，extra_kwargs</span></span><br><span class="line">        extra_kwargs = &#123; <span class="comment"># 类似于这种形式  name = serializers.CharField(max_length=16,min_length=4)</span></span><br><span class="line">            <span class="string">&#x27;id&#x27;</span>: &#123;<span class="string">&#x27;write_only&#x27;</span>: <span class="literal">True</span>, <span class="string">&#x27;read_only&#x27;</span>: <span class="literal">False</span>,max_length:<span class="number">16</span>,min_length:<span class="number">4</span>&#125;,</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment"># 12 如果在ModelSerializer中写一个局部钩子或者全局钩子，如何写？</span></span><br><span class="line">     - 跟之前一模一样</span><br><span class="line"><span class="comment"># 13 many=True 能够序列化多条的原因---&gt; __new__是在__init__之前执行的，造出一个空对象</span></span><br><span class="line"><span class="comment"># 14, 接口：统一子类的行为</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-今日内容"><a href="#2-今日内容" class="headerlink" title="2.今日内容"></a>2.今日内容</h2><h3 id="1-请求和响应"><a href="#1-请求和响应" class="headerlink" title="1. 请求和响应"></a>1. 请求和响应</h3><h4 id="1-1-请求"><a href="#1-1-请求" class="headerlink" title="1.1. 请求"></a>1.1. 请求</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># from rest_framework.request import Request </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, request, parsers=None, authenticators=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 negotiator=None, parser_context=None</span>):</span></span><br><span class="line">        <span class="keyword">assert</span> isinstance(request, HttpRequest), (</span><br><span class="line">            <span class="string">&#x27;The `request` argument must be an instance of &#x27;</span></span><br><span class="line">            <span class="string">&#x27;`django.http.HttpRequest`, not `&#123;&#125;.&#123;&#125;`.&#x27;</span></span><br><span class="line">            .format(request.__class__.__module__, request.__class__.__name__)</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># 二次封装request，将原生作为drf request对象的_request 属性</span></span><br><span class="line">        self._request = request</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span>(<span class="params">self, item</span>):</span></span><br><span class="line">        <span class="keyword">return</span> getattr(self._request, item)</span><br><span class="line"><span class="comment"># 请求对象.data: 前端以三种编码方式传入的数据，都可以取出来</span></span><br><span class="line"><span class="comment"># request.query_params与Django标准的request.GET相同，只是更换了更正确的名称而已。</span></span><br></pre></td></tr></table></figure>
+<h4 id="1-2-响应"><a href="#1-2-响应" class="headerlink" title="1.2. 响应"></a>1.2. 响应</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># from rest_framework.response import Response</span><br><span class="line">def __init__(self, data&#x3D;None, status&#x3D;None,</span><br><span class="line">                template_name&#x3D;None, headers&#x3D;None,</span><br><span class="line">                exception&#x3D;False, content_type&#x3D;None):</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -277,7 +286,10 @@
     <a href="/2020/12/06/py-drf/" rel="prev" title="py-drf">
       <i class="fa fa-chevron-left"></i> py-drf
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/10/mysql-01/" rel="next" title="mysql-01">
+      mysql-01 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -336,7 +348,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%A4%8D%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">1. 复习</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%A4%8D%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">1. 复习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BB%8A%E6%97%A5%E5%86%85%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">2.今日内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94"><span class="nav-number">2.1.</span> <span class="nav-text">1. 请求和响应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E8%AF%B7%E6%B1%82"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1. 请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E5%93%8D%E5%BA%94"><span class="nav-number">2.1.2.</span> <span class="nav-text">1.2. 响应</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -352,14 +364,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -400,7 +412,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -409,12 +421,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">233k</span>
+    <span title="站点总字数">240k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:28</span>
+    <span title="站点阅读时长">6:41</span>
 </div>
 
 <!--
