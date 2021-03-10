@@ -218,7 +218,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-15 20:47:18" itemprop="dateModified" datetime="2021-01-15T20:47:18+08:00">2021-01-15</time>
+                <time title="修改时间：2021-01-20 00:54:35" itemprop="dateModified" datetime="2021-01-20T00:54:35+08:00">2021-01-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -786,10 +786,16 @@ select * from emp right join dep on emp.dep_id = dep.id
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-11-20 23:43:10 / 修改时间：23:44:13" itemprop="dateCreated datePublished" datetime="2020-11-20T23:43:10+08:00">2020-11-20</time>
+              <time title="创建时间：2020-11-20 23:43:10" itemprop="dateCreated datePublished" datetime="2020-11-20T23:43:10+08:00">2020-11-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-23 23:28:04" itemprop="dateModified" datetime="2021-01-23T23:28:04+08:00">2021-01-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -806,14 +812,14 @@ select * from emp right join dep on emp.dep_id = dep.id
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.9k</span>
+              <span>7.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -927,6 +933,15 @@ select * from emp right join dep on emp.dep_id = dep.id
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 跨域设置</span></span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">&#x27;corsheaders&#x27;</span>,</span><br><span class="line">    ...</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">MIDDLEWARE = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">&#x27;corsheaders.middleware.CorsMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.middleware.common.CommonMiddleware&#x27;</span>,</span><br><span class="line">    ...</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">CORS_ALLOW_HEADERS = list(default_headers) + [</span><br><span class="line">    <span class="string">&#x27;XMLHttpRequest&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;X_FILENAME&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;accept-encoding&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;authorization&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;content-type&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;dnt&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;origin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;user-agent&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;x-csrftoken&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;x-requested-with&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Pragma&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;TOKEN&#x27;</span>,</span><br><span class="line">]</span><br><span class="line">CORS_ORIGIN_ALLOW_ALL = <span class="literal">True</span></span><br><span class="line">CORS_ALLOW_CREDENTIALS = <span class="literal">True</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+
+
+
+
+
+<p>#####<br>用户访问 index.html –&gt;加载main.js,创建了vue的对象，vue对象在index.html中圈了一块地，那里就可以用vue的语法了—&gt; main.js中的component挂载组件，挂载了APP组件，就是最外层的全局大组件—&gt;加载了App.vue —&gt; App.vue中配置vue-router–&gt;路由到了helloword组件</p>
+<p>App.vue如何加载到了helloword组件，通过vue-router路由匹配组件；哪里写了router-view就往哪里仍</p>
+<p>import Router from ‘vue-router’ // export default {功能} 抛出 才能引入</p>
+<p>export default new Router({<br>  routes: [<br>    {<br>      path: ‘/‘,<br>      name: ‘HelloWorld’,<br>      component: HelloWorld<br>    }<br>  ]<br>})</p>
 
       
     </div>
@@ -1898,7 +1913,7 @@ select * from emp right join dep on emp.dep_id = dep.id
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">240k</span>
+    <span title="站点总字数">241k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
