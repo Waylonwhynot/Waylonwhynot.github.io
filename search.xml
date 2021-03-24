@@ -595,18 +595,33 @@ select * from emp right join dep on emp.dep_id = dep.id
 </ul>
 <p>在代码 code review (代码评审) , 我们要求三种风格你可以随便选择一种你喜欢的风格，但是大家在选择完成之后，一定要主要的是，千万别中途换风格。</p>
 <h5 id="5-python的基础数据类型"><a href="#5-python的基础数据类型" class="headerlink" title="5. python的基础数据类型"></a>5. python的基础数据类型</h5><ul>
-<li><p>整型</p>
+<li>数字</li>
+</ul>
+<p>整型int</p>
 <blockquote>
-<p>表示一个整数的</p>
+<p>表示一个整数的<br>  定义：age=10 #age=int(10)<br>  用于标识：年龄，等级，身份证号，qq号，个数<br>浮点型</p>
 </blockquote>
-</li>
-<li><p>字符串</p>
+<p>float浮点型</p>
 <blockquote>
+<p>定义：salary=3.1 #salary=float(3.1)<br>用于标识：工资，身高，体重，</p>
+</blockquote>
+<ul>
+<li>字符串<blockquote>
 <p> 字符串会嵌套<br>name = “dj’sa’b”  ## 外层双引号，内层要求是单引号<br>name2 = ‘ds”ad”sa’ ## 外层单引号，内层要求是双引号<br>hhh = “dvshavhhhhhhhhhhhhhhh” \</p>
 <pre><code>&quot;dsadsadsadsa&quot;</code></pre>
 <p>使用三引号<br>kkk = ‘’’<br>dnsajndsandjansdnas<br>曾老师<br>boduo老师<br>‘’’<br>print(kkk, type(kkk))</p>
 </blockquote>
 </li>
+</ul>
+<blockquote>
+<blockquote>
+<p>单引号、双引号、多引号没有区别，多行字符串必须用多引号</p>
+</blockquote>
+</blockquote>
+<p>字符串拼接（只能在字符串之间进行，且只能相加或相乘）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#数字可以进行加减乘除等运算，字符串呢？让我大声告诉你，也能？what ?是的，但只能进行&quot;相加&quot;和&quot;相乘&quot;运算。</span><br><span class="line">&gt;&gt;&gt; name&#x3D;&#39;egon&#39;</span><br><span class="line">&gt;&gt;&gt; age&#x3D;&#39;18&#39;</span><br><span class="line">&gt;&gt;&gt; name+age #相加其实就是简单拼接</span><br><span class="line">&#39;egon18&#39;</span><br><span class="line">&gt;&gt;&gt; name*5 </span><br><span class="line">&#39;egonegonegonegonegon&#39;</span><br><span class="line"></span><br><span class="line">#注意1：字符串相加的效率不高</span><br><span class="line">字符串1+字符串3，并不会在字符串1的基础上加字符串2，而是申请一个全新的内存空间存入字符串1和字符串3，相当字符串1与字符串3的空间被复制了一次，</span><br><span class="line"></span><br><span class="line">#注意2：只能字符串加字符串，不能字符串加其他类型</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li><p>布尔</p>
 <blockquote>
 <p>隐式的布尔值</p>
@@ -614,6 +629,8 @@ select * from emp right join dep on emp.dep_id = dep.id
 <p>所有类型的数据都可以当做隐式的布尔值<br>0、None、空它们三类隐藏的布尔值都是False,除此以外都是True</p>
 </blockquote>
 </blockquote>
+</li>
+<li><p>列表<br>在[]内用逗号分隔，可以存放n个任意类型的值.</p>
 </li>
 </ul>
 <h6 id="5-1-注释"><a href="#5-1-注释" class="headerlink" title="5.1 注释"></a>5.1 注释</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">### : python 注释，unix的注释方式</span><br><span class="line">&#x2F;&#x2F;  : java， c, c++ 的注释方式</span><br><span class="line">&#39;&#39;&#39;&#39;&#39;&#39;&#39;: python多行注释</span><br><span class="line">&#x2F;*</span><br><span class="line">这是多行注释</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure>
@@ -652,7 +669,7 @@ select * from emp right join dep on emp.dep_id = dep.id
 <li>循环</li>
 </ul>
 <p>是 姚期智 提出的</p>
-<p>能够触类旁通，意思就是python学完之后， 在学go的时候，应该是没没任何压力的。<br>前年，参加校招。西安交大，西安大学<br>java， c++， 但是他们的数据结构和算法的功底非常的深厚</p>
+<p>能够触类旁通，意思就是python学完之后， 在学go的时候，应该是没没任何压力的。</p>
 <hr>
 <h5 id="8-格式化输出"><a href="#8-格式化输出" class="headerlink" title="8. 格式化输出"></a>8. 格式化输出</h5><p>% , format</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 第一种写法：字符串使用+ 不断的进行拼接</span></span><br><span class="line"><span class="comment"># name = input(&#x27;请输入姓名:&#x27;)</span></span><br><span class="line"><span class="comment"># age = input(&#x27;请输入年龄:&#x27;)</span></span><br><span class="line"><span class="comment"># job = input(&#x27;请输入职业:&#x27;)</span></span><br><span class="line"><span class="comment"># hobby = input(&#x27;请输入爱好:&#x27;)</span></span><br><span class="line"><span class="comment"># a = &#x27;------------ info of 51devops ----------&#x27;</span></span><br><span class="line"><span class="comment"># b = &#x27;Name:&#x27;</span></span><br><span class="line"><span class="comment"># c = &#x27;Age:&#x27;</span></span><br><span class="line"><span class="comment"># d = &#x27;Job:&#x27;</span></span><br><span class="line"><span class="comment"># e = &#x27;Hobby:&#x27;</span></span><br><span class="line"><span class="comment"># f = &#x27;------------- end ----------------&#x27;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># print(a+&#x27;\n&#x27;+b+name+&#x27;\n&#x27;+c+age+&#x27;\n&#x27;+d+job+&#x27;\n&#x27;+e+hobby+&#x27;\n&#x27;+f)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 第二种方法, 也有人用，用的还挺多。但是要求格式化传入的值和占位符的值需要一一对应</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># name = input(&#x27;请输入姓名:&#x27;)</span></span><br><span class="line"><span class="comment"># age = input(&#x27;请输入年龄:&#x27;)</span></span><br><span class="line"><span class="comment"># job = input(&#x27;请输入职业:&#x27;)</span></span><br><span class="line"><span class="comment"># hobby = input(&#x27;请输入爱好:&#x27;)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># msg = &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># ------------ info of 51devops ----------</span></span><br><span class="line"><span class="comment"># Name  : %s</span></span><br><span class="line"><span class="comment"># Age   : %s</span></span><br><span class="line"><span class="comment"># job   : %s</span></span><br><span class="line"><span class="comment"># Hobbie: %s</span></span><br><span class="line"><span class="comment"># ------------- end ----------------</span></span><br><span class="line"><span class="comment"># &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># ### % 格式化的  而msg中的%s叫字符串占位符，</span></span><br><span class="line"><span class="comment"># print(msg % (age, name, job, hobby))</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### 第三种方法， 使用format函数来进行格式化</span></span><br><span class="line">name = input(<span class="string">&#x27;请输入姓名:&#x27;</span>)</span><br><span class="line">age = input(<span class="string">&#x27;请输入年龄:&#x27;</span>)</span><br><span class="line">job = input(<span class="string">&#x27;请输入职业:&#x27;</span>)</span><br><span class="line">hobby = input(<span class="string">&#x27;请输入爱好:&#x27;</span>)</span><br><span class="line"></span><br><span class="line">msg = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">------------ info of 51devops ----------</span></span><br><span class="line"><span class="string">Name  : &#123;name1&#125;</span></span><br><span class="line"><span class="string">Age   : &#123;age1&#125;</span></span><br><span class="line"><span class="string">job   : &#123;job1&#125;</span></span><br><span class="line"><span class="string">Hobbie: &#123;hobby1&#125;</span></span><br><span class="line"><span class="string">------------- end ----------------</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">print(msg.format(age1=age, name1=name, job1=job, hobby1=hobby))</span><br></pre></td></tr></table></figure>
@@ -902,6 +919,26 @@ select * from emp right join dep on emp.dep_id = dep.id
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lst = [<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>]</span><br><span class="line"><span class="comment"># 方法一</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(lst[<span class="number">0</span>],lst[<span class="number">1</span>],lst[<span class="number">2</span>])</span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(args)</span><br><span class="line">func(*lst)  </span><br><span class="line"><span class="comment"># 在实参的位置上用*将lst(可迭代对象)按照顺序打散</span></span><br><span class="line"><span class="comment"># 在形参的位置上用*把收到的参数组合成一个元祖</span></span><br></pre></td></tr></table></figure>
 <p>字典也可以进行打散,不过需要**</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>py-day03-字符编码</title>
+    <url>/2021/03/24/py-day03-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/</url>
+    <content><![CDATA[<p>字符编码</p>
+<a id="more"></a>
+
+<h4 id="1-文本编辑器存取文件的原理（nodepad-，pycharm，word）"><a href="#1-文本编辑器存取文件的原理（nodepad-，pycharm，word）" class="headerlink" title="1.文本编辑器存取文件的原理（nodepad++，pycharm，word）"></a>1.文本编辑器存取文件的原理（nodepad++，pycharm，word）</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#1、打开编辑器就打开了启动了一个进程，是在内存中的，所以，用编辑器编写的内容也都是存放与内存中的，断电后数据丢失</span><br><span class="line"></span><br><span class="line">#2、要想永久保存，需要点击保存按钮：编辑器把内存的数据刷到了硬盘上。</span><br><span class="line"></span><br><span class="line">#3、在我们编写一个py文件（没有执行），跟编写其他文件没有任何区别，都只是在编写一堆字符而已。</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-python解释器执行py文件的原理-，例如python-test-py"><a href="#2-python解释器执行py文件的原理-，例如python-test-py" class="headerlink" title="2.python解释器执行py文件的原理 ，例如python test.py"></a>2.python解释器执行py文件的原理 ，例如python test.py</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#第一阶段：python解释器启动，此时就相当于启动了一个文本编辑器</span><br><span class="line"></span><br><span class="line">#第二阶段：python解释器相当于文本编辑器，去打开test.py文件，从硬盘上将test.py的文件内容读入到内存中(小复习：pyhon的解释性，决定了解释器只关心文件内容，不关心文件后缀名)</span><br><span class="line"></span><br><span class="line">#第三阶段：python解释器解释执行刚刚加载到内存中test.py的代码( ps：在该阶段，即真正执行代码时，才会识别python的语法，执行文件内代码，当执行到name&#x3D;&quot;egon&quot;时,会开辟内存空间存放字符串&quot;egon&quot;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-总结python解释器与文件本编辑的异同"><a href="#3-总结python解释器与文件本编辑的异同" class="headerlink" title="3.总结python解释器与文件本编辑的异同"></a>3.总结python解释器与文件本编辑的异同</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#1、相同点：python解释器是解释执行文件内容的，因而python解释器具备读py文件的功能，这一点与文本编辑器一样</span><br><span class="line"></span><br><span class="line">#2、不同点：文本编辑器将文件内容读入内存后，是为了显示或者编辑，根本不去理会python的语法，而python解释器将文件内容读入内存后，可不是为了给你瞅一眼python代码写的啥，而是为了执行python代码、会识别python语法。</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>python</category>
@@ -1510,6 +1547,95 @@ select * from emp right join dep on emp.dep_id = dep.id
       </tags>
   </entry>
   <entry>
+    <title>py-xadmin</title>
+    <url>/2020/11/20/py-xadmin/</url>
+    <content><![CDATA[<p>Django-xadmin</p>
+<a id="more"></a>
+
+<div id="title">Django-xadmin的介绍</div>
+
+<blockquote>
+<p><code>Django</code>是<code>python</code>的重量级web框架,写得少,做得多,非常适合后端开发,它很大的一个亮点是,自带后台管理模块,但它自带的后台管理有点丑,而<code>Xadmin</code>是基于<code>bootstrap</code>开发的一套后台管理框架,界面非常美观,只需几步就可以替换自带的<code>Django_admin</code></p>
+</blockquote>
+<div id="title">具体的安装步骤</div>
+
+<ol>
+<li>xadmin在python2.x时代的安装方法</li>
+</ol>
+<p>在python2.x时代，安装xadmin是通过如下命令</p>
+<blockquote>
+<p>pip install xadmin </p>
+</blockquote>
+<p>2.<code>xadmin</code>在<code>python3.6.x</code>时代的安装方法</p>
+<p><strong>需要安装如下的包</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install django-<span class="keyword">import</span>-export</span><br><span class="line">pip3 install django-reversion</span><br><span class="line">pip3 install django-formtools==<span class="number">2.1</span></span><br><span class="line">pip3 install future</span><br><span class="line">pip3 install httplib2</span><br><span class="line">pip3 install six</span><br><span class="line">pip3 install django-crispy-forms</span><br></pre></td></tr></table></figure>
+
+<p>2.1 下载<code>xadmin</code></p>
+<blockquote>
+<p><a href="https://github.com/sshwsfc/xadmin">https://github.com/sshwsfc/xadmin</a></p>
+</blockquote>
+<p>2.2、解压缩，得到<code>xadmin</code>文件夹，复制到项目的<code>extra_apps</code>,解压缩，得到<code>xadmin</code>文件夹, 如下图所示：</p>
+<p><img src="https://i.loli.net/2019/06/20/5d0b41759655b82871.jpg" alt="xadmin.jpg"></p>
+<p>2.3、在django中的根目录下创建<code>Python Package</code>，命名为<code>extra_apps</code>（如果不存在此文件夹则创建, 然后 鼠标右键<code>extra_app</code> 随后 <code>mark as sources root</code>）<br>（<code>Python Package</code>是带<code>init</code>文件的，跟普通<code>Package</code>不同）</p>
+<p>创建完<code>extra_apps</code>，需要在<code>settings</code>中配置一下<code>extra_apps</code>。设置为可搜索的路径</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build paths inside the project like this: os.path.join(BASE_DIR, ...)</span></span><br><span class="line">BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))</span><br><span class="line">sys.path.insert(<span class="number">0</span>, os.path.join(BASE_DIR, <span class="string">&#x27;extra_apps&#x27;</span>)) <span class="comment"># 把extra_apps文件夹添加到搜索目录中</span></span><br></pre></td></tr></table></figure>
+
+<p>2.4、把<code>xadmin</code>文件夹复制到<code>extra_apps</code></p>
+<p>2.5、<code>xadmin</code>的配置</p>
+<p><strong>配置到 INSTALLED_APPS</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 显示中文</span></span><br><span class="line"><span class="comment"># Application definition</span></span><br><span class="line"><span class="comment"># LANGUAGE_CODE = &#x27;en-us&#x27;</span></span><br><span class="line">LANGUAGE_CODE = <span class="string">&#x27;zh-hans&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># TIME_ZONE = &#x27;UTC&#x27;</span></span><br><span class="line">TIME_ZONE = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;xadmin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;crispy_forms&#x27;</span>, <span class="comment"># 注意crispy_forms之间是下划线隔开，不是横线</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>2.6、修改<code>urls.py</code>的<code>admin</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="comment"># url(&#x27;admin/&#x27;, admin.site.urls),</span></span><br><span class="line">    url(<span class="string">r&#x27;^xadmin/&#x27;</span>, xadmin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>2.7、迁移文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
+
+<p><strong>迁移完成后，我们看到数据库多了几张表</strong></p>
+<p><img src="https://i.loli.net/2019/06/20/5d0b43084942d52028.jpg" alt="xadmintable.jpg"></p>
+<p>2.8、<code>pycharm</code>创建<code>superuser</code> 用户</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
+
+<p>至此完成。</p>
+<p>如果报错，请先把原先旧的<code>app</code>里面<code>admin.py</code>里面的注册代码去掉，再试试</p>
+<p>运行一下项目，访问</p>
+<blockquote>
+<p><a href="http://127.0.0.1:8000/xadmin/">http://127.0.0.1:8000/xadmin/</a></p>
+</blockquote>
+<h4 id="xadmin的使用"><a href="#xadmin的使用" class="headerlink" title="xadmin的使用"></a><div id="title">xadmin的使用</div></h4><p>1.需要在<code>app</code>中创建<code>adminx.py</code>文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> repository <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> xadmin <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserProfileAdmin</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment">### 显示的字段名称</span></span><br><span class="line">    list_display = [<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 搜索时可输入的字段内容</span></span><br><span class="line">    search_fields = [<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;email&#x27;</span>, <span class="string">&#x27;phone&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 点击id可进入详细界面进行编辑（默认的）</span></span><br><span class="line">    list_display_links = (<span class="string">&#x27;id&#x27;</span>,)  </span><br><span class="line">    </span><br><span class="line">    <span class="comment">## 可编辑的列名</span></span><br><span class="line">    list_editable = [<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    <span class="comment"># list_filter = [&#x27;name&#x27; ,&#x27;email&#x27;,&#x27;phone&#x27;,&#x27;mobile&#x27;]</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 每页显示多少条</span></span><br><span class="line">    list_per_page = <span class="number">20</span> </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#根据id排序 </span></span><br><span class="line">    ordering = (<span class="string">&#x27;id&#x27;</span>,)　</span><br><span class="line">    　</span><br><span class="line">    <span class="comment">#设置只读字段　</span></span><br><span class="line">    readonly_fields = (<span class="string">&#x27;user_email&#x27;</span>,) </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#显示本条数据的所有信息</span></span><br><span class="line">    show_detail_fields = [<span class="string">&#x27;asset_name&#x27;</span>] </span><br><span class="line"></span><br><span class="line">xadmin.site.register(models.UserProfile,UserProfileAdmin)</span><br></pre></td></tr></table></figure>
+
+
+<p>3.数据导出<br>如果想要导出<code>Excel</code>数据，需要安装<code>xlwt</code>。</p>
+<p>默认情况下，<code>xadmin</code>会提供<code>Excel</code>，<code>CSV</code>,<code>XML</code>，<code>json</code>四种格式的数据导出，可以通过设置<code>OptionClass</code>的<code>list_export</code>属性来指定使用哪些导出格式（四种格式分别用<code>xls</code>，<code>csv</code>，<code>xml</code>，<code>json</code>表示）或是将<code>list_export</code>设置为<code>None</code>来禁用数据导出功能</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list_export = (<span class="string">&#x27;xls&#x27;</span>, <span class="string">&#x27;xml&#x27;</span>, <span class="string">&#x27;json&#x27;</span>)</span><br><span class="line">list_export_fields = (<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;title&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p>4.设置全局的配置</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局修改，固定写法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GlobalSettings</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment"># 修改title</span></span><br><span class="line">    site_title = <span class="string">&#x27;xxx后台管理界面&#x27;</span></span><br><span class="line">    <span class="comment"># 修改footer</span></span><br><span class="line">    site_footer = <span class="string">&#x27;xxx的公司&#x27;</span></span><br><span class="line">    <span class="comment"># 收起菜单</span></span><br><span class="line">    menu_style = <span class="string">&#x27;accordion&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 设置 models图标</span></span><br><span class="line">    <span class="comment"># https://v3.bootcss.com/components/</span></span><br><span class="line">    <span class="comment"># http://www.yeahzan.com/fa/facss.html</span></span><br><span class="line">    global_search_models = [models.Disk, models.Server]</span><br><span class="line">    global_models_icon = &#123;</span><br><span class="line">        <span class="comment"># Server: &quot;glyphicon glyphicon-tree-conifer&quot;, Pool: &quot;fa fa-cloud&quot;</span></span><br><span class="line">        models.Server: <span class="string">&quot;fa fa-linux&quot;</span>, models.Disk: <span class="string">&quot;fa fa-cloud&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 将title和footer信息进行注册</span></span><br><span class="line">xadmin.site.register(views.CommAdminView,GlobalSettings)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>图表显示</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data_charts = &#123;</span><br><span class="line">        <span class="string">&quot;host_service_type_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;部门机器使用情况&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;business_unit&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;business_unit&quot;</span>),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.8</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;host_idc_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;机房统计&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;idc&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;idc&quot;</span>,),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.3</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>注册模型与对应的管理类</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">xadmin.site.register(models.Disk, DiskAdmin)</span><br><span class="line">xadmin.site.register(models.Server, ServerAdmin)</span><br><span class="line">xadmin.site.register(models.IDC, IDCAdmin)</span><br><span class="line">xadmin.site.register(models.UserProfile, UserProfileAdmin)</span><br><span class="line">xadmin.site.register(models.UserGroup, UserGroupAdmin)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    </p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>py-skill</title>
     <url>/2020/11/06/py-skill/</url>
     <content><![CDATA[<p>需要记住</p>
@@ -1706,95 +1832,6 @@ select * from emp right join dep on emp.dep_id = dep.id
 <li>程序的解耦</li>
 <li>削峰</li>
 </ul>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>py-xadmin</title>
-    <url>/2020/11/20/py-xadmin/</url>
-    <content><![CDATA[<p>Django-xadmin</p>
-<a id="more"></a>
-
-<div id="title">Django-xadmin的介绍</div>
-
-<blockquote>
-<p><code>Django</code>是<code>python</code>的重量级web框架,写得少,做得多,非常适合后端开发,它很大的一个亮点是,自带后台管理模块,但它自带的后台管理有点丑,而<code>Xadmin</code>是基于<code>bootstrap</code>开发的一套后台管理框架,界面非常美观,只需几步就可以替换自带的<code>Django_admin</code></p>
-</blockquote>
-<div id="title">具体的安装步骤</div>
-
-<ol>
-<li>xadmin在python2.x时代的安装方法</li>
-</ol>
-<p>在python2.x时代，安装xadmin是通过如下命令</p>
-<blockquote>
-<p>pip install xadmin </p>
-</blockquote>
-<p>2.<code>xadmin</code>在<code>python3.6.x</code>时代的安装方法</p>
-<p><strong>需要安装如下的包</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install django-<span class="keyword">import</span>-export</span><br><span class="line">pip3 install django-reversion</span><br><span class="line">pip3 install django-formtools==<span class="number">2.1</span></span><br><span class="line">pip3 install future</span><br><span class="line">pip3 install httplib2</span><br><span class="line">pip3 install six</span><br><span class="line">pip3 install django-crispy-forms</span><br></pre></td></tr></table></figure>
-
-<p>2.1 下载<code>xadmin</code></p>
-<blockquote>
-<p><a href="https://github.com/sshwsfc/xadmin">https://github.com/sshwsfc/xadmin</a></p>
-</blockquote>
-<p>2.2、解压缩，得到<code>xadmin</code>文件夹，复制到项目的<code>extra_apps</code>,解压缩，得到<code>xadmin</code>文件夹, 如下图所示：</p>
-<p><img src="https://i.loli.net/2019/06/20/5d0b41759655b82871.jpg" alt="xadmin.jpg"></p>
-<p>2.3、在django中的根目录下创建<code>Python Package</code>，命名为<code>extra_apps</code>（如果不存在此文件夹则创建, 然后 鼠标右键<code>extra_app</code> 随后 <code>mark as sources root</code>）<br>（<code>Python Package</code>是带<code>init</code>文件的，跟普通<code>Package</code>不同）</p>
-<p>创建完<code>extra_apps</code>，需要在<code>settings</code>中配置一下<code>extra_apps</code>。设置为可搜索的路径</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build paths inside the project like this: os.path.join(BASE_DIR, ...)</span></span><br><span class="line">BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))</span><br><span class="line">sys.path.insert(<span class="number">0</span>, os.path.join(BASE_DIR, <span class="string">&#x27;extra_apps&#x27;</span>)) <span class="comment"># 把extra_apps文件夹添加到搜索目录中</span></span><br></pre></td></tr></table></figure>
-
-<p>2.4、把<code>xadmin</code>文件夹复制到<code>extra_apps</code></p>
-<p>2.5、<code>xadmin</code>的配置</p>
-<p><strong>配置到 INSTALLED_APPS</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 显示中文</span></span><br><span class="line"><span class="comment"># Application definition</span></span><br><span class="line"><span class="comment"># LANGUAGE_CODE = &#x27;en-us&#x27;</span></span><br><span class="line">LANGUAGE_CODE = <span class="string">&#x27;zh-hans&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># TIME_ZONE = &#x27;UTC&#x27;</span></span><br><span class="line">TIME_ZONE = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;xadmin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;crispy_forms&#x27;</span>, <span class="comment"># 注意crispy_forms之间是下划线隔开，不是横线</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>2.6、修改<code>urls.py</code>的<code>admin</code></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="comment"># url(&#x27;admin/&#x27;, admin.site.urls),</span></span><br><span class="line">    url(<span class="string">r&#x27;^xadmin/&#x27;</span>, xadmin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>2.7、迁移文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
-
-<p><strong>迁移完成后，我们看到数据库多了几张表</strong></p>
-<p><img src="https://i.loli.net/2019/06/20/5d0b43084942d52028.jpg" alt="xadmintable.jpg"></p>
-<p>2.8、<code>pycharm</code>创建<code>superuser</code> 用户</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
-
-<p>至此完成。</p>
-<p>如果报错，请先把原先旧的<code>app</code>里面<code>admin.py</code>里面的注册代码去掉，再试试</p>
-<p>运行一下项目，访问</p>
-<blockquote>
-<p><a href="http://127.0.0.1:8000/xadmin/">http://127.0.0.1:8000/xadmin/</a></p>
-</blockquote>
-<h4 id="xadmin的使用"><a href="#xadmin的使用" class="headerlink" title="xadmin的使用"></a><div id="title">xadmin的使用</div></h4><p>1.需要在<code>app</code>中创建<code>adminx.py</code>文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> repository <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> xadmin <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserProfileAdmin</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment">### 显示的字段名称</span></span><br><span class="line">    list_display = [<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 搜索时可输入的字段内容</span></span><br><span class="line">    search_fields = [<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;email&#x27;</span>, <span class="string">&#x27;phone&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 点击id可进入详细界面进行编辑（默认的）</span></span><br><span class="line">    list_display_links = (<span class="string">&#x27;id&#x27;</span>,)  </span><br><span class="line">    </span><br><span class="line">    <span class="comment">## 可编辑的列名</span></span><br><span class="line">    list_editable = [<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    <span class="comment"># list_filter = [&#x27;name&#x27; ,&#x27;email&#x27;,&#x27;phone&#x27;,&#x27;mobile&#x27;]</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 每页显示多少条</span></span><br><span class="line">    list_per_page = <span class="number">20</span> </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#根据id排序 </span></span><br><span class="line">    ordering = (<span class="string">&#x27;id&#x27;</span>,)　</span><br><span class="line">    　</span><br><span class="line">    <span class="comment">#设置只读字段　</span></span><br><span class="line">    readonly_fields = (<span class="string">&#x27;user_email&#x27;</span>,) </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#显示本条数据的所有信息</span></span><br><span class="line">    show_detail_fields = [<span class="string">&#x27;asset_name&#x27;</span>] </span><br><span class="line"></span><br><span class="line">xadmin.site.register(models.UserProfile,UserProfileAdmin)</span><br></pre></td></tr></table></figure>
-
-
-<p>3.数据导出<br>如果想要导出<code>Excel</code>数据，需要安装<code>xlwt</code>。</p>
-<p>默认情况下，<code>xadmin</code>会提供<code>Excel</code>，<code>CSV</code>,<code>XML</code>，<code>json</code>四种格式的数据导出，可以通过设置<code>OptionClass</code>的<code>list_export</code>属性来指定使用哪些导出格式（四种格式分别用<code>xls</code>，<code>csv</code>，<code>xml</code>，<code>json</code>表示）或是将<code>list_export</code>设置为<code>None</code>来禁用数据导出功能</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list_export = (<span class="string">&#x27;xls&#x27;</span>, <span class="string">&#x27;xml&#x27;</span>, <span class="string">&#x27;json&#x27;</span>)</span><br><span class="line">list_export_fields = (<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;title&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-
-<p>4.设置全局的配置</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局修改，固定写法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GlobalSettings</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment"># 修改title</span></span><br><span class="line">    site_title = <span class="string">&#x27;xxx后台管理界面&#x27;</span></span><br><span class="line">    <span class="comment"># 修改footer</span></span><br><span class="line">    site_footer = <span class="string">&#x27;xxx的公司&#x27;</span></span><br><span class="line">    <span class="comment"># 收起菜单</span></span><br><span class="line">    menu_style = <span class="string">&#x27;accordion&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 设置 models图标</span></span><br><span class="line">    <span class="comment"># https://v3.bootcss.com/components/</span></span><br><span class="line">    <span class="comment"># http://www.yeahzan.com/fa/facss.html</span></span><br><span class="line">    global_search_models = [models.Disk, models.Server]</span><br><span class="line">    global_models_icon = &#123;</span><br><span class="line">        <span class="comment"># Server: &quot;glyphicon glyphicon-tree-conifer&quot;, Pool: &quot;fa fa-cloud&quot;</span></span><br><span class="line">        models.Server: <span class="string">&quot;fa fa-linux&quot;</span>, models.Disk: <span class="string">&quot;fa fa-cloud&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 将title和footer信息进行注册</span></span><br><span class="line">xadmin.site.register(views.CommAdminView,GlobalSettings)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>图表显示</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data_charts = &#123;</span><br><span class="line">        <span class="string">&quot;host_service_type_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;部门机器使用情况&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;business_unit&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;business_unit&quot;</span>),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.8</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;host_idc_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;机房统计&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;idc&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;idc&quot;</span>,),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.3</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>注册模型与对应的管理类</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">xadmin.site.register(models.Disk, DiskAdmin)</span><br><span class="line">xadmin.site.register(models.Server, ServerAdmin)</span><br><span class="line">xadmin.site.register(models.IDC, IDCAdmin)</span><br><span class="line">xadmin.site.register(models.UserProfile, UserProfileAdmin)</span><br><span class="line">xadmin.site.register(models.UserGroup, UserGroupAdmin)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>​    </p>
 ]]></content>
       <categories>
         <category>python</category>
