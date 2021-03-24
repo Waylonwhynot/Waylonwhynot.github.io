@@ -590,10 +590,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-11-20 23:41:26 / 修改时间：23:42:26" itemprop="dateCreated datePublished" datetime="2020-11-20T23:41:26+08:00">2020-11-20</time>
+              <time title="创建时间：2020-11-20 23:41:26" itemprop="dateCreated datePublished" datetime="2020-11-20T23:41:26+08:00">2020-11-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-24 11:42:53" itemprop="dateModified" datetime="2021-03-24T11:42:53+08:00">2021-03-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -629,82 +635,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Django-xadmin"><a href="#Django-xadmin" class="headerlink" title="Django-xadmin"></a>Django-xadmin</h2><div id="title">Django-xadmin的介绍</div>
-
-<blockquote>
-<p><code>Django</code>是<code>python</code>的重量级web框架,写得少,做得多,非常适合后端开发,它很大的一个亮点是,自带后台管理模块,但它自带的后台管理有点丑,而<code>Xadmin</code>是基于<code>bootstrap</code>开发的一套后台管理框架,界面非常美观,只需几步就可以替换自带的<code>Django_admin</code></p>
-</blockquote>
-<div id="title">具体的安装步骤</div>
-
-<ol>
-<li>xadmin在python2.x时代的安装方法</li>
-</ol>
-<p>在python2.x时代，安装xadmin是通过如下命令</p>
-<blockquote>
-<p>pip install xadmin </p>
-</blockquote>
-<p>2.<code>xadmin</code>在<code>python3.6.x</code>时代的安装方法</p>
-<p><strong>需要安装如下的包</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pip3 install django-<span class="keyword">import</span>-export</span><br><span class="line">pip3 install django-reversion</span><br><span class="line">pip3 install django-formtools==<span class="number">2.1</span></span><br><span class="line">pip3 install future</span><br><span class="line">pip3 install httplib2</span><br><span class="line">pip3 install six</span><br><span class="line">pip3 install django-crispy-forms</span><br></pre></td></tr></table></figure>
-
-<p>2.1 下载<code>xadmin</code></p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/sshwsfc/xadmin">https://github.com/sshwsfc/xadmin</a></p>
-</blockquote>
-<p>2.2、解压缩，得到<code>xadmin</code>文件夹，复制到项目的<code>extra_apps</code>,解压缩，得到<code>xadmin</code>文件夹, 如下图所示：</p>
-<p><img src="https://i.loli.net/2019/06/20/5d0b41759655b82871.jpg" alt="xadmin.jpg"></p>
-<p>2.3、在django中的根目录下创建<code>Python Package</code>，命名为<code>extra_apps</code>（如果不存在此文件夹则创建, 然后 鼠标右键<code>extra_app</code> 随后 <code>mark as sources root</code>）<br>（<code>Python Package</code>是带<code>init</code>文件的，跟普通<code>Package</code>不同）</p>
-<p>创建完<code>extra_apps</code>，需要在<code>settings</code>中配置一下<code>extra_apps</code>。设置为可搜索的路径</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build paths inside the project like this: os.path.join(BASE_DIR, ...)</span></span><br><span class="line">BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))</span><br><span class="line">sys.path.insert(<span class="number">0</span>, os.path.join(BASE_DIR, <span class="string">&#x27;extra_apps&#x27;</span>)) <span class="comment"># 把extra_apps文件夹添加到搜索目录中</span></span><br></pre></td></tr></table></figure>
-
-<p>2.4、把<code>xadmin</code>文件夹复制到<code>extra_apps</code></p>
-<p>2.5、<code>xadmin</code>的配置</p>
-<p><strong>配置到 INSTALLED_APPS</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 显示中文</span></span><br><span class="line"><span class="comment"># Application definition</span></span><br><span class="line"><span class="comment"># LANGUAGE_CODE = &#x27;en-us&#x27;</span></span><br><span class="line">LANGUAGE_CODE = <span class="string">&#x27;zh-hans&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># TIME_ZONE = &#x27;UTC&#x27;</span></span><br><span class="line">TIME_ZONE = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;xadmin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;crispy_forms&#x27;</span>, <span class="comment"># 注意crispy_forms之间是下划线隔开，不是横线</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>2.6、修改<code>urls.py</code>的<code>admin</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="comment"># url(&#x27;admin/&#x27;, admin.site.urls),</span></span><br><span class="line">    url(<span class="string">r&#x27;^xadmin/&#x27;</span>, xadmin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>2.7、迁移文件</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
-
-<p><strong>迁移完成后，我们看到数据库多了几张表</strong></p>
-<p><img src="https://i.loli.net/2019/06/20/5d0b43084942d52028.jpg" alt="xadmintable.jpg"></p>
-<p>2.8、<code>pycharm</code>创建<code>superuser</code> 用户</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
-
-<p>至此完成。</p>
-<p>如果报错，请先把原先旧的<code>app</code>里面<code>admin.py</code>里面的注册代码去掉，再试试</p>
-<p>运行一下项目，访问</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="http://127.0.0.1:8000/xadmin/">http://127.0.0.1:8000/xadmin/</a></p>
-</blockquote>
-<h4 id="xadmin的使用"><a href="#xadmin的使用" class="headerlink" title="xadmin的使用"></a><div id="title">xadmin的使用</div></h4><p>1.需要在<code>app</code>中创建<code>adminx.py</code>文件</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> repository <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> xadmin <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserProfileAdmin</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment">### 显示的字段名称</span></span><br><span class="line">    list_display = [<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 搜索时可输入的字段内容</span></span><br><span class="line">    search_fields = [<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;email&#x27;</span>, <span class="string">&#x27;phone&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 点击id可进入详细界面进行编辑（默认的）</span></span><br><span class="line">    list_display_links = (<span class="string">&#x27;id&#x27;</span>,)  </span><br><span class="line">    </span><br><span class="line">    <span class="comment">## 可编辑的列名</span></span><br><span class="line">    list_editable = [<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    <span class="comment"># list_filter = [&#x27;name&#x27; ,&#x27;email&#x27;,&#x27;phone&#x27;,&#x27;mobile&#x27;]</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 每页显示多少条</span></span><br><span class="line">    list_per_page = <span class="number">20</span> </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#根据id排序 </span></span><br><span class="line">    ordering = (<span class="string">&#x27;id&#x27;</span>,)　</span><br><span class="line">    　</span><br><span class="line">    <span class="comment">#设置只读字段　</span></span><br><span class="line">    readonly_fields = (<span class="string">&#x27;user_email&#x27;</span>,) </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#显示本条数据的所有信息</span></span><br><span class="line">    show_detail_fields = [<span class="string">&#x27;asset_name&#x27;</span>] </span><br><span class="line"></span><br><span class="line">xadmin.site.register(models.UserProfile,UserProfileAdmin)</span><br></pre></td></tr></table></figure>
-
-
-<p>3.数据导出<br>如果想要导出<code>Excel</code>数据，需要安装<code>xlwt</code>。</p>
-<p>默认情况下，<code>xadmin</code>会提供<code>Excel</code>，<code>CSV</code>,<code>XML</code>，<code>json</code>四种格式的数据导出，可以通过设置<code>OptionClass</code>的<code>list_export</code>属性来指定使用哪些导出格式（四种格式分别用<code>xls</code>，<code>csv</code>，<code>xml</code>，<code>json</code>表示）或是将<code>list_export</code>设置为<code>None</code>来禁用数据导出功能</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list_export = (<span class="string">&#x27;xls&#x27;</span>, <span class="string">&#x27;xml&#x27;</span>, <span class="string">&#x27;json&#x27;</span>)</span><br><span class="line">list_export_fields = (<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;title&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-
-<p>4.设置全局的配置</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局修改，固定写法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GlobalSettings</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment"># 修改title</span></span><br><span class="line">    site_title = <span class="string">&#x27;xxx后台管理界面&#x27;</span></span><br><span class="line">    <span class="comment"># 修改footer</span></span><br><span class="line">    site_footer = <span class="string">&#x27;xxx的公司&#x27;</span></span><br><span class="line">    <span class="comment"># 收起菜单</span></span><br><span class="line">    menu_style = <span class="string">&#x27;accordion&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 设置 models图标</span></span><br><span class="line">    <span class="comment"># https://v3.bootcss.com/components/</span></span><br><span class="line">    <span class="comment"># http://www.yeahzan.com/fa/facss.html</span></span><br><span class="line">    global_search_models = [models.Disk, models.Server]</span><br><span class="line">    global_models_icon = &#123;</span><br><span class="line">        <span class="comment"># Server: &quot;glyphicon glyphicon-tree-conifer&quot;, Pool: &quot;fa fa-cloud&quot;</span></span><br><span class="line">        models.Server: <span class="string">&quot;fa fa-linux&quot;</span>, models.Disk: <span class="string">&quot;fa fa-cloud&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 将title和footer信息进行注册</span></span><br><span class="line">xadmin.site.register(views.CommAdminView,GlobalSettings)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>图表显示</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">data_charts = &#123;</span><br><span class="line">        <span class="string">&quot;host_service_type_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;部门机器使用情况&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;business_unit&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;business_unit&quot;</span>),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.8</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;host_idc_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;机房统计&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;idc&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;idc&quot;</span>,),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.3</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>注册模型与对应的管理类</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xadmin.site.register(models.Disk, DiskAdmin)</span><br><span class="line">xadmin.site.register(models.Server, ServerAdmin)</span><br><span class="line">xadmin.site.register(models.IDC, IDCAdmin)</span><br><span class="line">xadmin.site.register(models.UserProfile, UserProfileAdmin)</span><br><span class="line">xadmin.site.register(models.UserGroup, UserGroupAdmin)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>​    </p>
-
+          <p>Django-xadmin</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/20/py-xadmin/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
