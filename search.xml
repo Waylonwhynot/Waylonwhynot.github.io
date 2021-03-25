@@ -2525,10 +2525,22 @@ select * from emp right join dep on emp.dep_id = dep.id
 <li>位置参数<ul>
 <li>位置形参</li>
 <li>默认形参</li>
+<li>位置实参</li>
 </ul>
 </li>
-<li>关键字参数</li>
-<li>动态接收参数<blockquote>
+<li>关键字参数<ul>
+<li>关键字实参</li>
+</ul>
+</li>
+<li>可变长参数<ul>
+<li>‘*’ 与 ** 在形参中的应用</li>
+<li>‘*’ 与 ** 在实参中的应用</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
 <p>概念 - 形参</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">位置形参：在函数定义阶段按照从左至右的顺序依次定义的形参，称之为位置形参</span><br><span class="line">特点:    必须被传值，多一个不行少一个也不行</span><br><span class="line"></span><br><span class="line">默认形参：在函数定义阶段就已经为某个形参赋值了，称之为默认形参</span><br><span class="line">特点：   在函数定义阶段就已经赋值了，意味着在调用阶段可以为其赋值</span><br><span class="line"></span><br><span class="line">需要注意的问题：</span><br><span class="line">1.默认形参的值只在函数定义阶段被赋值一次</span><br><span class="line">2.默认形参的值同城应该是不可变类型</span><br></pre></td></tr></table></figure>
@@ -2537,27 +2549,29 @@ select * from emp right join dep on emp.dep_id = dep.id
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">位置实参：在函数调用阶段按照从左至右的顺序依次传入的值，称之为位置实参</span><br><span class="line">特点：按照顺序与形参一一对应</span><br><span class="line">关键字实参：在函实参数调用阶段按照key&#x3D;value 的格式传入的值，称之为关键字实参</span><br><span class="line">特点：可以打乱顺序，但是仍然能够为指定的形参赋值</span><br><span class="line"></span><br><span class="line">ps：可以混用位置实参与关键字实参，但是</span><br><span class="line">     1.位置实参必须在关键字前</span><br><span class="line">     2.不能为同一个形参重复赋值</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
-</li>
-</ul>
 <blockquote>
 <p>概念 - 动态参数</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">按位置传值多余的参数都由**args**统一接收，保存成一个**元组**的形式</span><br><span class="line">按关键字传值接受多个关键字参数，由kwargs接收，保存成一个字典的形式</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><p>1.默认参数用法：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">用法：为什么要用默认参数？将变化比较小的值设置成默认参数（比如一个班的男生多，女生就几个，就可以设置个默认值参数）</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">stu_info</span>(<span class="params">name,sex = <span class="string">&quot;male&quot;</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;打印学生信息函数，由于班中大部分学生都是男生，</span></span><br><span class="line"><span class="string">        所以设置默认参数sex的默认值为&#x27;male&#x27;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    print(name,sex)</span><br><span class="line">stu_info(<span class="string">&#x27;alex&#x27;</span>)</span><br><span class="line">stu_info(<span class="string">&#x27;海燕&#x27;</span>,<span class="string">&#x27;female&#x27;</span>)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>2.动态参数<br>args应用</p>
+<li><p>2.动态参数</p>
+</li>
+<li><p>* 与 ** 在形参实参中的应用<br>形参带*<br>args形参应用：按位置传值多余的参数都由<strong>args</strong>统一接收，保存成一个<strong>元组</strong>的形式</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fun</span>(<span class="params">a,b,*args</span>):</span></span><br><span class="line">    sum=a+b</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> args:</span><br><span class="line">           sum+=i</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">print(fun(<span class="number">1</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">4</span>))<span class="comment">#输出1+5+6+4的和</span></span><br></pre></td></tr></table></figure>
+<p>形参带**<br>kwargs形参应用</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fun</span>(<span class="params">a,b,**kwargs</span>):</span></span><br><span class="line">    print(a,b,kwargs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按照关键字传参数</span></span><br><span class="line">fun(a = <span class="number">10</span>,b = <span class="number">20</span>,cccc= <span class="number">30</span>,dddd = <span class="number">50</span>)<span class="comment">#输出10 20 &#123;&#x27;cccc&#x27;: 30, &#x27;dddd&#x27;: 50&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span>(<span class="params">a,b,*args,defult=<span class="number">6</span>,**kwargs</span>):</span></span><br><span class="line">    <span class="comment">#位置参数，*args, 默认参数，**kwargs</span></span><br><span class="line">    <span class="comment"># print(a,b,args,defult,kwargs)</span></span><br><span class="line">    <span class="keyword">return</span> a,b,args,defult,kwargs</span><br><span class="line"></span><br><span class="line"><span class="comment">#传参数的时候：必须先按照位置传参数，再按照关键字传参数</span></span><br><span class="line">print(f(<span class="number">1</span>,<span class="number">2</span>,<span class="number">7</span>,<span class="number">8</span>,ccc=<span class="number">10</span>,der=<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>‘* 与 ** 在实参中的应用<br>实参带<em>，</em>后跟的必须是一个可以被循环遍历的类型，*会将实参打散成位置实参</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def func(x,y,z):</span><br><span class="line">    print(x)</span><br><span class="line">    print(y)</span><br><span class="line">    print(z)</span><br><span class="line">func(*[11,22,33])</span><br><span class="line">func(*&quot;hello&quot;) # func(&quot;h&quot;,&quot;e&quot;,&quot;l&quot;,&quot;l&quot;,&quot;o&quot;)</span><br></pre></td></tr></table></figure>
+<p>实参带<strong>，</strong> 后跟的必须是一个字典，**会将实参打散成关键字实参</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def index(x,y,z):</span><br><span class="line">    print(x,y,z)</span><br><span class="line"></span><br><span class="line">def wrapper(*args, **kwargs):</span><br><span class="line">    print(args)</span><br><span class="line">    print(kwargs)</span><br><span class="line">    index(*args, **kwargs)</span><br><span class="line"></span><br><span class="line"># wrapper(1,2,3,4,5,6,7,8,a&#x3D;1,b&#x3D;2,c&#x3D;3)</span><br><span class="line"># wrapper(1,2,3)</span><br><span class="line">wrapper(1,z&#x3D;3,y&#x3D;2)</span><br></pre></td></tr></table></figure>
+
 
 </li>
 </ul>
-<p>kwargs应用</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fun</span>(<span class="params">a,b,**kwargs</span>):</span></span><br><span class="line">    print(a,b,kwargs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按照关键字传参数</span></span><br><span class="line">fun(a = <span class="number">10</span>,b = <span class="number">20</span>,cccc= <span class="number">30</span>,dddd = <span class="number">50</span>)<span class="comment">#输出10 20 &#123;&#x27;cccc&#x27;: 30, &#x27;dddd&#x27;: 50&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span>(<span class="params">a,b,*args,defult=<span class="number">6</span>,**kwargs</span>):</span></span><br><span class="line">    <span class="comment">#位置参数，*args, 默认参数，**kwargs</span></span><br><span class="line">    <span class="comment"># print(a,b,args,defult,kwargs)</span></span><br><span class="line">    <span class="keyword">return</span> a,b,args,defult,kwargs</span><br><span class="line"></span><br><span class="line"><span class="comment">#传参数的时候：必须先按照位置传参数，再按照关键字传参数</span></span><br><span class="line">print(f(<span class="number">1</span>,<span class="number">2</span>,<span class="number">7</span>,<span class="number">8</span>,ccc=<span class="number">10</span>,der=<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
-
 <p>参数组合：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">第一种：</span><br><span class="line">位置参数， 关键字参数， 默认参数</span><br><span class="line">test(a, b, c=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">第二种：</span><br><span class="line">动态接收位置参数， 动态接收关键字参数配合起来使用</span><br><span class="line">test(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(kwargs)</span><br><span class="line">func(**dic)</span><br></pre></td></tr></table></figure>
 
