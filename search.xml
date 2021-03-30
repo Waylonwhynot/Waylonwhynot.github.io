@@ -1669,95 +1669,6 @@ select * from emp right join dep on emp.dep_id = dep.id
       </tags>
   </entry>
   <entry>
-    <title>py-xadmin</title>
-    <url>/2020/11/20/py-xadmin/</url>
-    <content><![CDATA[<p>Django-xadmin</p>
-<a id="more"></a>
-
-<div id="title">Django-xadmin的介绍</div>
-
-<blockquote>
-<p><code>Django</code>是<code>python</code>的重量级web框架,写得少,做得多,非常适合后端开发,它很大的一个亮点是,自带后台管理模块,但它自带的后台管理有点丑,而<code>Xadmin</code>是基于<code>bootstrap</code>开发的一套后台管理框架,界面非常美观,只需几步就可以替换自带的<code>Django_admin</code></p>
-</blockquote>
-<div id="title">具体的安装步骤</div>
-
-<ol>
-<li>xadmin在python2.x时代的安装方法</li>
-</ol>
-<p>在python2.x时代，安装xadmin是通过如下命令</p>
-<blockquote>
-<p>pip install xadmin </p>
-</blockquote>
-<p>2.<code>xadmin</code>在<code>python3.6.x</code>时代的安装方法</p>
-<p><strong>需要安装如下的包</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install django-<span class="keyword">import</span>-export</span><br><span class="line">pip3 install django-reversion</span><br><span class="line">pip3 install django-formtools==<span class="number">2.1</span></span><br><span class="line">pip3 install future</span><br><span class="line">pip3 install httplib2</span><br><span class="line">pip3 install six</span><br><span class="line">pip3 install django-crispy-forms</span><br></pre></td></tr></table></figure>
-
-<p>2.1 下载<code>xadmin</code></p>
-<blockquote>
-<p><a href="https://github.com/sshwsfc/xadmin">https://github.com/sshwsfc/xadmin</a></p>
-</blockquote>
-<p>2.2、解压缩，得到<code>xadmin</code>文件夹，复制到项目的<code>extra_apps</code>,解压缩，得到<code>xadmin</code>文件夹, 如下图所示：</p>
-<p><img src="https://i.loli.net/2019/06/20/5d0b41759655b82871.jpg" alt="xadmin.jpg"></p>
-<p>2.3、在django中的根目录下创建<code>Python Package</code>，命名为<code>extra_apps</code>（如果不存在此文件夹则创建, 然后 鼠标右键<code>extra_app</code> 随后 <code>mark as sources root</code>）<br>（<code>Python Package</code>是带<code>init</code>文件的，跟普通<code>Package</code>不同）</p>
-<p>创建完<code>extra_apps</code>，需要在<code>settings</code>中配置一下<code>extra_apps</code>。设置为可搜索的路径</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build paths inside the project like this: os.path.join(BASE_DIR, ...)</span></span><br><span class="line">BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))</span><br><span class="line">sys.path.insert(<span class="number">0</span>, os.path.join(BASE_DIR, <span class="string">&#x27;extra_apps&#x27;</span>)) <span class="comment"># 把extra_apps文件夹添加到搜索目录中</span></span><br></pre></td></tr></table></figure>
-
-<p>2.4、把<code>xadmin</code>文件夹复制到<code>extra_apps</code></p>
-<p>2.5、<code>xadmin</code>的配置</p>
-<p><strong>配置到 INSTALLED_APPS</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 显示中文</span></span><br><span class="line"><span class="comment"># Application definition</span></span><br><span class="line"><span class="comment"># LANGUAGE_CODE = &#x27;en-us&#x27;</span></span><br><span class="line">LANGUAGE_CODE = <span class="string">&#x27;zh-hans&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># TIME_ZONE = &#x27;UTC&#x27;</span></span><br><span class="line">TIME_ZONE = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;xadmin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;crispy_forms&#x27;</span>, <span class="comment"># 注意crispy_forms之间是下划线隔开，不是横线</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>2.6、修改<code>urls.py</code>的<code>admin</code></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="comment"># url(&#x27;admin/&#x27;, admin.site.urls),</span></span><br><span class="line">    url(<span class="string">r&#x27;^xadmin/&#x27;</span>, xadmin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>2.7、迁移文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
-
-<p><strong>迁移完成后，我们看到数据库多了几张表</strong></p>
-<p><img src="https://i.loli.net/2019/06/20/5d0b43084942d52028.jpg" alt="xadmintable.jpg"></p>
-<p>2.8、<code>pycharm</code>创建<code>superuser</code> 用户</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
-
-<p>至此完成。</p>
-<p>如果报错，请先把原先旧的<code>app</code>里面<code>admin.py</code>里面的注册代码去掉，再试试</p>
-<p>运行一下项目，访问</p>
-<blockquote>
-<p><a href="http://127.0.0.1:8000/xadmin/">http://127.0.0.1:8000/xadmin/</a></p>
-</blockquote>
-<h4 id="xadmin的使用"><a href="#xadmin的使用" class="headerlink" title="xadmin的使用"></a><div id="title">xadmin的使用</div></h4><p>1.需要在<code>app</code>中创建<code>adminx.py</code>文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> repository <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> xadmin <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserProfileAdmin</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment">### 显示的字段名称</span></span><br><span class="line">    list_display = [<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 搜索时可输入的字段内容</span></span><br><span class="line">    search_fields = [<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;email&#x27;</span>, <span class="string">&#x27;phone&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 点击id可进入详细界面进行编辑（默认的）</span></span><br><span class="line">    list_display_links = (<span class="string">&#x27;id&#x27;</span>,)  </span><br><span class="line">    </span><br><span class="line">    <span class="comment">## 可编辑的列名</span></span><br><span class="line">    list_editable = [<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    <span class="comment"># list_filter = [&#x27;name&#x27; ,&#x27;email&#x27;,&#x27;phone&#x27;,&#x27;mobile&#x27;]</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 每页显示多少条</span></span><br><span class="line">    list_per_page = <span class="number">20</span> </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#根据id排序 </span></span><br><span class="line">    ordering = (<span class="string">&#x27;id&#x27;</span>,)　</span><br><span class="line">    　</span><br><span class="line">    <span class="comment">#设置只读字段　</span></span><br><span class="line">    readonly_fields = (<span class="string">&#x27;user_email&#x27;</span>,) </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#显示本条数据的所有信息</span></span><br><span class="line">    show_detail_fields = [<span class="string">&#x27;asset_name&#x27;</span>] </span><br><span class="line"></span><br><span class="line">xadmin.site.register(models.UserProfile,UserProfileAdmin)</span><br></pre></td></tr></table></figure>
-
-
-<p>3.数据导出<br>如果想要导出<code>Excel</code>数据，需要安装<code>xlwt</code>。</p>
-<p>默认情况下，<code>xadmin</code>会提供<code>Excel</code>，<code>CSV</code>,<code>XML</code>，<code>json</code>四种格式的数据导出，可以通过设置<code>OptionClass</code>的<code>list_export</code>属性来指定使用哪些导出格式（四种格式分别用<code>xls</code>，<code>csv</code>，<code>xml</code>，<code>json</code>表示）或是将<code>list_export</code>设置为<code>None</code>来禁用数据导出功能</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list_export = (<span class="string">&#x27;xls&#x27;</span>, <span class="string">&#x27;xml&#x27;</span>, <span class="string">&#x27;json&#x27;</span>)</span><br><span class="line">list_export_fields = (<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;title&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-
-<p>4.设置全局的配置</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局修改，固定写法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GlobalSettings</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment"># 修改title</span></span><br><span class="line">    site_title = <span class="string">&#x27;xxx后台管理界面&#x27;</span></span><br><span class="line">    <span class="comment"># 修改footer</span></span><br><span class="line">    site_footer = <span class="string">&#x27;xxx的公司&#x27;</span></span><br><span class="line">    <span class="comment"># 收起菜单</span></span><br><span class="line">    menu_style = <span class="string">&#x27;accordion&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 设置 models图标</span></span><br><span class="line">    <span class="comment"># https://v3.bootcss.com/components/</span></span><br><span class="line">    <span class="comment"># http://www.yeahzan.com/fa/facss.html</span></span><br><span class="line">    global_search_models = [models.Disk, models.Server]</span><br><span class="line">    global_models_icon = &#123;</span><br><span class="line">        <span class="comment"># Server: &quot;glyphicon glyphicon-tree-conifer&quot;, Pool: &quot;fa fa-cloud&quot;</span></span><br><span class="line">        models.Server: <span class="string">&quot;fa fa-linux&quot;</span>, models.Disk: <span class="string">&quot;fa fa-cloud&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 将title和footer信息进行注册</span></span><br><span class="line">xadmin.site.register(views.CommAdminView,GlobalSettings)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>图表显示</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data_charts = &#123;</span><br><span class="line">        <span class="string">&quot;host_service_type_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;部门机器使用情况&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;business_unit&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;business_unit&quot;</span>),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.8</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;host_idc_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;机房统计&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;idc&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;idc&quot;</span>,),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.3</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>注册模型与对应的管理类</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">xadmin.site.register(models.Disk, DiskAdmin)</span><br><span class="line">xadmin.site.register(models.Server, ServerAdmin)</span><br><span class="line">xadmin.site.register(models.IDC, IDCAdmin)</span><br><span class="line">xadmin.site.register(models.UserProfile, UserProfileAdmin)</span><br><span class="line">xadmin.site.register(models.UserGroup, UserGroupAdmin)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>​    </p>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>pycharm使用</title>
     <url>/2020/10/25/pycharm%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<p>Pycharm使用</p>
@@ -1848,6 +1759,220 @@ select * from emp right join dep on emp.dep_id = dep.id
 ]]></content>
       <categories>
         <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>py-xadmin</title>
+    <url>/2020/11/20/py-xadmin/</url>
+    <content><![CDATA[<p>Django-xadmin</p>
+<a id="more"></a>
+
+<div id="title">Django-xadmin的介绍</div>
+
+<blockquote>
+<p><code>Django</code>是<code>python</code>的重量级web框架,写得少,做得多,非常适合后端开发,它很大的一个亮点是,自带后台管理模块,但它自带的后台管理有点丑,而<code>Xadmin</code>是基于<code>bootstrap</code>开发的一套后台管理框架,界面非常美观,只需几步就可以替换自带的<code>Django_admin</code></p>
+</blockquote>
+<div id="title">具体的安装步骤</div>
+
+<ol>
+<li>xadmin在python2.x时代的安装方法</li>
+</ol>
+<p>在python2.x时代，安装xadmin是通过如下命令</p>
+<blockquote>
+<p>pip install xadmin </p>
+</blockquote>
+<p>2.<code>xadmin</code>在<code>python3.6.x</code>时代的安装方法</p>
+<p><strong>需要安装如下的包</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install django-<span class="keyword">import</span>-export</span><br><span class="line">pip3 install django-reversion</span><br><span class="line">pip3 install django-formtools==<span class="number">2.1</span></span><br><span class="line">pip3 install future</span><br><span class="line">pip3 install httplib2</span><br><span class="line">pip3 install six</span><br><span class="line">pip3 install django-crispy-forms</span><br></pre></td></tr></table></figure>
+
+<p>2.1 下载<code>xadmin</code></p>
+<blockquote>
+<p><a href="https://github.com/sshwsfc/xadmin">https://github.com/sshwsfc/xadmin</a></p>
+</blockquote>
+<p>2.2、解压缩，得到<code>xadmin</code>文件夹，复制到项目的<code>extra_apps</code>,解压缩，得到<code>xadmin</code>文件夹, 如下图所示：</p>
+<p><img src="https://i.loli.net/2019/06/20/5d0b41759655b82871.jpg" alt="xadmin.jpg"></p>
+<p>2.3、在django中的根目录下创建<code>Python Package</code>，命名为<code>extra_apps</code>（如果不存在此文件夹则创建, 然后 鼠标右键<code>extra_app</code> 随后 <code>mark as sources root</code>）<br>（<code>Python Package</code>是带<code>init</code>文件的，跟普通<code>Package</code>不同）</p>
+<p>创建完<code>extra_apps</code>，需要在<code>settings</code>中配置一下<code>extra_apps</code>。设置为可搜索的路径</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build paths inside the project like this: os.path.join(BASE_DIR, ...)</span></span><br><span class="line">BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))</span><br><span class="line">sys.path.insert(<span class="number">0</span>, os.path.join(BASE_DIR, <span class="string">&#x27;extra_apps&#x27;</span>)) <span class="comment"># 把extra_apps文件夹添加到搜索目录中</span></span><br></pre></td></tr></table></figure>
+
+<p>2.4、把<code>xadmin</code>文件夹复制到<code>extra_apps</code></p>
+<p>2.5、<code>xadmin</code>的配置</p>
+<p><strong>配置到 INSTALLED_APPS</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 显示中文</span></span><br><span class="line"><span class="comment"># Application definition</span></span><br><span class="line"><span class="comment"># LANGUAGE_CODE = &#x27;en-us&#x27;</span></span><br><span class="line">LANGUAGE_CODE = <span class="string">&#x27;zh-hans&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># TIME_ZONE = &#x27;UTC&#x27;</span></span><br><span class="line">TIME_ZONE = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;xadmin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;crispy_forms&#x27;</span>, <span class="comment"># 注意crispy_forms之间是下划线隔开，不是横线</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>2.6、修改<code>urls.py</code>的<code>admin</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="comment"># url(&#x27;admin/&#x27;, admin.site.urls),</span></span><br><span class="line">    url(<span class="string">r&#x27;^xadmin/&#x27;</span>, xadmin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>2.7、迁移文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
+
+<p><strong>迁移完成后，我们看到数据库多了几张表</strong></p>
+<p><img src="https://i.loli.net/2019/06/20/5d0b43084942d52028.jpg" alt="xadmintable.jpg"></p>
+<p>2.8、<code>pycharm</code>创建<code>superuser</code> 用户</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
+
+<p>至此完成。</p>
+<p>如果报错，请先把原先旧的<code>app</code>里面<code>admin.py</code>里面的注册代码去掉，再试试</p>
+<p>运行一下项目，访问</p>
+<blockquote>
+<p><a href="http://127.0.0.1:8000/xadmin/">http://127.0.0.1:8000/xadmin/</a></p>
+</blockquote>
+<h4 id="xadmin的使用"><a href="#xadmin的使用" class="headerlink" title="xadmin的使用"></a><div id="title">xadmin的使用</div></h4><p>1.需要在<code>app</code>中创建<code>adminx.py</code>文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> repository <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> xadmin <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserProfileAdmin</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment">### 显示的字段名称</span></span><br><span class="line">    list_display = [<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 搜索时可输入的字段内容</span></span><br><span class="line">    search_fields = [<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;email&#x27;</span>, <span class="string">&#x27;phone&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 点击id可进入详细界面进行编辑（默认的）</span></span><br><span class="line">    list_display_links = (<span class="string">&#x27;id&#x27;</span>,)  </span><br><span class="line">    </span><br><span class="line">    <span class="comment">## 可编辑的列名</span></span><br><span class="line">    list_editable = [<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    <span class="comment"># list_filter = [&#x27;name&#x27; ,&#x27;email&#x27;,&#x27;phone&#x27;,&#x27;mobile&#x27;]</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 每页显示多少条</span></span><br><span class="line">    list_per_page = <span class="number">20</span> </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#根据id排序 </span></span><br><span class="line">    ordering = (<span class="string">&#x27;id&#x27;</span>,)　</span><br><span class="line">    　</span><br><span class="line">    <span class="comment">#设置只读字段　</span></span><br><span class="line">    readonly_fields = (<span class="string">&#x27;user_email&#x27;</span>,) </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#显示本条数据的所有信息</span></span><br><span class="line">    show_detail_fields = [<span class="string">&#x27;asset_name&#x27;</span>] </span><br><span class="line"></span><br><span class="line">xadmin.site.register(models.UserProfile,UserProfileAdmin)</span><br></pre></td></tr></table></figure>
+
+
+<p>3.数据导出<br>如果想要导出<code>Excel</code>数据，需要安装<code>xlwt</code>。</p>
+<p>默认情况下，<code>xadmin</code>会提供<code>Excel</code>，<code>CSV</code>,<code>XML</code>，<code>json</code>四种格式的数据导出，可以通过设置<code>OptionClass</code>的<code>list_export</code>属性来指定使用哪些导出格式（四种格式分别用<code>xls</code>，<code>csv</code>，<code>xml</code>，<code>json</code>表示）或是将<code>list_export</code>设置为<code>None</code>来禁用数据导出功能</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list_export = (<span class="string">&#x27;xls&#x27;</span>, <span class="string">&#x27;xml&#x27;</span>, <span class="string">&#x27;json&#x27;</span>)</span><br><span class="line">list_export_fields = (<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;title&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p>4.设置全局的配置</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局修改，固定写法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GlobalSettings</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment"># 修改title</span></span><br><span class="line">    site_title = <span class="string">&#x27;xxx后台管理界面&#x27;</span></span><br><span class="line">    <span class="comment"># 修改footer</span></span><br><span class="line">    site_footer = <span class="string">&#x27;xxx的公司&#x27;</span></span><br><span class="line">    <span class="comment"># 收起菜单</span></span><br><span class="line">    menu_style = <span class="string">&#x27;accordion&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 设置 models图标</span></span><br><span class="line">    <span class="comment"># https://v3.bootcss.com/components/</span></span><br><span class="line">    <span class="comment"># http://www.yeahzan.com/fa/facss.html</span></span><br><span class="line">    global_search_models = [models.Disk, models.Server]</span><br><span class="line">    global_models_icon = &#123;</span><br><span class="line">        <span class="comment"># Server: &quot;glyphicon glyphicon-tree-conifer&quot;, Pool: &quot;fa fa-cloud&quot;</span></span><br><span class="line">        models.Server: <span class="string">&quot;fa fa-linux&quot;</span>, models.Disk: <span class="string">&quot;fa fa-cloud&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 将title和footer信息进行注册</span></span><br><span class="line">xadmin.site.register(views.CommAdminView,GlobalSettings)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>图表显示</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data_charts = &#123;</span><br><span class="line">        <span class="string">&quot;host_service_type_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;部门机器使用情况&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;business_unit&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;business_unit&quot;</span>),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.8</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;host_idc_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;机房统计&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;idc&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;idc&quot;</span>,),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.3</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>注册模型与对应的管理类</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">xadmin.site.register(models.Disk, DiskAdmin)</span><br><span class="line">xadmin.site.register(models.Server, ServerAdmin)</span><br><span class="line">xadmin.site.register(models.IDC, IDCAdmin)</span><br><span class="line">xadmin.site.register(models.UserProfile, UserProfileAdmin)</span><br><span class="line">xadmin.site.register(models.UserGroup, UserGroupAdmin)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    </p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue-介绍</title>
+    <url>/2020/11/20/vue-%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<p>vue简介</p>
+<a id="more"></a>
+
+<h3 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h3><p> 1、Vue.js目前最火的的一个前端框架，三大主流前端框架之一。<br> 2、Vue.js是一套构建用户界面的框架（一套完整的解决方案，对项目侵入性大，中途需要跟换框架则需要重构整个项目），只关注视图层，易上手，有配套的第三方类库。<br> 3、提高开发效率，帮助减少不必要的dom操作；双向数据绑定，通过框架提供的指令，前端只需要关注业务逻辑，不再关心dom如何渲染。</p>
+<h4 id="作者：尤雨熙"><a href="#作者：尤雨熙" class="headerlink" title="作者：尤雨熙"></a>作者：尤雨熙</h4><h4 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h4><blockquote>
+<p><a href="https://cn.vuejs.org/">https://cn.vuejs.org/</a></p>
+</blockquote>
+<h3 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 导入vue的包 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 将来的Vue实例会控制这个元素中所有内容 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- V（View），Vue实例所控制的这个元素区域 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span>   </span><br><span class="line">            <span class="comment">&lt;!-- 通过Vue提供的指令，很方便就能把data里的数据渲染到页面，不用手动操作dom了</span></span><br><span class="line"><span class="comment">           （前端Vue之类的框架，不提倡去手动操作dom） --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; msg &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">            <span class="comment">//导入包,就有Vue的构造函数</span></span></span><br><span class="line"><span class="javascript">            <span class="comment">//VM,这个new出来的vm对象,就是调度者</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;   <span class="comment">//&#123;&#125;配置对象</span></span></span><br><span class="line"><span class="javascript">                el:<span class="string">&#x27;#app&#x27;</span>,   <span class="comment">//element,这个Vue实例要控制页面上的哪个区域</span></span></span><br><span class="line"><span class="javascript">                data:&#123;   <span class="comment">//M,data就是用来保存当前页面数据的</span></span></span><br><span class="line"><span class="javascript">                    msg:<span class="string">&#x27;欢迎学习Vue&#x27;</span></span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="el的作用范围"><a href="#el的作用范围" class="headerlink" title="el的作用范围"></a>el的作用范围</h3><h4 id="选择器一定是id选择器吗？"><a href="#选择器一定是id选择器吗？" class="headerlink" title="选择器一定是id选择器吗？"></a>选择器一定是id选择器吗？</h4><blockquote>
+<p>不一定是，可以是id选择器或者类选择器以及标签选择器</p>
+</blockquote>
+<h4 id="可以使用其他标签吗？"><a href="#可以使用其他标签吗？" class="headerlink" title="可以使用其他标签吗？"></a>可以使用其他标签吗？</h4><blockquote>
+<p>只能是双标签中的内容，除了body和html</p>
+</blockquote>
+<h4 id="作用的范围是哪里？"><a href="#作用的范围是哪里？" class="headerlink" title="作用的范围是哪里？"></a>作用的范围是哪里？</h4><blockquote>
+<p>命中的元素以及后代子孙元素</p>
+</blockquote>
+<h3 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h3><blockquote>
+<p>创建Vue实例的时候，el(挂载点)，data(数据)，methods(设置方法)</p>
+</blockquote>
+<h2 id="vue中常见的指令"><a href="#vue中常见的指令" class="headerlink" title="vue中常见的指令"></a>vue中常见的指令</h2><h3 id="v-text的用法："><a href="#v-text的用法：" class="headerlink" title="v-text的用法："></a>v-text的用法：</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;vue&#x2F;dist&#x2F;vue.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id&#x3D;&quot;test&quot;&gt;</span><br><span class="line">    &lt;h2 v-text&#x3D;&quot;message&quot;&gt;&lt;&#x2F;h2&gt;</span><br><span class="line">    &lt;h3 v-text&#x3D;&quot;info&quot;&gt;&lt;&#x2F;h3&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    var app2 &#x3D; new Vue(&#123;</span><br><span class="line">        el: &#39;#test&#39;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            message: &quot;this is test&quot;,</span><br><span class="line">            info: &quot;this is info&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="v-html的使用"><a href="#v-html的使用" class="headerlink" title="v-html的使用"></a>v-html的使用</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;test&quot;&gt;</span><br><span class="line">   &lt;h4 v-html&#x3D;&quot;myhtml&quot;&gt;&lt;&#x2F;h4&gt;</span><br><span class="line"> &lt;&#x2F;div&gt;</span><br><span class="line">    var app2 &#x3D; new Vue(&#123;</span><br><span class="line">       el: &#39;#test&#39;,</span><br><span class="line">       data:&#123;</span><br><span class="line">           myhtml: &quot;&lt;a href&#x3D;&#39;http:&#x2F;&#x2F;wwww.baidu.com&#39;&gt;this is myhtml&lt;&#x2F;a&gt;&quot;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="v-on的使用"><a href="#v-on的使用" class="headerlink" title="v-on的使用"></a>v-on的使用</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&#39;test&#39;&gt;</span><br><span class="line">  &lt;input type&#x3D;&quot;button&quot; value&#x3D;&quot;点击&quot; v-on:click&#x3D;&quot;testclick&quot;&gt;</span><br><span class="line">  &lt;input type&#x3D;&quot;button&quot; value&#x3D;&quot;点击&quot; @click&#x3D;&quot;testclick&quot;&gt;</span><br><span class="line">  &lt;input type&#x3D;&quot;button&quot; value&#x3D;&quot;点击&quot; @click&#x3D;&quot;getfood&quot;&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">var app2 &#x3D; new Vue(&#123;</span><br><span class="line">        el: &#39;#test&#39;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            food: &quot;xxxxxxx&quot;,</span><br><span class="line">        &#125;,</span><br><span class="line">        methods :&#123;</span><br><span class="line">            testclick:function()&#123;</span><br><span class="line">              console.log(&#39;dsadas&#39;);</span><br><span class="line">            &#125;,</span><br><span class="line">            getfood:function () &#123;</span><br><span class="line">                console.log(this.food);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;)</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="v-show的使用"><a href="#v-show的使用" class="headerlink" title="v-show的使用"></a>v-show的使用</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">   &lt;h2 v-show&#x3D;&quot;isShow&quot;&gt;hello,h2&lt;&#x2F;h2&gt;</span><br><span class="line"> &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line"> &lt;script&gt;</span><br><span class="line">   var app &#x3D; new Vue(&#123;</span><br><span class="line">     el: &quot;#app&quot;,</span><br><span class="line">     data:&#123;</span><br><span class="line">         num : 0,</span><br><span class="line">         isShow: false</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;)</span><br><span class="line">&lt;&#x2F;script&gt;   </span><br></pre></td></tr></table></figure>
+
+<p>简单的例子：</p>
+<p>![image-20201114162743590](/Users/waylonyan/Library/Application Support/typora-user-images/image-20201114162743590.png)</p>
+<h3 id="v-bind的使用"><a href="#v-bind的使用" class="headerlink" title="v-bind的使用"></a>v-bind的使用</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  &lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">&lt;!--    &lt;h2 v-show&#x3D;&quot;isShow&quot;&gt;hello,h2&lt;&#x2F;h2&gt;--&gt;</span><br><span class="line">&lt;!--    &lt;img v-bind:src&#x3D;&quot;imgSrc&quot; alt&#x3D;&quot;&quot;&gt;--&gt;</span><br><span class="line">    &lt;img :src&#x3D;&quot;imgSrc&quot; :alt&#x3D;&quot;imgAlt&quot;&gt;</span><br><span class="line"></span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    var app &#x3D; new Vue(&#123;</span><br><span class="line">      el: &quot;#app&quot;,</span><br><span class="line">      data:&#123;</span><br><span class="line">          imgSrc: &quot;https:&#x2F;&#x2F;www.baidu.com&#x2F;img&#x2F;PC_803382a656108089122dc9a79d2729e8.png&quot;,</span><br><span class="line">          imgAlt : &quot;baidu&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    &lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="v-for的使用"><a href="#v-for的使用" class="headerlink" title="v-for的使用"></a>v-for的使用</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">   &lt;ul&gt;</span><br><span class="line">     &lt;li v-for&#x3D;&quot;item in arr&quot;&gt;&#123;&#123;item&#125;&#125;&lt;&#x2F;li&gt;</span><br><span class="line">   &lt;&#x2F;ul&gt;</span><br><span class="line">   &lt;ul&gt;</span><br><span class="line">     &lt;li v-for&#x3D;&quot;(item, index) in objArr&quot;&gt;</span><br><span class="line">       &#123;&#123;item.name&#125;&#125;</span><br><span class="line">     &lt;&#x2F;li&gt;</span><br><span class="line">   &lt;&#x2F;ul&gt;</span><br><span class="line"></span><br><span class="line"> &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line"> &lt;script&gt;</span><br><span class="line">   var app &#x3D; new Vue(&#123;</span><br><span class="line">     el: &quot;#app&quot;,</span><br><span class="line">     data:&#123;</span><br><span class="line">         arr: [1,2,3,4],</span><br><span class="line">         objArr: [</span><br><span class="line">             &#123;&quot;name&quot;:&quot;szk&quot;&#125;,</span><br><span class="line">             &#123;&quot;name&quot;:&quot;zhangsan&quot;&#125;</span><br><span class="line">         ]</span><br><span class="line">     &#125;</span><br><span class="line">  &lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="v-model的使用"><a href="#v-model的使用" class="headerlink" title="v-model的使用"></a>v-model的使用</h4><blockquote>
+<p>获取和设置表单元素的值（双向数据绑定）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&#39;app&#39;&gt; </span><br><span class="line">    &lt;input type&#x3D;&quot;text&quot; v-model&#x3D;&quot;message&quot;&gt;</span><br><span class="line">  &lt;h2&gt;&#123;&#123; message &#125;&#125;&lt;&#x2F;h2&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    var app &#x3D; new Vue(&#123;</span><br><span class="line">        el: &quot;#app&quot;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            &quot;message&quot;: &quot;helloworld&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例：简单记事本的实现"><a href="#案例：简单记事本的实现" class="headerlink" title="案例：简单记事本的实现"></a>案例：简单记事本的实现</h3><h4 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h4><ul>
+<li>生成列表结构(v-for 数组)</li>
+<li>获取用户的输入(v-model)</li>
+<li>回车，实现新增数据(v-on, enter添加数据)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;todoapp&quot;&gt;</span><br><span class="line"></span><br><span class="line">  &lt;input type&#x3D;&quot;text&quot; v-model&#x3D;&quot;inputValue&quot;&gt;</span><br><span class="line">  &lt;input type&#x3D;&quot;button&quot; value&#x3D;&quot;添加&quot; @click&#x3D;&quot;addTodo&quot;&gt;</span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li v-for&#x3D;&quot;item in todolist&quot;&gt;</span><br><span class="line">      &#123;&#123;item&#125;&#125;</span><br><span class="line">    &lt;&#x2F;li&gt;</span><br><span class="line">  &lt;&#x2F;ul&gt;</span><br><span class="line">  总共数据是&#123;&#123;todolist.length&#125;&#125;个</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  var app &#x3D; new Vue(&#123;</span><br><span class="line">      el: &quot;#todoapp&quot;,</span><br><span class="line">      data: &#123;</span><br><span class="line">          todolist: [&quot;吃饭&quot;, &quot;睡觉&quot;, &quot;打豆豆&quot;],</span><br><span class="line">          inputValue:&quot;&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      methods:&#123;</span><br><span class="line">          addTodo: function () &#123;</span><br><span class="line">              this.todolist.push(this.inputValue)</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="axios的使用"><a href="#axios的使用" class="headerlink" title="axios的使用"></a>axios的使用</h3><blockquote>
+<p><a href="http://www.axios-js.com/zh-cn/docs/">http://www.axios-js.com/zh-cn/docs/</a></p>
+</blockquote>
+<p>中文文档已经说的非常的详细了，大家可以参考中文文档！</p>
+<p>需要掌握：</p>
+<h3 id="跨域的问题："><a href="#跨域的问题：" class="headerlink" title="跨域的问题："></a>跨域的问题：</h3><h4 id="一、为什么会出现跨域问题"><a href="#一、为什么会出现跨域问题" class="headerlink" title="一、为什么会出现跨域问题"></a>一、为什么会出现跨域问题</h4><p>出于浏览器的同源策略限制。同源策略（Sameoriginpolicy）是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，则浏览器的正常功能可能都会受到影响。可以说Web是构建在同源策略基础之上的，浏览器只是针对同源策略的一种实现。同源策略会阻止一个域的javascript脚本和另外一个域的内容进行交互。所谓同源（即指在同一个域）就是两个页面具有相同的协议（protocol），主机（host）和端口号（port）</p>
+<h4 id="二、什么是跨域"><a href="#二、什么是跨域" class="headerlink" title="二、什么是跨域"></a>二、什么是跨域</h4><p>当一个请求url的<strong>协议、域名、端口</strong>三者之间任意一个与当前页面url不同即为跨域</p>
+<table>
+<thead>
+<tr>
+<th><strong>当前页面url</strong></th>
+<th><strong>被请求页面url</strong></th>
+<th><strong>是否跨域</strong></th>
+<th><strong>原因</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="http://www.test.com/">http://www.test.com/</a></td>
+<td><a href="http://www.test.com/index.html">http://www.test.com/index.html</a></td>
+<td>否</td>
+<td>同源（协议、域名、端口号相同）</td>
+</tr>
+<tr>
+<td><a href="http://www.test.com/">http://www.test.com/</a></td>
+<td><a href="https://www.test.com/index.html">https://www.test.com/index.html</a></td>
+<td>跨域</td>
+<td>协议不同（http/https）</td>
+</tr>
+<tr>
+<td><a href="http://www.test.com/">http://www.test.com/</a></td>
+<td><a href="http://www.baidu.com/">http://www.baidu.com/</a></td>
+<td>跨域</td>
+<td>主域名不同（test/baidu）</td>
+</tr>
+<tr>
+<td><a href="http://www.test.com/">http://www.test.com/</a></td>
+<td><a href="http://blog.test.com/">http://blog.test.com/</a></td>
+<td>跨域</td>
+<td>子域名不同（www/blog）</td>
+</tr>
+<tr>
+<td><a href="http://www.test.com:8080/">http://www.test.com:8080/</a></td>
+<td><a href="http://www.test.com:7001/">http://www.test.com:7001/</a></td>
+<td>跨域</td>
+<td>端口号不同（8080/7001）</td>
+</tr>
+</tbody></table>
+<p>参考：<a href="http://www.ruanyifeng.com/blog/2016/04/cors.html">http://www.ruanyifeng.com/blog/2016/04/cors.html</a></p>
+<p><strong>面试题会问，简单的介绍下跨域是啥？怎么解决的？</strong></p>
+<ul>
+<li>Jsonp 解决</li>
+<li>django中使用开源的组件，django-cors-headers</li>
+</ul>
+<h4 id="三、Django解决跨域问题"><a href="#三、Django解决跨域问题" class="headerlink" title="三、Django解决跨域问题"></a>三、Django解决跨域问题</h4><blockquote>
+<p><a href="https://github.com/adamchainz/django-cors-headers">https://github.com/adamchainz/django-cors-headers</a></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 跨域设置</span></span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">&#x27;corsheaders&#x27;</span>,</span><br><span class="line">    ...</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">MIDDLEWARE = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">&#x27;corsheaders.middleware.CorsMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.middleware.common.CommonMiddleware&#x27;</span>,</span><br><span class="line">    ...</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">CORS_ALLOW_HEADERS = list(default_headers) + [</span><br><span class="line">    <span class="string">&#x27;XMLHttpRequest&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;X_FILENAME&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;accept-encoding&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;authorization&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;content-type&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;dnt&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;origin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;user-agent&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;x-csrftoken&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;x-requested-with&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Pragma&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;TOKEN&#x27;</span>,</span><br><span class="line">]</span><br><span class="line">CORS_ORIGIN_ALLOW_ALL = <span class="literal">True</span></span><br><span class="line">CORS_ALLOW_CREDENTIALS = <span class="literal">True</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+<p>#####<br>用户访问 index.html –&gt;加载main.js,创建了vue的对象，vue对象在index.html中圈了一块地，那里就可以用vue的语法了—&gt; main.js中的component挂载组件，挂载了APP组件，就是最外层的全局大组件—&gt;加载了App.vue —&gt; App.vue中配置vue-router–&gt;路由到了helloword组件</p>
+<p>App.vue如何加载到了helloword组件，通过vue-router路由匹配组件；哪里写了router-view就往哪里仍</p>
+<p>import Router from ‘vue-router’ // export default {功能} 抛出 才能引入</p>
+<p>export default new Router({<br>  routes: [<br>    {<br>      path: ‘/‘,<br>      name: ‘HelloWorld’,<br>      component: HelloWorld<br>    }<br>  ]<br>})</p>
+]]></content>
+      <categories>
+        <category>vue</category>
       </categories>
       <tags>
         <tag>note</tag>
@@ -2019,131 +2144,6 @@ select * from emp right join dep on emp.dep_id = dep.id
 <p>套接字之所以简单是因为：客户端只需要调connect接口，服务端调accept接口；客户端干了什么：发syn，服务端回ack+syn，客户端再回ack； connect和accept接口把三次握手细节全部封装好了。</p>
 <p>粘包问题<br>TCP独有（流式协议）<br>把数据像水流一样发出去；TCP协议nagle算法会把时间间隔较短，数据量较小的数据粘到一起，基于网络发出去。<br>解决方案：收数据的时候收干净就好了</p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>vue-介绍</title>
-    <url>/2020/11/20/vue-%E4%BB%8B%E7%BB%8D/</url>
-    <content><![CDATA[<p>vue简介</p>
-<a id="more"></a>
-
-<h3 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h3><p> 1、Vue.js目前最火的的一个前端框架，三大主流前端框架之一。<br> 2、Vue.js是一套构建用户界面的框架（一套完整的解决方案，对项目侵入性大，中途需要跟换框架则需要重构整个项目），只关注视图层，易上手，有配套的第三方类库。<br> 3、提高开发效率，帮助减少不必要的dom操作；双向数据绑定，通过框架提供的指令，前端只需要关注业务逻辑，不再关心dom如何渲染。</p>
-<h4 id="作者：尤雨熙"><a href="#作者：尤雨熙" class="headerlink" title="作者：尤雨熙"></a>作者：尤雨熙</h4><h4 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h4><blockquote>
-<p><a href="https://cn.vuejs.org/">https://cn.vuejs.org/</a></p>
-</blockquote>
-<h3 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 导入vue的包 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 将来的Vue实例会控制这个元素中所有内容 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- V（View），Vue实例所控制的这个元素区域 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span>   </span><br><span class="line">            <span class="comment">&lt;!-- 通过Vue提供的指令，很方便就能把data里的数据渲染到页面，不用手动操作dom了</span></span><br><span class="line"><span class="comment">           （前端Vue之类的框架，不提倡去手动操作dom） --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; msg &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">            <span class="comment">//导入包,就有Vue的构造函数</span></span></span><br><span class="line"><span class="javascript">            <span class="comment">//VM,这个new出来的vm对象,就是调度者</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;   <span class="comment">//&#123;&#125;配置对象</span></span></span><br><span class="line"><span class="javascript">                el:<span class="string">&#x27;#app&#x27;</span>,   <span class="comment">//element,这个Vue实例要控制页面上的哪个区域</span></span></span><br><span class="line"><span class="javascript">                data:&#123;   <span class="comment">//M,data就是用来保存当前页面数据的</span></span></span><br><span class="line"><span class="javascript">                    msg:<span class="string">&#x27;欢迎学习Vue&#x27;</span></span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="el的作用范围"><a href="#el的作用范围" class="headerlink" title="el的作用范围"></a>el的作用范围</h3><h4 id="选择器一定是id选择器吗？"><a href="#选择器一定是id选择器吗？" class="headerlink" title="选择器一定是id选择器吗？"></a>选择器一定是id选择器吗？</h4><blockquote>
-<p>不一定是，可以是id选择器或者类选择器以及标签选择器</p>
-</blockquote>
-<h4 id="可以使用其他标签吗？"><a href="#可以使用其他标签吗？" class="headerlink" title="可以使用其他标签吗？"></a>可以使用其他标签吗？</h4><blockquote>
-<p>只能是双标签中的内容，除了body和html</p>
-</blockquote>
-<h4 id="作用的范围是哪里？"><a href="#作用的范围是哪里？" class="headerlink" title="作用的范围是哪里？"></a>作用的范围是哪里？</h4><blockquote>
-<p>命中的元素以及后代子孙元素</p>
-</blockquote>
-<h3 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h3><blockquote>
-<p>创建Vue实例的时候，el(挂载点)，data(数据)，methods(设置方法)</p>
-</blockquote>
-<h2 id="vue中常见的指令"><a href="#vue中常见的指令" class="headerlink" title="vue中常见的指令"></a>vue中常见的指令</h2><h3 id="v-text的用法："><a href="#v-text的用法：" class="headerlink" title="v-text的用法："></a>v-text的用法：</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;vue&#x2F;dist&#x2F;vue.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id&#x3D;&quot;test&quot;&gt;</span><br><span class="line">    &lt;h2 v-text&#x3D;&quot;message&quot;&gt;&lt;&#x2F;h2&gt;</span><br><span class="line">    &lt;h3 v-text&#x3D;&quot;info&quot;&gt;&lt;&#x2F;h3&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    var app2 &#x3D; new Vue(&#123;</span><br><span class="line">        el: &#39;#test&#39;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            message: &quot;this is test&quot;,</span><br><span class="line">            info: &quot;this is info&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="v-html的使用"><a href="#v-html的使用" class="headerlink" title="v-html的使用"></a>v-html的使用</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;test&quot;&gt;</span><br><span class="line">   &lt;h4 v-html&#x3D;&quot;myhtml&quot;&gt;&lt;&#x2F;h4&gt;</span><br><span class="line"> &lt;&#x2F;div&gt;</span><br><span class="line">    var app2 &#x3D; new Vue(&#123;</span><br><span class="line">       el: &#39;#test&#39;,</span><br><span class="line">       data:&#123;</span><br><span class="line">           myhtml: &quot;&lt;a href&#x3D;&#39;http:&#x2F;&#x2F;wwww.baidu.com&#39;&gt;this is myhtml&lt;&#x2F;a&gt;&quot;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="v-on的使用"><a href="#v-on的使用" class="headerlink" title="v-on的使用"></a>v-on的使用</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&#39;test&#39;&gt;</span><br><span class="line">  &lt;input type&#x3D;&quot;button&quot; value&#x3D;&quot;点击&quot; v-on:click&#x3D;&quot;testclick&quot;&gt;</span><br><span class="line">  &lt;input type&#x3D;&quot;button&quot; value&#x3D;&quot;点击&quot; @click&#x3D;&quot;testclick&quot;&gt;</span><br><span class="line">  &lt;input type&#x3D;&quot;button&quot; value&#x3D;&quot;点击&quot; @click&#x3D;&quot;getfood&quot;&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">var app2 &#x3D; new Vue(&#123;</span><br><span class="line">        el: &#39;#test&#39;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            food: &quot;xxxxxxx&quot;,</span><br><span class="line">        &#125;,</span><br><span class="line">        methods :&#123;</span><br><span class="line">            testclick:function()&#123;</span><br><span class="line">              console.log(&#39;dsadas&#39;);</span><br><span class="line">            &#125;,</span><br><span class="line">            getfood:function () &#123;</span><br><span class="line">                console.log(this.food);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;)</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="v-show的使用"><a href="#v-show的使用" class="headerlink" title="v-show的使用"></a>v-show的使用</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">   &lt;h2 v-show&#x3D;&quot;isShow&quot;&gt;hello,h2&lt;&#x2F;h2&gt;</span><br><span class="line"> &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line"> &lt;script&gt;</span><br><span class="line">   var app &#x3D; new Vue(&#123;</span><br><span class="line">     el: &quot;#app&quot;,</span><br><span class="line">     data:&#123;</span><br><span class="line">         num : 0,</span><br><span class="line">         isShow: false</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;)</span><br><span class="line">&lt;&#x2F;script&gt;   </span><br></pre></td></tr></table></figure>
-
-<p>简单的例子：</p>
-<p>![image-20201114162743590](/Users/waylonyan/Library/Application Support/typora-user-images/image-20201114162743590.png)</p>
-<h3 id="v-bind的使用"><a href="#v-bind的使用" class="headerlink" title="v-bind的使用"></a>v-bind的使用</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  &lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">&lt;!--    &lt;h2 v-show&#x3D;&quot;isShow&quot;&gt;hello,h2&lt;&#x2F;h2&gt;--&gt;</span><br><span class="line">&lt;!--    &lt;img v-bind:src&#x3D;&quot;imgSrc&quot; alt&#x3D;&quot;&quot;&gt;--&gt;</span><br><span class="line">    &lt;img :src&#x3D;&quot;imgSrc&quot; :alt&#x3D;&quot;imgAlt&quot;&gt;</span><br><span class="line"></span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    var app &#x3D; new Vue(&#123;</span><br><span class="line">      el: &quot;#app&quot;,</span><br><span class="line">      data:&#123;</span><br><span class="line">          imgSrc: &quot;https:&#x2F;&#x2F;www.baidu.com&#x2F;img&#x2F;PC_803382a656108089122dc9a79d2729e8.png&quot;,</span><br><span class="line">          imgAlt : &quot;baidu&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    &lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="v-for的使用"><a href="#v-for的使用" class="headerlink" title="v-for的使用"></a>v-for的使用</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">   &lt;ul&gt;</span><br><span class="line">     &lt;li v-for&#x3D;&quot;item in arr&quot;&gt;&#123;&#123;item&#125;&#125;&lt;&#x2F;li&gt;</span><br><span class="line">   &lt;&#x2F;ul&gt;</span><br><span class="line">   &lt;ul&gt;</span><br><span class="line">     &lt;li v-for&#x3D;&quot;(item, index) in objArr&quot;&gt;</span><br><span class="line">       &#123;&#123;item.name&#125;&#125;</span><br><span class="line">     &lt;&#x2F;li&gt;</span><br><span class="line">   &lt;&#x2F;ul&gt;</span><br><span class="line"></span><br><span class="line"> &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line"> &lt;script&gt;</span><br><span class="line">   var app &#x3D; new Vue(&#123;</span><br><span class="line">     el: &quot;#app&quot;,</span><br><span class="line">     data:&#123;</span><br><span class="line">         arr: [1,2,3,4],</span><br><span class="line">         objArr: [</span><br><span class="line">             &#123;&quot;name&quot;:&quot;szk&quot;&#125;,</span><br><span class="line">             &#123;&quot;name&quot;:&quot;zhangsan&quot;&#125;</span><br><span class="line">         ]</span><br><span class="line">     &#125;</span><br><span class="line">  &lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="v-model的使用"><a href="#v-model的使用" class="headerlink" title="v-model的使用"></a>v-model的使用</h4><blockquote>
-<p>获取和设置表单元素的值（双向数据绑定）</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&#39;app&#39;&gt; </span><br><span class="line">    &lt;input type&#x3D;&quot;text&quot; v-model&#x3D;&quot;message&quot;&gt;</span><br><span class="line">  &lt;h2&gt;&#123;&#123; message &#125;&#125;&lt;&#x2F;h2&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    var app &#x3D; new Vue(&#123;</span><br><span class="line">        el: &quot;#app&quot;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            &quot;message&quot;: &quot;helloworld&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="案例：简单记事本的实现"><a href="#案例：简单记事本的实现" class="headerlink" title="案例：简单记事本的实现"></a>案例：简单记事本的实现</h3><h4 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h4><ul>
-<li>生成列表结构(v-for 数组)</li>
-<li>获取用户的输入(v-model)</li>
-<li>回车，实现新增数据(v-on, enter添加数据)</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;todoapp&quot;&gt;</span><br><span class="line"></span><br><span class="line">  &lt;input type&#x3D;&quot;text&quot; v-model&#x3D;&quot;inputValue&quot;&gt;</span><br><span class="line">  &lt;input type&#x3D;&quot;button&quot; value&#x3D;&quot;添加&quot; @click&#x3D;&quot;addTodo&quot;&gt;</span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li v-for&#x3D;&quot;item in todolist&quot;&gt;</span><br><span class="line">      &#123;&#123;item&#125;&#125;</span><br><span class="line">    &lt;&#x2F;li&gt;</span><br><span class="line">  &lt;&#x2F;ul&gt;</span><br><span class="line">  总共数据是&#123;&#123;todolist.length&#125;&#125;个</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  var app &#x3D; new Vue(&#123;</span><br><span class="line">      el: &quot;#todoapp&quot;,</span><br><span class="line">      data: &#123;</span><br><span class="line">          todolist: [&quot;吃饭&quot;, &quot;睡觉&quot;, &quot;打豆豆&quot;],</span><br><span class="line">          inputValue:&quot;&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      methods:&#123;</span><br><span class="line">          addTodo: function () &#123;</span><br><span class="line">              this.todolist.push(this.inputValue)</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="axios的使用"><a href="#axios的使用" class="headerlink" title="axios的使用"></a>axios的使用</h3><blockquote>
-<p><a href="http://www.axios-js.com/zh-cn/docs/">http://www.axios-js.com/zh-cn/docs/</a></p>
-</blockquote>
-<p>中文文档已经说的非常的详细了，大家可以参考中文文档！</p>
-<p>需要掌握：</p>
-<h3 id="跨域的问题："><a href="#跨域的问题：" class="headerlink" title="跨域的问题："></a>跨域的问题：</h3><h4 id="一、为什么会出现跨域问题"><a href="#一、为什么会出现跨域问题" class="headerlink" title="一、为什么会出现跨域问题"></a>一、为什么会出现跨域问题</h4><p>出于浏览器的同源策略限制。同源策略（Sameoriginpolicy）是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，则浏览器的正常功能可能都会受到影响。可以说Web是构建在同源策略基础之上的，浏览器只是针对同源策略的一种实现。同源策略会阻止一个域的javascript脚本和另外一个域的内容进行交互。所谓同源（即指在同一个域）就是两个页面具有相同的协议（protocol），主机（host）和端口号（port）</p>
-<h4 id="二、什么是跨域"><a href="#二、什么是跨域" class="headerlink" title="二、什么是跨域"></a>二、什么是跨域</h4><p>当一个请求url的<strong>协议、域名、端口</strong>三者之间任意一个与当前页面url不同即为跨域</p>
-<table>
-<thead>
-<tr>
-<th><strong>当前页面url</strong></th>
-<th><strong>被请求页面url</strong></th>
-<th><strong>是否跨域</strong></th>
-<th><strong>原因</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a href="http://www.test.com/">http://www.test.com/</a></td>
-<td><a href="http://www.test.com/index.html">http://www.test.com/index.html</a></td>
-<td>否</td>
-<td>同源（协议、域名、端口号相同）</td>
-</tr>
-<tr>
-<td><a href="http://www.test.com/">http://www.test.com/</a></td>
-<td><a href="https://www.test.com/index.html">https://www.test.com/index.html</a></td>
-<td>跨域</td>
-<td>协议不同（http/https）</td>
-</tr>
-<tr>
-<td><a href="http://www.test.com/">http://www.test.com/</a></td>
-<td><a href="http://www.baidu.com/">http://www.baidu.com/</a></td>
-<td>跨域</td>
-<td>主域名不同（test/baidu）</td>
-</tr>
-<tr>
-<td><a href="http://www.test.com/">http://www.test.com/</a></td>
-<td><a href="http://blog.test.com/">http://blog.test.com/</a></td>
-<td>跨域</td>
-<td>子域名不同（www/blog）</td>
-</tr>
-<tr>
-<td><a href="http://www.test.com:8080/">http://www.test.com:8080/</a></td>
-<td><a href="http://www.test.com:7001/">http://www.test.com:7001/</a></td>
-<td>跨域</td>
-<td>端口号不同（8080/7001）</td>
-</tr>
-</tbody></table>
-<p>参考：<a href="http://www.ruanyifeng.com/blog/2016/04/cors.html">http://www.ruanyifeng.com/blog/2016/04/cors.html</a></p>
-<p><strong>面试题会问，简单的介绍下跨域是啥？怎么解决的？</strong></p>
-<ul>
-<li>Jsonp 解决</li>
-<li>django中使用开源的组件，django-cors-headers</li>
-</ul>
-<h4 id="三、Django解决跨域问题"><a href="#三、Django解决跨域问题" class="headerlink" title="三、Django解决跨域问题"></a>三、Django解决跨域问题</h4><blockquote>
-<p><a href="https://github.com/adamchainz/django-cors-headers">https://github.com/adamchainz/django-cors-headers</a></p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 跨域设置</span></span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">&#x27;corsheaders&#x27;</span>,</span><br><span class="line">    ...</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">MIDDLEWARE = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">&#x27;corsheaders.middleware.CorsMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.middleware.common.CommonMiddleware&#x27;</span>,</span><br><span class="line">    ...</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">CORS_ALLOW_HEADERS = list(default_headers) + [</span><br><span class="line">    <span class="string">&#x27;XMLHttpRequest&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;X_FILENAME&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;accept-encoding&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;authorization&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;content-type&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;dnt&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;origin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;user-agent&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;x-csrftoken&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;x-requested-with&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Pragma&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;TOKEN&#x27;</span>,</span><br><span class="line">]</span><br><span class="line">CORS_ORIGIN_ALLOW_ALL = <span class="literal">True</span></span><br><span class="line">CORS_ALLOW_CREDENTIALS = <span class="literal">True</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-<p>#####<br>用户访问 index.html –&gt;加载main.js,创建了vue的对象，vue对象在index.html中圈了一块地，那里就可以用vue的语法了—&gt; main.js中的component挂载组件，挂载了APP组件，就是最外层的全局大组件—&gt;加载了App.vue —&gt; App.vue中配置vue-router–&gt;路由到了helloword组件</p>
-<p>App.vue如何加载到了helloword组件，通过vue-router路由匹配组件；哪里写了router-view就往哪里仍</p>
-<p>import Router from ‘vue-router’ // export default {功能} 抛出 才能引入</p>
-<p>export default new Router({<br>  routes: [<br>    {<br>      path: ‘/‘,<br>      name: ‘HelloWorld’,<br>      component: HelloWorld<br>    }<br>  ]<br>})</p>
-]]></content>
-      <categories>
-        <category>vue</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
   </entry>
   <entry>
     <title>kubernetes网络通信原理</title>
@@ -2963,12 +2963,15 @@ select * from emp right join dep on emp.dep_id = dep.id
 </ol>
 <h4 id="4-生成器-面试中的重点"><a href="#4-生成器-面试中的重点" class="headerlink" title="4.生成器  面试中的重点"></a>4.生成器  面试中的重点</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 生成器定义</span></span><br><span class="line"><span class="comment">### 生成器的本质就是迭代器，因此我们可以使用迭代器中的__next__方法来获取元素</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    print(<span class="number">11</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">22</span>  <span class="comment">### 将return换成yield关键字即可</span></span><br><span class="line"></span><br><span class="line">ret = func()</span><br><span class="line"><span class="comment"># print(ret.__next__())</span></span><br><span class="line"><span class="comment"># print(ret)  ### &lt;generator object func at 0x103cc80b0&gt; 生成器的对象</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>return 和 yield 的区别<ul>
+<li><p>return 和 yield 的区别</p>
+<ul>
+<li>有了yield关键字，我们就有了一种自定义迭代器的实现方式。yield可以用于返回值，但不同于return，函数一旦遇到return就结束了，而yield可以保存函数的运行状态挂起函数，用来返回多次值</li>
 <li>yield是分段来执行一个函数,yield可以出现多次</li>
 <li>return是直接停止这个函数,return可以出现多次但是只会执行到第一个就结束了</li>
 </ul>
 </li>
-<li>生成器的好处<ul>
+<li><p>生成器的好处</p>
+<ul>
 <li>节省内存</li>
 </ul>
 </li>

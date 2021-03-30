@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/08/23/py-day03/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0.jpg">
 <meta property="article:published_time" content="2020-08-23T03:14:32.000Z">
-<meta property="article:modified_time" content="2021-03-29T13:31:30.536Z">
+<meta property="article:modified_time" content="2021-03-29T16:28:59.159Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-29 21:31:30" itemprop="dateModified" datetime="2021-03-29T21:31:30+08:00">2021-03-29</time>
+                <time title="修改时间：2021-03-30 00:28:59" itemprop="dateModified" datetime="2021-03-30T00:28:59+08:00">2021-03-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -576,12 +576,15 @@
 </ol>
 <h4 id="4-生成器-面试中的重点"><a href="#4-生成器-面试中的重点" class="headerlink" title="4.生成器  面试中的重点"></a>4.生成器  面试中的重点</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 生成器定义</span></span><br><span class="line"><span class="comment">### 生成器的本质就是迭代器，因此我们可以使用迭代器中的__next__方法来获取元素</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    print(<span class="number">11</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">22</span>  <span class="comment">### 将return换成yield关键字即可</span></span><br><span class="line"></span><br><span class="line">ret = func()</span><br><span class="line"><span class="comment"># print(ret.__next__())</span></span><br><span class="line"><span class="comment"># print(ret)  ### &lt;generator object func at 0x103cc80b0&gt; 生成器的对象</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>return 和 yield 的区别<ul>
+<li><p>return 和 yield 的区别</p>
+<ul>
+<li>有了yield关键字，我们就有了一种自定义迭代器的实现方式。yield可以用于返回值，但不同于return，函数一旦遇到return就结束了，而yield可以保存函数的运行状态挂起函数，用来返回多次值</li>
 <li>yield是分段来执行一个函数,yield可以出现多次</li>
 <li>return是直接停止这个函数,return可以出现多次但是只会执行到第一个就结束了</li>
 </ul>
 </li>
-<li>生成器的好处<ul>
+<li><p>生成器的好处</p>
+<ul>
 <li>节省内存</li>
 </ul>
 </li>
