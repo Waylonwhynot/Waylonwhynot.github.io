@@ -1459,312 +1459,6 @@ select * from emp right join dep on emp.dep_id = dep.id
       </tags>
   </entry>
   <entry>
-    <title>py-skill</title>
-    <url>/2020/11/06/py-skill/</url>
-    <content><![CDATA[<p>需要记住</p>
-<a id="more"></a>
-
-<ol start="0">
-<li>字符串前加r的意思<br>r/R 表示非转义的原始字符串,比如在字符串中如果出现\n是换行,但是如果在字符串的前面添加r则表示\和n两个字符,一般常见于正则表达式中。</li>
-</ol>
-<ol>
-<li>Python __dict__与dir()区别</li>
-</ol>
-<p>__dict__与dir()的区别：</p>
-<p>1.dir()是一个函数，返回的是list；<br>2.__dict__是一个字典，键为属性名，值为属性值；<br>3.dir()用来寻找一个对象的所有属性，包括__dict__中的属性，__dict__是dir()的子集；</p>
-<ol start="2">
-<li>字符串和字节相互转换<br>通过decode encode 方式太麻烦，不好理解</li>
-</ol>
-<p>字符串转换成字节</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>字节转换成字符串</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">str(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-
-<ol start="3">
-<li>class 中什么时候用classmethod</li>
-</ol>
-<ul>
-<li>想通过类的方法得到对象，会用到classmethod</li>
-</ul>
-<ol start="4">
-<li>Django 模板语法 如何处理xss攻击的</li>
-</ol>
-<ul>
-<li>safe<br>Django的模板中会对HTML标签和JS等语法标签进行自动转义，原因显而易见，这样是为了安全。但是有的时候我们可能不希望这些HTML元素被转义，比如我们做一个内容管理系统，后台添加的文章中是经过修饰的，这些修饰可能是通过一个类似于FCKeditor编辑加注了HTML修饰符的文本，如果自动转义的话显示的就是保护HTML标签的源文件。为了在Django中关闭HTML的自动转义有两种方式，如果是一个单独的变量我们可以通过过滤器“|safe”的方式告诉Django这段代码是安全的不必转义。比如：<figure class="highlight"><table><tr><td class="code"><pre><span class="line">value=<span class="string">&quot;&lt;a href=&quot;</span><span class="string">&quot;&gt;点击&lt;/a&gt;&quot;</span></span><br><span class="line">&#123;&#123; value|safe&#125;&#125;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;&#123;&#123; label &#125;&#125;&lt;/p&gt;  &lt;!--为了安全系统会把标签变成字符串--&gt;</span><br><span class="line">&lt;p&gt;&#123;&#123; label|safe &#125;&#125;&lt;/p&gt;    &lt;!--加上safe，确定你的数据是安全的才能被当成是标签--&gt;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>底层实现原理：mark_safe 通过html特殊字符的替换</p>
-<ol start="5">
-<li>csrf跨站请求伪造<br>什么是csrf：<br>其原理是攻击者构造网站后台某个功能接口的请求地址，诱导用户去点击或者用特殊方法让该请求地址自动加载。用户在登录状态下这个请求被服务端接收后会被误以为是用户合法的操作。对于 GET 形式的接口地址可轻易被攻击，对于 POST 形式的接口地址也不是百分百安全，攻击者可诱导用户进入带 Form 表单可用POST方式提交参数的页面</li>
-</ol>
-<p>原理：<br>当用post提交数据的时候，django会去检查是否有一个csrf的随机字符串，如果没有就会报错，这也是之前我们一直将其注释的原因，错误如下：403</p>
-<ul>
-<li>通过form提交<br>在form表单里面需要添加<code>&#123;%csrf_token%&#125;</code>，<br>这样当你查看页面源码的时候,可以看到form中有一个input是隐藏的<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;h3&gt;scrf_token&lt;/h3&gt;&lt;form action=&quot;/tag/&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &#123;% csrf_token %&#125;</span><br><span class="line">    &lt;p&gt;&lt;input type=&quot;text&quot; name=&quot;haiyan&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;submit&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<img src="https://images2015.cnblogs.com/blog/997599/201701/997599-20170113091806338-1978303584.png">
-
-
-<p>总结原理：当用户访问login页面的时候，会生成一个csrf的随机字符串，，并且cookie中也存放了这个随机字符串，当用户再次提交数据的时候会带着这个随机字符串提交，如果没有这个随机字符串则无法提交成功</p>
-<ul>
-<li>通过ajax提交</li>
-</ul>
-<p><a href="https://www.cnblogs.com/jinxf/p/9186923.html">https://www.cnblogs.com/jinxf/p/9186923.html</a></p>
-<ol start="6">
-<li>orm 相关问题</li>
-</ol>
-<p>values和values_list 在annotate（分组查询）  前后的区别<br><a href="https://www.runoob.com/django/django-orm-3.html">https://www.runoob.com/django/django-orm-3.html</a></p>
-<ol start="7">
-<li>Ajax<br>AJAX（Asynchronous Javascript And XML）翻译成中文就是“异步Javascript和XML”。即使用Javascript语言与服务器进行异步交互，传输的数据为XML（当然，传输的数据不只是XML,现在更多使用json数据）。</li>
-</ol>
-<ul>
-<li>同步交互：客户端发出一个请求后，需要等待服务器响应结束后，才能发出第二个请求；</li>
-<li>异步交互：客户端发出一个请求后，无需等待服务器响应结束，就可以发出第二个请求。</li>
-</ul>
-<p><strong>AJAX除了异步的特点外，还有一个就是：浏览器页面局部刷新；（这一特点给用户的感受是在不知不觉中完成请求和响应过程）</strong><br>局部刷新：Ajax 发请求，把数据拿过来，再勇敢Dom渲染局部</p>
-<p><code>$.ajax 是Jquery封装的，会根据不同参数和配置的type组装不同的http请求</code></p>
-<ol start="8">
-<li>forms组件</li>
-</ol>
-<ul>
-<li>使用它的字段检验功能<ul>
-<li><ol>
-<li>写一个类(UserForm)，继承Form</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>在类中写字段，pwd=forms.CharField(max_length=32,min_length=4)</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>在视图函数中使用: form=UserForm(检验的字典)</li>
-</ol>
-</li>
-<li><ol start="4">
-<li>form.is_valid()里面做校验；通过，存起来；不通过，forms.errors会有错误信息</li>
-</ol>
-</li>
-</ul>
-</li>
-<li>默认的校验规则还不够，需要自己写钩子函数<ul>
-<li>局部钩子：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean_</span>字段名():</span></span><br><span class="line">    val=self.cleaned_data.get(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">    通过<span class="keyword">return</span></span><br><span class="line">    不通过抛出</span><br></pre></td></tr></table></figure></li>
-<li>全局钩子：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean</span>(<span class="params">self</span>):</span></span><br><span class="line">    pwd=self.cleaned_data.get(<span class="string">&#x27;pwd&#x27;</span>)</span><br><span class="line">    r_pwd=self.cleaned_data.get(<span class="string">&#x27;r_pwd&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> pwd <span class="keyword">and</span> r_pwd:</span><br><span class="line">        <span class="keyword">if</span> pwd==r_pwd:</span><br><span class="line">            <span class="keyword">return</span> self.cleaned_data</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValidationError(<span class="string">&#x27;两次密码不一致&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> self.cleaned_data</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-</li>
-</ul>
-<ol start="9">
-<li><p>捕捉错误模块<br>import traceback<br>return response.ServerErrorResponse(content=traceback.format_exc())</p>
-</li>
-<li><p>QuerySet转成字典<br>引入模块 from django.forms import model_to_dict</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> model_to_dict</span><br><span class="line"></span><br><span class="line">ret = models.Publish.objects.all()</span><br><span class="line">res = [model_to_dict(obj) <span class="keyword">for</span> obj <span class="keyword">in</span> ret]</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>request.POST 和 request.body 获取数据</p>
-</li>
-</ol>
-<p>前端发送数据格式为 json，是在body里的，且header是application/json,数据在request.body<br>发送数据是form 表单的，request.POST</p>
-<ol start="12">
-<li>Cors跨域问题</li>
-</ol>
-<ol start="12">
-<li>JWT<br>面试问题：JWT底层实现原理<img src="/2020/11/06/py-skill/jwt%E4%BB%8B%E7%BB%8D.png" class title="objsort">
-<a href="https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html">https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html</a></li>
-</ol>
-<ul>
-<li><p>传统token方式</p>
-<blockquote>
-<p>用户登录成功后，服务端生成一个随机token给用户，并且在服务端(数据库或缓存)中保存一份token，以后用户再来访问时需携带token，服务端接收到token之后，去数据库或缓存中进行校验token的是否超时、是否合法。</p>
-</blockquote>
-</li>
-<li><p>为什么使用JWT<br>传统方式需要考虑session共享问题,存储中间件压力也很大;<br>使用JWT把后端的压力分摊给前端;<br>和session方式不一样的地方:服务端不再保存session的信息了,而是前端将信息保存在客户端,保存在cookie里面，仅仅是保存。下一次再去请求的时候,从cookie里面把信息拿出来,放到请求的header里面,然后发给服务端,后端进行验证的时候只是从header头里面把token拿出来,进行解密,拿到用户信息以及一些权限,再进行展示处理或者操作。</p>
-</li>
-</ul>
-<ul>
-<li><p>jwt方式</p>
-<blockquote>
-<p>用户登录成功后，服务端通过jwt生成一个随机token给用户（服务端无需保留token），以后用户再来访问时需携带token，服务端接收到token之后，通过jwt对token进行校验是否超时、是否合法。</p>
-</blockquote>
-</li>
-<li><p>三部分</p>
-<ul>
-<li>Header（头部）<blockquote>
-<p>是一个 JSON 对象,主要放JWT元信息;Base64URL进行加密；</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;alg&quot;: &quot;HS256&quot;,</span><br><span class="line">&quot;typ&quot;: &quot;JWT&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></blockquote>
-</li>
-<li>Payload（负载）<blockquote>
-<p>也是一个 JSON 对象，主要放实际的数据，用来存放实际需要传递的数据。Base64URL进行加密；如name或者工号</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;sub&quot;: &quot;1234567890&quot;,</span><br><span class="line">&quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">&quot;admin&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></blockquote>
-</li>
-<li>Signature（签名）<blockquote>
-<p>Signature 部分是对前两部分的签名，防止数据篡改。并且通过secret加密。</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">base64UrlEncode(payload),</span><br><span class="line">secret)</span><br></pre></td></tr></table></figure>
-<p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用”点”（.）分隔，就可以返回给用户。</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>JWT 的使用方式<br>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
-</li>
-</ul>
-<p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
-<p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
-<p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
-<p>前端登录—&gt; 后端验证，返回JWT—&gt;前端把jwt写入cookie（键为token）—&gt;登录验证成功—&gt;跳转前要经过路由守卫,请求前端的Getuserinfo，检验用户是否有权限跳转目标页面；(获取token，如没有，跳转登录页面，如果有token，有权限，然后请求getUserInfo—&gt;getuserinfo作用：查看用户是访问权限，是否有权限访问home页面；访问的时候要求带着token—&gt; 前端的getuserinfo，axios请求到后端的getuserinfo，后端从header头中拿出来进行jwt解密token，验证是否为合法用户(middleware进行进行验证:如果没有token或者为undefined，request.user设置为匿名用户;如果有token，jwt进行解密，可以获取name和id，name和id就是用户登录的时候自定义的数据jwt_data)；解密之后赋值给request.user; —&gt; 后端接口getuserinfo，判断request.user数据是否有值,返回. –&gt;前端判断权限信息</p>
-<p>后端接口逻辑:根据业务拿到id或者名字，到DB查询该用户是否有权限，有的话，返回True，没有的话，返回false。一般后端接口data是一些权限的信息</p>
-<p>中间件解密，login的时候加密</p>
-<ol start="14">
-<li>动静态页面区别<br>动态页面：数据每次请求可能不一样，数据是从数据库拿出来渲染的，数据改了，页面就变了。<br>静态页面：数据是固定的，写死的，就是静态页面</li>
-</ol>
-<p>访问速度：静态&gt;动态</p>
-<p>页面静态化：并发量比较高的首页（电商），后台数据如果发生变化，重新生成静态页面</p>
-<ol start="15">
-<li>web开发模式<blockquote>
-<p>前后端混合开发:（前后端不分离）请求动态页面–&gt;查询数据库–&gt;渲染模板–&gt;返回HTML内容(JS在客户端浏览器上执行，所以Ajax是从浏览器里发出去的)</p>
-</blockquote>
-</li>
-</ol>
-<blockquote>
-<p>前后端分离: 返给前端数据,JS处理数据,JS拿到数据进行DOM渲染</p>
-</blockquote>
-<ul>
-<li>过程:浏览器请求静态页面(不是Django转发的);看到页面后,里面写了一些JS的代码,可以向后端发起请求;返回Json/XML格式的数据,前端就可以渲染页面了.</li>
-</ul>
-<ol start="16">
-<li><p>api接口<br>通过网络,规定了前后台信息交互规则的url连接,也就是前后台交互的媒介。</p>
-</li>
-<li><p>RESTful API规范</p>
-</li>
-</ol>
-<ol start="18">
-<li>生产消费模型</li>
-</ol>
-<ul>
-<li>redis</li>
-<li>kafka</li>
-<li>rabbitmq</li>
-<li>rocketmq<br>消息队列存在哪些问题</li>
-<li>如何保证redis/kafka的高可用性</li>
-<li>生产的速度&gt;消费的速度 ？ 消息堆积的情况？ 增加消费者</li>
-<li>如果保证消息的顺序的可靠性</li>
-<li>如何保证生产者消费消息的时候，不重复消费(幂等性)</li>
-<li>待补充<br>消息队列的作用：</li>
-<li>程序的解耦</li>
-<li>削峰</li>
-</ul>
-<ol start="19">
-<li>函数对象（经常用）<br>利用该特性，优雅的取代多分支的if<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>():</span></span><br><span class="line">    print(<span class="string">&quot;登录&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span>():</span></span><br><span class="line">    print(<span class="string">&quot;注册&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transfer</span>():</span></span><br><span class="line">    print(<span class="string">&quot;转账&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">withdraw</span>():</span></span><br><span class="line">    print(<span class="string">&quot;提现&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>():</span></span><br><span class="line">    func_dic = &#123;</span><br><span class="line">        <span class="string">&quot;1&quot;</span>:[<span class="string">&quot;登录&quot;</span>,register],</span><br><span class="line">        <span class="string">&quot;2&quot;</span>:[<span class="string">&quot;注册&quot;</span>,login],</span><br><span class="line">        <span class="string">&quot;3&quot;</span>:[<span class="string">&quot;转账&quot;</span>,transfer],</span><br><span class="line">        <span class="string">&quot;4&quot;</span>:[<span class="string">&quot;提现&quot;</span>,withdraw],</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> func_dic:</span><br><span class="line">            print(k, func_dic[k][<span class="number">0</span>])</span><br><span class="line">        print(<span class="string">&quot;0 退出&quot;</span>)</span><br><span class="line"></span><br><span class="line">        choice = input(<span class="string">&quot;请输入您的命令编号: &quot;</span>).strip()</span><br><span class="line">        <span class="keyword">if</span> choice == <span class="string">&quot;0&quot;</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> choice <span class="keyword">in</span> func_dic:</span><br><span class="line">            func_dic[choice][<span class="number">1</span>]()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">&quot;请输入正确编号&quot;</span>)</span><br><span class="line"></span><br><span class="line">run()</span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>pycharm使用</title>
-    <url>/2020/10/25/pycharm%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<p>Pycharm使用</p>
-<a id="more"></a>
-
-<p>Evernote Export    body, td { font-family: 微软雅黑; font-size: 10pt; }  </p>
-<p>Pycharm基本使用</p>
-<ol start="2">
-<li>Pycharm的基本使用<ul>
-<li>在Pycharm下为你的Python项目配置Python解释器<ol>
-<li>Project:当前项目名&gt;Project Interpreter&gt;add Local</li>
-</ol>
-</li>
-<li>在Pycharm下创建Python文件、Python模块<ol>
-<li>File&gt;New&gt;Python File</li>
-<li>File&gt;New&gt;Python Package</li>
-</ol>
-</li>
-<li>使用Pycharm安装Python第三方模块<ol>
-<li>Project:当前项目名&gt;Project Interpreter&gt;点击右侧绿色小加号</li>
-</ol>
-</li>
-<li>Pycharm基本设置，例如不使用tab、tab=4空格、字体、字体颜色、主题、脚本头设置、显示行号等。如何导出和导入自定义设置。<ol>
-<li>不使用tab、tab=4空格：Editor&gt;Code Style&gt;Python</li>
-<li>字体、字体颜色：Edit&gt;Colors &amp; Fonts&gt;Python</li>
-<li>关闭自动更新：Appearance &amp; Behavior&gt;System Settings&gt;Updates</li>
-<li>脚本头设置：Edit&gt;File and Code Templates&gt;Python Script 注：其他类似</li>
-<li>显示行号：Edit&gt;General&gt;Appearance&gt;Show line numbers 注：2016.2默认显示行号</li>
-<li>右侧竖线是PEP8的代码规范，提示一行不要超过120个字符</li>
-<li>导出、导入你自定义的配置： File&gt;Export Settings、Import Settings</li>
-</ol>
-</li>
-<li>常用快捷键，例如复制当前行、删除当前行、批量注释、缩进、查找和替换。<ol>
-<li>常用快捷键的查询和配置：Keymap<ol>
-<li>Ctrl + D：复制当前行</li>
-<li>Ctrl + E：删除当前行</li>
-<li>Shift + Enter：快速换行</li>
-<li>Ctrl + /：快速注释（选中多行后可以批量注释）</li>
-<li>Tab：缩进当前行（选中多行后可以批量缩进）</li>
-<li>Shift + Tab：取消缩进（选中多行后可以批量取消缩进）</li>
-<li>Ctrl + F：查找</li>
-<li>Ctrl + H：替换</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>Pycharm安装插件，例如Markdown support、数据库支持插件等。<ol>
-<li>Plugins&gt;Browse repositories（下方三个按钮中间那个）&gt;搜索‘markdown support’&gt;install</li>
-<li>右上角View有三个选项可选，一般我们都用中间那个左侧编写，右侧实时预览</li>
-</ol>
-</li>
-<li>Git配置？<ol>
-<li>需要本地安装好Git</li>
-<li>Version Control&gt;Git</li>
-<li>配置了Git等版本控制系统之后，可以很方便的diff查看文件的不用</li>
-</ol>
-</li>
-<li>常用操作指南。例如复制文件路径、在文件管理器中打开、快速定位、查看模块结构视图、tab批量换space、TODO的使用、Debug的使用。<ol>
-<li>复制文件路径：左侧文件列表右键选中的文件&gt;Copy Path</li>
-<li>在文件管理器中打开：右键选中的文件&gt;往下找到Show In Explorer</li>
-<li>快速定位：Ctrl + 某些内建模块之后，点击在源文件中展开</li>
-<li>查看结构：IDE左侧边栏Structure 查看当前项目的结构</li>
-<li>tab批量换space：Edit&gt;Convert Indents</li>
-<li>TODO的使用：# TODO 要记录的事情</li>
-<li>Debug设置断点，直接点击行号与代码之间的空白处即可设置断点（视频里忘了说）</li>
-<li>Tab页上右键&gt;Move Right（Down），把当前Tab页移到窗口右边（下边），方便对比</li>
-<li>文件中右键&gt;Local History能够查看文件修改前后的对比</li>
-<li>IDE右下角能看到一些有用的信息，光标当前在第几行的第几个字符、当前回车换行、当前编码类型、当前Git分支</li>
-<li>IDE右侧边栏&gt;Database</li>
-</ol>
-</li>
-<li>如何去掉烦人的波浪线？PEP8又是什么？<ol>
-<li>单独一行的注释：#+1空格+注释内容</li>
-<li>代码后跟着的注释：2空格+#+1空格+注释内容</li>
-</ol>
-</li>
-<li>SSH Terminal： Default encoding:UTF-8<ol>
-<li>Settings&gt;Tools&gt;SSH Terminal&gt;最后一行Default encoding:选择UTF-82.  善用搜索！善用搜索！善用搜索！</li>
-</ol>
-<ul>
-<li>遇到不懂问题，先自己搜索。这样才记得更牢！2.  推荐使用sogou英文搜索<a href="http://english.sogou.com/">http://english.sogou.com/</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<hr>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>py-xadmin</title>
     <url>/2020/11/20/py-xadmin/</url>
     <content><![CDATA[<p>Django-xadmin</p>
@@ -1979,6 +1673,216 @@ select * from emp right join dep on emp.dep_id = dep.id
       </tags>
   </entry>
   <entry>
+    <title>py-skill</title>
+    <url>/2020/11/06/py-skill/</url>
+    <content><![CDATA[<p>需要记住</p>
+<a id="more"></a>
+
+<ol start="0">
+<li>字符串前加r的意思<br>r/R 表示非转义的原始字符串,比如在字符串中如果出现\n是换行,但是如果在字符串的前面添加r则表示\和n两个字符,一般常见于正则表达式中。</li>
+</ol>
+<ol>
+<li>Python __dict__与dir()区别</li>
+</ol>
+<p>__dict__与dir()的区别：</p>
+<p>1.dir()是一个函数，返回的是list；<br>2.__dict__是一个字典，键为属性名，值为属性值；<br>3.dir()用来寻找一个对象的所有属性，包括__dict__中的属性，__dict__是dir()的子集；</p>
+<ol start="2">
+<li>字符串和字节相互转换<br>通过decode encode 方式太麻烦，不好理解</li>
+</ol>
+<p>字符串转换成字节</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>字节转换成字符串</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">str(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<ol start="3">
+<li>class 中什么时候用classmethod</li>
+</ol>
+<ul>
+<li>想通过类的方法得到对象，会用到classmethod</li>
+</ul>
+<ol start="4">
+<li>Django 模板语法 如何处理xss攻击的</li>
+</ol>
+<ul>
+<li>safe<br>Django的模板中会对HTML标签和JS等语法标签进行自动转义，原因显而易见，这样是为了安全。但是有的时候我们可能不希望这些HTML元素被转义，比如我们做一个内容管理系统，后台添加的文章中是经过修饰的，这些修饰可能是通过一个类似于FCKeditor编辑加注了HTML修饰符的文本，如果自动转义的话显示的就是保护HTML标签的源文件。为了在Django中关闭HTML的自动转义有两种方式，如果是一个单独的变量我们可以通过过滤器“|safe”的方式告诉Django这段代码是安全的不必转义。比如：<figure class="highlight"><table><tr><td class="code"><pre><span class="line">value=<span class="string">&quot;&lt;a href=&quot;</span><span class="string">&quot;&gt;点击&lt;/a&gt;&quot;</span></span><br><span class="line">&#123;&#123; value|safe&#125;&#125;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;&#123;&#123; label &#125;&#125;&lt;/p&gt;  &lt;!--为了安全系统会把标签变成字符串--&gt;</span><br><span class="line">&lt;p&gt;&#123;&#123; label|safe &#125;&#125;&lt;/p&gt;    &lt;!--加上safe，确定你的数据是安全的才能被当成是标签--&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>底层实现原理：mark_safe 通过html特殊字符的替换</p>
+<ol start="5">
+<li>csrf跨站请求伪造<br>什么是csrf：<br>其原理是攻击者构造网站后台某个功能接口的请求地址，诱导用户去点击或者用特殊方法让该请求地址自动加载。用户在登录状态下这个请求被服务端接收后会被误以为是用户合法的操作。对于 GET 形式的接口地址可轻易被攻击，对于 POST 形式的接口地址也不是百分百安全，攻击者可诱导用户进入带 Form 表单可用POST方式提交参数的页面</li>
+</ol>
+<p>原理：<br>当用post提交数据的时候，django会去检查是否有一个csrf的随机字符串，如果没有就会报错，这也是之前我们一直将其注释的原因，错误如下：403</p>
+<ul>
+<li>通过form提交<br>在form表单里面需要添加<code>&#123;%csrf_token%&#125;</code>，<br>这样当你查看页面源码的时候,可以看到form中有一个input是隐藏的<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;h3&gt;scrf_token&lt;/h3&gt;&lt;form action=&quot;/tag/&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &#123;% csrf_token %&#125;</span><br><span class="line">    &lt;p&gt;&lt;input type=&quot;text&quot; name=&quot;haiyan&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;submit&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<img src="https://images2015.cnblogs.com/blog/997599/201701/997599-20170113091806338-1978303584.png">
+
+
+<p>总结原理：当用户访问login页面的时候，会生成一个csrf的随机字符串，，并且cookie中也存放了这个随机字符串，当用户再次提交数据的时候会带着这个随机字符串提交，如果没有这个随机字符串则无法提交成功</p>
+<ul>
+<li>通过ajax提交</li>
+</ul>
+<p><a href="https://www.cnblogs.com/jinxf/p/9186923.html">https://www.cnblogs.com/jinxf/p/9186923.html</a></p>
+<ol start="6">
+<li>orm 相关问题</li>
+</ol>
+<p>values和values_list 在annotate（分组查询）  前后的区别<br><a href="https://www.runoob.com/django/django-orm-3.html">https://www.runoob.com/django/django-orm-3.html</a></p>
+<ol start="7">
+<li>Ajax<br>AJAX（Asynchronous Javascript And XML）翻译成中文就是“异步Javascript和XML”。即使用Javascript语言与服务器进行异步交互，传输的数据为XML（当然，传输的数据不只是XML,现在更多使用json数据）。</li>
+</ol>
+<ul>
+<li>同步交互：客户端发出一个请求后，需要等待服务器响应结束后，才能发出第二个请求；</li>
+<li>异步交互：客户端发出一个请求后，无需等待服务器响应结束，就可以发出第二个请求。</li>
+</ul>
+<p><strong>AJAX除了异步的特点外，还有一个就是：浏览器页面局部刷新；（这一特点给用户的感受是在不知不觉中完成请求和响应过程）</strong><br>局部刷新：Ajax 发请求，把数据拿过来，再勇敢Dom渲染局部</p>
+<p><code>$.ajax 是Jquery封装的，会根据不同参数和配置的type组装不同的http请求</code></p>
+<ol start="8">
+<li>forms组件</li>
+</ol>
+<ul>
+<li>使用它的字段检验功能<ul>
+<li><ol>
+<li>写一个类(UserForm)，继承Form</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>在类中写字段，pwd=forms.CharField(max_length=32,min_length=4)</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>在视图函数中使用: form=UserForm(检验的字典)</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>form.is_valid()里面做校验；通过，存起来；不通过，forms.errors会有错误信息</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>默认的校验规则还不够，需要自己写钩子函数<ul>
+<li>局部钩子：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean_</span>字段名():</span></span><br><span class="line">    val=self.cleaned_data.get(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">    通过<span class="keyword">return</span></span><br><span class="line">    不通过抛出</span><br></pre></td></tr></table></figure></li>
+<li>全局钩子：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean</span>(<span class="params">self</span>):</span></span><br><span class="line">    pwd=self.cleaned_data.get(<span class="string">&#x27;pwd&#x27;</span>)</span><br><span class="line">    r_pwd=self.cleaned_data.get(<span class="string">&#x27;r_pwd&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> pwd <span class="keyword">and</span> r_pwd:</span><br><span class="line">        <span class="keyword">if</span> pwd==r_pwd:</span><br><span class="line">            <span class="keyword">return</span> self.cleaned_data</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValidationError(<span class="string">&#x27;两次密码不一致&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> self.cleaned_data</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ol start="9">
+<li><p>捕捉错误模块<br>import traceback<br>return response.ServerErrorResponse(content=traceback.format_exc())</p>
+</li>
+<li><p>QuerySet转成字典<br>引入模块 from django.forms import model_to_dict</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> model_to_dict</span><br><span class="line"></span><br><span class="line">ret = models.Publish.objects.all()</span><br><span class="line">res = [model_to_dict(obj) <span class="keyword">for</span> obj <span class="keyword">in</span> ret]</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>request.POST 和 request.body 获取数据</p>
+</li>
+</ol>
+<p>前端发送数据格式为 json，是在body里的，且header是application/json,数据在request.body<br>发送数据是form 表单的，request.POST</p>
+<ol start="12">
+<li>Cors跨域问题</li>
+</ol>
+<ol start="12">
+<li>JWT<br>面试问题：JWT底层实现原理<img src="/2020/11/06/py-skill/jwt%E4%BB%8B%E7%BB%8D.png" class title="objsort">
+<a href="https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html">https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html</a></li>
+</ol>
+<ul>
+<li><p>传统token方式</p>
+<blockquote>
+<p>用户登录成功后，服务端生成一个随机token给用户，并且在服务端(数据库或缓存)中保存一份token，以后用户再来访问时需携带token，服务端接收到token之后，去数据库或缓存中进行校验token的是否超时、是否合法。</p>
+</blockquote>
+</li>
+<li><p>为什么使用JWT<br>传统方式需要考虑session共享问题,存储中间件压力也很大;<br>使用JWT把后端的压力分摊给前端;<br>和session方式不一样的地方:服务端不再保存session的信息了,而是前端将信息保存在客户端,保存在cookie里面，仅仅是保存。下一次再去请求的时候,从cookie里面把信息拿出来,放到请求的header里面,然后发给服务端,后端进行验证的时候只是从header头里面把token拿出来,进行解密,拿到用户信息以及一些权限,再进行展示处理或者操作。</p>
+</li>
+</ul>
+<ul>
+<li><p>jwt方式</p>
+<blockquote>
+<p>用户登录成功后，服务端通过jwt生成一个随机token给用户（服务端无需保留token），以后用户再来访问时需携带token，服务端接收到token之后，通过jwt对token进行校验是否超时、是否合法。</p>
+</blockquote>
+</li>
+<li><p>三部分</p>
+<ul>
+<li>Header（头部）<blockquote>
+<p>是一个 JSON 对象,主要放JWT元信息;Base64URL进行加密；</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;alg&quot;: &quot;HS256&quot;,</span><br><span class="line">&quot;typ&quot;: &quot;JWT&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></blockquote>
+</li>
+<li>Payload（负载）<blockquote>
+<p>也是一个 JSON 对象，主要放实际的数据，用来存放实际需要传递的数据。Base64URL进行加密；如name或者工号</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;sub&quot;: &quot;1234567890&quot;,</span><br><span class="line">&quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">&quot;admin&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></blockquote>
+</li>
+<li>Signature（签名）<blockquote>
+<p>Signature 部分是对前两部分的签名，防止数据篡改。并且通过secret加密。</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">base64UrlEncode(payload),</span><br><span class="line">secret)</span><br></pre></td></tr></table></figure>
+<p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用”点”（.）分隔，就可以返回给用户。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>JWT 的使用方式<br>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
+</li>
+</ul>
+<p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
+<p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
+<p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
+<p>前端登录—&gt; 后端验证，返回JWT—&gt;前端把jwt写入cookie（键为token）—&gt;登录验证成功—&gt;跳转前要经过路由守卫,请求前端的Getuserinfo，检验用户是否有权限跳转目标页面；(获取token，如没有，跳转登录页面，如果有token，有权限，然后请求getUserInfo—&gt;getuserinfo作用：查看用户是访问权限，是否有权限访问home页面；访问的时候要求带着token—&gt; 前端的getuserinfo，axios请求到后端的getuserinfo，后端从header头中拿出来进行jwt解密token，验证是否为合法用户(middleware进行进行验证:如果没有token或者为undefined，request.user设置为匿名用户;如果有token，jwt进行解密，可以获取name和id，name和id就是用户登录的时候自定义的数据jwt_data)；解密之后赋值给request.user; —&gt; 后端接口getuserinfo，判断request.user数据是否有值,返回. –&gt;前端判断权限信息</p>
+<p>后端接口逻辑:根据业务拿到id或者名字，到DB查询该用户是否有权限，有的话，返回True，没有的话，返回false。一般后端接口data是一些权限的信息</p>
+<p>中间件解密，login的时候加密</p>
+<ol start="14">
+<li>动静态页面区别<br>动态页面：数据每次请求可能不一样，数据是从数据库拿出来渲染的，数据改了，页面就变了。<br>静态页面：数据是固定的，写死的，就是静态页面</li>
+</ol>
+<p>访问速度：静态&gt;动态</p>
+<p>页面静态化：并发量比较高的首页（电商），后台数据如果发生变化，重新生成静态页面</p>
+<ol start="15">
+<li>web开发模式<blockquote>
+<p>前后端混合开发:（前后端不分离）请求动态页面–&gt;查询数据库–&gt;渲染模板–&gt;返回HTML内容(JS在客户端浏览器上执行，所以Ajax是从浏览器里发出去的)</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>前后端分离: 返给前端数据,JS处理数据,JS拿到数据进行DOM渲染</p>
+</blockquote>
+<ul>
+<li>过程:浏览器请求静态页面(不是Django转发的);看到页面后,里面写了一些JS的代码,可以向后端发起请求;返回Json/XML格式的数据,前端就可以渲染页面了.</li>
+</ul>
+<ol start="16">
+<li><p>api接口<br>通过网络,规定了前后台信息交互规则的url连接,也就是前后台交互的媒介。</p>
+</li>
+<li><p>RESTful API规范</p>
+</li>
+</ol>
+<ol start="18">
+<li>生产消费模型</li>
+</ol>
+<ul>
+<li>redis</li>
+<li>kafka</li>
+<li>rabbitmq</li>
+<li>rocketmq<br>消息队列存在哪些问题</li>
+<li>如何保证redis/kafka的高可用性</li>
+<li>生产的速度&gt;消费的速度 ？ 消息堆积的情况？ 增加消费者</li>
+<li>如果保证消息的顺序的可靠性</li>
+<li>如何保证生产者消费消息的时候，不重复消费(幂等性)</li>
+<li>待补充<br>消息队列的作用：</li>
+<li>程序的解耦</li>
+<li>削峰</li>
+</ul>
+<ol start="19">
+<li>函数对象（经常用）<br>利用该特性，优雅的取代多分支的if<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>():</span></span><br><span class="line">    print(<span class="string">&quot;登录&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span>():</span></span><br><span class="line">    print(<span class="string">&quot;注册&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transfer</span>():</span></span><br><span class="line">    print(<span class="string">&quot;转账&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">withdraw</span>():</span></span><br><span class="line">    print(<span class="string">&quot;提现&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>():</span></span><br><span class="line">    func_dic = &#123;</span><br><span class="line">        <span class="string">&quot;1&quot;</span>:[<span class="string">&quot;登录&quot;</span>,register],</span><br><span class="line">        <span class="string">&quot;2&quot;</span>:[<span class="string">&quot;注册&quot;</span>,login],</span><br><span class="line">        <span class="string">&quot;3&quot;</span>:[<span class="string">&quot;转账&quot;</span>,transfer],</span><br><span class="line">        <span class="string">&quot;4&quot;</span>:[<span class="string">&quot;提现&quot;</span>,withdraw],</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> func_dic:</span><br><span class="line">            print(k, func_dic[k][<span class="number">0</span>])</span><br><span class="line">        print(<span class="string">&quot;0 退出&quot;</span>)</span><br><span class="line"></span><br><span class="line">        choice = input(<span class="string">&quot;请输入您的命令编号: &quot;</span>).strip()</span><br><span class="line">        <span class="keyword">if</span> choice == <span class="string">&quot;0&quot;</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> choice <span class="keyword">in</span> func_dic:</span><br><span class="line">            func_dic[choice][<span class="number">1</span>]()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">&quot;请输入正确编号&quot;</span>)</span><br><span class="line"></span><br><span class="line">run()</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>发布方式对比</title>
     <url>/2020/08/13/%E5%8F%91%E5%B8%83%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94/</url>
     <content><![CDATA[<p>灰度、蓝绿、ABtest发布等部署方案对比</p>
@@ -2064,6 +1968,102 @@ select * from emp right join dep on emp.dep_id = dep.id
       </categories>
       <tags>
         <tag>deploy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pycharm使用</title>
+    <url>/2020/10/25/pycharm%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>Pycharm使用</p>
+<a id="more"></a>
+
+<p>Evernote Export    body, td { font-family: 微软雅黑; font-size: 10pt; }  </p>
+<p>Pycharm基本使用</p>
+<ol start="2">
+<li>Pycharm的基本使用<ul>
+<li>在Pycharm下为你的Python项目配置Python解释器<ol>
+<li>Project:当前项目名&gt;Project Interpreter&gt;add Local</li>
+</ol>
+</li>
+<li>在Pycharm下创建Python文件、Python模块<ol>
+<li>File&gt;New&gt;Python File</li>
+<li>File&gt;New&gt;Python Package</li>
+</ol>
+</li>
+<li>使用Pycharm安装Python第三方模块<ol>
+<li>Project:当前项目名&gt;Project Interpreter&gt;点击右侧绿色小加号</li>
+</ol>
+</li>
+<li>Pycharm基本设置，例如不使用tab、tab=4空格、字体、字体颜色、主题、脚本头设置、显示行号等。如何导出和导入自定义设置。<ol>
+<li>不使用tab、tab=4空格：Editor&gt;Code Style&gt;Python</li>
+<li>字体、字体颜色：Edit&gt;Colors &amp; Fonts&gt;Python</li>
+<li>关闭自动更新：Appearance &amp; Behavior&gt;System Settings&gt;Updates</li>
+<li>脚本头设置：Edit&gt;File and Code Templates&gt;Python Script 注：其他类似</li>
+<li>显示行号：Edit&gt;General&gt;Appearance&gt;Show line numbers 注：2016.2默认显示行号</li>
+<li>右侧竖线是PEP8的代码规范，提示一行不要超过120个字符</li>
+<li>导出、导入你自定义的配置： File&gt;Export Settings、Import Settings</li>
+</ol>
+</li>
+<li>常用快捷键，例如复制当前行、删除当前行、批量注释、缩进、查找和替换。<ol>
+<li>常用快捷键的查询和配置：Keymap<ol>
+<li>Ctrl + D：复制当前行</li>
+<li>Ctrl + E：删除当前行</li>
+<li>Shift + Enter：快速换行</li>
+<li>Ctrl + /：快速注释（选中多行后可以批量注释）</li>
+<li>Tab：缩进当前行（选中多行后可以批量缩进）</li>
+<li>Shift + Tab：取消缩进（选中多行后可以批量取消缩进）</li>
+<li>Ctrl + F：查找</li>
+<li>Ctrl + H：替换</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Pycharm安装插件，例如Markdown support、数据库支持插件等。<ol>
+<li>Plugins&gt;Browse repositories（下方三个按钮中间那个）&gt;搜索‘markdown support’&gt;install</li>
+<li>右上角View有三个选项可选，一般我们都用中间那个左侧编写，右侧实时预览</li>
+</ol>
+</li>
+<li>Git配置？<ol>
+<li>需要本地安装好Git</li>
+<li>Version Control&gt;Git</li>
+<li>配置了Git等版本控制系统之后，可以很方便的diff查看文件的不用</li>
+</ol>
+</li>
+<li>常用操作指南。例如复制文件路径、在文件管理器中打开、快速定位、查看模块结构视图、tab批量换space、TODO的使用、Debug的使用。<ol>
+<li>复制文件路径：左侧文件列表右键选中的文件&gt;Copy Path</li>
+<li>在文件管理器中打开：右键选中的文件&gt;往下找到Show In Explorer</li>
+<li>快速定位：Ctrl + 某些内建模块之后，点击在源文件中展开</li>
+<li>查看结构：IDE左侧边栏Structure 查看当前项目的结构</li>
+<li>tab批量换space：Edit&gt;Convert Indents</li>
+<li>TODO的使用：# TODO 要记录的事情</li>
+<li>Debug设置断点，直接点击行号与代码之间的空白处即可设置断点（视频里忘了说）</li>
+<li>Tab页上右键&gt;Move Right（Down），把当前Tab页移到窗口右边（下边），方便对比</li>
+<li>文件中右键&gt;Local History能够查看文件修改前后的对比</li>
+<li>IDE右下角能看到一些有用的信息，光标当前在第几行的第几个字符、当前回车换行、当前编码类型、当前Git分支</li>
+<li>IDE右侧边栏&gt;Database</li>
+</ol>
+</li>
+<li>如何去掉烦人的波浪线？PEP8又是什么？<ol>
+<li>单独一行的注释：#+1空格+注释内容</li>
+<li>代码后跟着的注释：2空格+#+1空格+注释内容</li>
+</ol>
+</li>
+<li>SSH Terminal： Default encoding:UTF-8<ol>
+<li>Settings&gt;Tools&gt;SSH Terminal&gt;最后一行Default encoding:选择UTF-82.  善用搜索！善用搜索！善用搜索！</li>
+</ol>
+<ul>
+<li>遇到不懂问题，先自己搜索。这样才记得更牢！2.  推荐使用sogou英文搜索<a href="http://english.sogou.com/">http://english.sogou.com/</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
       </tags>
   </entry>
   <entry>
@@ -2951,17 +2951,17 @@ select * from emp right join dep on emp.dep_id = dep.id
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">字典使用**sorted**排序</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>dic = {1:’a’,3:’c’,2:’b’}<br>print(sorted(dic))   # 字典排序返回的就是排序后的key<br>结果:<br>[1,2,3]</p>
 <p>salaries = {<br>  ‘szk’:30000,<br>  ‘zhangsan’:888888888,<br>  ‘nick’:2000,<br>  ‘pounds’:100<br>}<br>sorted(salaries, key=lambda name:salaries[name])</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">##### 2.匿名函数 lambada  面试问的较多</span><br><span class="line"></span><br><span class="line">####7. 迭代器 和 for循环机制 面试中的重点 </span><br><span class="line">- 为什么要有迭代器</span><br><span class="line">&gt; 要有一种不依赖于索引的取值方案</span><br><span class="line"></span><br><span class="line">- 可迭代对象</span><br><span class="line">&gt; 列表,字符串,元祖,字典,集合,文件对象</span><br><span class="line">- 迭代器对象</span><br><span class="line">&gt; 文件对象</span><br><span class="line"></span><br><span class="line">- **for循环工作原理**</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">##### 2.匿名函数 lambada  面试问的较多</span><br><span class="line"></span><br><span class="line">####7. 迭代器 和 for循环机制 面试中的重点 </span><br><span class="line">- 为什么要有迭代器</span><br><span class="line">&gt; 要有一种不依赖于索引的取值方案</span><br><span class="line"></span><br><span class="line">- 可迭代对象</span><br><span class="line">&gt; 列表,字符串,元祖,字典,集合,文件对象</span><br><span class="line">- 迭代器对象</span><br><span class="line">&gt; 文件对象</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">可迭代对象</span><br><span class="line">&gt; &quot;可以转成迭代器对象&quot;;但凡有_iter__()方法都称之为可迭代对象</span><br><span class="line">&gt;          调用可迭代对象._iter__():得到迭代器对象</span><br><span class="line"></span><br><span class="line">迭代器对象</span><br><span class="line">&gt; 内部包含__iter__() 同时包含__next__().</span><br><span class="line">  迭代器._next__(): 得到迭代器的下一个值</span><br><span class="line">  迭代器._iter__(): 得到迭代器的本身,说白了调与没调一个样</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- **for循环工作原理**</span><br></pre></td></tr></table></figure>
 <p>for循环还不报错,其实上边就是迭代器的机制。</p>
 <p>d = {‘a’:1, ‘b’:2, ‘c’:3}<br>for x in 迭代器对象.<strong>iter</strong>():<br>    可以不加区分的调用可迭代对象或者迭代器对象<br>for循环工作原理：<br>可以称之为迭代器循环</p>
 <ol>
 <li>d.<strong>iter</strong>()得到一个迭代器对象</li>
 <li>迭代器对象.<strong>next</strong>()拿到一个返回值,然后将返回值赋值给k</li>
-<li>循环往复步骤2,直到抛出Stopiteration异常for循环会捕捉异常然后结束循环<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; 注意: 迭代器不能反复,只能向下执行,并且是一次性的.获取过了就不能在获取了。</span><br><span class="line"></span><br><span class="line">可迭代对象</span><br><span class="line">&gt; &quot;可以转成迭代器对象&quot;;但凡有_iter__()方法都称之为可迭代对象</span><br><span class="line">&gt;          调用可迭代对象._iter__():得到迭代器对象</span><br><span class="line"></span><br><span class="line">迭代器对象</span><br><span class="line">&gt; 内部包含__iter__() 同时包含__next__().</span><br><span class="line">  迭代器._next__(): 得到迭代器的下一个值</span><br><span class="line">  迭代器._iter__(): 得到迭代器的本身,说白了调与没调一个样</span><br><span class="line"></span><br><span class="line">总结:</span><br><span class="line">* Iterator: 迭代器. 内部包含__iter__() 同时包含__next__().</span><br><span class="line">* 迭代器的特点:</span><br><span class="line">1. 节省内存.</span><br><span class="line">2. 惰性机制</span><br><span class="line">3. 不能反复, 只能向下执行.</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line">a &#x3D; &#39;abc&#39;</span><br><span class="line">print(dir(a))  # dir查看对象的方法和函数</span><br><span class="line"># 在打印结果中寻找__iter__ 如果存在就表示当前的这个类型是个可迭代对象</span><br></pre></td></tr></table></figure>
+<li>循环往复步骤2,直到抛出Stopiteration异常for循环会捕捉异常然后结束循环<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; 注意: 迭代器不能反复,只能向下执行,并且是一次性的.获取过了就不能在获取了。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">总结:</span><br><span class="line">* Iterator: 迭代器. 内部包含__iter__() 同时包含__next__().</span><br><span class="line">* 迭代器的特点:</span><br><span class="line">0. 提供一种新的，统一的取值方式（不依赖于索引的key）</span><br><span class="line">1. 节省内存.</span><br><span class="line">2. 惰性机制</span><br><span class="line">* 迭代器的缺点:</span><br><span class="line">1. 不能反复, 只能向下执行.</span><br><span class="line">2. 取值不灵活</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line">a &#x3D; &#39;abc&#39;</span><br><span class="line">print(dir(a))  # dir查看对象的方法和函数</span><br><span class="line"># 在打印结果中寻找__iter__ 如果存在就表示当前的这个类型是个可迭代对象</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
-<h4 id="4-生成器-面试中的重点"><a href="#4-生成器-面试中的重点" class="headerlink" title="4.生成器  面试中的重点"></a>4.生成器  面试中的重点</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 生成器定义</span></span><br><span class="line"><span class="comment">### 生成器的本质就是迭代器，因此我们可以使用迭代器中的__next__方法来获取元素</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    print(<span class="number">11</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">22</span>  <span class="comment">### 将return换成yield关键字即可</span></span><br><span class="line"></span><br><span class="line">ret = func()</span><br><span class="line"><span class="comment"># print(ret.__next__())</span></span><br><span class="line"><span class="comment"># print(ret)  ### &lt;generator object func at 0x103cc80b0&gt; 生成器的对象</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-生成器-面试中的重点"><a href="#4-生成器-面试中的重点" class="headerlink" title="4.生成器  面试中的重点"></a>4.生成器  面试中的重点</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">### 生成器定义</span></span><br><span class="line"><span class="comment">### 生成器的本质就是迭代器，因此我们可以使用迭代器中的__next__方法来获取元素</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    print(<span class="number">11</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">22</span>  <span class="comment">### 将return换成yield关键字即可</span></span><br><span class="line"></span><br><span class="line">ret = func()</span><br><span class="line"><span class="comment"># print(ret.__next__())</span></span><br><span class="line"><span class="comment"># print(ret)  ### &lt;generator object func at 0x103cc80b0&gt; 生成器的对象</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_range</span>(<span class="params">start, stop, step</span>):</span></span><br><span class="line">    <span class="keyword">while</span> start &lt; stop:</span><br><span class="line">        <span class="keyword">yield</span> start</span><br><span class="line">        start += step</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = my_range(<span class="number">1</span>, <span class="number">10</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>return 和 yield 的区别</p>
 <ul>
@@ -2984,18 +2984,33 @@ select * from emp right join dep on emp.dep_id = dep.id
 <p>[结果 for 变量 in 可迭代对象]</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ls &#x3D; [i for i in range(10)]</span><br><span class="line">print(ls)</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li><p>筛选模式</p>
+<p>筛选模式</p>
 <blockquote>
 <p>[结果 for 变量 in 可迭代对象 if 条件]</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lst &#x3D; [i for i in range(100) if i %2 &#x3D;&#x3D; 0]</span><br><span class="line">print(lst)</span><br></pre></td></tr></table></figure>
-</li>
+
+<ol start="2">
 <li><p>字典生成式</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 内置方法初识</span></span><br><span class="line">l=[<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;d&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> i,v <span class="keyword">in</span> enumerate(l):</span><br><span class="line">    print(i,v)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 构造字典</span></span><br><span class="line">keys=[<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;age&#x27;</span>,<span class="string">&#x27;sex&#x27;</span>]</span><br><span class="line">vals=[<span class="string">&#x27;szk&#x27;</span>,<span class="number">18</span>,<span class="string">&#x27;male&#x27;</span>]</span><br><span class="line">dic=&#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i,k <span class="keyword">in</span> enumerate(keys):</span><br><span class="line">    <span class="comment"># print(i,k)</span></span><br><span class="line">    dic[k]=vals[i]</span><br><span class="line">print(dic)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 字典生成式</span></span><br><span class="line">dic=&#123;k:vals[i] <span class="keyword">for</span> i,k <span class="keyword">in</span> enumerate(keys)&#125;</span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 也支持if判断</span></span><br><span class="line">dic=&#123;k:vals[i] <span class="keyword">for</span> i,k <span class="keyword">in</span> enumerate(keys) <span class="keyword">if</span> i &gt; <span class="number">0</span>&#125;</span><br><span class="line">print(dic)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>三元表达式</p>
-<blockquote>
+<li><p>集合生成式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">res &#x3D; &#123;i for i in range(5)&#125;</span><br><span class="line">print(res, type(res))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成器表达式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">res &#x3D; (i for i in range(5))</span><br><span class="line">print(res, type(res))</span><br><span class="line"></span><br><span class="line">print(tuple(res))</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>案例，读文件省内存<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">&#x27;a.txt&#x27;</span>, mode=<span class="string">&#x27;rt&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    res = sum((len(line) <span class="keyword">for</span> line <span class="keyword">in</span> f ))</span><br><span class="line">    print(res)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
+</ul>
+<ol start="4">
+<li>三元表达式<blockquote>
 <p>结果 = 条件成立 if 条件 else 条件不成立返回的值</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 求两个数的较大值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">max2</span>(<span class="params">x, y</span>):</span></span><br><span class="line">  <span class="keyword">if</span> x &gt; y:</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">return</span> y</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 三元表达式实现的效果:条件成立的情况下返回一个值，不成立的情况下返回另外一个值</span></span><br><span class="line">name = input(<span class="string">&#x27;please input your name&gt;&gt;&gt;:&#x27;</span>).strip()</span><br><span class="line">res = <span class="string">&#x27;NB&#x27;</span> <span class="keyword">if</span> name = <span class="string">&#x27;szk&#x27;</span> <span class="keyword">else</span> <span class="string">&#x27;SB&#x27;</span>  <span class="comment"># 当name值为szk的时候才会是NB其他情况都是SB</span></span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">语法结构</span></span><br><span class="line"><span class="string">结果 = 条件成立 if 条件 else 条件不成立返回的值</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">替换上面max2内的代码</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
@@ -3012,7 +3027,7 @@ select * from emp right join dep on emp.dep_id = dep.id
 <p>举个例子：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#1.从1到100，求个和？</span></span><br><span class="line"><span class="comment">## 常规的做法</span></span><br><span class="line">sum = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">101</span>):</span><br><span class="line">    sum += i</span><br><span class="line">print(sum)</span><br><span class="line"></span><br><span class="line"><span class="comment">### 递归的做法</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">有意义的递归：</span></span><br><span class="line"><span class="string">    有最终的结束条件</span></span><br><span class="line"><span class="string">    n规模问题的解决得益于n-1问题的规模的解决</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">现在是求1到100的和？</span></span><br><span class="line"><span class="string">1到99的和，然后再加上 100， 即就能够知道1到100的和</span></span><br><span class="line"><span class="string">1到98的和，然后再加上 99，就能够知道1到99的和</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sumrecv</span>(<span class="params">n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> sumrecv(n<span class="number">-1</span>) + n </span><br></pre></td></tr></table></figure>
 
-<p>#2.求n!</p>
+<p>2.求n!</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">jiecheng</span>(<span class="params">n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> jiecheng(n<span class="number">-1</span>) * n</span><br><span class="line"></span><br><span class="line">res = jiecheng(<span class="number">5</span>)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
 
 
