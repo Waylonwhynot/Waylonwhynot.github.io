@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/08/23/py-day03/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0.jpg">
 <meta property="article:published_time" content="2020-08-23T03:14:32.000Z">
-<meta property="article:modified_time" content="2021-03-30T07:35:09.334Z">
+<meta property="article:modified_time" content="2021-03-31T09:30:01.538Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-30 15:35:09" itemprop="dateModified" datetime="2021-03-30T15:35:09+08:00">2021-03-30</time>
+                <time title="修改时间：2021-03-31 17:30:01" itemprop="dateModified" datetime="2021-03-31T17:30:01+08:00">2021-03-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,14 +241,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>18k</span>
+              <span>21k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>30 分钟</span>
+              <span>35 分钟</span>
             </span>
 
         </div>
@@ -404,7 +404,7 @@
 </li>
 <li><p>2、什么是装饰器<br>  装饰就是修饰，器指的就是工具<br>  装饰器本身可以是任意可调用的对象<br>  被装饰的对象也可以是任意可调用的对象</p>
 <p>  装饰器—&gt;函数<br>  被装饰的对象=&gt;函数</p>
-<p>  装饰器是用来为被装饰对象添加新功能的一种工具<br>  必须遵循：4,</p>
+<p>  装饰器是用来为被装饰对象添加新功能的一种工具<br>  必须遵循：</p>
 <pre><code>  1、不能修改被装饰对象的源代码
   2、不能修改被装饰对象的调用方式</code></pre>
 </li>
@@ -458,6 +458,9 @@
 </blockquote>
 <ol start="6">
 <li><strong>有参数装饰器模板</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> 有参装饰器(<span class="params">x, y, z</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">outter</span>(<span class="params">func</span>):</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span>(<span class="params">*args, **kwargs</span>):</span></span><br><span class="line">            res = func(*args, **kwargs)</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line">    <span class="keyword">return</span> outter</span><br><span class="line"></span><br><span class="line"><span class="meta">@有参装饰器(1,y=1,z=2)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> 被装饰对象():</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+
+
 
 </li>
 </ol>
@@ -527,7 +530,7 @@
 <p><strong>​​min()</strong> 求最小值</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(min([12,3,4]))  # 寻找最小的数字</span><br><span class="line">结果:</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
 <p>​<strong>max()</strong> 求最大值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(max([12,3,4]))  # 寻找最大的数字</span><br><span class="line">结果:</span><br><span class="line">12</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">print(max([12,3,4]))  # 寻找最大的数字</span><br><span class="line">结果:</span><br><span class="line">12</span><br><span class="line">max的工作原理就是迭代对象里的值，迭代的是什么返回什么，字典就是key；能改变的是别让迭代出来的值当比较依据.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">max(iterable, key&#x3D;func)</span><br><span class="line"></span><br><span class="line">salaries &#x3D; &#123;&#39;aaa&#39;: 1000, &#39;bbb&#39;:1100, &#39;ccc&#39;:1200, &#39;dddd&#39;:13000&#125;</span><br><span class="line"></span><br><span class="line">def func(x):</span><br><span class="line">    return salaries[x]</span><br><span class="line"></span><br><span class="line">res &#x3D; max(salaries, key&#x3D;func)</span><br><span class="line">print(res)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p><strong>数据结构相关</strong><br>列表和元组:</p>
 <ul>
@@ -557,24 +560,116 @@
 <p><strong>enumerate()</strong> 举例</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lst &#x3D; [&#39;zhangsan&#39;,&#39;lisi&#39;,&#39;wangwu&#39;]</span><br><span class="line">for i,k in enumerate(lst):</span><br><span class="line">    print(&#39;这是序号&#39;,i)</span><br><span class="line">    print(&#39;这是元素&#39;,k)</span><br><span class="line">&#96;&#96;&#96; </span><br><span class="line">**zip()** 函数用于将可迭代的对象作为参数,将对象中对应的元素打包成一个个元祖,</span><br><span class="line">然后返回由这些元祖组成的内容,如果各个迭代器的元素个数不一致,则按照长度最短的返回</span><br></pre></td></tr></table></figure>
 <p>lst1 = [1,2,3]<br>lst2 = [‘a’,’b’,’c’,’d’]<br>lst3 = (11,12,13,14,15)<br>for i in zip(lst1,lst2,lst3):<br>    print(i)<br>结果:<br>(1, ‘a’, 11)<br>(2, ‘b’, 12)<br>(3, ‘c’, 13)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**lambda**</span><br><span class="line">&gt; 匿名函数,为了解决一些简单的需求而设计的一句话函数</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>def func(n):<br>    return n<strong>n<br>print(func(4))<br>f = lambda x: x</strong>x<br>print(f(4))<br>结果:<br>256<br>256</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">**lambda**表示的是匿名函数,不需要用**def**来声明,一句话就可以声明出一个函数</span><br><span class="line">语法:</span><br><span class="line">　　函数名 &#x3D; **lambda** 参数:返回值</span><br><span class="line">注意:</span><br><span class="line">　　1. 函数的参数可以有多个,多个参数之间用逗号隔开</span><br><span class="line">　　2. 匿名函数不管多复杂.只能写一行.且逻辑结束后直接返回数据</span><br><span class="line">　　3. 返回值和正常的函数一样,可以是任意数据类型,返回值的时候只能返回一个不能返回多个匿名函数并不是说一定没有名字,这里前面的变量就是一个函数名,说他是匿名原因是我们通过name查看的时候是没有名字的.统一都叫做lambda.在调用的时候没有什么特别之处,像正常的函数调用既可</span><br><span class="line"></span><br><span class="line">**sorted**</span><br><span class="line">排序函数</span><br><span class="line"></span><br><span class="line">&gt; 语法:sorted(iterable,key&#x3D;None,reverse&#x3D;False)</span><br><span class="line"></span><br><span class="line">**iterable** : 可迭代对象</span><br><span class="line">**key**: 排序规则(排序函数),在**sorted**内部会将可迭代对象中的每一个元素传递给这个函数的参数.根据函数运算的结果进行排序</span><br><span class="line">**reverse** :是否是倒叙,True 倒叙 False 正序</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>lst = [1,3,2,5,4]<br>lst2 = sorted(lst)<br>print(lst)    #原列表不会改变<br>print(lst2)   #返回的新列表是经过排序的<br>lst3 = sorted(lst,reverse=True)<br>print(lst3)   #倒叙<br>结果:<br>[1, 3, 2, 5, 4]<br>[1, 2, 3, 4, 5]<br>[5, 4, 3, 2, 1]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">字典使用**sorted**排序</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>dic = {1:’a’,3:’c’,2:’b’}<br>print(sorted(dic))   # 字典排序返回的就是排序后的key<br>结果:<br>[1,2,3]</p>
-<p>salaries = {<br>  ‘szk’:30000,<br>  ‘zhangsan’:888888888,<br>  ‘nick’:2000,<br>  ‘pounds’:100<br>}<br>sorted(salaries, key=lambda name:salaries[name])</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">##### 2.匿名函数 lambada  面试问的较多</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 7. 迭代器 和 for循环机制 面试中的重点 </span><br><span class="line">- 为什么要有迭代器</span><br><span class="line">&gt; 要有一种不依赖于索引的取值方案</span><br><span class="line"></span><br><span class="line">- 可迭代对象</span><br><span class="line">&gt; 列表,字符串,元祖,字典,集合,文件对象</span><br><span class="line">- 迭代器对象</span><br><span class="line">&gt; 文件对象</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">可迭代对象</span><br><span class="line">&gt; &quot;可以转成迭代器对象&quot;;但凡有_iter__()方法都称之为可迭代对象</span><br><span class="line">&gt;          调用可迭代对象._iter__():得到迭代器对象</span><br><span class="line"></span><br><span class="line">迭代器对象</span><br><span class="line">&gt; 内部包含__iter__() 同时包含__next__().</span><br><span class="line">  迭代器._next__(): 得到迭代器的下一个值</span><br><span class="line">  迭代器._iter__(): 得到迭代器的本身,说白了调与没调一个样</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- **for循环工作原理**</span><br></pre></td></tr></table></figure>
-<p>for循环还不报错,其实上边就是迭代器的机制。</p>
-<p>d = {‘a’:1, ‘b’:2, ‘c’:3}<br>for x in 迭代器对象.<strong>iter</strong>():<br>    可以不加区分的调用可迭代对象或者迭代器对象<br>for循环工作原理：<br>可以称之为迭代器循环</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**lambda**</span><br><span class="line">&gt; 匿名函数,一句话函数；用于临时调用一次的场景：更多的是将匿名函数与其他函数配合使用</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line">def func(n):</span><br><span class="line">    return n**n</span><br><span class="line">print(func(4))</span><br><span class="line">f &#x3D; lambda x: x**x</span><br><span class="line">print(f(4))</span><br><span class="line">结果:</span><br><span class="line">256</span><br><span class="line">256</span><br><span class="line"></span><br><span class="line">salaries &#x3D; &#123;&#39;aaa&#39;: 1000, &#39;bbb&#39;:1100, &#39;ccc&#39;:1200, &#39;dddd&#39;:13000&#125;</span><br><span class="line"></span><br><span class="line">def func(x):</span><br><span class="line">    return salaries[x]</span><br><span class="line"></span><br><span class="line">res &#x3D; max(salaries, key&#x3D;lambda k:salaries[k])</span><br><span class="line">print(res)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>lambda</strong>表示的是匿名函数,不需要用<strong>def</strong>来声明,一句话就可以声明出一个函数<br>语法:<br>　　函数名 = <strong>lambda</strong> 参数:返回值<br>注意:<br>　　1. 函数的参数可以有多个,多个参数之间用逗号隔开<br>　　2. 匿名函数不管多复杂.只能写一行.且逻辑结束后直接返回数据<br>　　3. 返回值和正常的函数一样,可以是任意数据类型,返回值的时候只能返回一个不能返回多个匿名函数并不是说一定没有名字,这里前面的变量就是一个函数名,说他是匿名原因是我们通过name查看的时候是没有名字的.统一都叫做lambda.在调用的时候没有什么特别之处,像正常的函数调用既可</p>
+<p><strong>sorted</strong><br>排序函数</p>
+<blockquote>
+<p>语法:sorted(iterable,key=None,reverse=False)</p>
+</blockquote>
+<p><strong>iterable</strong> : 可迭代对象<br><strong>key</strong>: 排序规则(排序函数),在<strong>sorted</strong>内部会将可迭代对象中的每一个元素传递给这个函数的参数.根据函数运算的结果进行排序<br><strong>reverse</strong> :是否是倒叙,True 倒叙 False 正序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">lst &#x3D; [1,3,2,5,4]</span><br><span class="line">lst2 &#x3D; sorted(lst)</span><br><span class="line">print(lst)    #原列表不会改变</span><br><span class="line">print(lst2)   #返回的新列表是经过排序的</span><br><span class="line">lst3 &#x3D; sorted(lst,reverse&#x3D;True)</span><br><span class="line">print(lst3)   #倒叙</span><br><span class="line">结果:</span><br><span class="line">[1, 3, 2, 5, 4]</span><br><span class="line">[1, 2, 3, 4, 5]</span><br><span class="line">[5, 4, 3, 2, 1]</span><br></pre></td></tr></table></figure>
+<p>字典使用<strong>sorted</strong>排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dic &#x3D; &#123;1:&#39;a&#39;,3:&#39;c&#39;,2:&#39;b&#39;&#125;</span><br><span class="line">print(sorted(dic))   # 字典排序返回的就是排序后的key</span><br><span class="line">结果:</span><br><span class="line">[1,2,3]</span><br><span class="line"></span><br><span class="line">salaries &#x3D; &#123;</span><br><span class="line">  &#39;szk&#39;:30000,</span><br><span class="line">  &#39;zhangsan&#39;:888888888,</span><br><span class="line">  &#39;nick&#39;:2000,</span><br><span class="line">  &#39;pounds&#39;:100</span><br><span class="line">&#125;</span><br><span class="line">sorted(salaries, key&#x3D;lambda name:salaries[name])</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="2-匿名函数-lambada-面试问的较多"><a href="#2-匿名函数-lambada-面试问的较多" class="headerlink" title="2.匿名函数 lambada  面试问的较多"></a>2.匿名函数 lambada  面试问的较多</h5><h5 id="3-map、reduce、filter"><a href="#3-map、reduce、filter" class="headerlink" title="3.map、reduce、filter"></a>3.map、reduce、filter</h5><p>函数map、reduce、filter都支持迭代器协议，用来处理可迭代对象，我们以一个可迭代对象array为例来介绍它们三个的用法</p>
+<ul>
+<li>map函数会根据提供的函数对指定序列做映射。<ul>
+<li>map的作用是以参数序列中的每一个元素调用function函数，返回包含每次function函数返回值的list。</li>
+</ul>
+</li>
+<li>filter函数会对指定序列执行过滤操作。<ul>
+<li>filter函数会对序列参数sequence中的每个元素调用function函数，最后返回的结果包含调用结果为True的元素。返回值的类型和参数sequence的类型相同</li>
+</ul>
+</li>
+<li>reduce函数，reduce函数会对参数序列中元素进行累积。<ul>
+<li>function参数是一个有两个参数的函数，reduce依次从sequence中取一个元素，和上一次调用function的结果做参数再次调用function。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array&#x3D;[1,2,3,4,5]</span><br></pre></td></tr></table></figure>
+要求一：对array的每个元素做平方处理，可以使用map函数<br>map函数可以接收两个参数，一个是函数，另外一个是可迭代对象，具体用法如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; res&#x3D;map(lambda x:x**2,array)</span><br><span class="line">&gt;&gt;&gt; res</span><br><span class="line">&lt;map object at 0x1033f45f8&gt;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+解析：map会依次迭代array，得到的值依次传给匿名函数（也可以是有名函数），而map函数得到的结果仍然是迭代器。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; list(res) #使用list可以依次迭代res，取得的值作为列表元素</span><br><span class="line">[1, 4, 9, 16, 25]</span><br></pre></td></tr></table></figure>
+要求二：对array进行合并操作，比如求和运算，这就用到了reduce函数<br>reduce函数可以接收三个参数，一个是函数，第二个是可迭代对象，第三个是初始值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># reduce在python2中是内置函数，在python3中则被集成到模块functools中，需要导入才能使用</span><br><span class="line">&gt;&gt;&gt; from functools import reduce </span><br><span class="line">&gt;&gt;&gt; res&#x3D;reduce(lambda x,y:x+y,array)</span><br><span class="line">&gt;&gt;&gt; res</span><br><span class="line">15</span><br></pre></td></tr></table></figure>
+解析：</li>
+</ul>
+</li>
+</ul>
+<p>1 没有初始值，reduce函数会先迭代一次array得到的值作为初始值，作为第一个值数传给x，然后继续迭代一次array得到的值作为第二个值传给y，运算的结果为3</p>
+<p>2 将上一次reduce运算的结果作为第一个值传给x，然后迭代一次array得到的结果作为第二个值传给y，依次类推，知道迭代完array的所有元素，得到最终的结果15</p>
+<p>也可以为reduce指定初始值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; res&#x3D;reduce(lambda x,y:x+y,array,100) &gt;&gt;&gt; res</span><br><span class="line">115</span><br></pre></td></tr></table></figure>
+<p>要求三：对array进行过滤操作，这就用到了filter函数，比如过滤出大于3的元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; res&#x3D;filter(lambda x:x&gt;3,array)</span><br></pre></td></tr></table></figure>
+<p>解析：filter函数会依次迭代array，得到的值依次传给匿名函数，如果匿名函数的返回值为真，则过滤出该元素，而filter函数得到的结果仍然是迭代器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; list(res) </span><br><span class="line">[4, 5]</span><br></pre></td></tr></table></figure>
+<p>提示：我们介绍map、filter、reduce只是为了带大家了解函数式编程的大致思想，在实际开发中，我们完全可以用列表生成式或者生成器表达式来实现三者的功能。</p>
+<h4 id="7-迭代器-和-for循环机制-面试中的重点"><a href="#7-迭代器-和-for循环机制-面试中的重点" class="headerlink" title="7. 迭代器 和 for循环机制 面试中的重点"></a>7. 迭代器 和 for循环机制 面试中的重点</h4><ul>
+<li><p>为什么要有迭代器</p>
+<blockquote>
+<p>要有一种不依赖于索引的取值方案</p>
+</blockquote>
+</li>
+<li><p>可迭代对象</p>
+<blockquote>
+<p>列表,字符串,元祖,字典,集合,文件对象</p>
+</blockquote>
+</li>
+<li><p>迭代器对象</p>
+<blockquote>
+<p>文件对象</p>
+</blockquote>
+</li>
+</ul>
+<p>可迭代对象</p>
+<blockquote>
+<p>“可以转成迭代器对象”;但凡有_iter__()方法都称之为可迭代对象</p>
+</blockquote>
+<p>调用可迭代对象._iter__():得到迭代器对象</p>
+<p>迭代器对象</p>
+<blockquote>
+<p>既有包含<strong>iter</strong>() 同时包含<strong>next</strong>().</p>
+</blockquote>
+<p>  迭代器.<em>next__(): 得到迭代器的下一个值<br>  迭代器.<em>iter</em></em>(): 得到迭代器的本身,说白了调与没调一个样</p>
+<ul>
+<li><strong>for循环工作原理</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">d &#x3D; &#123;&#39;a&#39;:1, &#39;b&#39;:2, &#39;c&#39;:3&#125;</span><br><span class="line">for x in 迭代器对象.__iter__():</span><br><span class="line">    可以不加区分的调用可迭代对象或者迭代器对象</span><br><span class="line">for循环工作原理：</span><br><span class="line">可以称之为迭代器循环</span><br><span class="line">1. 可迭代对象.__iter__()得到一个迭代器对象</span><br><span class="line">2. 迭代器对象.__next__()拿到一个返回值,然后将返回值赋值给k</span><br><span class="line">3. 循环往复步骤2,直到抛出Stopiteration异常for循环会捕捉异常然后结束循环</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意: 迭代器不能反复,只能向下执行,并且是一次性的.获取过了就不能在获取了。</p>
+</blockquote>
+</li>
+</ul>
+<p>总结:</p>
+<ul>
+<li><p>Iterator: 迭代器. 内部包含<strong>iter</strong>() 同时包含<strong>next</strong>().</p>
+</li>
+<li><p>迭代器的优点:</p>
+</li>
+</ul>
+<ol start="0">
+<li>提供一种新的，统一的取值方式（不依赖于索引的key）</li>
+<li>节省内存.</li>
+<li>惰性机制</li>
+</ol>
+<ul>
+<li>迭代器的缺点:</li>
+</ul>
 <ol>
-<li>d.<strong>iter</strong>()得到一个迭代器对象</li>
-<li>迭代器对象.<strong>next</strong>()拿到一个返回值,然后将返回值赋值给k</li>
-<li>循环往复步骤2,直到抛出Stopiteration异常for循环会捕捉异常然后结束循环<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&gt; 注意: 迭代器不能反复,只能向下执行,并且是一次性的.获取过了就不能在获取了。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">总结:</span><br><span class="line">* Iterator: 迭代器. 内部包含__iter__() 同时包含__next__().</span><br><span class="line">* 迭代器的优点:</span><br><span class="line">0. 提供一种新的，统一的取值方式（不依赖于索引的key）</span><br><span class="line">1. 节省内存.</span><br><span class="line">2. 惰性机制</span><br><span class="line">* 迭代器的缺点:</span><br><span class="line">1. 不能反复, 只能向下执行.</span><br><span class="line">2. 取值不灵活</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line">a &#x3D; &#39;abc&#39;</span><br><span class="line">print(dir(a))  # dir查看对象的方法和函数</span><br><span class="line"># 在打印结果中寻找__iter__ 如果存在就表示当前的这个类型是个可迭代对象</span><br></pre></td></tr></table></figure>
+<li>不能反复, 只能向下执行.</li>
+<li>取值不灵活</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="string">&#x27;abc&#x27;</span></span><br><span class="line">print(dir(a))  <span class="comment"># dir查看对象的方法和函数</span></span><br><span class="line"><span class="comment"># 在打印结果中寻找__iter__ 如果存在就表示当前的这个类型是个可迭代对象</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-生成器-面试中的重点"><a href="#4-生成器-面试中的重点" class="headerlink" title="4.生成器  面试中的重点"></a>4.生成器  面试中的重点</h4><ul>
+<li><p>生成器定义<br>生成器的本质就是迭代器，因此我们可以使用迭代器中的__next__方法来获取元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    print(<span class="number">11</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">22</span>  <span class="comment">### 将return换成yield关键字即可</span></span><br><span class="line"></span><br><span class="line">ret = func()</span><br><span class="line"><span class="comment"># print(ret.__next__())</span></span><br><span class="line"><span class="comment"># print(ret)  ### &lt;generator object func at 0x103cc80b0&gt; 生成器的对象</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_range</span>(<span class="params">start, stop, step</span>):</span></span><br><span class="line">    <span class="keyword">while</span> start &lt; stop:</span><br><span class="line">        <span class="keyword">yield</span> start</span><br><span class="line">        start += step</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = my_range(<span class="number">1</span>, <span class="number">10</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>x=yield g.send</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def dog(name):</span><br><span class="line">    print(&#39;倒戈%s准备吃东西了....&#39; %name)</span><br><span class="line">    while True:</span><br><span class="line">        # x 拿到的是yield返回值</span><br><span class="line">        x &#x3D; yield 默认是None</span><br><span class="line">        print(&#39;倒戈%s准备吃东西了..%s..&#39; %(name,x))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">g.send 意思就是yield接受到的值赋值给x</span><br><span class="line"></span><br><span class="line">g &#x3D; dog(&#39;alex&#39;)</span><br><span class="line">g.send(None) #   &#x3D;&#x3D; next(g)</span><br><span class="line">g.send(&#39;adasd&#39;)   </span><br><span class="line">g.close()  # 关闭之后无法传值</span><br><span class="line">g.send(&#39;13123&#39;)  # 报错</span><br></pre></td></tr></table></figure>
 
 </li>
-</ol>
-<h4 id="4-生成器-面试中的重点"><a href="#4-生成器-面试中的重点" class="headerlink" title="4.生成器  面试中的重点"></a>4.生成器  面试中的重点</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 生成器定义</span></span><br><span class="line"><span class="comment">### 生成器的本质就是迭代器，因此我们可以使用迭代器中的__next__方法来获取元素</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    print(<span class="number">11</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">22</span>  <span class="comment">### 将return换成yield关键字即可</span></span><br><span class="line"></span><br><span class="line">ret = func()</span><br><span class="line"><span class="comment"># print(ret.__next__())</span></span><br><span class="line"><span class="comment"># print(ret)  ### &lt;generator object func at 0x103cc80b0&gt; 生成器的对象</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_range</span>(<span class="params">start, stop, step</span>):</span></span><br><span class="line">    <span class="keyword">while</span> start &lt; stop:</span><br><span class="line">        <span class="keyword">yield</span> start</span><br><span class="line">        start += step</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = my_range(<span class="number">1</span>, <span class="number">10</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+</ul>
+<p>理解</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dog</span>(<span class="params">name</span>):</span></span><br><span class="line">    food_list = []</span><br><span class="line">    print(<span class="string">&#x27;倒戈%s准备吃东西了....&#x27;</span> % name)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># x 拿到的是yield返回值</span></span><br><span class="line">        x = <span class="keyword">yield</span> food_list</span><br><span class="line">        print(<span class="string">&#x27;倒戈%s准备吃东西了..%s..&#x27;</span> %(name,x))</span><br><span class="line">        food_list.append(x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">g = dog(<span class="string">&#x27;alex&#x27;</span>)</span><br><span class="line"></span><br><span class="line">res = g.send(<span class="literal">None</span>) <span class="comment"># next(g)</span></span><br><span class="line"></span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line">res = g.send(<span class="string">&#x27;宫保鸡鸡&#x27;</span>)</span><br><span class="line"><span class="comment">#&#x27;倒戈%s准备吃东西了..%s..&#x27; %(name,宫保鸡鸡)</span></span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
 <ul>
 <li><p>return 和 yield 的区别</p>
 <ul>
@@ -585,10 +680,11 @@
 </li>
 <li><p>生成器的好处</p>
 <ul>
-<li>节省内存</li>
+<li>节省内存<br>python中提供的生成器：</li>
 </ul>
 </li>
 </ul>
+<p>1.生成器函数(yield)    2.生成器表达式(res = (i for i in range(5)))</p>
 <p>总结：生成器一定是迭代器，但是迭代器就不一定是生成器</p>
 <h4 id="5-列表生成式和字典生成式-项目中的重点"><a href="#5-列表生成式和字典生成式-项目中的重点" class="headerlink" title="5.列表生成式和字典生成式 []  项目中的重点"></a>5.列表生成式和字典生成式 []  项目中的重点</h4><ol>
 <li>列表推导式的常⽤写法:</li>
@@ -637,12 +733,26 @@
 <blockquote>
 <p>有意义的递归一定是伴随着n规模的减少而减少</p>
 </blockquote>
-<p>举个例子：</p>
+<p>举个例子：累加</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.从1到100，求个和？</span></span><br><span class="line"><span class="comment">## 常规的做法</span></span><br><span class="line">sum = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">101</span>):</span><br><span class="line">    sum += i</span><br><span class="line">print(sum)</span><br><span class="line"></span><br><span class="line"><span class="comment">### 递归的做法</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">有意义的递归：</span></span><br><span class="line"><span class="string">    有最终的结束条件</span></span><br><span class="line"><span class="string">    n规模问题的解决得益于n-1问题的规模的解决</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">现在是求1到100的和？</span></span><br><span class="line"><span class="string">1到99的和，然后再加上 100， 即就能够知道1到100的和</span></span><br><span class="line"><span class="string">1到98的和，然后再加上 99，就能够知道1到99的和</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sumrecv</span>(<span class="params">n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> sumrecv(n<span class="number">-1</span>) + n </span><br></pre></td></tr></table></figure>
 
 <p>2.求n!</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">jiecheng</span>(<span class="params">n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> jiecheng(n<span class="number">-1</span>) * n</span><br><span class="line"></span><br><span class="line">res = jiecheng(<span class="number">5</span>)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><p>递推</p>
+<blockquote>
+<p>满足某种结束条件，结束递归调用，然后一层一层返回</p>
+</blockquote>
+</li>
+<li><p>回溯</p>
+<blockquote>
+<p>一层一层调用下去</p>
+</blockquote>
+</li>
+</ul>
+<p>3.二分法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">nums = [<span class="number">-1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">56</span>, <span class="number">78</span>, <span class="number">79</span>, <span class="number">80</span>, <span class="number">81</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_find</span>(<span class="params">find_num, l</span>):</span></span><br><span class="line">    print(l)</span><br><span class="line">    <span class="keyword">if</span> len(l) == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">&quot;找的值不存在&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    mid_index = len(l) // <span class="number">2</span></span><br><span class="line">    mid_val = l[mid_index]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> find_num &gt; mid_val:</span><br><span class="line">        l = l[mid_index+<span class="number">1</span>:]</span><br><span class="line">        binary_find(find_num, l)</span><br><span class="line">    <span class="keyword">elif</span> find_num &lt; mid_val:</span><br><span class="line">        l = l[:mid_index]</span><br><span class="line">        binary_find(find_num, l)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&quot;索引下标&quot;</span>, mid_index)</span><br><span class="line">        print(<span class="string">&#x27;find it&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">binary_find(<span class="number">82</span>, nums)</span><br></pre></td></tr></table></figure>
 
 <h4 id="6-函数名的作用以及闭包函数-面试和项目中的重点"><a href="#6-函数名的作用以及闭包函数-面试和项目中的重点" class="headerlink" title="6.函数名的作用以及闭包函数   面试和项目中的重点"></a>6.函数名的作用以及闭包函数   面试和项目中的重点</h4><blockquote>
 <p>闭包函数：函数嵌套+名称空间与作用域+函数对象</p>
@@ -661,11 +771,7 @@
 <blockquote>
 <p>函数的作用域关系在定义阶段就已经固定了，与调用位置无关<br>f = outter() —&gt; 指向inner内存地址<br>闭: 函数一定来自于函数内部<br>包: 此函数外面还包裹了一层东西，无论在哪用inner，都是以外面包裹的这一层东西为准</p>
 </blockquote>
-<h4 id="7-装饰器-面试和项目中的重中之重"><a href="#7-装饰器-面试和项目中的重中之重" class="headerlink" title="7.**装饰器 面试和项目中的重中之重 **"></a>7.**装饰器 面试和项目中的重中之重 **</h4><h3 id="模块部分："><a href="#模块部分：" class="headerlink" title="模块部分："></a>模块部分：</h3><p>1.模块的使用</p>
-<p>2.自定义模块 </p>
-<p>3.内置模块  time os</p>
-<p>4.第三方模块  pymysql， jenkins，gitlab</p>
-
+<h4 id="7-装饰器-面试和项目中的重中之重"><a href="#7-装饰器-面试和项目中的重中之重" class="headerlink" title="7.**装饰器 面试和项目中的重中之重 **"></a>7.**装饰器 面试和项目中的重中之重 **</h4>
     </div>
 
     
@@ -748,7 +854,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">内容复习 </span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E9%83%A8%E5%88%86%EF%BC%9A"><span class="nav-number"></span> <span class="nav-text">函数部分：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">0.函数对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%87%BD%E6%95%B0%E5%B5%8C%E5%A5%97"><span class="nav-number">3.</span> <span class="nav-text">1.函数嵌套</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4"><span class="nav-number">4.</span> <span class="nav-text">2. 名称空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">5.</span> <span class="nav-text">3. 作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">4. 闭包函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">7.</span> <span class="nav-text">5.装饰器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0"><span class="nav-number">8.</span> <span class="nav-text">6. 内置函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E7%94%9F%E6%88%90%E5%99%A8-%E9%9D%A2%E8%AF%95%E4%B8%AD%E7%9A%84%E9%87%8D%E7%82%B9"><span class="nav-number">9.</span> <span class="nav-text">4.生成器  面试中的重点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%88%97%E8%A1%A8%E7%94%9F%E6%88%90%E5%BC%8F%E5%92%8C%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%BC%8F-%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%87%8D%E7%82%B9"><span class="nav-number">10.</span> <span class="nav-text">5.列表生成式和字典生成式 []  项目中的重点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0-%E9%9D%A2%E8%AF%95%E4%B8%AD%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text">5. 递归函数  面试中常见问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%87%BD%E6%95%B0%E5%90%8D%E7%9A%84%E4%BD%9C%E7%94%A8%E4%BB%A5%E5%8F%8A%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0-%E9%9D%A2%E8%AF%95%E5%92%8C%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%87%8D%E7%82%B9"><span class="nav-number">12.</span> <span class="nav-text">6.函数名的作用以及闭包函数   面试和项目中的重点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E8%A3%85%E9%A5%B0%E5%99%A8-%E9%9D%A2%E8%AF%95%E5%92%8C%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">13.</span> <span class="nav-text">7.**装饰器 面试和项目中的重中之重 **</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E9%83%A8%E5%88%86%EF%BC%9A"><span class="nav-number"></span> <span class="nav-text">模块部分：</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">内容复习 </span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E9%83%A8%E5%88%86%EF%BC%9A"><span class="nav-number"></span> <span class="nav-text">函数部分：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">0.函数对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%87%BD%E6%95%B0%E5%B5%8C%E5%A5%97"><span class="nav-number">3.</span> <span class="nav-text">1.函数嵌套</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4"><span class="nav-number">4.</span> <span class="nav-text">2. 名称空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">5.</span> <span class="nav-text">3. 作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">4. 闭包函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">7.</span> <span class="nav-text">5.装饰器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0"><span class="nav-number">8.</span> <span class="nav-text">6. 内置函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0-lambada-%E9%9D%A2%E8%AF%95%E9%97%AE%E7%9A%84%E8%BE%83%E5%A4%9A"><span class="nav-number">8.1.</span> <span class="nav-text">2.匿名函数 lambada  面试问的较多</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-map%E3%80%81reduce%E3%80%81filter"><span class="nav-number">8.2.</span> <span class="nav-text">3.map、reduce、filter</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E8%BF%AD%E4%BB%A3%E5%99%A8-%E5%92%8C-for%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6-%E9%9D%A2%E8%AF%95%E4%B8%AD%E7%9A%84%E9%87%8D%E7%82%B9"><span class="nav-number">9.</span> <span class="nav-text">7. 迭代器 和 for循环机制 面试中的重点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E7%94%9F%E6%88%90%E5%99%A8-%E9%9D%A2%E8%AF%95%E4%B8%AD%E7%9A%84%E9%87%8D%E7%82%B9"><span class="nav-number">10.</span> <span class="nav-text">4.生成器  面试中的重点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%88%97%E8%A1%A8%E7%94%9F%E6%88%90%E5%BC%8F%E5%92%8C%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%BC%8F-%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%87%8D%E7%82%B9"><span class="nav-number">11.</span> <span class="nav-text">5.列表生成式和字典生成式 []  项目中的重点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0-%E9%9D%A2%E8%AF%95%E4%B8%AD%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">12.</span> <span class="nav-text">5. 递归函数  面试中常见问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%87%BD%E6%95%B0%E5%90%8D%E7%9A%84%E4%BD%9C%E7%94%A8%E4%BB%A5%E5%8F%8A%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0-%E9%9D%A2%E8%AF%95%E5%92%8C%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%87%8D%E7%82%B9"><span class="nav-number">13.</span> <span class="nav-text">6.函数名的作用以及闭包函数   面试和项目中的重点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E8%A3%85%E9%A5%B0%E5%99%A8-%E9%9D%A2%E8%AF%95%E5%92%8C%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">14.</span> <span class="nav-text">7.**装饰器 面试和项目中的重中之重 **</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -821,12 +927,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">260k</span>
+    <span title="站点总字数">265k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:13</span>
+    <span title="站点阅读时长">7:21</span>
 </div>
 
 <!--
