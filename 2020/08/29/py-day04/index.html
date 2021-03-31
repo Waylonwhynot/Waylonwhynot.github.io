@@ -28,8 +28,9 @@
 <meta property="og:description" content="python基础函数高级操作(生成器、迭代器、装饰器)+模块(request json)">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/08/29/py-day04/from%E5%AF%BC%E5%8C%85x%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://waylon.whatyouneed.site/2020/08/29/py-day04/import.png">
 <meta property="article:published_time" content="2020-08-29T12:34:34.000Z">
-<meta property="article:modified_time" content="2021-03-31T12:48:17.185Z">
+<meta property="article:modified_time" content="2021-03-31T13:12:19.043Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -223,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 20:48:17" itemprop="dateModified" datetime="2021-03-31T20:48:17+08:00">2021-03-31</time>
+                <time title="修改时间：2021-03-31 21:12:19" itemprop="dateModified" datetime="2021-03-31T21:12:19+08:00">2021-03-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -248,7 +249,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>20 分钟</span>
+              <span>21 分钟</span>
             </span>
 
         </div>
@@ -436,6 +437,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> md <span class="keyword">import</span> read</span><br><span class="line">read()</span><br></pre></td></tr></table></figure>
 <p><strong>import x x=模块foo中值0的内存地址</strong></p>
 <img src="/2020/08/29/py-day04/from%E5%AF%BC%E5%8C%85x%E7%9A%84%E5%85%B3%E7%B3%BB.png" class title="py-day04">
+<img src="/2020/08/29/py-day04/import.png" class title="py-day04">
 
 <ul>
 <li>from 模块 import *<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from foo import * #把foo中所有的名字都导入到当前执行文件的名称空间中，在当前位置直接可以使用这些名字</span><br><span class="line"></span><br><span class="line">a&#x3D;x</span><br><span class="line">get()</span><br><span class="line">change()</span><br><span class="line">obj&#x3D;Foo()</span><br></pre></td></tr></table></figure>
@@ -517,6 +519,21 @@
 <li>sha1</li>
 <li>sha256</li>
 </ul>
+</li>
+</ul>
+<h4 id="包部分："><a href="#包部分：" class="headerlink" title="包部分："></a>包部分：</h4><p>“””<br>随着模块数目的增多，把所有模块不加区分地放到一起也是极不合理的，于是Python为我们提供了一种把模块组织到一起的方法，即创建一个包。包就是一个含有<strong>init</strong>.py文件的文件夹，文件夹内可以组织子模块或子包，例如<br>“””</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pool&#x2F;                #顶级包</span><br><span class="line">├── __init__.py     </span><br><span class="line">├── futures          #子包</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── process.py</span><br><span class="line">│   └── thread.py</span><br><span class="line">└── versions.py      #子模块</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-包就是包含有init-py的文件夹；"><a href="#1-包就是包含有init-py的文件夹；" class="headerlink" title="1.包就是包含有init.py的文件夹；"></a>1.包就是包含有<strong>init</strong>.py的文件夹；</h5><h5 id="2-包的本质是文件的一种形式，包是用来当做模块导入的"><a href="#2-包的本质是文件的一种形式，包是用来当做模块导入的" class="headerlink" title="2.包的本质是文件的一种形式，包是用来当做模块导入的"></a>2.包的本质是文件的一种形式，包是用来当做模块导入的</h5><ul>
+<li>需要强调</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#1. 在python3中，即使包下没有__init__.py文件，import 包仍然不会报错，而在python2中，包下一定要有该文件，否则import 包报错</span><br><span class="line"></span><br><span class="line">#2. 创建包的目的不是为了运行，而是被导入使用，记住，包只是模块的一种形式而已，包的本质就是一种模块</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导入包与<strong>init</strong>.py<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、执行包下的__init__.py文件</span><br><span class="line">2、产生一个新的名称空间用于存放__init__.py执行过程中产生的名字</span><br><span class="line">3、在当前执行文件所在的名称空间中得到一个名字pool，该名字指向__init__.py的名称空间，例如http:&#x2F;&#x2F;pool.xxx和pool.yyy中的xxx和yyy都是来自于pool下的__init__.py，也就是说导入包时并不会导入包下所有的子模块与子包</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ul>
 <h4 id="本周内容："><a href="#本周内容：" class="headerlink" title="本周内容："></a>本周内容：</h4><p>0.内置的模块</p>
@@ -647,7 +664,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">复习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E9%83%A8%E5%88%86%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">模块部分：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E5%86%85%E5%AE%B9%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">本周内容：</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">复习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E9%83%A8%E5%88%86%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">模块部分：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%85%E9%83%A8%E5%88%86%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">包部分：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E5%8C%85%E5%B0%B1%E6%98%AF%E5%8C%85%E5%90%AB%E6%9C%89init-py%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9B"><span class="nav-number">3.1.</span> <span class="nav-text">1.包就是包含有init.py的文件夹；</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E5%8C%85%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%98%AF%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%80%E7%A7%8D%E5%BD%A2%E5%BC%8F%EF%BC%8C%E5%8C%85%E6%98%AF%E7%94%A8%E6%9D%A5%E5%BD%93%E5%81%9A%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5%E7%9A%84"><span class="nav-number">3.2.</span> <span class="nav-text">2.包的本质是文件的一种形式，包是用来当做模块导入的</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E5%86%85%E5%AE%B9%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">本周内容：</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -725,7 +742,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:23</span>
+    <span title="站点阅读时长">7:24</span>
 </div>
 
 <!--

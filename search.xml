@@ -1585,85 +1585,6 @@ select * from emp right join dep on emp.dep_id = dep.id
       </tags>
   </entry>
   <entry>
-    <title>面试问题复习</title>
-    <url>/2020/09/13/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E5%A4%8D%E4%B9%A0/</url>
-    <content><![CDATA[<p>TCP三次握手四次挥手</p>
-<a id="more"></a>
-<p>TCP三次握手四次挥手面试题：<br><a href="https://www.cnblogs.com/Qing-840/p/9283367.html">https://www.cnblogs.com/Qing-840/p/9283367.html</a></p>
-<ol>
-<li><p>C/S B/S<br> client————–server<br> browser————-server</p>
-<p> 其中server端应该注意问题：</p>
-<pre><code> 1、服务端应该保证稳定运行，并且最好是开启之后就一直运行到世界末日
- 2、服务端要支持并发
- 3、服务端要绑定唯一的地址</code></pre>
-</li>
-<li><p>什么是网络<br> 网络=物理连接介质+互联网通信协议</p>
-<p> 而互联网通信协议就是计算机界的英语</p>
-</li>
-</ol>
-<ol start="3">
-<li>定位对方在哪的地址是<br> ip+port可以定位到全世界范围内独一无二的一个网络应用程序<br> arp协议会自动将ip解析成mac地址</li>
-</ol>
-<ul>
-<li><p>数据链路层<br>arp协议功能：广播的方式发送数据包，获取目标主机的mac地址<br>IP协议的作用主要有两个，一个是为每一台计算机分配IP地址，另一个是确定哪些地址在同一个子网络。</p>
-</li>
-<li><p>网络层<br>一个个彼此隔离的小的局域网组成的，那么如果所有的通信都采用以太网的广播方式，那么一台机器发送的包全世界都会收到，</p>
-</li>
-</ul>
-<p>这就不仅仅是效率低的问题了，这会是一种灾难<br>须找出一种方法来区分哪些计算机属于同一广播域，哪些不是，如果是就采用广播的方式发送，如果不是，</p>
-<p>就采用路由的方式（向不同广播域／子网分发数据包），mac地址是无法区分的，它只跟厂商有关</p>
-<p>网络层功能：引入一套新的地址用来区分不同的广播域／子网，这套地址即网络地址</p>
-<p>网络层由来：有了ethernet、mac地址、广播的发送方式，世界上的计算机就可以彼此通信了，问题是世界范围的互联网是由</p>
-<ul>
-<li>传输层<br>传输层的由来：网络层的ip帮我们区分子网，以太网层的mac帮我们找到主机，然后大家使用的都是应用程序，你的电脑上可能同时开启qq，暴风影音，等多个应用程序，</li>
-</ul>
-<p>那么我们通过ip和mac找到了一台特定的主机，<strong>如何标识这台主机上的应用程序，答案就是端口，端口即应用程序与网卡关联的编号。</strong></p>
-<p>传输层功能：建立端口到端口的通信</p>
-<p>补充：端口范围0-65535，0-1023为系统占用端口</p>
-<p>tcp协议：</p>
-<p>可靠传输，TCP数据包没有长度限制，理论上可以无限长，但是为了保证网络的效率，通常TCP数据包的长度不会超过IP数据包的长度，以确保单个TCP数据包不必再分割。</p>
-<p>以太网头    ip 头                  tcp头                  数据                                                    </p>
-<p>udp协议：</p>
-<p>不可靠传输，”报头”部分一共只有8个字节，总长度不超过65,535字节，正好放进一个IP数据包。</p>
-<p>以太网头    ip头                         udp头                               数据                                           </p>
-<img src="/2020/09/13/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E5%A4%8D%E4%B9%A0/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" class title="三次握手四次挥手">
-
-<p><strong>高并发的情况下会存在大量的timewait，timewait过高会占用大量内存和cpu使用率</strong></p>
-<ul>
-<li>优化timewait方法（待补充）</li>
-</ul>
-<p><strong>如果机器上存在大量SYN_RCVD状态，证明遭遇泛洪攻击</strong></p>
-<ul>
-<li>优化建议（待补充）</li>
-</ul>
-<ul>
-<li>应用层<br>应用层由来：用户使用的都是应用程序，均工作于应用层，互联网是开发的，大家都可以开发自己的应用程序，数据多种多样，必须规定好数据的组织形式 </li>
-</ul>
-<p>应用层功能：规定应用程序的数据格式。</p>
-<p>例：TCP协议可以为各种各样的程序传递数据，比如Email、WWW、FTP等等。那么，必须有不同协议规定电子邮件、网页、FTP数据的格式，这些应用程序协议就构成了”应用层”。</p>
-<ul>
-<li>socket<br>我们知道两个进程如果需要进行通讯最基本的一个前提能能够唯一的标示一个进程，在本地进程通讯中我们可以使用PID来唯一标示一个进程，但PID只在本地唯一，网络中的两个进程PID冲突几率很大，这时候我们需要另辟它径了，我们知道IP层的ip地址可以唯一标示主机，而TCP层协议和端口号可以唯一标示主机的一个进程，这样我们可以利用ip地址＋协议＋端口号唯一标示网络中的一个进程。</li>
-</ul>
-<p>能够唯一标示网络中的进程后，它们就可以利用socket进行通信了，什么是socket呢？我们经常把socket翻译为套接字，socket是在应用层和传输层之间的一个抽象层，它把TCP/IP层复杂的操作抽象为几个简单的接口供应用层调用已实现进程在网络中通信。</p>
-<blockquote>
-<p>总结：套接字是什么，位于应用层与传输层之间，用来把传输层以下的协议封装好，提供好简单的接口；但凡编写基于网络通信的cs架构的软件，基于套接字去写就可以了。遵循套接字简单的接口规范，写出来的程序自然是遵循tcp/udp协议的了。</p>
-</blockquote>
-<blockquote>
-<p><strong>也有人将socket说成ip+port，ip是用来标识互联网中的一台主机的位置，而port是用来标识这台机器上的一个应用程序，ip地址是配置到网卡上的，而port是应用程序开启的，ip与port的绑定就标识了互联网中独一无二的一个应用程序;而程序的pid是同一台机器上不同进程或者线程的标识</strong></p>
-</blockquote>
-<img src="/2020/09/13/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E5%A4%8D%E4%B9%A0/socket%E5%A5%97%E6%8E%A5%E5%AD%97.png" class title="套接字">
-
-<p>socket起源于UNIX，在Unix一切皆文件哲学的思想下，socket是一种”打开—读/写—关闭”模式的实现，服务器和客户端各自维护一个”文件”，在建立连接打开后，可以向自己文件写入内容供对方读取或者读取对方内容，通讯结束时关闭文件。</p>
-<ul>
-<li>套接字工作流程<img src="/2020/09/13/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E5%A4%8D%E4%B9%A0/%E5%A5%97%E6%8E%A5%E5%AD%97%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.jpg" class title="套接字">
-
-</li>
-</ul>
-<p>套接字之所以简单是因为：客户端只需要调connect接口，服务端调accept接口；客户端干了什么：发syn，服务端回ack+syn，客户端再回ack； connect和accept接口把三次握手细节全部封装好了。</p>
-<p>粘包问题<br>TCP独有（流式协议）<br>把数据像水流一样发出去；TCP协议nagle算法会把时间间隔较短，数据量较小的数据粘到一起，基于网络发出去。<br>解决方案：收数据的时候收干净就好了</p>
-]]></content>
-  </entry>
-  <entry>
     <title>vue-介绍</title>
     <url>/2020/11/20/vue-%E4%BB%8B%E7%BB%8D/</url>
     <content><![CDATA[<p>vue简介</p>
@@ -1875,6 +1796,85 @@ select * from emp right join dep on emp.dep_id = dep.id
       <tags>
         <tag>deploy</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>面试问题复习</title>
+    <url>/2020/09/13/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E5%A4%8D%E4%B9%A0/</url>
+    <content><![CDATA[<p>TCP三次握手四次挥手</p>
+<a id="more"></a>
+<p>TCP三次握手四次挥手面试题：<br><a href="https://www.cnblogs.com/Qing-840/p/9283367.html">https://www.cnblogs.com/Qing-840/p/9283367.html</a></p>
+<ol>
+<li><p>C/S B/S<br> client————–server<br> browser————-server</p>
+<p> 其中server端应该注意问题：</p>
+<pre><code> 1、服务端应该保证稳定运行，并且最好是开启之后就一直运行到世界末日
+ 2、服务端要支持并发
+ 3、服务端要绑定唯一的地址</code></pre>
+</li>
+<li><p>什么是网络<br> 网络=物理连接介质+互联网通信协议</p>
+<p> 而互联网通信协议就是计算机界的英语</p>
+</li>
+</ol>
+<ol start="3">
+<li>定位对方在哪的地址是<br> ip+port可以定位到全世界范围内独一无二的一个网络应用程序<br> arp协议会自动将ip解析成mac地址</li>
+</ol>
+<ul>
+<li><p>数据链路层<br>arp协议功能：广播的方式发送数据包，获取目标主机的mac地址<br>IP协议的作用主要有两个，一个是为每一台计算机分配IP地址，另一个是确定哪些地址在同一个子网络。</p>
+</li>
+<li><p>网络层<br>一个个彼此隔离的小的局域网组成的，那么如果所有的通信都采用以太网的广播方式，那么一台机器发送的包全世界都会收到，</p>
+</li>
+</ul>
+<p>这就不仅仅是效率低的问题了，这会是一种灾难<br>须找出一种方法来区分哪些计算机属于同一广播域，哪些不是，如果是就采用广播的方式发送，如果不是，</p>
+<p>就采用路由的方式（向不同广播域／子网分发数据包），mac地址是无法区分的，它只跟厂商有关</p>
+<p>网络层功能：引入一套新的地址用来区分不同的广播域／子网，这套地址即网络地址</p>
+<p>网络层由来：有了ethernet、mac地址、广播的发送方式，世界上的计算机就可以彼此通信了，问题是世界范围的互联网是由</p>
+<ul>
+<li>传输层<br>传输层的由来：网络层的ip帮我们区分子网，以太网层的mac帮我们找到主机，然后大家使用的都是应用程序，你的电脑上可能同时开启qq，暴风影音，等多个应用程序，</li>
+</ul>
+<p>那么我们通过ip和mac找到了一台特定的主机，<strong>如何标识这台主机上的应用程序，答案就是端口，端口即应用程序与网卡关联的编号。</strong></p>
+<p>传输层功能：建立端口到端口的通信</p>
+<p>补充：端口范围0-65535，0-1023为系统占用端口</p>
+<p>tcp协议：</p>
+<p>可靠传输，TCP数据包没有长度限制，理论上可以无限长，但是为了保证网络的效率，通常TCP数据包的长度不会超过IP数据包的长度，以确保单个TCP数据包不必再分割。</p>
+<p>以太网头    ip 头                  tcp头                  数据                                                    </p>
+<p>udp协议：</p>
+<p>不可靠传输，”报头”部分一共只有8个字节，总长度不超过65,535字节，正好放进一个IP数据包。</p>
+<p>以太网头    ip头                         udp头                               数据                                           </p>
+<img src="/2020/09/13/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E5%A4%8D%E4%B9%A0/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" class title="三次握手四次挥手">
+
+<p><strong>高并发的情况下会存在大量的timewait，timewait过高会占用大量内存和cpu使用率</strong></p>
+<ul>
+<li>优化timewait方法（待补充）</li>
+</ul>
+<p><strong>如果机器上存在大量SYN_RCVD状态，证明遭遇泛洪攻击</strong></p>
+<ul>
+<li>优化建议（待补充）</li>
+</ul>
+<ul>
+<li>应用层<br>应用层由来：用户使用的都是应用程序，均工作于应用层，互联网是开发的，大家都可以开发自己的应用程序，数据多种多样，必须规定好数据的组织形式 </li>
+</ul>
+<p>应用层功能：规定应用程序的数据格式。</p>
+<p>例：TCP协议可以为各种各样的程序传递数据，比如Email、WWW、FTP等等。那么，必须有不同协议规定电子邮件、网页、FTP数据的格式，这些应用程序协议就构成了”应用层”。</p>
+<ul>
+<li>socket<br>我们知道两个进程如果需要进行通讯最基本的一个前提能能够唯一的标示一个进程，在本地进程通讯中我们可以使用PID来唯一标示一个进程，但PID只在本地唯一，网络中的两个进程PID冲突几率很大，这时候我们需要另辟它径了，我们知道IP层的ip地址可以唯一标示主机，而TCP层协议和端口号可以唯一标示主机的一个进程，这样我们可以利用ip地址＋协议＋端口号唯一标示网络中的一个进程。</li>
+</ul>
+<p>能够唯一标示网络中的进程后，它们就可以利用socket进行通信了，什么是socket呢？我们经常把socket翻译为套接字，socket是在应用层和传输层之间的一个抽象层，它把TCP/IP层复杂的操作抽象为几个简单的接口供应用层调用已实现进程在网络中通信。</p>
+<blockquote>
+<p>总结：套接字是什么，位于应用层与传输层之间，用来把传输层以下的协议封装好，提供好简单的接口；但凡编写基于网络通信的cs架构的软件，基于套接字去写就可以了。遵循套接字简单的接口规范，写出来的程序自然是遵循tcp/udp协议的了。</p>
+</blockquote>
+<blockquote>
+<p><strong>也有人将socket说成ip+port，ip是用来标识互联网中的一台主机的位置，而port是用来标识这台机器上的一个应用程序，ip地址是配置到网卡上的，而port是应用程序开启的，ip与port的绑定就标识了互联网中独一无二的一个应用程序;而程序的pid是同一台机器上不同进程或者线程的标识</strong></p>
+</blockquote>
+<img src="/2020/09/13/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E5%A4%8D%E4%B9%A0/socket%E5%A5%97%E6%8E%A5%E5%AD%97.png" class title="套接字">
+
+<p>socket起源于UNIX，在Unix一切皆文件哲学的思想下，socket是一种”打开—读/写—关闭”模式的实现，服务器和客户端各自维护一个”文件”，在建立连接打开后，可以向自己文件写入内容供对方读取或者读取对方内容，通讯结束时关闭文件。</p>
+<ul>
+<li>套接字工作流程<img src="/2020/09/13/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E5%A4%8D%E4%B9%A0/%E5%A5%97%E6%8E%A5%E5%AD%97%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.jpg" class title="套接字">
+
+</li>
+</ul>
+<p>套接字之所以简单是因为：客户端只需要调connect接口，服务端调accept接口；客户端干了什么：发syn，服务端回ack+syn，客户端再回ack； connect和accept接口把三次握手细节全部封装好了。</p>
+<p>粘包问题<br>TCP独有（流式协议）<br>把数据像水流一样发出去；TCP协议nagle算法会把时间间隔较短，数据量较小的数据粘到一起，基于网络发出去。<br>解决方案：收数据的时候收干净就好了</p>
+]]></content>
   </entry>
   <entry>
     <title>kubernetes网络通信原理</title>
@@ -2554,6 +2554,7 @@ select * from emp right join dep on emp.dep_id = dep.id
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> md <span class="keyword">import</span> read</span><br><span class="line">read()</span><br></pre></td></tr></table></figure>
 <p><strong>import x x=模块foo中值0的内存地址</strong></p>
 <img src="/2020/08/29/py-day04/from%E5%AF%BC%E5%8C%85x%E7%9A%84%E5%85%B3%E7%B3%BB.png" class title="py-day04">
+<img src="/2020/08/29/py-day04/import.png" class title="py-day04">
 
 <ul>
 <li>from 模块 import *<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from foo import * #把foo中所有的名字都导入到当前执行文件的名称空间中，在当前位置直接可以使用这些名字</span><br><span class="line"></span><br><span class="line">a&#x3D;x</span><br><span class="line">get()</span><br><span class="line">change()</span><br><span class="line">obj&#x3D;Foo()</span><br></pre></td></tr></table></figure>
@@ -2635,6 +2636,21 @@ select * from emp right join dep on emp.dep_id = dep.id
 <li>sha1</li>
 <li>sha256</li>
 </ul>
+</li>
+</ul>
+<h4 id="包部分："><a href="#包部分：" class="headerlink" title="包部分："></a>包部分：</h4><p>“””<br>随着模块数目的增多，把所有模块不加区分地放到一起也是极不合理的，于是Python为我们提供了一种把模块组织到一起的方法，即创建一个包。包就是一个含有<strong>init</strong>.py文件的文件夹，文件夹内可以组织子模块或子包，例如<br>“””</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pool&#x2F;                #顶级包</span><br><span class="line">├── __init__.py     </span><br><span class="line">├── futures          #子包</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── process.py</span><br><span class="line">│   └── thread.py</span><br><span class="line">└── versions.py      #子模块</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-包就是包含有init-py的文件夹；"><a href="#1-包就是包含有init-py的文件夹；" class="headerlink" title="1.包就是包含有init.py的文件夹；"></a>1.包就是包含有<strong>init</strong>.py的文件夹；</h5><h5 id="2-包的本质是文件的一种形式，包是用来当做模块导入的"><a href="#2-包的本质是文件的一种形式，包是用来当做模块导入的" class="headerlink" title="2.包的本质是文件的一种形式，包是用来当做模块导入的"></a>2.包的本质是文件的一种形式，包是用来当做模块导入的</h5><ul>
+<li>需要强调</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#1. 在python3中，即使包下没有__init__.py文件，import 包仍然不会报错，而在python2中，包下一定要有该文件，否则import 包报错</span><br><span class="line"></span><br><span class="line">#2. 创建包的目的不是为了运行，而是被导入使用，记住，包只是模块的一种形式而已，包的本质就是一种模块</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导入包与<strong>init</strong>.py<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1、执行包下的__init__.py文件</span><br><span class="line">2、产生一个新的名称空间用于存放__init__.py执行过程中产生的名字</span><br><span class="line">3、在当前执行文件所在的名称空间中得到一个名字pool，该名字指向__init__.py的名称空间，例如http:&#x2F;&#x2F;pool.xxx和pool.yyy中的xxx和yyy都是来自于pool下的__init__.py，也就是说导入包时并不会导入包下所有的子模块与子包</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ul>
 <h4 id="本周内容："><a href="#本周内容：" class="headerlink" title="本周内容："></a>本周内容：</h4><p>0.内置的模块</p>
