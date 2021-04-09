@@ -532,42 +532,6 @@ select * from emp right join dep on emp.dep_id = dep.id
       </tags>
   </entry>
   <entry>
-    <title>py_day02_exercise</title>
-    <url>/2020/08/09/py-day02-exercise/</url>
-    <content><![CDATA[<p>温故知新</p>
-<a id="more"></a>
-<h3 id="1-根据需求写代码"><a href="#1-根据需求写代码" class="headerlink" title="1.根据需求写代码"></a>1.根据需求写代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;k1&#x27;</span>: <span class="string">&quot;v1&quot;</span>, <span class="string">&quot;k2&quot;</span>: <span class="string">&quot;v2&quot;</span>, <span class="string">&quot;k3&quot;</span>: [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k4&#x27;</span>] = <span class="string">&#x27;v4&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在修改字典中 &quot;k1&quot; 对应的值为 &quot;alex&quot;，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k1&#x27;</span>] = <span class="string">&#x27;alex&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值中追加一个元素 44，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].append(<span class="number">44</span>)</span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值的第 1 个位置插入个元素 18，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].insert(<span class="number">0</span>,<span class="number">18</span>)</span><br><span class="line">print(dic)</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-根据需求写代码"><a href="#2-根据需求写代码" class="headerlink" title="2.根据需求写代码"></a>2.根据需求写代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic1 = &#123;</span><br><span class="line"> <span class="string">&#x27;name&#x27;</span>:[<span class="string">&#x27;pounds&#x27;</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>],</span><br><span class="line"> <span class="string">&#x27;job&#x27;</span>:<span class="string">&#x27;teacher&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;51devops&#x27;</span>:&#123;<span class="string">&#x27;szk&#x27;</span>:[<span class="string">&#x27;python1&#x27;</span>,<span class="string">&#x27;python2&#x27;</span>,<span class="number">100</span>]&#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1，将name对应的列表追加⼀个元素’xxx’。</span></span><br><span class="line">dic1[<span class="string">&#x27;name&#x27;</span>].append(<span class="string">&#x27;xxx&#x27;</span>)</span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 2，将name对应的列表中的 pounds ⾸字⺟⼤写。</span></span><br><span class="line">(<span class="number">1</span>)转成大写后upadte</span><br><span class="line">new_words = dic1[<span class="string">&#x27;name&#x27;</span>][<span class="number">0</span>].capitalize()</span><br><span class="line">dic1.update(&#123;<span class="string">&#x27;name&#x27;</span>:[new_words,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>]&#125;)</span><br><span class="line">(<span class="number">2</span>)直接赋值更改</span><br><span class="line">dic1[<span class="string">&#x27;name&#x27;</span>][<span class="number">0</span>] = <span class="string">&#x27;Pounds&#x27;</span></span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 3，51devops 对应的字典加⼀个键值对 ’haoda’,’linux’。</span></span><br><span class="line">dic1[<span class="string">&#x27;51devops&#x27;</span>][<span class="string">&#x27;haoda&#x27;</span>] = <span class="string">&#x27;linux&#x27;</span></span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 4，将51devops对应的字典中的szk对应的列表中的python2删除</span></span><br><span class="line">dic1[<span class="string">&#x27;51devops&#x27;</span>][<span class="string">&#x27;szk&#x27;</span>].remove(<span class="string">&#x27;python2&#x27;</span>)</span><br><span class="line">print(dic1)</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-判断以下值那个能做字典的key-？那个能做集合的元素？"><a href="#3-判断以下值那个能做字典的key-？那个能做集合的元素？" class="headerlink" title="3.判断以下值那个能做字典的key ？那个能做集合的元素？"></a>3.判断以下值那个能做字典的key ？那个能做集合的元素？</h3><ul>
-<li>1       ✅</li>
-<li>-1      ✅</li>
-<li>“”      ✅</li>
-<li>None    ✅</li>
-<li>[1,2]   ❌</li>
-<li>(1,)    ✅</li>
-<li>{11,22,33,4} ❌</li>
-<li>{‘name’:’szk’,’age’:18} ❌</li>
-</ul>
-<h3 id="4-将字典的键和值分别追加到-key-list-和-value-list-两个列表中，如："><a href="#4-将字典的键和值分别追加到-key-list-和-value-list-两个列表中，如：" class="headerlink" title="4.将字典的键和值分别追加到 key_list 和 value_list 两个列表中，如："></a>4.将字典的键和值分别追加到 key_list 和 value_list 两个列表中，如：</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">key_list = []</span><br><span class="line">value_list = []</span><br><span class="line">info = &#123;<span class="string">&#x27;k1&#x27;</span>:<span class="string">&#x27;v1&#x27;</span>,<span class="string">&#x27;k2&#x27;</span>:<span class="string">&#x27;v2&#x27;</span>,<span class="string">&#x27;k3&#x27;</span>:<span class="string">&#x27;v3&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> info.items():</span><br><span class="line">    key_list.append(k)</span><br><span class="line">    value_list.append(v)</span><br><span class="line">print(key_list)</span><br><span class="line">print(value_list)</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-字典dic-‘k1’-“v1”-“k2”-“v2”-“k3”-11-22-33"><a href="#5-字典dic-‘k1’-“v1”-“k2”-“v2”-“k3”-11-22-33" class="headerlink" title="5.字典dic = {‘k1’: “v1”, “k2”: “v2”, “k3”: [11,22,33]}"></a>5.字典dic = {‘k1’: “v1”, “k2”: “v2”, “k3”: [11,22,33]}</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;k1&#x27;</span>: <span class="string">&quot;v1&quot;</span>, <span class="string">&quot;k2&quot;</span>: <span class="string">&quot;v2&quot;</span>, <span class="string">&quot;k3&quot;</span>: [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>]&#125;</span><br><span class="line"><span class="comment"># a. 请循环输出所有的key</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> dic.keys():</span><br><span class="line">    print(k)</span><br><span class="line"><span class="comment"># b. 请循环输出所有的value</span></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> dic.values():</span><br><span class="line">    print(v)</span><br><span class="line"><span class="comment"># c. 请循环输出所有的key和value</span></span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> dic.items():</span><br><span class="line">    print(k,v)</span><br><span class="line"><span class="comment"># d. 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k4&#x27;</span>] = <span class="string">&#x27;v4&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># e. 请在修改字典中 &quot;k1&quot; 对应的值为 &quot;szk&quot;，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k1&#x27;</span>] = <span class="string">&#x27;szk&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># f. 请在k3对应的值中追加一个元素 44，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].append(<span class="number">44</span>)</span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># g. 请在k3对应的值的第 1 个位置插入个元素 18，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].insert(<span class="number">0</span>,<span class="number">18</span>)</span><br><span class="line">print(dic)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="6-请循环打印k2对应的值中的每个元素。"><a href="#6-请循环打印k2对应的值中的每个元素。" class="headerlink" title="6.请循环打印k2对应的值中的每个元素。"></a>6.请循环打印k2对应的值中的每个元素。</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">info = &#123;</span><br><span class="line">    <span class="string">&#x27;k1&#x27;</span>:<span class="string">&#x27;v1&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;k2&#x27;</span>:[(<span class="string">&#x27;pounds&#x27;</span>),(<span class="string">&#x27;szk&#x27;</span>),(<span class="string">&#x27;51devops&#x27;</span>)],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> values <span class="keyword">in</span> info[<span class="string">&#x27;k2&#x27;</span>]:</span><br><span class="line">    print(values)</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-输出商品列表，用户输入序号，显示用户选中的商品"><a href="#7-输出商品列表，用户输入序号，显示用户选中的商品" class="headerlink" title="7.输出商品列表，用户输入序号，显示用户选中的商品"></a>7.输出商品列表，用户输入序号，显示用户选中的商品</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tag = <span class="literal">True</span></span><br><span class="line"><span class="comment">#购物车</span></span><br><span class="line">bag = []</span><br><span class="line"><span class="comment">#购物车商品总价格</span></span><br><span class="line">bag_price = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> tag:</span><br><span class="line">    <span class="keyword">for</span> inx,value <span class="keyword">in</span> enumerate(goods):</span><br><span class="line">          print(inx,value[<span class="string">&#x27;name&#x27;</span>],value[<span class="string">&#x27;price&#x27;</span>])</span><br><span class="line">    choice = input(<span class="string">&quot;请输入商品编号(退出输入Q/q):&quot;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> choice == <span class="string">&#x27;q&#x27;</span> <span class="keyword">or</span> choice == <span class="string">&#x27;Q&#x27;</span>:</span><br><span class="line">        print(<span class="string">&quot;您购买的商品列表:%s,一共消费:%s&quot;</span> %(bag,bag_price))</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span>  choice.isdigit():</span><br><span class="line">        choice = int(choice)</span><br><span class="line">        <span class="keyword">if</span> choice &gt;= <span class="number">0</span> <span class="keyword">and</span> choice &lt; len(goods):</span><br><span class="line">            print(<span class="string">&#x27;商品:%s  价格:%s&#x27;</span> % (goods[choice][<span class="string">&#x27;name&#x27;</span>], goods[choice][<span class="string">&#x27;price&#x27;</span>]))</span><br><span class="line">            bag.append(goods[choice][<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">            bag_price += goods[choice][<span class="string">&#x27;price&#x27;</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">&quot;输入的编号不存在，请重新输入&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&quot;请输入正确的产品编号&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<hr>
-]]></content>
-      <categories>
-        <category>python_exercise</category>
-      </categories>
-      <tags>
-        <tag>python_exercise</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>py_day01</title>
     <url>/2020/08/09/py-day01/</url>
     <content><![CDATA[<p>python基础<br>变量·字符串·常用操作</p>
@@ -790,6 +754,42 @@ select * from emp right join dep on emp.dep_id = dep.id
       </categories>
       <tags>
         <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>py_day02_exercise</title>
+    <url>/2020/08/09/py-day02-exercise/</url>
+    <content><![CDATA[<p>温故知新</p>
+<a id="more"></a>
+<h3 id="1-根据需求写代码"><a href="#1-根据需求写代码" class="headerlink" title="1.根据需求写代码"></a>1.根据需求写代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;k1&#x27;</span>: <span class="string">&quot;v1&quot;</span>, <span class="string">&quot;k2&quot;</span>: <span class="string">&quot;v2&quot;</span>, <span class="string">&quot;k3&quot;</span>: [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k4&#x27;</span>] = <span class="string">&#x27;v4&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在修改字典中 &quot;k1&quot; 对应的值为 &quot;alex&quot;，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k1&#x27;</span>] = <span class="string">&#x27;alex&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值中追加一个元素 44，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].append(<span class="number">44</span>)</span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># 请在k3对应的值的第 1 个位置插入个元素 18，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].insert(<span class="number">0</span>,<span class="number">18</span>)</span><br><span class="line">print(dic)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-根据需求写代码"><a href="#2-根据需求写代码" class="headerlink" title="2.根据需求写代码"></a>2.根据需求写代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic1 = &#123;</span><br><span class="line"> <span class="string">&#x27;name&#x27;</span>:[<span class="string">&#x27;pounds&#x27;</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>],</span><br><span class="line"> <span class="string">&#x27;job&#x27;</span>:<span class="string">&#x27;teacher&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;51devops&#x27;</span>:&#123;<span class="string">&#x27;szk&#x27;</span>:[<span class="string">&#x27;python1&#x27;</span>,<span class="string">&#x27;python2&#x27;</span>,<span class="number">100</span>]&#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1，将name对应的列表追加⼀个元素’xxx’。</span></span><br><span class="line">dic1[<span class="string">&#x27;name&#x27;</span>].append(<span class="string">&#x27;xxx&#x27;</span>)</span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 2，将name对应的列表中的 pounds ⾸字⺟⼤写。</span></span><br><span class="line">(<span class="number">1</span>)转成大写后upadte</span><br><span class="line">new_words = dic1[<span class="string">&#x27;name&#x27;</span>][<span class="number">0</span>].capitalize()</span><br><span class="line">dic1.update(&#123;<span class="string">&#x27;name&#x27;</span>:[new_words,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>]&#125;)</span><br><span class="line">(<span class="number">2</span>)直接赋值更改</span><br><span class="line">dic1[<span class="string">&#x27;name&#x27;</span>][<span class="number">0</span>] = <span class="string">&#x27;Pounds&#x27;</span></span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 3，51devops 对应的字典加⼀个键值对 ’haoda’,’linux’。</span></span><br><span class="line">dic1[<span class="string">&#x27;51devops&#x27;</span>][<span class="string">&#x27;haoda&#x27;</span>] = <span class="string">&#x27;linux&#x27;</span></span><br><span class="line">print(dic1)</span><br><span class="line"><span class="comment"># 4，将51devops对应的字典中的szk对应的列表中的python2删除</span></span><br><span class="line">dic1[<span class="string">&#x27;51devops&#x27;</span>][<span class="string">&#x27;szk&#x27;</span>].remove(<span class="string">&#x27;python2&#x27;</span>)</span><br><span class="line">print(dic1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-判断以下值那个能做字典的key-？那个能做集合的元素？"><a href="#3-判断以下值那个能做字典的key-？那个能做集合的元素？" class="headerlink" title="3.判断以下值那个能做字典的key ？那个能做集合的元素？"></a>3.判断以下值那个能做字典的key ？那个能做集合的元素？</h3><ul>
+<li>1       ✅</li>
+<li>-1      ✅</li>
+<li>“”      ✅</li>
+<li>None    ✅</li>
+<li>[1,2]   ❌</li>
+<li>(1,)    ✅</li>
+<li>{11,22,33,4} ❌</li>
+<li>{‘name’:’szk’,’age’:18} ❌</li>
+</ul>
+<h3 id="4-将字典的键和值分别追加到-key-list-和-value-list-两个列表中，如："><a href="#4-将字典的键和值分别追加到-key-list-和-value-list-两个列表中，如：" class="headerlink" title="4.将字典的键和值分别追加到 key_list 和 value_list 两个列表中，如："></a>4.将字典的键和值分别追加到 key_list 和 value_list 两个列表中，如：</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">key_list = []</span><br><span class="line">value_list = []</span><br><span class="line">info = &#123;<span class="string">&#x27;k1&#x27;</span>:<span class="string">&#x27;v1&#x27;</span>,<span class="string">&#x27;k2&#x27;</span>:<span class="string">&#x27;v2&#x27;</span>,<span class="string">&#x27;k3&#x27;</span>:<span class="string">&#x27;v3&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> info.items():</span><br><span class="line">    key_list.append(k)</span><br><span class="line">    value_list.append(v)</span><br><span class="line">print(key_list)</span><br><span class="line">print(value_list)</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-字典dic-‘k1’-“v1”-“k2”-“v2”-“k3”-11-22-33"><a href="#5-字典dic-‘k1’-“v1”-“k2”-“v2”-“k3”-11-22-33" class="headerlink" title="5.字典dic = {‘k1’: “v1”, “k2”: “v2”, “k3”: [11,22,33]}"></a>5.字典dic = {‘k1’: “v1”, “k2”: “v2”, “k3”: [11,22,33]}</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;k1&#x27;</span>: <span class="string">&quot;v1&quot;</span>, <span class="string">&quot;k2&quot;</span>: <span class="string">&quot;v2&quot;</span>, <span class="string">&quot;k3&quot;</span>: [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>]&#125;</span><br><span class="line"><span class="comment"># a. 请循环输出所有的key</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> dic.keys():</span><br><span class="line">    print(k)</span><br><span class="line"><span class="comment"># b. 请循环输出所有的value</span></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> dic.values():</span><br><span class="line">    print(v)</span><br><span class="line"><span class="comment"># c. 请循环输出所有的key和value</span></span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> dic.items():</span><br><span class="line">    print(k,v)</span><br><span class="line"><span class="comment"># d. 请在字典中添加一个键值对，&quot;k4&quot;: &quot;v4&quot;，输出添加后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k4&#x27;</span>] = <span class="string">&#x27;v4&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># e. 请在修改字典中 &quot;k1&quot; 对应的值为 &quot;szk&quot;，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k1&#x27;</span>] = <span class="string">&#x27;szk&#x27;</span></span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># f. 请在k3对应的值中追加一个元素 44，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].append(<span class="number">44</span>)</span><br><span class="line">print(dic)</span><br><span class="line"><span class="comment"># g. 请在k3对应的值的第 1 个位置插入个元素 18，输出修改后的字典</span></span><br><span class="line">dic[<span class="string">&#x27;k3&#x27;</span>].insert(<span class="number">0</span>,<span class="number">18</span>)</span><br><span class="line">print(dic)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-请循环打印k2对应的值中的每个元素。"><a href="#6-请循环打印k2对应的值中的每个元素。" class="headerlink" title="6.请循环打印k2对应的值中的每个元素。"></a>6.请循环打印k2对应的值中的每个元素。</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">info = &#123;</span><br><span class="line">    <span class="string">&#x27;k1&#x27;</span>:<span class="string">&#x27;v1&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;k2&#x27;</span>:[(<span class="string">&#x27;pounds&#x27;</span>),(<span class="string">&#x27;szk&#x27;</span>),(<span class="string">&#x27;51devops&#x27;</span>)],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> values <span class="keyword">in</span> info[<span class="string">&#x27;k2&#x27;</span>]:</span><br><span class="line">    print(values)</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-输出商品列表，用户输入序号，显示用户选中的商品"><a href="#7-输出商品列表，用户输入序号，显示用户选中的商品" class="headerlink" title="7.输出商品列表，用户输入序号，显示用户选中的商品"></a>7.输出商品列表，用户输入序号，显示用户选中的商品</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tag = <span class="literal">True</span></span><br><span class="line"><span class="comment">#购物车</span></span><br><span class="line">bag = []</span><br><span class="line"><span class="comment">#购物车商品总价格</span></span><br><span class="line">bag_price = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> tag:</span><br><span class="line">    <span class="keyword">for</span> inx,value <span class="keyword">in</span> enumerate(goods):</span><br><span class="line">          print(inx,value[<span class="string">&#x27;name&#x27;</span>],value[<span class="string">&#x27;price&#x27;</span>])</span><br><span class="line">    choice = input(<span class="string">&quot;请输入商品编号(退出输入Q/q):&quot;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> choice == <span class="string">&#x27;q&#x27;</span> <span class="keyword">or</span> choice == <span class="string">&#x27;Q&#x27;</span>:</span><br><span class="line">        print(<span class="string">&quot;您购买的商品列表:%s,一共消费:%s&quot;</span> %(bag,bag_price))</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span>  choice.isdigit():</span><br><span class="line">        choice = int(choice)</span><br><span class="line">        <span class="keyword">if</span> choice &gt;= <span class="number">0</span> <span class="keyword">and</span> choice &lt; len(goods):</span><br><span class="line">            print(<span class="string">&#x27;商品:%s  价格:%s&#x27;</span> % (goods[choice][<span class="string">&#x27;name&#x27;</span>], goods[choice][<span class="string">&#x27;price&#x27;</span>]))</span><br><span class="line">            bag.append(goods[choice][<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">            bag_price += goods[choice][<span class="string">&#x27;price&#x27;</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">&quot;输入的编号不存在，请重新输入&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&quot;请输入正确的产品编号&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+]]></content>
+      <categories>
+        <category>python_exercise</category>
+      </categories>
+      <tags>
+        <tag>python_exercise</tag>
       </tags>
   </entry>
   <entry>
@@ -1184,95 +1184,6 @@ select * from emp right join dep on emp.dep_id = dep.id
       </tags>
   </entry>
   <entry>
-    <title>py-xadmin</title>
-    <url>/2020/11/20/py-xadmin/</url>
-    <content><![CDATA[<p>Django-xadmin</p>
-<a id="more"></a>
-
-<div id="title">Django-xadmin的介绍</div>
-
-<blockquote>
-<p><code>Django</code>是<code>python</code>的重量级web框架,写得少,做得多,非常适合后端开发,它很大的一个亮点是,自带后台管理模块,但它自带的后台管理有点丑,而<code>Xadmin</code>是基于<code>bootstrap</code>开发的一套后台管理框架,界面非常美观,只需几步就可以替换自带的<code>Django_admin</code></p>
-</blockquote>
-<div id="title">具体的安装步骤</div>
-
-<ol>
-<li>xadmin在python2.x时代的安装方法</li>
-</ol>
-<p>在python2.x时代，安装xadmin是通过如下命令</p>
-<blockquote>
-<p>pip install xadmin </p>
-</blockquote>
-<p>2.<code>xadmin</code>在<code>python3.6.x</code>时代的安装方法</p>
-<p><strong>需要安装如下的包</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install django-<span class="keyword">import</span>-export</span><br><span class="line">pip3 install django-reversion</span><br><span class="line">pip3 install django-formtools==<span class="number">2.1</span></span><br><span class="line">pip3 install future</span><br><span class="line">pip3 install httplib2</span><br><span class="line">pip3 install six</span><br><span class="line">pip3 install django-crispy-forms</span><br></pre></td></tr></table></figure>
-
-<p>2.1 下载<code>xadmin</code></p>
-<blockquote>
-<p><a href="https://github.com/sshwsfc/xadmin">https://github.com/sshwsfc/xadmin</a></p>
-</blockquote>
-<p>2.2、解压缩，得到<code>xadmin</code>文件夹，复制到项目的<code>extra_apps</code>,解压缩，得到<code>xadmin</code>文件夹, 如下图所示：</p>
-<p><img src="https://i.loli.net/2019/06/20/5d0b41759655b82871.jpg" alt="xadmin.jpg"></p>
-<p>2.3、在django中的根目录下创建<code>Python Package</code>，命名为<code>extra_apps</code>（如果不存在此文件夹则创建, 然后 鼠标右键<code>extra_app</code> 随后 <code>mark as sources root</code>）<br>（<code>Python Package</code>是带<code>init</code>文件的，跟普通<code>Package</code>不同）</p>
-<p>创建完<code>extra_apps</code>，需要在<code>settings</code>中配置一下<code>extra_apps</code>。设置为可搜索的路径</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build paths inside the project like this: os.path.join(BASE_DIR, ...)</span></span><br><span class="line">BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))</span><br><span class="line">sys.path.insert(<span class="number">0</span>, os.path.join(BASE_DIR, <span class="string">&#x27;extra_apps&#x27;</span>)) <span class="comment"># 把extra_apps文件夹添加到搜索目录中</span></span><br></pre></td></tr></table></figure>
-
-<p>2.4、把<code>xadmin</code>文件夹复制到<code>extra_apps</code></p>
-<p>2.5、<code>xadmin</code>的配置</p>
-<p><strong>配置到 INSTALLED_APPS</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 显示中文</span></span><br><span class="line"><span class="comment"># Application definition</span></span><br><span class="line"><span class="comment"># LANGUAGE_CODE = &#x27;en-us&#x27;</span></span><br><span class="line">LANGUAGE_CODE = <span class="string">&#x27;zh-hans&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># TIME_ZONE = &#x27;UTC&#x27;</span></span><br><span class="line">TIME_ZONE = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;xadmin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;crispy_forms&#x27;</span>, <span class="comment"># 注意crispy_forms之间是下划线隔开，不是横线</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>2.6、修改<code>urls.py</code>的<code>admin</code></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="comment"># url(&#x27;admin/&#x27;, admin.site.urls),</span></span><br><span class="line">    url(<span class="string">r&#x27;^xadmin/&#x27;</span>, xadmin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>2.7、迁移文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
-
-<p><strong>迁移完成后，我们看到数据库多了几张表</strong></p>
-<p><img src="https://i.loli.net/2019/06/20/5d0b43084942d52028.jpg" alt="xadmintable.jpg"></p>
-<p>2.8、<code>pycharm</code>创建<code>superuser</code> 用户</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
-
-<p>至此完成。</p>
-<p>如果报错，请先把原先旧的<code>app</code>里面<code>admin.py</code>里面的注册代码去掉，再试试</p>
-<p>运行一下项目，访问</p>
-<blockquote>
-<p><a href="http://127.0.0.1:8000/xadmin/">http://127.0.0.1:8000/xadmin/</a></p>
-</blockquote>
-<h4 id="xadmin的使用"><a href="#xadmin的使用" class="headerlink" title="xadmin的使用"></a><div id="title">xadmin的使用</div></h4><p>1.需要在<code>app</code>中创建<code>adminx.py</code>文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> repository <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> xadmin <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserProfileAdmin</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment">### 显示的字段名称</span></span><br><span class="line">    list_display = [<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 搜索时可输入的字段内容</span></span><br><span class="line">    search_fields = [<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;email&#x27;</span>, <span class="string">&#x27;phone&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 点击id可进入详细界面进行编辑（默认的）</span></span><br><span class="line">    list_display_links = (<span class="string">&#x27;id&#x27;</span>,)  </span><br><span class="line">    </span><br><span class="line">    <span class="comment">## 可编辑的列名</span></span><br><span class="line">    list_editable = [<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    <span class="comment"># list_filter = [&#x27;name&#x27; ,&#x27;email&#x27;,&#x27;phone&#x27;,&#x27;mobile&#x27;]</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 每页显示多少条</span></span><br><span class="line">    list_per_page = <span class="number">20</span> </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#根据id排序 </span></span><br><span class="line">    ordering = (<span class="string">&#x27;id&#x27;</span>,)　</span><br><span class="line">    　</span><br><span class="line">    <span class="comment">#设置只读字段　</span></span><br><span class="line">    readonly_fields = (<span class="string">&#x27;user_email&#x27;</span>,) </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#显示本条数据的所有信息</span></span><br><span class="line">    show_detail_fields = [<span class="string">&#x27;asset_name&#x27;</span>] </span><br><span class="line"></span><br><span class="line">xadmin.site.register(models.UserProfile,UserProfileAdmin)</span><br></pre></td></tr></table></figure>
-
-
-<p>3.数据导出<br>如果想要导出<code>Excel</code>数据，需要安装<code>xlwt</code>。</p>
-<p>默认情况下，<code>xadmin</code>会提供<code>Excel</code>，<code>CSV</code>,<code>XML</code>，<code>json</code>四种格式的数据导出，可以通过设置<code>OptionClass</code>的<code>list_export</code>属性来指定使用哪些导出格式（四种格式分别用<code>xls</code>，<code>csv</code>，<code>xml</code>，<code>json</code>表示）或是将<code>list_export</code>设置为<code>None</code>来禁用数据导出功能</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list_export = (<span class="string">&#x27;xls&#x27;</span>, <span class="string">&#x27;xml&#x27;</span>, <span class="string">&#x27;json&#x27;</span>)</span><br><span class="line">list_export_fields = (<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;title&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-
-<p>4.设置全局的配置</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局修改，固定写法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GlobalSettings</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment"># 修改title</span></span><br><span class="line">    site_title = <span class="string">&#x27;xxx后台管理界面&#x27;</span></span><br><span class="line">    <span class="comment"># 修改footer</span></span><br><span class="line">    site_footer = <span class="string">&#x27;xxx的公司&#x27;</span></span><br><span class="line">    <span class="comment"># 收起菜单</span></span><br><span class="line">    menu_style = <span class="string">&#x27;accordion&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 设置 models图标</span></span><br><span class="line">    <span class="comment"># https://v3.bootcss.com/components/</span></span><br><span class="line">    <span class="comment"># http://www.yeahzan.com/fa/facss.html</span></span><br><span class="line">    global_search_models = [models.Disk, models.Server]</span><br><span class="line">    global_models_icon = &#123;</span><br><span class="line">        <span class="comment"># Server: &quot;glyphicon glyphicon-tree-conifer&quot;, Pool: &quot;fa fa-cloud&quot;</span></span><br><span class="line">        models.Server: <span class="string">&quot;fa fa-linux&quot;</span>, models.Disk: <span class="string">&quot;fa fa-cloud&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 将title和footer信息进行注册</span></span><br><span class="line">xadmin.site.register(views.CommAdminView,GlobalSettings)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>图表显示</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data_charts = &#123;</span><br><span class="line">        <span class="string">&quot;host_service_type_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;部门机器使用情况&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;business_unit&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;business_unit&quot;</span>),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.8</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;host_idc_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;机房统计&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;idc&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;idc&quot;</span>,),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.3</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>注册模型与对应的管理类</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">xadmin.site.register(models.Disk, DiskAdmin)</span><br><span class="line">xadmin.site.register(models.Server, ServerAdmin)</span><br><span class="line">xadmin.site.register(models.IDC, IDCAdmin)</span><br><span class="line">xadmin.site.register(models.UserProfile, UserProfileAdmin)</span><br><span class="line">xadmin.site.register(models.UserGroup, UserGroupAdmin)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>​    </p>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>pycharm使用</title>
     <url>/2020/10/25/pycharm%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<p>Pycharm使用</p>
@@ -1366,6 +1277,183 @@ select * from emp right join dep on emp.dep_id = dep.id
       </categories>
       <tags>
         <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>py-xadmin</title>
+    <url>/2020/11/20/py-xadmin/</url>
+    <content><![CDATA[<p>Django-xadmin</p>
+<a id="more"></a>
+
+<div id="title">Django-xadmin的介绍</div>
+
+<blockquote>
+<p><code>Django</code>是<code>python</code>的重量级web框架,写得少,做得多,非常适合后端开发,它很大的一个亮点是,自带后台管理模块,但它自带的后台管理有点丑,而<code>Xadmin</code>是基于<code>bootstrap</code>开发的一套后台管理框架,界面非常美观,只需几步就可以替换自带的<code>Django_admin</code></p>
+</blockquote>
+<div id="title">具体的安装步骤</div>
+
+<ol>
+<li>xadmin在python2.x时代的安装方法</li>
+</ol>
+<p>在python2.x时代，安装xadmin是通过如下命令</p>
+<blockquote>
+<p>pip install xadmin </p>
+</blockquote>
+<p>2.<code>xadmin</code>在<code>python3.6.x</code>时代的安装方法</p>
+<p><strong>需要安装如下的包</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install django-<span class="keyword">import</span>-export</span><br><span class="line">pip3 install django-reversion</span><br><span class="line">pip3 install django-formtools==<span class="number">2.1</span></span><br><span class="line">pip3 install future</span><br><span class="line">pip3 install httplib2</span><br><span class="line">pip3 install six</span><br><span class="line">pip3 install django-crispy-forms</span><br></pre></td></tr></table></figure>
+
+<p>2.1 下载<code>xadmin</code></p>
+<blockquote>
+<p><a href="https://github.com/sshwsfc/xadmin">https://github.com/sshwsfc/xadmin</a></p>
+</blockquote>
+<p>2.2、解压缩，得到<code>xadmin</code>文件夹，复制到项目的<code>extra_apps</code>,解压缩，得到<code>xadmin</code>文件夹, 如下图所示：</p>
+<p><img src="https://i.loli.net/2019/06/20/5d0b41759655b82871.jpg" alt="xadmin.jpg"></p>
+<p>2.3、在django中的根目录下创建<code>Python Package</code>，命名为<code>extra_apps</code>（如果不存在此文件夹则创建, 然后 鼠标右键<code>extra_app</code> 随后 <code>mark as sources root</code>）<br>（<code>Python Package</code>是带<code>init</code>文件的，跟普通<code>Package</code>不同）</p>
+<p>创建完<code>extra_apps</code>，需要在<code>settings</code>中配置一下<code>extra_apps</code>。设置为可搜索的路径</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build paths inside the project like this: os.path.join(BASE_DIR, ...)</span></span><br><span class="line">BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))</span><br><span class="line">sys.path.insert(<span class="number">0</span>, os.path.join(BASE_DIR, <span class="string">&#x27;extra_apps&#x27;</span>)) <span class="comment"># 把extra_apps文件夹添加到搜索目录中</span></span><br></pre></td></tr></table></figure>
+
+<p>2.4、把<code>xadmin</code>文件夹复制到<code>extra_apps</code></p>
+<p>2.5、<code>xadmin</code>的配置</p>
+<p><strong>配置到 INSTALLED_APPS</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 显示中文</span></span><br><span class="line"><span class="comment"># Application definition</span></span><br><span class="line"><span class="comment"># LANGUAGE_CODE = &#x27;en-us&#x27;</span></span><br><span class="line">LANGUAGE_CODE = <span class="string">&#x27;zh-hans&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># TIME_ZONE = &#x27;UTC&#x27;</span></span><br><span class="line">TIME_ZONE = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;xadmin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;crispy_forms&#x27;</span>, <span class="comment"># 注意crispy_forms之间是下划线隔开，不是横线</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>2.6、修改<code>urls.py</code>的<code>admin</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="comment"># url(&#x27;admin/&#x27;, admin.site.urls),</span></span><br><span class="line">    url(<span class="string">r&#x27;^xadmin/&#x27;</span>, xadmin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>2.7、迁移文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
+
+<p><strong>迁移完成后，我们看到数据库多了几张表</strong></p>
+<p><img src="https://i.loli.net/2019/06/20/5d0b43084942d52028.jpg" alt="xadmintable.jpg"></p>
+<p>2.8、<code>pycharm</code>创建<code>superuser</code> 用户</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
+
+<p>至此完成。</p>
+<p>如果报错，请先把原先旧的<code>app</code>里面<code>admin.py</code>里面的注册代码去掉，再试试</p>
+<p>运行一下项目，访问</p>
+<blockquote>
+<p><a href="http://127.0.0.1:8000/xadmin/">http://127.0.0.1:8000/xadmin/</a></p>
+</blockquote>
+<h4 id="xadmin的使用"><a href="#xadmin的使用" class="headerlink" title="xadmin的使用"></a><div id="title">xadmin的使用</div></h4><p>1.需要在<code>app</code>中创建<code>adminx.py</code>文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xadmin</span><br><span class="line"><span class="keyword">from</span> repository <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> xadmin <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserProfileAdmin</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment">### 显示的字段名称</span></span><br><span class="line">    list_display = [<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 搜索时可输入的字段内容</span></span><br><span class="line">    search_fields = [<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;email&#x27;</span>, <span class="string">&#x27;phone&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 点击id可进入详细界面进行编辑（默认的）</span></span><br><span class="line">    list_display_links = (<span class="string">&#x27;id&#x27;</span>,)  </span><br><span class="line">    </span><br><span class="line">    <span class="comment">## 可编辑的列名</span></span><br><span class="line">    list_editable = [<span class="string">&#x27;name&#x27;</span> ,<span class="string">&#x27;email&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;mobile&#x27;</span>]</span><br><span class="line">    <span class="comment"># list_filter = [&#x27;name&#x27; ,&#x27;email&#x27;,&#x27;phone&#x27;,&#x27;mobile&#x27;]</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 每页显示多少条</span></span><br><span class="line">    list_per_page = <span class="number">20</span> </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#根据id排序 </span></span><br><span class="line">    ordering = (<span class="string">&#x27;id&#x27;</span>,)　</span><br><span class="line">    　</span><br><span class="line">    <span class="comment">#设置只读字段　</span></span><br><span class="line">    readonly_fields = (<span class="string">&#x27;user_email&#x27;</span>,) </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#显示本条数据的所有信息</span></span><br><span class="line">    show_detail_fields = [<span class="string">&#x27;asset_name&#x27;</span>] </span><br><span class="line"></span><br><span class="line">xadmin.site.register(models.UserProfile,UserProfileAdmin)</span><br></pre></td></tr></table></figure>
+
+
+<p>3.数据导出<br>如果想要导出<code>Excel</code>数据，需要安装<code>xlwt</code>。</p>
+<p>默认情况下，<code>xadmin</code>会提供<code>Excel</code>，<code>CSV</code>,<code>XML</code>，<code>json</code>四种格式的数据导出，可以通过设置<code>OptionClass</code>的<code>list_export</code>属性来指定使用哪些导出格式（四种格式分别用<code>xls</code>，<code>csv</code>，<code>xml</code>，<code>json</code>表示）或是将<code>list_export</code>设置为<code>None</code>来禁用数据导出功能</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list_export = (<span class="string">&#x27;xls&#x27;</span>, <span class="string">&#x27;xml&#x27;</span>, <span class="string">&#x27;json&#x27;</span>)</span><br><span class="line">list_export_fields = (<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;title&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p>4.设置全局的配置</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局修改，固定写法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GlobalSettings</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment"># 修改title</span></span><br><span class="line">    site_title = <span class="string">&#x27;xxx后台管理界面&#x27;</span></span><br><span class="line">    <span class="comment"># 修改footer</span></span><br><span class="line">    site_footer = <span class="string">&#x27;xxx的公司&#x27;</span></span><br><span class="line">    <span class="comment"># 收起菜单</span></span><br><span class="line">    menu_style = <span class="string">&#x27;accordion&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 设置 models图标</span></span><br><span class="line">    <span class="comment"># https://v3.bootcss.com/components/</span></span><br><span class="line">    <span class="comment"># http://www.yeahzan.com/fa/facss.html</span></span><br><span class="line">    global_search_models = [models.Disk, models.Server]</span><br><span class="line">    global_models_icon = &#123;</span><br><span class="line">        <span class="comment"># Server: &quot;glyphicon glyphicon-tree-conifer&quot;, Pool: &quot;fa fa-cloud&quot;</span></span><br><span class="line">        models.Server: <span class="string">&quot;fa fa-linux&quot;</span>, models.Disk: <span class="string">&quot;fa fa-cloud&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 将title和footer信息进行注册</span></span><br><span class="line">xadmin.site.register(views.CommAdminView,GlobalSettings)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>图表显示</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data_charts = &#123;</span><br><span class="line">        <span class="string">&quot;host_service_type_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;部门机器使用情况&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;business_unit&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;business_unit&quot;</span>),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.8</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;host_idc_counts&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>: <span class="string">&#x27;机房统计&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;x-field&#x27;</span>: <span class="string">&quot;idc&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;y-field&#x27;</span>: (<span class="string">&quot;idc&quot;</span>,),</span><br><span class="line">            <span class="string">&#x27;option&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;series&quot;</span>: &#123;<span class="string">&quot;bars&quot;</span>: &#123;<span class="string">&quot;align&quot;</span>: <span class="string">&quot;center&quot;</span>, <span class="string">&quot;barWidth&quot;</span>: <span class="number">0.3</span>, <span class="string">&quot;show&quot;</span>: <span class="literal">True</span>&#125;&#125;,</span><br><span class="line">                <span class="string">&quot;xaxis&quot;</span>: &#123;<span class="string">&quot;aggregate&quot;</span>: <span class="string">&quot;count&quot;</span>, <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>注册模型与对应的管理类</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">xadmin.site.register(models.Disk, DiskAdmin)</span><br><span class="line">xadmin.site.register(models.Server, ServerAdmin)</span><br><span class="line">xadmin.site.register(models.IDC, IDCAdmin)</span><br><span class="line">xadmin.site.register(models.UserProfile, UserProfileAdmin)</span><br><span class="line">xadmin.site.register(models.UserGroup, UserGroupAdmin)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    </p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>发布方式对比</title>
+    <url>/2020/08/13/%E5%8F%91%E5%B8%83%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94/</url>
+    <content><![CDATA[<p>灰度、蓝绿、ABtest发布等部署方案对比</p>
+<a id="more"></a>
+<h2 id="蓝绿发布（Blue-Green-Deployment）"><a href="#蓝绿发布（Blue-Green-Deployment）" class="headerlink" title="蓝绿发布（Blue/Green Deployment）"></a>蓝绿发布（Blue/Green Deployment）</h2><ol>
+<li>定义</li>
+</ol>
+<p>蓝绿部署是不停老版本，部署新版本然后进行测试。确认OK后将流量切到新版本，然后老版本同时也升级到新版本。</p>
+<ol start="2">
+<li>特点</li>
+</ol>
+<p>蓝绿部署无需停机，并且风险较小。</p>
+<ol start="3">
+<li>部署过程</li>
+</ol>
+<p>部署版本 1 的应用（初始的状态）<br>所有外部请求的流量都打到这个版本上。<br>部署版本 2 的应用<br>版本 2 的代码与版本 1 不同(新功能、Bug修复等)。</p>
+<p>将流量从版本 1 切换到版本 2。<br>如版本 2 测试正常，就删除版本 1 正在使用的资源（例如实例），从此正式用版本 2。<br>4. 小结</p>
+<p>从过程不难发现，在部署的过程中，我们的应用始终在线。并且新版本上线的过程中，并没有修改老版本的任何内容，在部署期间，老版本的状态不受影响，这样风险很小。并且只要老版本的资源不被删除，理论上，我们可以在任何时间回滚到老版本。</p>
+<ol start="5">
+<li>蓝绿发布的注意事项</li>
+</ol>
+<p>当你切换到蓝色环境时，需要妥当处理未完成的业务和新的业务。如果你的数据库后端无法处理，会是一个比较麻烦的问题。</p>
+<p>可能会出现需要同时处理微服务架构应用和传统架构应用的情况，如果在蓝绿部署中协调不好这两者，还是有可能会导致服务停止。<br>需要提前考虑数据库与应用部署同步迁移/回滚的问题。<br>蓝绿部署需要有基础设施支持。<br>在非隔离基础架构（ VM 、 Docker 等）上执行蓝绿部署，蓝色环境和绿色环境有被摧毁的风险。<br>6. 优势和不足</p>
+<p>优势<br>升级切换和回退速度非常快。</p>
+<p>不足<br>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响。</p>
+<p>需要两倍机器资源。</p>
+<ol start="7">
+<li>适用场合</li>
+</ol>
+<p>对用户体验有一定容忍度的场景。<br>机器资源有富余或者可以按需分配（AWS 云，或自建容器云）。</p>
+<h2 id="灰度发布"><a href="#灰度发布" class="headerlink" title="灰度发布"></a>灰度发布</h2><ol>
+<li>定义</li>
+</ol>
+<p>灰度发布是指在黑与白之间，能够平滑过渡的一种发布方式。AB Test 就是一种灰度发布方式，让一部分用户继续用 A，一部分用户开始用 B，如果用户对 B 没有什么反对意见，那么逐步扩大范围，把所有用户都迁移到 B 上面来。灰度发布可以保证整体系统的稳定，在初始灰度的时候就可以发现、调整问题，以保证其影响度。</p>
+<ol start="2">
+<li><p>A/B Testing<br>A/B 测试是用来测试应用功能表现的方法，例如可用性、受欢迎程度、可见性等等。 A/B 测试通常用在应用的前端上，不过当然需要后端来支持。<br>A/B 测试与蓝绿部署的区别在于， A/B 测试目的在于通过科学的实验设计、采样样本代表性、流量分割与小流量测试等方式来获得具有代表性的实验结论，并确信该结论在推广到全部流量可信；蓝绿部署的目的是安全稳定地发布新版本应用，并在必要时回滚。</p>
+</li>
+<li><p>金丝雀发布</p>
+</li>
+</ol>
+<p>我们平常所说的金丝雀部署也是灰度发布的一种方式，在原有版本可用的情况下，同时部署一个新版本应用作为「金丝雀」服务器来测试新版本的性能和表现，以保障整体系统稳定的情况下，尽早发现、调整问题。</p>
+<blockquote>
+<p>矿井中的金丝雀：17 世纪，英国矿井工人发现，金丝雀对瓦斯这种气体十分敏感。空气中哪怕有极其微量的瓦斯，金丝雀也会停止歌唱；当瓦斯含量超过一定限度时，虽然鲁钝的人类毫无察觉，金丝雀却早已毒发身亡。当时在采矿设备相对简陋的条件下，工人们每次下井都会带上一只金丝雀作为瓦斯检测指标，以便在危险状况下紧急撤离。</p>
+</blockquote>
+<p>灰度发布／金丝雀发布由以下几个步骤组成：</p>
+<p>准备好部署各个阶段的工件，包括：构建工件，测试脚本，配置文件和部署清单文件。<br>从负载均衡列表中移除掉「金丝雀」服务器。<br>升级「金丝雀」应用（排掉原有流量并进行部署）。<br>对应用进行自动化测试。<br>将「金丝雀」服务器重新添加到负载均衡列表中（连通性和健康检查）。<br>如果「金丝雀」在线使用测试成功，升级剩余的其他服务器（否则就回滚）。<br>除此之外灰度发布还可以设置路由权重，动态调整不同的权重来进行新老版本的验证。</p>
+<ol start="4">
+<li>优势和不足</li>
+</ol>
+<p>优势<br>用户体验影响小，灰度发布过程出现问题只影响少量用户。</p>
+<p>不足<br>发布自动化程度不够，发布期间可引发服务中断。</p>
+<h2 id="滚动发布（Rolling-Update-Deployment）"><a href="#滚动发布（Rolling-Update-Deployment）" class="headerlink" title="滚动发布（Rolling Update Deployment）"></a>滚动发布（Rolling Update Deployment）</h2><p>在金丝雀发布基础上的进一步优化改进，是一种自动化程度较高的发布方式，用户体验比较平滑，是目前成熟型技术组织所采用的主流发布方式。</p>
+<ol>
+<li>定义</li>
+</ol>
+<p>滚动发布：一般是取出一个或者多个服务器停止服务，执行更新，并重新将其投入使用。周而复始，直到集群中所有的实例都更新成新版本。</p>
+<ol start="2">
+<li>特点</li>
+</ol>
+<p>这种部署方式相对于蓝绿部署，更加节约资源——它不需要运行两个集群、两倍的实例数。我们可以部分部署，例如每次只取出集群的 20% 进行升级。</p>
+<ol start="3">
+<li>部署过程</li>
+</ol>
+<p>滚动式发布一般先发 1 台，或者一个小比例，如 2% 服务器，主要做流量验证用，类似金丝雀 (Canary) 测试。<br>滚动式发布需要比较复杂的发布工具和智能 LB，支持平滑的版本替换和流量拉入拉出。<br>每次发布时，先将老版本 V1 流量从 LB 上摘除，然后清除老版本，发新版本 V2，再将 LB 流量接入新版本。这样可以尽量保证用户体验不受影响。<br>一次滚动式发布一般由若干个发布批次组成，每批的数量一般是可以配置的（可以通过发布模板定义）。例如第一批 1 台（金丝雀），第二批 10%，第三批 50%，第四批 100%。每个批次之间留观察间隔，通过手工验证或监控反馈确保没有问题再发下一批次，所以总体上滚动式发布过程是比较缓慢的 (其中金丝雀的时间一般会比后续批次更长，比如金丝雀 10 分钟，后续间隔 2 分钟)。<br>回退是发布的逆过程，将新版本流量从 LB 上摘除，清除新版本，发老版本，再将 LB 流量接入老版本。和发布过程一样，回退过程一般也比较慢的。<br>4. 优势和不足</p>
+<p>优势<br>用户体验影响小，体验较平滑。</p>
+<p>不足<br>发布和回退时间比较缓慢。</p>
+<p>发布工具比较复杂，LB 需要平滑的流量摘除和拉入能力。</p>
+<h2 id="其它发布方式"><a href="#其它发布方式" class="headerlink" title="其它发布方式"></a>其它发布方式</h2><p>上述都是偏传统的发布方式，能覆盖大部分应用发布场景。针对一些关键新功能的上线发布，或者一些特定的场景，还有一些特殊的发布方式。</p>
+<p>功能开关发布</p>
+<p>利用代码中的功能开关（Feature Flag/Toggle/Switch）来控制发布逻辑，一般不需要复杂的发布工具和智能 LB 配合，是一种相对比较低成本和简单的发布方式。这种方式也是支持现代 DevOps 理念，研发人员可以灵活定制和自助完成的发布方式。功能开关的原理如下图所示：</p>
+<ol>
+<li>部署过程</li>
+</ol>
+<p>功能开关发布需要一个配置中心或者开关中心这样的服务支持，例如携程的 Apollo 配置中心或者开源的 FF4J，这些都支持开关发布。业界还有专门的功能开关 SaaS 服务，例如 LaunchDarkly。通过配置中心，运维或研发人员可以在运行期动态配置功能开关的值。当然，功能开关发布只是配置中心的一种使用场景，配置中心还能支持其它很多动态配置场景。<br>功能开关服务一般提供客户端 SDK，方便开发人员集成。在运行期，客户端 SDK 会同步最新的开关值，技术实现有推方式 (push)，也有拉方式 (pull)，或者推拉结合方式。<br>新功能（V2 new feature）和老功能（V1 old feature）住在同一套代码中，新功能隐藏在开关后面，如果开关没有打开，则走老代码逻辑，如果开关打开，则走新代码逻辑。技术实现上可以理解为一个简单的 if/else 逻辑。<br>应用上线后，开关先不打开，然后运维或研发人员通过开关中心打开新功能，经过流量验证新功能没有问题，则发布完成；如果有问题，则随时可以通过开关中心切回老功能逻辑。<br>2. 优势和不足</p>
+<p>优势<br>升级切换和回退速度非常快。</p>
+<p>相对于复杂的发布工具，实施比较简单，成本相对低廉。</p>
+<p>研发能够灵活定制发布逻辑，支持 DevOps 自助发布。</p>
+<p>不足<br>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响。</p>
+<p>对代码有侵入，代码逻辑会变复杂，需要定期清理老版本逻辑，维护成本变高。</p>
+]]></content>
+      <categories>
+        <category>ops</category>
+      </categories>
+      <tags>
+        <tag>deploy</tag>
       </tags>
   </entry>
   <entry>
@@ -1491,94 +1579,6 @@ select * from emp right join dep on emp.dep_id = dep.id
       </categories>
       <tags>
         <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>发布方式对比</title>
-    <url>/2020/08/13/%E5%8F%91%E5%B8%83%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94/</url>
-    <content><![CDATA[<p>灰度、蓝绿、ABtest发布等部署方案对比</p>
-<a id="more"></a>
-<h2 id="蓝绿发布（Blue-Green-Deployment）"><a href="#蓝绿发布（Blue-Green-Deployment）" class="headerlink" title="蓝绿发布（Blue/Green Deployment）"></a>蓝绿发布（Blue/Green Deployment）</h2><ol>
-<li>定义</li>
-</ol>
-<p>蓝绿部署是不停老版本，部署新版本然后进行测试。确认OK后将流量切到新版本，然后老版本同时也升级到新版本。</p>
-<ol start="2">
-<li>特点</li>
-</ol>
-<p>蓝绿部署无需停机，并且风险较小。</p>
-<ol start="3">
-<li>部署过程</li>
-</ol>
-<p>部署版本 1 的应用（初始的状态）<br>所有外部请求的流量都打到这个版本上。<br>部署版本 2 的应用<br>版本 2 的代码与版本 1 不同(新功能、Bug修复等)。</p>
-<p>将流量从版本 1 切换到版本 2。<br>如版本 2 测试正常，就删除版本 1 正在使用的资源（例如实例），从此正式用版本 2。<br>4. 小结</p>
-<p>从过程不难发现，在部署的过程中，我们的应用始终在线。并且新版本上线的过程中，并没有修改老版本的任何内容，在部署期间，老版本的状态不受影响，这样风险很小。并且只要老版本的资源不被删除，理论上，我们可以在任何时间回滚到老版本。</p>
-<ol start="5">
-<li>蓝绿发布的注意事项</li>
-</ol>
-<p>当你切换到蓝色环境时，需要妥当处理未完成的业务和新的业务。如果你的数据库后端无法处理，会是一个比较麻烦的问题。</p>
-<p>可能会出现需要同时处理微服务架构应用和传统架构应用的情况，如果在蓝绿部署中协调不好这两者，还是有可能会导致服务停止。<br>需要提前考虑数据库与应用部署同步迁移/回滚的问题。<br>蓝绿部署需要有基础设施支持。<br>在非隔离基础架构（ VM 、 Docker 等）上执行蓝绿部署，蓝色环境和绿色环境有被摧毁的风险。<br>6. 优势和不足</p>
-<p>优势<br>升级切换和回退速度非常快。</p>
-<p>不足<br>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响。</p>
-<p>需要两倍机器资源。</p>
-<ol start="7">
-<li>适用场合</li>
-</ol>
-<p>对用户体验有一定容忍度的场景。<br>机器资源有富余或者可以按需分配（AWS 云，或自建容器云）。</p>
-<h2 id="灰度发布"><a href="#灰度发布" class="headerlink" title="灰度发布"></a>灰度发布</h2><ol>
-<li>定义</li>
-</ol>
-<p>灰度发布是指在黑与白之间，能够平滑过渡的一种发布方式。AB Test 就是一种灰度发布方式，让一部分用户继续用 A，一部分用户开始用 B，如果用户对 B 没有什么反对意见，那么逐步扩大范围，把所有用户都迁移到 B 上面来。灰度发布可以保证整体系统的稳定，在初始灰度的时候就可以发现、调整问题，以保证其影响度。</p>
-<ol start="2">
-<li><p>A/B Testing<br>A/B 测试是用来测试应用功能表现的方法，例如可用性、受欢迎程度、可见性等等。 A/B 测试通常用在应用的前端上，不过当然需要后端来支持。<br>A/B 测试与蓝绿部署的区别在于， A/B 测试目的在于通过科学的实验设计、采样样本代表性、流量分割与小流量测试等方式来获得具有代表性的实验结论，并确信该结论在推广到全部流量可信；蓝绿部署的目的是安全稳定地发布新版本应用，并在必要时回滚。</p>
-</li>
-<li><p>金丝雀发布</p>
-</li>
-</ol>
-<p>我们平常所说的金丝雀部署也是灰度发布的一种方式，在原有版本可用的情况下，同时部署一个新版本应用作为「金丝雀」服务器来测试新版本的性能和表现，以保障整体系统稳定的情况下，尽早发现、调整问题。</p>
-<blockquote>
-<p>矿井中的金丝雀：17 世纪，英国矿井工人发现，金丝雀对瓦斯这种气体十分敏感。空气中哪怕有极其微量的瓦斯，金丝雀也会停止歌唱；当瓦斯含量超过一定限度时，虽然鲁钝的人类毫无察觉，金丝雀却早已毒发身亡。当时在采矿设备相对简陋的条件下，工人们每次下井都会带上一只金丝雀作为瓦斯检测指标，以便在危险状况下紧急撤离。</p>
-</blockquote>
-<p>灰度发布／金丝雀发布由以下几个步骤组成：</p>
-<p>准备好部署各个阶段的工件，包括：构建工件，测试脚本，配置文件和部署清单文件。<br>从负载均衡列表中移除掉「金丝雀」服务器。<br>升级「金丝雀」应用（排掉原有流量并进行部署）。<br>对应用进行自动化测试。<br>将「金丝雀」服务器重新添加到负载均衡列表中（连通性和健康检查）。<br>如果「金丝雀」在线使用测试成功，升级剩余的其他服务器（否则就回滚）。<br>除此之外灰度发布还可以设置路由权重，动态调整不同的权重来进行新老版本的验证。</p>
-<ol start="4">
-<li>优势和不足</li>
-</ol>
-<p>优势<br>用户体验影响小，灰度发布过程出现问题只影响少量用户。</p>
-<p>不足<br>发布自动化程度不够，发布期间可引发服务中断。</p>
-<h2 id="滚动发布（Rolling-Update-Deployment）"><a href="#滚动发布（Rolling-Update-Deployment）" class="headerlink" title="滚动发布（Rolling Update Deployment）"></a>滚动发布（Rolling Update Deployment）</h2><p>在金丝雀发布基础上的进一步优化改进，是一种自动化程度较高的发布方式，用户体验比较平滑，是目前成熟型技术组织所采用的主流发布方式。</p>
-<ol>
-<li>定义</li>
-</ol>
-<p>滚动发布：一般是取出一个或者多个服务器停止服务，执行更新，并重新将其投入使用。周而复始，直到集群中所有的实例都更新成新版本。</p>
-<ol start="2">
-<li>特点</li>
-</ol>
-<p>这种部署方式相对于蓝绿部署，更加节约资源——它不需要运行两个集群、两倍的实例数。我们可以部分部署，例如每次只取出集群的 20% 进行升级。</p>
-<ol start="3">
-<li>部署过程</li>
-</ol>
-<p>滚动式发布一般先发 1 台，或者一个小比例，如 2% 服务器，主要做流量验证用，类似金丝雀 (Canary) 测试。<br>滚动式发布需要比较复杂的发布工具和智能 LB，支持平滑的版本替换和流量拉入拉出。<br>每次发布时，先将老版本 V1 流量从 LB 上摘除，然后清除老版本，发新版本 V2，再将 LB 流量接入新版本。这样可以尽量保证用户体验不受影响。<br>一次滚动式发布一般由若干个发布批次组成，每批的数量一般是可以配置的（可以通过发布模板定义）。例如第一批 1 台（金丝雀），第二批 10%，第三批 50%，第四批 100%。每个批次之间留观察间隔，通过手工验证或监控反馈确保没有问题再发下一批次，所以总体上滚动式发布过程是比较缓慢的 (其中金丝雀的时间一般会比后续批次更长，比如金丝雀 10 分钟，后续间隔 2 分钟)。<br>回退是发布的逆过程，将新版本流量从 LB 上摘除，清除新版本，发老版本，再将 LB 流量接入老版本。和发布过程一样，回退过程一般也比较慢的。<br>4. 优势和不足</p>
-<p>优势<br>用户体验影响小，体验较平滑。</p>
-<p>不足<br>发布和回退时间比较缓慢。</p>
-<p>发布工具比较复杂，LB 需要平滑的流量摘除和拉入能力。</p>
-<h2 id="其它发布方式"><a href="#其它发布方式" class="headerlink" title="其它发布方式"></a>其它发布方式</h2><p>上述都是偏传统的发布方式，能覆盖大部分应用发布场景。针对一些关键新功能的上线发布，或者一些特定的场景，还有一些特殊的发布方式。</p>
-<p>功能开关发布</p>
-<p>利用代码中的功能开关（Feature Flag/Toggle/Switch）来控制发布逻辑，一般不需要复杂的发布工具和智能 LB 配合，是一种相对比较低成本和简单的发布方式。这种方式也是支持现代 DevOps 理念，研发人员可以灵活定制和自助完成的发布方式。功能开关的原理如下图所示：</p>
-<ol>
-<li>部署过程</li>
-</ol>
-<p>功能开关发布需要一个配置中心或者开关中心这样的服务支持，例如携程的 Apollo 配置中心或者开源的 FF4J，这些都支持开关发布。业界还有专门的功能开关 SaaS 服务，例如 LaunchDarkly。通过配置中心，运维或研发人员可以在运行期动态配置功能开关的值。当然，功能开关发布只是配置中心的一种使用场景，配置中心还能支持其它很多动态配置场景。<br>功能开关服务一般提供客户端 SDK，方便开发人员集成。在运行期，客户端 SDK 会同步最新的开关值，技术实现有推方式 (push)，也有拉方式 (pull)，或者推拉结合方式。<br>新功能（V2 new feature）和老功能（V1 old feature）住在同一套代码中，新功能隐藏在开关后面，如果开关没有打开，则走老代码逻辑，如果开关打开，则走新代码逻辑。技术实现上可以理解为一个简单的 if/else 逻辑。<br>应用上线后，开关先不打开，然后运维或研发人员通过开关中心打开新功能，经过流量验证新功能没有问题，则发布完成；如果有问题，则随时可以通过开关中心切回老功能逻辑。<br>2. 优势和不足</p>
-<p>优势<br>升级切换和回退速度非常快。</p>
-<p>相对于复杂的发布工具，实施比较简单，成本相对低廉。</p>
-<p>研发能够灵活定制发布逻辑，支持 DevOps 自助发布。</p>
-<p>不足<br>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响。</p>
-<p>对代码有侵入，代码逻辑会变复杂，需要定期清理老版本逻辑，维护成本变高。</p>
-]]></content>
-      <categories>
-        <category>ops</category>
-      </categories>
-      <tags>
-        <tag>deploy</tag>
       </tags>
   </entry>
   <entry>
@@ -2709,138 +2709,6 @@ select * from emp right join dep on emp.dep_id = dep.id
       </tags>
   </entry>
   <entry>
-    <title>py-day10</title>
-    <url>/2020/10/31/py-day10/</url>
-    <content><![CDATA[<p>Django 分页<br>django的模型字段介绍<br>cookie-session<br>Auth模块</p>
-<a id="more"></a>
-
-
-<h3 id="0-django的admin"><a href="#0-django的admin" class="headerlink" title="0. django的admin"></a>0. django的admin</h3><p>就是django内置了了⼀一套后台管理理系统，因为⾃自带的东⻄西，扩展性不不是很好。临时拿来⽤用可以，但是如果 让⽤用户使⽤用，就不不太推荐<br>需要注册模型类 admin.py</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Register your models here.</span><br><span class="line">from app01 import models</span><br><span class="line">### 注册 admin.site.register(models.Book)</span><br></pre></td></tr></table></figure>
-
-<h3 id="cookie-session"><a href="#cookie-session" class="headerlink" title="cookie session"></a>cookie session</h3><p>session和token都是用来保持会话，功能相同</p>
-<p>一、session机制，原理<br>　　 <img src="/2020/10/31/py-day10/cookie-session.png" class title="objsort"><br>session是服务端存储的一个对象，主要用来存储所有访问过该服务端的客户端的用户信息（也可以存储其他信息），从而实现保持用户会话状态。但是服务器重启时，内存会被销毁，存储的用户信息也就消失了。<br>　　　　不同的用户访问服务端的时候会在session对象中存储键值对，“键”用来存储开启这个用户信息的“钥匙”，在登录成功后，“钥匙”通过cookie返回给客户端，客户端存储为sessionId记录在cookie中。当客户端再次访问时，会默认携带cookie中的sessionId来实现会话机制。</p>
-<ul>
-<li><p>工作原理：</p>
-<ul>
-<li><p>a. 浏览器第一次请求获取登录页面 login。</p>
-</li>
-<li><p>b. 浏览器输入账号密码第二次请求，若输入正确，服务器响应浏览器一个 index 页面和一个键为 sessionid，值为随机字符串的 cookie，即 set_cookie (“sessionid”,随机字符串)。</p>
-</li>
-<li><p>c. 服务器内部在 django.session 表中记录一条数据。</p>
-<p>  django.session 表中有三个字段。</p>
-<p>  session_key：存的是随机字符串，即响应给浏览器的 cookie 的 sessionid 键对应的值。<br>  session_data：存的是用户的信息，即多个 request.session[“key”]=value，且是密文。<br>  expire_date：存的是该条记录的过期时间（默认14天）</p>
-</li>
-<li><p>d. 浏览器第三次请求其他资源时，携带 cookie :{sessionid:随机字符串}，服务器从 django.session 表中根据该随机字符串取出该用户的数据，供其使用（即保存状态）。</p>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>注意</strong>: django.session 表中保存的是浏览器的信息，而不是每一个用户的信息。 因此， 同一浏览器多个用户请求只保存一条记录（后面覆盖前面）,多个浏览器请求才保存多条记录。</p>
-<p>cookie 弥补了 http 无状态的不足，让服务器知道来的人是”谁”，但是 cookie 以文本的形式保存在浏览器端，安全性较差，且最大只支持 4096 字节，所以只通过 cookie 识别不同的用户，然后，在对应的 session 里保存私密的信息以及超过 4096 字节的文本。</p>
-<p>session是基于cookie的。<br>cookie的数据4k左右<br>cookie存储数据的格式：字符串key=value<br>cookie存储有效期：可以自行通过expires进行具体的日期设置，如果没设置，默认是关闭浏览器时失效。<br>cookie有效范围：当前域名下有效。所以session这种会话存储方式方式只适用于客户端代码和服务端代码运行在同一台服务器上（前后端项目协议、域名、端口号都一致，即在一个项目下）<br>session持久化<br>　　　　用于解决重启服务器后session就消失的问题。在数据库中存储session，而不是存储在内存中。通过包：express-mysql-session</p>
-<p>其它<br>　　　　当客户端存储的cookie失效后，服务端的session不会立即销毁，会有一个延时，服务端会定期清理无效session，不会造成无效数据占用存储空间的问题。</p>
-<p>二、token机制，原理<br>　　<img src="/2020/10/31/py-day10/session-cookie2.png" class title="objsort"></p>
-<p>适用于项目级的前后端分离（前后端代码运行在不同的服务器下）<br>　　　　请求登录时，token和sessionId原理相同，是对key和key对应的用户信息进行加密后的加密字符，登录成功后，会在响应主体中将{token：’字符串’}返回给客户端。客户端通过cookie、sessionStorage、localStorage都可以进行存储。再次请求时不会默认携带，需要在请求拦截器位置给请求头中添加认证字段Authorization携带token信息，服务器端就可以通过token信息查找用户登录状态。</p>
-<p><strong>四. 总结</strong></p>
-<p>1、cookie数据存放在客户的浏览器上，session数据放在服务器上。</p>
-<p>2、cookie不是很安全，别人可以分析存放在本地的cookie并进行cookie欺骗，考虑到安全应当使用session。</p>
-<p>3、session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能，考虑到减轻服务器性能方面，应当使用cookie。</p>
-<p>4、单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie。</p>
-<p>5、可以考虑将登陆信息等重要信息存放为session，其他信息如果需要保留，可以放在cookie中。</p>
-<p>五.应用场景</p>
-<p>登录网站，今输入用户名密码登录了，第二天再打开很多情况下就直接打开了。这个时候用到的一个机制就是cookie。<br>session一个场景是购物车，添加了商品之后客户端处可以知道添加了哪些商品，而服务器端如何判别呢，所以也需要存储一些信息就用到了session<br>服务器可以设置或读取Cookies中包含信息，借此维护用户跟服务器会话中的状态。<br>在刚才的购物场景中，当用户选购了第一项商品，服务器在向用户发送网页的同时，还发送了一段Cookie，记录着那项商品的信息。当用户访问另一个页面，浏览器会把Cookie发送给服务器，于是服务器知道他之前选购了什么。用户继续选购饮料，服务器就在原来那段Cookie里追加新的商品信息。结帐时，服务器读取发送来的Cookie就行了。</p>
-<ul>
-<li>django的使⽤<ul>
-<li>Django cookie 的使用:<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set_cookie() : 服务端给前端设置cooKies键值对 r</span><br><span class="line">equest.COOKIES获取</span><br><span class="line">delete_cookie(): 清楚浏览器器信息</span><br></pre></td></tr></table></figure>
-示例：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def login(request):</span><br><span class="line"></span><br><span class="line">if request.method &#x3D;&#x3D; &quot;GET&quot;:</span><br><span class="line">    return render(request,&quot;login.html&quot;)</span><br><span class="line">username &#x3D; request.POST.get(&#39;username&#39;)</span><br><span class="line">pwd &#x3D; request.POST.get(&#39;pwd&#39;)</span><br><span class="line"></span><br><span class="line">if username &#x3D;&#x3D; &quot;yan&quot; and pwd &#x3D;&#x3D; &quot;123456&quot;:</span><br><span class="line">    rep &#x3D; redirect(&quot;&#x2F;index&#x2F;&quot;)</span><br><span class="line">    #rep.set_cookie(&quot;islogin&quot;, &quot;assdasdasd&quot;)</span><br><span class="line">    rep.set_signed_cookie(&quot;islogin&quot;, &#39;asdasd&#39;, salt&#x3D;&quot;asdasd&quot;)</span><br><span class="line">    return rep</span><br><span class="line">else:</span><br><span class="line">    return redirect(&quot;&#x2F;login&#x2F;&quot;)</span><br><span class="line"></span><br><span class="line">def order(request):</span><br><span class="line">cookie_info &#x3D; request.COOKIES.get(&quot;islogin&quot;)</span><br><span class="line">print(cookie_info)</span><br><span class="line">if cookie_info:</span><br><span class="line">    return HttpResponse(&#39;this is a order.html&#39;)</span><br><span class="line">else:</span><br><span class="line">    return redirect(&quot;&#x2F;login&#x2F;&quot;)</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-</li>
-</ul>
-<pre><code>- django的session使⽤:
-&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;session 设置：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;request.session[&amp;quot;key&amp;quot;] &amp;#x3D; value&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
-执行步骤：
-a. 生成随机字符串
-b. 把随机字符串和设置的键值对保存到 django_session 表的 session_key 和 session_data 里
-c. 设置 cookie：set_cookie(“sessionid”,随机字符串) 响应给浏览器
-
-session 获取：
-&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;request.session.get(&amp;#39;key&amp;#39;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
-执行步骤：
-a. 从 cookie 中获取 sessionid 键的值，即随机字符串。
-b. 根据随机字符串从 django_session 表过滤出记录。
-c. 取出 session_data 字段的数据。
-
-session 删除，删除整条记录（包括 session_key、session_data、expire_date 三个字段）：
-`request.session.flush()`
-删除 session_data 里的其中一组键值对：
-`del request.session[&quot;key&quot;]`
-
-执行步骤：
-    a. 从 cookie 中获取 sessionid 键的值，即随机字符串
-    b. 根据随机字符串从 django_session 表过滤出记录
-    c. 删除过滤出来的记录</code></pre>
-<p>设置session：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">request.session[&#39;is_login&#39;] &#x3D; True</span><br><span class="line">        request.session[&#39;user1&#39;] &#x3D; username</span><br><span class="line">        return redirect(&quot;&#x2F;index&#x2F;&quot;)</span><br></pre></td></tr></table></figure>
-<p>验证session：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">cookie_info = request.session.get(<span class="string">&quot;is_login&quot;</span>)  <span class="comment">### 相当于从session数据表中获取对应的data值，进行解密</span></span><br><span class="line">   print(cookie_info)</span><br><span class="line">   <span class="keyword">if</span> cookie_info:</span><br><span class="line">       <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;this is a order.html&#x27;</span>)</span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>删除sessionid</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">request.session.flush()  <span class="comment"># 删除一条记录(session_key , session_data, expire_date) 三个字段</span></span><br><span class="line"><span class="keyword">return</span> HttpResponse(<span class="string">&quot;退出成功&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render,redirect,HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">request</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> render(request,<span class="string">&quot;login.html&quot;</span>)</span><br><span class="line">    username = request.POST.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    pwd = request.POST.get(<span class="string">&#x27;pwd&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> username == <span class="string">&quot;yan&quot;</span> <span class="keyword">and</span> pwd == <span class="string">&quot;123456&quot;</span>:</span><br><span class="line">        <span class="comment">### cookie做法</span></span><br><span class="line">        <span class="comment"># rep = redirect(&quot;/index/&quot;)</span></span><br><span class="line">        <span class="comment"># rep.set_cookie(&quot;islogin&quot;, &quot;assdasdasd&quot;)</span></span><br><span class="line">        <span class="comment"># rep.set_signed_cookie(&quot;islogin&quot;, &#x27;asdasd&#x27;, salt=&quot;asdasd&quot;)</span></span><br><span class="line">        <span class="comment"># return rep</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">### session做法</span></span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        两步操作：</span></span><br><span class="line"><span class="string">        1. 将数据保存在session数据库中，相当于登记在访客登记表上</span></span><br><span class="line"><span class="string">        2. set_cookie(&quot;session_id&quot;, 随机字符串)</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">        request.session[<span class="string">&#x27;is_login&#x27;</span>] = <span class="literal">True</span></span><br><span class="line">        request.session[<span class="string">&#x27;user1&#x27;</span>] = username</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&quot;/index/&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;this is a index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logout</span>(<span class="params">request</span>):</span></span><br><span class="line">    request.session.flush()  <span class="comment"># 删除一条记录(session_key , session_data, expire_date) 三个字段</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;退出成功&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">order</span>(<span class="params">request</span>):</span></span><br><span class="line">    cookie_info = request.session.get(<span class="string">&quot;is_login&quot;</span>)  <span class="comment">### 相当于从session数据表中获取对应的data值，进行解密</span></span><br><span class="line">    print(cookie_info)</span><br><span class="line">    <span class="keyword">if</span> cookie_info:</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;this is a order.html&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>扩展:分布式session存储</li>
-</ul>
-<h3 id="二-django的模型字段介绍"><a href="#二-django的模型字段介绍" class="headerlink" title="二. django的模型字段介绍"></a>二. django的模型字段介绍</h3><p>⽐比较常⻅见的模型字段:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;1&gt; CharField</span><br><span class="line">#字符串串字段, ⽤用于较短的字符串串.</span><br><span class="line">#CharField 要求必须有⼀一个参数 maxlength, ⽤用于从数据库层和Django校验层限制该字段所 允许的最⼤大字符数</span><br><span class="line"></span><br><span class="line">&lt;2&gt; IntegerField #⽤用于保存⼀一个整数.</span><br><span class="line"></span><br><span class="line">&lt;3&gt; FloatField</span><br><span class="line"># ⼀一个浮点数. 必须 提供两个参数:</span><br><span class="line">#</span><br><span class="line"># 参数 描述</span><br><span class="line"># max_digits 总位数(不不包括⼩小数点和符号)</span><br><span class="line"># decimal_places ⼩小数位数</span><br><span class="line"># 举例例来说, 要保存最⼤大值为 999 (⼩小数点后保存2位),你要这样定义字段: #</span><br><span class="line"># models.FloatField(..., max_digits&#x3D;5, decimal_places&#x3D;2)</span><br><span class="line"></span><br><span class="line">&lt;5&gt; TextField</span><br><span class="line"># ⼀一个容量量很⼤大的⽂文本字段.</span><br><span class="line"># admin ⽤用⼀一个 &lt;textarea&gt; (⽂文本区域)表示该字段数据.(⼀一个多⾏行行编辑框).</span><br><span class="line"></span><br><span class="line">&lt;5&gt; TextField</span><br><span class="line"># ⼀一个容量量很⼤大的⽂文本字段.</span><br><span class="line"># admin ⽤用⼀一个 &lt;textarea&gt; (⽂文本区域)表示该字段数据.(⼀一个多⾏行行编辑框).</span><br><span class="line"></span><br><span class="line">&lt;7&gt; DateField</span><br><span class="line"># ⼀一个⽇日期字段. 共有下列列额外的可选参数:</span><br><span class="line"># Argument</span><br><span class="line"># auto_now &quot;last-modified&quot; 时间戳. # auto_now_add</span><br><span class="line">于表示对象创建时间.</span><br><span class="line">描述 当对象被保存时,⾃自动将该字段的值设置为当前时间.通常⽤用于表示</span><br><span class="line">当对象⾸首次被创建时,⾃自动将该字段的值设置为当前时间.通常⽤用</span><br><span class="line"></span><br><span class="line">&lt;8&gt; DateTimeField</span><br><span class="line"># ⼀一个⽇日期时间字段. 类似 DateField ⽀支持同样的附加选项.</span><br></pre></td></tr></table></figure>
-
-<p>常⻅见的参数:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1、null&#x3D;True 数据库中字段是否可以为空</span><br><span class="line">4、auto_now 和 auto_now_add</span><br><span class="line">  auto_now ⾃自动创建---⽆无论添加或修改，都是当前操作的时间   auto_now_add ⾃自动创建---永远是创建时的时间</span><br><span class="line">5、choices</span><br><span class="line">GENDER_CHOICE &#x3D; (</span><br><span class="line">(u&#39;M&#39;, u&#39;Male&#39;),</span><br><span class="line">(u&#39;F&#39;, u&#39;Female&#39;), )</span><br><span class="line">gender &#x3D; models.CharField(max_length&#x3D;2,choices &#x3D; GENDER_CHOICE)   这⾥里里我们⽤用在内存创建⼀一个关联,来取代再创建⼀一个简单的表来关联 6、max_length</span><br><span class="line">7、default  默认值</span><br><span class="line">9、unique&#x3D;True  不不允许重复 例例如⽤用户名注册时候是不不允许重复的,在username字段⾥里里设置, 不不让重复</span><br><span class="line">10、db_index &#x3D; True  数据库索引</span><br></pre></td></tr></table></figure>
-
-<h3 id="Django-分页"><a href="#Django-分页" class="headerlink" title="Django 分页"></a>Django 分页</h3><ul>
-<li><p>导入分页模块<br><code>from django.core.paginator import Paginator</code></p>
-</li>
-<li><p>查询所有数据列表queryset对象<br><code>book_list = BorrotBook.objects.all()</code></p>
-</li>
-<li><p>实例化对象<br><code>paginator = Paginator(book_list, 10)</code></p>
-</li>
-<li><p>Paginator类对象的属性<br>序号    属性名    说明<br>1    num_pages    返回分页之后的总页数<br>2    page_range    返回分页后的页码列表</p>
-</li>
-</ul>
-<p>Paginator类对象的方法</p>
-<p>序号    方法名    说明<br>1    page(self, number)    返回第number页的page类实例对象</p>
-<p>Page实例对象的属性<br>序号    属性名    说明<br>1    number    返回当前页的页码<br>2    object_list    返回当前页的数据查询集<br>3    paginator    返回对应的Paginator类对象</p>
-<p>page实例对象的方法</p>
-<p>序号    方法名    说明<br>1    has_previous    判断当前页是否有前一页<br>2    has_next    判断当前页是否有下一页<br>3    previous_page_number    返回前一页的页码<br>4    next_page_number    返回下一页的页码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Views.py</span><br><span class="line">bookinfo = models.Book.objects.all() <span class="comment">## [&lt;Book: Book object (1)&gt;, &lt;Book: Book object (2)&gt;, &lt;Book: Book object (3)&gt;]&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> django.core.paginator <span class="keyword">import</span> Paginator</span><br><span class="line">    paginator = Paginator(bookinfo, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">    print(paginator)</span><br><span class="line">    pindex = request.GET.get(<span class="string">&#x27;pindex&#x27;</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    pindex = int(pindex)</span><br><span class="line">    page = paginator.page(pindex)  <span class="comment"># 传递当前页的实例对象到前端</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">## 3. 展示从数据库中获取的内容，美化展示</span></span><br><span class="line">    <span class="comment"># books = models.Book.objects.create(title=&quot;如来神掌&quot;,price=200,publish=&quot;功夫出版社&quot;,pub_date=&quot;2010-10-10&quot;)</span></span><br><span class="line">    print(pindex , page)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&quot;booklist.html&quot;</span>, &#123; <span class="string">&quot;page&quot;</span>: page, <span class="string">&quot;pindex&quot;</span>: pindex&#125;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% for obj in page %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.id &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.title &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.publish &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.price &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.pub_date &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>删除 | 更新&#123;&#123; obj.id &#125;&#125; <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line">&#123;#    <span class="tag">&lt;<span class="name">--底部分页按钮显示--</span>&gt;</span>#&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">nav</span> <span class="attr">aria-label</span>=<span class="string">&quot;Page navigation&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;pagination&quot;</span>&gt;</span></span><br><span class="line">        &#123;#            # 判断当前页是否有上一页#&#125;</span><br><span class="line">        &#123;% if page.has_previous %&#125;</span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/booklist/?pindex=&#123;&#123;page.previous_page_number&#125;&#125;&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;Previous&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="symbol">&amp;laquo;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &#123;% endif %&#125;</span><br><span class="line">        &#123;#    # 循环遍历页码列表，并展示到底部#&#125;</span><br><span class="line">        &#123;% for num in page.paginator.page_range%&#125;</span><br><span class="line">            &#123;%if pindex == num %&#125;</span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;active&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> &gt;</span>&#123;&#123; num &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            &#123;%else%&#125;</span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/booklist/?pindex=&#123;&#123;num&#125;&#125;&quot;</span>&gt;</span>&#123;&#123; num &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            &#123;%endif%&#125;</span><br><span class="line">         &#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line">&#123;#            # 判断当前页是否有下一页#&#125;</span><br><span class="line">         &#123;% if page.has_next %&#125;</span><br><span class="line">             <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/booklist/?pindex=&#123;&#123;page.next_page_number&#125;&#125;&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;Next&quot;</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">span</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="symbol">&amp;raquo;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          &#123;% endif %&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="auth模块"><a href="#auth模块" class="headerlink" title="auth模块"></a>auth模块</h3><p>Django 用户认证（Auth）组件一般用在用户的登录注册上，用于判断当前的用户是否合法，并跳转到登陆成功或失败页面。</p>
-<p>Django 用户认证（Auth）组件需要导入 auth 模块:<br>导入模块</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 认证模块</span></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> auth</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对应数据库</span></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User, AnonymousUser</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.decorators <span class="keyword">import</span> login_required</span><br></pre></td></tr></table></figure>
-
-
-
-<p>使⽤用auth.login() 登录成功的时候，<br><code>request.user的值: zekai &lt;class &#39;django.utils.functional.SimpleLazyObject&#39;&gt;</code><br>如果未登录，则<br><code>request.user的值:AnonymousUser &lt;class &#39;django.utils.functional.SimpleLazyObject&#39;&gt;</code></p>
-<p>示例代码：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render, HttpResponse, redirect</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> auth</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User, AnonymousUser</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.decorators <span class="keyword">import</span> login_required</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># def login(request):</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#     if request.method == &#x27;GET&#x27;:</span></span><br><span class="line"><span class="comment">#         return render(request, &quot;login.html&quot;)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#     username = request.POST.get(&#x27;username&#x27;)</span></span><br><span class="line"><span class="comment">#     pwd = request.POST.get(&#x27;pwd&#x27;)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#     if username == &#x27;zekai&#x27; and pwd == &#x27;123qwe&#x27;:</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         ### cookie的做法</span></span><br><span class="line"><span class="comment">#         # rep = redirect(&quot;/index/&quot;)</span></span><br><span class="line"><span class="comment">#         # rep.set_cookie(&quot;is_login&quot;, &quot;dsbahdbshabdhsja&quot;)</span></span><br><span class="line"><span class="comment">#         # rep.set_signed_cookie(&quot;is_login&quot;, &quot;dsbahdbshabdhsja&quot;, salt=&quot;test123&quot;)</span></span><br><span class="line"><span class="comment">#         # return rep</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         ### session的做法</span></span><br><span class="line"><span class="comment">#         &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#         两步操作:</span></span><br><span class="line"><span class="comment">#         1.将数据保存在session数据库中，相当于登记在访客登记表上</span></span><br><span class="line"><span class="comment">#         2.set_cookie(&quot;sessionid&quot;, 随机字符串)</span></span><br><span class="line"><span class="comment">#         &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#         request.session[&#x27;is_login&#x27;] = True</span></span><br><span class="line"><span class="comment">#         request.session[&#x27;user1&#x27;] = username</span></span><br><span class="line"><span class="comment">#         return redirect(&quot;/index/&quot;)</span></span><br><span class="line"><span class="comment">#     else:</span></span><br><span class="line"><span class="comment">#         return redirect(&#x27;/login/&#x27;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">request</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> render(request, <span class="string">&quot;login.html&quot;</span>)</span><br><span class="line"></span><br><span class="line">    username = request.POST.get(<span class="string">&quot;username&quot;</span>)</span><br><span class="line">    password = request.POST.get(<span class="string">&quot;pwd&quot;</span>)</span><br><span class="line">    user_obj = auth.authenticate(username=username, password=password)</span><br><span class="line"></span><br><span class="line">    print(user_obj.__dict__)</span><br><span class="line">    <span class="comment"># print(user_obj.username)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> user_obj:</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(request.body)</span><br><span class="line">        <span class="comment">### 待解决</span></span><br><span class="line">        path = request.POST.get(<span class="string">&quot;url&quot;</span>) <span class="keyword">or</span> <span class="string">&quot;/index/&quot;</span></span><br><span class="line"></span><br><span class="line">        print(path)</span><br><span class="line">        auth.login(request, user_obj)  <span class="comment">### 此方法相当于 request.session[&#x27;is_login&#x27;] = True</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> redirect(path)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="comment">## OA  ladap</span></span><br><span class="line">    <span class="comment"># User.objects.create_superuser(username=&#x27;zekai&#x27;, email=&quot;zekai@163.com&quot;, password=&quot;123qwe&quot;)</span></span><br><span class="line">    <span class="comment"># User.objects.create_user(username=&quot;test&quot;, password=&#x27;test&#x27;)</span></span><br><span class="line">    <span class="comment"># User.objects.create(username=&quot;test2&quot;, password=&#x27;qweasd&#x27;)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@login_required</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">request</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;this is index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@login_required</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;test1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">order</span>(<span class="params">request</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">### 使用cookie和session方式</span></span><br><span class="line">    <span class="comment"># cookie_info = request.session.get(&quot;is_login&quot;)  ### 相当于从session数据表中获取对应的data值</span></span><br><span class="line">    <span class="comment"># if cookie_info:</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># return HttpResponse(&#x27;this is order.html&#x27;)</span></span><br><span class="line">    <span class="comment"># else:</span></span><br><span class="line">    <span class="comment">#     return redirect(&quot;/login/&quot;)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">## 使用auth模块的方式</span></span><br><span class="line">    print(request.user, type(request.user)) <span class="comment">## zekai &lt;class &#x27;django.utils.functional.SimpleLazyObject&#x27;&gt;</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(request.user, AnonymousUser):</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;this is order.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logout</span>(<span class="params">request</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">### session的方式</span></span><br><span class="line">    <span class="comment"># request.session.flush() # 删除一条记录包括(session_key session_data expire_date)三个字段</span></span><br><span class="line">    <span class="comment"># return redirect(&quot;/login/&quot;)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">### auth模块的方式</span></span><br><span class="line">    ppp = auth.logout(request)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>py-day09</title>
     <url>/2020/10/18/py-day09/</url>
     <content><![CDATA[<p>ORM相关</p>
@@ -3136,6 +3004,138 @@ session 删除，删除整条记录（包括 session_key、session_data、expire
 <p>一对一查询</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查询alex的手机号</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 正向查询</span></span><br><span class="line">    ret=Author.objects.filter(name=<span class="string">&quot;alex&quot;</span>).values(<span class="string">&quot;authordetail__telephone&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 反向查询</span></span><br><span class="line">    ret=AuthorDetail.objects.filter(author__name=<span class="string">&quot;alex&quot;</span>).values(<span class="string">&quot;telephone&quot;</span>)</span><br></pre></td></tr></table></figure>
 
+
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>py-day10</title>
+    <url>/2020/10/31/py-day10/</url>
+    <content><![CDATA[<p>Django 分页<br>django的模型字段介绍<br>cookie-session<br>Auth模块</p>
+<a id="more"></a>
+
+
+<h3 id="0-django的admin"><a href="#0-django的admin" class="headerlink" title="0. django的admin"></a>0. django的admin</h3><p>就是django内置了了⼀一套后台管理理系统，因为⾃自带的东⻄西，扩展性不不是很好。临时拿来⽤用可以，但是如果 让⽤用户使⽤用，就不不太推荐<br>需要注册模型类 admin.py</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Register your models here.</span><br><span class="line">from app01 import models</span><br><span class="line">### 注册 admin.site.register(models.Book)</span><br></pre></td></tr></table></figure>
+
+<h3 id="cookie-session"><a href="#cookie-session" class="headerlink" title="cookie session"></a>cookie session</h3><p>session和token都是用来保持会话，功能相同</p>
+<p>一、session机制，原理<br>　　 <img src="/2020/10/31/py-day10/cookie-session.png" class title="objsort"><br>session是服务端存储的一个对象，主要用来存储所有访问过该服务端的客户端的用户信息（也可以存储其他信息），从而实现保持用户会话状态。但是服务器重启时，内存会被销毁，存储的用户信息也就消失了。<br>　　　　不同的用户访问服务端的时候会在session对象中存储键值对，“键”用来存储开启这个用户信息的“钥匙”，在登录成功后，“钥匙”通过cookie返回给客户端，客户端存储为sessionId记录在cookie中。当客户端再次访问时，会默认携带cookie中的sessionId来实现会话机制。</p>
+<ul>
+<li><p>工作原理：</p>
+<ul>
+<li><p>a. 浏览器第一次请求获取登录页面 login。</p>
+</li>
+<li><p>b. 浏览器输入账号密码第二次请求，若输入正确，服务器响应浏览器一个 index 页面和一个键为 sessionid，值为随机字符串的 cookie，即 set_cookie (“sessionid”,随机字符串)。</p>
+</li>
+<li><p>c. 服务器内部在 django.session 表中记录一条数据。</p>
+<p>  django.session 表中有三个字段。</p>
+<p>  session_key：存的是随机字符串，即响应给浏览器的 cookie 的 sessionid 键对应的值。<br>  session_data：存的是用户的信息，即多个 request.session[“key”]=value，且是密文。<br>  expire_date：存的是该条记录的过期时间（默认14天）</p>
+</li>
+<li><p>d. 浏览器第三次请求其他资源时，携带 cookie :{sessionid:随机字符串}，服务器从 django.session 表中根据该随机字符串取出该用户的数据，供其使用（即保存状态）。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>注意</strong>: django.session 表中保存的是浏览器的信息，而不是每一个用户的信息。 因此， 同一浏览器多个用户请求只保存一条记录（后面覆盖前面）,多个浏览器请求才保存多条记录。</p>
+<p>cookie 弥补了 http 无状态的不足，让服务器知道来的人是”谁”，但是 cookie 以文本的形式保存在浏览器端，安全性较差，且最大只支持 4096 字节，所以只通过 cookie 识别不同的用户，然后，在对应的 session 里保存私密的信息以及超过 4096 字节的文本。</p>
+<p>session是基于cookie的。<br>cookie的数据4k左右<br>cookie存储数据的格式：字符串key=value<br>cookie存储有效期：可以自行通过expires进行具体的日期设置，如果没设置，默认是关闭浏览器时失效。<br>cookie有效范围：当前域名下有效。所以session这种会话存储方式方式只适用于客户端代码和服务端代码运行在同一台服务器上（前后端项目协议、域名、端口号都一致，即在一个项目下）<br>session持久化<br>　　　　用于解决重启服务器后session就消失的问题。在数据库中存储session，而不是存储在内存中。通过包：express-mysql-session</p>
+<p>其它<br>　　　　当客户端存储的cookie失效后，服务端的session不会立即销毁，会有一个延时，服务端会定期清理无效session，不会造成无效数据占用存储空间的问题。</p>
+<p>二、token机制，原理<br>　　<img src="/2020/10/31/py-day10/session-cookie2.png" class title="objsort"></p>
+<p>适用于项目级的前后端分离（前后端代码运行在不同的服务器下）<br>　　　　请求登录时，token和sessionId原理相同，是对key和key对应的用户信息进行加密后的加密字符，登录成功后，会在响应主体中将{token：’字符串’}返回给客户端。客户端通过cookie、sessionStorage、localStorage都可以进行存储。再次请求时不会默认携带，需要在请求拦截器位置给请求头中添加认证字段Authorization携带token信息，服务器端就可以通过token信息查找用户登录状态。</p>
+<p><strong>四. 总结</strong></p>
+<p>1、cookie数据存放在客户的浏览器上，session数据放在服务器上。</p>
+<p>2、cookie不是很安全，别人可以分析存放在本地的cookie并进行cookie欺骗，考虑到安全应当使用session。</p>
+<p>3、session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能，考虑到减轻服务器性能方面，应当使用cookie。</p>
+<p>4、单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie。</p>
+<p>5、可以考虑将登陆信息等重要信息存放为session，其他信息如果需要保留，可以放在cookie中。</p>
+<p>五.应用场景</p>
+<p>登录网站，今输入用户名密码登录了，第二天再打开很多情况下就直接打开了。这个时候用到的一个机制就是cookie。<br>session一个场景是购物车，添加了商品之后客户端处可以知道添加了哪些商品，而服务器端如何判别呢，所以也需要存储一些信息就用到了session<br>服务器可以设置或读取Cookies中包含信息，借此维护用户跟服务器会话中的状态。<br>在刚才的购物场景中，当用户选购了第一项商品，服务器在向用户发送网页的同时，还发送了一段Cookie，记录着那项商品的信息。当用户访问另一个页面，浏览器会把Cookie发送给服务器，于是服务器知道他之前选购了什么。用户继续选购饮料，服务器就在原来那段Cookie里追加新的商品信息。结帐时，服务器读取发送来的Cookie就行了。</p>
+<ul>
+<li>django的使⽤<ul>
+<li>Django cookie 的使用:<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set_cookie() : 服务端给前端设置cooKies键值对 r</span><br><span class="line">equest.COOKIES获取</span><br><span class="line">delete_cookie(): 清楚浏览器器信息</span><br></pre></td></tr></table></figure>
+示例：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def login(request):</span><br><span class="line"></span><br><span class="line">if request.method &#x3D;&#x3D; &quot;GET&quot;:</span><br><span class="line">    return render(request,&quot;login.html&quot;)</span><br><span class="line">username &#x3D; request.POST.get(&#39;username&#39;)</span><br><span class="line">pwd &#x3D; request.POST.get(&#39;pwd&#39;)</span><br><span class="line"></span><br><span class="line">if username &#x3D;&#x3D; &quot;yan&quot; and pwd &#x3D;&#x3D; &quot;123456&quot;:</span><br><span class="line">    rep &#x3D; redirect(&quot;&#x2F;index&#x2F;&quot;)</span><br><span class="line">    #rep.set_cookie(&quot;islogin&quot;, &quot;assdasdasd&quot;)</span><br><span class="line">    rep.set_signed_cookie(&quot;islogin&quot;, &#39;asdasd&#39;, salt&#x3D;&quot;asdasd&quot;)</span><br><span class="line">    return rep</span><br><span class="line">else:</span><br><span class="line">    return redirect(&quot;&#x2F;login&#x2F;&quot;)</span><br><span class="line"></span><br><span class="line">def order(request):</span><br><span class="line">cookie_info &#x3D; request.COOKIES.get(&quot;islogin&quot;)</span><br><span class="line">print(cookie_info)</span><br><span class="line">if cookie_info:</span><br><span class="line">    return HttpResponse(&#39;this is a order.html&#39;)</span><br><span class="line">else:</span><br><span class="line">    return redirect(&quot;&#x2F;login&#x2F;&quot;)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- django的session使⽤:
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;session 设置：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;request.session[&amp;quot;key&amp;quot;] &amp;#x3D; value&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+执行步骤：
+a. 生成随机字符串
+b. 把随机字符串和设置的键值对保存到 django_session 表的 session_key 和 session_data 里
+c. 设置 cookie：set_cookie(“sessionid”,随机字符串) 响应给浏览器
+
+session 获取：
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;request.session.get(&amp;#39;key&amp;#39;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+执行步骤：
+a. 从 cookie 中获取 sessionid 键的值，即随机字符串。
+b. 根据随机字符串从 django_session 表过滤出记录。
+c. 取出 session_data 字段的数据。
+
+session 删除，删除整条记录（包括 session_key、session_data、expire_date 三个字段）：
+`request.session.flush()`
+删除 session_data 里的其中一组键值对：
+`del request.session[&quot;key&quot;]`
+
+执行步骤：
+    a. 从 cookie 中获取 sessionid 键的值，即随机字符串
+    b. 根据随机字符串从 django_session 表过滤出记录
+    c. 删除过滤出来的记录</code></pre>
+<p>设置session：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">request.session[&#39;is_login&#39;] &#x3D; True</span><br><span class="line">        request.session[&#39;user1&#39;] &#x3D; username</span><br><span class="line">        return redirect(&quot;&#x2F;index&#x2F;&quot;)</span><br></pre></td></tr></table></figure>
+<p>验证session：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">cookie_info = request.session.get(<span class="string">&quot;is_login&quot;</span>)  <span class="comment">### 相当于从session数据表中获取对应的data值，进行解密</span></span><br><span class="line">   print(cookie_info)</span><br><span class="line">   <span class="keyword">if</span> cookie_info:</span><br><span class="line">       <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;this is a order.html&#x27;</span>)</span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>删除sessionid</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">request.session.flush()  <span class="comment"># 删除一条记录(session_key , session_data, expire_date) 三个字段</span></span><br><span class="line"><span class="keyword">return</span> HttpResponse(<span class="string">&quot;退出成功&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render,redirect,HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">request</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> render(request,<span class="string">&quot;login.html&quot;</span>)</span><br><span class="line">    username = request.POST.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    pwd = request.POST.get(<span class="string">&#x27;pwd&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> username == <span class="string">&quot;yan&quot;</span> <span class="keyword">and</span> pwd == <span class="string">&quot;123456&quot;</span>:</span><br><span class="line">        <span class="comment">### cookie做法</span></span><br><span class="line">        <span class="comment"># rep = redirect(&quot;/index/&quot;)</span></span><br><span class="line">        <span class="comment"># rep.set_cookie(&quot;islogin&quot;, &quot;assdasdasd&quot;)</span></span><br><span class="line">        <span class="comment"># rep.set_signed_cookie(&quot;islogin&quot;, &#x27;asdasd&#x27;, salt=&quot;asdasd&quot;)</span></span><br><span class="line">        <span class="comment"># return rep</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">### session做法</span></span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        两步操作：</span></span><br><span class="line"><span class="string">        1. 将数据保存在session数据库中，相当于登记在访客登记表上</span></span><br><span class="line"><span class="string">        2. set_cookie(&quot;session_id&quot;, 随机字符串)</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">        request.session[<span class="string">&#x27;is_login&#x27;</span>] = <span class="literal">True</span></span><br><span class="line">        request.session[<span class="string">&#x27;user1&#x27;</span>] = username</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&quot;/index/&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;this is a index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logout</span>(<span class="params">request</span>):</span></span><br><span class="line">    request.session.flush()  <span class="comment"># 删除一条记录(session_key , session_data, expire_date) 三个字段</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;退出成功&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">order</span>(<span class="params">request</span>):</span></span><br><span class="line">    cookie_info = request.session.get(<span class="string">&quot;is_login&quot;</span>)  <span class="comment">### 相当于从session数据表中获取对应的data值，进行解密</span></span><br><span class="line">    print(cookie_info)</span><br><span class="line">    <span class="keyword">if</span> cookie_info:</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;this is a order.html&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>扩展:分布式session存储</li>
+</ul>
+<h3 id="二-django的模型字段介绍"><a href="#二-django的模型字段介绍" class="headerlink" title="二. django的模型字段介绍"></a>二. django的模型字段介绍</h3><p>⽐比较常⻅见的模型字段:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;1&gt; CharField</span><br><span class="line">#字符串串字段, ⽤用于较短的字符串串.</span><br><span class="line">#CharField 要求必须有⼀一个参数 maxlength, ⽤用于从数据库层和Django校验层限制该字段所 允许的最⼤大字符数</span><br><span class="line"></span><br><span class="line">&lt;2&gt; IntegerField #⽤用于保存⼀一个整数.</span><br><span class="line"></span><br><span class="line">&lt;3&gt; FloatField</span><br><span class="line"># ⼀一个浮点数. 必须 提供两个参数:</span><br><span class="line">#</span><br><span class="line"># 参数 描述</span><br><span class="line"># max_digits 总位数(不不包括⼩小数点和符号)</span><br><span class="line"># decimal_places ⼩小数位数</span><br><span class="line"># 举例例来说, 要保存最⼤大值为 999 (⼩小数点后保存2位),你要这样定义字段: #</span><br><span class="line"># models.FloatField(..., max_digits&#x3D;5, decimal_places&#x3D;2)</span><br><span class="line"></span><br><span class="line">&lt;5&gt; TextField</span><br><span class="line"># ⼀一个容量量很⼤大的⽂文本字段.</span><br><span class="line"># admin ⽤用⼀一个 &lt;textarea&gt; (⽂文本区域)表示该字段数据.(⼀一个多⾏行行编辑框).</span><br><span class="line"></span><br><span class="line">&lt;5&gt; TextField</span><br><span class="line"># ⼀一个容量量很⼤大的⽂文本字段.</span><br><span class="line"># admin ⽤用⼀一个 &lt;textarea&gt; (⽂文本区域)表示该字段数据.(⼀一个多⾏行行编辑框).</span><br><span class="line"></span><br><span class="line">&lt;7&gt; DateField</span><br><span class="line"># ⼀一个⽇日期字段. 共有下列列额外的可选参数:</span><br><span class="line"># Argument</span><br><span class="line"># auto_now &quot;last-modified&quot; 时间戳. # auto_now_add</span><br><span class="line">于表示对象创建时间.</span><br><span class="line">描述 当对象被保存时,⾃自动将该字段的值设置为当前时间.通常⽤用于表示</span><br><span class="line">当对象⾸首次被创建时,⾃自动将该字段的值设置为当前时间.通常⽤用</span><br><span class="line"></span><br><span class="line">&lt;8&gt; DateTimeField</span><br><span class="line"># ⼀一个⽇日期时间字段. 类似 DateField ⽀支持同样的附加选项.</span><br></pre></td></tr></table></figure>
+
+<p>常⻅见的参数:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1、null&#x3D;True 数据库中字段是否可以为空</span><br><span class="line">4、auto_now 和 auto_now_add</span><br><span class="line">  auto_now ⾃自动创建---⽆无论添加或修改，都是当前操作的时间   auto_now_add ⾃自动创建---永远是创建时的时间</span><br><span class="line">5、choices</span><br><span class="line">GENDER_CHOICE &#x3D; (</span><br><span class="line">(u&#39;M&#39;, u&#39;Male&#39;),</span><br><span class="line">(u&#39;F&#39;, u&#39;Female&#39;), )</span><br><span class="line">gender &#x3D; models.CharField(max_length&#x3D;2,choices &#x3D; GENDER_CHOICE)   这⾥里里我们⽤用在内存创建⼀一个关联,来取代再创建⼀一个简单的表来关联 6、max_length</span><br><span class="line">7、default  默认值</span><br><span class="line">9、unique&#x3D;True  不不允许重复 例例如⽤用户名注册时候是不不允许重复的,在username字段⾥里里设置, 不不让重复</span><br><span class="line">10、db_index &#x3D; True  数据库索引</span><br></pre></td></tr></table></figure>
+
+<h3 id="Django-分页"><a href="#Django-分页" class="headerlink" title="Django 分页"></a>Django 分页</h3><ul>
+<li><p>导入分页模块<br><code>from django.core.paginator import Paginator</code></p>
+</li>
+<li><p>查询所有数据列表queryset对象<br><code>book_list = BorrotBook.objects.all()</code></p>
+</li>
+<li><p>实例化对象<br><code>paginator = Paginator(book_list, 10)</code></p>
+</li>
+<li><p>Paginator类对象的属性<br>序号    属性名    说明<br>1    num_pages    返回分页之后的总页数<br>2    page_range    返回分页后的页码列表</p>
+</li>
+</ul>
+<p>Paginator类对象的方法</p>
+<p>序号    方法名    说明<br>1    page(self, number)    返回第number页的page类实例对象</p>
+<p>Page实例对象的属性<br>序号    属性名    说明<br>1    number    返回当前页的页码<br>2    object_list    返回当前页的数据查询集<br>3    paginator    返回对应的Paginator类对象</p>
+<p>page实例对象的方法</p>
+<p>序号    方法名    说明<br>1    has_previous    判断当前页是否有前一页<br>2    has_next    判断当前页是否有下一页<br>3    previous_page_number    返回前一页的页码<br>4    next_page_number    返回下一页的页码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Views.py</span><br><span class="line">bookinfo = models.Book.objects.all() <span class="comment">## [&lt;Book: Book object (1)&gt;, &lt;Book: Book object (2)&gt;, &lt;Book: Book object (3)&gt;]&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> django.core.paginator <span class="keyword">import</span> Paginator</span><br><span class="line">    paginator = Paginator(bookinfo, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">    print(paginator)</span><br><span class="line">    pindex = request.GET.get(<span class="string">&#x27;pindex&#x27;</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    pindex = int(pindex)</span><br><span class="line">    page = paginator.page(pindex)  <span class="comment"># 传递当前页的实例对象到前端</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">## 3. 展示从数据库中获取的内容，美化展示</span></span><br><span class="line">    <span class="comment"># books = models.Book.objects.create(title=&quot;如来神掌&quot;,price=200,publish=&quot;功夫出版社&quot;,pub_date=&quot;2010-10-10&quot;)</span></span><br><span class="line">    print(pindex , page)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&quot;booklist.html&quot;</span>, &#123; <span class="string">&quot;page&quot;</span>: page, <span class="string">&quot;pindex&quot;</span>: pindex&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% for obj in page %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.id &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.title &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.publish &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.price &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; obj.pub_date &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>删除 | 更新&#123;&#123; obj.id &#125;&#125; <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line">&#123;#    <span class="tag">&lt;<span class="name">--底部分页按钮显示--</span>&gt;</span>#&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">nav</span> <span class="attr">aria-label</span>=<span class="string">&quot;Page navigation&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;pagination&quot;</span>&gt;</span></span><br><span class="line">        &#123;#            # 判断当前页是否有上一页#&#125;</span><br><span class="line">        &#123;% if page.has_previous %&#125;</span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/booklist/?pindex=&#123;&#123;page.previous_page_number&#125;&#125;&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;Previous&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="symbol">&amp;laquo;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &#123;% endif %&#125;</span><br><span class="line">        &#123;#    # 循环遍历页码列表，并展示到底部#&#125;</span><br><span class="line">        &#123;% for num in page.paginator.page_range%&#125;</span><br><span class="line">            &#123;%if pindex == num %&#125;</span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;active&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> &gt;</span>&#123;&#123; num &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            &#123;%else%&#125;</span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/booklist/?pindex=&#123;&#123;num&#125;&#125;&quot;</span>&gt;</span>&#123;&#123; num &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            &#123;%endif%&#125;</span><br><span class="line">         &#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line">&#123;#            # 判断当前页是否有下一页#&#125;</span><br><span class="line">         &#123;% if page.has_next %&#125;</span><br><span class="line">             <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/booklist/?pindex=&#123;&#123;page.next_page_number&#125;&#125;&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;Next&quot;</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">span</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="symbol">&amp;raquo;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          &#123;% endif %&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="auth模块"><a href="#auth模块" class="headerlink" title="auth模块"></a>auth模块</h3><p>Django 用户认证（Auth）组件一般用在用户的登录注册上，用于判断当前的用户是否合法，并跳转到登陆成功或失败页面。</p>
+<p>Django 用户认证（Auth）组件需要导入 auth 模块:<br>导入模块</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 认证模块</span></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> auth</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对应数据库</span></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User, AnonymousUser</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.decorators <span class="keyword">import</span> login_required</span><br></pre></td></tr></table></figure>
+
+
+
+<p>使⽤用auth.login() 登录成功的时候，<br><code>request.user的值: zekai &lt;class &#39;django.utils.functional.SimpleLazyObject&#39;&gt;</code><br>如果未登录，则<br><code>request.user的值:AnonymousUser &lt;class &#39;django.utils.functional.SimpleLazyObject&#39;&gt;</code></p>
+<p>示例代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render, HttpResponse, redirect</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> auth</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User, AnonymousUser</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.decorators <span class="keyword">import</span> login_required</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># def login(request):</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#     if request.method == &#x27;GET&#x27;:</span></span><br><span class="line"><span class="comment">#         return render(request, &quot;login.html&quot;)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#     username = request.POST.get(&#x27;username&#x27;)</span></span><br><span class="line"><span class="comment">#     pwd = request.POST.get(&#x27;pwd&#x27;)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#     if username == &#x27;zekai&#x27; and pwd == &#x27;123qwe&#x27;:</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         ### cookie的做法</span></span><br><span class="line"><span class="comment">#         # rep = redirect(&quot;/index/&quot;)</span></span><br><span class="line"><span class="comment">#         # rep.set_cookie(&quot;is_login&quot;, &quot;dsbahdbshabdhsja&quot;)</span></span><br><span class="line"><span class="comment">#         # rep.set_signed_cookie(&quot;is_login&quot;, &quot;dsbahdbshabdhsja&quot;, salt=&quot;test123&quot;)</span></span><br><span class="line"><span class="comment">#         # return rep</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         ### session的做法</span></span><br><span class="line"><span class="comment">#         &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#         两步操作:</span></span><br><span class="line"><span class="comment">#         1.将数据保存在session数据库中，相当于登记在访客登记表上</span></span><br><span class="line"><span class="comment">#         2.set_cookie(&quot;sessionid&quot;, 随机字符串)</span></span><br><span class="line"><span class="comment">#         &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#         request.session[&#x27;is_login&#x27;] = True</span></span><br><span class="line"><span class="comment">#         request.session[&#x27;user1&#x27;] = username</span></span><br><span class="line"><span class="comment">#         return redirect(&quot;/index/&quot;)</span></span><br><span class="line"><span class="comment">#     else:</span></span><br><span class="line"><span class="comment">#         return redirect(&#x27;/login/&#x27;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">request</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> render(request, <span class="string">&quot;login.html&quot;</span>)</span><br><span class="line"></span><br><span class="line">    username = request.POST.get(<span class="string">&quot;username&quot;</span>)</span><br><span class="line">    password = request.POST.get(<span class="string">&quot;pwd&quot;</span>)</span><br><span class="line">    user_obj = auth.authenticate(username=username, password=password)</span><br><span class="line"></span><br><span class="line">    print(user_obj.__dict__)</span><br><span class="line">    <span class="comment"># print(user_obj.username)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> user_obj:</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(request.body)</span><br><span class="line">        <span class="comment">### 待解决</span></span><br><span class="line">        path = request.POST.get(<span class="string">&quot;url&quot;</span>) <span class="keyword">or</span> <span class="string">&quot;/index/&quot;</span></span><br><span class="line"></span><br><span class="line">        print(path)</span><br><span class="line">        auth.login(request, user_obj)  <span class="comment">### 此方法相当于 request.session[&#x27;is_login&#x27;] = True</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> redirect(path)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="comment">## OA  ladap</span></span><br><span class="line">    <span class="comment"># User.objects.create_superuser(username=&#x27;zekai&#x27;, email=&quot;zekai@163.com&quot;, password=&quot;123qwe&quot;)</span></span><br><span class="line">    <span class="comment"># User.objects.create_user(username=&quot;test&quot;, password=&#x27;test&#x27;)</span></span><br><span class="line">    <span class="comment"># User.objects.create(username=&quot;test2&quot;, password=&#x27;qweasd&#x27;)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@login_required</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">request</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;this is index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@login_required</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;test1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">order</span>(<span class="params">request</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">### 使用cookie和session方式</span></span><br><span class="line">    <span class="comment"># cookie_info = request.session.get(&quot;is_login&quot;)  ### 相当于从session数据表中获取对应的data值</span></span><br><span class="line">    <span class="comment"># if cookie_info:</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># return HttpResponse(&#x27;this is order.html&#x27;)</span></span><br><span class="line">    <span class="comment"># else:</span></span><br><span class="line">    <span class="comment">#     return redirect(&quot;/login/&quot;)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">## 使用auth模块的方式</span></span><br><span class="line">    print(request.user, type(request.user)) <span class="comment">## zekai &lt;class &#x27;django.utils.functional.SimpleLazyObject&#x27;&gt;</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(request.user, AnonymousUser):</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;this is order.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logout</span>(<span class="params">request</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">### session的方式</span></span><br><span class="line">    <span class="comment"># request.session.flush() # 删除一条记录包括(session_key session_data expire_date)三个字段</span></span><br><span class="line">    <span class="comment"># return redirect(&quot;/login/&quot;)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">### auth模块的方式</span></span><br><span class="line">    ppp = auth.logout(request)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> redirect(<span class="string">&quot;/login/&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -3562,8 +3562,11 @@ session 删除，删除整条记录（包括 session_key、session_data、expire
 <p>可变数据类型：是指变量的值发生改变时，其对应的内存地址<strong>不发生改变</strong>。<br>字典、集合、列表</p>
 <p>整型（不可变）<br>列表（有序可变）<br>字符串（有序不可变）<br>元组（有序不可变）<br>字典（无序可变）<br>集合（无序可变）</p>
 <ol start="28">
-<li></li>
+<li>需要掌握的<strong>内置方法</strong></li>
+<li>isinstance（做类型判断，不推荐用type）<br>判断一个对象是不是累的实例</li>
+<li>issubclass<br>判断类是否属于xx子类</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">obj=Foo()</span><br><span class="line"><span class="comment">#判断Foo 是不是 obj 的实例</span></span><br><span class="line"><span class="comment"># print(isinstance(obj,Foo))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(isinstance([],list))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(type(obj) is Foo)</span></span><br><span class="line"><span class="comment"># print(type([1,2]) is list) </span></span><br><span class="line"></span><br><span class="line">print(issubclass(Foo,object))</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>python</category>
@@ -4439,8 +4442,8 @@ session 删除，删除整条记录（包括 session_key、session_data、expire
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySQL</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,host,port</span>):</span></span><br><span class="line">        self.host=host</span><br><span class="line">        self.port=port</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">from_conf</span>(<span class="params">cls</span>):</span></span><br><span class="line">        <span class="keyword">return</span> cls(settings.HOST,settings.PORT)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create_id</span>():</span></span><br><span class="line">        m=hashlib.md5()</span><br><span class="line">        m.update(str(time.clock()).encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> m.hexdigest()</span><br><span class="line"></span><br><span class="line">obj=MySQL(<span class="string">&#x27;1.1.1.1&#x27;</span>,<span class="number">3306</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># print(MySQL.create_id())</span></span><br><span class="line"><span class="comment"># print(obj.create_id())</span></span><br><span class="line">obj.id=obj.create_id()</span><br><span class="line"></span><br><span class="line">print(obj.id)</span><br></pre></td></tr></table></figure>
 
 
-<h4 id="8-内置方法"><a href="#8-内置方法" class="headerlink" title="8.内置方法"></a>8.内置方法</h4><ol>
-<li>isinstance<br>判断实例是否属于类</li>
+<h4 id="8-内置方法-需要掌握"><a href="#8-内置方法-需要掌握" class="headerlink" title="8.内置方法 需要掌握"></a>8.内置方法 <strong>需要掌握</strong></h4><ol>
+<li>isinstance 做类型判断，不推荐用type）<br>判断实例是否属于类</li>
 <li>issubclass<br>判断类是否属于xx子类</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">obj=Foo()</span><br><span class="line"><span class="comment">#判断Foo 是不是 obj 的实例</span></span><br><span class="line"><span class="comment"># print(isinstance(obj,Foo))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(isinstance([],list))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(type(obj) is Foo)</span></span><br><span class="line"><span class="comment"># print(type([1,2]) is list) </span></span><br><span class="line"></span><br><span class="line">print(issubclass(Foo,object))</span><br></pre></td></tr></table></figure>
