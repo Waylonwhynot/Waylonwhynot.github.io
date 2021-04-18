@@ -1,225 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>py-cmdb</title>
-    <url>/2020/11/15/py-cmdb/</url>
-    <content><![CDATA[<p>cmdb</p>
-<a id="more"></a>
-
-<h4 id="一-为什么要做cmdb？"><a href="#一-为什么要做cmdb？" class="headerlink" title="一. 为什么要做cmdb？"></a>一. 为什么要做cmdb？</h4><pre><code>1. 项目上线的流程： 
-    调研需求分析 ---》 开会确定日期 ---》 开发程序 ---》 项目测试人员 ---》代码上线（运维来负责）
-
-    传统上线方式：
-        直接代码解压 ，启服务， 访问项目， 进行测试
-
-        弊端：
-
-            - 手工上线  运维来干预 
-            - 加机器， 需要重复进行代码的部署
-
-        优化策略：
-            代码上线系统 
-
-            必要条件：需要知道服务器的信息 （服务器的主机名， 硬盘大小。。。）
-
-2. 一个公司即将上市， 审查公司的资产 
-
-    传统方式,统计公司服务器资产的方式：
-        excel表格 
-            最后信息会变得不准确
-            导致年底进行审计的时候，资产变得无法进行准确的统计</code></pre>
-<p>​<br>    CMDB：</p>
-<pre><code>    配置管理数据库      
-    记录服务器的资产信息（包括 机架位置， 主机名，硬盘， 网卡， 产品线， 管理员等）的      
-    位置：
-        是自动化运维的基石</code></pre>
-<p>​            </p>
-<h4 id="二-cmdb实现的方案："><a href="#二-cmdb实现的方案：" class="headerlink" title="二. cmdb实现的方案："></a>二. cmdb实现的方案：</h4><pre><code> 核心的代码：</code></pre>
-<ul>
-<li><ol>
-<li>linux相关的命令   megacli </li>
-</ol>
-</li>
-<li><ol start="2">
-<li>Python的代码执行linux命令， 得到结果返回给服务端<br>​            </li>
-</ol>
-</li>
-<li><p>业内：</p>
-<ul>
-<li>agent方案<ul>
-<li>优点：速度快</li>
-<li>缺点：每一台机器都需要部署，维护</li>
-</ul>
-</li>
-<li>ssh类方案<ul>
-<li>优点：只需要在中控机上部署</li>
-<li>缺点：速度慢</li>
-</ul>
-</li>
-<li>salt方案<br>  使用场景：公司正在使用saltstack</li>
-</ul>
-</li>
-<li><p>目标：    </p>
-<pre><code>  写一份代码， 通过改变配置实现三套方案       
-  客户端的采集</code></pre>
-</li>
-</ul>
-<h4 id="三-代码实现："><a href="#三-代码实现：" class="headerlink" title="三. 代码实现："></a>三. 代码实现：</h4><ul>
-<li>开发过程中遇到的问题<br>  解决的方案：<pre><code>  - 采用的是高内聚低耦合的思想，对代码进行高度的封装和抽离
-  - 集成了默认的全局配置文件以及自定制配置文件
-  - Django 中间件的写法，对插件进行可插拔式的采集23</code></pre>
-</li>
-</ul>
-<p>目录结构：<br>    bin  ： 核心的启动文件  start.py<br>    conf : 配置文件夹<br>    lib  ：库文件<br>    log  : 不建议将日志文件夹放在项目中   /var/log  mkidr /logs/cmdb/<br>    src  : 核心的源代码目录<br>    test : 开发的过程中， 需要进行代码的调试<br>​            </p>
-<ol>
-<li>高级配置文件的实现 ： <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">    django的配置：</span><br><span class="line">        <span class="keyword">from</span> django.conf <span class="keyword">import</span> global_settings, settings</span><br><span class="line">        settings.TIME_ZONE</span><br><span class="line">    ```    </span><br><span class="line">        将自定制的配置和全局的配置集成在一个对象上， 之后想要使用任何属性的时候， 直接可以通过此对象获得</span><br><span class="line">    </span><br><span class="line">    技术要点：</span><br><span class="line">        getattr : 反射获取 对应的值</span><br><span class="line">        setattr : 反射设置</span><br><span class="line">​        </span><br><span class="line"><span class="number">2.</span> 编程思想：</span><br><span class="line">    </span><br><span class="line">高内聚低耦合</span><br><span class="line">    </span><br><span class="line">写一个类或者一个函数的时候， 我们需要明确一下次函数或者此类主要负责干啥的</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span>():</span></span><br><span class="line">    <span class="comment">#### 和用户相关的一些逻辑</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getUserInfo</span>():</span></span><br><span class="line">        <span class="comment">#### 获取用户的信息</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">### 处理订单相关的业务逻辑</span></span><br><span class="line">        </span><br><span class="line">​            </span><br><span class="line">可插拔式的配置：</span><br><span class="line">```python</span><br><span class="line">settings.py:</span><br><span class="line">    PLUGINS_DICT = &#123;</span><br><span class="line">        <span class="string">&quot;basic&quot;</span> : <span class="string">&#x27;src.plugins.basic.Basic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;disk&quot;</span> : <span class="string">&#x27;src.plugins.disk.Disk&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;memory&quot;</span> : <span class="string">&#x27;src.plugins.memory.Memory&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;nic&quot;</span> : <span class="string">&#x27;src.plugins.nic.Nic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;cpu&quot;</span> : <span class="string">&#x27;src.plugins.cpu.Cpu&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    参考django的中间件</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">execute</span>(<span class="params">self</span>):</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.plugins_dict.items():</span><br><span class="line">            <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">            k: basic </span></span><br><span class="line"><span class="string">            v: src.plugins.basic.Basic  字符串</span></span><br><span class="line"><span class="string">            &#x27;&#x27;&#x27;</span></span><br><span class="line">            module_path, cls_name = v.rsplit(<span class="string">&#x27;.&#x27;</span>, <span class="number">1</span>)</span><br><span class="line">            module = importlib.import_module(module_path)  <span class="comment">#### 导入路径</span></span><br><span class="line">            cls = getattr(module, cls_name)   <span class="comment">##### 获取对应的类名</span></span><br><span class="line">            cls().process()    <span class="comment">#### 执行该类对应的方法</span></span><br></pre></td></tr></table></figure>
-插件的代码：</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Memory</span>():</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;memory&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>​<br>​<br>3. 插件代码重复：</p>
-<ul>
-<li>解决的方法：<ul>
-<li><ol>
-<li>base.py 写一个基类， 所有的插件继承这个基类， 只需要执行该基类中的方法</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>cmd_func 抽离出去，当做参数传给execute函数</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<ol start="4">
-<li>并发采集服务器信息(agent方式不需要考虑，ssh方式需要考虑)</li>
-</ol>
-<ul>
-<li>并发采集<ul>
-<li>并发采集，采用线程池<ul>
-<li>Python2：线程池 无；进程池 有；</li>
-<li>Python3：线程池 有；进程池 有；</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>from concurrent.futures import ThreadPoolExecutor，ProcessPoolExecutor</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment">### 线程池</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor，ProcessPoolExecutor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">i</span>):</span></span><br><span class="line"></span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line">    print(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p = ThreadPoolExecutor(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    <span class="comment"># run(i)</span></span><br><span class="line">    p.submit(run, i)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li><p>遇到的问题</p>
-<ul>
-<li>唯一标识的问题<ul>
-<li>需要选出一个唯一的字段，作为唯一标识来进行区分服务器信息</li>
-</ul>
-</li>
-<li>解决<ul>
-<li>sn 主板序列号</li>
-<li>问题，虚拟机和物理机一个sn号，导致服务器信息采集不完整</li>
-<li>hostname</li>
-<li>规范</li>
-<li><ol start="0">
-<li>1000台服务器，需要唯一的主机名</li>
-</ol>
-</li>
-<li><ol>
-<li>将服务器主机名，录入到后台管理数据库中（登记服务器）</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>再分配给技术之前，需要运行一下采集的程序，此时收集上来的数据都是最原始的。可以将原始数据中过的hostname保存到一个文件当中，以后，我们再向后端post数据的时候，以文件中的hostname为一个标准<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Agent</span>(<span class="params">Base</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">collect</span>(<span class="params">self</span>):</span></span><br><span class="line">        res = PluginsManager().execute()</span><br><span class="line">        <span class="comment">###唯一标识的问题</span></span><br><span class="line">        hostname = res[<span class="string">&#x27;basic&#x27;</span>][<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;hostname&#x27;</span>]</span><br><span class="line">        info = open(os.path.join(settings.BASEDIR, <span class="string">&#x27;conf/cert&#x27;</span>), <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>).read()</span><br><span class="line"></span><br><span class="line">        <span class="comment">###第一次运行，需要将原始的主机名写入到文件中</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> info.strip():</span><br><span class="line">            <span class="keyword">with</span> open(os.path.join(settings.BASEDIR, <span class="string">&#x27;conf/cert&#x27;</span>), <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">                fp.write(hostname)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            res[<span class="string">&#x27;basic&#x27;</span>][<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;hostname&#x27;</span>] = info</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> res.items():</span><br><span class="line">            print(k, v)</span><br><span class="line">        self.postInfo(res)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>API验证</p>
-</li>
-</ol>
-<ul>
-<li><p>自定义的验证</p>
-</li>
-<li><p>对称加密</p>
-<ul>
-<li>缺点：key是明文传输的<ul>
-<li>解决方法：发过去的key加密</li>
-<li>要求每次加密的key都是动态的</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>非对称加密</p>
-</li>
-</ul>
-<p>第一种方式</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">对称加密</span><br><span class="line">client</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">key = <span class="string">&#x27;asdasdasd&#x27;</span></span><br><span class="line">res = requests.get(<span class="string">&#x27;http://127.0.0.1:8000/testapi&#x27;</span>, headers=&#123;<span class="string">&#x27;key&#x27;</span>:key&#125;)</span><br><span class="line">print(res.text)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">server</span><br><span class="line">server_key = <span class="string">&#x27;asdasdasds&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">testapi</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        clent_key = request.META[<span class="string">&#x27;HTTP_KEY&#x27;</span>]</span><br><span class="line">        <span class="keyword">if</span> server_key != clent_key:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;非法请求&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(request.body)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>第二种方式，堆成加密，密文（1.时间，2.加密出错）<br>3.连接redis，设置key的过期时间 20s</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib,time</span><br><span class="line">client_time = time.time()</span><br><span class="line">tmp = <span class="string">&quot;%s|%s&quot;</span> %(key, client_time)</span><br><span class="line">m = hashlib.md5()</span><br><span class="line">m.update(bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">res = m.hexdigest()</span><br><span class="line">print(res)</span><br><span class="line">info = <span class="string">&quot;%s|%s&quot;</span> %(res, client_time)</span><br><span class="line">print(info)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = requests.get(<span class="string">&#x27;http://127.0.0.1:8000/testapi&#x27;</span>, headers=&#123;<span class="string">&#x27;key&#x27;</span>:info&#125;)</span><br><span class="line">print(res.text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hashlib,time</span><br><span class="line">server_key = <span class="string">&#x27;asdasdasd&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">testapi</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        client_key = request.META.get(<span class="string">&#x27;HTTP_KEY&#x27;</span>)</span><br><span class="line">        print(client_key)</span><br><span class="line">        client_md5_key, client_time = client_key.split(<span class="string">&#x27;|&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        server_time = time.time()</span><br><span class="line">        client_time = float(client_time)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> server_time - client_time &gt; <span class="number">10</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;第一关，时间失效&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        tmp = <span class="string">&quot;%s|%s&quot;</span> % (server_key, client_time)</span><br><span class="line"></span><br><span class="line">        m = hashlib.md5()</span><br><span class="line">        m.update(bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">        server_md5_key = m.hexdigest()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> server_md5_key != client_md5_key:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;第二关，加密出错&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(request.body)</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>JWT</li>
-</ul>
-<ol start="7">
-<li>数据入库<br>新的数据：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#39;0&#39;: &#123;&#39;slot&#39;: &#39;0&#39;, &#39;pd_type&#39;: &#39;SAS&#39;, &#39;capacity&#39;: &#39;279.396&#39;, &#39;model&#39;: &#39;SEAGATE ST300MM0006     LS08S0K2B5NV&#39;&#125;, </span><br><span class="line">    &#39;1&#39;: &#123;&#39;slot&#39;: &#39;1&#39;, &#39;pd_type&#39;: &#39;SAS&#39;, &#39;capacity&#39;: &#39;279.396&#39;, &#39;model&#39;: &#39;SEAGATE ST300MM0006     LS08S0K2B5AH&#39;&#125;, &#39;2&#39;: &#123;&#39;slot&#39;: &#39;2&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1SZNSAFA01085L     Samsung SSD 850 PRO 512GB               EXM01B6Q&#39;&#125;, </span><br><span class="line">    &#39;3&#39;: &#123;&#39;slot&#39;: &#39;3&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAF912433K     Samsung SSD 840 PRO Series              DXM06B0Q&#39;&#125;, </span><br><span class="line">    &#39;4&#39;: &#123;&#39;slot&#39;: &#39;4&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAF303909M     Samsung SSD 840 PRO Series              DXM05B0Q&#39;&#125;, </span><br><span class="line">    &#39;5&#39;: &#123;&#39;slot&#39;: &#39;5&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAFB00549A     Samsung SSD 840 PRO Series              DXM06B0Q&#39;&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>老数据：<br>    数据库中获取</p>
-<ol start="8">
-<li>页面展示</li>
-</ol>
-<ul>
-<li><p>分为两大块：<br>前后端不分离<br>  后端的程序和前端的Html页面全部放在一个项目之下</p>
-<p>  两种方式：</p>
-<pre><code>  - 纯粹的去手写html页面  加入Bootstrap美化页面
-  - 用别人写好的第三方框架
-      - layui
-      - xadmin admin的加强版</code></pre>
-<p>  图表：</p>
-<pre><code>  PC时代：
-      highcharts               
-      Echarts  
-  移动端：
-      antv</code></pre>
-<p>  前后端分离</p>
-<pre><code>  前端： vue、react、angular js
-      - vueAdmin-template
-      - iview-admin
-  后端：
-      - DRF </code></pre>
-</li>
-<li><p>redis：</p>
-<ol start="0">
-<li><p>非关系型数据库<br> mongodb memcache</p>
-<p> 国内用redis比较多的公司是：weibo</p>
-</li>
-<li><p>5大数据类型 </p>
-<p> 字符串类型<br> 列表<br> 集合<br> 有序集合<br> 哈希</p>
-</li>
-<li><p>python操作redis</p>
-<ul>
-<li>django连接redis</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<p>问题：<br>业务线调整，变换主机名，我需要提前注册到数据库里吗？<br>如果没有提前注册，数据库中没有我的这个hostname，就不会接收我的消息</p>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>cmdb</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>mysql-01</title>
     <url>/2021/01/10/mysql-01/</url>
     <content><![CDATA[<p>sql 库表操作</p>
@@ -529,6 +310,252 @@ select * from emp right join dep on emp.dep_id = dep.id
       </categories>
       <tags>
         <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>prometheus相关</title>
+    <url>/2021/04/18/prometheus%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<p>Prometheus 进阶</p>
+<a id="more"></a>
+
+<ol>
+<li>什么是时序<br>指标名称{标签} + 时间戳<br>不断的打点 , 按照时间依次生成值</li>
+</ol>
+<ol start="2">
+<li><p>日志转时序<br>哪个机器 路径 匹配正则  计数、关键字<br>metrics timestamp 3</p>
+</li>
+<li><p>psm 服务树  gpa</p>
+</li>
+<li><p>promethues 高基数<br>理解为 以metric 为查询 条件，组合成的结果序列较多，就称为高基数 ， 是旨在 查询和告警条件下</p>
+</li>
+<li><p>grafana 设置成row<br>懒加载，防止一次请求过多；做隔离的</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>prometheus</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>py-cmdb</title>
+    <url>/2020/11/15/py-cmdb/</url>
+    <content><![CDATA[<p>cmdb</p>
+<a id="more"></a>
+
+<h4 id="一-为什么要做cmdb？"><a href="#一-为什么要做cmdb？" class="headerlink" title="一. 为什么要做cmdb？"></a>一. 为什么要做cmdb？</h4><pre><code>1. 项目上线的流程： 
+    调研需求分析 ---》 开会确定日期 ---》 开发程序 ---》 项目测试人员 ---》代码上线（运维来负责）
+
+    传统上线方式：
+        直接代码解压 ，启服务， 访问项目， 进行测试
+
+        弊端：
+
+            - 手工上线  运维来干预 
+            - 加机器， 需要重复进行代码的部署
+
+        优化策略：
+            代码上线系统 
+
+            必要条件：需要知道服务器的信息 （服务器的主机名， 硬盘大小。。。）
+
+2. 一个公司即将上市， 审查公司的资产 
+
+    传统方式,统计公司服务器资产的方式：
+        excel表格 
+            最后信息会变得不准确
+            导致年底进行审计的时候，资产变得无法进行准确的统计</code></pre>
+<p>​<br>    CMDB：</p>
+<pre><code>    配置管理数据库      
+    记录服务器的资产信息（包括 机架位置， 主机名，硬盘， 网卡， 产品线， 管理员等）的      
+    位置：
+        是自动化运维的基石</code></pre>
+<p>​            </p>
+<h4 id="二-cmdb实现的方案："><a href="#二-cmdb实现的方案：" class="headerlink" title="二. cmdb实现的方案："></a>二. cmdb实现的方案：</h4><pre><code> 核心的代码：</code></pre>
+<ul>
+<li><ol>
+<li>linux相关的命令   megacli </li>
+</ol>
+</li>
+<li><ol start="2">
+<li>Python的代码执行linux命令， 得到结果返回给服务端<br>​            </li>
+</ol>
+</li>
+<li><p>业内：</p>
+<ul>
+<li>agent方案<ul>
+<li>优点：速度快</li>
+<li>缺点：每一台机器都需要部署，维护</li>
+</ul>
+</li>
+<li>ssh类方案<ul>
+<li>优点：只需要在中控机上部署</li>
+<li>缺点：速度慢</li>
+</ul>
+</li>
+<li>salt方案<br>  使用场景：公司正在使用saltstack</li>
+</ul>
+</li>
+<li><p>目标：    </p>
+<pre><code>  写一份代码， 通过改变配置实现三套方案       
+  客户端的采集</code></pre>
+</li>
+</ul>
+<h4 id="三-代码实现："><a href="#三-代码实现：" class="headerlink" title="三. 代码实现："></a>三. 代码实现：</h4><ul>
+<li>开发过程中遇到的问题<br>  解决的方案：<pre><code>  - 采用的是高内聚低耦合的思想，对代码进行高度的封装和抽离
+  - 集成了默认的全局配置文件以及自定制配置文件
+  - Django 中间件的写法，对插件进行可插拔式的采集23</code></pre>
+</li>
+</ul>
+<p>目录结构：<br>    bin  ： 核心的启动文件  start.py<br>    conf : 配置文件夹<br>    lib  ：库文件<br>    log  : 不建议将日志文件夹放在项目中   /var/log  mkidr /logs/cmdb/<br>    src  : 核心的源代码目录<br>    test : 开发的过程中， 需要进行代码的调试<br>​            </p>
+<ol>
+<li>高级配置文件的实现 ： <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">    django的配置：</span><br><span class="line">        <span class="keyword">from</span> django.conf <span class="keyword">import</span> global_settings, settings</span><br><span class="line">        settings.TIME_ZONE</span><br><span class="line">    ```    </span><br><span class="line">        将自定制的配置和全局的配置集成在一个对象上， 之后想要使用任何属性的时候， 直接可以通过此对象获得</span><br><span class="line">    </span><br><span class="line">    技术要点：</span><br><span class="line">        getattr : 反射获取 对应的值</span><br><span class="line">        setattr : 反射设置</span><br><span class="line">​        </span><br><span class="line"><span class="number">2.</span> 编程思想：</span><br><span class="line">    </span><br><span class="line">高内聚低耦合</span><br><span class="line">    </span><br><span class="line">写一个类或者一个函数的时候， 我们需要明确一下次函数或者此类主要负责干啥的</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span>():</span></span><br><span class="line">    <span class="comment">#### 和用户相关的一些逻辑</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getUserInfo</span>():</span></span><br><span class="line">        <span class="comment">#### 获取用户的信息</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">### 处理订单相关的业务逻辑</span></span><br><span class="line">        </span><br><span class="line">​            </span><br><span class="line">可插拔式的配置：</span><br><span class="line">```python</span><br><span class="line">settings.py:</span><br><span class="line">    PLUGINS_DICT = &#123;</span><br><span class="line">        <span class="string">&quot;basic&quot;</span> : <span class="string">&#x27;src.plugins.basic.Basic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;disk&quot;</span> : <span class="string">&#x27;src.plugins.disk.Disk&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;memory&quot;</span> : <span class="string">&#x27;src.plugins.memory.Memory&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;nic&quot;</span> : <span class="string">&#x27;src.plugins.nic.Nic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;cpu&quot;</span> : <span class="string">&#x27;src.plugins.cpu.Cpu&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    参考django的中间件</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">execute</span>(<span class="params">self</span>):</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.plugins_dict.items():</span><br><span class="line">            <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">            k: basic </span></span><br><span class="line"><span class="string">            v: src.plugins.basic.Basic  字符串</span></span><br><span class="line"><span class="string">            &#x27;&#x27;&#x27;</span></span><br><span class="line">            module_path, cls_name = v.rsplit(<span class="string">&#x27;.&#x27;</span>, <span class="number">1</span>)</span><br><span class="line">            module = importlib.import_module(module_path)  <span class="comment">#### 导入路径</span></span><br><span class="line">            cls = getattr(module, cls_name)   <span class="comment">##### 获取对应的类名</span></span><br><span class="line">            cls().process()    <span class="comment">#### 执行该类对应的方法</span></span><br></pre></td></tr></table></figure>
+插件的代码：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Memory</span>():</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;memory&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>​<br>​<br>3. 插件代码重复：</p>
+<ul>
+<li>解决的方法：<ul>
+<li><ol>
+<li>base.py 写一个基类， 所有的插件继承这个基类， 只需要执行该基类中的方法</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>cmd_func 抽离出去，当做参数传给execute函数</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>并发采集服务器信息(agent方式不需要考虑，ssh方式需要考虑)</li>
+</ol>
+<ul>
+<li>并发采集<ul>
+<li>并发采集，采用线程池<ul>
+<li>Python2：线程池 无；进程池 有；</li>
+<li>Python3：线程池 有；进程池 有；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>from concurrent.futures import ThreadPoolExecutor，ProcessPoolExecutor</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment">### 线程池</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor，ProcessPoolExecutor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">i</span>):</span></span><br><span class="line"></span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line">    print(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p = ThreadPoolExecutor(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    <span class="comment"># run(i)</span></span><br><span class="line">    p.submit(run, i)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>遇到的问题</p>
+<ul>
+<li>唯一标识的问题<ul>
+<li>需要选出一个唯一的字段，作为唯一标识来进行区分服务器信息</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>sn 主板序列号</li>
+<li>问题，虚拟机和物理机一个sn号，导致服务器信息采集不完整</li>
+<li>hostname</li>
+<li>规范</li>
+<li><ol start="0">
+<li>1000台服务器，需要唯一的主机名</li>
+</ol>
+</li>
+<li><ol>
+<li>将服务器主机名，录入到后台管理数据库中（登记服务器）</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>再分配给技术之前，需要运行一下采集的程序，此时收集上来的数据都是最原始的。可以将原始数据中过的hostname保存到一个文件当中，以后，我们再向后端post数据的时候，以文件中的hostname为一个标准<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Agent</span>(<span class="params">Base</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">collect</span>(<span class="params">self</span>):</span></span><br><span class="line">        res = PluginsManager().execute()</span><br><span class="line">        <span class="comment">###唯一标识的问题</span></span><br><span class="line">        hostname = res[<span class="string">&#x27;basic&#x27;</span>][<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;hostname&#x27;</span>]</span><br><span class="line">        info = open(os.path.join(settings.BASEDIR, <span class="string">&#x27;conf/cert&#x27;</span>), <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>).read()</span><br><span class="line"></span><br><span class="line">        <span class="comment">###第一次运行，需要将原始的主机名写入到文件中</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> info.strip():</span><br><span class="line">            <span class="keyword">with</span> open(os.path.join(settings.BASEDIR, <span class="string">&#x27;conf/cert&#x27;</span>), <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">                fp.write(hostname)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            res[<span class="string">&#x27;basic&#x27;</span>][<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;hostname&#x27;</span>] = info</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> res.items():</span><br><span class="line">            print(k, v)</span><br><span class="line">        self.postInfo(res)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>API验证</p>
+</li>
+</ol>
+<ul>
+<li><p>自定义的验证</p>
+</li>
+<li><p>对称加密</p>
+<ul>
+<li>缺点：key是明文传输的<ul>
+<li>解决方法：发过去的key加密</li>
+<li>要求每次加密的key都是动态的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>非对称加密</p>
+</li>
+</ul>
+<p>第一种方式</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">对称加密</span><br><span class="line">client</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">key = <span class="string">&#x27;asdasdasd&#x27;</span></span><br><span class="line">res = requests.get(<span class="string">&#x27;http://127.0.0.1:8000/testapi&#x27;</span>, headers=&#123;<span class="string">&#x27;key&#x27;</span>:key&#125;)</span><br><span class="line">print(res.text)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">server</span><br><span class="line">server_key = <span class="string">&#x27;asdasdasds&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">testapi</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        clent_key = request.META[<span class="string">&#x27;HTTP_KEY&#x27;</span>]</span><br><span class="line">        <span class="keyword">if</span> server_key != clent_key:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;非法请求&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(request.body)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>第二种方式，堆成加密，密文（1.时间，2.加密出错）<br>3.连接redis，设置key的过期时间 20s</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib,time</span><br><span class="line">client_time = time.time()</span><br><span class="line">tmp = <span class="string">&quot;%s|%s&quot;</span> %(key, client_time)</span><br><span class="line">m = hashlib.md5()</span><br><span class="line">m.update(bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">res = m.hexdigest()</span><br><span class="line">print(res)</span><br><span class="line">info = <span class="string">&quot;%s|%s&quot;</span> %(res, client_time)</span><br><span class="line">print(info)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = requests.get(<span class="string">&#x27;http://127.0.0.1:8000/testapi&#x27;</span>, headers=&#123;<span class="string">&#x27;key&#x27;</span>:info&#125;)</span><br><span class="line">print(res.text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hashlib,time</span><br><span class="line">server_key = <span class="string">&#x27;asdasdasd&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">testapi</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        client_key = request.META.get(<span class="string">&#x27;HTTP_KEY&#x27;</span>)</span><br><span class="line">        print(client_key)</span><br><span class="line">        client_md5_key, client_time = client_key.split(<span class="string">&#x27;|&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        server_time = time.time()</span><br><span class="line">        client_time = float(client_time)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> server_time - client_time &gt; <span class="number">10</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;第一关，时间失效&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        tmp = <span class="string">&quot;%s|%s&quot;</span> % (server_key, client_time)</span><br><span class="line"></span><br><span class="line">        m = hashlib.md5()</span><br><span class="line">        m.update(bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">        server_md5_key = m.hexdigest()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> server_md5_key != client_md5_key:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;第二关，加密出错&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(request.body)</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>JWT</li>
+</ul>
+<ol start="7">
+<li>数据入库<br>新的数据：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#39;0&#39;: &#123;&#39;slot&#39;: &#39;0&#39;, &#39;pd_type&#39;: &#39;SAS&#39;, &#39;capacity&#39;: &#39;279.396&#39;, &#39;model&#39;: &#39;SEAGATE ST300MM0006     LS08S0K2B5NV&#39;&#125;, </span><br><span class="line">    &#39;1&#39;: &#123;&#39;slot&#39;: &#39;1&#39;, &#39;pd_type&#39;: &#39;SAS&#39;, &#39;capacity&#39;: &#39;279.396&#39;, &#39;model&#39;: &#39;SEAGATE ST300MM0006     LS08S0K2B5AH&#39;&#125;, &#39;2&#39;: &#123;&#39;slot&#39;: &#39;2&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1SZNSAFA01085L     Samsung SSD 850 PRO 512GB               EXM01B6Q&#39;&#125;, </span><br><span class="line">    &#39;3&#39;: &#123;&#39;slot&#39;: &#39;3&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAF912433K     Samsung SSD 840 PRO Series              DXM06B0Q&#39;&#125;, </span><br><span class="line">    &#39;4&#39;: &#123;&#39;slot&#39;: &#39;4&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAF303909M     Samsung SSD 840 PRO Series              DXM05B0Q&#39;&#125;, </span><br><span class="line">    &#39;5&#39;: &#123;&#39;slot&#39;: &#39;5&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAFB00549A     Samsung SSD 840 PRO Series              DXM06B0Q&#39;&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>老数据：<br>    数据库中获取</p>
+<ol start="8">
+<li>页面展示</li>
+</ol>
+<ul>
+<li><p>分为两大块：<br>前后端不分离<br>  后端的程序和前端的Html页面全部放在一个项目之下</p>
+<p>  两种方式：</p>
+<pre><code>  - 纯粹的去手写html页面  加入Bootstrap美化页面
+  - 用别人写好的第三方框架
+      - layui
+      - xadmin admin的加强版</code></pre>
+<p>  图表：</p>
+<pre><code>  PC时代：
+      highcharts               
+      Echarts  
+  移动端：
+      antv</code></pre>
+<p>  前后端分离</p>
+<pre><code>  前端： vue、react、angular js
+      - vueAdmin-template
+      - iview-admin
+  后端：
+      - DRF </code></pre>
+</li>
+<li><p>redis：</p>
+<ol start="0">
+<li><p>非关系型数据库<br> mongodb memcache</p>
+<p> 国内用redis比较多的公司是：weibo</p>
+</li>
+<li><p>5大数据类型 </p>
+<p> 字符串类型<br> 列表<br> 集合<br> 有序集合<br> 哈希</p>
+</li>
+<li><p>python操作redis</p>
+<ul>
+<li>django连接redis</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>问题：<br>业务线调整，变换主机名，我需要提前注册到数据库里吗？<br>如果没有提前注册，数据库中没有我的这个hostname，就不会接收我的消息</p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>cmdb</tag>
       </tags>
   </entry>
   <entry>
@@ -1435,10 +1462,7 @@ select * from emp right join dep on emp.dep_id = dep.id
 
 
 
-<ul>
-<li>粘包问题<br>TCP独有（流式协议）</li>
-</ul>
-<p><strong>原因</strong>:<br>tcp是流式协议,数据像水流一样发出去；TCP协议nagle算法会把时间间隔较短，数据量较小的数据粘到一起，没有任何边界区分,基于网络发出去。<strong>收数据没收干净</strong>,会和下一次结果混合在一起。</p>
+<h4 id="粘包问题"><a href="#粘包问题" class="headerlink" title="粘包问题"></a>粘包问题</h4><p>TCP独有（流式协议）<br><strong>原因</strong>:<br>tcp是流式协议,数据像水流一样发出去；TCP协议nagle算法会把时间间隔较短，数据量较小的数据粘到一起，没有任何边界区分,基于网络发出去。<strong>收数据没收干净</strong>,会和下一次结果混合在一起。</p>
 <p><strong>解决方案</strong>: 收数据的时候收干净就好了</p>
 <ul>
 <li><p>基于tcp协议实现远程执行命令</p>
@@ -1449,100 +1473,32 @@ select * from emp right join dep on emp.dep_id = dep.id
 </li>
 </ul>
 <p>客户端</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8080</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>: <span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 接收端</span></span><br><span class="line">    <span class="comment"># 1.先收4个字节，从中提取接下来要收的头的长度</span></span><br><span class="line">    header_length_x = client.recv(<span class="number">4</span>)</span><br><span class="line">    header_length = struct.unpack(<span class="string">&#x27;i&#x27;</span>, header_length_x)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 2. 接收头,并解析</span></span><br><span class="line">    json_str_bytes = client.recv(header_length)</span><br><span class="line">    json_str = json_str_bytes.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    header_dic = json.loads(json_str)</span><br><span class="line">    print(header_dic)</span><br><span class="line">    total_size = header_dic[<span class="string">&quot;total_size&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3.接收真是数据</span></span><br><span class="line">    recv_size = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> recv_size &lt; total_size:</span><br><span class="line">        recv_data = client.recv(<span class="number">1024</span>)</span><br><span class="line">        recv_size += len(recv_data)</span><br><span class="line">        print(recv_data.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print()</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8080</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>: <span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 接收端</span></span><br><span class="line">    <span class="comment"># 1.先收4个字节，从中提取接下来要收的头的长度</span></span><br><span class="line">    header_length_x = client.recv(<span class="number">4</span>)</span><br><span class="line">    header_length = struct.unpack(<span class="string">&#x27;i&#x27;</span>, header_length_x)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 2. 接收头,并解析</span></span><br><span class="line">    json_str_bytes = client.recv(header_length)</span><br><span class="line">    json_str = json_str_bytes.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    header_dic = json.loads(json_str)</span><br><span class="line">    print(header_dic)</span><br><span class="line">    total_size = header_dic[<span class="string">&quot;total_size&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3.接收真是数据</span></span><br><span class="line">    recv_size = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> recv_size &lt; total_size:</span><br><span class="line">        recv_data = client.recv(<span class="number">1024</span>)</span><br><span class="line">        recv_size += len(recv_data)</span><br><span class="line">        print(recv_data.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="socketserver实现并发"><a href="#socketserver实现并发" class="headerlink" title="socketserver实现并发"></a>socketserver实现并发</h4><ul>
+<li>基于tcp实现并发<br>服务端<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> socketserver</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRequestHandle</span>(<span class="params">socketserver.BaseRequestHandler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span>(<span class="params">self</span>):</span></span><br><span class="line">         <span class="comment"># 如果是tcp协议，self.request =&gt; conn</span></span><br><span class="line">        print(self.client_address)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                cmd = self.request.recv(<span class="number">1024</span>)</span><br><span class="line">                <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">break</span></span><br><span class="line">                self.request.send(cmd.upper())</span><br><span class="line">            <span class="keyword">except</span> Exception:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        self.request.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端应该做两件事</span></span><br><span class="line"><span class="comment"># 第一件事: 循环地从半连接池中去除链接请求与其建立双向链接，拿到链接对象</span></span><br><span class="line">s = socketserver.ThreadingTCPServer((<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">8888</span>),MyRequestHandle)</span><br><span class="line">s.serve_forever()</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line"><span class="comment"># while True:</span></span><br><span class="line"><span class="comment">#     启动一个线程conn,client_addr = server.accept()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二件事: 拿到链接对象，与其进行通信循环 ===&gt; handle</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>客户端</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET,SOCK_STREAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8888</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解决粘包问题思路:</span></span><br><span class="line">    <span class="comment"># 1.拿到数据总大小</span></span><br><span class="line">    <span class="comment"># 2.revc_size = 0,循环接收,每收到一次，recv+=接收的长度</span></span><br><span class="line">    <span class="comment"># 3.直到revc_size = total_size 结束循环</span></span><br><span class="line">    cmd_res = client.recv(<span class="number">1024</span>)  <span class="comment"># 本次接收，最大接收1024bytes</span></span><br><span class="line">    print(cmd_res.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>基于UDP实现并发<br>服务端<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> socketserver</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRequestHandle</span>(<span class="params">socketserver.BaseRequestHandler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span>(<span class="params">self</span>):</span></span><br><span class="line">        client_data = self.request[<span class="number">0</span>]</span><br><span class="line">        server = self.request[<span class="number">1</span>]</span><br><span class="line">        client_address = self.client_address</span><br><span class="line"></span><br><span class="line">        print(<span class="string">&#x27;客户端发来的数据%s&#x27;</span> %client_data)</span><br><span class="line">        server.sendto(client_data.upper(), client_address)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端应该做两件事</span></span><br><span class="line"><span class="comment"># 第一件事: 循环地从半连接池中去除链接请求与其建立双向链接，拿到链接对象</span></span><br><span class="line">s = socketserver.ThreadingUDPServer((<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">8888</span>),MyRequestHandle)</span><br><span class="line">s.serve_forever()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>客户端</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET,SOCK_DGRAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8888</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解决粘包问题思路:</span></span><br><span class="line">    <span class="comment"># 1.拿到数据总大小</span></span><br><span class="line">    <span class="comment"># 2.revc_size = 0,循环接收,每收到一次，recv+=接收的长度</span></span><br><span class="line">    <span class="comment"># 3.直到revc_size = total_size 结束循环</span></span><br><span class="line">    cmd_res = client.recv(<span class="number">1024</span>)  <span class="comment"># 本次接收，最大接收1024bytes</span></span><br><span class="line">    print(cmd_res.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
       <categories>
         <category>python</category>
       </categories>
       <tags>
         <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>发布方式对比</title>
-    <url>/2020/08/13/%E5%8F%91%E5%B8%83%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94/</url>
-    <content><![CDATA[<p>灰度、蓝绿、ABtest发布等部署方案对比</p>
-<a id="more"></a>
-<h2 id="蓝绿发布（Blue-Green-Deployment）"><a href="#蓝绿发布（Blue-Green-Deployment）" class="headerlink" title="蓝绿发布（Blue/Green Deployment）"></a>蓝绿发布（Blue/Green Deployment）</h2><ol>
-<li>定义</li>
-</ol>
-<p>蓝绿部署是不停老版本，部署新版本然后进行测试。确认OK后将流量切到新版本，然后老版本同时也升级到新版本。</p>
-<ol start="2">
-<li>特点</li>
-</ol>
-<p>蓝绿部署无需停机，并且风险较小。</p>
-<ol start="3">
-<li>部署过程</li>
-</ol>
-<p>部署版本 1 的应用（初始的状态）<br>所有外部请求的流量都打到这个版本上。<br>部署版本 2 的应用<br>版本 2 的代码与版本 1 不同(新功能、Bug修复等)。</p>
-<p>将流量从版本 1 切换到版本 2。<br>如版本 2 测试正常，就删除版本 1 正在使用的资源（例如实例），从此正式用版本 2。<br>4. 小结</p>
-<p>从过程不难发现，在部署的过程中，我们的应用始终在线。并且新版本上线的过程中，并没有修改老版本的任何内容，在部署期间，老版本的状态不受影响，这样风险很小。并且只要老版本的资源不被删除，理论上，我们可以在任何时间回滚到老版本。</p>
-<ol start="5">
-<li>蓝绿发布的注意事项</li>
-</ol>
-<p>当你切换到蓝色环境时，需要妥当处理未完成的业务和新的业务。如果你的数据库后端无法处理，会是一个比较麻烦的问题。</p>
-<p>可能会出现需要同时处理微服务架构应用和传统架构应用的情况，如果在蓝绿部署中协调不好这两者，还是有可能会导致服务停止。<br>需要提前考虑数据库与应用部署同步迁移/回滚的问题。<br>蓝绿部署需要有基础设施支持。<br>在非隔离基础架构（ VM 、 Docker 等）上执行蓝绿部署，蓝色环境和绿色环境有被摧毁的风险。<br>6. 优势和不足</p>
-<p>优势<br>升级切换和回退速度非常快。</p>
-<p>不足<br>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响。</p>
-<p>需要两倍机器资源。</p>
-<ol start="7">
-<li>适用场合</li>
-</ol>
-<p>对用户体验有一定容忍度的场景。<br>机器资源有富余或者可以按需分配（AWS 云，或自建容器云）。</p>
-<h2 id="灰度发布"><a href="#灰度发布" class="headerlink" title="灰度发布"></a>灰度发布</h2><ol>
-<li>定义</li>
-</ol>
-<p>灰度发布是指在黑与白之间，能够平滑过渡的一种发布方式。AB Test 就是一种灰度发布方式，让一部分用户继续用 A，一部分用户开始用 B，如果用户对 B 没有什么反对意见，那么逐步扩大范围，把所有用户都迁移到 B 上面来。灰度发布可以保证整体系统的稳定，在初始灰度的时候就可以发现、调整问题，以保证其影响度。</p>
-<ol start="2">
-<li><p>A/B Testing<br>A/B 测试是用来测试应用功能表现的方法，例如可用性、受欢迎程度、可见性等等。 A/B 测试通常用在应用的前端上，不过当然需要后端来支持。<br>A/B 测试与蓝绿部署的区别在于， A/B 测试目的在于通过科学的实验设计、采样样本代表性、流量分割与小流量测试等方式来获得具有代表性的实验结论，并确信该结论在推广到全部流量可信；蓝绿部署的目的是安全稳定地发布新版本应用，并在必要时回滚。</p>
-</li>
-<li><p>金丝雀发布</p>
-</li>
-</ol>
-<p>我们平常所说的金丝雀部署也是灰度发布的一种方式，在原有版本可用的情况下，同时部署一个新版本应用作为「金丝雀」服务器来测试新版本的性能和表现，以保障整体系统稳定的情况下，尽早发现、调整问题。</p>
-<blockquote>
-<p>矿井中的金丝雀：17 世纪，英国矿井工人发现，金丝雀对瓦斯这种气体十分敏感。空气中哪怕有极其微量的瓦斯，金丝雀也会停止歌唱；当瓦斯含量超过一定限度时，虽然鲁钝的人类毫无察觉，金丝雀却早已毒发身亡。当时在采矿设备相对简陋的条件下，工人们每次下井都会带上一只金丝雀作为瓦斯检测指标，以便在危险状况下紧急撤离。</p>
-</blockquote>
-<p>灰度发布／金丝雀发布由以下几个步骤组成：</p>
-<p>准备好部署各个阶段的工件，包括：构建工件，测试脚本，配置文件和部署清单文件。<br>从负载均衡列表中移除掉「金丝雀」服务器。<br>升级「金丝雀」应用（排掉原有流量并进行部署）。<br>对应用进行自动化测试。<br>将「金丝雀」服务器重新添加到负载均衡列表中（连通性和健康检查）。<br>如果「金丝雀」在线使用测试成功，升级剩余的其他服务器（否则就回滚）。<br>除此之外灰度发布还可以设置路由权重，动态调整不同的权重来进行新老版本的验证。</p>
-<ol start="4">
-<li>优势和不足</li>
-</ol>
-<p>优势<br>用户体验影响小，灰度发布过程出现问题只影响少量用户。</p>
-<p>不足<br>发布自动化程度不够，发布期间可引发服务中断。</p>
-<h2 id="滚动发布（Rolling-Update-Deployment）"><a href="#滚动发布（Rolling-Update-Deployment）" class="headerlink" title="滚动发布（Rolling Update Deployment）"></a>滚动发布（Rolling Update Deployment）</h2><p>在金丝雀发布基础上的进一步优化改进，是一种自动化程度较高的发布方式，用户体验比较平滑，是目前成熟型技术组织所采用的主流发布方式。</p>
-<ol>
-<li>定义</li>
-</ol>
-<p>滚动发布：一般是取出一个或者多个服务器停止服务，执行更新，并重新将其投入使用。周而复始，直到集群中所有的实例都更新成新版本。</p>
-<ol start="2">
-<li>特点</li>
-</ol>
-<p>这种部署方式相对于蓝绿部署，更加节约资源——它不需要运行两个集群、两倍的实例数。我们可以部分部署，例如每次只取出集群的 20% 进行升级。</p>
-<ol start="3">
-<li>部署过程</li>
-</ol>
-<p>滚动式发布一般先发 1 台，或者一个小比例，如 2% 服务器，主要做流量验证用，类似金丝雀 (Canary) 测试。<br>滚动式发布需要比较复杂的发布工具和智能 LB，支持平滑的版本替换和流量拉入拉出。<br>每次发布时，先将老版本 V1 流量从 LB 上摘除，然后清除老版本，发新版本 V2，再将 LB 流量接入新版本。这样可以尽量保证用户体验不受影响。<br>一次滚动式发布一般由若干个发布批次组成，每批的数量一般是可以配置的（可以通过发布模板定义）。例如第一批 1 台（金丝雀），第二批 10%，第三批 50%，第四批 100%。每个批次之间留观察间隔，通过手工验证或监控反馈确保没有问题再发下一批次，所以总体上滚动式发布过程是比较缓慢的 (其中金丝雀的时间一般会比后续批次更长，比如金丝雀 10 分钟，后续间隔 2 分钟)。<br>回退是发布的逆过程，将新版本流量从 LB 上摘除，清除新版本，发老版本，再将 LB 流量接入老版本。和发布过程一样，回退过程一般也比较慢的。<br>4. 优势和不足</p>
-<p>优势<br>用户体验影响小，体验较平滑。</p>
-<p>不足<br>发布和回退时间比较缓慢。</p>
-<p>发布工具比较复杂，LB 需要平滑的流量摘除和拉入能力。</p>
-<h2 id="其它发布方式"><a href="#其它发布方式" class="headerlink" title="其它发布方式"></a>其它发布方式</h2><p>上述都是偏传统的发布方式，能覆盖大部分应用发布场景。针对一些关键新功能的上线发布，或者一些特定的场景，还有一些特殊的发布方式。</p>
-<p>功能开关发布</p>
-<p>利用代码中的功能开关（Feature Flag/Toggle/Switch）来控制发布逻辑，一般不需要复杂的发布工具和智能 LB 配合，是一种相对比较低成本和简单的发布方式。这种方式也是支持现代 DevOps 理念，研发人员可以灵活定制和自助完成的发布方式。功能开关的原理如下图所示：</p>
-<ol>
-<li>部署过程</li>
-</ol>
-<p>功能开关发布需要一个配置中心或者开关中心这样的服务支持，例如携程的 Apollo 配置中心或者开源的 FF4J，这些都支持开关发布。业界还有专门的功能开关 SaaS 服务，例如 LaunchDarkly。通过配置中心，运维或研发人员可以在运行期动态配置功能开关的值。当然，功能开关发布只是配置中心的一种使用场景，配置中心还能支持其它很多动态配置场景。<br>功能开关服务一般提供客户端 SDK，方便开发人员集成。在运行期，客户端 SDK 会同步最新的开关值，技术实现有推方式 (push)，也有拉方式 (pull)，或者推拉结合方式。<br>新功能（V2 new feature）和老功能（V1 old feature）住在同一套代码中，新功能隐藏在开关后面，如果开关没有打开，则走老代码逻辑，如果开关打开，则走新代码逻辑。技术实现上可以理解为一个简单的 if/else 逻辑。<br>应用上线后，开关先不打开，然后运维或研发人员通过开关中心打开新功能，经过流量验证新功能没有问题，则发布完成；如果有问题，则随时可以通过开关中心切回老功能逻辑。<br>2. 优势和不足</p>
-<p>优势<br>升级切换和回退速度非常快。</p>
-<p>相对于复杂的发布工具，实施比较简单，成本相对低廉。</p>
-<p>研发能够灵活定制发布逻辑，支持 DevOps 自助发布。</p>
-<p>不足<br>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响。</p>
-<p>对代码有侵入，代码逻辑会变复杂，需要定期清理老版本逻辑，维护成本变高。</p>
-]]></content>
-      <categories>
-        <category>ops</category>
-      </categories>
-      <tags>
-        <tag>deploy</tag>
       </tags>
   </entry>
   <entry>
@@ -1665,6 +1621,107 @@ select * from emp right join dep on emp.dep_id = dep.id
 ]]></content>
       <categories>
         <category>vue</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>发布方式对比</title>
+    <url>/2020/08/13/%E5%8F%91%E5%B8%83%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94/</url>
+    <content><![CDATA[<p>灰度、蓝绿、ABtest发布等部署方案对比</p>
+<a id="more"></a>
+<h2 id="蓝绿发布（Blue-Green-Deployment）"><a href="#蓝绿发布（Blue-Green-Deployment）" class="headerlink" title="蓝绿发布（Blue/Green Deployment）"></a>蓝绿发布（Blue/Green Deployment）</h2><ol>
+<li>定义</li>
+</ol>
+<p>蓝绿部署是不停老版本，部署新版本然后进行测试。确认OK后将流量切到新版本，然后老版本同时也升级到新版本。</p>
+<ol start="2">
+<li>特点</li>
+</ol>
+<p>蓝绿部署无需停机，并且风险较小。</p>
+<ol start="3">
+<li>部署过程</li>
+</ol>
+<p>部署版本 1 的应用（初始的状态）<br>所有外部请求的流量都打到这个版本上。<br>部署版本 2 的应用<br>版本 2 的代码与版本 1 不同(新功能、Bug修复等)。</p>
+<p>将流量从版本 1 切换到版本 2。<br>如版本 2 测试正常，就删除版本 1 正在使用的资源（例如实例），从此正式用版本 2。<br>4. 小结</p>
+<p>从过程不难发现，在部署的过程中，我们的应用始终在线。并且新版本上线的过程中，并没有修改老版本的任何内容，在部署期间，老版本的状态不受影响，这样风险很小。并且只要老版本的资源不被删除，理论上，我们可以在任何时间回滚到老版本。</p>
+<ol start="5">
+<li>蓝绿发布的注意事项</li>
+</ol>
+<p>当你切换到蓝色环境时，需要妥当处理未完成的业务和新的业务。如果你的数据库后端无法处理，会是一个比较麻烦的问题。</p>
+<p>可能会出现需要同时处理微服务架构应用和传统架构应用的情况，如果在蓝绿部署中协调不好这两者，还是有可能会导致服务停止。<br>需要提前考虑数据库与应用部署同步迁移/回滚的问题。<br>蓝绿部署需要有基础设施支持。<br>在非隔离基础架构（ VM 、 Docker 等）上执行蓝绿部署，蓝色环境和绿色环境有被摧毁的风险。<br>6. 优势和不足</p>
+<p>优势<br>升级切换和回退速度非常快。</p>
+<p>不足<br>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响。</p>
+<p>需要两倍机器资源。</p>
+<ol start="7">
+<li>适用场合</li>
+</ol>
+<p>对用户体验有一定容忍度的场景。<br>机器资源有富余或者可以按需分配（AWS 云，或自建容器云）。</p>
+<h2 id="灰度发布"><a href="#灰度发布" class="headerlink" title="灰度发布"></a>灰度发布</h2><ol>
+<li>定义</li>
+</ol>
+<p>灰度发布是指在黑与白之间，能够平滑过渡的一种发布方式。AB Test 就是一种灰度发布方式，让一部分用户继续用 A，一部分用户开始用 B，如果用户对 B 没有什么反对意见，那么逐步扩大范围，把所有用户都迁移到 B 上面来。灰度发布可以保证整体系统的稳定，在初始灰度的时候就可以发现、调整问题，以保证其影响度。</p>
+<ol start="2">
+<li><p>A/B Testing<br>A/B 测试是用来测试应用功能表现的方法，例如可用性、受欢迎程度、可见性等等。 A/B 测试通常用在应用的前端上，不过当然需要后端来支持。<br>A/B 测试与蓝绿部署的区别在于， A/B 测试目的在于通过科学的实验设计、采样样本代表性、流量分割与小流量测试等方式来获得具有代表性的实验结论，并确信该结论在推广到全部流量可信；蓝绿部署的目的是安全稳定地发布新版本应用，并在必要时回滚。</p>
+</li>
+<li><p>金丝雀发布</p>
+</li>
+</ol>
+<p>我们平常所说的金丝雀部署也是灰度发布的一种方式，在原有版本可用的情况下，同时部署一个新版本应用作为「金丝雀」服务器来测试新版本的性能和表现，以保障整体系统稳定的情况下，尽早发现、调整问题。</p>
+<blockquote>
+<p>矿井中的金丝雀：17 世纪，英国矿井工人发现，金丝雀对瓦斯这种气体十分敏感。空气中哪怕有极其微量的瓦斯，金丝雀也会停止歌唱；当瓦斯含量超过一定限度时，虽然鲁钝的人类毫无察觉，金丝雀却早已毒发身亡。当时在采矿设备相对简陋的条件下，工人们每次下井都会带上一只金丝雀作为瓦斯检测指标，以便在危险状况下紧急撤离。</p>
+</blockquote>
+<p>灰度发布／金丝雀发布由以下几个步骤组成：</p>
+<p>准备好部署各个阶段的工件，包括：构建工件，测试脚本，配置文件和部署清单文件。<br>从负载均衡列表中移除掉「金丝雀」服务器。<br>升级「金丝雀」应用（排掉原有流量并进行部署）。<br>对应用进行自动化测试。<br>将「金丝雀」服务器重新添加到负载均衡列表中（连通性和健康检查）。<br>如果「金丝雀」在线使用测试成功，升级剩余的其他服务器（否则就回滚）。<br>除此之外灰度发布还可以设置路由权重，动态调整不同的权重来进行新老版本的验证。</p>
+<ol start="4">
+<li>优势和不足</li>
+</ol>
+<p>优势<br>用户体验影响小，灰度发布过程出现问题只影响少量用户。</p>
+<p>不足<br>发布自动化程度不够，发布期间可引发服务中断。</p>
+<h2 id="滚动发布（Rolling-Update-Deployment）"><a href="#滚动发布（Rolling-Update-Deployment）" class="headerlink" title="滚动发布（Rolling Update Deployment）"></a>滚动发布（Rolling Update Deployment）</h2><p>在金丝雀发布基础上的进一步优化改进，是一种自动化程度较高的发布方式，用户体验比较平滑，是目前成熟型技术组织所采用的主流发布方式。</p>
+<ol>
+<li>定义</li>
+</ol>
+<p>滚动发布：一般是取出一个或者多个服务器停止服务，执行更新，并重新将其投入使用。周而复始，直到集群中所有的实例都更新成新版本。</p>
+<ol start="2">
+<li>特点</li>
+</ol>
+<p>这种部署方式相对于蓝绿部署，更加节约资源——它不需要运行两个集群、两倍的实例数。我们可以部分部署，例如每次只取出集群的 20% 进行升级。</p>
+<ol start="3">
+<li>部署过程</li>
+</ol>
+<p>滚动式发布一般先发 1 台，或者一个小比例，如 2% 服务器，主要做流量验证用，类似金丝雀 (Canary) 测试。<br>滚动式发布需要比较复杂的发布工具和智能 LB，支持平滑的版本替换和流量拉入拉出。<br>每次发布时，先将老版本 V1 流量从 LB 上摘除，然后清除老版本，发新版本 V2，再将 LB 流量接入新版本。这样可以尽量保证用户体验不受影响。<br>一次滚动式发布一般由若干个发布批次组成，每批的数量一般是可以配置的（可以通过发布模板定义）。例如第一批 1 台（金丝雀），第二批 10%，第三批 50%，第四批 100%。每个批次之间留观察间隔，通过手工验证或监控反馈确保没有问题再发下一批次，所以总体上滚动式发布过程是比较缓慢的 (其中金丝雀的时间一般会比后续批次更长，比如金丝雀 10 分钟，后续间隔 2 分钟)。<br>回退是发布的逆过程，将新版本流量从 LB 上摘除，清除新版本，发老版本，再将 LB 流量接入老版本。和发布过程一样，回退过程一般也比较慢的。<br>4. 优势和不足</p>
+<p>优势<br>用户体验影响小，体验较平滑。</p>
+<p>不足<br>发布和回退时间比较缓慢。</p>
+<p>发布工具比较复杂，LB 需要平滑的流量摘除和拉入能力。</p>
+<h2 id="其它发布方式"><a href="#其它发布方式" class="headerlink" title="其它发布方式"></a>其它发布方式</h2><p>上述都是偏传统的发布方式，能覆盖大部分应用发布场景。针对一些关键新功能的上线发布，或者一些特定的场景，还有一些特殊的发布方式。</p>
+<p>功能开关发布</p>
+<p>利用代码中的功能开关（Feature Flag/Toggle/Switch）来控制发布逻辑，一般不需要复杂的发布工具和智能 LB 配合，是一种相对比较低成本和简单的发布方式。这种方式也是支持现代 DevOps 理念，研发人员可以灵活定制和自助完成的发布方式。功能开关的原理如下图所示：</p>
+<ol>
+<li>部署过程</li>
+</ol>
+<p>功能开关发布需要一个配置中心或者开关中心这样的服务支持，例如携程的 Apollo 配置中心或者开源的 FF4J，这些都支持开关发布。业界还有专门的功能开关 SaaS 服务，例如 LaunchDarkly。通过配置中心，运维或研发人员可以在运行期动态配置功能开关的值。当然，功能开关发布只是配置中心的一种使用场景，配置中心还能支持其它很多动态配置场景。<br>功能开关服务一般提供客户端 SDK，方便开发人员集成。在运行期，客户端 SDK 会同步最新的开关值，技术实现有推方式 (push)，也有拉方式 (pull)，或者推拉结合方式。<br>新功能（V2 new feature）和老功能（V1 old feature）住在同一套代码中，新功能隐藏在开关后面，如果开关没有打开，则走老代码逻辑，如果开关打开，则走新代码逻辑。技术实现上可以理解为一个简单的 if/else 逻辑。<br>应用上线后，开关先不打开，然后运维或研发人员通过开关中心打开新功能，经过流量验证新功能没有问题，则发布完成；如果有问题，则随时可以通过开关中心切回老功能逻辑。<br>2. 优势和不足</p>
+<p>优势<br>升级切换和回退速度非常快。</p>
+<p>相对于复杂的发布工具，实施比较简单，成本相对低廉。</p>
+<p>研发能够灵活定制发布逻辑，支持 DevOps 自助发布。</p>
+<p>不足<br>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响。</p>
+<p>对代码有侵入，代码逻辑会变复杂，需要定期清理老版本逻辑，维护成本变高。</p>
+]]></content>
+      <categories>
+        <category>ops</category>
+      </categories>
+      <tags>
+        <tag>deploy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>并发编程</title>
+    <url>/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[<p>并发编程-进程-线程 multiprocess </p>
+<a id="more"></a>
+]]></content>
+      <categories>
+        <category>python</category>
       </categories>
       <tags>
         <tag>note</tag>

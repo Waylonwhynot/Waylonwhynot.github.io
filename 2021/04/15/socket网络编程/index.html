@@ -28,7 +28,7 @@
 <meta property="og:description" content="socket 网络编程">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-15T06:38:29.000Z">
-<meta property="article:modified_time" content="2021-04-16T20:13:58.240Z">
+<meta property="article:modified_time" content="2021-04-17T05:38:23.755Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-17 04:13:58" itemprop="dateModified" datetime="2021-04-17T04:13:58+08:00">2021-04-17</time>
+                <time title="修改时间：2021-04-17 13:38:23" itemprop="dateModified" datetime="2021-04-17T13:38:23+08:00">2021-04-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.5k</span>
+              <span>6.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -322,10 +322,7 @@
 
 
 
-<ul>
-<li>粘包问题<br>TCP独有（流式协议）</li>
-</ul>
-<p><strong>原因</strong>:<br>tcp是流式协议,数据像水流一样发出去；TCP协议nagle算法会把时间间隔较短，数据量较小的数据粘到一起，没有任何边界区分,基于网络发出去。<strong>收数据没收干净</strong>,会和下一次结果混合在一起。</p>
+<h4 id="粘包问题"><a href="#粘包问题" class="headerlink" title="粘包问题"></a>粘包问题</h4><p>TCP独有（流式协议）<br><strong>原因</strong>:<br>tcp是流式协议,数据像水流一样发出去；TCP协议nagle算法会把时间间隔较短，数据量较小的数据粘到一起，没有任何边界区分,基于网络发出去。<strong>收数据没收干净</strong>,会和下一次结果混合在一起。</p>
 <p><strong>解决方案</strong>: 收数据的时候收干净就好了</p>
 <ul>
 <li><p>基于tcp协议实现远程执行命令</p>
@@ -337,6 +334,26 @@
 </ul>
 <p>客户端</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8080</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>: <span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 接收端</span></span><br><span class="line">    <span class="comment"># 1.先收4个字节，从中提取接下来要收的头的长度</span></span><br><span class="line">    header_length_x = client.recv(<span class="number">4</span>)</span><br><span class="line">    header_length = struct.unpack(<span class="string">&#x27;i&#x27;</span>, header_length_x)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 2. 接收头,并解析</span></span><br><span class="line">    json_str_bytes = client.recv(header_length)</span><br><span class="line">    json_str = json_str_bytes.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    header_dic = json.loads(json_str)</span><br><span class="line">    print(header_dic)</span><br><span class="line">    total_size = header_dic[<span class="string">&quot;total_size&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3.接收真是数据</span></span><br><span class="line">    recv_size = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> recv_size &lt; total_size:</span><br><span class="line">        recv_data = client.recv(<span class="number">1024</span>)</span><br><span class="line">        recv_size += len(recv_data)</span><br><span class="line">        print(recv_data.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="socketserver实现并发"><a href="#socketserver实现并发" class="headerlink" title="socketserver实现并发"></a>socketserver实现并发</h4><ul>
+<li>基于tcp实现并发<br>服务端<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socketserver</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRequestHandle</span>(<span class="params">socketserver.BaseRequestHandler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span>(<span class="params">self</span>):</span></span><br><span class="line">         <span class="comment"># 如果是tcp协议，self.request =&gt; conn</span></span><br><span class="line">        print(self.client_address)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                cmd = self.request.recv(<span class="number">1024</span>)</span><br><span class="line">                <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">break</span></span><br><span class="line">                self.request.send(cmd.upper())</span><br><span class="line">            <span class="keyword">except</span> Exception:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        self.request.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端应该做两件事</span></span><br><span class="line"><span class="comment"># 第一件事: 循环地从半连接池中去除链接请求与其建立双向链接，拿到链接对象</span></span><br><span class="line">s = socketserver.ThreadingTCPServer((<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">8888</span>),MyRequestHandle)</span><br><span class="line">s.serve_forever()</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line"><span class="comment"># while True:</span></span><br><span class="line"><span class="comment">#     启动一个线程conn,client_addr = server.accept()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二件事: 拿到链接对象，与其进行通信循环 ===&gt; handle</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>客户端</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET,SOCK_STREAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8888</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解决粘包问题思路:</span></span><br><span class="line">    <span class="comment"># 1.拿到数据总大小</span></span><br><span class="line">    <span class="comment"># 2.revc_size = 0,循环接收,每收到一次，recv+=接收的长度</span></span><br><span class="line">    <span class="comment"># 3.直到revc_size = total_size 结束循环</span></span><br><span class="line">    cmd_res = client.recv(<span class="number">1024</span>)  <span class="comment"># 本次接收，最大接收1024bytes</span></span><br><span class="line">    print(cmd_res.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>基于UDP实现并发<br>服务端<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socketserver</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRequestHandle</span>(<span class="params">socketserver.BaseRequestHandler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span>(<span class="params">self</span>):</span></span><br><span class="line">        client_data = self.request[<span class="number">0</span>]</span><br><span class="line">        server = self.request[<span class="number">1</span>]</span><br><span class="line">        client_address = self.client_address</span><br><span class="line"></span><br><span class="line">        print(<span class="string">&#x27;客户端发来的数据%s&#x27;</span> %client_data)</span><br><span class="line">        server.sendto(client_data.upper(), client_address)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端应该做两件事</span></span><br><span class="line"><span class="comment"># 第一件事: 循环地从半连接池中去除链接请求与其建立双向链接，拿到链接对象</span></span><br><span class="line">s = socketserver.ThreadingUDPServer((<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">8888</span>),MyRequestHandle)</span><br><span class="line">s.serve_forever()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>客户端</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET,SOCK_DGRAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8888</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解决粘包问题思路:</span></span><br><span class="line">    <span class="comment"># 1.拿到数据总大小</span></span><br><span class="line">    <span class="comment"># 2.revc_size = 0,循环接收,每收到一次，recv+=接收的长度</span></span><br><span class="line">    <span class="comment"># 3.直到revc_size = total_size 结束循环</span></span><br><span class="line">    cmd_res = client.recv(<span class="number">1024</span>)  <span class="comment"># 本次接收，最大接收1024bytes</span></span><br><span class="line">    print(cmd_res.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
     </div>
 
     
@@ -357,7 +374,10 @@
     <a href="/2021/03/24/py-day03-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" rel="prev" title="py-day03-字符编码">
       <i class="fa fa-chevron-left"></i> py-day03-字符编码
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" rel="next" title="并发编程">
+      并发编程 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -416,7 +436,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">网络基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">传输层</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.1.1.</span> <span class="nav-text">三次握手建立连接</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82"><span class="nav-number">1.2.</span> <span class="nav-text">应用层</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socket%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">socket介绍</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">网络基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">传输层</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.1.1.</span> <span class="nav-text">三次握手建立连接</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82"><span class="nav-number">1.2.</span> <span class="nav-text">应用层</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socket%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">socket介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B2%98%E5%8C%85%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">粘包问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#socketserver%E5%AE%9E%E7%8E%B0%E5%B9%B6%E5%8F%91"><span class="nav-number">2.2.</span> <span class="nav-text">socketserver实现并发</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -432,14 +452,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -489,12 +509,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">308k</span>
+    <span title="站点总字数">310k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:33</span>
+    <span title="站点阅读时长">8:36</span>
 </div>
 
 <!--
