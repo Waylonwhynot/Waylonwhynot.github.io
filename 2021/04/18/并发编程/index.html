@@ -20,18 +20,23 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="并发编程-进程-线程 multiprocess">
+  <meta name="description" content="并发编程-进程理论-同步异步-如何开启进程  multiprocess">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并发编程">
 <meta property="og:url" content="https://waylon.whatyouneed.site/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="并发编程-进程-线程 multiprocess">
+<meta property="og:description" content="并发编程-进程理论-同步异步-如何开启进程  multiprocess">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://waylon.whatyouneed.site/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%A4%9A%E9%81%93%E6%8A%80%E6%9C%AF.png">
+<meta property="og:image" content="https://waylon.whatyouneed.site/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E6%97%B6%E9%97%B4%E7%89%87%E8%BD%AE%E8%BD%AC.png">
+<meta property="og:image" content="https://waylon.whatyouneed.site/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%89%E7%8A%B6%E6%80%81%E5%9B%BE.png">
+<meta property="og:image" content="https://waylon.whatyouneed.site/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E4%B8%89%E7%8A%B6%E6%80%81%E5%9B%BE%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3.png">
 <meta property="article:published_time" content="2021-04-17T18:18:16.000Z">
-<meta property="article:modified_time" content="2021-04-17T18:19:22.919Z">
+<meta property="article:modified_time" content="2021-04-19T03:17:12.594Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://waylon.whatyouneed.site/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%A4%9A%E9%81%93%E6%8A%80%E6%9C%AF.png">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">
 
@@ -213,10 +218,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-18 02:18:16 / 修改时间：02:19:22" itemprop="dateCreated datePublished" datetime="2021-04-18T02:18:16+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 02:18:16" itemprop="dateCreated datePublished" datetime="2021-04-18T02:18:16+08:00">2021-04-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-19 11:17:12" itemprop="dateModified" datetime="2021-04-19T11:17:12+08:00">2021-04-19</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -233,14 +244,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>22</span>
+              <span>3.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -252,8 +263,112 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>并发编程-进程-线程 multiprocess </p>
+        <p>并发编程-进程理论-同步异步-如何开启进程  multiprocess </p>
 <a id="more"></a>
+
+<h2 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h2><h3 id="操作系统发展史"><a href="#操作系统发展史" class="headerlink" title="操作系统发展史"></a>操作系统发展史</h3><p>参考博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Dominic-Ji/articles/10929381.html">https://www.cnblogs.com/Dominic-Ji/articles/10929381.html</a></p>
+<h3 id="多道技术"><a href="#多道技术" class="headerlink" title="多道技术"></a>多道技术</h3><p>单核实现并发的效果</p>
+<h3 id="必备知识点"><a href="#必备知识点" class="headerlink" title="必备知识点"></a>必备知识点</h3><ul>
+<li><p>并发</p>
+<p>看起来像同时运行的就可以称之为并发</p>
+</li>
+<li><p>并行</p>
+<p>真正意义上的同时执行</p>
+</li>
+</ul>
+<p>ps:</p>
+<ul>
+<li>并行肯定算并发</li>
+<li>单核的计算机肯定不能实现并行，但是可以实现并发</li>
+</ul>
+<p>补充: 我们直接假设单核就是一个核心,干活的就一个人，不要考虑cpu里面的内核数</p>
+<h3 id="多道技术图解"><a href="#多道技术图解" class="headerlink" title="多道技术图解"></a>多道技术图解</h3><p>节省了多个程序运行的总耗时</p>
+<img src="/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%A4%9A%E9%81%93%E6%8A%80%E6%9C%AF.png" class title="并发编程">
+
+<h4 id="多道技术重点知识"><a href="#多道技术重点知识" class="headerlink" title="多道技术重点知识"></a>多道技术重点知识</h4><p>空间上的复用和时间上的复用</p>
+<ul>
+<li><p>空间上的复用</p>
+<p>多个程序公用一套计算机硬件</p>
+</li>
+<li><p>时间上的复用</p>
+<p>例子: 洗衣服30s，做饭50s，烧水30s</p>
+<p>单道110s，多道时间最长的那个               切换节省时间</p>
+<p>例子: 吃饭，玩游戏，边吃饭边玩游戏      保存状态</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">切换（cpu）分为两种情况，</span></span><br><span class="line"><span class="string">  1. 当一个程序遇到IO操作的时候，这会没使用cpu，操作系统会剥夺该程序的CPU执行权限</span></span><br><span class="line"><span class="string">     作用: 提高了cpu的利用率，并且也不影响程序的执行效率</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">  2. 当一个程序长时间占用cpu的时候，操作系统也会剥夺该程序的CPU执行权限 </span></span><br><span class="line"><span class="string">         作用: 降低了程序的执行效率（原本时间+切换时间）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="进程理论"><a href="#进程理论" class="headerlink" title="进程理论"></a>进程理论</h2><h3 id="必备知识点-1"><a href="#必备知识点-1" class="headerlink" title="必备知识点"></a>必备知识点</h3><h4 id="程序和进程的区别"><a href="#程序和进程的区别" class="headerlink" title="程序和进程的区别"></a>程序和进程的区别</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">程序就是一堆躺在硬盘上的代码，是”死“的</span></span><br><span class="line"><span class="string">进程则是表示程序正在执行的过程，是”活“的</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h3><ul>
+<li><p>先来先服务的调度算法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;对长作业有利，对短作业无益&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>短作业优先调度算法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;对短作业有利, 对长作业无益&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>时间片轮转+多级反馈队列</p>
+</li>
+</ul>
+<img src="/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E6%97%B6%E9%97%B4%E7%89%87%E8%BD%AE%E8%BD%AC.png" class title="并发编程">
+
+
+
+<h3 id="进程运行的三状态图"><a href="#进程运行的三状态图" class="headerlink" title="进程运行的三状态图"></a>进程运行的三状态图</h3><img src="/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%89%E7%8A%B6%E6%80%81%E5%9B%BE.png" class title="并发编程">
+
+
+
+<img src="/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E4%B8%89%E7%8A%B6%E6%80%81%E5%9B%BE%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3.png" class title="并发编程">
+
+
+
+<h2 id="两对重要概念"><a href="#两对重要概念" class="headerlink" title="两对重要概念"></a>两对重要概念</h2><ul>
+<li><strong>同步和异步</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;描述的是任务的提交方式&quot;&quot;&quot;</span></span><br><span class="line">同步: 任务提交之后，原地等待任务的返回结果，等待的过程中不做任何事（干等）</span><br><span class="line">      程序层面上表现出来的就是夯住了</span><br><span class="line">异步: 任务提交之后，不原地等待任务的返回结果，直接去做其他事情</span><br><span class="line">      我提交的任务结果如何获取？</span><br><span class="line">      任务的返回结果，会有一个异步回调机制自动处理</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>阻塞非阻塞</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;描述进程的运行状态&quot;&quot;&quot;</span></span><br><span class="line">阻塞: 阻塞态</span><br><span class="line">非阻塞: 就绪态、运行态</span><br><span class="line">  </span><br><span class="line">理想状态: 我们应该让我们写的代码永远在就绪态和运行态之间切换</span><br></pre></td></tr></table></figure>
+
+<p>上述概念的组合: 最高效的一种组合就是 <strong>异步非阻塞</strong></p>
+<h3 id="开启进程的两种方式"><a href="#开启进程的两种方式" class="headerlink" title="开启进程的两种方式"></a>开启进程的两种方式</h3><p>定心丸: 代码开启进程和线程的方式，代码书写基本是一样的，你学会了如何开启进程就学会了如何开启线程.</p>
+<p><strong>进程创建的第一种方式</strong>.p,start()告诉操作系统创建一个进程</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进程创建的第一种方式</span></span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">task</span>(<span class="params">name</span>):</span></span><br><span class="line">    print(<span class="string">&#x27;%s is running&#x27;</span> % name)</span><br><span class="line">    time.sleep(<span class="number">3</span>)</span><br><span class="line">    print(<span class="string">&#x27;%s is over&#x27;</span> % name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 实例化一个对象</span></span><br><span class="line">    p = Process(target=task, args=(<span class="string">&#x27;jason&#x27;</span>,))</span><br><span class="line">    <span class="comment"># 容器类型无论里面有几个元素，建议一定要用逗号隔开</span></span><br><span class="line">    <span class="comment"># 2 开启进程</span></span><br><span class="line">    p.start()  <span class="comment"># 告诉操作系统创建一个进程</span></span><br><span class="line">    print(<span class="string">&#x27;主&#x27;</span>)</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">windows 操作系统下创建进程一定要在main下面创建</span></span><br><span class="line"><span class="string">因为windows下创建进程类似于模块导入的方式</span></span><br><span class="line"><span class="string">会从上往下依次执行代码</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>进程创建的第二种方式</strong>: 类的继承</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyProcess</span>(<span class="params">Process</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;hello bf girl&#x27;</span>)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">        print(<span class="string">&#x27;get out!&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    p = MyProcess()</span><br><span class="line">    p.start()</span><br><span class="line">    print(<span class="string">&#x27;主&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>**总结: **</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">创建进程就是在内存中申请一块内存空间将需要运行的代码丢进去</span></span><br><span class="line"><span class="string">一个进程对应在内存中就是一块独立的内存空间</span></span><br><span class="line"><span class="string">多个进程对应在内存中就是多块独立的内存空间</span></span><br><span class="line"><span class="string">进程与进程之间默认情况下无法直接交互，如果想交互可以借助于第三方工具、模块</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="join方法"><a href="#join方法" class="headerlink" title="join方法"></a>join方法</h3><p>join方法是让主进程的代码等待子进程代码运行结束之后，再继续运行。不影响其他子进程之间的运行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">task</span>(<span class="params">name, n</span>):</span></span><br><span class="line">    print(<span class="string">&#x27;%s is running&#x27;</span> % name)</span><br><span class="line">    time.sleep(n)</span><br><span class="line">    print(<span class="string">&#x27;%s is over&#x27;</span> % name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 实例化一个对象</span></span><br><span class="line">    <span class="comment"># p1 = Process(target=task, args=(&#x27;jason&#x27;,1))</span></span><br><span class="line">    <span class="comment"># p2 = Process(target=task, args=(&#x27;egon&#x27;,2))</span></span><br><span class="line">    <span class="comment"># p3 = Process(target=task, args=(&#x27;tank&#x27;,3))</span></span><br><span class="line">    <span class="comment"># start_time = time.time()</span></span><br><span class="line">    <span class="comment"># p1.start()</span></span><br><span class="line">    <span class="comment"># p2.start()</span></span><br><span class="line">    <span class="comment"># p3.start()  # 仅仅是告诉操作系统要创建进程，什么时候操作系统操作是看系统什么时候加载程序到内存，cpu什么时候执行</span></span><br><span class="line">    <span class="comment"># # p.join()  # 主进程等待子进程p运行结束之后再继续往后执行</span></span><br><span class="line">    <span class="comment"># p1.join()</span></span><br><span class="line">    <span class="comment"># p2.join()</span></span><br><span class="line">    <span class="comment"># p3.join()</span></span><br><span class="line">    start_time = time.time()</span><br><span class="line">    p_list = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">4</span>):</span><br><span class="line">        p = Process(target=task, args=(<span class="string">&#x27;子进程 %s&#x27;</span> %i, i))</span><br><span class="line">        p.start()</span><br><span class="line">        p_list.append(p)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> p_list:</span><br><span class="line">        p.join()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">&#x27;主&#x27;</span>, time.time() - start_time)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="进程之间数据相互隔离"><a href="#进程之间数据相互隔离" class="headerlink" title="进程之间数据相互隔离"></a>进程之间数据相互隔离</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"></span><br><span class="line">money = <span class="number">100</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">task</span>():</span></span><br><span class="line">    <span class="keyword">global</span> money  <span class="comment"># 局部修改全局</span></span><br><span class="line">    money = <span class="number">666</span></span><br><span class="line">    print(<span class="string">&#x27;子 %s&#x27;</span> %money)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    p = Process(target=task)</span><br><span class="line">    p.start()</span><br><span class="line">    p.join()</span><br><span class="line">    print(money)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>复习:</p>
+<ul>
+<li>阐述同步异步阻塞非阻塞</li>
+<li>手写开启进程的两种方式</li>
+</ul>
 
     </div>
 
@@ -337,6 +452,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">并发编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8F%91%E5%B1%95%E5%8F%B2"><span class="nav-number">1.1.</span> <span class="nav-text">操作系统发展史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E9%81%93%E6%8A%80%E6%9C%AF"><span class="nav-number">1.2.</span> <span class="nav-text">多道技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%85%E5%A4%87%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">1.3.</span> <span class="nav-text">必备知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E9%81%93%E6%8A%80%E6%9C%AF%E5%9B%BE%E8%A7%A3"><span class="nav-number">1.4.</span> <span class="nav-text">多道技术图解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E9%81%93%E6%8A%80%E6%9C%AF%E9%87%8D%E7%82%B9%E7%9F%A5%E8%AF%86"><span class="nav-number">1.4.1.</span> <span class="nav-text">多道技术重点知识</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%90%86%E8%AE%BA"><span class="nav-number">2.</span> <span class="nav-text">进程理论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%85%E5%A4%87%E7%9F%A5%E8%AF%86%E7%82%B9-1"><span class="nav-number">2.1.</span> <span class="nav-text">必备知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.1.1.</span> <span class="nav-text">程序和进程的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6"><span class="nav-number">2.2.</span> <span class="nav-text">进程调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E8%BF%90%E8%A1%8C%E7%9A%84%E4%B8%89%E7%8A%B6%E6%80%81%E5%9B%BE"><span class="nav-number">2.3.</span> <span class="nav-text">进程运行的三状态图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E5%AF%B9%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">两对重要概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">开启进程的两种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#join%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">join方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E4%B9%8B%E9%97%B4%E6%95%B0%E6%8D%AE%E7%9B%B8%E4%BA%92%E9%9A%94%E7%A6%BB"><span class="nav-number">3.3.</span> <span class="nav-text">进程之间数据相互隔离</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -409,12 +525,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">310k</span>
+    <span title="站点总字数">313k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:36</span>
+    <span title="站点阅读时长">8:41</span>
 </div>
 
 <!--
