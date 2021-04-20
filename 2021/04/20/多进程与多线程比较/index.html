@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="灰度、蓝绿、ABtest发布等部署方案对比">
+  <meta name="description" content="多进程与多线程比较">
 <meta property="og:type" content="article">
-<meta property="og:title" content="发布方式对比">
-<meta property="og:url" content="https://waylon.whatyouneed.site/2020/08/13/%E5%8F%91%E5%B8%83%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94/index.html">
+<meta property="og:title" content="多进程与多线程比较">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/04/20/%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%AF%94%E8%BE%83/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="灰度、蓝绿、ABtest发布等部署方案对比">
+<meta property="og:description" content="多进程与多线程比较">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-08-12T18:34:18.000Z">
-<meta property="article:modified_time" content="2020-08-12T18:58:26.111Z">
+<meta property="article:published_time" content="2021-04-20T02:07:38.000Z">
+<meta property="article:modified_time" content="2021-04-20T02:09:53.701Z">
 <meta property="article:author" content="Waylon Yan">
-<meta property="article:tag" content="deploy">
+<meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://waylon.whatyouneed.site/2020/08/13/%E5%8F%91%E5%B8%83%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94/">
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/04/20/%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%AF%94%E8%BE%83/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>发布方式对比 | YouNeed</title>
+  <title>多进程与多线程比较 | YouNeed</title>
   
 
 
@@ -191,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2020/08/13/%E5%8F%91%E5%B8%83%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94/">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/04/20/%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%AF%94%E8%BE%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/timg.jpeg">
@@ -204,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          发布方式对比
+          多进程与多线程比较
         </h1>
 
         <div class="post-meta">
@@ -215,7 +215,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-08-13 02:34:18 / 修改时间：02:58:26" itemprop="dateCreated datePublished" datetime="2020-08-13T02:34:18+08:00">2020-08-13</time>
+              <time title="创建时间：2021-04-20 10:07:38 / 修改时间：10:09:53" itemprop="dateCreated datePublished" datetime="2021-04-20T10:07:38+08:00">2021-04-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,7 +223,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ops/" itemprop="url" rel="index"><span itemprop="name">ops</span></a>
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
                 </span>
             </span>
 
@@ -233,14 +233,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
+              <span>1.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -252,84 +252,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>灰度、蓝绿、ABtest发布等部署方案对比</p>
+        <p>多进程与多线程比较</p>
 <a id="more"></a>
-<h2 id="蓝绿发布（Blue-Green-Deployment）"><a href="#蓝绿发布（Blue-Green-Deployment）" class="headerlink" title="蓝绿发布（Blue/Green Deployment）"></a>蓝绿发布（Blue/Green Deployment）</h2><ol>
-<li>定义</li>
-</ol>
-<p>蓝绿部署是不停老版本，部署新版本然后进行测试。确认OK后将流量切到新版本，然后老版本同时也升级到新版本。</p>
-<ol start="2">
-<li>特点</li>
-</ol>
-<p>蓝绿部署无需停机，并且风险较小。</p>
-<ol start="3">
-<li>部署过程</li>
-</ol>
-<p>部署版本 1 的应用（初始的状态）<br>所有外部请求的流量都打到这个版本上。<br>部署版本 2 的应用<br>版本 2 的代码与版本 1 不同(新功能、Bug修复等)。</p>
-<p>将流量从版本 1 切换到版本 2。<br>如版本 2 测试正常，就删除版本 1 正在使用的资源（例如实例），从此正式用版本 2。<br>4. 小结</p>
-<p>从过程不难发现，在部署的过程中，我们的应用始终在线。并且新版本上线的过程中，并没有修改老版本的任何内容，在部署期间，老版本的状态不受影响，这样风险很小。并且只要老版本的资源不被删除，理论上，我们可以在任何时间回滚到老版本。</p>
-<ol start="5">
-<li>蓝绿发布的注意事项</li>
-</ol>
-<p>当你切换到蓝色环境时，需要妥当处理未完成的业务和新的业务。如果你的数据库后端无法处理，会是一个比较麻烦的问题。</p>
-<p>可能会出现需要同时处理微服务架构应用和传统架构应用的情况，如果在蓝绿部署中协调不好这两者，还是有可能会导致服务停止。<br>需要提前考虑数据库与应用部署同步迁移/回滚的问题。<br>蓝绿部署需要有基础设施支持。<br>在非隔离基础架构（ VM 、 Docker 等）上执行蓝绿部署，蓝色环境和绿色环境有被摧毁的风险。<br>6. 优势和不足</p>
-<p>优势<br>升级切换和回退速度非常快。</p>
-<p>不足<br>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响。</p>
-<p>需要两倍机器资源。</p>
-<ol start="7">
-<li>适用场合</li>
-</ol>
-<p>对用户体验有一定容忍度的场景。<br>机器资源有富余或者可以按需分配（AWS 云，或自建容器云）。</p>
-<h2 id="灰度发布"><a href="#灰度发布" class="headerlink" title="灰度发布"></a>灰度发布</h2><ol>
-<li>定义</li>
-</ol>
-<p>灰度发布是指在黑与白之间，能够平滑过渡的一种发布方式。AB Test 就是一种灰度发布方式，让一部分用户继续用 A，一部分用户开始用 B，如果用户对 B 没有什么反对意见，那么逐步扩大范围，把所有用户都迁移到 B 上面来。灰度发布可以保证整体系统的稳定，在初始灰度的时候就可以发现、调整问题，以保证其影响度。</p>
-<ol start="2">
-<li><p>A/B Testing<br>A/B 测试是用来测试应用功能表现的方法，例如可用性、受欢迎程度、可见性等等。 A/B 测试通常用在应用的前端上，不过当然需要后端来支持。<br>A/B 测试与蓝绿部署的区别在于， A/B 测试目的在于通过科学的实验设计、采样样本代表性、流量分割与小流量测试等方式来获得具有代表性的实验结论，并确信该结论在推广到全部流量可信；蓝绿部署的目的是安全稳定地发布新版本应用，并在必要时回滚。</p>
-</li>
-<li><p>金丝雀发布</p>
-</li>
-</ol>
-<p>我们平常所说的金丝雀部署也是灰度发布的一种方式，在原有版本可用的情况下，同时部署一个新版本应用作为「金丝雀」服务器来测试新版本的性能和表现，以保障整体系统稳定的情况下，尽早发现、调整问题。</p>
-<blockquote>
-<p>矿井中的金丝雀：17 世纪，英国矿井工人发现，金丝雀对瓦斯这种气体十分敏感。空气中哪怕有极其微量的瓦斯，金丝雀也会停止歌唱；当瓦斯含量超过一定限度时，虽然鲁钝的人类毫无察觉，金丝雀却早已毒发身亡。当时在采矿设备相对简陋的条件下，工人们每次下井都会带上一只金丝雀作为瓦斯检测指标，以便在危险状况下紧急撤离。</p>
-</blockquote>
-<p>灰度发布／金丝雀发布由以下几个步骤组成：</p>
-<p>准备好部署各个阶段的工件，包括：构建工件，测试脚本，配置文件和部署清单文件。<br>从负载均衡列表中移除掉「金丝雀」服务器。<br>升级「金丝雀」应用（排掉原有流量并进行部署）。<br>对应用进行自动化测试。<br>将「金丝雀」服务器重新添加到负载均衡列表中（连通性和健康检查）。<br>如果「金丝雀」在线使用测试成功，升级剩余的其他服务器（否则就回滚）。<br>除此之外灰度发布还可以设置路由权重，动态调整不同的权重来进行新老版本的验证。</p>
-<ol start="4">
-<li>优势和不足</li>
-</ol>
-<p>优势<br>用户体验影响小，灰度发布过程出现问题只影响少量用户。</p>
-<p>不足<br>发布自动化程度不够，发布期间可引发服务中断。</p>
-<h2 id="滚动发布（Rolling-Update-Deployment）"><a href="#滚动发布（Rolling-Update-Deployment）" class="headerlink" title="滚动发布（Rolling Update Deployment）"></a>滚动发布（Rolling Update Deployment）</h2><p>在金丝雀发布基础上的进一步优化改进，是一种自动化程度较高的发布方式，用户体验比较平滑，是目前成熟型技术组织所采用的主流发布方式。</p>
-<ol>
-<li>定义</li>
-</ol>
-<p>滚动发布：一般是取出一个或者多个服务器停止服务，执行更新，并重新将其投入使用。周而复始，直到集群中所有的实例都更新成新版本。</p>
-<ol start="2">
-<li>特点</li>
-</ol>
-<p>这种部署方式相对于蓝绿部署，更加节约资源——它不需要运行两个集群、两倍的实例数。我们可以部分部署，例如每次只取出集群的 20% 进行升级。</p>
-<ol start="3">
-<li>部署过程</li>
-</ol>
-<p>滚动式发布一般先发 1 台，或者一个小比例，如 2% 服务器，主要做流量验证用，类似金丝雀 (Canary) 测试。<br>滚动式发布需要比较复杂的发布工具和智能 LB，支持平滑的版本替换和流量拉入拉出。<br>每次发布时，先将老版本 V1 流量从 LB 上摘除，然后清除老版本，发新版本 V2，再将 LB 流量接入新版本。这样可以尽量保证用户体验不受影响。<br>一次滚动式发布一般由若干个发布批次组成，每批的数量一般是可以配置的（可以通过发布模板定义）。例如第一批 1 台（金丝雀），第二批 10%，第三批 50%，第四批 100%。每个批次之间留观察间隔，通过手工验证或监控反馈确保没有问题再发下一批次，所以总体上滚动式发布过程是比较缓慢的 (其中金丝雀的时间一般会比后续批次更长，比如金丝雀 10 分钟，后续间隔 2 分钟)。<br>回退是发布的逆过程，将新版本流量从 LB 上摘除，清除新版本，发老版本，再将 LB 流量接入老版本。和发布过程一样，回退过程一般也比较慢的。<br>4. 优势和不足</p>
-<p>优势<br>用户体验影响小，体验较平滑。</p>
-<p>不足<br>发布和回退时间比较缓慢。</p>
-<p>发布工具比较复杂，LB 需要平滑的流量摘除和拉入能力。</p>
-<h2 id="其它发布方式"><a href="#其它发布方式" class="headerlink" title="其它发布方式"></a>其它发布方式</h2><p>上述都是偏传统的发布方式，能覆盖大部分应用发布场景。针对一些关键新功能的上线发布，或者一些特定的场景，还有一些特殊的发布方式。</p>
-<p>功能开关发布</p>
-<p>利用代码中的功能开关（Feature Flag/Toggle/Switch）来控制发布逻辑，一般不需要复杂的发布工具和智能 LB 配合，是一种相对比较低成本和简单的发布方式。这种方式也是支持现代 DevOps 理念，研发人员可以灵活定制和自助完成的发布方式。功能开关的原理如下图所示：</p>
-<ol>
-<li>部署过程</li>
-</ol>
-<p>功能开关发布需要一个配置中心或者开关中心这样的服务支持，例如携程的 Apollo 配置中心或者开源的 FF4J，这些都支持开关发布。业界还有专门的功能开关 SaaS 服务，例如 LaunchDarkly。通过配置中心，运维或研发人员可以在运行期动态配置功能开关的值。当然，功能开关发布只是配置中心的一种使用场景，配置中心还能支持其它很多动态配置场景。<br>功能开关服务一般提供客户端 SDK，方便开发人员集成。在运行期，客户端 SDK 会同步最新的开关值，技术实现有推方式 (push)，也有拉方式 (pull)，或者推拉结合方式。<br>新功能（V2 new feature）和老功能（V1 old feature）住在同一套代码中，新功能隐藏在开关后面，如果开关没有打开，则走老代码逻辑，如果开关打开，则走新代码逻辑。技术实现上可以理解为一个简单的 if/else 逻辑。<br>应用上线后，开关先不打开，然后运维或研发人员通过开关中心打开新功能，经过流量验证新功能没有问题，则发布完成；如果有问题，则随时可以通过开关中心切回老功能逻辑。<br>2. 优势和不足</p>
-<p>优势<br>升级切换和回退速度非常快。</p>
-<p>相对于复杂的发布工具，实施比较简单，成本相对低廉。</p>
-<p>研发能够灵活定制发布逻辑，支持 DevOps 自助发布。</p>
-<p>不足<br>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响。</p>
-<p>对代码有侵入，代码逻辑会变复杂，需要定期清理老版本逻辑，维护成本变高。</p>
 
+
+
+<h4 id="python同一个进程下多线程无法利用多核心优势，是不是没有用了"><a href="#python同一个进程下多线程无法利用多核心优势，是不是没有用了" class="headerlink" title="python同一个进程下多线程无法利用多核心优势，是不是没有用了"></a>python同一个进程下多线程无法利用多核心优势，是不是没有用了</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">多线程是否有用要看具体情况</span><br><span class="line">单核：<span class="number">4</span>个任务（IO密集型/计算密集型）</span><br><span class="line">多核：<span class="number">4</span>个任务（IO密集型/计算密集型）</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算密集型  每个任务执行时间都需要10s</span></span><br><span class="line">单核(不用考虑了):</span><br><span class="line">  多进程: 额外的消耗资源</span><br><span class="line">  多线程: 节省开销</span><br><span class="line"></span><br><span class="line">多核:</span><br><span class="line">  多进程: 总耗时 <span class="number">10</span>+</span><br><span class="line">  多线程: 总耗时 <span class="number">40</span>+</span><br><span class="line"></span><br><span class="line"><span class="comment"># IO密集型</span></span><br><span class="line">多核:</span><br><span class="line">  多进程: 相对来说更消耗资源</span><br><span class="line">  多线程: 多线程更节省资源</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">######计算密集型</span></span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="keyword">import</span> os,time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">work</span>():</span></span><br><span class="line">    res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">100000000</span>):</span><br><span class="line">        res *= i</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    l = []</span><br><span class="line">    cpu_count = os.cpu_count()</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(cpu_count):</span><br><span class="line">        <span class="comment"># p = Process(target=work)   # 8.5 s</span></span><br><span class="line">        t = Thread(target=work)      <span class="comment"># 41.5s</span></span><br><span class="line">        t.start()</span><br><span class="line">        <span class="comment"># p.start()</span></span><br><span class="line">        <span class="comment"># l.append(p)</span></span><br><span class="line">        l.append(t)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> l:</span><br><span class="line">        p.join()</span><br><span class="line">    print(time.time() - start_time)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#######IO密集型</span></span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="keyword">import</span> os,time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">work</span>():</span></span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    l = []</span><br><span class="line">    cpu_count = os.cpu_count()</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4000</span>):</span><br><span class="line">        <span class="comment"># p = Process(target=work)     # 20.5s</span></span><br><span class="line">        t = Thread(target=work)      <span class="comment"># 3s</span></span><br><span class="line">        t.start()</span><br><span class="line">        <span class="comment"># p.start()</span></span><br><span class="line">        <span class="comment"># l.append(p)</span></span><br><span class="line">        l.append(t)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> l:</span><br><span class="line">        p.join()</span><br><span class="line">    print(time.time() - start_time)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">多进程和多线程都有各自的优势</span></span><br><span class="line"><span class="string">并且后面写项目的时候通常可以</span></span><br><span class="line"><span class="string">    多进程下面再开设多线程</span></span><br><span class="line"><span class="string">这样的话可以利用多线程也可以介绍资源消耗</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -338,7 +276,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/deploy/" rel="tag"><i class="fas fa-cookie-bite"></i> deploy</a>
+              <a href="/tags/note/" rel="tag"><i class="fas fa-cookie-bite"></i> note</a>
           </div>
 
         
@@ -347,13 +285,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" rel="prev" title="kubernetes网络通信原理">
-      <i class="fa fa-chevron-left"></i> kubernetes网络通信原理
+    <a href="/2021/04/20/GIL%E5%85%A8%E5%B1%80%E8%A7%A3%E9%87%8A%E5%99%A8%E9%94%81/" rel="prev" title="GIL全局解释器锁">
+      <i class="fa fa-chevron-left"></i> GIL全局解释器锁
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/08/16/py-day02/" rel="next" title="py-day02">
-      py-day02 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -412,7 +347,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%93%9D%E7%BB%BF%E5%8F%91%E5%B8%83%EF%BC%88Blue-Green-Deployment%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">蓝绿发布（Blue&#x2F;Green Deployment）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83"><span class="nav-number">2.</span> <span class="nav-text">灰度发布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%9A%E5%8A%A8%E5%8F%91%E5%B8%83%EF%BC%88Rolling-Update-Deployment%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">滚动发布（Rolling Update Deployment）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E5%8F%91%E5%B8%83%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">其它发布方式</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E5%90%8C%E4%B8%80%E4%B8%AA%E8%BF%9B%E7%A8%8B%E4%B8%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%97%A0%E6%B3%95%E5%88%A9%E7%94%A8%E5%A4%9A%E6%A0%B8%E5%BF%83%E4%BC%98%E5%8A%BF%EF%BC%8C%E6%98%AF%E4%B8%8D%E6%98%AF%E6%B2%A1%E6%9C%89%E7%94%A8%E4%BA%86"><span class="nav-number">1.</span> <span class="nav-text">python同一个进程下多线程无法利用多核心优势，是不是没有用了</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81"><span class="nav-number">2.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
