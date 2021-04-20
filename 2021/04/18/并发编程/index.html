@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://waylon.whatyouneed.site/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%89%E7%8A%B6%E6%80%81%E5%9B%BE.png">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E4%B8%89%E7%8A%B6%E6%80%81%E5%9B%BE%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3.png">
 <meta property="article:published_time" content="2021-04-17T18:18:16.000Z">
-<meta property="article:modified_time" content="2021-04-19T03:18:43.527Z">
+<meta property="article:modified_time" content="2021-04-20T12:42:33.458Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-19 11:18:43" itemprop="dateModified" datetime="2021-04-19T11:18:43+08:00">2021-04-19</time>
+                <time title="修改时间：2021-04-20 20:42:33" itemprop="dateModified" datetime="2021-04-20T20:42:33+08:00">2021-04-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,7 +244,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
+              <span>4.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -279,7 +279,7 @@
 <p>ps:</p>
 <ul>
 <li>并行肯定算并发</li>
-<li>单核的计算机肯定不能实现并行，但是可以实现并发</li>
+<li>只有多核才涉及到并行</li>
 </ul>
 <p>补充: 我们直接假设单核就是一个核心,干活的就一个人，不要考虑cpu里面的内核数</p>
 <h3 id="多道技术图解"><a href="#多道技术图解" class="headerlink" title="多道技术图解"></a>多道技术图解</h3><p>节省了多个程序运行的总耗时</p>
@@ -300,7 +300,7 @@
 
 
 
-<h2 id="进程理论"><a href="#进程理论" class="headerlink" title="进程理论"></a>进程理论</h2><h3 id="必备知识点-1"><a href="#必备知识点-1" class="headerlink" title="必备知识点"></a>必备知识点</h3><h4 id="程序和进程的区别"><a href="#程序和进程的区别" class="headerlink" title="程序和进程的区别"></a>程序和进程的区别</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">程序就是一堆躺在硬盘上的代码，是”死“的</span></span><br><span class="line"><span class="string">进程则是表示程序正在执行的过程，是”活“的</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="进程理论"><a href="#进程理论" class="headerlink" title="进程理论"></a>进程理论</h2><h3 id="必备知识点-1"><a href="#必备知识点-1" class="headerlink" title="必备知识点"></a>必备知识点</h3><h4 id="程序和进程的区别"><a href="#程序和进程的区别" class="headerlink" title="程序和进程的区别"></a>程序和进程的区别</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">程序就是一堆躺在硬盘上的代码，是”死“的</span></span><br><span class="line"><span class="string">进程则是表示程序正在执行的过程，是”活“的</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h3><ul>
 <li><p>先来先服务的调度算法</p>
@@ -321,6 +321,14 @@
 
 
 <img src="/2021/04/18/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E4%B8%89%E7%8A%B6%E6%80%81%E5%9B%BE%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3.png" class title="并发编程">
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 进程是资源分配的最小单位，线程是cpu执行的最小单位</span><br><span class="line">#一个程序运行，最少有一个进程</span><br><span class="line">#一个进程里最少有一条线程</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 进程和程序的区分</span><br><span class="line">程序可以作为一种软件资料长期存在，而进程是有一定生命期的。</span><br><span class="line">程序是永久的，进程是暂时的。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 进程的状态（）</span><br><span class="line">    -就绪态：可以被cpu调度执行了，还没有执行，排着队</span><br><span class="line">    -运行态：在cpu中运行，正在运行（如果到了时间片，也会被调度出去，调度出去的程序是就绪态）</span><br><span class="line">    -阻塞态：io操作，把数据加载到内存中</span><br></pre></td></tr></table></figure>
+
+
+
+
 
 
 
@@ -530,7 +538,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:10</span>
+    <span title="站点阅读时长">9:11</span>
 </div>
 
 <!--
