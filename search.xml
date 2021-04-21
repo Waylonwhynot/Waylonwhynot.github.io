@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>prometheus相关</title>
-    <url>/2021/04/18/prometheus%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[<p>Prometheus 进阶</p>
-<a id="more"></a>
-
-<ol>
-<li>什么是时序<br>指标名称{标签} + 时间戳<br>不断的打点 , 按照时间依次生成值</li>
-</ol>
-<ol start="2">
-<li><p>日志转时序<br>哪个机器 路径 匹配正则  计数、关键字<br>metrics timestamp 3</p>
-</li>
-<li><p>psm 服务树  gpa</p>
-</li>
-<li><p>promethues 高基数<br>理解为 以metric 为查询 条件，组合成的结果序列较多，就称为高基数 ， 是旨在 查询和告警条件下</p>
-</li>
-<li><p>grafana 设置成row<br>懒加载，防止一次请求过多；做隔离的</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>prometheus</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>mysql-01</title>
     <url>/2021/01/10/mysql-01/</url>
     <content><![CDATA[<p>sql 库表操作</p>
@@ -334,6 +307,33 @@ select * from emp right join dep on emp.dep_id = dep.id
 ]]></content>
       <categories>
         <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>prometheus相关</title>
+    <url>/2021/04/18/prometheus%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<p>Prometheus 进阶</p>
+<a id="more"></a>
+
+<ol>
+<li>什么是时序<br>指标名称{标签} + 时间戳<br>不断的打点 , 按照时间依次生成值</li>
+</ol>
+<ol start="2">
+<li><p>日志转时序<br>哪个机器 路径 匹配正则  计数、关键字<br>metrics timestamp 3</p>
+</li>
+<li><p>psm 服务树  gpa</p>
+</li>
+<li><p>promethues 高基数<br>理解为 以metric 为查询 条件，组合成的结果序列较多，就称为高基数 ， 是旨在 查询和告警条件下</p>
+</li>
+<li><p>grafana 设置成row<br>懒加载，防止一次请求过多；做隔离的</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>prometheus</category>
       </categories>
       <tags>
         <tag>note</tag>
@@ -1396,6 +1396,120 @@ select * from emp right join dep on emp.dep_id = dep.id
       </tags>
   </entry>
   <entry>
+    <title>socket网络编程</title>
+    <url>/2021/04/15/socket%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[<p>socket 网络编程</p>
+<a id="more"></a>
+<hr>
+<h3 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h3><p><strong>网络号</strong>: （ip与掩码位运算）标明是否在同一个局域网<br><strong>ARP协议</strong>: 二层交换机工作所在层级，IP –&gt; MAC 地址的映射关系<br>三层为路由协议（公网）<br>网卡（工作在2层）<br><strong>帧</strong>：头16字节(源地址mac + 目标地址mac) + 数据部分 1500MTU 一次最多接受1500字节<br><strong>包</strong>: 源ip + 目的ip<br><strong>段</strong>: 源端口+ 目的端口</p>
+<ul>
+<li>交换机只有两种情况广播:<ul>
+<li>目标mac FF.FF.FF.FF</li>
+<li>目标mac不在mac地址表中</li>
+</ul>
+</li>
+</ul>
+<p><strong>socket五元组</strong><br>源ip 目的ip 源端口 目的端口 协议</p>
+<h4 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h4><p>tcp/udp 基于端口<br>端口范围 0-65535  0-1023 系统保留</p>
+<p>基于tcp协议通信: 必须建立一个双向通信的链接<br>C&lt;————-&gt;S<br>三次握手建立 双向通路</p>
+<h5 id="三次握手建立连接-四次挥手"><a href="#三次握手建立连接-四次挥手" class="headerlink" title="三次握手建立连接 四次挥手"></a><strong>三次握手建立连接</strong> <strong>四次挥手</strong></h5><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlly1gjrnmxyuwrj30uz0enab6.jpg" alt="120-TCP三次握手和四次挥手-三次握手静态.jpg?x-oss-process=style/watermark"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">第一次握手  服务器进入LISTEN状态，客户端发送SYN进入SYN_SENT状态</span><br><span class="line"></span><br><span class="line">第二次握手 服务端接收到SYN，进入SYN_RCVD状态，同时发送ACK&#x2F;SYN</span><br><span class="line"></span><br><span class="line">第三次握手 客户端收到SYN&#x2F;ACK，回复ACK，客户端进入ESTABLISHED状态，服务端进入ESTABLISHED状态</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlly1gjrnn2jht0j30ry0f73zx.jpg" alt="120-TCP三次握手和四次挥手-四次挥手静态.png?x-oss-process=style/watermark"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">第一次挥手  客户端发送FIN&#x3D;1，此时，客户端进入FIN_WAIT_1状态，表示没有数据再发送给服务端了</span><br><span class="line"></span><br><span class="line">第二次挥手  服务端接收到FIN请求，回复ACK，进入CLOSE_WAIT状态，客户端进入FIN-WAIT-2状态</span><br><span class="line"></span><br><span class="line">第三次挥手  服务端向客户端发送FIN ，同时服务端进入 LAST_ACK 状态。</span><br><span class="line"></span><br><span class="line">第四次挥手 客户端收到服务端发送的 FIN ，向服务端发送 ACK 报文段，然后客户端进入 TIME_WAIT 状态</span><br><span class="line"></span><br><span class="line">务端收到客户端的 ACK 报文段以后，就关闭连接。此时，客户端等待 2MSL（指一个片段在网络中最大的存活时间）后依然没有收到回复，则说明服务端已经正常关闭，这样客户端就可以关闭连接了。进入CLOSED状态</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>tcp 为什么可靠？<br>是因为每发一个数据，服务端回应信息说收到，客户端才会把自己的数据清理掉(内存)，才算完成；一定时间之内 服务端没回应信息，认为这个数据包丢了，客户端会重新发一份给服务端，保证服务端必须收到数据。<br>双向通路只是用来发数据的。</li>
+</ul>
+<p>一般 服务端会 主动发起断开连接，以支持其他客户端连接请求。</p>
+<p><strong>服务端处于timewait状态，意味着正在经历高并发。</strong></p>
+<ul>
+<li>udp为什么不可靠？<br>速度优先 选择udp协议<br>不需要建立双向连接，udp传输数据不需要对方确认，发过去就清理掉了。<br>qq udp通信</li>
+</ul>
+<h4 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h4><p>可以自定义协议 ==&gt; 头部+数据部分<br>自定义协议需要注意的问题:</p>
+<ol>
+<li>两大组成部分=头部+数据部门<ul>
+<li>头部：放对数据的描述信息<ul>
+<li>比如:数据要发给谁，数据的类型，数据的长度</li>
+</ul>
+</li>
+<li>数据部分: 想要发的数据</li>
+</ul>
+</li>
+<li>头部长度必须固定<br> 因为接收端要通过头部活动区所接收的数据的详细信息</li>
+</ol>
+<p>http https  ftp</p>
+<h3 id="socket介绍"><a href="#socket介绍" class="headerlink" title="socket介绍"></a>socket介绍</h3><p>传输层以下归套接字socket管理</p>
+<p>我们知道两个进程如果需要进行通讯最基本的一个前提能能够唯一的标示一个进程，在本地进程通讯中我们可以使用PID来唯一标示一个进程，但PID只在本地唯一，网络中的两个进程PID冲突几率很大，这时候我们需要另辟它径了，我们知道IP层的ip地址可以唯一标示主机，而TCP层协议和端口号可以唯一标示主机的一个进程，这样我们可以利用ip地址＋协议＋端口号唯一标示网络中的一个进程。</p>
+<p>能够唯一标示网络中的进程后，它们就可以利用socket进行通信了，什么是socket呢？我们经常把socket翻译为套接字，socket是在应用层和传输层之间的一个抽象层，它把TCP/IP层复杂的操作抽象为几个简单的接口供应用层调用已实现进程在网络中通信。</p>
+<blockquote>
+<p>总结：套接字是什么，位于应用层与传输层之间，用来把传输层以下的协议封装好，提供好简单的接口；但凡编写基于网络通信的cs架构的软件，基于套接字去写就可以了。遵循套接字简单的接口规范，写出来的程序自然是遵循tcp/udp协议的了。</p>
+</blockquote>
+<blockquote>
+<p><strong>也有人将socket说成ip+port，ip是用来标识互联网中的一台主机的位置，而port是用来标识这台机器上的一个应用程序，ip地址是配置到网卡上的，而port是应用程序开启的，ip与port的绑定就标识了互联网中独一无二的一个应用程序;而程序的pid是同一台机器上不同进程或者线程的标识</strong></p>
+</blockquote>
+
+
+<p>socket起源于UNIX，在Unix一切皆文件哲学的思想下，socket是一种”打开—读/写—关闭”模式的实现，服务器和客户端各自维护一个”文件”，在建立连接打开后，可以向自己文件写入内容供对方读取或者读取对方内容，通讯结束时关闭文件。</p>
+<ul>
+<li>套接字工作流程
+
+</li>
+</ul>
+<p>套接字之所以简单是因为：客户端只需要调connect接口，服务端调accept接口；客户端干了什么：发syn，服务端回ack+syn，客户端再回ack； connect和accept接口把三次握手细节全部封装好了。</p>
+<p>服务端</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入socket模块</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment"># 第一个socket是模块名，第二个socket是类名</span></span><br><span class="line"><span class="comment">#类实例化得到对象，得到一个socket对象</span></span><br><span class="line"><span class="comment"># server=socket.socket(family=socket.AF_INET,type=socket.SOCK_STREAM)</span></span><br><span class="line"><span class="comment">#不写默认就是他</span></span><br><span class="line">server=socket.socket()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绑定地址跟端口  ,传一个元组，监听的地址，监听的端口</span></span><br><span class="line">server.bind((<span class="string">&#x27;192.168.11.28&#x27;</span>,<span class="number">8008</span>))</span><br><span class="line"><span class="comment">#监听</span></span><br><span class="line"><span class="comment"># 半连接池是5，可以缓冲5个</span></span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#等待用户连接(看源码，有两个返回结果)</span></span><br><span class="line"><span class="comment"># sock是连接对象，以后这个服务端和客户端交互，使用这个对象交互</span></span><br><span class="line"><span class="comment"># addr是客户端地址（ip和端口）</span></span><br><span class="line">sock,addr=server.accept()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接收客户端发给我的消息</span></span><br><span class="line">data=sock.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="comment"># 打印</span></span><br><span class="line">print(data)</span><br><span class="line"></span><br><span class="line"><span class="comment">#服务端给客户端发送消息（必须是byte格式）</span></span><br><span class="line">sock.send(<span class="string">b&#x27;helloworld&#x27;</span>)</span><br><span class="line">time.sleep(<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 关闭连接对象</span></span><br><span class="line">sock.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">#关闭服务</span></span><br><span class="line">server.close()</span><br></pre></td></tr></table></figure>
+
+<p>客户端</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">phone = socket.socket(socket.AF_INET, socket.SOCK_STREAM) <span class="comment"># 流式协议 =&gt; tcp协议</span></span><br><span class="line"></span><br><span class="line">phone.connect((<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">8080</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    msg = input(<span class="string">&#x27;输入要发送的消息&#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(msg) == <span class="number">0</span>:<span class="keyword">continue</span></span><br><span class="line">    phone.send(msg.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">    data = phone.recv(<span class="number">1024</span>)</span><br><span class="line">    print(data.decode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">phone.close()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h4 id="粘包问题"><a href="#粘包问题" class="headerlink" title="粘包问题"></a>粘包问题</h4><p>TCP独有（流式协议）<br><strong>原因</strong>:<br>tcp是流式协议,数据像水流一样发出去；TCP协议nagle算法会把时间间隔较短，数据量较小的数据粘到一起，没有任何边界区分,基于网络发出去。<strong>收数据没收干净</strong>,会和下一次结果混合在一起。</p>
+<p><strong>解决方案</strong>: 收数据的时候收干净就好了</p>
+<ul>
+<li><p>基于tcp协议实现远程执行命令</p>
+</li>
+<li><p>终极粘包解决方案<br>服务端</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 服务端应该满足两个特点</span></span><br><span class="line"><span class="comment"># 1. 一直对外提供服务</span></span><br><span class="line"><span class="comment"># 2. 并发的实现多个客户端</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">server = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">server.setsockopt(SOL_SOCKET, SO_REUSEADDR, <span class="number">1</span>)</span><br><span class="line">server.bind((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8080</span>))</span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端应该做两件事</span></span><br><span class="line"><span class="comment"># 第一件事: 循环地从半连接池中去除链接请求与其建立双向链接，拿到链接对象</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    conn, client_addr = server.accept()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 第二件事: 拿到链接对象，与其进行通信循环</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            cmd = conn.recv(<span class="number">1024</span>)</span><br><span class="line">            <span class="keyword">if</span> len(cmd) == <span class="number">0</span>: <span class="keyword">break</span></span><br><span class="line">            obj = subprocess.Popen(cmd.decode(<span class="string">&#x27;utf-8&#x27;</span>),</span><br><span class="line">                                   shell=<span class="literal">True</span>,</span><br><span class="line">                                   stdout=subprocess.PIPE,</span><br><span class="line">                                   stderr=subprocess.PIPE</span><br><span class="line">                                   )</span><br><span class="line">            stdout_res = obj.stdout.read()</span><br><span class="line">            stderr_res = obj.stderr.read()</span><br><span class="line">            total_size = len(stdout_res) + len(stderr_res)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 1.制作头</span></span><br><span class="line">            header_dic = &#123;</span><br><span class="line">                <span class="string">&quot;filename&quot;</span>: <span class="string">&quot;a.txt&quot;</span>,</span><br><span class="line">                <span class="string">&quot;total_size&quot;</span>: total_size,</span><br><span class="line">                <span class="string">&quot;md5&quot;</span>: <span class="string">&quot;asdasdasd&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            json_str = json.dumps(header_dic)</span><br><span class="line">            json_str_bytes = json_str.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 2. 先发数据的头长度发过去</span></span><br><span class="line">            <span class="comment"># int --&gt; 固定长度的bytes</span></span><br><span class="line">            header_length_x = struct.pack(<span class="string">&#x27;i&#x27;</span>, len(json_str_bytes))</span><br><span class="line">            conn.send(header_length_x)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 发头信息</span></span><br><span class="line">            conn.send(json_str_bytes)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 4. 再发真实的数据</span></span><br><span class="line">            conn.send(stderr_res)</span><br><span class="line">            conn.send(stdout_res)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    conn.close()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>客户端</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8080</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>: <span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 接收端</span></span><br><span class="line">    <span class="comment"># 1.先收4个字节，从中提取接下来要收的头的长度</span></span><br><span class="line">    header_length_x = client.recv(<span class="number">4</span>)</span><br><span class="line">    header_length = struct.unpack(<span class="string">&#x27;i&#x27;</span>, header_length_x)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 2. 接收头,并解析</span></span><br><span class="line">    json_str_bytes = client.recv(header_length)</span><br><span class="line">    json_str = json_str_bytes.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    header_dic = json.loads(json_str)</span><br><span class="line">    print(header_dic)</span><br><span class="line">    total_size = header_dic[<span class="string">&quot;total_size&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3.接收真是数据</span></span><br><span class="line">    recv_size = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> recv_size &lt; total_size:</span><br><span class="line">        recv_data = client.recv(<span class="number">1024</span>)</span><br><span class="line">        recv_size += len(recv_data)</span><br><span class="line">        print(recv_data.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="socketserver实现并发"><a href="#socketserver实现并发" class="headerlink" title="socketserver实现并发"></a>socketserver实现并发</h4><ul>
+<li>基于tcp实现并发<br>服务端<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> socketserver</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRequestHandle</span>(<span class="params">socketserver.BaseRequestHandler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span>(<span class="params">self</span>):</span></span><br><span class="line">         <span class="comment"># 如果是tcp协议，self.request =&gt; conn</span></span><br><span class="line">        print(self.client_address)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                cmd = self.request.recv(<span class="number">1024</span>)</span><br><span class="line">                <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">break</span></span><br><span class="line">                self.request.send(cmd.upper())</span><br><span class="line">            <span class="keyword">except</span> Exception:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        self.request.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端应该做两件事</span></span><br><span class="line"><span class="comment"># 第一件事: 循环地从半连接池中去除链接请求与其建立双向链接，拿到链接对象</span></span><br><span class="line">s = socketserver.ThreadingTCPServer((<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">8888</span>),MyRequestHandle)</span><br><span class="line">s.serve_forever()</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line"><span class="comment"># while True:</span></span><br><span class="line"><span class="comment">#     启动一个线程conn,client_addr = server.accept()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二件事: 拿到链接对象，与其进行通信循环 ===&gt; handle</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>客户端</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET,SOCK_STREAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8888</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解决粘包问题思路:</span></span><br><span class="line">    <span class="comment"># 1.拿到数据总大小</span></span><br><span class="line">    <span class="comment"># 2.revc_size = 0,循环接收,每收到一次，recv+=接收的长度</span></span><br><span class="line">    <span class="comment"># 3.直到revc_size = total_size 结束循环</span></span><br><span class="line">    cmd_res = client.recv(<span class="number">1024</span>)  <span class="comment"># 本次接收，最大接收1024bytes</span></span><br><span class="line">    print(cmd_res.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>基于UDP实现并发<br>服务端<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> socketserver</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRequestHandle</span>(<span class="params">socketserver.BaseRequestHandler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span>(<span class="params">self</span>):</span></span><br><span class="line">        client_data = self.request[<span class="number">0</span>]</span><br><span class="line">        server = self.request[<span class="number">1</span>]</span><br><span class="line">        client_address = self.client_address</span><br><span class="line"></span><br><span class="line">        print(<span class="string">&#x27;客户端发来的数据%s&#x27;</span> %client_data)</span><br><span class="line">        server.sendto(client_data.upper(), client_address)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端应该做两件事</span></span><br><span class="line"><span class="comment"># 第一件事: 循环地从半连接池中去除链接请求与其建立双向链接，拿到链接对象</span></span><br><span class="line">s = socketserver.ThreadingUDPServer((<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">8888</span>),MyRequestHandle)</span><br><span class="line">s.serve_forever()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>客户端</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET,SOCK_DGRAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8888</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解决粘包问题思路:</span></span><br><span class="line">    <span class="comment"># 1.拿到数据总大小</span></span><br><span class="line">    <span class="comment"># 2.revc_size = 0,循环接收,每收到一次，recv+=接收的长度</span></span><br><span class="line">    <span class="comment"># 3.直到revc_size = total_size 结束循环</span></span><br><span class="line">    cmd_res = client.recv(<span class="number">1024</span>)  <span class="comment"># 本次接收，最大接收1024bytes</span></span><br><span class="line">    print(cmd_res.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>note</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue-介绍</title>
     <url>/2020/11/20/vue-%E4%BB%8B%E7%BB%8D/</url>
     <content><![CDATA[<p>vue简介</p>
@@ -1515,120 +1629,6 @@ select * from emp right join dep on emp.dep_id = dep.id
 ]]></content>
       <categories>
         <category>vue</category>
-      </categories>
-      <tags>
-        <tag>note</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>socket网络编程</title>
-    <url>/2021/04/15/socket%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</url>
-    <content><![CDATA[<p>socket 网络编程</p>
-<a id="more"></a>
-<hr>
-<h3 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h3><p><strong>网络号</strong>: （ip与掩码位运算）标明是否在同一个局域网<br><strong>ARP协议</strong>: 二层交换机工作所在层级，IP –&gt; MAC 地址的映射关系<br>三层为路由协议（公网）<br>网卡（工作在2层）<br><strong>帧</strong>：头16字节(源地址mac + 目标地址mac) + 数据部分 1500MTU 一次最多接受1500字节<br><strong>包</strong>: 源ip + 目的ip<br><strong>段</strong>: 源端口+ 目的端口</p>
-<ul>
-<li>交换机只有两种情况广播:<ul>
-<li>目标mac FF.FF.FF.FF</li>
-<li>目标mac不在mac地址表中</li>
-</ul>
-</li>
-</ul>
-<p><strong>socket五元组</strong><br>源ip 目的ip 源端口 目的端口 协议</p>
-<h4 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h4><p>tcp/udp 基于端口<br>端口范围 0-65535  0-1023 系统保留</p>
-<p>基于tcp协议通信: 必须建立一个双向通信的链接<br>C&lt;————-&gt;S<br>三次握手建立 双向通路</p>
-<h5 id="三次握手建立连接-四次挥手"><a href="#三次握手建立连接-四次挥手" class="headerlink" title="三次握手建立连接 四次挥手"></a><strong>三次握手建立连接</strong> <strong>四次挥手</strong></h5><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlly1gjrnmxyuwrj30uz0enab6.jpg" alt="120-TCP三次握手和四次挥手-三次握手静态.jpg?x-oss-process=style/watermark"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">第一次握手  服务器进入LISTEN状态，客户端发送SYN进入SYN_SENT状态</span><br><span class="line"></span><br><span class="line">第二次握手 服务端接收到SYN，进入SYN_RCVD状态，同时发送ACK&#x2F;SYN</span><br><span class="line"></span><br><span class="line">第三次握手 客户端收到SYN&#x2F;ACK，回复ACK，客户端进入ESTABLISHED状态，服务端进入ESTABLISHED状态</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlly1gjrnn2jht0j30ry0f73zx.jpg" alt="120-TCP三次握手和四次挥手-四次挥手静态.png?x-oss-process=style/watermark"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">第一次挥手  客户端发送FIN&#x3D;1，此时，客户端进入FIN_WAIT_1状态，表示没有数据再发送给服务端了</span><br><span class="line"></span><br><span class="line">第二次挥手  服务端接收到FIN请求，回复ACK，进入CLOSE_WAIT状态，客户端进入FIN-WAIT-2状态</span><br><span class="line"></span><br><span class="line">第三次挥手  服务端向客户端发送FIN ，同时服务端进入 LAST_ACK 状态。</span><br><span class="line"></span><br><span class="line">第四次挥手 客户端收到服务端发送的 FIN ，向服务端发送 ACK 报文段，然后客户端进入 TIME_WAIT 状态</span><br><span class="line"></span><br><span class="line">务端收到客户端的 ACK 报文段以后，就关闭连接。此时，客户端等待 2MSL（指一个片段在网络中最大的存活时间）后依然没有收到回复，则说明服务端已经正常关闭，这样客户端就可以关闭连接了。进入CLOSED状态</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>tcp 为什么可靠？<br>是因为每发一个数据，服务端回应信息说收到，客户端才会把自己的数据清理掉(内存)，才算完成；一定时间之内 服务端没回应信息，认为这个数据包丢了，客户端会重新发一份给服务端，保证服务端必须收到数据。<br>双向通路只是用来发数据的。</li>
-</ul>
-<p>一般 服务端会 主动发起断开连接，以支持其他客户端连接请求。</p>
-<p><strong>服务端处于timewait状态，意味着正在经历高并发。</strong></p>
-<ul>
-<li>udp为什么不可靠？<br>速度优先 选择udp协议<br>不需要建立双向连接，udp传输数据不需要对方确认，发过去就清理掉了。<br>qq udp通信</li>
-</ul>
-<h4 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h4><p>可以自定义协议 ==&gt; 头部+数据部分<br>自定义协议需要注意的问题:</p>
-<ol>
-<li>两大组成部分=头部+数据部门<ul>
-<li>头部：放对数据的描述信息<ul>
-<li>比如:数据要发给谁，数据的类型，数据的长度</li>
-</ul>
-</li>
-<li>数据部分: 想要发的数据</li>
-</ul>
-</li>
-<li>头部长度必须固定<br> 因为接收端要通过头部活动区所接收的数据的详细信息</li>
-</ol>
-<p>http https  ftp</p>
-<h3 id="socket介绍"><a href="#socket介绍" class="headerlink" title="socket介绍"></a>socket介绍</h3><p>传输层以下归套接字socket管理</p>
-<p>我们知道两个进程如果需要进行通讯最基本的一个前提能能够唯一的标示一个进程，在本地进程通讯中我们可以使用PID来唯一标示一个进程，但PID只在本地唯一，网络中的两个进程PID冲突几率很大，这时候我们需要另辟它径了，我们知道IP层的ip地址可以唯一标示主机，而TCP层协议和端口号可以唯一标示主机的一个进程，这样我们可以利用ip地址＋协议＋端口号唯一标示网络中的一个进程。</p>
-<p>能够唯一标示网络中的进程后，它们就可以利用socket进行通信了，什么是socket呢？我们经常把socket翻译为套接字，socket是在应用层和传输层之间的一个抽象层，它把TCP/IP层复杂的操作抽象为几个简单的接口供应用层调用已实现进程在网络中通信。</p>
-<blockquote>
-<p>总结：套接字是什么，位于应用层与传输层之间，用来把传输层以下的协议封装好，提供好简单的接口；但凡编写基于网络通信的cs架构的软件，基于套接字去写就可以了。遵循套接字简单的接口规范，写出来的程序自然是遵循tcp/udp协议的了。</p>
-</blockquote>
-<blockquote>
-<p><strong>也有人将socket说成ip+port，ip是用来标识互联网中的一台主机的位置，而port是用来标识这台机器上的一个应用程序，ip地址是配置到网卡上的，而port是应用程序开启的，ip与port的绑定就标识了互联网中独一无二的一个应用程序;而程序的pid是同一台机器上不同进程或者线程的标识</strong></p>
-</blockquote>
-
-
-<p>socket起源于UNIX，在Unix一切皆文件哲学的思想下，socket是一种”打开—读/写—关闭”模式的实现，服务器和客户端各自维护一个”文件”，在建立连接打开后，可以向自己文件写入内容供对方读取或者读取对方内容，通讯结束时关闭文件。</p>
-<ul>
-<li>套接字工作流程
-
-</li>
-</ul>
-<p>套接字之所以简单是因为：客户端只需要调connect接口，服务端调accept接口；客户端干了什么：发syn，服务端回ack+syn，客户端再回ack； connect和accept接口把三次握手细节全部封装好了。</p>
-<p>服务端</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入socket模块</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment"># 第一个socket是模块名，第二个socket是类名</span></span><br><span class="line"><span class="comment">#类实例化得到对象，得到一个socket对象</span></span><br><span class="line"><span class="comment"># server=socket.socket(family=socket.AF_INET,type=socket.SOCK_STREAM)</span></span><br><span class="line"><span class="comment">#不写默认就是他</span></span><br><span class="line">server=socket.socket()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绑定地址跟端口  ,传一个元组，监听的地址，监听的端口</span></span><br><span class="line">server.bind((<span class="string">&#x27;192.168.11.28&#x27;</span>,<span class="number">8008</span>))</span><br><span class="line"><span class="comment">#监听</span></span><br><span class="line"><span class="comment"># 半连接池是5，可以缓冲5个</span></span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#等待用户连接(看源码，有两个返回结果)</span></span><br><span class="line"><span class="comment"># sock是连接对象，以后这个服务端和客户端交互，使用这个对象交互</span></span><br><span class="line"><span class="comment"># addr是客户端地址（ip和端口）</span></span><br><span class="line">sock,addr=server.accept()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接收客户端发给我的消息</span></span><br><span class="line">data=sock.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="comment"># 打印</span></span><br><span class="line">print(data)</span><br><span class="line"></span><br><span class="line"><span class="comment">#服务端给客户端发送消息（必须是byte格式）</span></span><br><span class="line">sock.send(<span class="string">b&#x27;helloworld&#x27;</span>)</span><br><span class="line">time.sleep(<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 关闭连接对象</span></span><br><span class="line">sock.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">#关闭服务</span></span><br><span class="line">server.close()</span><br></pre></td></tr></table></figure>
-
-<p>客户端</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">phone = socket.socket(socket.AF_INET, socket.SOCK_STREAM) <span class="comment"># 流式协议 =&gt; tcp协议</span></span><br><span class="line"></span><br><span class="line">phone.connect((<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">8080</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    msg = input(<span class="string">&#x27;输入要发送的消息&#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(msg) == <span class="number">0</span>:<span class="keyword">continue</span></span><br><span class="line">    phone.send(msg.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">    data = phone.recv(<span class="number">1024</span>)</span><br><span class="line">    print(data.decode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">phone.close()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-<h4 id="粘包问题"><a href="#粘包问题" class="headerlink" title="粘包问题"></a>粘包问题</h4><p>TCP独有（流式协议）<br><strong>原因</strong>:<br>tcp是流式协议,数据像水流一样发出去；TCP协议nagle算法会把时间间隔较短，数据量较小的数据粘到一起，没有任何边界区分,基于网络发出去。<strong>收数据没收干净</strong>,会和下一次结果混合在一起。</p>
-<p><strong>解决方案</strong>: 收数据的时候收干净就好了</p>
-<ul>
-<li><p>基于tcp协议实现远程执行命令</p>
-</li>
-<li><p>终极粘包解决方案<br>服务端</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 服务端应该满足两个特点</span></span><br><span class="line"><span class="comment"># 1. 一直对外提供服务</span></span><br><span class="line"><span class="comment"># 2. 并发的实现多个客户端</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">server = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">server.setsockopt(SOL_SOCKET, SO_REUSEADDR, <span class="number">1</span>)</span><br><span class="line">server.bind((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8080</span>))</span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端应该做两件事</span></span><br><span class="line"><span class="comment"># 第一件事: 循环地从半连接池中去除链接请求与其建立双向链接，拿到链接对象</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    conn, client_addr = server.accept()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 第二件事: 拿到链接对象，与其进行通信循环</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            cmd = conn.recv(<span class="number">1024</span>)</span><br><span class="line">            <span class="keyword">if</span> len(cmd) == <span class="number">0</span>: <span class="keyword">break</span></span><br><span class="line">            obj = subprocess.Popen(cmd.decode(<span class="string">&#x27;utf-8&#x27;</span>),</span><br><span class="line">                                   shell=<span class="literal">True</span>,</span><br><span class="line">                                   stdout=subprocess.PIPE,</span><br><span class="line">                                   stderr=subprocess.PIPE</span><br><span class="line">                                   )</span><br><span class="line">            stdout_res = obj.stdout.read()</span><br><span class="line">            stderr_res = obj.stderr.read()</span><br><span class="line">            total_size = len(stdout_res) + len(stderr_res)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 1.制作头</span></span><br><span class="line">            header_dic = &#123;</span><br><span class="line">                <span class="string">&quot;filename&quot;</span>: <span class="string">&quot;a.txt&quot;</span>,</span><br><span class="line">                <span class="string">&quot;total_size&quot;</span>: total_size,</span><br><span class="line">                <span class="string">&quot;md5&quot;</span>: <span class="string">&quot;asdasdasd&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            json_str = json.dumps(header_dic)</span><br><span class="line">            json_str_bytes = json_str.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 2. 先发数据的头长度发过去</span></span><br><span class="line">            <span class="comment"># int --&gt; 固定长度的bytes</span></span><br><span class="line">            header_length_x = struct.pack(<span class="string">&#x27;i&#x27;</span>, len(json_str_bytes))</span><br><span class="line">            conn.send(header_length_x)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 发头信息</span></span><br><span class="line">            conn.send(json_str_bytes)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 4. 再发真实的数据</span></span><br><span class="line">            conn.send(stderr_res)</span><br><span class="line">            conn.send(stdout_res)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    conn.close()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>客户端</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8080</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>: <span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 接收端</span></span><br><span class="line">    <span class="comment"># 1.先收4个字节，从中提取接下来要收的头的长度</span></span><br><span class="line">    header_length_x = client.recv(<span class="number">4</span>)</span><br><span class="line">    header_length = struct.unpack(<span class="string">&#x27;i&#x27;</span>, header_length_x)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 2. 接收头,并解析</span></span><br><span class="line">    json_str_bytes = client.recv(header_length)</span><br><span class="line">    json_str = json_str_bytes.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    header_dic = json.loads(json_str)</span><br><span class="line">    print(header_dic)</span><br><span class="line">    total_size = header_dic[<span class="string">&quot;total_size&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3.接收真是数据</span></span><br><span class="line">    recv_size = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> recv_size &lt; total_size:</span><br><span class="line">        recv_data = client.recv(<span class="number">1024</span>)</span><br><span class="line">        recv_size += len(recv_data)</span><br><span class="line">        print(recv_data.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="socketserver实现并发"><a href="#socketserver实现并发" class="headerlink" title="socketserver实现并发"></a>socketserver实现并发</h4><ul>
-<li>基于tcp实现并发<br>服务端<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> socketserver</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRequestHandle</span>(<span class="params">socketserver.BaseRequestHandler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span>(<span class="params">self</span>):</span></span><br><span class="line">         <span class="comment"># 如果是tcp协议，self.request =&gt; conn</span></span><br><span class="line">        print(self.client_address)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                cmd = self.request.recv(<span class="number">1024</span>)</span><br><span class="line">                <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">break</span></span><br><span class="line">                self.request.send(cmd.upper())</span><br><span class="line">            <span class="keyword">except</span> Exception:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        self.request.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端应该做两件事</span></span><br><span class="line"><span class="comment"># 第一件事: 循环地从半连接池中去除链接请求与其建立双向链接，拿到链接对象</span></span><br><span class="line">s = socketserver.ThreadingTCPServer((<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">8888</span>),MyRequestHandle)</span><br><span class="line">s.serve_forever()</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line"><span class="comment"># while True:</span></span><br><span class="line"><span class="comment">#     启动一个线程conn,client_addr = server.accept()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二件事: 拿到链接对象，与其进行通信循环 ===&gt; handle</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>客户端</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET,SOCK_STREAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8888</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解决粘包问题思路:</span></span><br><span class="line">    <span class="comment"># 1.拿到数据总大小</span></span><br><span class="line">    <span class="comment"># 2.revc_size = 0,循环接收,每收到一次，recv+=接收的长度</span></span><br><span class="line">    <span class="comment"># 3.直到revc_size = total_size 结束循环</span></span><br><span class="line">    cmd_res = client.recv(<span class="number">1024</span>)  <span class="comment"># 本次接收，最大接收1024bytes</span></span><br><span class="line">    print(cmd_res.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-
-<ul>
-<li>基于UDP实现并发<br>服务端<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> socketserver</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRequestHandle</span>(<span class="params">socketserver.BaseRequestHandler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span>(<span class="params">self</span>):</span></span><br><span class="line">        client_data = self.request[<span class="number">0</span>]</span><br><span class="line">        server = self.request[<span class="number">1</span>]</span><br><span class="line">        client_address = self.client_address</span><br><span class="line"></span><br><span class="line">        print(<span class="string">&#x27;客户端发来的数据%s&#x27;</span> %client_data)</span><br><span class="line">        server.sendto(client_data.upper(), client_address)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端应该做两件事</span></span><br><span class="line"><span class="comment"># 第一件事: 循环地从半连接池中去除链接请求与其建立双向链接，拿到链接对象</span></span><br><span class="line">s = socketserver.ThreadingUDPServer((<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">8888</span>),MyRequestHandle)</span><br><span class="line">s.serve_forever()</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>客户端</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">client = socket(AF_INET,SOCK_DGRAM)</span><br><span class="line">client.connect((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8888</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd = input(<span class="string">&#x27;请输入命令&gt;&gt;: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> len(cmd) == <span class="number">0</span>:<span class="keyword">continue</span></span><br><span class="line">    client.send(cmd.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解决粘包问题思路:</span></span><br><span class="line">    <span class="comment"># 1.拿到数据总大小</span></span><br><span class="line">    <span class="comment"># 2.revc_size = 0,循环接收,每收到一次，recv+=接收的长度</span></span><br><span class="line">    <span class="comment"># 3.直到revc_size = total_size 结束循环</span></span><br><span class="line">    cmd_res = client.recv(<span class="number">1024</span>)  <span class="comment"># 本次接收，最大接收1024bytes</span></span><br><span class="line">    print(cmd_res.decode(<span class="string">&#x27;utf-8&#x27;</span>), end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>python</category>
       </categories>
       <tags>
         <tag>note</tag>
@@ -1812,7 +1812,7 @@ select * from emp right join dep on emp.dep_id = dep.id
 
 
 <p><strong>进程创建的第二种方式</strong>: 类的继承</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyProcess</span>(<span class="params">Process</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;hello bf girl&#x27;</span>)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">        print(<span class="string">&#x27;get out!&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    p = MyProcess()</span><br><span class="line">    p.start()</span><br><span class="line">    print(<span class="string">&#x27;主&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyProcess</span>(<span class="params">Process</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name1, age</span>)</span></span><br><span class="line"><span class="function">        <span class="title">super</span>().<span class="title">__init__</span>()</span></span><br><span class="line">        self.name1 = name1</span><br><span class="line">        self.age = age</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;hello bf girl&#x27;</span>)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">        print(<span class="string">&#x27;get out!&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    p = MyProcess()</span><br><span class="line">    p.start()</span><br><span class="line">    print(<span class="string">&#x27;主&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
 
 
@@ -1823,6 +1823,12 @@ select * from emp right join dep on emp.dep_id = dep.id
 
 <h3 id="join方法"><a href="#join方法" class="headerlink" title="join方法"></a>join方法</h3><p>join方法是让主进程的代码等待子进程代码运行结束之后，再继续运行。不影响其他子进程之间的运行。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">task</span>(<span class="params">name, n</span>):</span></span><br><span class="line">    print(<span class="string">&#x27;%s is running&#x27;</span> % name)</span><br><span class="line">    time.sleep(n)</span><br><span class="line">    print(<span class="string">&#x27;%s is over&#x27;</span> % name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 实例化一个对象</span></span><br><span class="line">    <span class="comment"># p1 = Process(target=task, args=(&#x27;jason&#x27;,1))</span></span><br><span class="line">    <span class="comment"># p2 = Process(target=task, args=(&#x27;egon&#x27;,2))</span></span><br><span class="line">    <span class="comment"># p3 = Process(target=task, args=(&#x27;tank&#x27;,3))</span></span><br><span class="line">    <span class="comment"># start_time = time.time()</span></span><br><span class="line">    <span class="comment"># p1.start()</span></span><br><span class="line">    <span class="comment"># p2.start()</span></span><br><span class="line">    <span class="comment"># p3.start()  # 仅仅是告诉操作系统要创建进程，什么时候操作系统操作是看系统什么时候加载程序到内存，cpu什么时候执行</span></span><br><span class="line">    <span class="comment"># # p.join()  # 主进程等待子进程p运行结束之后再继续往后执行</span></span><br><span class="line">    <span class="comment"># p1.join()</span></span><br><span class="line">    <span class="comment"># p2.join()</span></span><br><span class="line">    <span class="comment"># p3.join()</span></span><br><span class="line">    start_time = time.time()</span><br><span class="line">    p_list = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">4</span>):</span><br><span class="line">        p = Process(target=task, args=(<span class="string">&#x27;子进程 %s&#x27;</span> %i, i))</span><br><span class="line">        p.start()</span><br><span class="line">        p_list.append(p)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> p_list:</span><br><span class="line">        p.join()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">&#x27;主&#x27;</span>, time.time() - start_time)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="同时运行多个进程"><a href="#同时运行多个进程" class="headerlink" title="同时运行多个进程"></a>同时运行多个进程</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">task</span>(<span class="params">name, n</span>):</span></span><br><span class="line">    print(<span class="string">&#x27;%s is running&#x27;</span> % name)</span><br><span class="line">    time.sleep(n)</span><br><span class="line">    print(<span class="string">&#x27;%s is over&#x27;</span> % name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    p_list = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">4</span>):</span><br><span class="line">        p = Process(target=task, args=(<span class="string">&#x27;子进程 %s&#x27;</span> %i, i))</span><br><span class="line">        p.start()</span><br><span class="line">        p_list.append(p)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> p_list:</span><br><span class="line">        p.join()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">&#x27;主&#x27;</span>, time.time() - start_time)</span><br></pre></td></tr></table></figure>
+
+
 
 
 
