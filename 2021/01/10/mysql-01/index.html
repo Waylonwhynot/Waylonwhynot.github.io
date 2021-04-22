@@ -28,7 +28,7 @@
 <meta property="og:description" content="sql 库表操作">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-01-10T06:10:53.000Z">
-<meta property="article:modified_time" content="2021-03-24T03:39:21.103Z">
+<meta property="article:modified_time" content="2021-04-22T11:54:20.343Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-24 11:39:21" itemprop="dateModified" datetime="2021-03-24T11:39:21+08:00">2021-03-24</time>
+                <time title="修改时间：2021-04-22 19:54:20" itemprop="dateModified" datetime="2021-04-22T19:54:20+08:00">2021-04-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.9k</span>
+              <span>7.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -262,120 +262,54 @@
 <a id="more"></a>
 <h2 id="1-基本库表语句"><a href="#1-基本库表语句" class="headerlink" title="1. 基本库表语句"></a>1. 基本库表语句</h2><p>1、mysql是什么？<br>    mysql本质就是一个c/s架构的套接字软件</p>
 <p>2、数据库基本概念<br>    数据库服务器： 运行有数据库管理软件的计算机<br>    数据库管理软件：mysql<br>    库：文件夹<br>    表：文件<br>    记录：文件中的一行的内容</p>
-<p>3、针对库、表、记录的操作<br>    文件夹：<br>        增<br>            create database db12 charset utf8;<br>        改<br>            alter database db12 charset gbk;<br>        查<br>            show databases;<br>            show create database db12;<br>        删<br>            drop database db12;</p>
-<pre><code>文件：
-    use db1; # 切换文件夹
+<p>3、针对库、表、记录的操作</p>
+<blockquote>
+<p>库</p>
+</blockquote>
+<p>数据库命名规则：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">可以由字母、数字、下划线、＠、＃、＄</span><br><span class="line">区分大小写</span><br><span class="line">唯一性</span><br><span class="line">不能使用关键字如 create select</span><br><span class="line">不能单独使用数字</span><br><span class="line">最长128位</span><br></pre></td></tr></table></figure>
 
-    增
-        create table t1(id int,name char(16));
-    改
-        alter table db1.t1 modify name char(15);
-        alter table db1.t1 change name NAME char(10);
-    查
-        show tables;
-        show create table t1;
-        desc t1;
-        desc db1.t1;
-
-    删
-        drop table db1.t1;
-
-
-文件中一行行内容
-    增
-        insert into db1.t1(id,name) values
-        (1,&#39;egon&#39;),
-        (2,&#39;alexdsb&#39;),
-        (3,&#39;wxxsb&#39;);
-
-        insert into db1.t1(name) values
-        (&#39;egon&#39;),
-        (&#39;alexdsb&#39;),
-        (&#39;wxxsb&#39;);
+<p>数据库相关操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">增</span><br><span class="line">    create database db12 charset utf8;</span><br><span class="line">改</span><br><span class="line">    alter database db12 charset gbk;</span><br><span class="line">查</span><br><span class="line">    show databases;</span><br><span class="line">    show create database db12;</span><br><span class="line">    select database();</span><br><span class="line">删</span><br><span class="line">    drop database db12;</span><br></pre></td></tr></table></figure>
 
 
 
-    改
-        update db1.t1 set name=&#39;SB&#39; where id=3;
-    查
-        select id,name from db1.t1;
+<blockquote>
+<p>表</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">文件：</span><br><span class="line">    use db1; # 切换文件夹</span><br><span class="line"></span><br><span class="line">    增</span><br><span class="line">        create table t1(id int,name char(16));</span><br><span class="line">    改</span><br><span class="line">        alter table db1.t1 modify name char(15);</span><br><span class="line">        alter table db1.t1 change name NAME char(10);</span><br><span class="line">    查</span><br><span class="line">        show tables;</span><br><span class="line">        show create table t1;</span><br><span class="line">        desc t1;</span><br><span class="line">        desc db1.t1;</span><br><span class="line"></span><br><span class="line">    删</span><br><span class="line">        drop table db1.t1;</span><br></pre></td></tr></table></figure>
 
-    删
-        delete from db1.t1 where id &gt;= 2;
 
-        # delete 只能用于删除符合条件的某几条记录，不能用于清空表
-        delete from t1;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">文件中一行行内容</span><br><span class="line">    增</span><br><span class="line">        insert into db1.t1(id,name) values</span><br><span class="line">        (1,&#39;egon&#39;),</span><br><span class="line">        (2,&#39;alexdsb&#39;),</span><br><span class="line">        (3,&#39;wxxsb&#39;);</span><br><span class="line"></span><br><span class="line">        insert into db1.t1(name) values</span><br><span class="line">        (&#39;egon&#39;),</span><br><span class="line">        (&#39;alexdsb&#39;),</span><br><span class="line">        (&#39;wxxsb&#39;);</span><br></pre></td></tr></table></figure>
 
-        # 清空表应该使用truncate,不仅删除所有记录，而且将自增字段的值归0
-        truncate t1;</code></pre>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">改</span><br><span class="line">    update db1.t1 set name&#x3D;&#39;SB&#39; where id&#x3D;3;</span><br><span class="line">查</span><br><span class="line">    select id,name from db1.t1;</span><br><span class="line"></span><br><span class="line">删</span><br><span class="line">    delete from db1.t1 where id &gt;&#x3D; 2;</span><br><span class="line"></span><br><span class="line">    # delete 只能用于删除符合条件的某几条记录，不能用于清空表</span><br><span class="line">    delete from t1;</span><br><span class="line"></span><br><span class="line">    # 清空表应该使用truncate,不仅删除所有记录，而且将自增字段的值归0</span><br><span class="line">    truncate t1;</span><br></pre></td></tr></table></figure>
+
+
 <h3 id="2-数据类型"><a href="#2-数据类型" class="headerlink" title="2.数据类型"></a>2.数据类型</h3><p>建表的完整语法：<br>    create table 表名(<br>    字段名1 类型[(宽度) 约束条件],<br>    字段名2 类型[(宽度) 约束条件],<br>    字段名3 类型[(宽度) 约束条件]<br>    );<br>注意：建表时最后一个字段后一定不要加逗号</p>
 <p>1、存储引擎<br>    存储引擎就是表的类型<br>    不同的类型会对应不同处理机制</p>
-<pre><code>create table t3(id int)engine=&#39;innodb&#39;;
-create table t4(id int)engine=&#39;myisam&#39;;
-create table t5(id int)engine=&#39;blackhole&#39;;
-create table t6(id int)engine=&#39;memory&#39;;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create table t3(id int)engine&#x3D;&#39;innodb&#39;;</span><br><span class="line">create table t4(id int)engine&#x3D;&#39;myisam&#39;;</span><br><span class="line">create table t5(id int)engine&#x3D;&#39;blackhole&#39;;</span><br><span class="line">create table t6(id int)engine&#x3D;&#39;memory&#39;;</span><br><span class="line"></span><br><span class="line">insert into t3 values(1);</span><br><span class="line">insert into t4 values(1);</span><br><span class="line">insert into t5 values(1);</span><br><span class="line">insert into t6 values(1);</span><br></pre></td></tr></table></figure>
 
-insert into t3 values(1);
-insert into t4 values(1);
-insert into t5 values(1);
-insert into t6 values(1);</code></pre>
 <p>2、数据类型<br>    设置sql模式为严格模式<br>        set global sql_mode=”strict_trans_tables”;<br>        需要重启客户端，会重新加载sql_mode</p>
-<pre><code>1. 数字类型：整型（默认有符号），浮点型
-    1.1 整型
-        强调：对于整型类型来说，数据类型的宽度限制的是显示宽度而非存储宽度
-        create table t7(id tinyint);
-        insert into t7 values(-1);
-
-        create table t8(id tinyint unsigned);
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 数字类型：整型（默认有符号），浮点型</span><br><span class="line">    1.1 整型</span><br><span class="line">        强调：对于整型类型来说，数据类型的宽度限制的是显示宽度而非存储宽度</span><br><span class="line">        create table t7(id tinyint);</span><br><span class="line">        insert into t7 values(-1);</span><br><span class="line"></span><br><span class="line">        create table t8(id tinyint unsigned);</span><br></pre></td></tr></table></figure>
 
 
-        create table t9(id int unsigned);
-        insert into t9 values(4294967295);
-
-        create table t10(id int(3) unsigned);
-
-    1.2 浮点型（数的宽度-包含小数，小数位)
-
-        create table t14(x float(255,30)); 整数位就是225
-        create table t15(x double(255,30));
-        create table t16(x decimal(65,30));
-
-        insert into t14 values(1.111111111111111111111111111111);
-        insert into t15 values(1.111111111111111111111111111111);
-        insert into t16 values(1.111111111111111111111111111111);
-
-2、字符类型：char，varchar</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">        create table t9(id int unsigned);</span><br><span class="line">        insert into t9 values(4294967295);</span><br><span class="line"></span><br><span class="line">        create table t10(id int(3) unsigned);</span><br><span class="line"></span><br><span class="line">    1.2 浮点型（数的宽度-包含小数，小数位)</span><br><span class="line"></span><br><span class="line">        create table t14(x float(255,30)); 整数位就是225</span><br><span class="line">        create table t15(x double(255,30));</span><br><span class="line">        create table t16(x decimal(65,30));</span><br><span class="line"></span><br><span class="line">        insert into t14 values(1.111111111111111111111111111111);</span><br><span class="line">        insert into t15 values(1.111111111111111111111111111111);</span><br><span class="line">        insert into t16 values(1.111111111111111111111111111111);</span><br><span class="line"></span><br><span class="line">2、字符类型：char，varchar</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>varchar不一定更省内存，当存储额数据刚好到达限制的时候,varchar刚好大一个头部信息1-2bytes    varchar(4) char(4) 存储’abcd’<br>        char(5)<br>            相同点：最大能存放5个字符<br>            不同点：char 定长<br>                传入3个字符，那么用空格补全两个空格</p>
 </blockquote>
-<pre><code>    varchar(5)
-        相同点:最大能存放5个字符
-        不同点：
-            varchar变长
-            传入3个字符，就存3个字符
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">varchar(5)</span><br><span class="line">    相同点:最大能存放5个字符</span><br><span class="line">    不同点：</span><br><span class="line">        varchar变长</span><br><span class="line">        传入3个字符，就存3个字符</span><br></pre></td></tr></table></figure>
 
 
-    create table t22(x char(5));
-    create table t23(x varchar(5));
-
-    insert into t22 values(&#39;a&#39;);
-    insert into t23 values(&#39;a&#39;);
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table t22(x char(5));</span><br><span class="line">create table t23(x varchar(5));</span><br><span class="line"></span><br><span class="line">insert into t22 values(&#39;a&#39;);</span><br><span class="line">insert into t23 values(&#39;a&#39;);</span><br></pre></td></tr></table></figure>
 
 
-    select char_length(x) from t22;
-    select char_length(x) from t23;
-    注意：
-    1、
-        针对char类型，在存放时会将字符补全为5个，然后在查询时又会将末尾补全的空格去掉，如果不想让mysql
-        去掉末尾的空格，应该修改sql模式
-        set global sql_mode=&quot;strict_trans_tables,PAD_CHAR_TO_FULL_LENGTH&quot;
-
-    2、
-        查询语句中where  字段=“值    ”，会将值右面的空格去掉后再做比较
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">select char_length(x) from t22;</span><br><span class="line">select char_length(x) from t23;</span><br><span class="line">注意：</span><br><span class="line">1、</span><br><span class="line">    针对char类型，在存放时会将字符补全为5个，然后在查询时又会将末尾补全的空格去掉，如果不想让mysql</span><br><span class="line">    去掉末尾的空格，应该修改sql模式</span><br><span class="line">    set global sql_mode&#x3D;&quot;strict_trans_tables,PAD_CHAR_TO_FULL_LENGTH&quot;</span><br><span class="line"></span><br><span class="line">2、</span><br><span class="line">    查询语句中where  字段&#x3D;“值    ”，会将值右面的空格去掉后再做比较</span><br></pre></td></tr></table></figure>
 
 
 
-    egon
+<pre><code>    egon
     alex
     lxx
 
@@ -715,12 +649,12 @@ select * from emp right join dep on emp.dep_id = dep.id
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">345k</span>
+    <span title="站点总字数">347k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:35</span>
+    <span title="站点阅读时长">9:38</span>
 </div>
 
 <!--
