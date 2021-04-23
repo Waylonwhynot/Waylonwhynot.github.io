@@ -27,11 +27,13 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="sql 库表操作">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210423085136177.png">
 <meta property="article:published_time" content="2021-01-10T06:10:53.000Z">
-<meta property="article:modified_time" content="2021-04-22T11:54:20.343Z">
+<meta property="article:modified_time" content="2021-04-23T00:58:24.630Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210423085136177.png">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2021/01/10/mysql-01/">
 
@@ -221,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-22 19:54:20" itemprop="dateModified" datetime="2021-04-22T19:54:20+08:00">2021-04-22</time>
+                <time title="修改时间：2021-04-23 08:58:24" itemprop="dateModified" datetime="2021-04-23T08:58:24+08:00">2021-04-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,14 +241,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.2k</span>
+              <span>8.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>12 分钟</span>
+              <span>15 分钟</span>
             </span>
 
         </div>
@@ -260,6 +262,11 @@
       
         <p>sql 库表操作</p>
 <a id="more"></a>
+
+<h2 id="0-基本概念"><a href="#0-基本概念" class="headerlink" title="0. 基本概念"></a>0. 基本概念</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL语言主要用于存取数据、查询数据、更新数据和管理关系数据库系统,SQL语言由IBM开发。SQL语言分为3种类型：</span><br><span class="line"><span class="meta">#</span><span class="bash">1、DDL语句    数据库定义语言： 数据库、表、视图、索引、存储过程，例如CREATE DROP ALTER</span></span><br><span class="line"><span class="meta">#</span><span class="bash">2、DML语句    数据库操纵语言： 插入数据INSERT、删除数据DELETE、更新数据UPDATE、查询数据SELECT</span></span><br><span class="line"><span class="meta">#</span><span class="bash">3、DCL语句    数据库控制语言： 例如控制用户的访问权限GRANT、REVOKE</span></span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="1-基本库表语句"><a href="#1-基本库表语句" class="headerlink" title="1. 基本库表语句"></a>1. 基本库表语句</h2><p>1、mysql是什么？<br>    mysql本质就是一个c/s架构的套接字软件</p>
 <p>2、数据库基本概念<br>    数据库服务器： 运行有数据库管理软件的计算机<br>    数据库管理软件：mysql<br>    库：文件夹<br>    表：文件<br>    记录：文件中的一行的内容</p>
 <p>3、针对库、表、记录的操作</p>
@@ -277,85 +284,68 @@
 <blockquote>
 <p>表</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">文件：</span><br><span class="line">    use db1; # 切换文件夹</span><br><span class="line"></span><br><span class="line">    增</span><br><span class="line">        create table t1(id int,name char(16));</span><br><span class="line">    改</span><br><span class="line">        alter table db1.t1 modify name char(15);</span><br><span class="line">        alter table db1.t1 change name NAME char(10);</span><br><span class="line">    查</span><br><span class="line">        show tables;</span><br><span class="line">        show create table t1;</span><br><span class="line">        desc t1;</span><br><span class="line">        desc db1.t1;</span><br><span class="line"></span><br><span class="line">    删</span><br><span class="line">        drop table db1.t1;</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">文件中一行行内容</span><br><span class="line">    增</span><br><span class="line">        insert into db1.t1(id,name) values</span><br><span class="line">        (1,&#39;egon&#39;),</span><br><span class="line">        (2,&#39;alexdsb&#39;),</span><br><span class="line">        (3,&#39;wxxsb&#39;);</span><br><span class="line"></span><br><span class="line">        insert into db1.t1(name) values</span><br><span class="line">        (&#39;egon&#39;),</span><br><span class="line">        (&#39;alexdsb&#39;),</span><br><span class="line">        (&#39;wxxsb&#39;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">文件：</span><br><span class="line">    use db1; # 切换文件夹</span><br><span class="line"></span><br><span class="line">    增</span><br><span class="line">        create table t1(id int,name char(16));</span><br><span class="line">    改</span><br><span class="line">        alter table db1.t1 modify name char(15);</span><br><span class="line">        alter table db1.t1 change name NAME char(10);</span><br><span class="line">    查</span><br><span class="line">        show tables;</span><br><span class="line">        show create table t1; # 查看创表语句</span><br><span class="line">        desc t1;</span><br><span class="line">        desc db1.t1;</span><br><span class="line"></span><br><span class="line">    删</span><br><span class="line">        drop table db1.t1;</span><br></pre></td></tr></table></figure>
 
 
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">改</span><br><span class="line">    update db1.t1 set name&#x3D;&#39;SB&#39; where id&#x3D;3;</span><br><span class="line">查</span><br><span class="line">    select id,name from db1.t1;</span><br><span class="line"></span><br><span class="line">删</span><br><span class="line">    delete from db1.t1 where id &gt;&#x3D; 2;</span><br><span class="line"></span><br><span class="line">    # delete 只能用于删除符合条件的某几条记录，不能用于清空表</span><br><span class="line">    delete from t1;</span><br><span class="line"></span><br><span class="line">    # 清空表应该使用truncate,不仅删除所有记录，而且将自增字段的值归0</span><br><span class="line">    truncate t1;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="2-数据类型"><a href="#2-数据类型" class="headerlink" title="2.数据类型"></a>2.数据类型</h3><p>建表的完整语法：<br>    create table 表名(<br>    字段名1 类型[(宽度) 约束条件],<br>    字段名2 类型[(宽度) 约束条件],<br>    字段名3 类型[(宽度) 约束条件]<br>    );<br>注意：建表时最后一个字段后一定不要加逗号</p>
-<p>1、存储引擎<br>    存储引擎就是表的类型<br>    不同的类型会对应不同处理机制</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create table t3(id int)engine&#x3D;&#39;innodb&#39;;</span><br><span class="line">create table t4(id int)engine&#x3D;&#39;myisam&#39;;</span><br><span class="line">create table t5(id int)engine&#x3D;&#39;blackhole&#39;;</span><br><span class="line">create table t6(id int)engine&#x3D;&#39;memory&#39;;</span><br><span class="line"></span><br><span class="line">insert into t3 values(1);</span><br><span class="line">insert into t4 values(1);</span><br><span class="line">insert into t5 values(1);</span><br><span class="line">insert into t6 values(1);</span><br></pre></td></tr></table></figure>
-
-<p>2、数据类型<br>    设置sql模式为严格模式<br>        set global sql_mode=”strict_trans_tables”;<br>        需要重启客户端，会重新加载sql_mode</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 数字类型：整型（默认有符号），浮点型</span><br><span class="line">    1.1 整型</span><br><span class="line">        强调：对于整型类型来说，数据类型的宽度限制的是显示宽度而非存储宽度</span><br><span class="line">        create table t7(id tinyint);</span><br><span class="line">        insert into t7 values(-1);</span><br><span class="line"></span><br><span class="line">        create table t8(id tinyint unsigned);</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">        create table t9(id int unsigned);</span><br><span class="line">        insert into t9 values(4294967295);</span><br><span class="line"></span><br><span class="line">        create table t10(id int(3) unsigned);</span><br><span class="line"></span><br><span class="line">    1.2 浮点型（数的宽度-包含小数，小数位)</span><br><span class="line"></span><br><span class="line">        create table t14(x float(255,30)); 整数位就是225</span><br><span class="line">        create table t15(x double(255,30));</span><br><span class="line">        create table t16(x decimal(65,30));</span><br><span class="line"></span><br><span class="line">        insert into t14 values(1.111111111111111111111111111111);</span><br><span class="line">        insert into t15 values(1.111111111111111111111111111111);</span><br><span class="line">        insert into t16 values(1.111111111111111111111111111111);</span><br><span class="line"></span><br><span class="line">2、字符类型：char，varchar</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>varchar不一定更省内存，当存储额数据刚好到达限制的时候,varchar刚好大一个头部信息1-2bytes    varchar(4) char(4) 存储’abcd’<br>        char(5)<br>            相同点：最大能存放5个字符<br>            不同点：char 定长<br>                传入3个字符，那么用空格补全两个空格</p>
+<p>记录</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">varchar(5)</span><br><span class="line">    相同点:最大能存放5个字符</span><br><span class="line">    不同点：</span><br><span class="line">        varchar变长</span><br><span class="line">        传入3个字符，就存3个字符</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table t22(x char(5));</span><br><span class="line">create table t23(x varchar(5));</span><br><span class="line"></span><br><span class="line">insert into t22 values(&#39;a&#39;);</span><br><span class="line">insert into t23 values(&#39;a&#39;);</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">select char_length(x) from t22;</span><br><span class="line">select char_length(x) from t23;</span><br><span class="line">注意：</span><br><span class="line">1、</span><br><span class="line">    针对char类型，在存放时会将字符补全为5个，然后在查询时又会将末尾补全的空格去掉，如果不想让mysql</span><br><span class="line">    去掉末尾的空格，应该修改sql模式</span><br><span class="line">    set global sql_mode&#x3D;&quot;strict_trans_tables,PAD_CHAR_TO_FULL_LENGTH&quot;</span><br><span class="line"></span><br><span class="line">2、</span><br><span class="line">    查询语句中where  字段&#x3D;“值    ”，会将值右面的空格去掉后再做比较</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">文件中一行行内容</span><br><span class="line">    增</span><br><span class="line">        insert into db1.t1(id,name) values</span><br><span class="line">        (1,&#39;egon&#39;),</span><br><span class="line">        (2,&#39;alexdsb&#39;),</span><br><span class="line">        (3,&#39;wxxsb&#39;);</span><br><span class="line"></span><br><span class="line">        insert into db1.t1(name) values</span><br><span class="line">        (&#39;egon&#39;),</span><br><span class="line">        (&#39;alexdsb&#39;),</span><br><span class="line">        (&#39;wxxsb&#39;);</span><br><span class="line">    改</span><br><span class="line">        update db1.t1 set name&#x3D;&#39;SB&#39; where id&#x3D;3;</span><br><span class="line">    查</span><br><span class="line">        select id,name from db1.t1;</span><br><span class="line"></span><br><span class="line">    删</span><br><span class="line">        delete from db1.t1 where id &gt;&#x3D; 2;</span><br><span class="line"></span><br><span class="line">        # delete 只能用于删除符合条件的某几条记录，不能用于清空表</span><br><span class="line">        delete from t1;</span><br><span class="line"></span><br><span class="line">        # 清空表应该使用truncate,不仅删除所有记录，而且将自增字段的值归0</span><br><span class="line">        truncate t1;</span><br></pre></td></tr></table></figure>
 
 
 
-<pre><code>    egon
-    alex
-    lxx
+<h2 id="2-存储引擎"><a href="#2-存储引擎" class="headerlink" title="2. 存储引擎"></a>2. 存储引擎</h2><p>存储引擎就是表的类型(例如文件类型txt pdf)<br> 不同的类型会对应不同处理机制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"># 查看存储引擎</span><br><span class="line">show engines;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* myisam</span><br><span class="line"># 5.5之前默认</span><br><span class="line">      create table t4(id int)engine&#x3D;&#39;myisam&#39;;</span><br><span class="line">      特点: 速度比innodb快, 但是我们更加注重数据的安全</span><br><span class="line">      文件特点: t4.frm 表结构 </span><br><span class="line">               t4.MYD 表数据</span><br><span class="line">               t4.MYI 索引</span><br><span class="line">      存数据特点: insert into t4 values(1);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* innodb</span><br><span class="line"># 5.5之后默认</span><br><span class="line">      create table t3(id int)engine&#x3D;&#39;innodb&#39;;</span><br><span class="line">      特点: 存储数据更加安全; 支持事务(数据安全),行级锁(数据安全), 外键(数据与数据之间的联系)</span><br><span class="line">      文件特点: t3.frm 表结构 </span><br><span class="line">               t3.MYD 表数据</span><br><span class="line">      存数据特点: insert into t3 values(1);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* blackhole</span><br><span class="line"># 黑洞  无论存什么，都立刻消失</span><br><span class="line">      create table t5(id int)engine&#x3D;&#39;blackhole&#39;;</span><br><span class="line">      文件特点: t5.frm  只有表结构 </span><br><span class="line">      存数据特点: insert into t5 values(1); 数据没有</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* memory</span><br><span class="line"># 内存引擎(全部存在内存中) 断电数据丢失</span><br><span class="line">      create table t6(id int)engine&#x3D;&#39;memory&#39;;</span><br><span class="line">      文件特点: t6.frm 只有表结构 </span><br><span class="line">      存数据特点: insert into t6 values(1); 重启数据丢失</span><br></pre></td></tr></table></figure>
 
-    char(5)
-    egon |alex |lxx  |
+<h2 id="2-数据类型"><a href="#2-数据类型" class="headerlink" title="2.数据类型"></a>2.数据类型</h2><p>建表的完整语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table 表名(</span><br><span class="line"> 字段名1 类型[(宽度) 约束条件],</span><br><span class="line"> 字段名2 类型[(宽度) 约束条件],</span><br><span class="line"> 字段名3 类型[(宽度) 约束条件]</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
-    varchar(5)
-    1bytes+egon|1bytes+alex|1bytes+lxx|
-
-
-
-
-
-3、日期类型：time，date，datetime，timestamp，year，
-    create table student(
-        id int primary key auto_increment,
-        name char(16),
-        born_year year,
-        class_time time,
-        birth date,
-        reg_time datetime
-    );
-
-    insert into student(name,born_year,class_time,birth,reg_time) values
-    (&#39;egon1&#39;,now(),now(),now(),now());
+<p><strong>注意</strong>：</p>
+<ul>
+<li><p>同一张表字段名不能重复</p>
+</li>
+<li><p>宽度和约束条件是可选的；字段名必须的；</p>
+<ul>
+<li>约束条件支持多个<ul>
+<li>字段名1 类型[(宽度) 约束条件1 约束条件2….</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>建表时最后一个字段后一定不要加逗号</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">补充：</span><br><span class="line">    宽度一般是对存储数据的限制，</span><br><span class="line">    create table t7(name char); 默认宽度<span class="number">1</span></span><br><span class="line">    insert into t7 values(<span class="string">&#x27;jason&#x27;</span>);</span><br><span class="line">    5.6 --&gt; 默认没有开启严格模式 规定只能存一个字符 你给了多个字符，那么自动截取</span><br><span class="line">    5.7 --&gt; 默认开启了严格模式，那么规定只能存几个，就不能超，否则报错 Data too long for column &#x27;name&#x27; at row 1</span><br><span class="line">    </span><br><span class="line"><span class="string">&quot;&quot;&quot;严格模式到底开否？&quot;&quot;&quot;</span></span><br><span class="line">MySQL <span class="number">5.7</span>以后默认开启；要开，少让DB干活。</span><br><span class="line"></span><br><span class="line"><span class="comment"># 约束条件 null not null</span></span><br><span class="line">create table t8（id int, name char <span class="keyword">not</span> null）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">宽度：限制数据存储</span></span><br><span class="line"><span class="string">约束条件：在宽度的基础之上增加额外的约束</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">设置sql模式为严格模式</span><br><span class="line">show variables like <span class="string">&quot;%mode&quot;</span>;</span><br><span class="line"><span class="comment"># 全局设置</span></span><br><span class="line">set <span class="keyword">global</span> sql_mode=<span class="string">&quot;strict_trans_tables&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者修改配置文件</span></span><br><span class="line">sql_mode=STRICT_TRANS_TABLES</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">需要重启客户端，会重新加载sql_mode</span><br></pre></td></tr></table></figure>
 
 
 
-    create table t17(x datetime);
-    create table t18(x timestamp);
-    create table t19(x datetime not null default now());
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
+<li>数字类型<ul>
+<li>整型（默认有符号） <ul>
+<li>TINYINT SMALLINT MEDUIMINT INT BIGINT</li>
+<li>年龄，等级，id，号码</li>
+</ul>
+</li>
+<li>浮点型<ul>
+<li>FLOAT DOUBLE DECIMAL</li>
+<li>身高，体重，薪资</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">1.1 整型</span><br><span class="line">    强调：对于整型类型来说，无序指定宽度，默认宽度足够显示。</span><br><span class="line">         数据类型的宽度限制的是显示宽度而非存储宽度</span><br><span class="line">         id int(8)</span><br><span class="line">            如果数字没有超出8位，那么默认用空格填充至8位</span><br><span class="line">            超出，有几位存几位（遵守最大范围）</span><br><span class="line">         </span><br><span class="line">    </span><br><span class="line"># tinyint</span><br><span class="line">    create table t7(id tinyint);</span><br><span class="line">    insert into t7 values(-129),(256);</span><br><span class="line">    结论：默认有符号，超出限制只存最大值</span><br><span class="line">    </span><br><span class="line"># tinyint 无符号</span><br><span class="line">    create table t8(id tinyint unsigned);</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"># int</span><br><span class="line">    create table t1(id int);</span><br><span class="line">    insert into t1 values(-1),(256);</span><br><span class="line">    结论：默认有符号，可以存负数</span><br><span class="line"></span><br><span class="line"># int 无符号</span><br><span class="line">    create table t2(id int unsigned);</span><br><span class="line">    insert into t2 values(4294967295);</span><br><span class="line">    # 用0 填充</span><br><span class="line">    create table t10(id int(3) unsigned zerofill);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">1.2 浮点型（数的宽度-包含小数，小数位)</span><br><span class="line"></span><br><span class="line">    create table t14(x float(255,30));   # 总共255位，小数30位，整数位就是225</span><br><span class="line">    create table t15(x double(255,30));  # 总共255位，小数30位，整数位就是225</span><br><span class="line">    create table t16(x decimal(65,30));  # 总共65位，小数30位，整数位就是35</span><br><span class="line"></span><br><span class="line">    insert into t14 values(1.111111111111111111111111111111);</span><br><span class="line">    insert into t15 values(1.111111111111111111111111111111);</span><br><span class="line">    insert into t16 values(1.111111111111111111111111111111);</span><br></pre></td></tr></table></figure>
 
-4、枚举类型enum与集合类型set
-    enum:多选一
-    set：多选多
-
-    create table emp(
-        id int primary key auto_increment,
-        name char(16),
-        sex enum(&#39;male&#39;,&#39;female&#39;,&#39;unknow&#39;),
-        hobbies set(&#39;play&#39;,&#39;read&#39;,&#39;sleep&#39;)
-    );
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210423085136177.png" alt="image-20210423085136177"></p>
+<ul>
+<li>字符类型：char，varchar</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">varchar不一定更省内存，当存储额数据刚好到达限制的时候,varchar刚好大一个头部信息1-2bytes    varchar(4) char(4) 存储&#39;abcd&#39;</span><br><span class="line">   char(5)</span><br><span class="line">       相同点：最大能存放5个字符</span><br><span class="line">       不同点：char 定长</span><br><span class="line">           传入3个字符，那么用空格补全两个空格</span><br><span class="line">           </span><br><span class="line">    varchar(5)</span><br><span class="line">        相同点:最大能存放5个字符</span><br><span class="line">        不同点：</span><br><span class="line">            varchar变长</span><br><span class="line">            传入3个字符，就存3个字符</span><br><span class="line">            </span><br><span class="line">    create table t22(x char(5));</span><br><span class="line">    create table t23(x varchar(5));</span><br><span class="line"></span><br><span class="line">    insert into t22 values(&#39;a&#39;);</span><br><span class="line">    insert into t23 values(&#39;a&#39;);</span><br><span class="line">    select char_length(x) from t22;</span><br><span class="line">    select char_length(x) from t23;</span><br><span class="line">    </span><br><span class="line">    注意：</span><br><span class="line">    1.</span><br><span class="line">        针对char类型，在存放时会将字符补全为5个，然后在查询时又会将末尾补全的空格去掉，如果不想让mysql</span><br><span class="line">        去掉末尾的空格，应该修改sql模式</span><br><span class="line">        set global sql_mode&#x3D;&quot;strict_trans_tables,PAD_CHAR_TO_FULL_LENGTH&quot;</span><br><span class="line"></span><br><span class="line">    2.</span><br><span class="line">        查询语句中where  字段&#x3D;“值    ”，会将值右面的空格去掉后再做比较</span><br><span class="line">     egon</span><br><span class="line">    alex</span><br><span class="line">    lxx</span><br><span class="line"></span><br><span class="line">    char(5)</span><br><span class="line">    egon |alex |lxx  |</span><br><span class="line"></span><br><span class="line">    varchar(5)</span><br><span class="line">    1bytes+egon|1bytes+alex|1bytes+lxx|</span><br><span class="line">    </span><br><span class="line">    3、日期类型：time，date，datetime，timestamp，year，</span><br><span class="line">    create table student(</span><br><span class="line">        id int primary key auto_increment,</span><br><span class="line">        name char(16),</span><br><span class="line">        born_year year,</span><br><span class="line">        class_time time,</span><br><span class="line">        birth date,</span><br><span class="line">        reg_time datetime</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    insert into student(name,born_year,class_time,birth,reg_time) values</span><br><span class="line">    (&#39;egon1&#39;,now(),now(),now(),now());</span><br><span class="line">    </span><br><span class="line">    create table t17(x datetime);</span><br><span class="line">    create table t18(x timestamp);</span><br><span class="line">    create table t19(x datetime not null default now());</span><br><span class="line"></span><br><span class="line">4、枚举类型enum与集合类型set</span><br><span class="line">    enum:多选一</span><br><span class="line">    set：多选多</span><br><span class="line"></span><br><span class="line">    create table emp(</span><br><span class="line">        id int primary key auto_increment,</span><br><span class="line">        name char(16),</span><br><span class="line">        sex enum(&#39;male&#39;,&#39;female&#39;,&#39;unknow&#39;),</span><br><span class="line">        hobbies set(&#39;play&#39;,&#39;read&#39;,&#39;sleep&#39;)</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    insert into emp(name,sex,hobbies) values</span><br><span class="line">    (&#39;egon&#39;,&#39;male&#39;,&#39;play,read&#39;);</span><br></pre></td></tr></table></figure>
 
 
-    insert into emp(name,sex,hobbies) values
-    (&#39;egon&#39;,&#39;male&#39;,&#39;play,read&#39;);</code></pre>
+
+
 <h3 id="3-表操作之约束条件"><a href="#3-表操作之约束条件" class="headerlink" title="3.表操作之约束条件"></a>3.表操作之约束条件</h3><h1 id="约束条件：约束条件是在类型之外为字段附加的限制"><a href="#约束条件：约束条件是在类型之外为字段附加的限制" class="headerlink" title="约束条件：约束条件是在类型之外为字段附加的限制"></a>约束条件：约束条件是在类型之外为字段附加的限制</h1><p>强调：<br>如果表的类型为innodb存储引擎，那么在创建表时，必须定义一个主键<br>如果不指定，innodb存储 引擎会自上而下寻找一个不为空且唯一的字段当做主键<br>如果不指定并且也没有not null+unique的字段，那么innodb存储引擎会生成一个隐藏的字段<br>当做主键</p>
 <p>#1、primary key<br>    单从约束角度去看，主键的约束效果就是not null + unique<br>    但其实innodb存储引擎会以主键为准创建聚集索引</p>
 <pre><code>结论：
@@ -576,7 +566,7 @@ select * from emp right join dep on emp.dep_id = dep.id
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E5%BA%93%E8%A1%A8%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.</span> <span class="nav-text">1. 基本库表语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">2.数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%A1%A8%E6%93%8D%E4%BD%9C%E4%B9%8B%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">3.表操作之约束条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6%EF%BC%9A%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6%E6%98%AF%E5%9C%A8%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%A4%96%E4%B8%BA%E5%AD%97%E6%AE%B5%E9%99%84%E5%8A%A0%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-number"></span> <span class="nav-text">约束条件：约束条件是在类型之外为字段附加的限制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">0.1.</span> <span class="nav-text">4.单表查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%BF%9E%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">0.2.</span> <span class="nav-text">5.连表操作</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">0. 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E5%BA%93%E8%A1%A8%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.</span> <span class="nav-text">1. 基本库表语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">3.</span> <span class="nav-text">2. 存储引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">2.数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.1.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%A1%A8%E6%93%8D%E4%BD%9C%E4%B9%8B%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="nav-number">4.2.</span> <span class="nav-text">3.表操作之约束条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6%EF%BC%9A%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6%E6%98%AF%E5%9C%A8%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%A4%96%E4%B8%BA%E5%AD%97%E6%AE%B5%E9%99%84%E5%8A%A0%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-number"></span> <span class="nav-text">约束条件：约束条件是在类型之外为字段附加的限制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">0.1.</span> <span class="nav-text">4.单表查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%BF%9E%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">0.2.</span> <span class="nav-text">5.连表操作</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -654,7 +644,7 @@ select * from emp right join dep on emp.dep_id = dep.id
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:38</span>
+    <span title="站点阅读时长">9:39</span>
 </div>
 
 <!--
