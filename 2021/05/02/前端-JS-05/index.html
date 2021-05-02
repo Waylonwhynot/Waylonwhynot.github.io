@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="JS 的 DOM操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端-JS-05">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/05/02/%E5%89%8D%E7%AB%AF-JS-05/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="JS 的 DOM操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/0081Kckwgy1gkftm8npgvj30di07edfr.jpg">
+<meta property="article:published_time" content="2021-05-02T06:22:38.000Z">
+<meta property="article:modified_time" content="2021-05-02T06:24:07.047Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="note">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/0081Kckwgy1gkftm8npgvj30di07edfr.jpg">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/05/02/%E5%89%8D%E7%AB%AF-JS-05/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>前端-JS-05 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/02/%E5%89%8D%E7%AB%AF-JS-05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端-JS-05
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-02 14:22:38 / 修改时间：14:24:07" itemprop="dateCreated datePublished" datetime="2021-05-02T14:22:38+08:00">2021-05-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>15k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>25 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>JS 的 DOM操作</p>
+<a id="more"></a>
+
+<h2 id="1、DOM概述"><a href="#1、DOM概述" class="headerlink" title="1、DOM概述"></a>1、DOM概述</h2><h3 id="1-1-什么是DOM"><a href="#1-1-什么是DOM" class="headerlink" title="1-1 什么是DOM"></a>1-1 什么是DOM</h3><ul>
+<li>文档对象模型 Document Object Model</li>
+<li>文档对象模型 是表示和操作 HTML和XML文档内容的基础API</li>
+<li>文档对象模型，是W3C组织推荐的处理可扩展标志语言的标准编程接口</li>
+</ul>
+<h3 id="12-DOM分类"><a href="#12-DOM分类" class="headerlink" title="12 DOM分类"></a>12 DOM分类</h3><ul>
+<li>核心 DOM - 针对任何结构化文档的标准模型</li>
+<li>XML DOM - 针对 XML 文档的标准模型</li>
+<li>HTML DOM - 针对 HTML 文档的标准模型</li>
+</ul>
+<h3 id="1-3-DOM分级"><a href="#1-3-DOM分级" class="headerlink" title="1-3 DOM分级"></a>1-3 DOM分级</h3><ul>
+<li><p>1级dom</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1级DOM在1998年10月份成为W3C的提议，由DOM核心与DOM HTML两个模块组成。DOM核心能映射以XML为基础的文档结构，允许获取和操作文档的任意部分。DOM HTML通过添加HTML专用的对象与函数对DOM核心进行了扩展。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2级dom</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过对原有DOM的扩展，2级DOM通过对象接口增加了对鼠标和用户界面事件、范围、遍历（重复执行DOM文档）和层叠样式表（CSS）的支持。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3级dom</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3级DOM通过引入统一方式载入和保存文档和文档验证方法对DOM进行进一步扩展，DOM3包含一个名为“DOM载入与保存”的新模块，DOM核心扩展后可支持XML1.0的所有内容，包括XML Infoset、 XPath、和XML Base。</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="1-4-DOM树"><a href="#1-4-DOM树" class="headerlink" title="1-4 DOM树"></a>1-4 DOM树</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/0081Kckwgy1gkftm8npgvj30di07edfr.jpg" alt="img"></p>
+<h2 id="2-查找标签"><a href="#2-查找标签" class="headerlink" title="2 查找标签"></a>2 查找标签</h2><h3 id="2-1-直接查找"><a href="#2-1-直接查找" class="headerlink" title="2-1 直接查找"></a>2-1 直接查找</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1&quot;&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div&gt;div上面的div&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div&gt;div上面的div&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div id&#x3D;&quot;d1&quot;&gt;div</span><br><span class="line">    &lt;div&gt;div&gt;div&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;p class&#x3D;&quot;c1&quot;&gt;div&gt;p</span><br><span class="line">        &lt;span&gt;div&gt;p&gt;span&lt;&#x2F;span&gt;</span><br><span class="line">    &lt;&#x2F;p&gt;</span><br><span class="line">    &lt;p&gt;div&gt;p&lt;&#x2F;p&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div&gt;div下面div&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div&gt;div下面div&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">id查找</span><br><span class="line">类查找</span><br><span class="line">标签查找</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"># 注意三个方法的返回值是不一样的</span><br><span class="line">document.getElementById(&#39;d1&#39;)</span><br><span class="line">&lt;div id&#x3D;&quot;d1&quot;&gt;…&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">document.getElementsByClassName(&#39;c1&#39;)</span><br><span class="line">HTMLCollection [p.c1]0: p.c1length: 1__proto__: HTMLCollection</span><br><span class="line">      </span><br><span class="line">document.getElementsByTagName(&#39;div&#39;)</span><br><span class="line">HTMLCollection(3) [div#d1, div, div, d1: div#d1]</span><br><span class="line">                   </span><br><span class="line">                   </span><br><span class="line">let divEle &#x3D; document.getElementsByTagName(&#39;div&#39;)[1]</span><br><span class="line">divEle</span><br><span class="line">&lt;div&gt;div&gt;div&lt;&#x2F;div&gt;</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">当你用变量名指代标签对象的时候 一般情况下都推荐你书写成</span><br><span class="line">xxxEle</span><br><span class="line">    divEle</span><br><span class="line">    aEle</span><br><span class="line">    pEle</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-间接查找-熟悉"><a href="#2-2-间接查找-熟悉" class="headerlink" title="2-2 间接查找(熟悉)"></a>2-2 间接查找(熟悉)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">let pEle &#x3D; document.getElementsByClassName(&#39;c1&#39;)[0]  # 注意是否需要索引取值</span><br><span class="line"></span><br><span class="line">pEle.parentElement  # 拿父节点</span><br><span class="line">&lt;div id&#x3D;&quot;d1&quot;&gt;&quot;div</span><br><span class="line">    &quot;&lt;div&gt;div&gt;div&lt;&#x2F;div&gt;&lt;p class&#x3D;&quot;c1&quot;&gt;…&lt;&#x2F;p&gt;&lt;p&gt;div&gt;p&lt;&#x2F;p&gt;&lt;&#x2F;div&gt;</span><br><span class="line">pEle.parentElement.parentElement</span><br><span class="line">&lt;body&gt;…&lt;&#x2F;body&gt;</span><br><span class="line">pEle.parentElement.parentElement.parentElement</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;…&lt;&#x2F;head&gt;&lt;body&gt;…&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;</span><br><span class="line">pEle.parentElement.parentElement.parentElement.parentElement</span><br><span class="line">null</span><br><span class="line"></span><br><span class="line">let divEle &#x3D; document.getElementById(&#39;d1&#39;)</span><br><span class="line">divEle.children  # 获取所有的子标签</span><br><span class="line">divEle.children[0]</span><br><span class="line">&lt;div&gt;div&gt;div&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">divEle.firstElementChild</span><br><span class="line">&lt;div&gt;div&gt;div&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">divEle.lastElementChild</span><br><span class="line">&lt;p&gt;div&gt;p&lt;&#x2F;p&gt;</span><br><span class="line"></span><br><span class="line">divEle.nextElementSibling  # 同级别下面第一个</span><br><span class="line">&lt;div&gt;div下面div&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">divEle.previousElementSibling  # 同级别上面第一个</span><br><span class="line">&lt;div&gt;div上面的div&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-节点操作"><a href="#3-节点操作" class="headerlink" title="3 节点操作"></a>3 节点操作</h2><h3 id="3-1-基本操作"><a href="#3-1-基本操作" class="headerlink" title="3-1 基本操作"></a>3-1 基本操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1&quot;&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id&#x3D;&quot;d1&quot;&gt;div</span><br><span class="line">        &lt;p id&#x3D;&quot;d2&quot;&gt;div&gt;p&lt;&#x2F;p&gt;</span><br><span class="line">        &lt;span&gt;div&gt;span&lt;&#x2F;span&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">通过DOM操作动态的创建img标签</span><br><span class="line">并且给标签加属性</span><br><span class="line">最后将标签添加到文本中</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">let imgEle &#x3D; document.createElement(&#39;img&#39;)  # 创建标签</span><br><span class="line"></span><br><span class="line">imgEle.src &#x3D; &#39;111.png&#39;  # 给标签设置默认的属性</span><br><span class="line">&quot;111.png&quot;</span><br><span class="line">imgEle</span><br><span class="line"></span><br><span class="line">imgEle.username &#x3D; &#39;jason&#39;  # 自定义的属性没办法点的方式直接设置</span><br><span class="line">&quot;jason&quot;</span><br><span class="line">imgEle</span><br><span class="line">&lt;img src&#x3D;&quot;111.png&quot;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">imgEle.setAttribute(&#39;username&#39;,&#39;jason&#39;)   # 既可以设置自定义的属性也可以设置默认的书写</span><br><span class="line">undefined</span><br><span class="line">imgEle</span><br><span class="line">&lt;img src&#x3D;&quot;111.png&quot; username&#x3D;&quot;jason&quot;&gt;</span><br><span class="line">imgEle.setAttribute(&#39;title&#39;,&#39;一张图片&#39;)</span><br><span class="line">imgEle</span><br><span class="line">&lt;img src&#x3D;&quot;111.png&quot; username&#x3D;&quot;jason&quot; title&#x3D;&quot;一张图片&quot;&gt;</span><br><span class="line"></span><br><span class="line">let divEle &#x3D; document.getElementById(&#39;d1&#39;)</span><br><span class="line">undefined</span><br><span class="line">divEle.appendChild(imgEle)  # 标签内部添加元素(尾部追加)</span><br><span class="line">&lt;img src&#x3D;&quot;111.png&quot; username&#x3D;&quot;jason&quot; title&#x3D;&quot;一张图片&quot;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">创建a标签</span><br><span class="line">设置属性</span><br><span class="line">设置文本</span><br><span class="line">添加到标签内部</span><br><span class="line">    添加到指定的标签的上面</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">let aEle &#x3D; document.createElement(&#39;a&#39;)</span><br><span class="line"></span><br><span class="line">aEle</span><br><span class="line">&lt;a&gt;&lt;&#x2F;a&gt;</span><br><span class="line">aEle.href &#x3D; &#39;https:&#x2F;&#x2F;www.mzitu.com&#x2F;&#39;</span><br><span class="line">&quot;https:&#x2F;&#x2F;www.mzitu.com&#x2F;&quot;</span><br><span class="line">aEle</span><br><span class="line">&lt;a href&#x3D;&quot;https:&#x2F;&#x2F;www.mzitu.com&#x2F;&quot;&gt;&lt;&#x2F;a&gt;</span><br><span class="line"></span><br><span class="line">aEle.innerText &#x3D; &#39;点我有你好看!&#39;  # 给标签设置文本内容</span><br><span class="line">&quot;点我有你好看!&quot;</span><br><span class="line">aEle</span><br><span class="line">&lt;a href&#x3D;&quot;https:&#x2F;&#x2F;www.mzitu.com&#x2F;&quot;&gt;点我有你好看!&lt;&#x2F;a&gt;</span><br><span class="line">let divEle &#x3D; document.getElementById(&#39;d1&#39;)</span><br><span class="line">undefined</span><br><span class="line">let pEle &#x3D; document.getElementById(&#39;d2&#39;)</span><br><span class="line">undefined</span><br><span class="line">divEle.insertBefore(aEle,pEle)  # 添加标签内容指定位置添加</span><br><span class="line">&lt;a href&#x3D;&quot;https:&#x2F;&#x2F;www.mzitu.com&#x2F;&quot;&gt;点我有你好看!&lt;&#x2F;a&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">额外补充</span><br><span class="line">    appendChild()</span><br><span class="line">        removeChild()</span><br><span class="line">        replaceChild()</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    setAttribute()  设置属性</span><br><span class="line">        getAttribute()  获取属性</span><br><span class="line">        removeAttribute()  移除属性</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line"># innerText与innerHTML</span><br><span class="line">divEle.innerText  # 获取标签内部所有的文本</span><br><span class="line">&quot;div 点我有你好看!</span><br><span class="line">div&gt;p</span><br><span class="line">div&gt;span&quot;</span><br><span class="line"></span><br><span class="line">divEle.innerHTML  # 内部文本和标签都拿到</span><br><span class="line">&quot;div</span><br><span class="line">        &lt;a href&#x3D;&quot;https:&#x2F;&#x2F;www.mzitu.com&#x2F;&quot;&gt;点我有你好看!&lt;&#x2F;a&gt;&lt;p id&#x3D;&quot;d2&quot;&gt;div&gt;p&lt;&#x2F;p&gt;</span><br><span class="line">        &lt;span&gt;div&gt;span&lt;&#x2F;span&gt;</span><br><span class="line">    &quot;</span><br><span class="line">    </span><br><span class="line">divEle.innerText &#x3D; &#39;heiheihei&#39;</span><br><span class="line">&quot;heiheihei&quot;</span><br><span class="line">divEle.innerHTML &#x3D; &#39;hahahaha&#39;</span><br><span class="line">&quot;hahahaha&quot;</span><br><span class="line"></span><br><span class="line">divEle.innerText &#x3D; &#39;&lt;h1&gt;heiheihei&lt;&#x2F;h1&gt;&#39;  # 不识别html标签</span><br><span class="line">&quot;&lt;h1&gt;heiheihei&lt;&#x2F;h1&gt;&quot;</span><br><span class="line">divEle.innerHTML &#x3D; &#39;&lt;h1&gt;hahahaha&lt;&#x2F;h1&gt;&#39;  # 识别html标签</span><br><span class="line">&quot;&lt;h1&gt;hahahaha&lt;&#x2F;h1&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-获取值操作"><a href="#3-2-获取值操作" class="headerlink" title="3-2 获取值操作"></a>3-2 获取值操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1&quot;&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;d1&quot;&gt;</span><br><span class="line">&lt;input type&#x3D;&quot;file&quot; id&#x3D;&quot;d3&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;select name&#x3D;&quot;&quot; id&#x3D;&quot;d2&quot;&gt;</span><br><span class="line">    &lt;option value&#x3D;&quot;111&quot;&gt;哈哈&lt;&#x2F;option&gt;</span><br><span class="line">    &lt;option value&#x3D;&quot;222&quot;&gt;嘿嘿&lt;&#x2F;option&gt;</span><br><span class="line">    &lt;option value&#x3D;&quot;333&quot;&gt;么么&lt;&#x2F;option&gt;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br><span class="line"># 获取用户数据标签内部的数据</span><br><span class="line">let seEle &#x3D; document.getElementById(&#39;d2&#39;)</span><br><span class="line">seEle.value</span><br><span class="line">&quot;111&quot;</span><br><span class="line">seEle.value</span><br><span class="line">&quot;333&quot;</span><br><span class="line"></span><br><span class="line">let inputEle &#x3D; document.getElementById(&#39;d1&#39;)</span><br><span class="line">inputEle.value</span><br><span class="line"></span><br><span class="line"># 如何获取用户上传的文件数据</span><br><span class="line">let fileEle &#x3D; document.getElementById(&#39;d3&#39;)</span><br><span class="line">fileEle.value  # 无法获取到文件数据</span><br><span class="line">&quot;C:\fakepath\02_测试路由.png&quot;</span><br><span class="line"></span><br><span class="line">fileEle.files</span><br><span class="line">FileList &#123;0: File, length: 1&#125;0: File &#123;name: &quot;02_测试路由.png&quot;, lastModified: 1557043082000, lastModifiedDate: Sun May 05 2019 15:58:02 GMT+0800 (中国标准时间), webkitRelativePath: &quot;&quot;, size: 29580, …&#125;length: 1__proto__: FileList</span><br><span class="line">      </span><br><span class="line">fileEle.files[0]  # 获取文件数据</span><br><span class="line">File &#123;name: &quot;02_测试路由.png&quot;, lastModified: 1557043082000, lastModifiedDate: Sun May 05 2019 15:58:02 GMT+0800 (中国标准时间), webkitRelativePath: &quot;&quot;, size: 29580, …&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-class、css操作"><a href="#3-3-class、css操作" class="headerlink" title="3-3 class、css操作"></a>3-3 class、css操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1&quot;&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .c1 &#123;</span><br><span class="line">            height: 400px;</span><br><span class="line">            width: 400px;</span><br><span class="line">            border-radius: 50%;</span><br><span class="line">        &#125;</span><br><span class="line">        .bg_green &#123;</span><br><span class="line">            background-color: greenyellow;</span><br><span class="line">        &#125;</span><br><span class="line">        .bg_red &#123;</span><br><span class="line">            background-color: red;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;&#x2F;style&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id&#x3D;&quot;d1&quot; class&#x3D;&quot;c1 bg_red bg_green&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;p&gt;今天难得拖堂 大伙儿见谅&lt;&#x2F;p&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br><span class="line">let divEle &#x3D; document.getElementById(&#39;d1&#39;)</span><br><span class="line">undefined</span><br><span class="line">divEle.classList  # 获取标签所有的类属性</span><br><span class="line">DOMTokenList(3) [&quot;c1&quot;, &quot;bg_red&quot;, &quot;bg_green&quot;, value: &quot;c1 bg_red bg_green&quot;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">divEle.classList.remove(&#39;bg_red&#39;)  # 移除某个类属性</span><br><span class="line">undefined</span><br><span class="line"></span><br><span class="line">divEle.classList.add(&#39;bg_red&#39;)  # 添加类属性</span><br><span class="line">undefined</span><br><span class="line">divEle.classList.contains(&#39;c1&#39;)  # 验证是否包含某个类属性</span><br><span class="line">true</span><br><span class="line">divEle.classList.contains(&#39;c2&#39;)</span><br><span class="line">false</span><br><span class="line"></span><br><span class="line">divEle.classList.toggle(&#39;bg_red&#39;)  # 有则删除无则添加</span><br><span class="line">false</span><br><span class="line">divEle.classList.toggle(&#39;bg_red&#39;)</span><br><span class="line">true</span><br><span class="line">divEle.classList.toggle(&#39;bg_red&#39;)</span><br><span class="line">false</span><br><span class="line">divEle.classList.toggle(&#39;bg_red&#39;)</span><br><span class="line">true</span><br><span class="line">divEle.classList.toggle(&#39;bg_red&#39;)</span><br><span class="line">false</span><br><span class="line">divEle.classList.toggle(&#39;bg_red&#39;)</span><br><span class="line">true</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># DOM操作操作标签样式 统一先用style起手</span><br><span class="line">let pEle &#x3D; document.getElementsByTagName(&#39;p&#39;)[0]</span><br><span class="line">undefined</span><br><span class="line">pEle.style.color &#x3D; &#39;red&#39;</span><br><span class="line">&quot;red&quot;</span><br><span class="line">pEle.style.fontSize &#x3D; &#39;28px&#39;</span><br><span class="line">&quot;28px&quot;</span><br><span class="line">pEle.style.backgroundColor &#x3D; &#39;yellow&#39;</span><br><span class="line">&quot;yellow&quot;</span><br><span class="line">pEle.style.border &#x3D; &#39;3px solid red&#39;</span><br><span class="line">&quot;3px solid red&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-事件"><a href="#4-事件" class="headerlink" title="4 事件"></a>4 事件</h2><p>HTML 4.0 的新特性之一是有能力使 HTML 事件触发浏览器中的动作（action），比如当用户点击某个 HTML 元素时启动一段 JavaScript。下面是一个属性列表，这些属性可插入 HTML 标签来定义事件动作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">onclick        当用户点击某个对象时调用的事件句柄。</span><br><span class="line">ondblclick     当用户双击某个对象时调用的事件句柄。</span><br><span class="line"></span><br><span class="line">onfocus        元素获得焦点。               &#x2F;&#x2F; 练习：输入框</span><br><span class="line">onblur         元素失去焦点。               应用场景：用于表单验证,用户离开某个输入框时,代表已经输入完了,我们可以对它进行验证.</span><br><span class="line">onchange       域的内容被改变。             应用场景：通常用于表单元素,当元素内容被改变时触发.（select联动）</span><br><span class="line"></span><br><span class="line">onkeydown      某个键盘按键被按下。          应用场景: 当用户在最后一个输入框按下回车按键时,表单提交.</span><br><span class="line">onkeypress     某个键盘按键被按下并松开。</span><br><span class="line">onkeyup        某个键盘按键被松开。</span><br><span class="line">onload         一张页面或一幅图像完成加载。</span><br><span class="line">onmousedown    鼠标按钮被按下。</span><br><span class="line">onmousemove    鼠标被移动。</span><br><span class="line">onmouseout     鼠标从某元素移开。</span><br><span class="line">onmouseover    鼠标移到某元素之上。</span><br><span class="line"></span><br><span class="line">onselect      在文本框中的文本被选中时发生。</span><br><span class="line">onsubmit      确认按钮被点击，使用的对象是form。</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-基本使用"><a href="#4-1-基本使用" class="headerlink" title="4-1 基本使用"></a>4-1 基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">达到某个事先设定的条件 自动触发的动作</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"># 绑定事件的两种方式</span><br><span class="line">&lt;button onclick&#x3D;&quot;func1()&quot;&gt;点我&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;d1&quot;&gt;点我&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    &#x2F;&#x2F; 第一种绑定事件的方式</span><br><span class="line">    function func1() &#123;</span><br><span class="line">        alert(111)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 第二种</span><br><span class="line">    let btnEle &#x3D; document.getElementById(&#39;d1&#39;);</span><br><span class="line">    btnEle.onclick &#x3D; function () &#123;</span><br><span class="line">        alert(222)</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">script标签既可以放在head内 也可以放在body内</span><br><span class="line">但是通常情况下都是放在body内的最底部</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 等待浏览器窗口加载完毕之后再执行代码</span><br><span class="line">window.onload &#x3D; function () &#123;</span><br><span class="line">            &#x2F;&#x2F; 第一种绑定事件的方式</span><br><span class="line">            function func1() &#123;</span><br><span class="line">                alert(111)</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F; 第二种</span><br><span class="line">            let btnEle &#x3D; document.getElementById(&#39;d1&#39;);</span><br><span class="line">            btnEle.onclick &#x3D; function () &#123;</span><br><span class="line">                alert(222)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-事件案例"><a href="#4-2-事件案例" class="headerlink" title="4-2 事件案例"></a>4-2 事件案例</h3><ul>
+<li><p>开关灯案例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;d1&quot; class&#x3D;&quot;c1 bg_red bg_green&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;button id&#x3D;&quot;d2&quot;&gt;变色&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        let btnEle &#x3D; document.getElementById(&#39;d2&#39;)</span><br><span class="line">        let divEle &#x3D; document.getElementById(&#39;d1&#39;)</span><br><span class="line">        btnEle.onclick &#x3D; function () &#123;  &#x2F;&#x2F; 绑定点击事件</span><br><span class="line">            &#x2F;&#x2F; 动态的修改div标签的类属性</span><br><span class="line">            divEle.classList.toggle(&#39;bg_red&#39;)</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>input框获取焦点失去焦点案例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type&#x3D;&quot;text&quot; value&#x3D;&quot;老板 去吗?&quot; id&#x3D;&quot;d1&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    let iEle &#x3D; document.getElementById(&#39;d1&#39;)</span><br><span class="line">    &#x2F;&#x2F; 获取焦点事件</span><br><span class="line">    iEle.onfocus &#x3D; function () &#123;</span><br><span class="line">        &#x2F;&#x2F; 将input框内部值去除</span><br><span class="line">        iEle.value &#x3D; &#39;&#39;</span><br><span class="line">        &#x2F;&#x2F;  点value就是获取   等号赋值就是设置</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 失去焦点事件</span><br><span class="line">    iEle.onblur &#x3D; function () &#123;</span><br><span class="line">        &#x2F;&#x2F; 给input标签重写赋值</span><br><span class="line">        iEle.value &#x3D; &#39;没钱 不去!&#39;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实时展示当前时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;d1&quot; style&#x3D;&quot;display: block;height: 50px;width: 200px&quot;&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;d2&quot;&gt;开始&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;d3&quot;&gt;结束&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    &#x2F;&#x2F; 先定义一个全局存储定时器的变量</span><br><span class="line">    let t &#x3D; null</span><br><span class="line">    let inputEle &#x3D; document.getElementById(&#39;d1&#39;)</span><br><span class="line">    let startBtnEle &#x3D; document.getElementById(&#39;d2&#39;)</span><br><span class="line">    let endBtnEle &#x3D; document.getElementById(&#39;d3&#39;)</span><br><span class="line">    &#x2F;&#x2F; 1 访问页面之后 将访问的时间展示到input框中</span><br><span class="line">    &#x2F;&#x2F; 2 动态展示当前时间</span><br><span class="line">    &#x2F;&#x2F; 3 页面上加两个按钮 一个开始 一个结束</span><br><span class="line">    function showTime() &#123;</span><br><span class="line">        let currentTime &#x3D; new Date();</span><br><span class="line">        inputEle.value &#x3D; currentTime.toLocaleString()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    startBtnEle.onclick &#x3D; function () &#123;</span><br><span class="line">        &#x2F;&#x2F; 限制定时器只能开一个</span><br><span class="line">        if(!t)&#123;</span><br><span class="line">            t &#x3D; setInterval(showTime,1000)  &#x2F;&#x2F; 每点击一次就会开设一个定时器 而t只指代最后一个</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    endBtnEle.onclick &#x3D; function () &#123;</span><br><span class="line">        clearInterval(t)</span><br><span class="line">        &#x2F;&#x2F; 还应该将t重置为空</span><br><span class="line">        t &#x3D; null</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>省市联动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1&quot;&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;select name&#x3D;&quot;&quot; id&#x3D;&quot;d1&quot;&gt;</span><br><span class="line">    &lt;option value&#x3D;&quot;&quot; selected disabled&gt;--请选择--&lt;&#x2F;option&gt;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br><span class="line">&lt;select name&#x3D;&quot;&quot; id&#x3D;&quot;d2&quot;&gt;&lt;&#x2F;select&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    let proEle &#x3D; document.getElementById(&#39;d1&#39;)</span><br><span class="line">    let cityEle &#x3D; document.getElementById(&#39;d2&#39;)</span><br><span class="line">    &#x2F;&#x2F; 先模拟省市数据</span><br><span class="line">    data &#x3D; &#123;</span><br><span class="line">        &quot;河北&quot;: [&quot;廊坊&quot;, &quot;邯郸&quot;,&#39;唐山&#39;],</span><br><span class="line">        &quot;北京&quot;: [&quot;朝阳区&quot;, &quot;海淀区&quot;,&#39;昌平区&#39;],</span><br><span class="line">        &quot;山东&quot;: [&quot;威海市&quot;, &quot;烟台市&quot;,&#39;临沂市&#39;],</span><br><span class="line">        &#39;上海&#39;:[&#39;浦东新区&#39;,&#39;静安区&#39;,&#39;黄浦区&#39;],</span><br><span class="line">        &#39;深圳&#39;:[&#39;南山区&#39;,&#39;宝安区&#39;,&#39;福田区&#39;]</span><br><span class="line">    &#125;;</span><br><span class="line">    &#x2F;&#x2F; 选for循环获取省</span><br><span class="line">    for(let key in data)&#123;</span><br><span class="line">        &#x2F;&#x2F; 将省信息做成一个个option标签 添加到第一个select框中</span><br><span class="line">        &#x2F;&#x2F; 1 创建option标签</span><br><span class="line">        let opEle &#x3D; document.createElement(&#39;option&#39;)</span><br><span class="line">        &#x2F;&#x2F; 2 设置文本</span><br><span class="line">        opEle.innerText &#x3D; key</span><br><span class="line">        &#x2F;&#x2F; 3 设置value</span><br><span class="line">        opEle.value &#x3D; key  &#x2F;&#x2F; &lt;option value&#x3D;&quot;省&quot;&gt;省&lt;&#x2F;option&gt;</span><br><span class="line">        &#x2F;&#x2F; 4 将创建好的option标签添加到第一个select中</span><br><span class="line">        proEle.appendChild(opEle)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 文本域变化事件  change事件</span><br><span class="line">    proEle.onchange &#x3D; function () &#123;</span><br><span class="line">        &#x2F;&#x2F; 先获取到用户选择的省</span><br><span class="line">        let currentPro &#x3D; proEle.value</span><br><span class="line">        &#x2F;&#x2F; 获取对应的市信息</span><br><span class="line">        let currentCityList &#x3D; data[currentPro]</span><br><span class="line">        &#x2F;&#x2F; 清空市select中所有的option</span><br><span class="line">        cityEle.innerHTML &#x3D; &#39;&#39;</span><br><span class="line">        &#x2F;&#x2F; 自己加一个请选择</span><br><span class="line">        let ss &#x3D; &quot;&lt;option disabled selected&gt;请选择&lt;&#x2F;option&gt;&quot;</span><br><span class="line">        &#x2F;&#x2F; let oppEle &#x3D; document.createElement(&#39;option&#39;)</span><br><span class="line">        &#x2F;&#x2F; oppEle.innerText &#x3D; &#39;请选择&#39;</span><br><span class="line">        &#x2F;&#x2F; oppEle.setAttribute(&#39;selected&#39;,&#39;selected&#39;)</span><br><span class="line">        cityEle.innerHTML &#x3D; ss</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; for循环所有的市 渲染到第二个select中</span><br><span class="line">        for (let i&#x3D;0;i&lt;currentCityList.length;i++)&#123;</span><br><span class="line">            let currentCity &#x3D; currentCityList[i]</span><br><span class="line">            &#x2F;&#x2F; 1 创建option标签</span><br><span class="line">            let opEle &#x3D; document.createElement(&#39;option&#39;)</span><br><span class="line">            &#x2F;&#x2F; 2 设置文本</span><br><span class="line">            opEle.innerText &#x3D; currentCity</span><br><span class="line">            &#x2F;&#x2F; 3 设置value</span><br><span class="line">            opEle.value &#x3D; currentCity  &#x2F;&#x2F; &lt;option value&#x3D;&quot;省&quot;&gt;省&lt;&#x2F;option&gt;</span><br><span class="line">            &#x2F;&#x2F; 4 将创建好的option标签添加到第一个select中</span><br><span class="line">            cityEle.appendChild(opEle)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/note/" rel="tag"><i class="fas fa-cookie-bite"></i> note</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/02/%E5%89%8D%E7%AB%AF-JS-04/" rel="prev" title="前端-JS-04">
+      <i class="fa fa-chevron-left"></i> 前端-JS-04
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/02/%E5%89%8D%E7%AB%AF-JQuery-01/" rel="next" title="前端-JQuery-01">
+      前端-JQuery-01 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81DOM%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1、DOM概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AFDOM"><span class="nav-number">1.1.</span> <span class="nav-text">1-1 什么是DOM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-DOM%E5%88%86%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">12 DOM分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-DOM%E5%88%86%E7%BA%A7"><span class="nav-number">1.3.</span> <span class="nav-text">1-3 DOM分级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-DOM%E6%A0%91"><span class="nav-number">1.4.</span> <span class="nav-text">1-4 DOM树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%9F%A5%E6%89%BE%E6%A0%87%E7%AD%BE"><span class="nav-number">2.</span> <span class="nav-text">2 查找标签</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%9B%B4%E6%8E%A5%E6%9F%A5%E6%89%BE"><span class="nav-number">2.1.</span> <span class="nav-text">2-1 直接查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E9%97%B4%E6%8E%A5%E6%9F%A5%E6%89%BE-%E7%86%9F%E6%82%89"><span class="nav-number">2.2.</span> <span class="nav-text">2-2 间接查找(熟悉)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%8A%82%E7%82%B9%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">3 节点操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">3.1.</span> <span class="nav-text">3-1 基本操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E8%8E%B7%E5%8F%96%E5%80%BC%E6%93%8D%E4%BD%9C"><span class="nav-number">3.2.</span> <span class="nav-text">3-2 获取值操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-class%E3%80%81css%E6%93%8D%E4%BD%9C"><span class="nav-number">3.3.</span> <span class="nav-text">3-3 class、css操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">4 事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">4.1.</span> <span class="nav-text">4-1 基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%BA%8B%E4%BB%B6%E6%A1%88%E4%BE%8B"><span class="nav-number">4.2.</span> <span class="nav-text">4-2 事件案例</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">628k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">17:26</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

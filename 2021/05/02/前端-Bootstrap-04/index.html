@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Bootstrap插件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端-Bootstrap-04">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/05/02/%E5%89%8D%E7%AB%AF-Bootstrap-04/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Bootstrap插件">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-02T06:43:44.000Z">
+<meta property="article:modified_time" content="2021-05-02T06:47:06.360Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="note">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/05/02/%E5%89%8D%E7%AB%AF-Bootstrap-04/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>前端-Bootstrap-04 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/02/%E5%89%8D%E7%AB%AF-Bootstrap-04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端-Bootstrap-04
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-02 14:43:44 / 修改时间：14:47:06" itemprop="dateCreated datePublished" datetime="2021-05-02T14:43:44+08:00">2021-05-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>40k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1:07</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Bootstrap插件</p>
+<a id="more"></a>
+
+<h2 id="1-BootStrap插件使用规则"><a href="#1-BootStrap插件使用规则" class="headerlink" title="1 BootStrap插件使用规则"></a>1 BootStrap插件使用规则</h2><h3 id="1-1-单个引入"><a href="#1-1-单个引入" class="headerlink" title="1.1 单个引入"></a>1.1 单个引入</h3><p>JavaScript 插件可以单个引入（使用 Bootstrap 提供的单个 <code>*.js</code> 文件），或者一次性全部引入（使用 <code>bootstrap.js</code> 或压缩版的 <code>bootstrap.min.js</code>）。</p>
+<blockquote>
+<p>某些插件和 CSS 组件依赖于其它插件。如果你是单个引入每个插件的，请确保在文档中检查插件之间的依赖关系。注意，所有插件都依赖 jQuery （也就是说，jQuery必须在所有插件<strong>之前</strong>引入页面）。 <a target="_blank" rel="noopener" href="https://github.com/twbs/bootstrap/blob/v3.3.7/bower.json"><code>bower.json</code></a> 文件中列出了 Bootstrap 所支持的 jQuery 版本。</p>
+</blockquote>
+<h3 id="1-2-data属性"><a href="#1-2-data属性" class="headerlink" title="1.2 data属性"></a>1.2 data属性</h3><p>你可以仅仅通过 data 属性 API 就能使用所有的 Bootstrap 插件，无需写一行 JavaScript 代码。这是 Bootstrap 中的一等 API，也应该是你的首选方式。</p>
+<p>话又说回来，在某些情况下可能需要将此功能关闭。因此，我们还提供了关闭 data 属性 API 的方法，即解除以 <code>data-api</code> 为命名空间并绑定在文档上的事件。就像下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(document).off(&#39;.data-api&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>另外，如果是针对某个特定的插件，只需在 <code>data-api</code> 前面添加那个插件的名称作为命名空间，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(document).off(&#39;.alert.data-api&#39;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-编程方式的-API"><a href="#1-3-编程方式的-API" class="headerlink" title="1.3 编程方式的 API"></a>1.3 编程方式的 API</h3><p>我们为所有 Bootstrap 插件提供了纯 JavaScript 方式的 API。所有公开的 API 都是支持单独或链式调用方式，并且返回其所操作的元素集合（注：和jQuery的调用形式一致）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;.btn.danger&#39;).button(&#39;toggle&#39;).addClass(&#39;fat&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>所有方法都可以接受一个可选的 option 对象作为参数，或者一个代表特定方法的字符串，或者什么也不提供（在这种情况下，插件将会以默认值初始化）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myModal&#39;).modal()                      &#x2F;&#x2F; 以默认值初始化</span><br><span class="line">$(&#39;#myModal&#39;).modal(&#123; keyboard: false &#125;)   &#x2F;&#x2F; initialized with no keyboard</span><br><span class="line">$(&#39;#myModal&#39;).modal(&#39;show&#39;)                &#x2F;&#x2F; 初始化后立即调用 show 方法</span><br></pre></td></tr></table></figure>
+
+<p>每个插件还通过 <code>Constructor</code> 属性暴露了其原始的构造函数：<code>$.fn.popover.Constructor</code>。如果你想获取某个插件的实例，可以直接通过页面元素获取：<code>$(&#39;[rel=&quot;popover&quot;]&#39;).data(&#39;popover&#39;)</code>。</p>
+<p><strong>默认设置</strong></p>
+<p>每个插件都可以通过修改其自身的 <code>Constructor.DEFAULTS</code> 对象从而改变插件的默认设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.fn.modal.Constructor.DEFAULTS.keyboard &#x3D; false &#x2F;&#x2F; 将模态框插件的 &#96;keyboard&#96; 默认选参数置为 false</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-避免命名空间冲突"><a href="#1-4-避免命名空间冲突" class="headerlink" title="1.4 避免命名空间冲突"></a>1.4 避免命名空间冲突</h3><p>某些时候可能需要将 Bootstrap 插件与其他 UI 框架共同使用。在这种情况下，命名空间冲突随时可能发生。如果不幸发生了这种情况，你可以通过调用插件的 <code>.noConflict</code> 方法恢复其原始值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var bootstrapButton &#x3D; $.fn.button.noConflict() &#x2F;&#x2F; return $.fn.button to previously assigned value</span><br><span class="line">$.fn.bootstrapBtn &#x3D; bootstrapButton            &#x2F;&#x2F; give $().bootstrapBtn the Bootstrap functionality</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-事件"><a href="#1-5-事件" class="headerlink" title="1.5 事件"></a>1.5 事件</h3><p>Bootstrap 为大部分插件所具有的动作提供了自定义事件。一般来说，这些事件都有不定式和过去式两种动词的命名形式，例如，不定式形式的动词（例如 <code>show</code>）表示其在事件开始时被触发；而过去式动词（例如 <code>shown</code> ）表示在动作执行完毕之后被触发。</p>
+<p>从 3.0.0 版本开始，所有 Bootstrap 事件的名称都采用命名空间方式。</p>
+<p>所有以不定式形式的动词命名的事件都提供了 <code>preventDefault</code> 功能。这就赋予你在动作开始执行前将其停止的能力。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myModal&#39;).on(&#39;show.bs.modal&#39;, function (e) &#123;</span><br><span class="line">  if (!data) return e.preventDefault() &#x2F;&#x2F; 阻止模态框的展示</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-6-版本号"><a href="#1-6-版本号" class="headerlink" title="1.6 版本号"></a>1.6 版本号</h3><p>每个 Bootstrap 的 jQuery 插件的版本号都可以通过插件的构造函数上的 <code>VERSION</code> 属性获取到。例如工具提示框（tooltip）插件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.fn.tooltip.Constructor.VERSION &#x2F;&#x2F; &#x3D;&gt; &quot;3.3.7&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-过渡效果-transition-js"><a href="#2-过渡效果-transition-js" class="headerlink" title="2 过渡效果 transition.js"></a>2 过渡效果 transition.js</h2><h3 id="2-1-关于过渡效果"><a href="#2-1-关于过渡效果" class="headerlink" title="2.1 关于过渡效果"></a>2.1 关于过渡效果</h3><p>对于简单的过渡效果，只需将 <code>transition.js</code> 和其它 JS 文件一起引入即可。如果你使用的是编译（或压缩）版的 <code>bootstrap.js</code> 文件，就无需再单独将其引入了。</p>
+<h3 id="2-3-包含的内容"><a href="#2-3-包含的内容" class="headerlink" title="2.3 包含的内容"></a>2.3 包含的内容</h3><p>Transition.js 是针对 <code>transitionEnd</code> 事件的一个基本辅助工具，也是对 CSS 过渡效果的模拟。它被其它插件用来检测当前浏览器对是否支持 CSS 的过渡效果。</p>
+<h3 id="2-4-禁用过度效果"><a href="#2-4-禁用过度效果" class="headerlink" title="2.4 禁用过度效果"></a>2.4 禁用过度效果</h3><p>通过下面的 JavaScript 代码可以在全局范围禁用过渡效果，并且必须将此代码放在 <code>transition.js</code> （或 <code>bootstrap.js</code> 或 <code>bootstrap.min.js</code>）后面，确保在 js 文件加载完毕后再执行下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.support.transition &#x3D; false</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-模态框-modal-js"><a href="#3-模态框-modal-js" class="headerlink" title="3 模态框 modal.js"></a>3 模态框 modal.js</h2><blockquote>
+<p>务必将模态框的 HTML 代码放在文档的最高层级内（也就是说，尽量作为 body 标签的直接子元素），以避免其他组件影响模态框的展现和/或功能。</p>
+</blockquote>
+<h3 id="3-1-模态框定义"><a href="#3-1-模态框定义" class="headerlink" title="3.1 模态框定义"></a>3.1 模态框定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Modal --&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;modal fade&quot; id&#x3D;&quot;myModal&quot; tabindex&#x3D;&quot;-1&quot; role&#x3D;&quot;dialog&quot; aria-labelledby&#x3D;&quot;myModalLabel&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;modal-dialog&quot; role&#x3D;&quot;document&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;modal-content&quot;&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-header&quot;&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;close&quot; data-dismiss&#x3D;&quot;modal&quot; aria-label&#x3D;&quot;Close&quot;&gt;&lt;span aria-hidden&#x3D;&quot;true&quot;&gt;&amp;times;&lt;&#x2F;span&gt;&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;h4 class&#x3D;&quot;modal-title&quot; id&#x3D;&quot;myModalLabel&quot;&gt;Modal title&lt;&#x2F;h4&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-body&quot;&gt;</span><br><span class="line">        ...</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-footer&quot;&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-dismiss&#x3D;&quot;modal&quot;&gt;Close&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot;&gt;Save changes&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-按钮"><a href="#3-2-按钮" class="headerlink" title="3.2 按钮"></a>3.2 按钮</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Button trigger modal --&gt;</span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary btn-lg&quot; data-toggle&#x3D;&quot;modal&quot; data-target&#x3D;&quot;#myModal&quot;&gt;</span><br><span class="line">  Launch demo modal</span><br><span class="line">&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-模态框尺寸"><a href="#3-3-模态框尺寸" class="headerlink" title="3.3 模态框尺寸"></a>3.3 模态框尺寸</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Large modal --&gt;</span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot; data-toggle&#x3D;&quot;modal&quot; data-target&#x3D;&quot;.bs-example-modal-lg&quot;&gt;Large modal&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class&#x3D;&quot;modal fade bs-example-modal-lg&quot; tabindex&#x3D;&quot;-1&quot; role&#x3D;&quot;dialog&quot; aria-labelledby&#x3D;&quot;myLargeModalLabel&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;modal-dialog modal-lg&quot; role&#x3D;&quot;document&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;modal-content&quot;&gt;</span><br><span class="line">      ...</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Small modal --&gt;</span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot; data-toggle&#x3D;&quot;modal&quot; data-target&#x3D;&quot;.bs-example-modal-sm&quot;&gt;Small modal&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class&#x3D;&quot;modal fade bs-example-modal-sm&quot; tabindex&#x3D;&quot;-1&quot; role&#x3D;&quot;dialog&quot; aria-labelledby&#x3D;&quot;mySmallModalLabel&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;modal-dialog modal-sm&quot; role&#x3D;&quot;document&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;modal-content&quot;&gt;</span><br><span class="line">      ...</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-禁止动画效果"><a href="#3-4-禁止动画效果" class="headerlink" title="3.4 禁止动画效果"></a>3.4 禁止动画效果</h3><p>如果你不需要模态框弹出时的动画效果（淡入淡出效果），删掉 <code>.fade</code> 类即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;modal&quot; tabindex&#x3D;&quot;-1&quot; role&#x3D;&quot;dialog&quot; aria-labelledby&#x3D;&quot;...&quot;&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-模态框中使用栅格系统"><a href="#3-5-模态框中使用栅格系统" class="headerlink" title="3.5 模态框中使用栅格系统"></a>3.5 模态框中使用栅格系统</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;modal fade&quot; tabindex&#x3D;&quot;-1&quot; role&#x3D;&quot;dialog&quot; aria-labelledby&#x3D;&quot;gridSystemModalLabel&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;modal-dialog&quot; role&#x3D;&quot;document&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;modal-content&quot;&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-header&quot;&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;close&quot; data-dismiss&#x3D;&quot;modal&quot; aria-label&#x3D;&quot;Close&quot;&gt;&lt;span aria-hidden&#x3D;&quot;true&quot;&gt;&amp;times;&lt;&#x2F;span&gt;&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;h4 class&#x3D;&quot;modal-title&quot; id&#x3D;&quot;gridSystemModalLabel&quot;&gt;Modal title&lt;&#x2F;h4&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-body&quot;&gt;</span><br><span class="line">        &lt;div class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">          &lt;div class&#x3D;&quot;col-md-4&quot;&gt;.col-md-4&lt;&#x2F;div&gt;</span><br><span class="line">          &lt;div class&#x3D;&quot;col-md-4 col-md-offset-4&quot;&gt;.col-md-4 .col-md-offset-4&lt;&#x2F;div&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">        &lt;div class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">          &lt;div class&#x3D;&quot;col-md-3 col-md-offset-3&quot;&gt;.col-md-3 .col-md-offset-3&lt;&#x2F;div&gt;</span><br><span class="line">          &lt;div class&#x3D;&quot;col-md-2 col-md-offset-4&quot;&gt;.col-md-2 .col-md-offset-4&lt;&#x2F;div&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">        &lt;div class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">          &lt;div class&#x3D;&quot;col-md-6 col-md-offset-3&quot;&gt;.col-md-6 .col-md-offset-3&lt;&#x2F;div&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">        &lt;div class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">          &lt;div class&#x3D;&quot;col-sm-9&quot;&gt;</span><br><span class="line">            Level 1: .col-sm-9</span><br><span class="line">            &lt;div class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">              &lt;div class&#x3D;&quot;col-xs-8 col-sm-6&quot;&gt;</span><br><span class="line">                Level 2: .col-xs-8 .col-sm-6</span><br><span class="line">              &lt;&#x2F;div&gt;</span><br><span class="line">              &lt;div class&#x3D;&quot;col-xs-4 col-sm-6&quot;&gt;</span><br><span class="line">                Level 2: .col-xs-4 .col-sm-6</span><br><span class="line">              &lt;&#x2F;div&gt;</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line">          &lt;&#x2F;div&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-footer&quot;&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-dismiss&#x3D;&quot;modal&quot;&gt;Close&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot;&gt;Save changes&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;&lt;!-- &#x2F;.modal-content --&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;&lt;!-- &#x2F;.modal-dialog --&gt;</span><br><span class="line">&lt;&#x2F;div&gt;&lt;!-- &#x2F;.modal --&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-基于触发器按钮的不同模态内容"><a href="#3-6-基于触发器按钮的不同模态内容" class="headerlink" title="3.6 基于触发器按钮的不同模态内容"></a>3.6 基于触发器按钮的不同模态内容</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot; data-toggle&#x3D;&quot;modal&quot; data-target&#x3D;&quot;#exampleModal&quot; data-whatever&#x3D;&quot;@mdo&quot;&gt;Open modal for @mdo&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot; data-toggle&#x3D;&quot;modal&quot; data-target&#x3D;&quot;#exampleModal&quot; data-whatever&#x3D;&quot;@fat&quot;&gt;Open modal for @fat&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot; data-toggle&#x3D;&quot;modal&quot; data-target&#x3D;&quot;#exampleModal&quot; data-whatever&#x3D;&quot;@getbootstrap&quot;&gt;Open modal for @getbootstrap&lt;&#x2F;button&gt;</span><br><span class="line">...more buttons...</span><br><span class="line"></span><br><span class="line">&lt;div class&#x3D;&quot;modal fade&quot; id&#x3D;&quot;exampleModal&quot; tabindex&#x3D;&quot;-1&quot; role&#x3D;&quot;dialog&quot; aria-labelledby&#x3D;&quot;exampleModalLabel&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;modal-dialog&quot; role&#x3D;&quot;document&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;modal-content&quot;&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-header&quot;&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;close&quot; data-dismiss&#x3D;&quot;modal&quot; aria-label&#x3D;&quot;Close&quot;&gt;&lt;span aria-hidden&#x3D;&quot;true&quot;&gt;&amp;times;&lt;&#x2F;span&gt;&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;h4 class&#x3D;&quot;modal-title&quot; id&#x3D;&quot;exampleModalLabel&quot;&gt;New message&lt;&#x2F;h4&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-body&quot;&gt;</span><br><span class="line">        &lt;form&gt;</span><br><span class="line">          &lt;div class&#x3D;&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label for&#x3D;&quot;recipient-name&quot; class&#x3D;&quot;control-label&quot;&gt;Recipient:&lt;&#x2F;label&gt;</span><br><span class="line">            &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;recipient-name&quot;&gt;</span><br><span class="line">          &lt;&#x2F;div&gt;</span><br><span class="line">          &lt;div class&#x3D;&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label for&#x3D;&quot;message-text&quot; class&#x3D;&quot;control-label&quot;&gt;Message:&lt;&#x2F;label&gt;</span><br><span class="line">            &lt;textarea class&#x3D;&quot;form-control&quot; id&#x3D;&quot;message-text&quot;&gt;&lt;&#x2F;textarea&gt;</span><br><span class="line">          &lt;&#x2F;div&gt;</span><br><span class="line">        &lt;&#x2F;form&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-footer&quot;&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-dismiss&#x3D;&quot;modal&quot;&gt;Close&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot;&gt;Send message&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">$(&#39;#exampleModal&#39;).on(&#39;show.bs.modal&#39;, function (event) &#123;</span><br><span class="line">  var button &#x3D; $(event.relatedTarget) &#x2F;&#x2F; Button that triggered the modal</span><br><span class="line">  var recipient &#x3D; button.data(&#39;whatever&#39;) &#x2F;&#x2F; Extract info from data-* attributes</span><br><span class="line">  &#x2F;&#x2F; If necessary, you could initiate an AJAX request here (and then do the updating in a callback).</span><br><span class="line">  &#x2F;&#x2F; Update the modal&#39;s content. We&#39;ll use jQuery here, but you could use a data binding library or other methods instead.</span><br><span class="line">  var modal &#x3D; $(this)</span><br><span class="line">  modal.find(&#39;.modal-title&#39;).text(&#39;New message to &#39; + recipient)</span><br><span class="line">  modal.find(&#39;.modal-body input&#39;).val(recipient)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-通过JavaScript处理模态框"><a href="#3-7-通过JavaScript处理模态框" class="headerlink" title="3.7 通过JavaScript处理模态框"></a>3.7 通过JavaScript处理模态框</h3><h4 id="打开"><a href="#打开" class="headerlink" title="打开"></a>打开</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myModal&#39;).modal(options)</span><br></pre></td></tr></table></figure>
+
+<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>backdrop</td>
+<td>boolean 或 字符串 <code>&#39;static&#39;</code></td>
+<td>true</td>
+<td>I指定一个静态的背景，当用户点击模态框外部时不会关闭模态框。</td>
+</tr>
+<tr>
+<td>keyboard</td>
+<td>boolean</td>
+<td>true</td>
+<td>键盘上的 esc 键被按下时关闭模态框。</td>
+</tr>
+<tr>
+<td>show</td>
+<td>boolean</td>
+<td>true</td>
+<td>模态框初始化之后就立即显示出来。</td>
+</tr>
+<tr>
+<td>remote</td>
+<td>path</td>
+<td>false</td>
+<td><strong>This option is deprecated since v3.3.0 and has been removed in v4.</strong> We recommend instead using client-side templating or a data binding framework, or calling <a target="_blank" rel="noopener" href="http://api.jquery.com/load/">jQuery.load</a>yourself.如果提供的是 URL，将利用 jQuery 的 <code>load</code> 方法<strong>从此 URL 地址加载要展示的内容（只加载一次）</strong>并插入 <code>.modal-content</code> 内。如果使用的是 data 属性 API，还可以利用 <code>href</code> 属性指定内容来源地址。下面是一个实例：<code>&lt;a data-toggle=&quot;modal&quot; href=&quot;remote.html&quot; data-target=&quot;#modal&quot;&gt;Click me&lt;/a&gt;</code></td>
+</tr>
+</tbody></table>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><p><strong><code>.modal(options)</code></strong></p>
+<p>将页面中的某块内容作为模态框激活。接受可选参数 <code>object</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myModal&#39;).modal(&#123;</span><br><span class="line">  keyboard: false</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>.modal(&#39;toggle&#39;)</code></strong></p>
+<p>手动打开或关闭模态框。<strong>在模态框显示或隐藏之前返回到主调函数中</strong>（也就是，在触发 <code>shown.bs.modal</code> 或 <code>hidden.bs.modal</code> 事件之前）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myModal&#39;).modal(&#39;toggle&#39;)</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>.modal(&#39;show&#39;)</code></strong></p>
+<p>手动打开模态框。<strong>在模态框显示之前返回到主调函数中</strong> （也就是，在触发 <code>shown.bs.modal</code> 事件之前）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myModal&#39;).modal(&#39;show&#39;)</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>.modal(&#39;hide&#39;)</code></strong></p>
+<p>手动隐藏模态框。<strong>在模态框隐藏之前返回到主调函数中</strong> （也就是，在触发 <code>hidden.bs.modal</code> 事件之前）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myModal&#39;).modal(&#39;hide&#39;)</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>.modal(&#39;handleUpdate&#39;)</code></strong></p>
+<p>整模态的定位，以对抗滚动条，以防出现一个模式，这会使模态向左跳</p>
+<p>只需要当模态的高度在打开时改变。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myModal&#39;).modal(&#39;handleUpdate&#39;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><p>Bootstrap 的模态框类提供了一些事件用于监听并执行你自己的代码。</p>
+<table>
+<thead>
+<tr>
+<th>事件类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>show.bs.modal</td>
+<td><code>show</code> 方法调用之后立即触发该事件。如果是通过点击某个作为触发器的元素，则此元素可以通过事件的 <code>relatedTarget</code> 属性进行访问。</td>
+</tr>
+<tr>
+<td>shown.bs.modal</td>
+<td>此事件在模态框已经显示出来（并且同时在 CSS 过渡效果完成）之后被触发。如果是通过点击某个作为触发器的元素，则此元素可以通过事件的 <code>relatedTarget</code> 属性进行访问。</td>
+</tr>
+<tr>
+<td>hide.bs.modal</td>
+<td><code>hide</code> 方法调用之后立即触发该事件。</td>
+</tr>
+<tr>
+<td>hidden.bs.modal</td>
+<td>此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。</td>
+</tr>
+<tr>
+<td>loaded.bs.modal</td>
+<td>从<code>远端的数据源</code>加载完数据之后触发该事件。</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myModal&#39;).on(&#39;hidden.bs.modal&#39;, function (e) &#123;</span><br><span class="line">  &#x2F;&#x2F; do something...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-下拉菜单-dropdown-js"><a href="#4-下拉菜单-dropdown-js" class="headerlink" title="4 下拉菜单 dropdown.js"></a>4 下拉菜单 dropdown.js</h2><h3 id="4-1-JavaScript调用"><a href="#4-1-JavaScript调用" class="headerlink" title="4.1 JavaScript调用"></a>4.1 JavaScript调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;.dropdown-toggle&#39;).dropdown()</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h4><p><strong><code>$().dropdown(&#39;toggle&#39;)</code></strong></p>
+<p>Toggles the dropdown menu of a given navbar or tabbed navigation.</p>
+<h4 id="事件-1"><a href="#事件-1" class="headerlink" title="事件"></a>事件</h4><table>
+<thead>
+<tr>
+<th>Event Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>show.bs.dropdown</td>
+<td>This event fires immediately when the show instance method is called.</td>
+</tr>
+<tr>
+<td>shown.bs.dropdown</td>
+<td>This event is fired when the dropdown has been made visible to the user (will wait for CSS transitions, to complete).</td>
+</tr>
+<tr>
+<td>hide.bs.dropdown</td>
+<td>This event is fired immediately when the hide instance method has been called.</td>
+</tr>
+<tr>
+<td>hidden.bs.dropdown</td>
+<td>This event is fired when the dropdown has finished being hidden from the user (will wait for CSS transitions, to complete).</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myDropdown&#39;).on(&#39;show.bs.dropdown&#39;, function () &#123;</span><br><span class="line">  &#x2F;&#x2F; do something…</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-滚动监听-scrollspy-js"><a href="#5-滚动监听-scrollspy-js" class="headerlink" title="5 滚动监听 scrollspy.js"></a>5 滚动监听 scrollspy.js</h2><p>滚动监听插件是用来根据滚动条所处的位置来自动更新导航项的。滚动导航条下面的区域并关注导航项的变化。下拉菜单中的条目也会自动高亮显示。</p>
+<blockquote>
+<p>依赖 Bootstrap 的导航组件</p>
+<p>滚动监听插件依赖 Bootstrap 的导航组件用于高亮显示当前激活的链接。</p>
+<p>无论何种实现方式，滚动监听都需要被监听的组件是 <code>position: relative;</code> 即相对定位方式。大多数时候是监听 <code>&lt;body&gt;</code> 元素</p>
+</blockquote>
+<h3 id="5-1-基本调用"><a href="#5-1-基本调用" class="headerlink" title="5.1 基本调用"></a>5.1 基本调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">&#125;</span><br><span class="line">&lt;body data-spy&#x3D;&quot;scroll&quot; data-target&#x3D;&quot;#navbar-example&quot;&gt;</span><br><span class="line">  ...</span><br><span class="line">  &lt;div id&#x3D;&quot;navbar-example&quot;&gt;</span><br><span class="line">    &lt;ul class&#x3D;&quot;nav nav-tabs&quot; role&#x3D;&quot;tablist&quot;&gt;</span><br><span class="line">      ...</span><br><span class="line">    &lt;&#x2F;ul&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-JavaScript调用"><a href="#5-2-JavaScript调用" class="headerlink" title="5.2 JavaScript调用"></a>5.2 JavaScript调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;body&#39;).scrollspy(&#123; target: &#39;#navbar-example&#39; &#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法-2"><a href="#方法-2" class="headerlink" title="方法"></a>方法</h4><p><strong><code>.scrollspy(&#39;refresh&#39;)</code></strong></p>
+<p>当使用滚动监听插件的同时在 DOM 中添加或删除元素后，你需要像下面这样调用此刷新（ refresh） 方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;[data-spy&#x3D;&quot;scroll&quot;]&#39;).each(function () &#123;</span><br><span class="line">  var $spy &#x3D; $(this).scrollspy(&#39;refresh&#39;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h4><p>可以通过 data 属性或 JavaScript 传递参数。对于 data 属性，其名称是将参数名附着到 <code>data-</code> 后面组成，例如 <code>data-offset=&quot;&quot;</code>。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>offset</td>
+<td>number</td>
+<td>10</td>
+<td>计算滚动位置时相对于顶部的偏移量（像素数）。</td>
+</tr>
+</tbody></table>
+<h4 id="事件-2"><a href="#事件-2" class="headerlink" title="事件"></a>事件</h4><table>
+<thead>
+<tr>
+<th>事件类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>activate.bs.scrollspy</td>
+<td>每当一个新条目被激活后都将由滚动监听插件触发此事件。</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myScrollspy&#39;).on(&#39;activate.bs.scrollspy&#39;, function () &#123;</span><br><span class="line">  &#x2F;&#x2F; do something…</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-标签页-tab-js"><a href="#6-标签页-tab-js" class="headerlink" title="6 标签页 tab.js"></a>6 标签页 tab.js</h2><h3 id="6-1-基本使用"><a href="#6-1-基本使用" class="headerlink" title="6.1 基本使用"></a>6.1 基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- Nav tabs --&gt;</span><br><span class="line">  &lt;ul class&#x3D;&quot;nav nav-tabs&quot; role&#x3D;&quot;tablist&quot;&gt;</span><br><span class="line">    &lt;li role&#x3D;&quot;presentation&quot; class&#x3D;&quot;active&quot;&gt;&lt;a href&#x3D;&quot;#home&quot; aria-controls&#x3D;&quot;home&quot; role&#x3D;&quot;tab&quot; data-toggle&#x3D;&quot;tab&quot;&gt;Home&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li role&#x3D;&quot;presentation&quot;&gt;&lt;a href&#x3D;&quot;#profile&quot; aria-controls&#x3D;&quot;profile&quot; role&#x3D;&quot;tab&quot; data-toggle&#x3D;&quot;tab&quot;&gt;Profile&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li role&#x3D;&quot;presentation&quot;&gt;&lt;a href&#x3D;&quot;#messages&quot; aria-controls&#x3D;&quot;messages&quot; role&#x3D;&quot;tab&quot; data-toggle&#x3D;&quot;tab&quot;&gt;Messages&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li role&#x3D;&quot;presentation&quot;&gt;&lt;a href&#x3D;&quot;#settings&quot; aria-controls&#x3D;&quot;settings&quot; role&#x3D;&quot;tab&quot; data-toggle&#x3D;&quot;tab&quot;&gt;Settings&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">  &lt;&#x2F;ul&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- Tab panes --&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;tab-content&quot;&gt;</span><br><span class="line">    &lt;div role&#x3D;&quot;tabpanel&quot; class&#x3D;&quot;tab-pane active&quot; id&#x3D;&quot;home&quot;&gt;...&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;div role&#x3D;&quot;tabpanel&quot; class&#x3D;&quot;tab-pane&quot; id&#x3D;&quot;profile&quot;&gt;...&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;div role&#x3D;&quot;tabpanel&quot; class&#x3D;&quot;tab-pane&quot; id&#x3D;&quot;messages&quot;&gt;...&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;div role&#x3D;&quot;tabpanel&quot; class&#x3D;&quot;tab-pane&quot; id&#x3D;&quot;settings&quot;&gt;...&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-Fade特效"><a href="#6-2-Fade特效" class="headerlink" title="6.2 Fade特效"></a>6.2 Fade特效</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;tab-content&quot;&gt;</span><br><span class="line">  &lt;div role&#x3D;&quot;tabpanel&quot; class&#x3D;&quot;tab-pane fade in active&quot; id&#x3D;&quot;home&quot;&gt;...&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;div role&#x3D;&quot;tabpanel&quot; class&#x3D;&quot;tab-pane fade&quot; id&#x3D;&quot;profile&quot;&gt;...&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;div role&#x3D;&quot;tabpanel&quot; class&#x3D;&quot;tab-pane fade&quot; id&#x3D;&quot;messages&quot;&gt;...&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;div role&#x3D;&quot;tabpanel&quot; class&#x3D;&quot;tab-pane fade&quot; id&#x3D;&quot;settings&quot;&gt;...&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-JavaScript调用"><a href="#6-3-JavaScript调用" class="headerlink" title="6.3 JavaScript调用"></a>6.3 JavaScript调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myTabs a&#39;).click(function (e) &#123;</span><br><span class="line">  e.preventDefault()</span><br><span class="line">  $(this).tab(&#39;show&#39;)</span><br><span class="line">&#125;)</span><br><span class="line">$(&#39;#myTabs a[href&#x3D;&quot;#profile&quot;]&#39;).tab(&#39;show&#39;) &#x2F;&#x2F; Select tab by name</span><br><span class="line">$(&#39;#myTabs a:first&#39;).tab(&#39;show&#39;) &#x2F;&#x2F; Select first tab</span><br><span class="line">$(&#39;#myTabs a:last&#39;).tab(&#39;show&#39;) &#x2F;&#x2F; Select last tab</span><br><span class="line">$(&#39;#myTabs li:eq(2) a&#39;).tab(&#39;show&#39;) &#x2F;&#x2F; Select third tab (0-indexed)</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法-3"><a href="#方法-3" class="headerlink" title="方法"></a>方法</h4><p><strong><code>$().tab</code></strong></p>
+<p>该方法可以激活标签页元素和内容容器。标签页需要用一个 <strong>data-target</strong> 或者一个指向 DOM 中容器节点的 <strong>href</strong>。</p>
+<p><strong><code>.tab(&#39;show&#39;)</code></strong></p>
+<p>Selects the given tab and shows its associated content. Any other tab that was previously selected becomes unselected and its associated content is hidden. <strong>Returns to the caller before the tab pane has actually been shown</strong> (i.e. before the <code>shown.bs.tab</code>event occurs).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#someTab&#39;).tab(&#39;show&#39;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件-3"><a href="#事件-3" class="headerlink" title="事件"></a>事件</h4><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>show.bs.tab</td>
+<td>该事件在标签页显示时触发，但是必须在新标签页被显示之前。分别使用 <strong>event.target</strong> 和 <strong>event.relatedTarget</strong> 来定位到激活的标签页和前一个激活的标签页。</td>
+<td><code>$(&#39;a[data-toggle=&quot;tab&quot;]&#39;).on(&#39;show.bs.tab&#39;, function (e) &#123; e.target // 激活的标签页 e.relatedTarget // 前一个激活的标签页 &#125;)</code></td>
+</tr>
+<tr>
+<td>shown.bs.tab</td>
+<td>该事件在标签页显示时触发，但是必须在某个标签页已经显示之后。分别使用 <strong>event.target</strong> 和 <strong>event.relatedTarget</strong> 来定位到激活的标签页和前一个激活的标签页。</td>
+<td><code>$(&#39;a[data-toggle=&quot;tab&quot;]&#39;).on(&#39;shown.bs.tab&#39;, function (e) &#123; e.target // 激活的标签页 e.relatedTarget // 前一个激活的标签页 &#125;)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;a[data-toggle&#x3D;&quot;tab&quot;]&#39;).on(&#39;shown.bs.tab&#39;, function (e) &#123;</span><br><span class="line">  e.target &#x2F;&#x2F; newly activated tab</span><br><span class="line">  e.relatedTarget &#x2F;&#x2F; previous active tab</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-工具提示-tooltips-js"><a href="#7-工具提示-tooltips-js" class="headerlink" title="7 工具提示 tooltips.js"></a>7 工具提示 tooltips.js</h2><h3 id="7-1-基本使用"><a href="#7-1-基本使用" class="headerlink" title="7.1 基本使用"></a>7.1 基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-toggle&#x3D;&quot;tooltip&quot; data-placement&#x3D;&quot;left&quot; title&#x3D;&quot;Tooltip on left&quot;&gt;Tooltip on left&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-toggle&#x3D;&quot;tooltip&quot; data-placement&#x3D;&quot;top&quot; title&#x3D;&quot;Tooltip on top&quot;&gt;Tooltip on top&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-toggle&#x3D;&quot;tooltip&quot; data-placement&#x3D;&quot;bottom&quot; title&#x3D;&quot;Tooltip on bottom&quot;&gt;Tooltip on bottom&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-toggle&#x3D;&quot;tooltip&quot; data-placement&#x3D;&quot;right&quot; title&#x3D;&quot;Tooltip on right&quot;&gt;Tooltip on right&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-2-JavaScript调用"><a href="#7-2-JavaScript调用" class="headerlink" title="7.2 JavaScript调用"></a>7.2 JavaScript调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#example&#39;).tooltip(options)</span><br></pre></td></tr></table></figure>
+
+<h4 id="参数-2"><a href="#参数-2" class="headerlink" title="参数"></a>参数</h4><table>
+<thead>
+<tr>
+<th>选项名称</th>
+<th>类型/默认值</th>
+<th>Data 属性名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>animation</td>
+<td>boolean <em>默认值：true</em></td>
+<td>data-animation</td>
+<td>提示工具使用 CSS 渐变滤镜效果。</td>
+</tr>
+<tr>
+<td>html</td>
+<td>boolean <em>默认值：false</em></td>
+<td>data-html</td>
+<td>向提示工具插入 HTML。如果为 false，jQuery 的 text 方法将被用于向 dom 插入内容。如果您担心 XSS 攻击，请使用 text。</td>
+</tr>
+<tr>
+<td>placement</td>
+<td>string|function <em>默认值：top</em></td>
+<td>data-placement</td>
+<td>规定如何定位提示工具（即 top|bottom|left|right|auto）。 当指定为 <em>auto</em> 时，会动态调整提示工具。例如，如果 placement 是 “auto left”，提示工具将会尽可能显示在左边，在情况不允许的情况下它才会显示在右边。</td>
+</tr>
+<tr>
+<td>selector</td>
+<td>string <em>默认值：false</em></td>
+<td>data-selector</td>
+<td>如果提供了一个选择器，提示工具对象将被委派到指定的目标。</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string | function <em>默认值：’’</em></td>
+<td>data-title</td>
+<td>如果未指定 <em>title</em> 属性，则 title 选项是默认的 title 值。</td>
+</tr>
+<tr>
+<td>trigger</td>
+<td>string <em>默认值：’hover focus’</em></td>
+<td>data-trigger</td>
+<td>定义如何触发提示工具： <strong>click| hover | focus | manual</strong>。您可以传递多个触发器，每个触发器之间用空格分隔。</td>
+</tr>
+<tr>
+<td>delay</td>
+<td>number | object <em>默认值：0</em></td>
+<td>data-delay</td>
+<td>延迟显示和隐藏提示工具的毫秒数 - 对 manual 手动触发类型不适用。如果提供的是一个数字，那么延迟将会应用于显示和隐藏。如果提供的是对象，结构如下所示：<code>delay: &#123; show: 500, hide: 100 &#125;</code></td>
+</tr>
+<tr>
+<td>container</td>
+<td>string | false <em>默认值：false</em></td>
+<td>data-container</td>
+<td>向指定元素追加提示工具。 实例： container: ‘body’</td>
+</tr>
+</tbody></table>
+<h4 id="方法-4"><a href="#方法-4" class="headerlink" title="方法"></a>方法</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Options:</strong> .tooltip(options)</td>
+<td>向元素集合附加提示工具句柄。</td>
+<td><code>$().tooltip(options)</code></td>
+</tr>
+<tr>
+<td><strong>Toggle:</strong> .tooltip(‘toggle’)</td>
+<td>切换显示/隐藏元素的提示工具。</td>
+<td><code>$(&#39;#element&#39;).tooltip(&#39;toggle&#39;)</code></td>
+</tr>
+<tr>
+<td><strong>Show:</strong> .tooltip(‘show’)</td>
+<td>显示元素的提示工具。</td>
+<td><code>$(&#39;#element&#39;).tooltip(&#39;show&#39;)</code></td>
+</tr>
+<tr>
+<td><strong>Hide:</strong> .tooltip(‘hide’)</td>
+<td>隐藏元素的提示工具。</td>
+<td><code>$(&#39;#element&#39;).tooltip(&#39;hide&#39;)</code></td>
+</tr>
+<tr>
+<td><strong>Destroy:</strong> .tooltip(‘destroy’)</td>
+<td>隐藏并销毁元素的提示工具。</td>
+<td><code>$(&#39;#element&#39;).tooltip(&#39;destroy&#39;)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#element&#39;).tooltip(&#39;destroy&#39;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件-4"><a href="#事件-4" class="headerlink" title="事件"></a>事件</h4><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>show.bs.tooltip</td>
+<td>当调用 show 实例方法时立即触发该事件。</td>
+<td><code>$(&#39;#myTooltip&#39;).on(&#39;show.bs.tooltip&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+<tr>
+<td>shown.bs.tooltip</td>
+<td>当提示工具对用户可见时触发该事件（将等待 CSS 过渡效果完成）。</td>
+<td><code>$(&#39;#myTooltip&#39;).on(&#39;shown.bs.tooltip&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+<tr>
+<td>hide.bs.tooltip</td>
+<td>当调用 hide 实例方法时立即触发该事件。</td>
+<td><code>$(&#39;#myTooltip&#39;).on(&#39;hide.bs.tooltip&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+<tr>
+<td>hidden.bs.tooltip</td>
+<td>当提示工具对用户隐藏时触发该事件（将等待 CSS 过渡效果完成）。</td>
+<td><code>$(&#39;#myTooltip&#39;).on(&#39;hidden.bs.tooltip&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myTooltip&#39;).on(&#39;hidden.bs.tooltip&#39;, function () &#123;</span><br><span class="line">  &#x2F;&#x2F; do something…</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-弹出框-popover-js"><a href="#8-弹出框-popover-js" class="headerlink" title="8 弹出框 popover.js"></a>8 弹出框 popover.js</h2><h3 id="8-1-基本使用"><a href="#8-1-基本使用" class="headerlink" title="8.1 基本使用"></a>8.1 基本使用</h3><h4 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-lg btn-danger&quot; data-toggle&#x3D;&quot;popover&quot; title&#x3D;&quot;Popover title&quot; data-content&#x3D;&quot;And here&#39;s some amazing content. It&#39;s very engaging. Right?&quot;&gt;点我弹出&#x2F;隐藏弹出框&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="弹出方向"><a href="#弹出方向" class="headerlink" title="弹出方向"></a>弹出方向</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-container&#x3D;&quot;body&quot; data-toggle&#x3D;&quot;popover&quot; data-placement&#x3D;&quot;left&quot; data-content&#x3D;&quot;Vivamus sagittis lacus vel augue laoreet rutrum faucibus.&quot;&gt;</span><br><span class="line">  Popover on 左侧</span><br><span class="line">&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-container&#x3D;&quot;body&quot; data-toggle&#x3D;&quot;popover&quot; data-placement&#x3D;&quot;top&quot; data-content&#x3D;&quot;Vivamus sagittis lacus vel augue laoreet rutrum faucibus.&quot;&gt;</span><br><span class="line">  Popover on 顶部</span><br><span class="line">&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-container&#x3D;&quot;body&quot; data-toggle&#x3D;&quot;popover&quot; data-placement&#x3D;&quot;bottom&quot; data-content&#x3D;&quot;Vivamus</span><br><span class="line">sagittis lacus vel augue laoreet rutrum faucibus.&quot;&gt;</span><br><span class="line">  Popover on 底部</span><br><span class="line">&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-container&#x3D;&quot;body&quot; data-toggle&#x3D;&quot;popover&quot; data-placement&#x3D;&quot;right&quot; data-content&#x3D;&quot;Vivamus sagittis lacus vel augue laoreet rutrum faucibus.&quot;&gt;</span><br><span class="line">  Popover on 右侧</span><br><span class="line">&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="点击并让弹出框消失"><a href="#点击并让弹出框消失" class="headerlink" title="点击并让弹出框消失"></a>点击并让弹出框消失</h4><p>通过使用 <code>focus</code> 触发器可以在用户点击弹出框是让其消失。</p>
+<blockquote>
+<p>实现“点击并让弹出框消失”的效果需要一些额外的代码</p>
+<p>为了更好的跨浏览器和跨平台效果，你必须使用 <code>&lt;a&gt;</code> 标签，<em>不能</em>使用 <code>&lt;button&gt;</code> 标签，并且，还必须包含 <code>role=&quot;button&quot;</code> 和 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes#tabindex"><code>tabindex</code></a> 属性。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a tabindex&#x3D;&quot;0&quot; class&#x3D;&quot;btn btn-lg btn-danger&quot; role&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;popover&quot; data-trigger&#x3D;&quot;focus&quot; title&#x3D;&quot;Dismissible popover&quot; data-content&#x3D;&quot;And here&#39;s some amazing content. It&#39;s very engaging. Right?&quot;&gt;可消失的弹出框&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-2-javaScript调用"><a href="#8-2-javaScript调用" class="headerlink" title="8.2 javaScript调用"></a>8.2 javaScript调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#example&#39;).popover(options)</span><br></pre></td></tr></table></figure>
+
+<h4 id="参数-3"><a href="#参数-3" class="headerlink" title="参数"></a>参数</h4><p>可以通过 data 属性或 JavaScript 传递参数。对于 data 属性，将参数名附着到 <code>data-</code> 后面，例如 <code>data-animation=&quot;&quot;</code>。</p>
+<table>
+<thead>
+<tr>
+<th>选项名称</th>
+<th>类型/默认值</th>
+<th>Data 属性名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>animation</td>
+<td>boolean <em>默认值：true</em></td>
+<td>data-animation</td>
+<td>向弹出框应用 CSS 褪色过渡效果。</td>
+</tr>
+<tr>
+<td>html</td>
+<td>boolean <em>默认值：false</em></td>
+<td>data-html</td>
+<td>向弹出框插入 HTML。如果为 false，jQuery 的 text 方法将被用于向 dom 插入内容。如果您担心 XSS 攻击，请使用 text。</td>
+</tr>
+<tr>
+<td>placement</td>
+<td>string|function <em>默认值：top</em></td>
+<td>data-placement</td>
+<td>规定如何定位弹出框（即 top|bottom|left|right|auto）。 当指定为 <em>auto</em> 时，会动态调整弹出框。例如，如果 placement 是 “auto left”，弹出框将会尽可能显示在左边，在情况不允许的情况下它才会显示在右边。</td>
+</tr>
+<tr>
+<td>selector</td>
+<td>string <em>默认值：false</em></td>
+<td>data-selector</td>
+<td>如果提供了一个选择器，弹出框对象将被委派到指定的目标。</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string | function <em>默认值：’’</em></td>
+<td>data-title</td>
+<td>如果未指定 <em>title</em> 属性，则 title 选项是默认的 title 值。</td>
+</tr>
+<tr>
+<td>trigger</td>
+<td>string <em>默认值：’hover focus’</em></td>
+<td>data-trigger</td>
+<td>定义如何触发弹出框： <strong>click| hover | focus | manual</strong>。您可以传递多个触发器，每个触发器之间用空格分隔。</td>
+</tr>
+<tr>
+<td>delay</td>
+<td>number | object <em>默认值：0</em></td>
+<td>data-delay</td>
+<td>延迟显示和隐藏弹出框的毫秒数 - 对 manual 手动触发类型不适用。如果提供的是一个数字，那么延迟将会应用于显示和隐藏。如果提供的是对象，结构如下所示：<code>delay: &#123; show: 500, hide: 100 &#125;</code></td>
+</tr>
+<tr>
+<td>container</td>
+<td>string | false <em>默认值：false</em></td>
+<td>data-container</td>
+<td>向指定元素追加弹出框。 实例： container: ‘body’</td>
+</tr>
+</tbody></table>
+<h4 id="方法-5"><a href="#方法-5" class="headerlink" title="方法"></a>方法</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Options:</strong> .popover(options)</td>
+<td>向元素集合附加弹出框句柄。</td>
+<td><code>$().popover(options)</code></td>
+</tr>
+<tr>
+<td><strong>Toggle:</strong> .popover(‘toggle’)</td>
+<td>切换显示/隐藏元素的弹出框。</td>
+<td><code>$(&#39;#element&#39;).popover(&#39;toggle&#39;)</code></td>
+</tr>
+<tr>
+<td><strong>Show:</strong> .popover(‘show’)</td>
+<td>显示元素的弹出框。</td>
+<td><code>$(&#39;#element&#39;).popover(&#39;show&#39;)</code></td>
+</tr>
+<tr>
+<td><strong>Hide:</strong> .popover(‘hide’)</td>
+<td>隐藏元素的弹出框。</td>
+<td><code>$(&#39;#element&#39;).popover(&#39;hide&#39;)</code></td>
+</tr>
+<tr>
+<td><strong>Destroy:</strong> .popover(‘destroy’)</td>
+<td>隐藏并销毁元素的弹出框。</td>
+<td><code>$(&#39;#element&#39;).popover(&#39;destroy&#39;)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#element&#39;).popover(&#39;destroy&#39;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件-5"><a href="#事件-5" class="headerlink" title="事件"></a>事件</h4><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>show.bs.popover</td>
+<td>当调用 show 实例方法时立即触发该事件。</td>
+<td><code>$(&#39;#mypopover&#39;).on(&#39;show.bs.popover&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+<tr>
+<td>shown.bs.popover</td>
+<td>当弹出框对用户可见时触发该事件（将等待 CSS 过渡效果完成）。</td>
+<td><code>$(&#39;#mypopover&#39;).on(&#39;shown.bs.popover&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+<tr>
+<td>hide.bs.popover</td>
+<td>当调用 hide 实例方法时立即触发该事件。</td>
+<td><code>$(&#39;#mypopover&#39;).on(&#39;hide.bs.popover&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+<tr>
+<td>hidden.bs.popover</td>
+<td>当工具提示对用户隐藏时触发该事件（将等待 CSS 过渡效果完成）。</td>
+<td><code>$(&#39;#mypopover&#39;).on(&#39;hidden.bs.popover&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myPopover&#39;).on(&#39;hidden.bs.popover&#39;, function () &#123;</span><br><span class="line">  &#x2F;&#x2F; do something…</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="9-警告信息-alert-js"><a href="#9-警告信息-alert-js" class="headerlink" title="9 警告信息 alert.js"></a>9 警告信息 alert.js</h2><h3 id="9-1-基本使用"><a href="#9-1-基本使用" class="headerlink" title="9.1 基本使用"></a>9.1 基本使用</h3><p>当使用 <code>.close</code> 按钮时，它必须是 <code>.alert-dismissible</code> 的第一个子元素，并且在它之前不能有任何文本内容。</p>
+<p>为关闭按钮添加 <code>data-dismiss=&quot;alert&quot;</code> 属性就可以使其自动为警告框赋予关闭功能。关闭警告框也就是将其从 DOM 中删除。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;close&quot; data-dismiss&#x3D;&quot;alert&quot; aria-label&#x3D;&quot;Close&quot;&gt;</span><br><span class="line">  &lt;span aria-hidden&#x3D;&quot;true&quot;&gt;&amp;times;&lt;&#x2F;span&gt;</span><br><span class="line">&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
+
+<p>为了让警告框在关闭时表现出动画效果，请确保为其添加了 <code>.fade</code> 和 <code>.in</code> 类。</p>
+<h3 id="9-2-JavaScript调用"><a href="#9-2-JavaScript调用" class="headerlink" title="9.2 JavaScript调用"></a>9.2 JavaScript调用</h3><h4 id="方法-6"><a href="#方法-6" class="headerlink" title="方法"></a>方法</h4><p><strong><code>$().alert()</code></strong></p>
+<p>让警告框监听具有 <code>data-dismiss=&quot;alert&quot;</code> 属性的后裔元素的点击（click）事件。（如果是通过 data 属性进行的初始化则无需使用）</p>
+<p><strong><code>$().alert(&#39;close&#39;)</code></strong></p>
+<p>关闭警告框并从 DOM 中将其删除。如果警告框被赋予了 <code>.fade</code> 和 <code>.in</code> 类，那么，警告框在淡出之后才会被删除。</p>
+<h4 id="事件-6"><a href="#事件-6" class="headerlink" title="事件"></a>事件</h4><p>Bootstrap 的警告框插件对外暴露了一些可以被监听的事件。</p>
+<table>
+<thead>
+<tr>
+<th>事件类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>close.bs.alert</td>
+<td>当 <code>close</code> 方法被调用后立即触发此事件。</td>
+</tr>
+<tr>
+<td>closed.bs.alert</td>
+<td>当警告框被关闭后（也即 CSS 过渡效果完毕之后）立即触发此事件。</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myAlert&#39;).on(&#39;closed.bs.alert&#39;, function () &#123;</span><br><span class="line">  &#x2F;&#x2F; do something…</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="10-按钮-button-js"><a href="#10-按钮-button-js" class="headerlink" title="10 按钮 button.js"></a>10 按钮 button.js</h2><h3 id="10-1-加载状态"><a href="#10-1-加载状态" class="headerlink" title="10.1 加载状态"></a>10.1 加载状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;button type&#x3D;&quot;button&quot; id&#x3D;&quot;myButton&quot; data-loading-text&#x3D;&quot;Loading...&quot; class&#x3D;&quot;btn btn-primary&quot; autocomplete&#x3D;&quot;off&quot;&gt;</span><br><span class="line">  Loading state</span><br><span class="line">&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  $(&#39;#myButton&#39;).on(&#39;click&#39;, function () &#123;</span><br><span class="line">    var $btn &#x3D; $(this).button(&#39;loading&#39;)</span><br><span class="line">    &#x2F;&#x2F; business logic...</span><br><span class="line">    $btn.button(&#39;reset&#39;)</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-2-独立的按钮切换状态"><a href="#10-2-独立的按钮切换状态" class="headerlink" title="10.2 独立的按钮切换状态"></a>10.2 独立的按钮切换状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot; data-toggle&#x3D;&quot;button&quot; aria-pressed&#x3D;&quot;false&quot; autocomplete&#x3D;&quot;off&quot;&gt;</span><br><span class="line">  Single toggle</span><br><span class="line">&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-3-Checkbox和Radio"><a href="#10-3-Checkbox和Radio" class="headerlink" title="10.3 Checkbox和Radio"></a>10.3 Checkbox和Radio</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;btn-group&quot; data-toggle&#x3D;&quot;buttons&quot;&gt;</span><br><span class="line">  &lt;label class&#x3D;&quot;btn btn-primary active&quot;&gt;</span><br><span class="line">    &lt;input type&#x3D;&quot;checkbox&quot; autocomplete&#x3D;&quot;off&quot; checked&gt; Checkbox 1 (pre-checked)</span><br><span class="line">  &lt;&#x2F;label&gt;</span><br><span class="line">  &lt;label class&#x3D;&quot;btn btn-primary&quot;&gt;</span><br><span class="line">    &lt;input type&#x3D;&quot;checkbox&quot; autocomplete&#x3D;&quot;off&quot;&gt; Checkbox 2</span><br><span class="line">  &lt;&#x2F;label&gt;</span><br><span class="line">  &lt;label class&#x3D;&quot;btn btn-primary&quot;&gt;</span><br><span class="line">    &lt;input type&#x3D;&quot;checkbox&quot; autocomplete&#x3D;&quot;off&quot;&gt; Checkbox 3</span><br><span class="line">  &lt;&#x2F;label&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;btn-group&quot; data-toggle&#x3D;&quot;buttons&quot;&gt;</span><br><span class="line">  &lt;label class&#x3D;&quot;btn btn-primary active&quot;&gt;</span><br><span class="line">    &lt;input type&#x3D;&quot;radio&quot; name&#x3D;&quot;options&quot; id&#x3D;&quot;option1&quot; autocomplete&#x3D;&quot;off&quot; checked&gt; Radio 1 (preselected)</span><br><span class="line">  &lt;&#x2F;label&gt;</span><br><span class="line">  &lt;label class&#x3D;&quot;btn btn-primary&quot;&gt;</span><br><span class="line">    &lt;input type&#x3D;&quot;radio&quot; name&#x3D;&quot;options&quot; id&#x3D;&quot;option2&quot; autocomplete&#x3D;&quot;off&quot;&gt; Radio 2</span><br><span class="line">  &lt;&#x2F;label&gt;</span><br><span class="line">  &lt;label class&#x3D;&quot;btn btn-primary&quot;&gt;</span><br><span class="line">    &lt;input type&#x3D;&quot;radio&quot; name&#x3D;&quot;options&quot; id&#x3D;&quot;option3&quot; autocomplete&#x3D;&quot;off&quot;&gt; Radio 3</span><br><span class="line">  &lt;&#x2F;label&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-4-JavaScript方法"><a href="#10-4-JavaScript方法" class="headerlink" title="10.4 JavaScript方法"></a>10.4 JavaScript方法</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>button(‘toggle’)</td>
+<td>切换按压状态。赋予按钮被激活的外观。您可以使用 <strong>data-toggle</strong> 属性启用按钮的自动切换。</td>
+<td><code>$().button(&#39;toggle&#39;)</code></td>
+</tr>
+<tr>
+<td>.button(‘loading’)</td>
+<td>当加载时，按钮是禁用的，且文本变为 button 元素的 <strong>data-loading-text</strong> 属性的值。</td>
+<td><code>$().button(&#39;loading&#39;)</code></td>
+</tr>
+<tr>
+<td>.button(‘reset’)</td>
+<td>重置按钮状态，文本内容恢复为最初的内容。当您想要把按钮返回为原始的状态时，该方法非常有用。</td>
+<td><code>$().button(&#39;reset&#39;)</code></td>
+</tr>
+<tr>
+<td>.button(string)</td>
+<td>该方法中的字符串是指由用户声明的任何字符串。使用该方法，重置按钮状态，并添加新的内容。</td>
+<td><code>$().button(string)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;button type&#x3D;&quot;button&quot; id&#x3D;&quot;myStateButton&quot; data-complete-text&#x3D;&quot;finished!&quot; class&#x3D;&quot;btn btn-primary&quot; autocomplete&#x3D;&quot;off&quot;&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  $(&#39;#myStateButton&#39;).on(&#39;click&#39;, function () &#123;</span><br><span class="line">    $(this).button(&#39;complete&#39;) &#x2F;&#x2F; button text will be &quot;finished!&quot;</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="11-折叠-collapse-js"><a href="#11-折叠-collapse-js" class="headerlink" title="11 折叠 collapse.js"></a>11 折叠 collapse.js</h2><h3 id="11-1-基本使用"><a href="#11-1-基本使用" class="headerlink" title="11.1 基本使用"></a>11.1 基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;a class&#x3D;&quot;btn btn-primary&quot; role&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; href&#x3D;&quot;#collapseExample&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseExample&quot;&gt;</span><br><span class="line">  Link with href</span><br><span class="line">&lt;&#x2F;a&gt;</span><br><span class="line">&lt;button class&#x3D;&quot;btn btn-primary&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseExample&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseExample&quot;&gt;</span><br><span class="line">  Button with data-target</span><br><span class="line">&lt;&#x2F;button&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;collapse&quot; id&#x3D;&quot;collapseExample&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;well&quot;&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-2-手风琴菜单"><a href="#11-2-手风琴菜单" class="headerlink" title="11.2 手风琴菜单"></a>11.2 手风琴菜单</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;panel-group&quot; id&#x3D;&quot;accordion&quot; role&#x3D;&quot;tablist&quot; aria-multiselectable&#x3D;&quot;true&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;panel panel-default&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;panel-heading&quot; role&#x3D;&quot;tab&quot; id&#x3D;&quot;headingOne&quot;&gt;</span><br><span class="line">      &lt;h4 class&#x3D;&quot;panel-title&quot;&gt;</span><br><span class="line">        &lt;a role&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-parent&#x3D;&quot;#accordion&quot; href&#x3D;&quot;#collapseOne&quot; aria-expanded&#x3D;&quot;true&quot; aria-controls&#x3D;&quot;collapseOne&quot;&gt;</span><br><span class="line">          Collapsible Group Item #1</span><br><span class="line">        &lt;&#x2F;a&gt;</span><br><span class="line">      &lt;&#x2F;h4&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;div id&#x3D;&quot;collapseOne&quot; class&#x3D;&quot;panel-collapse collapse in&quot; role&#x3D;&quot;tabpanel&quot; aria-labelledby&#x3D;&quot;headingOne&quot;&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;panel-body&quot;&gt;</span><br><span class="line">        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven&#39;t heard of them accusamus labore sustainable VHS.</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;panel panel-default&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;panel-heading&quot; role&#x3D;&quot;tab&quot; id&#x3D;&quot;headingTwo&quot;&gt;</span><br><span class="line">      &lt;h4 class&#x3D;&quot;panel-title&quot;&gt;</span><br><span class="line">        &lt;a class&#x3D;&quot;collapsed&quot; role&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-parent&#x3D;&quot;#accordion&quot; href&#x3D;&quot;#collapseTwo&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseTwo&quot;&gt;</span><br><span class="line">          Collapsible Group Item #2</span><br><span class="line">        &lt;&#x2F;a&gt;</span><br><span class="line">      &lt;&#x2F;h4&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;div id&#x3D;&quot;collapseTwo&quot; class&#x3D;&quot;panel-collapse collapse&quot; role&#x3D;&quot;tabpanel&quot; aria-labelledby&#x3D;&quot;headingTwo&quot;&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;panel-body&quot;&gt;</span><br><span class="line">        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven&#39;t heard of them accusamus labore sustainable VHS.</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;panel panel-default&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;panel-heading&quot; role&#x3D;&quot;tab&quot; id&#x3D;&quot;headingThree&quot;&gt;</span><br><span class="line">      &lt;h4 class&#x3D;&quot;panel-title&quot;&gt;</span><br><span class="line">        &lt;a class&#x3D;&quot;collapsed&quot; role&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-parent&#x3D;&quot;#accordion&quot; href&#x3D;&quot;#collapseThree&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseThree&quot;&gt;</span><br><span class="line">          Collapsible Group Item #3</span><br><span class="line">        &lt;&#x2F;a&gt;</span><br><span class="line">      &lt;&#x2F;h4&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;div id&#x3D;&quot;collapseThree&quot; class&#x3D;&quot;panel-collapse collapse&quot; role&#x3D;&quot;tabpanel&quot; aria-labelledby&#x3D;&quot;headingThree&quot;&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;panel-body&quot;&gt;</span><br><span class="line">        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven&#39;t heard of them accusamus labore sustainable VHS.</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>It’s also possible to swap out <code>.panel-body</code>s with <code>.list-group</code>s.</p>
+<h3 id="11-3-JavaScript调用"><a href="#11-3-JavaScript调用" class="headerlink" title="11.3 JavaScript调用"></a>11.3 JavaScript调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;.collapse&#39;).collapse()</span><br></pre></td></tr></table></figure>
+
+<h4 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h4><table>
+<thead>
+<tr>
+<th>选项名称</th>
+<th>类型/默认值</th>
+<th>Data 属性名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>parent</td>
+<td>selector <em>默认值：false</em></td>
+<td>data-parent</td>
+<td>如果提供了一个选择器，当可折叠项目显示时，指定父元素下的所有可折叠的元素将被关闭。这与传统的折叠面板（accordion）的行为类似 - 这依赖于 accordion-group 类。</td>
+</tr>
+<tr>
+<td>toggle</td>
+<td>boolean <em>默认值：true</em></td>
+<td>data-toggle</td>
+<td>切换调用可折叠元素。</td>
+</tr>
+</tbody></table>
+<h4 id="方法-7"><a href="#方法-7" class="headerlink" title="方法"></a>方法</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Options:</strong> .collapse(options)</td>
+<td>激活内容为可折叠元素。接受一个可选的 options 对象。</td>
+<td><code>$(&#39;#identifier&#39;).collapse(&#123; toggle: false &#125;)</code></td>
+</tr>
+<tr>
+<td><strong>Toggle:</strong> .collapse(‘toggle’)</td>
+<td>切换显示/隐藏可折叠元素。</td>
+<td><code>$(&#39;#identifier&#39;).collapse(&#39;toggle&#39;)</code></td>
+</tr>
+<tr>
+<td><strong>Show:</strong> .collapse(‘show’)</td>
+<td>显示可折叠元素。</td>
+<td><code>$(&#39;#identifier&#39;).collapse(&#39;show&#39;)</code></td>
+</tr>
+<tr>
+<td><strong>Hide:</strong> .collapse(‘hide’)</td>
+<td>隐藏可折叠元素。</td>
+<td><code>$(&#39;#identifier&#39;).collapse(&#39;hide&#39;)</code></td>
+</tr>
+</tbody></table>
+<h4 id="事件-7"><a href="#事件-7" class="headerlink" title="事件"></a>事件</h4><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>show.bs.collapse</td>
+<td>在调用 show 方法后触发该事件。</td>
+<td><code>$(&#39;#identifier&#39;).on(&#39;show.bs.collapse&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+<tr>
+<td>shown.bs.collapse</td>
+<td>当折叠元素对用户可见时触发该事件（将等待 CSS 过渡效果完成）。</td>
+<td><code>$(&#39;#identifier&#39;).on(&#39;shown.bs.collapse&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+<tr>
+<td>hide.bs.collapse</td>
+<td>当调用 hide 实例方法时立即触发该事件。</td>
+<td><code>$(&#39;#identifier&#39;).on(&#39;hide.bs.collapse&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+<tr>
+<td>hidden.bs.collapse</td>
+<td>当折叠元素对用户隐藏时触发该事件（将等待 CSS 过渡效果完成）。</td>
+<td><code>$(&#39;#identifier&#39;).on(&#39;hidden.bs.collapse&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myCollapsible&#39;).on(&#39;hidden.bs.collapse&#39;, function () &#123;</span><br><span class="line">  &#x2F;&#x2F; do something…</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="12-轮播-carousel-js"><a href="#12-轮播-carousel-js" class="headerlink" title="12 轮播 carousel.js"></a>12 轮播 carousel.js</h2><h3 id="12-1-基本使用"><a href="#12-1-基本使用" class="headerlink" title="12.1 基本使用"></a>12.1 基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;carousel-example-generic&quot; class&#x3D;&quot;carousel slide&quot; data-ride&#x3D;&quot;carousel&quot;&gt;</span><br><span class="line">  &lt;!-- Indicators --&gt;</span><br><span class="line">  &lt;ol class&#x3D;&quot;carousel-indicators&quot;&gt;</span><br><span class="line">    &lt;li data-target&#x3D;&quot;#carousel-example-generic&quot; data-slide-to&#x3D;&quot;0&quot; class&#x3D;&quot;active&quot;&gt;&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li data-target&#x3D;&quot;#carousel-example-generic&quot; data-slide-to&#x3D;&quot;1&quot;&gt;&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li data-target&#x3D;&quot;#carousel-example-generic&quot; data-slide-to&#x3D;&quot;2&quot;&gt;&lt;&#x2F;li&gt;</span><br><span class="line">  &lt;&#x2F;ol&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- Wrapper for slides --&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;carousel-inner&quot; role&#x3D;&quot;listbox&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;item active&quot;&gt;</span><br><span class="line">      &lt;img src&#x3D;&quot;...&quot; alt&#x3D;&quot;...&quot;&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;carousel-caption&quot;&gt;</span><br><span class="line">        ...</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;item&quot;&gt;</span><br><span class="line">      &lt;img src&#x3D;&quot;...&quot; alt&#x3D;&quot;...&quot;&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;carousel-caption&quot;&gt;</span><br><span class="line">        ...</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- Controls --&gt;</span><br><span class="line">  &lt;a class&#x3D;&quot;left carousel-control&quot; href&#x3D;&quot;#carousel-example-generic&quot; role&#x3D;&quot;button&quot; data-slide&#x3D;&quot;prev&quot;&gt;</span><br><span class="line">    &lt;span class&#x3D;&quot;glyphicon glyphicon-chevron-left&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;&#x2F;span&gt;</span><br><span class="line">    &lt;span class&#x3D;&quot;sr-only&quot;&gt;Previous&lt;&#x2F;span&gt;</span><br><span class="line">  &lt;&#x2F;a&gt;</span><br><span class="line">  &lt;a class&#x3D;&quot;right carousel-control&quot; href&#x3D;&quot;#carousel-example-generic&quot; role&#x3D;&quot;button&quot; data-slide&#x3D;&quot;next&quot;&gt;</span><br><span class="line">    &lt;span class&#x3D;&quot;glyphicon glyphicon-chevron-right&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;&#x2F;span&gt;</span><br><span class="line">    &lt;span class&#x3D;&quot;sr-only&quot;&gt;Next&lt;&#x2F;span&gt;</span><br><span class="line">  &lt;&#x2F;a&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="12-2-每个项目的标题"><a href="#12-2-每个项目的标题" class="headerlink" title="12.2 每个项目的标题"></a>12.2 每个项目的标题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;item&quot;&gt;</span><br><span class="line">  &lt;img src&#x3D;&quot;...&quot; alt&#x3D;&quot;...&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;carousel-caption&quot;&gt;</span><br><span class="line">    &lt;h3&gt;...&lt;&#x2F;h3&gt;</span><br><span class="line">    &lt;p&gt;...&lt;&#x2F;p&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="12-3-JavaScript-调用"><a href="#12-3-JavaScript-调用" class="headerlink" title="12.3 JavaScript 调用"></a>12.3 JavaScript 调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;.carousel&#39;).carousel()</span><br></pre></td></tr></table></figure>
+
+<h4 id="选项-1"><a href="#选项-1" class="headerlink" title="选项"></a>选项</h4><table>
+<thead>
+<tr>
+<th>选项名称</th>
+<th>类型/默认值</th>
+<th>Data 属性名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>interval</td>
+<td>number <em>默认值：5000</em></td>
+<td>data-interval</td>
+<td>自动循环每个项目之间延迟的时间量。如果为 false，轮播将不会自动循环。</td>
+</tr>
+<tr>
+<td>pause</td>
+<td>string <em>默认值：”hover”</em></td>
+<td>data-pause</td>
+<td>鼠标进入时暂停轮播循环，鼠标离开时恢复轮播循环。</td>
+</tr>
+<tr>
+<td>wrap</td>
+<td>boolean <em>默认值：true</em></td>
+<td>data-wrap</td>
+<td>轮播是否连续循环。</td>
+</tr>
+</tbody></table>
+<h4 id="方法-8"><a href="#方法-8" class="headerlink" title="方法"></a>方法</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.carousel(options)</td>
+<td>初始化轮播为可选的 options 对象，并开始循环项目。</td>
+<td><code>$(&#39;#identifier&#39;).carousel(&#123; interval: 2000 &#125;)</code></td>
+</tr>
+<tr>
+<td>.carousel(‘cycle’)</td>
+<td>从左到右循环轮播项目。</td>
+<td><code>$(&#39;#identifier&#39;).carousel(&#39;cycle&#39;)</code></td>
+</tr>
+<tr>
+<td>.carousel(‘pause’)</td>
+<td>停止轮播循环项目。</td>
+<td><code>$(&#39;#identifier&#39;).carousel(&#39;pause&#39;)</code></td>
+</tr>
+<tr>
+<td>.carousel(number)</td>
+<td>循环轮播到某个特定的帧（从 0 开始计数，与数组类似）。</td>
+<td><code>$(&#39;#identifier&#39;).carousel(number)</code></td>
+</tr>
+<tr>
+<td>.carousel(‘prev’)</td>
+<td>循环轮播到上一个项目。</td>
+<td><code>$(&#39;#identifier&#39;).carousel(&#39;prev&#39;)</code></td>
+</tr>
+<tr>
+<td>.carousel(‘next’)</td>
+<td>循环轮播到下一个项目。</td>
+<td><code>$(&#39;#identifier&#39;).carousel(&#39;next&#39;)</code></td>
+</tr>
+</tbody></table>
+<h4 id="事件-8"><a href="#事件-8" class="headerlink" title="事件"></a>事件</h4><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>slide.bs.carousel</td>
+<td>当调用 slide 实例方法时立即触发该事件。</td>
+<td><code>$(&#39;#identifier&#39;).on(&#39;slide.bs.carousel&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+<tr>
+<td>slid.bs.carousel</td>
+<td>当轮播完成幻灯片过渡效果时触发该事件。</td>
+<td><code>$(&#39;#identifier&#39;).on(&#39;slid.bs.carousel&#39;, function () &#123; // 执行一些动作... &#125;)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myCarousel&#39;).on(&#39;slide.bs.carousel&#39;, function () &#123;</span><br><span class="line">  &#x2F;&#x2F; do something…</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="13-附加-affix-js"><a href="#13-附加-affix-js" class="headerlink" title="13 附加 affix.js"></a>13 附加 affix.js</h2><h3 id="12-1-基本使用-1"><a href="#12-1-基本使用-1" class="headerlink" title="12.1 基本使用"></a>12.1 基本使用</h3><p>To easily add affix behavior to any element, just add <code>data-spy=&quot;affix&quot;</code> to the element you want to spy on. Use offsets to define when to toggle the pinning of an element.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div data-spy&#x3D;&quot;affix&quot; data-offset-top&#x3D;&quot;60&quot; data-offset-bottom&#x3D;&quot;200&quot;&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="13-2-JavaScript调用"><a href="#13-2-JavaScript调用" class="headerlink" title="13.2 JavaScript调用"></a>13.2 JavaScript调用</h3><p>Call the affix plugin via JavaScript:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myAffix&#39;).affix(&#123;</span><br><span class="line">  offset: &#123;</span><br><span class="line">    top: 100,</span><br><span class="line">    bottom: function () &#123;</span><br><span class="line">      return (this.bottom &#x3D; $(&#39;.footer&#39;).outerHeight(true))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="选项-2"><a href="#选项-2" class="headerlink" title="选项"></a>选项</h4><p>Options can be passed via data attributes or JavaScript. For data attributes, append the option name to <code>data-</code>, as in <code>data-offset-top=&quot;200&quot;</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>offset</td>
+<td>number | function | object</td>
+<td>10</td>
+<td>Pixels to offset from screen when calculating position of scroll. If a single number is provided, the offset will be applied in both top and bottom directions. To provide a unique, bottom and top offset just provide an object <code>offset: &#123; top: 10 &#125;</code> or <code>offset: &#123; top: 10, bottom: 5 &#125;</code>. Use a function when you need to dynamically calculate an offset.</td>
+</tr>
+<tr>
+<td>target</td>
+<td>selector | node | jQuery element</td>
+<td>the <code>window</code>object</td>
+<td>Specifies the target element of the affix.</td>
+</tr>
+</tbody></table>
+<h4 id="方法-9"><a href="#方法-9" class="headerlink" title="方法"></a>方法</h4><p><strong><code>$().affix(options)</code></strong></p>
+<p>Activates your content as affixed content. Accepts an optional options <code>object</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myAffix&#39;).affix(&#123;</span><br><span class="line">  offset: 15</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>** <code>$().affix(&#39;checkPosition&#39;)</code>**</p>
+<p>Recalculates the state of the affix based on the dimensions, position, and scroll position of the relevant elements. The <code>.affix</code>, <code>.affix-top</code>, and <code>.affix-bottom</code> classes are added to or removed from the affixed content according to the new state. This method needs to be called whenever the dimensions of the affixed content or the target element are changed, to ensure correct positioning of the affixed content.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#myAffix&#39;).affix(&#39;checkPosition&#39;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件-9"><a href="#事件-9" class="headerlink" title="事件"></a>事件</h4><p>Bootstrap’s affix plugin exposes a few events for hooking into affix functionality.</p>
+<table>
+<thead>
+<tr>
+<th>Event Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>affix.bs.affix</td>
+<td>This event fires immediately before the element has been affixed.</td>
+</tr>
+<tr>
+<td>affixed.bs.affix</td>
+<td>This event is fired after the element has been affixed.</td>
+</tr>
+<tr>
+<td>affix-top.bs.affix</td>
+<td>This event fires immediately before the element has been affixed-top.</td>
+</tr>
+<tr>
+<td>affixed-top.bs.affix</td>
+<td>This event is fired after the element has been affixed-top.</td>
+</tr>
+<tr>
+<td>affix-bottom.bs.affix</td>
+<td>This event fires immediately before the element has been affixed-bottom.</td>
+</tr>
+<tr>
+<td>affixed-bottom.bs.affix</td>
+<td>This event is fired after the element has been affixed-bottom.</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/note/" rel="tag"><i class="fas fa-cookie-bite"></i> note</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/02/%E5%89%8D%E7%AB%AF-Bootstrap-03/" rel="prev" title="前端-Bootstrap-03">
+      <i class="fa fa-chevron-left"></i> 前端-Bootstrap-03
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-BootStrap%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8%E8%A7%84%E5%88%99"><span class="nav-number">1.</span> <span class="nav-text">1 BootStrap插件使用规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%8D%95%E4%B8%AA%E5%BC%95%E5%85%A5"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 单个引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-data%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 data属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E7%BC%96%E7%A8%8B%E6%96%B9%E5%BC%8F%E7%9A%84-API"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 编程方式的 API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E9%81%BF%E5%85%8D%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%86%B2%E7%AA%81"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 避免命名空间冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 版本号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%BF%87%E6%B8%A1%E6%95%88%E6%9E%9C-transition-js"><span class="nav-number">2.</span> <span class="nav-text">2 过渡效果 transition.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%85%B3%E4%BA%8E%E8%BF%87%E6%B8%A1%E6%95%88%E6%9E%9C"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 关于过渡效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%8C%85%E5%90%AB%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">2.2.</span> <span class="nav-text">2.3 包含的内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E7%A6%81%E7%94%A8%E8%BF%87%E5%BA%A6%E6%95%88%E6%9E%9C"><span class="nav-number">2.3.</span> <span class="nav-text">2.4 禁用过度效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%A8%A1%E6%80%81%E6%A1%86-modal-js"><span class="nav-number">3.</span> <span class="nav-text">3 模态框 modal.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%A8%A1%E6%80%81%E6%A1%86%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 模态框定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%8C%89%E9%92%AE"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 按钮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%A8%A1%E6%80%81%E6%A1%86%E5%B0%BA%E5%AF%B8"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 模态框尺寸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E7%A6%81%E6%AD%A2%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 禁止动画效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E6%A8%A1%E6%80%81%E6%A1%86%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%A0%85%E6%A0%BC%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 模态框中使用栅格系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-%E5%9F%BA%E4%BA%8E%E8%A7%A6%E5%8F%91%E5%99%A8%E6%8C%89%E9%92%AE%E7%9A%84%E4%B8%8D%E5%90%8C%E6%A8%A1%E6%80%81%E5%86%85%E5%AE%B9"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 基于触发器按钮的不同模态内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-%E9%80%9A%E8%BF%87JavaScript%E5%A4%84%E7%90%86%E6%A8%A1%E6%80%81%E6%A1%86"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 通过JavaScript处理模态框</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%BC%80"><span class="nav-number">3.7.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">3.7.2.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">3.7.3.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6"><span class="nav-number">3.7.4.</span> <span class="nav-text">事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%B8%8B%E6%8B%89%E8%8F%9C%E5%8D%95-dropdown-js"><span class="nav-number">4.</span> <span class="nav-text">4 下拉菜单 dropdown.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-JavaScript%E8%B0%83%E7%94%A8"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 JavaScript调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-1"><span class="nav-number">4.1.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6-1"><span class="nav-number">4.1.2.</span> <span class="nav-text">事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%BB%9A%E5%8A%A8%E7%9B%91%E5%90%AC-scrollspy-js"><span class="nav-number">5.</span> <span class="nav-text">5 滚动监听 scrollspy.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%9F%BA%E6%9C%AC%E8%B0%83%E7%94%A8"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 基本调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-JavaScript%E8%B0%83%E7%94%A8"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 JavaScript调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-2"><span class="nav-number">5.2.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0-1"><span class="nav-number">5.2.2.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6-2"><span class="nav-number">5.2.3.</span> <span class="nav-text">事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%A0%87%E7%AD%BE%E9%A1%B5-tab-js"><span class="nav-number">6.</span> <span class="nav-text">6 标签页 tab.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-Fade%E7%89%B9%E6%95%88"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 Fade特效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-JavaScript%E8%B0%83%E7%94%A8"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 JavaScript调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-3"><span class="nav-number">6.3.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6-3"><span class="nav-number">6.3.2.</span> <span class="nav-text">事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%B7%A5%E5%85%B7%E6%8F%90%E7%A4%BA-tooltips-js"><span class="nav-number">7.</span> <span class="nav-text">7 工具提示 tooltips.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-JavaScript%E8%B0%83%E7%94%A8"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 JavaScript调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0-2"><span class="nav-number">7.2.1.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-4"><span class="nav-number">7.2.2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6-4"><span class="nav-number">7.2.3.</span> <span class="nav-text">事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%BC%B9%E5%87%BA%E6%A1%86-popover-js"><span class="nav-number">8.</span> <span class="nav-text">8 弹出框 popover.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">8.1.</span> <span class="nav-text">8.1 基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC"><span class="nav-number">8.1.1.</span> <span class="nav-text">基本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%B9%E5%87%BA%E6%96%B9%E5%90%91"><span class="nav-number">8.1.2.</span> <span class="nav-text">弹出方向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E5%B9%B6%E8%AE%A9%E5%BC%B9%E5%87%BA%E6%A1%86%E6%B6%88%E5%A4%B1"><span class="nav-number">8.1.3.</span> <span class="nav-text">点击并让弹出框消失</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-javaScript%E8%B0%83%E7%94%A8"><span class="nav-number">8.2.</span> <span class="nav-text">8.2 javaScript调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0-3"><span class="nav-number">8.2.1.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-5"><span class="nav-number">8.2.2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6-5"><span class="nav-number">8.2.3.</span> <span class="nav-text">事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E8%AD%A6%E5%91%8A%E4%BF%A1%E6%81%AF-alert-js"><span class="nav-number">9.</span> <span class="nav-text">9 警告信息 alert.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">9.1.</span> <span class="nav-text">9.1 基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-JavaScript%E8%B0%83%E7%94%A8"><span class="nav-number">9.2.</span> <span class="nav-text">9.2 JavaScript调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-6"><span class="nav-number">9.2.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6-6"><span class="nav-number">9.2.2.</span> <span class="nav-text">事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E6%8C%89%E9%92%AE-button-js"><span class="nav-number">10.</span> <span class="nav-text">10 按钮 button.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-%E5%8A%A0%E8%BD%BD%E7%8A%B6%E6%80%81"><span class="nav-number">10.1.</span> <span class="nav-text">10.1 加载状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-%E7%8B%AC%E7%AB%8B%E7%9A%84%E6%8C%89%E9%92%AE%E5%88%87%E6%8D%A2%E7%8A%B6%E6%80%81"><span class="nav-number">10.2.</span> <span class="nav-text">10.2 独立的按钮切换状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-3-Checkbox%E5%92%8CRadio"><span class="nav-number">10.3.</span> <span class="nav-text">10.3 Checkbox和Radio</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-4-JavaScript%E6%96%B9%E6%B3%95"><span class="nav-number">10.4.</span> <span class="nav-text">10.4 JavaScript方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E6%8A%98%E5%8F%A0-collapse-js"><span class="nav-number">11.</span> <span class="nav-text">11 折叠 collapse.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">11.1.</span> <span class="nav-text">11.1 基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-2-%E6%89%8B%E9%A3%8E%E7%90%B4%E8%8F%9C%E5%8D%95"><span class="nav-number">11.2.</span> <span class="nav-text">11.2 手风琴菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-3-JavaScript%E8%B0%83%E7%94%A8"><span class="nav-number">11.3.</span> <span class="nav-text">11.3 JavaScript调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%89%E9%A1%B9"><span class="nav-number">11.3.1.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-7"><span class="nav-number">11.3.2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6-7"><span class="nav-number">11.3.3.</span> <span class="nav-text">事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-%E8%BD%AE%E6%92%AD-carousel-js"><span class="nav-number">12.</span> <span class="nav-text">12 轮播 carousel.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">12.1.</span> <span class="nav-text">12.1 基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-2-%E6%AF%8F%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%A0%87%E9%A2%98"><span class="nav-number">12.2.</span> <span class="nav-text">12.2 每个项目的标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-3-JavaScript-%E8%B0%83%E7%94%A8"><span class="nav-number">12.3.</span> <span class="nav-text">12.3 JavaScript 调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%89%E9%A1%B9-1"><span class="nav-number">12.3.1.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-8"><span class="nav-number">12.3.2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6-8"><span class="nav-number">12.3.3.</span> <span class="nav-text">事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-%E9%99%84%E5%8A%A0-affix-js"><span class="nav-number">13.</span> <span class="nav-text">13 附加 affix.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-1"><span class="nav-number">13.1.</span> <span class="nav-text">12.1 基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-2-JavaScript%E8%B0%83%E7%94%A8"><span class="nav-number">13.2.</span> <span class="nav-text">13.2 JavaScript调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%89%E9%A1%B9-2"><span class="nav-number">13.2.1.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-9"><span class="nav-number">13.2.2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6-9"><span class="nav-number">13.2.3.</span> <span class="nav-text">事件</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">628k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">17:26</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
