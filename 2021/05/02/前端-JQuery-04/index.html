@@ -28,7 +28,7 @@
 <meta property="og:description" content="JQuery 操作DOM">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-02T06:36:54.000Z">
-<meta property="article:modified_time" content="2021-05-02T06:39:14.940Z">
+<meta property="article:modified_time" content="2021-05-05T04:18:17.089Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -213,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-05-02 14:36:54 / 修改时间：14:39:14" itemprop="dateCreated datePublished" datetime="2021-05-02T14:36:54+08:00">2021-05-02</time>
+              <time title="创建时间：2021-05-02 14:36:54" itemprop="dateCreated datePublished" datetime="2021-05-02T14:36:54+08:00">2021-05-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-05 12:18:17" itemprop="dateModified" datetime="2021-05-05T12:18:17+08:00">2021-05-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -233,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>793</span>
+              <span>1.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -266,6 +272,16 @@
 <h2 id="5-删除"><a href="#5-删除" class="headerlink" title="5 删除"></a>5 删除</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">empty()            删除匹配的元素集合中所有的子节点</span><br><span class="line">remove([expr])    从DOM中删除所有匹配的元素</span><br><span class="line">detach([expr])    从DOM中删除所有匹配的元素 这个方法不会把匹配的元素从jQuery对象中删除，因而可以在将来再使用这些匹配的元素。与remove()不同的是，所有绑定的事件、附加的数据等都会保留下来</span><br></pre></td></tr></table></figure>
 
 <h2 id="6-复制"><a href="#6-复制" class="headerlink" title="6 复制"></a>6 复制</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clone([Even[,deepEven]])    克隆匹配的DOM元素并且选中这些克隆的副本</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文档处理</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">js                        jQuery</span></span><br><span class="line"><span class="string">createElement(&#x27;p&#x27;)        $(&#x27;&lt;p&gt;&#x27;)</span></span><br><span class="line"><span class="string">appendChild()             append()</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">let $pEle = $(<span class="string">&#x27;&lt;p&gt;&#x27;</span>)</span><br><span class="line">undefined</span><br><span class="line">$pEle.text(<span class="string">&#x27;你好啊 草莓要不要来几个&#x27;</span>)</span><br><span class="line">pEle.attr(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;d1&#x27;</span>)</span><br><span class="line">$pEle[<span class="number">0</span>]</span><br><span class="line">&lt;p&gt;​你好啊 草莓要不要来几个​&lt;/p&gt;​</span><br><span class="line">$(<span class="string">&#x27;#d1&#x27;</span>).append($pEle) <span class="comment"># 内部尾部追加</span></span><br><span class="line">$pEle.appendTo(<span class="string">&#x27;#d1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">$(<span class="string">&#x27;#d1&#x27;</span>).prepend($pEle) <span class="comment"># 内部头部追加</span></span><br><span class="line">$pEle.prependTo($(<span class="string">&#x27;#d1&#x27;</span>))</span><br><span class="line"></span><br><span class="line">$(<span class="string">&#x27;#d2&#x27;</span>).after($pEle) <span class="comment"># 放在标签后面</span></span><br><span class="line">$pEle.insertAfter($(<span class="string">&#x27;#d2&#x27;</span>)) </span><br><span class="line"></span><br><span class="line">$(<span class="string">&#x27;#d1&#x27;</span>).before($pEle)</span><br><span class="line">$pEle.insertBefore($(<span class="string">&#x27;#d1&#x27;</span>))</span><br><span class="line"></span><br><span class="line">$(<span class="string">&#x27;#d1&#x27;</span>).remove() <span class="comment"># 将标签从DOM树中删除</span></span><br><span class="line"></span><br><span class="line">$(<span class="string">&#x27;#d1&#x27;</span>).empty()  <span class="comment"># 清空标签内部所有内容</span></span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
@@ -421,12 +437,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">719k</span>
+    <span title="站点总字数">723k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:59</span>
+    <span title="站点阅读时长">20:04</span>
 </div>
 
 <!--
