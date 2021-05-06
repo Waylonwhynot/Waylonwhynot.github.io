@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一 web框架Web框架（Web framework）是一种开发框架，用来支持动态网站、网络应用和网络服务的开发。这大多数的web框架提供了一套开发和部署网站的方式，也为web行为提供了一套通用的方法。web框架已经实现了很多功能，开发人员使用框架提供的方法并且完成自己的业务逻辑，就能快速开发web应用了。浏览器和服务器的是基于HTTP协议进行通信的。也可以说web框架就是在以上十几行代码基础张扩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django入门-web框架-03">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/05/07/Django%E5%85%A5%E9%97%A8-web%E6%A1%86%E6%9E%B6-03/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="一 web框架Web框架（Web framework）是一种开发框架，用来支持动态网站、网络应用和网络服务的开发。这大多数的web框架提供了一套开发和部署网站的方式，也为web行为提供了一套通用的方法。web框架已经实现了很多功能，开发人员使用框架提供的方法并且完成自己的业务逻辑，就能快速开发web应用了。浏览器和服务器的是基于HTTP协议进行通信的。也可以说web框架就是在以上十几行代码基础张扩">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1gj1vegl3a2j308q088q2w.jpg">
+<meta property="article:published_time" content="2021-05-06T19:56:45.000Z">
+<meta property="article:modified_time" content="2021-05-06T20:03:10.904Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1gj1vegl3a2j308q088q2w.jpg">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/05/07/Django%E5%85%A5%E9%97%A8-web%E6%A1%86%E6%9E%B6-03/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Django入门-web框架-03 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/07/Django%E5%85%A5%E9%97%A8-web%E6%A1%86%E6%9E%B6-03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Django入门-web框架-03
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-07 03:56:45 / 修改时间：04:03:10" itemprop="dateCreated datePublished" datetime="2021-05-07T03:56:45+08:00">2021-05-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="一-web框架"><a href="#一-web框架" class="headerlink" title="一 web框架"></a>一 web框架</h2><p>Web框架（Web framework）是一种开发框架，用来支持动态网站、网络应用和网络服务的开发。这大多数的web框架提供了一套开发和部署网站的方式，也为web行为提供了一套通用的方法。web框架已经实现了很多功能，开发人员使用框架提供的方法并且完成自己的业务逻辑，就能快速开发web应用了。浏览器和服务器的是基于HTTP协议进行通信的。也可以说web框架就是在以上十几行代码基础张扩展出来的，有很多简单方便使用的方法，大大提高了开发的效率。</p>
+<h3 id="1-1-wsgiref模块"><a href="#1-1-wsgiref模块" class="headerlink" title="1.1 wsgiref模块"></a>1.1 wsgiref模块</h3><p>最简单的Web应用就是先把HTML用文件保存好，用一个现成的HTTP服务器软件，接收用户请求，从文件中读取HTML，返回。</p>
+<p>如果要动态生成HTML，就需要把上述步骤自己来实现。不过，接受HTTP请求、解析HTTP请求、发送HTTP响应都是苦力活，如果我们自己来写这些底层代码，还没开始写动态HTML呢，就得花个把月去读HTTP规范。</p>
+<p>正确的做法是底层代码由专门的服务器软件实现，我们用Python专注于生成HTML文档。因为我们不希望接触到TCP连接、HTTP原始请求和响应格式，所以，需要一个统一的接口协议来实现这样的服务器软件，让我们专心用Python编写Web业务。这个接口就是WSGI：Web Server Gateway Interface。而wsgiref模块就是python基于wsgi协议开发的服务模块。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mya</span>(<span class="params">environ, start_response</span>):</span></span><br><span class="line">    print(environ)</span><br><span class="line">    start_response(<span class="string">&#x27;200 OK&#x27;</span>, [(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;text/html&#x27;</span>)])</span><br><span class="line">    <span class="keyword">if</span> environ.get(<span class="string">&#x27;PATH_INFO&#x27;</span>) == <span class="string">&#x27;/index&#x27;</span>:</span><br><span class="line">        <span class="keyword">with</span> open(<span class="string">&#x27;index.html&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            data=f.read()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">elif</span> environ.get(<span class="string">&#x27;PATH_INFO&#x27;</span>) == <span class="string">&#x27;/login&#x27;</span>:</span><br><span class="line">        <span class="keyword">with</span> open(<span class="string">&#x27;login.html&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            data = f.read()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        data=<span class="string">b&#x27;&lt;h1&gt;Hello, web!&lt;/h1&gt;&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> [data]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    myserver = make_server(<span class="string">&#x27;&#x27;</span>, <span class="number">8011</span>, mya)</span><br><span class="line">    print(<span class="string">&#x27;监听8010&#x27;</span>)</span><br><span class="line">    myserver.serve_forever()</span><br></pre></td></tr></table></figure>
+
+<h2 id="二-手撸自己的Web框架"><a href="#二-手撸自己的Web框架" class="headerlink" title="二 手撸自己的Web框架"></a>二 手撸自己的Web框架</h2><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1gj1vegl3a2j308q088q2w.jpg" alt="img"></p>
+<h3 id="2-1-models-py"><a href="#2-1-models-py" class="headerlink" title="2.1 models.py"></a>2.1 models.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#39;&#39;&#39;</span><br><span class="line">链接数据库返回字典格式：</span><br><span class="line">cursor&#x3D;pymysql.cursors.DictCursor</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line"></span><br><span class="line">import pymysql</span><br><span class="line">#连接数据库</span><br><span class="line">conn &#x3D; pymysql.connect(host&#x3D;&#39;127.0.0.1&#39;,port&#x3D; 3306,user &#x3D; &#39;root&#39;,passwd&#x3D;&#39;123456&#39;,db&#x3D;&#39;web&#39;) #db：库名</span><br><span class="line">#创建游标</span><br><span class="line">cur &#x3D; conn.cursor()</span><br><span class="line"></span><br><span class="line">sql&#x3D;&#39;&#39;&#39;</span><br><span class="line">create table userinfo(</span><br><span class="line">        id INT PRIMARY KEY ,</span><br><span class="line">        name VARCHAR(32) ,</span><br><span class="line">        password VARCHAR(32)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line"></span><br><span class="line">cur.execute(sql)</span><br><span class="line"></span><br><span class="line">#提交</span><br><span class="line">conn.commit()</span><br><span class="line">#关闭指针对象</span><br><span class="line">cur.close()</span><br><span class="line">#关闭连接对象</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-myserver-py"><a href="#2-2-myserver-py" class="headerlink" title="2.2 myserver.py"></a>2.2 myserver.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">from wsgiref.simple_server import make_server</span><br><span class="line"></span><br><span class="line">from urls import url_patters</span><br><span class="line"></span><br><span class="line">def mya(environ, start_response):</span><br><span class="line">    # print(environ)</span><br><span class="line">    start_response(&#39;200 OK&#39;, [(&#39;Content-Type&#39;, &#39;text&#x2F;html&#39;)])</span><br><span class="line">    func &#x3D; None</span><br><span class="line">    for item in url_patters:</span><br><span class="line">        if item[0] &#x3D;&#x3D; environ.get(&#39;PATH_INFO&#39;):</span><br><span class="line">            func &#x3D; item[1]</span><br><span class="line">            break</span><br><span class="line">    if func:</span><br><span class="line">        data &#x3D; func(environ)</span><br><span class="line">        return [data]</span><br><span class="line">    else:</span><br><span class="line">        return [b&#39;404&#39;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    myserver &#x3D; make_server(&#39;&#39;, 8011, mya)</span><br><span class="line">    print(&#39;监听8010&#39;)</span><br><span class="line">    myserver.serve_forever()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-urls-py"><a href="#2-3-urls-py" class="headerlink" title="2.3 urls.py"></a>2.3 urls.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from views import *</span><br><span class="line">url_patters &#x3D; [</span><br><span class="line">    (&#39;&#x2F;login&#39;, login),</span><br><span class="line">    (&#39;&#x2F;index&#39;, index),</span><br><span class="line">    (&#39;&#x2F;time&#39;, time),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-views-py"><a href="#2-4-views-py" class="headerlink" title="2.4 views.py"></a>2.4 views.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">def index(environ):</span><br><span class="line">    with open(&#39;templates&#x2F;index.html&#39;, &#39;rb&#39;) as f:</span><br><span class="line">        data &#x3D; f.read()</span><br><span class="line">    return data</span><br><span class="line">def time(environ):</span><br><span class="line">    import datetime</span><br><span class="line">    now&#x3D;datetime.datetime.now().strftime(&#39;%y-%m-%d %X&#39;)</span><br><span class="line">    print(now)</span><br><span class="line">    return now.encode(&#39;utf-8&#39;)</span><br><span class="line">from urllib.parse import parse_qs</span><br><span class="line">import pymysql</span><br><span class="line">def login(request):</span><br><span class="line">    if request.get(&quot;REQUEST_METHOD&quot;) &#x3D;&#x3D; &quot;POST&quot;:</span><br><span class="line">        try:</span><br><span class="line">            request_body_size &#x3D; int(request.get(&#39;CONTENT_LENGTH&#39;, 0))</span><br><span class="line">        except (ValueError):</span><br><span class="line">            request_body_size &#x3D; 0</span><br><span class="line"></span><br><span class="line">        request_body &#x3D; request[&#39;wsgi.input&#39;].read(request_body_size)</span><br><span class="line">        data &#x3D; parse_qs(request_body)</span><br><span class="line"></span><br><span class="line">        user &#x3D; data.get(b&quot;user&quot;)[0].decode(&quot;utf8&quot;)</span><br><span class="line">        pwd &#x3D; data.get(b&quot;pwd&quot;)[0].decode(&quot;utf8&quot;)</span><br><span class="line"></span><br><span class="line">        # 连接数据库</span><br><span class="line">        conn &#x3D; pymysql.connect(host&#x3D;&#39;127.0.0.1&#39;, port&#x3D;3306, user&#x3D;&#39;root&#39;, passwd&#x3D;&#39;123456&#39;, db&#x3D;&#39;web&#39;)  # db：库名</span><br><span class="line">        # 创建游标</span><br><span class="line">        cur &#x3D; conn.cursor()</span><br><span class="line">        SQL &#x3D; &quot;select * from userinfo WHERE NAME &#x3D;&#39;%s&#39; AND PASSWORD &#x3D;&#39;%s&#39;&quot; % (user, pwd)</span><br><span class="line">        cur.execute(SQL)</span><br><span class="line"></span><br><span class="line">        if cur.fetchone():</span><br><span class="line"></span><br><span class="line">            f &#x3D; open(&quot;templates&#x2F;backend.html&quot;, &quot;rb&quot;)</span><br><span class="line">            data &#x3D; f.read()</span><br><span class="line">            data &#x3D; data.decode(&quot;utf8&quot;)</span><br><span class="line">            return data.encode(&quot;utf8&quot;)</span><br><span class="line"></span><br><span class="line">        else:</span><br><span class="line">            print(&quot;OK456&quot;)</span><br><span class="line">            return b&quot;user or pwd is wrong&quot;</span><br><span class="line"></span><br><span class="line">    else:</span><br><span class="line">        f &#x3D; open(&quot;templates&#x2F;login.html&quot;, &quot;rb&quot;)</span><br><span class="line">        data &#x3D; f.read()</span><br><span class="line">        f.close()</span><br><span class="line">        return data</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-tempaltes下backend-html"><a href="#2-5-tempaltes下backend-html" class="headerlink" title="2.5 tempaltes下backend.html"></a>2.5 tempaltes下backend.html</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">登录成功</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-tempaltes下index-html"><a href="#2-5-tempaltes下index-html" class="headerlink" title="2.5 tempaltes下index.html"></a>2.5 tempaltes下index.html</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">index</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-tempaltes下login-html"><a href="#2-5-tempaltes下login-html" class="headerlink" title="2.5 tempaltes下login.html"></a>2.5 tempaltes下login.html</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;h4&gt;登录页面&lt;&#x2F;h4&gt;</span><br><span class="line">&lt;form action&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:8011&#x2F;login&quot; method&#x3D;&quot;post&quot;&gt;</span><br><span class="line">     用户名 &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;user&quot;&gt;</span><br><span class="line">     密码 &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;pwd&quot;&gt;</span><br><span class="line">    &lt;input type&#x3D;&quot;submit&quot;&gt;</span><br><span class="line">&lt;&#x2F;form&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三-其它socket服务端"><a href="#三-其它socket服务端" class="headerlink" title="三 其它socket服务端"></a>三 其它socket服务端</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#39;cgi&#39;: CGIServer,</span><br><span class="line">&#39;flup&#39;: FlupFCGIServer,</span><br><span class="line">&#39;wsgiref&#39;: WSGIRefServer,</span><br><span class="line">&#39;waitress&#39;: WaitressServer,</span><br><span class="line">&#39;cherrypy&#39;: CherryPyServer,</span><br><span class="line">&#39;paste&#39;: PasteServer,</span><br><span class="line">&#39;fapws3&#39;: FapwsServer,</span><br><span class="line">&#39;tornado&#39;: TornadoServer,</span><br><span class="line">&#39;gae&#39;: AppEngineServer,</span><br><span class="line">&#39;twisted&#39;: TwistedServer,</span><br><span class="line">&#39;diesel&#39;: DieselServer,</span><br><span class="line">&#39;meinheld&#39;: MeinheldServer,</span><br><span class="line">&#39;gunicorn&#39;: GunicornServer,</span><br><span class="line">&#39;eventlet&#39;: EventletServer,</span><br><span class="line">&#39;gevent&#39;: GeventServer,</span><br><span class="line">&#39;geventSocketIO&#39;:GeventSocketIOServer,</span><br><span class="line">&#39;rocket&#39;: RocketServer,</span><br><span class="line">&#39;bjoern&#39; : BjoernServer,</span><br><span class="line">&#39;auto&#39;: AutoServer,</span><br></pre></td></tr></table></figure>
+
+<p>都遵循一个协议wsgi（Web Server Gateway Interface web服务网关接口）</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"><i class="fas fa-cookie-bite"></i> Django</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/07/Django%E5%85%A5%E9%97%A8-HTTP%E5%8D%8F%E8%AE%AE-02/" rel="prev" title="Django入门-HTTP协议-02">
+      <i class="fa fa-chevron-left"></i> Django入门-HTTP协议-02
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/07/Django%E5%85%A5%E9%97%A8-%E7%AE%80%E4%BB%8B-04/" rel="next" title="Django入门-简介-04">
+      Django入门-简介-04 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-web%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">一 web框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-wsgiref%E6%A8%A1%E5%9D%97"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 wsgiref模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E6%89%8B%E6%92%B8%E8%87%AA%E5%B7%B1%E7%9A%84Web%E6%A1%86%E6%9E%B6"><span class="nav-number">2.</span> <span class="nav-text">二 手撸自己的Web框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-models-py"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 models.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-myserver-py"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 myserver.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-urls-py"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 urls.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-views-py"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 views.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-tempaltes%E4%B8%8Bbackend-html"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 tempaltes下backend.html</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-tempaltes%E4%B8%8Bindex-html"><span class="nav-number">2.6.</span> <span class="nav-text">2.5 tempaltes下index.html</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-tempaltes%E4%B8%8Blogin-html"><span class="nav-number">2.7.</span> <span class="nav-text">2.5 tempaltes下login.html</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E5%85%B6%E5%AE%83socket%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-number">3.</span> <span class="nav-text">三 其它socket服务端</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">724k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">20:07</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
