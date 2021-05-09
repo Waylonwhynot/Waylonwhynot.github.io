@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Django Models 多表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django进阶-模型02-多表">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B02-%E5%A4%9A%E8%A1%A8/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Django Models 多表">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154506056-742977620.gif">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154506295-1608619351.-20210509234914708.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154506295-1608619351..jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154507433-1879441364.gif">
+<meta property="article:published_time" content="2021-05-09T15:26:42.000Z">
+<meta property="article:modified_time" content="2021-05-09T15:49:39.707Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154506056-742977620.gif">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B02-%E5%A4%9A%E8%A1%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Django进阶-模型02-多表 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B02-%E5%A4%9A%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Django进阶-模型02-多表
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-09 23:26:42 / 修改时间：23:49:39" itemprop="dateCreated datePublished" datetime="2021-05-09T23:26:42+08:00">2021-05-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>17k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>28 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Django Models 多表</p>
+<a id="more"></a>
+
+<h1 id="一-表关系回顾"><a href="#一-表关系回顾" class="headerlink" title="一 表关系回顾"></a>一 表关系回顾</h1><p> 在讲解MySQL时，我们提到，把应用程序的所有数据都放在一张表里是极不合理的。</p>
+<p> 比如我们开发一个员工管理系统，在数据库里只创建一张员工信息表，该表有四个字段：工号、姓名、部门名、部门职能描述，此时若公司有1万名员工，但只有3个部门，因为每一名员工后都需要跟着部门信息（部门名、部门职能），所以将会导致部门信息出现大量重复、浪费空间。</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154506056-742977620.gif" alt="img">]</p>
+<p> 解决方法就是将数据存放于不同的表中，然后基于foreign key建立表之间的关联关系。</p>
+<p> 细说的话，表之间存在三种关系：多对一、一对一、多对多，那如何确定两张表之间的关系呢？按照下述步骤操作即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Copy左表&lt;-------------------------------&gt;右表</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤一：先分析</span></span><br><span class="line"><span class="comment">#分析1、先站在左表的角度</span></span><br><span class="line">是否左表的多条记录可以对应右表的一条记录</span><br><span class="line"></span><br><span class="line"><span class="comment">#分析2、再站在右表的角度去找</span></span><br><span class="line">是否右表的多条记录可以对应左表的一条记录</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤二：后确定关系</span></span><br><span class="line"><span class="comment"># 多对一</span></span><br><span class="line">如果只有<span class="string">&quot;分析1&quot;</span>成立，那么可以确定两张表的关系是：左表多对一右表，关联字段应该创建在左表中，然后foreign key 右表一个字段（通常是id）</span><br><span class="line">如果只有<span class="string">&quot;分析2&quot;</span>成立，那么可以确定两张表的关系是：右表多对一左表，关联字段应该创建在右表中，然后foreign key 左表一个字段（通常是id）</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一对一</span></span><br><span class="line">如果<span class="string">&quot;分析1&quot;</span>和<span class="string">&quot;分析2&quot;</span>都不成立，而是左表的一条记录唯一对应右表的一条记录，反之亦然。这种情况很简单，就是在左表foreign key右表的基础上，将左表的关联字段设置成unique即可</span><br><span class="line"></span><br><span class="line"><span class="comment"># 多对多</span></span><br><span class="line">如果<span class="string">&quot;分析1&quot;</span>和<span class="string">&quot;分析2&quot;</span>同时成立，则证明这两张表是一个双向的多对一，即多对多,需要创建一张单独的新表来专门存放二者的关系，关联字段应该创建在新表中，然后在新表中分别foreign key两张表的id字段</span><br></pre></td></tr></table></figure>
+
+<p>我们以一个图书管理系统为背景，设计了下述四张表，让我们来找一找它们之间的关系</p>
+<p>书籍表：app01_book</p>
+<p>出版社表：app01_publish</p>
+<p>作者表：app01_author</p>
+<p>作者详细信息表：app01_authordetail</p>
+<h4 id="例1、app01-book与app01-publish"><a href="#例1、app01-book与app01-publish" class="headerlink" title="例1、app01_book与app01_publish"></a>例1、app01_book与app01_publish</h4><p>找关系</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Copy左表(app01_book)&lt;-------------------------------&gt;右表(app01_publish)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤一：</span></span><br><span class="line"><span class="comment">#分析1、先站在左表的角度</span></span><br><span class="line">左表的多条记录代表多版本书籍，右表的一条记录代表一个出版社，多本书籍对应同一个出版社 ✔️</span><br><span class="line"></span><br><span class="line"><span class="comment">#分析2、再站在右表的角度去找</span></span><br><span class="line">右表的多条记录代表多个出版社，左表的一条记录代表一本书，多个出版社不能出版同一本书 ✘</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤二：后确定关系</span></span><br><span class="line"><span class="comment"># 多对一</span></span><br><span class="line">只有<span class="string">&quot;分析1&quot;</span>成立，那么可以确定两张表的关系是：左表(app01_book)多对一右表(app01_publish)，关联字段应该创建在左表(app01_book)中，然后foreign key 右表(app01_publish)的id字段</span><br></pre></td></tr></table></figure>
+
+<p>sql语句</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、由于foreign key的影响,必须先创建被关联表</span></span><br><span class="line">CREATE TABLE app01_publish (</span><br><span class="line">    id INT PRIMARY KEY auto_increment,</span><br><span class="line">    name VARCHAR (<span class="number">20</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、才能创建出关联表</span></span><br><span class="line">CREATE TABLE app01_book (</span><br><span class="line">    id INT PRIMARY KEY auto_increment,</span><br><span class="line">    title VARCHAR (<span class="number">20</span>),</span><br><span class="line">    price DECIMAL (<span class="number">8</span>, <span class="number">2</span>),</span><br><span class="line">    pub_date DATE,</span><br><span class="line">    publish_id INT, <span class="comment"># 新增关联字段</span></span><br><span class="line">    FOREIGN KEY (publish_id) REFERENCES app01_publish (id) </span><br><span class="line">    ON UPDATE CASCADE ON DELETE CASCADE</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h4 id="例2、app01-author与app01-authordetail"><a href="#例2、app01-author与app01-authordetail" class="headerlink" title="例2、app01_author与app01_authordetail"></a>例2、app01_author与app01_authordetail</h4><p>找关系</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Copy左表(app01_author)&lt;-------------------------------&gt;右表(app01_authordetail)</span><br><span class="line"></span><br><span class="line">一个作者唯一对应一条自己的详情信息，反之亦然，所以两张表是一对一的关系。在左表中新增关联字段并添加unique约束，然后foreign key右表</span><br></pre></td></tr></table></figure>
+
+<p>sql语句</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、由于foreign key的影响,必须先创建被关联表</span></span><br><span class="line">CREATE TABLE app01_authordetail (</span><br><span class="line">    id INT PRIMARY KEY auto_increment,</span><br><span class="line">    tel VARCHAR (<span class="number">20</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、才能创建出关联表</span></span><br><span class="line">CREATE TABLE app01_author (</span><br><span class="line">    id INT PRIMARY KEY auto_increment,</span><br><span class="line">    name VARCHAR (<span class="number">20</span>),</span><br><span class="line">    age INT,</span><br><span class="line">    authordetail_id INT UNIQUE, <span class="comment"># 新增关联字段,并添加唯一性约束unique</span></span><br><span class="line">    FOREIGN KEY (authordetail_id) REFERENCES app01_authordetail (id) </span><br><span class="line">    ON UPDATE CASCADE ON DELETE CASCADE</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h4 id="例3、app01-book与app01-author"><a href="#例3、app01-book与app01-author" class="headerlink" title="例3、app01_book与app01_author"></a>例3、app01_book与app01_author</h4><p>找关系</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Copy左表(app01_book)&lt;-------------------------------&gt;右表(app01_author)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤一：</span></span><br><span class="line"><span class="comment">#分析1、先站在左表的角度</span></span><br><span class="line">左表的多条记录代表多版本书籍，右表的一条记录代表一个作者，多本书籍可以由同一个作者编写 ✔️</span><br><span class="line"></span><br><span class="line"><span class="comment">#分析2、再站在右表的角度去找</span></span><br><span class="line">右表的多条记录代表多个作者，左表的一条记录代表一本书，多个作者可以合作编写同一本书 ✔️</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤二：后确定关系</span></span><br><span class="line"><span class="comment"># 多对多</span></span><br><span class="line"><span class="string">&quot;分析1&quot;</span>和<span class="string">&quot;分析2&quot;</span>同时成立，证明这两张表是多对多的关系,需要创建一张单独的新表来专门存放二者的关系，关联字段应该创建在新表中，然后在新表中分别foreign key两张表的id字段</span><br></pre></td></tr></table></figure>
+
+<p>sql语句</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、创建被关联表一：app01_book，例1中已创建</span></span><br><span class="line"><span class="comment"># 2、创建被关联表二：app01_author，例2中已创建</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3、创建新表，存放app01_book于app01_author的关联关系</span></span><br><span class="line">CREATE TABLE app01_book_authors (</span><br><span class="line">    id INT PRIMARY KEY auto_increment,</span><br><span class="line">    book_id INT, <span class="comment"># 新增关联字段，用来关联表app01_book</span></span><br><span class="line">    author_id INT, <span class="comment"># 新增关联字段，用来关联表app01_author</span></span><br><span class="line">    FOREIGN KEY (book_id) REFERENCES app01_book (id) ON UPDATE CASCADE ON DELETE CASCADE,</span><br><span class="line">    FOREIGN KEY (author_id) REFERENCES app01_author (id) ON UPDATE CASCADE ON DELETE CASCADE</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>上述三个例子中生成的表如下</p>
+<p>插图5，修改链接：<a target="_blank" rel="noopener" href="https://www.processon.com/diagraming/5a895fdde4b0874437c9c580">https://www.processon.com/diagraming/5a895fdde4b0874437c9c580</a></p>
+<p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154506295-1608619351.-20210509234914708.jpg" alt="插图5"></p>
+<h1 id="二-创建模型"><a href="#二-创建模型" class="headerlink" title="二 创建模型"></a>二 创建模型</h1><p>模型类如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Copyfrom django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="comment"># 表app01_publish</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Publish</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    nid = models.AutoField(primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = models.CharField(max_length=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 表app01_book</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    nid = models.AutoField(primary_key=<span class="literal">True</span>)</span><br><span class="line">    title = models.CharField(max_length=<span class="number">20</span>)</span><br><span class="line">    price = models.DecimalField(max_digits=<span class="number">8</span>, decimal_places=<span class="number">2</span>)</span><br><span class="line">    pub_date = models.DateField()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 表app01_book多对一表app01_publish，参数to指定模型名，参数to_field指定要关联的那个字段</span></span><br><span class="line">    publish = models.ForeignKey(to=<span class="string">&#x27;Publish&#x27;</span>,to_field=<span class="string">&#x27;nid&#x27;</span>,on_delete=models.CASCADE)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 我们自己写sql时，针对书籍表与作者表的多对关系，需要自己创建新表，而基于django的orm，下面这一行代码可以帮我们自动创建那张关系表</span></span><br><span class="line">    authors=models.ManyToManyField(to=<span class="string">&#x27;Author&#x27;</span>) </span><br><span class="line">    <span class="comment"># 变量名为authors，则新表名为app01_book_authors，若变量名为xxx，则新表名为app01_book_xxx</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 表app01_author</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Author</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    nid = models.AutoField(primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = models.CharField(max_length=<span class="number">20</span>)</span><br><span class="line">    age = models.IntegerField()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 表app01_author一对一表app01_authordetail</span></span><br><span class="line">    author_detail = models.OneToOneField(to=<span class="string">&#x27;AuthorDetail&#x27;</span>,to_field=<span class="string">&#x27;nid&#x27;</span>,unique=<span class="literal">True</span>,on_delete=models.CASCADE)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 表app01_authordetail</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthorDetail</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    nid = models.AutoField(primary_key=<span class="literal">True</span>)</span><br><span class="line">    tel = models.CharField(max_length=<span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+
+<p>强调：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copy在创建关联时，针对参数to，如果传入的是字符串（to=<span class="string">&quot;模型名&quot;</span>），则模型类的定义不区分先后顺序，如果传入的是模型名（to=Author），则Author类必须事先定义</span><br></pre></td></tr></table></figure>
+
+<h1 id="三-添加、删除、修改记录"><a href="#三-添加、删除、修改记录" class="headerlink" title="三 添加、删除、修改记录"></a>三 添加、删除、修改记录</h1><h3 id="3-1-添加记录"><a href="#3-1-添加记录" class="headerlink" title="3.1 添加记录"></a>3.1 添加记录</h3><p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154506295-1608619351..jpg" alt="插图5"></p>
+<p>！！强调！！：上图所示的表名、字段名都是mysql中的真实表/物理表，而我们下述所示所有操作，都是通过模型类来操作物理表，例如无论增删改查，所使用的字段名都模型类中的字段</p>
+<p>按照上图所示，由于foreign key的关系，我们需要事先往app01_publish与app01_authordetail里插入记录</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、需求：通过模型Publish往表app01_publish里插入三家出版社</span></span><br><span class="line">Publish.objects.create(name=<span class="string">&#x27;北京出版社&#x27;</span>)</span><br><span class="line">Publish.objects.create(name=<span class="string">&#x27;长春出版社&#x27;</span>)</span><br><span class="line">Publish.objects.create(name=<span class="string">&#x27;大连出版社&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、需求：通过模型AuthorDetail往表app01_authordetail里插入三条作者详情</span></span><br><span class="line">AuthorDetail.objects.create(tel=<span class="string">&#x27;18611312331&#x27;</span>)</span><br><span class="line">AuthorDetail.objects.create(tel=<span class="string">&#x27;15033413881&#x27;</span>)</span><br><span class="line">AuthorDetail.objects.create(tel=<span class="string">&#x27;13011453220&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>按照上图所示，插入时会涉及到多张表，我们同样分三种情况来介绍</p>
+<p>1、多对一：app01_book与app01_publish</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：书籍(葵花宝典、菊花宝典、桃花宝典)都是在北京出版社出版的</span></span><br><span class="line"><span class="comment"># 1、先通过模型Publish从出版社表app01_publish查出北京出版社</span></span><br><span class="line">publish_obj=Publish.objects.filter(name=<span class="string">&#x27;北京出版社&#x27;</span>).first()</span><br><span class="line"><span class="comment"># 上述代码也可以简写为：publish_obj=Publish.objects.get(name=&#x27;北京出版社&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、再通过模型Book往书籍表app01_book里插入三本书籍与出版社的对应关系</span></span><br><span class="line"><span class="comment"># 方式一：使用publish参数指定关联</span></span><br><span class="line">book_obj1=Book.objects.create(title=<span class="string">&#x27;葵花宝典&#x27;</span>,price=<span class="number">2000</span>,pub_date=<span class="string">&#x27;1985-3-11&#x27;</span>,publish=publish_obj)</span><br><span class="line"></span><br><span class="line">book_obj2=Book.objects.create(title=<span class="string">&#x27;菊花宝典&#x27;</span>,price=<span class="number">3000</span>,pub_date=<span class="string">&#x27;1990-1-21&#x27;</span>,publish=publish_obj)</span><br><span class="line"></span><br><span class="line">book_obj3=Book.objects.create(title=<span class="string">&#x27;桃花宝典&#x27;</span>,price=<span class="number">4000</span>,pub_date=<span class="string">&#x27;1991-1-23&#x27;</span>,publish=publish_obj)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式二：使用publish_id参数指定关联</span></span><br><span class="line">book_obj1=Book.objects.create(title=<span class="string">&#x27;葵花宝典&#x27;</span>,price=<span class="number">2000</span>,pub_date=<span class="string">&#x27;1985-3-11&#x27;</span>,publish_id=publish_obj.nid)</span><br><span class="line"></span><br><span class="line">book_obj2=Book.objects.create(title=<span class="string">&#x27;菊花宝典&#x27;</span>,price=<span class="number">3000</span>,pub_date=<span class="string">&#x27;1990-1-21&#x27;</span>,publish_id=<span class="number">1</span>) <span class="comment"># 在已经出版社id的情况下，可以直接指定</span></span><br><span class="line"></span><br><span class="line">book_obj3=Book.objects.create(title=<span class="string">&#x27;桃花宝典&#x27;</span>,price=<span class="number">4000</span>,pub_date=<span class="string">&#x27;1991-1-23&#x27;</span>,publish_id=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意：无论方式一还是方式二得到的书籍对象book_obj1、book_obj2、book_obj3</span></span><br><span class="line"><span class="comment">#      都可以调用publish字段来访问关联的那一个出版社对象</span></span><br><span class="line"><span class="comment">#      都可以调用publish_id来访问关联的那一个出版社对象的nid</span></span><br><span class="line">print(book_obj1.publish,book_obj1.publish_id) </span><br><span class="line">print(book_obj2.publish,book_obj2.publish_id) </span><br><span class="line">print(book_obj3.publish,book_obj3.publish_id)</span><br><span class="line"><span class="comment"># 三本书关联的是同一个出版社，所以输出结果均相同</span></span><br></pre></td></tr></table></figure>
+
+<p>参照上述步骤，把剩余三本书与出版社的对应关系也插入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Copybook_obj1 = Book.objects.create(title=<span class="string">&#x27;玉女心经&#x27;</span>, price=<span class="number">5000</span>, pub_date=<span class="string">&#x27;1988-3-24&#x27;</span>, publish_id=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">book_obj2 = Book.objects.create(title=<span class="string">&#x27;玉男心经&#x27;</span>, price=<span class="number">3000</span>, pub_date=<span class="string">&#x27;1985-6-17&#x27;</span>, publish_id=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">book_obj3 = Book.objects.create(title=<span class="string">&#x27;九阴真经&#x27;</span>, price=<span class="number">6000</span>, pub_date=<span class="string">&#x27;1983-8-17&#x27;</span>, publish_id=<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>2、一对一：app01_author与app01_authordetail</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：插入三个作者，并与作者详情表一一对应</span></span><br><span class="line"><span class="comment"># 由于作者详情表我们已经事先创建好记录，所以只需要往作者表插入记录即可</span></span><br><span class="line"><span class="comment"># 方式一：需要事先过滤出作者详情的对象，然后通过模型Author的字段author来指定要关联的作者详情对象(略)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式二：确定作者详情对象的id，然后通过模型Author通过字段author_id来指定关联关系，</span></span><br><span class="line">Author.objects.create(name=<span class="string">&#x27;egon&#x27;</span>,age=<span class="number">18</span>,author_detail_id=<span class="number">1</span>)</span><br><span class="line">Author.objects.create(name=<span class="string">&#x27;kevin&#x27;</span>,age=<span class="number">38</span>,author_detail_id=<span class="number">2</span>)</span><br><span class="line">Author.objects.create(name=<span class="string">&#x27;rose&#x27;</span>,age=<span class="number">28</span>,author_detail_id=<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>3、多对多：app01_book与app01_author</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 我们参照物理表app01_book_authors制定需求，需要创建如下关系</span></span><br><span class="line"><span class="comment"># 1、葵花宝典的作者为：egon、kevin</span></span><br><span class="line"><span class="comment"># 2、菊花宝典的作者为：egon、kevin、rose</span></span><br><span class="line"><span class="comment"># 3、桃花宝典的作者为：egon、kevin</span></span><br><span class="line"><span class="comment"># 4、玉女心经的作者为：kevin、rose</span></span><br><span class="line"><span class="comment"># 5、玉男心经的作者为：kevin</span></span><br><span class="line"><span class="comment"># 6、九阴真经的作者为：egon、rose</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 需要创建出上述关系，具体做法如下</span></span><br><span class="line"><span class="comment"># 1、先获取书籍对象</span></span><br><span class="line">book_obj1=Book.objects.get(title=<span class="string">&#x27;葵花宝典&#x27;</span>)</span><br><span class="line">book_obj2=Book.objects.get(title=<span class="string">&#x27;菊花宝典&#x27;</span>)</span><br><span class="line">book_obj3=Book.objects.get(title=<span class="string">&#x27;桃花宝典&#x27;</span>)</span><br><span class="line">book_obj4=Book.objects.get(title=<span class="string">&#x27;玉女心经&#x27;</span>)</span><br><span class="line">book_obj5=Book.objects.get(title=<span class="string">&#x27;玉男心经&#x27;</span>)</span><br><span class="line">book_obj6=Book.objects.get(title=<span class="string">&#x27;九阴真经&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、然后获取作者对象</span></span><br><span class="line">egon=Author.objects.get(name=<span class="string">&#x27;egon&#x27;</span>)</span><br><span class="line">kevin=Author.objects.get(name=<span class="string">&#x27;kevin&#x27;</span>)</span><br><span class="line">rose=Author.objects.get(name=<span class="string">&#x27;rose&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3、最后依次创建上述关系：在原生SQL中多对多关系涉及到操作第三张关系表，但是在ORM中我们只需要操作模型类Book下的字段author即可</span></span><br><span class="line">book_obj1.authors.add(egon,kevin)</span><br><span class="line">book_obj2.authors.add(egon,kevin,rose)</span><br><span class="line">book_obj3.authors.add(egon,kevin)</span><br><span class="line">book_obj4.authors.add(kevin,rose)</span><br><span class="line">book_obj5.authors.add(kevin)</span><br><span class="line">book_obj6.authors.add(egon,rose)</span><br></pre></td></tr></table></figure>
+
+<p>可以通过书籍对象下的authors字段获取其所关联的所有作者对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copybook_obj1.authors.all() <span class="comment"># 返回一个存有多个作者的queryset</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-删除、修改记录"><a href="#3-2-删除、修改记录" class="headerlink" title="3.2 删除、修改记录"></a>3.2 删除、修改记录</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、book_obj.authors.remove() ：将某个特定的对象从被关联对象集合中去除</span></span><br><span class="line"><span class="comment"># 从菊花宝典的作者集合中去掉作者rose</span></span><br><span class="line">rose = Author.objects.get(name=<span class="string">&#x27;rose&#x27;</span>)</span><br><span class="line">book_obj2 = Book.objects.get(title=<span class="string">&#x27;菊花宝典&#x27;</span>)</span><br><span class="line">book_obj2.authors.remove(rose)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、book_obj.authors.clear()：清空被关联对象集合</span></span><br><span class="line"><span class="comment"># 清空菊花宝典所关联的所有作者</span></span><br><span class="line">book_obj2 = Book.objects.get(title=<span class="string">&#x27;菊花宝典&#x27;</span>)</span><br><span class="line">book_obj2.authors.clear()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3、book_obj.authors.set()：先清空再重新设置　</span></span><br><span class="line"><span class="comment"># 玉男心经的作者原来为kevin，要求设置为egon、rose</span></span><br><span class="line">egon=Author.objects.get(name=<span class="string">&#x27;egon&#x27;</span>)</span><br><span class="line">rose=Author.objects.get(name=<span class="string">&#x27;rose&#x27;</span>)</span><br><span class="line"></span><br><span class="line">book_obj5 = Book.objects.get(title=<span class="string">&#x27;玉男心经&#x27;</span>)</span><br><span class="line"></span><br><span class="line">book_obj5.authors.set([egon,rose]) <span class="comment"># 多个作者对象放到列表里</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="四-查询记录"><a href="#四-查询记录" class="headerlink" title="四 查询记录"></a>四 查询记录</h1><p>数据库操作最常用的还是查询操作，在介绍ORM下多表关联查询时，需要事先记住关于ORM模型的一个非常重要的概念：在使用模型类进行多表关联查询时，如果确定两张表存在关联关系，那么在选取一个表作为起始（为了后续描述方便，我们将其简称为”基表”）后，可以跨表引用来自另外一张中的字段值，这存在正向与反向之分</p>
+<p>如果关联字段存在于基表中，称之为正向查询，否则，称之为反向查询</p>
+<p>例如表模Book与Publish，关联字段存在于Book中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 当以Book为基表时，称之为正向查询</span></span><br><span class="line">Book(基表)-------正向----------&gt;Publish</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当以Publish为基表时，称之为反向查询</span></span><br><span class="line">Book&lt;-------反向----------Publish(基表)</span><br></pre></td></tr></table></figure>
+
+<p>使用原生sql进行多表关联查询时无非两种方式：子查询、join连表查询，ORM里同样有两种查询方式（严格依赖正向、反向的概念）</p>
+<h3 id="4-1-基于对象的跨表查询"><a href="#4-1-基于对象的跨表查询" class="headerlink" title="4.1 基于对象的跨表查询"></a>4.1 基于对象的跨表查询</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154507433-1879441364.gif" alt="img"></p>
+<h4 id="1、跨两张表查询"><a href="#1、跨两张表查询" class="headerlink" title="1、跨两张表查询"></a>1、跨两张表查询</h4><h5 id="1-1、一对一查询（模型类Author与AuthorDetail）"><a href="#1-1、一对一查询（模型类Author与AuthorDetail）" class="headerlink" title="1.1、一对一查询（模型类Author与AuthorDetail）"></a>1.1、一对一查询（模型类Author与AuthorDetail）</h5><p>正向查询，按关联字段：author_detail</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询作者egon的手机号</span></span><br><span class="line"><span class="comment"># 1、先取出作者对象</span></span><br><span class="line">egon=Author.objects.filter(name=<span class="string">&#x27;egon&#x27;</span>).first() </span><br><span class="line"><span class="comment"># 2、正向查询：根据作者对象下的关联字段author_detail取到作者详情</span></span><br><span class="line">print(egon.author_detail.tel) <span class="comment"># 输出：18611312331</span></span><br></pre></td></tr></table></figure>
+
+<p>反向查询，按模型名(小写)：author</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询手机号为&#x27;18611312331&#x27;的作者名</span></span><br><span class="line"><span class="comment"># 1、先取出作者的详情对象</span></span><br><span class="line">tel=AuthorDetail.objects.filter(tel=<span class="string">&#x27;18611312331&#x27;</span>).first()</span><br><span class="line"><span class="comment"># 2、反向查询：根据小写的模型名author取到作者对象</span></span><br><span class="line">print(tel.author.name) <span class="comment"># 输出：egon</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="1-2、多对一查询（模型类Book与Publish）"><a href="#1-2、多对一查询（模型类Book与Publish）" class="headerlink" title="1.2、多对一查询（模型类Book与Publish）"></a>1.2、多对一查询（模型类Book与Publish）</h5><p>正向查询，按关联字段：publish</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询葵花宝典的出版社名字</span></span><br><span class="line"><span class="comment"># 1、先取书籍对象</span></span><br><span class="line">book_obj=Book.objects.filter(title=<span class="string">&#x27;葵花宝典&#x27;</span>).first()</span><br><span class="line"><span class="comment"># 2、正向查询：根据书籍对象下的关联字段publish取到出版社</span></span><br><span class="line">print(book_obj.publish.name) <span class="comment"># 输出：北京出版社</span></span><br></pre></td></tr></table></figure>
+
+<p>反向查询，按模型名(小写)_set：book_set</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询北京出版社都出版的所有书籍名字</span></span><br><span class="line"><span class="comment"># 1、先取出出版社对象</span></span><br><span class="line">publish_obj=Publish.objects.filter(name=<span class="string">&#x27;北京出版社&#x27;</span>).first()</span><br><span class="line"><span class="comment"># 2、反向查询：根据book_set取到所有的书籍</span></span><br><span class="line">book_objs=publish_obj.book_set.all()</span><br><span class="line">print([book_obj.title <span class="keyword">for</span> book_obj <span class="keyword">in</span> book_objs]) <span class="comment"># 输出：[&#x27;葵花宝典&#x27;, &#x27;菊花宝典&#x27;, &#x27;桃花宝典&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="1-3、多对多查询（模型类Book与Author）"><a href="#1-3、多对多查询（模型类Book与Author）" class="headerlink" title="1.3、多对多查询（模型类Book与Author）"></a>1.3、多对多查询（模型类Book与Author）</h5><p>正向查询，按关联字段，如authors</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询葵花宝典的所有作者</span></span><br><span class="line"><span class="comment"># 1、先取出书籍对象</span></span><br><span class="line">book_obj=Book.objects.filter(title=<span class="string">&#x27;葵花宝典&#x27;</span>).first()</span><br><span class="line"><span class="comment"># 2、正向查询：根据书籍对象下的关联字段authors取到所有作者</span></span><br><span class="line">author_objs=book_obj.authors.all()</span><br><span class="line">print([obj.name <span class="keyword">for</span> obj <span class="keyword">in</span> author_objs]) <span class="comment"># 输出：[&#x27;egon&#x27;, &#x27;kevin&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p>反向查询，按模型名(小写)_set：如author_set</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询作者rose出版的所有书籍</span></span><br><span class="line"><span class="comment"># 1、先取出作者对象</span></span><br><span class="line">egon=Author.objects.filter(name=<span class="string">&#x27;rose&#x27;</span>).first() </span><br><span class="line"><span class="comment"># 2、反向查询：根据book_set取到作者对象</span></span><br><span class="line">book_objs=egon.book_set.all()</span><br><span class="line">print([book_obj.title <span class="keyword">for</span> book_obj <span class="keyword">in</span> book_objs]) <span class="comment"># 输出：[&#x27;玉女心经&#x27;, &#x27;九阴真经&#x27;, &#x27;玉男心经&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2、连续跨-gt-2张表查询"><a href="#2、连续跨-gt-2张表查询" class="headerlink" title="2、连续跨&gt;2张表查询"></a>2、连续跨&gt;2张表查询</h4><p>连续跨&gt;2张表的操作的套路与上面的案例都是一样的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询葵花宝典的作者们的手机号</span></span><br><span class="line"></span><br><span class="line">book_obj=Book.objects.filter(title=<span class="string">&#x27;葵花宝典&#x27;</span>).first()</span><br><span class="line">author_objs=book_obj.authors.all()</span><br><span class="line">print([author_obj.author_detail.tel <span class="keyword">for</span> author_obj <span class="keyword">in</span> author_objs]) </span><br><span class="line"><span class="comment"># 输出：[&#x27;18611312331&#x27;, &#x27;15033413881&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-基于双下划线的跨表查询"><a href="#4-2-基于双下划线的跨表查询" class="headerlink" title="4.2 基于双下划线的跨表查询"></a>4.2 基于双下划线的跨表查询</h3><h4 id="1、跨两张表查询-1"><a href="#1、跨两张表查询-1" class="headerlink" title="1、跨两张表查询"></a>1、跨两张表查询</h4><h5 id="1-1、一对一查询（模型类Author与AuthorDetail）-1"><a href="#1-1、一对一查询（模型类Author与AuthorDetail）-1" class="headerlink" title="1.1、一对一查询（模型类Author与AuthorDetail）"></a>1.1、一对一查询（模型类Author与AuthorDetail）</h5><p>正向查询，按关联字段+双下划线：author_detail__</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询作者egon的手机号</span></span><br><span class="line"><span class="comment"># 注意values()中的参数是：关联字段名__要取的那张被关联表中的字段</span></span><br><span class="line">res = Author.objects.filter(name=<span class="string">&#x27;egon&#x27;</span>).values(<span class="string">&#x27;author_detail__tel&#x27;</span>).first()</span><br><span class="line">print(res[<span class="string">&#x27;author_detail__tel&#x27;</span>]) <span class="comment"># &#123;&#x27;author_detail__tel&#x27;: &#x27;18611312331&#x27;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意：基于双下划线的跨表查询会被django的orm识别为join操作，所以上述代码相当于如下sql，后续案例均是相同原理，我们不再累述</span></span><br><span class="line">select app01_authordetail.tel <span class="keyword">from</span> app01_author inner join app01_authordetail on app01_author.author_detail_id = app01_authordetail.nid where app01_author.name = <span class="string">&#x27;egon&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>反向查询，按模型名(小写)+双下划线：author__</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询手机号为&#x27;18611312331&#x27;的作者名</span></span><br><span class="line"><span class="comment"># 注意values()中的参数是：小写的模型名__要取的那张被关联表中的字段</span></span><br><span class="line">res=AuthorDetail.objects.filter(tel=<span class="string">&#x27;18611312331&#x27;</span>).values(<span class="string">&#x27;author__name&#x27;</span>).first()</span><br><span class="line">print(res) <span class="comment"># &#123;&#x27;author__name&#x27;: &#x27;egon&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>补充：基表决定了正向还是反向</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、针对上例中正向查询的需求：查询作者egon的手机号，如果我们选取的基表是AuthorDetail，那么就成了反向查询，应该用反向查询的语法</span></span><br><span class="line">res = AuthorDetail.objects.filter(author__name=<span class="string">&#x27;egon&#x27;</span>).values(<span class="string">&#x27;tel&#x27;</span>).first()</span><br><span class="line">print(res)  <span class="comment"># &#123;&#x27;tel&#x27;: &#x27;18611312331&#x27;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、针对上例中反向查询的需求：查询手机号为&#x27;18611312331&#x27;的作者名，如果我们选取的基表是Author，那么就成了正向查询，应该用正向查询的语法</span></span><br><span class="line">res=Author.objects.filter(author_detail__tel=<span class="string">&#x27;18611312331&#x27;</span>).values(<span class="string">&#x27;name&#x27;</span>).first()</span><br><span class="line">print(res) <span class="comment"># &#123;&#x27;name&#x27;: &#x27;egon&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="1-2、多对一查询（模型类Book与Publish）-1"><a href="#1-2、多对一查询（模型类Book与Publish）-1" class="headerlink" title="1.2、多对一查询（模型类Book与Publish）"></a>1.2、多对一查询（模型类Book与Publish）</h5><p>正向查询，按关联字段+双下划线：publish__</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询葵花宝典的出版社名字</span></span><br><span class="line"><span class="comment"># 注意values()中的参数是：关联字段名__要取的那张被关联表中的字段</span></span><br><span class="line">res=Book.objects.filter(title=<span class="string">&#x27;葵花宝典&#x27;</span>).values(<span class="string">&#x27;publish__name&#x27;</span>).first()</span><br><span class="line">print(res[<span class="string">&#x27;publish__name&#x27;</span>]) <span class="comment"># &#123;&#x27;publish__name&#x27;: &#x27;北京出版社&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>反向查询，按模型名(小写)+双下划线：book__</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询北京出版社都出版的所有书籍名字</span></span><br><span class="line"><span class="comment"># 注意values()中的参数是：小写的模型名__要取的那张被关联表中的字段</span></span><br><span class="line">res = Publish.objects.filter(name=<span class="string">&#x27;北京出版社&#x27;</span>).values(<span class="string">&#x27;book__title&#x27;</span>)</span><br><span class="line">print(res)  <span class="comment"># &lt;QuerySet [&#123;&#x27;book__title&#x27;: &#x27;葵花宝典&#x27;&#125;, &#123;&#x27;book__title&#x27;: &#x27;菊花宝典&#x27;&#125;, &#123;&#x27;book__title&#x27;: &#x27;桃花宝典&#x27;&#125;]&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>补充：基表决定了正向还是反向</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、针对上例中正向查询的需求：查询葵花宝典的出版社名字，如果我们选取的基表是Publish，那么就成了反向查询，应该用反向查询的语法</span></span><br><span class="line">res = Publish.objects.filter(book__title=<span class="string">&#x27;葵花宝典&#x27;</span>).values(<span class="string">&#x27;name&#x27;</span>).first()</span><br><span class="line">print(res)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;北京出版社&#x27;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、针对上例中反向查询的需求：查询北京出版社都出版的所有书籍名字，如果我们选取的基表是Book，那么就成了正向查询，应该用正向查询的语法</span></span><br><span class="line">res=Book.objects.filter(publish__name=<span class="string">&#x27;北京出版社&#x27;</span>).values(<span class="string">&#x27;title&#x27;</span>)</span><br><span class="line">print(res) <span class="comment"># &lt;QuerySet [&#123;&#x27;title&#x27;: &#x27;葵花宝典&#x27;&#125;, &#123;&#x27;title&#x27;: &#x27;菊花宝典&#x27;&#125;, &#123;&#x27;title&#x27;: &#x27;桃花宝典&#x27;&#125;]&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="1-3、多对多查询（模型类Book与Author）-1"><a href="#1-3、多对多查询（模型类Book与Author）-1" class="headerlink" title="1.3、多对多查询（模型类Book与Author）"></a>1.3、多对多查询（模型类Book与Author）</h5><p>正向查询，按关联字段+双下划线：authors__</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询葵花宝典的所有作者</span></span><br><span class="line"><span class="comment"># 注意values()中的参数是：关联字段名__要取的那张被关联表中的字段</span></span><br><span class="line">res=Book.objects.filter(title=<span class="string">&#x27;葵花宝典&#x27;</span>).values(<span class="string">&#x27;authors__name&#x27;</span>)</span><br><span class="line">print(res) <span class="comment"># &lt;QuerySet [&#123;&#x27;authors__name&#x27;: &#x27;egon&#x27;&#125;, &#123;&#x27;authors__name&#x27;: &#x27;kevin&#x27;&#125;]&gt; </span></span><br></pre></td></tr></table></figure>
+
+<p>反向查询，按模型名(小写)+双下划线：如book__</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求：查询作者rose出版的所有书籍</span></span><br><span class="line"><span class="comment"># 注意values()中的参数是：小写的模型名__要取的那张被关联表中的字段</span></span><br><span class="line">res = Author.objects.filter(name=<span class="string">&#x27;rose&#x27;</span>).values(<span class="string">&#x27;book__title&#x27;</span>)</span><br><span class="line">print(res) <span class="comment"># &lt;QuerySet [&#123;&#x27;book__title&#x27;: &#x27;玉女心经&#x27;&#125;, &#123;&#x27;book__title&#x27;: &#x27;九阴真经&#x27;&#125;, &#123;&#x27;book__title&#x27;: &#x27;玉男心经&#x27;&#125;]&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>补充：基表决定了正向还是反向</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、针对上例中正向查询的需求：查询葵花宝典的所有作者，如果我们选取的基表是authors，那么就成了反向查询，应该用反向查询的语法</span></span><br><span class="line">res=Author.objects.filter(book__title=<span class="string">&#x27;葵花宝典&#x27;</span>).values(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">print(res) <span class="comment"># &lt;QuerySet [&#123;&#x27;name&#x27;: &#x27;egon&#x27;&#125;, &#123;&#x27;name&#x27;: &#x27;kevin&#x27;&#125;]&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、针对上例中反向查询的需求：查询作者rose出版的所有书籍，如果我们选取的基表是Book，那么就成了正向查询，应该用正向查询的语法</span></span><br><span class="line">res=Book.objects.filter(authors__name=<span class="string">&#x27;rose&#x27;</span>).values(<span class="string">&#x27;title&#x27;</span>)</span><br><span class="line">print(res) <span class="comment"># &lt;QuerySet [&#123;&#x27;title&#x27;: &#x27;玉女心经&#x27;&#125;, &#123;&#x27;title&#x27;: &#x27;九阴真经&#x27;&#125;, &#123;&#x27;title&#x27;: &#x27;玉男心经&#x27;&#125;]&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2、连续跨-gt-2张表查询-1"><a href="#2、连续跨-gt-2张表查询-1" class="headerlink" title="2、连续跨&gt;2张表查询"></a>2、连续跨&gt;2张表查询</h4><p>连续跨&gt;2张表的操作的套路与上面的案例都是一样的,可以连续接n个双下划线，只需要在每次连双下划线时，确定是正向还是反向即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 需求1：查询北京出版社出版过的所有书籍的名字以及作者的姓名、手机号</span></span><br><span class="line"><span class="comment"># 方式一：基表为Publish</span></span><br><span class="line">res=Publish.objects.filter(name=<span class="string">&#x27;北京出版社&#x27;</span>).values_list(<span class="string">&#x27;book__title&#x27;</span>,<span class="string">&#x27;book__authors__name&#x27;</span>,<span class="string">&#x27;book__authors__author_detail__tel&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式二：基表为Book</span></span><br><span class="line">res=Book.objects.filter(publish__name=<span class="string">&#x27;北京出版社&#x27;</span>).values_list(<span class="string">&#x27;title&#x27;</span>,<span class="string">&#x27;authors__name&#x27;</span>,<span class="string">&#x27;authors__author_detail__tel&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 循环打印结果均为</span></span><br><span class="line"><span class="keyword">for</span> obj <span class="keyword">in</span> res:</span><br><span class="line">    print(obj)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">输出：</span></span><br><span class="line"><span class="string">(&#x27;葵花宝典&#x27;, &#x27;egon&#x27;, &#x27;18611312331&#x27;)</span></span><br><span class="line"><span class="string">(&#x27;菊花宝典&#x27;, &#x27;egon&#x27;, &#x27;18611312331&#x27;)</span></span><br><span class="line"><span class="string">(&#x27;桃花宝典&#x27;, &#x27;egon&#x27;, &#x27;18611312331&#x27;)</span></span><br><span class="line"><span class="string">(&#x27;葵花宝典&#x27;, &#x27;kevin&#x27;, &#x27;15033413881&#x27;)</span></span><br><span class="line"><span class="string">(&#x27;菊花宝典&#x27;, &#x27;kevin&#x27;, &#x27;15033413881&#x27;)</span></span><br><span class="line"><span class="string">(&#x27;桃花宝典&#x27;, &#x27;kevin&#x27;, &#x27;15033413881&#x27;)</span></span><br><span class="line"><span class="string">(&#x27;菊花宝典&#x27;, &#x27;rose&#x27;, &#x27;13011453220&#x27;)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 需求2：查询手机号以186开头的作者出版过的所有书籍名称以及出版社名称</span></span><br><span class="line"><span class="comment"># 方式一：基表为AuthorDetail</span></span><br><span class="line">res=AuthorDetail.objects.filter(tel__startswith=<span class="string">&#x27;186&#x27;</span>).values_list(<span class="string">&#x27;author__book__title&#x27;</span>,<span class="string">&#x27;author__book__publish__name&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式二：基表为Book</span></span><br><span class="line">res=Book.objects.filter(authors__author_detail__tel__startswith=<span class="string">&#x27;186&#x27;</span>).values_list(<span class="string">&#x27;title&#x27;</span>,<span class="string">&#x27;publish__name&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式三：基表为Publish</span></span><br><span class="line">res=Publish.objects.filter(book__authors__author_detail__tel__startswith=<span class="string">&#x27;186&#x27;</span>).values_list(<span class="string">&#x27;book__title&#x27;</span>,<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 循环打印结果均为</span></span><br><span class="line"><span class="keyword">for</span> obj <span class="keyword">in</span> res:</span><br><span class="line">    print(obj)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">输出：</span></span><br><span class="line"><span class="string">(&#x27;葵花宝典&#x27;, &#x27;北京出版社&#x27;)</span></span><br><span class="line"><span class="string">(&#x27;菊花宝典&#x27;, &#x27;北京出版社&#x27;)</span></span><br><span class="line"><span class="string">(&#x27;桃花宝典&#x27;, &#x27;北京出版社&#x27;)</span></span><br><span class="line"><span class="string">(&#x27;九阴真经&#x27;, &#x27;大连出版社&#x27;)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"><i class="fas fa-cookie-bite"></i> Django</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B01-%E5%8D%95%E8%A1%A8/" rel="prev" title="Django进阶-模型01-单表">
+      <i class="fa fa-chevron-left"></i> Django进阶-模型01-单表
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B03-%E6%9B%B4%E5%A4%9A%E5%AD%97%E6%AE%B5%E4%B8%8E%E5%8F%82%E6%95%B0/" rel="next" title="Django进阶-模型03-更多字段与参数">
+      Django进阶-模型03-更多字段与参数 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E8%A1%A8%E5%85%B3%E7%B3%BB%E5%9B%9E%E9%A1%BE"><span class="nav-number">1.</span> <span class="nav-text">一 表关系回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B1%E3%80%81app01-book%E4%B8%8Eapp01-publish"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">例1、app01_book与app01_publish</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B2%E3%80%81app01-author%E4%B8%8Eapp01-authordetail"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">例2、app01_author与app01_authordetail</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B3%E3%80%81app01-book%E4%B8%8Eapp01-author"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">例3、app01_book与app01_author</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">二 创建模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-%E6%B7%BB%E5%8A%A0%E3%80%81%E5%88%A0%E9%99%A4%E3%80%81%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95"><span class="nav-number">3.</span> <span class="nav-text">三 添加、删除、修改记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%B7%BB%E5%8A%A0%E8%AE%B0%E5%BD%95"><span class="nav-number">3.0.1.</span> <span class="nav-text">3.1 添加记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%88%A0%E9%99%A4%E3%80%81%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95"><span class="nav-number">3.0.2.</span> <span class="nav-text">3.2 删除、修改记录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-%E6%9F%A5%E8%AF%A2%E8%AE%B0%E5%BD%95"><span class="nav-number">4.</span> <span class="nav-text">四 查询记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%9F%BA%E4%BA%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%B7%A8%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">4.0.1.</span> <span class="nav-text">4.1 基于对象的跨表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E8%B7%A8%E4%B8%A4%E5%BC%A0%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">4.0.1.1.</span> <span class="nav-text">1、跨两张表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1%E3%80%81%E4%B8%80%E5%AF%B9%E4%B8%80%E6%9F%A5%E8%AF%A2%EF%BC%88%E6%A8%A1%E5%9E%8B%E7%B1%BBAuthor%E4%B8%8EAuthorDetail%EF%BC%89"><span class="nav-number">4.0.1.1.1.</span> <span class="nav-text">1.1、一对一查询（模型类Author与AuthorDetail）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2%E3%80%81%E5%A4%9A%E5%AF%B9%E4%B8%80%E6%9F%A5%E8%AF%A2%EF%BC%88%E6%A8%A1%E5%9E%8B%E7%B1%BBBook%E4%B8%8EPublish%EF%BC%89"><span class="nav-number">4.0.1.1.2.</span> <span class="nav-text">1.2、多对一查询（模型类Book与Publish）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3%E3%80%81%E5%A4%9A%E5%AF%B9%E5%A4%9A%E6%9F%A5%E8%AF%A2%EF%BC%88%E6%A8%A1%E5%9E%8B%E7%B1%BBBook%E4%B8%8EAuthor%EF%BC%89"><span class="nav-number">4.0.1.1.3.</span> <span class="nav-text">1.3、多对多查询（模型类Book与Author）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E8%BF%9E%E7%BB%AD%E8%B7%A8-gt-2%E5%BC%A0%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">4.0.1.2.</span> <span class="nav-text">2、连续跨&gt;2张表查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%9F%BA%E4%BA%8E%E5%8F%8C%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%84%E8%B7%A8%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">4.0.2.</span> <span class="nav-text">4.2 基于双下划线的跨表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E8%B7%A8%E4%B8%A4%E5%BC%A0%E8%A1%A8%E6%9F%A5%E8%AF%A2-1"><span class="nav-number">4.0.2.1.</span> <span class="nav-text">1、跨两张表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1%E3%80%81%E4%B8%80%E5%AF%B9%E4%B8%80%E6%9F%A5%E8%AF%A2%EF%BC%88%E6%A8%A1%E5%9E%8B%E7%B1%BBAuthor%E4%B8%8EAuthorDetail%EF%BC%89-1"><span class="nav-number">4.0.2.1.1.</span> <span class="nav-text">1.1、一对一查询（模型类Author与AuthorDetail）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2%E3%80%81%E5%A4%9A%E5%AF%B9%E4%B8%80%E6%9F%A5%E8%AF%A2%EF%BC%88%E6%A8%A1%E5%9E%8B%E7%B1%BBBook%E4%B8%8EPublish%EF%BC%89-1"><span class="nav-number">4.0.2.1.2.</span> <span class="nav-text">1.2、多对一查询（模型类Book与Publish）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3%E3%80%81%E5%A4%9A%E5%AF%B9%E5%A4%9A%E6%9F%A5%E8%AF%A2%EF%BC%88%E6%A8%A1%E5%9E%8B%E7%B1%BBBook%E4%B8%8EAuthor%EF%BC%89-1"><span class="nav-number">4.0.2.1.3.</span> <span class="nav-text">1.3、多对多查询（模型类Book与Author）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E8%BF%9E%E7%BB%AD%E8%B7%A8-gt-2%E5%BC%A0%E8%A1%A8%E6%9F%A5%E8%AF%A2-1"><span class="nav-number">4.0.2.2.</span> <span class="nav-text">2、连续跨&gt;2张表查询</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">849k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">23:35</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Django Models 单表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django进阶-模型01-单表">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B01-%E5%8D%95%E8%A1%A8/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Django Models 单表">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154426642-247451393.gif">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154426919-289128626..jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154427128-1549418778..jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154427742-909662861.gif">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154428051-13811605.gif">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154428870-896477511.gif">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154429608-819964630.gif">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154429787-990698832..png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154429995-1202096679..png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154430256-1231154195.gif">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154430491-350232440..png">
+<meta property="article:published_time" content="2021-05-09T15:26:30.000Z">
+<meta property="article:modified_time" content="2021-05-09T15:42:55.338Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154426642-247451393.gif">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B01-%E5%8D%95%E8%A1%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Django进阶-模型01-单表 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B01-%E5%8D%95%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Django进阶-模型01-单表
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-09 23:26:30 / 修改时间：23:42:55" itemprop="dateCreated datePublished" datetime="2021-05-09T23:26:30+08:00">2021-05-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>17k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>28 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Django Models 单表</p>
+<a id="more"></a>
+
+<h1 id="一-ORM简介"><a href="#一-ORM简介" class="headerlink" title="一 ORM简介"></a>一 ORM简介</h1><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154426642-247451393.gif" alt="img">]</p>
+<p> 我们在使用Django框架开发web应用的过程中，不可避免地会涉及到数据的管理操作（如增、删、改、查），而一旦谈到数据的管理操作，就需要用到数据库管理软件，例如mysql、oracle、Microsoft SQL Server等。</p>
+<p> 如果应用程序需要操作数据（比如将用户注册信息永久存放起来），那么我们需要在应用程序中编写原生sql语句，然后使用pymysql模块远程操作mysql数据库，详见图1</p>
+<p>但是直接编写原生sql语句会存在两方面的问题，严重影响开发效率，如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment">#1. sql语句的执行效率：应用开发程序员需要耗费一大部分精力去优化sql语句</span></span><br><span class="line"><span class="comment">#2. 数据库迁移：针对mysql开发的sql语句无法直接应用到oracle数据库上，一旦需要迁移数据库，便需要考虑跨平台问题</span></span><br></pre></td></tr></table></figure>
+
+<p>为了解决上述问题，django引入了ORM的概念，ORM全称Object Relational Mapping，即对象关系映射，是在pymysq之上又进行了一层封装，对于数据的操作，我们无需再去编写原生sql，取代代之的是基于面向对象的思想去编写类、对象、调用相应的方法等，ORM会将其转换/映射成原生SQL然后交给pymysql执行，详见图2</p>
+<p>。。。。。。插图1</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154426919-289128626..jpg" alt="插图1"></p>
+<p>原生SQL与ORM的对应关系示例如下</p>
+<p>插图2</p>
+<p>若图片需要修改，则查看地址：<a target="_blank" rel="noopener" href="https://www.processon.com/diagraming/588d8be2e4b098bf4d1ecb1d">https://www.processon.com/diagraming/588d8be2e4b098bf4d1ecb1d</a></p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154427128-1549418778..jpg" alt="插图2"></p>
+<p>如此，开发人员既不用再去考虑原生SQL的优化问题，也不用考虑数据库迁移的问题，ORM都帮我们做了优化且支持多种数据库，这极大地提升了我们的开发效率，下面就让我们来详细学习ORM的使用吧</p>
+<h1 id="二-单表操作"><a href="#二-单表操作" class="headerlink" title="二 单表操作"></a>二 单表操作</h1><h2 id="2-1-按步骤创建表"><a href="#2-1-按步骤创建表" class="headerlink" title="2.1 按步骤创建表"></a>2.1 按步骤创建表</h2><h5 id="2-1-1-创建django项目，新建名为app01的app，在app01的models-py中创建模型"><a href="#2-1-1-创建django项目，新建名为app01的app，在app01的models-py中创建模型" class="headerlink" title="2.1.1 创建django项目，新建名为app01的app，在app01的models.py中创建模型"></a>2.1.1 创建django项目，新建名为app01的app，在app01的models.py中创建模型</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Copyclass Employee(models.Model): <span class="comment"># 必须是models.Model的子类</span></span><br><span class="line">    id=models.AutoField(primary_key=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    name=models.CharField(max_length=<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">    gender=models.BooleanField(default=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    birth=models.DateField()</span><br><span class="line"></span><br><span class="line">    department=models.CharField(max_length=<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">    salary=models.DecimalField(max_digits=<span class="number">10</span>,decimal_places=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-2-django的orm支持多种数据库，如果想将上述模型转为mysql数据库中的表，需要settings-py中"><a href="#2-1-2-django的orm支持多种数据库，如果想将上述模型转为mysql数据库中的表，需要settings-py中" class="headerlink" title="2.1.2 django的orm支持多种数据库，如果想将上述模型转为mysql数据库中的表，需要settings.py中"></a>2.1.2 django的orm支持多种数据库，如果想将上述模型转为mysql数据库中的表，需要settings.py中</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 删除\注释掉原来的DATABASES配置项，新增下述配置</span></span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;ENGINE&#x27;</span>: <span class="string">&#x27;django.db.backends.mysql&#x27;</span>, <span class="comment"># 使用mysql数据库</span></span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;db1&#x27;</span>,          <span class="comment"># 要连接的数据库</span></span><br><span class="line">        <span class="string">&#x27;USER&#x27;</span>: <span class="string">&#x27;root&#x27;</span>,         <span class="comment"># 链接数据库的用于名</span></span><br><span class="line">        <span class="string">&#x27;PASSWORD&#x27;</span>: <span class="string">&#x27;&#x27;</span>,         <span class="comment"># 链接数据库的用于名                  </span></span><br><span class="line">        <span class="string">&#x27;HOST&#x27;</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>,    <span class="comment"># mysql服务监听的ip  </span></span><br><span class="line">        <span class="string">&#x27;PORT&#x27;</span>: <span class="number">3306</span>,           <span class="comment"># mysql服务监听的端口  </span></span><br><span class="line">        <span class="string">&#x27;ATOMIC_REQUEST&#x27;</span>: <span class="literal">True</span>, <span class="comment">#设置为True代表同一个http请求所对应的所有sql都放在一个事务中执行 </span></span><br><span class="line">                                <span class="comment">#(要么所有都成功，要么所有都失败)，这是全局性的配置，如果要对某个</span></span><br><span class="line">                                <span class="comment">#http请求放水（然后自定义事务），可以用non_atomic_requests修饰器 </span></span><br><span class="line">        <span class="string">&#x27;OPTIONS&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;init_command&quot;</span>: <span class="string">&quot;SET storage_engine=INNODB&quot;</span>, <span class="comment">#设置创建表的存储引擎为INNODB</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-3-在链接mysql数据库前，必须事先创建好数据库"><a href="#2-1-3-在链接mysql数据库前，必须事先创建好数据库" class="headerlink" title="2.1.3 在链接mysql数据库前，必须事先创建好数据库"></a>2.1.3 在链接mysql数据库前，必须事先创建好数据库</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copymysql&gt; create database db1; <span class="comment"># 数据库名必须与settings.py中指定的名字对应上</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-4-其实python解释器在运行django程序时，django的orm底层操作数据库的python模块默认是mysqldb而非pymysql，然而对于解释器而言，python2-x解释器支持的操作数据库的模块是mysqldb，而python3-x解释器支持的操作数据库的模块则是pymysql，，毫无疑问，目前我们的django程序都是运行于python3-x解释器下，于是我们需要修改django的orm默认操作数据库的模块为pymysql，具体做法如下"><a href="#2-1-4-其实python解释器在运行django程序时，django的orm底层操作数据库的python模块默认是mysqldb而非pymysql，然而对于解释器而言，python2-x解释器支持的操作数据库的模块是mysqldb，而python3-x解释器支持的操作数据库的模块则是pymysql，，毫无疑问，目前我们的django程序都是运行于python3-x解释器下，于是我们需要修改django的orm默认操作数据库的模块为pymysql，具体做法如下" class="headerlink" title="2.1.4 其实python解释器在运行django程序时，django的orm底层操作数据库的python模块默认是mysqldb而非pymysql，然而对于解释器而言，python2.x解释器支持的操作数据库的模块是mysqldb，而python3.x解释器支持的操作数据库的模块则是pymysql，，毫无疑问，目前我们的django程序都是运行于python3.x解释器下，于是我们需要修改django的orm默认操作数据库的模块为pymysql，具体做法如下"></a>2.1.4 其实python解释器在运行django程序时，django的orm底层操作数据库的python模块默认是mysqldb而非pymysql，然而对于解释器而言，python2.x解释器支持的操作数据库的模块是mysqldb，而python3.x解释器支持的操作数据库的模块则是pymysql，，毫无疑问，目前我们的django程序都是运行于python3.x解释器下，于是我们需要修改django的orm默认操作数据库的模块为pymysql，具体做法如下</h5><p>插图3</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154427742-909662861.gif" alt="插图3"></p>
+<h5 id="2-1-5-确保配置文件settings-py中的INSTALLED-APPS中添加我们创建的app名称-django2-x与django1-x处理添加方式不同"><a href="#2-1-5-确保配置文件settings-py中的INSTALLED-APPS中添加我们创建的app名称-django2-x与django1-x处理添加方式不同" class="headerlink" title="2.1.5 确保配置文件settings.py中的INSTALLED_APPS中添加我们创建的app名称,django2.x与django1.x处理添加方式不同"></a>2.1.5 确保配置文件settings.py中的INSTALLED_APPS中添加我们创建的app名称,django2.x与django1.x处理添加方式不同</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># django1.x版本，在下述列表中新增我们的app名字即可</span></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;app01&#x27;</span>,</span><br><span class="line">    <span class="comment"># &#x27;app02&#x27; # 若有新增的app，依次添加即可</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># django2.x版本，可能会帮我们自动添加app，只是换了一种添加方式</span></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;app01.apps.App01Config&#x27;</span>, <span class="comment"># 如果默认已经添加了，则无需重复添加</span></span><br><span class="line">    <span class="comment"># &#x27;app02.apps.App02Config&#x27;, # 若有新增的app，按照规律依次添加即可</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-6-如果想打印orm转换过程中的sql，需要在settings中进行配置日志："><a href="#2-1-6-如果想打印orm转换过程中的sql，需要在settings中进行配置日志：" class="headerlink" title="2.1.6 如果想打印orm转换过程中的sql，需要在settings中进行配置日志："></a>2.1.6 如果想打印orm转换过程中的sql，需要在settings中进行配置日志：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CopyLOGGING = &#123;</span><br><span class="line">    <span class="string">&#x27;version&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">&#x27;disable_existing_loggers&#x27;</span>: <span class="literal">False</span>,</span><br><span class="line">    <span class="string">&#x27;handlers&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;console&#x27;</span>:&#123;</span><br><span class="line">            <span class="string">&#x27;level&#x27;</span>:<span class="string">&#x27;DEBUG&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;class&#x27;</span>:<span class="string">&#x27;logging.StreamHandler&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&#x27;loggers&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;django.db.backends&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;handlers&#x27;</span>: [<span class="string">&#x27;console&#x27;</span>],</span><br><span class="line">            <span class="string">&#x27;propagate&#x27;</span>: <span class="literal">True</span>,</span><br><span class="line">            <span class="string">&#x27;level&#x27;</span>:<span class="string">&#x27;DEBUG&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-7-最后在命令行中执行两条数据库迁移命令，即可在指定的数据库db1中创建表-："><a href="#2-1-7-最后在命令行中执行两条数据库迁移命令，即可在指定的数据库db1中创建表-：" class="headerlink" title="2.1.7 最后在命令行中执行两条数据库迁移命令，即可在指定的数据库db1中创建表 ："></a>2.1.7 最后在命令行中执行两条数据库迁移命令，即可在指定的数据库db1中创建表 ：</h5><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Copy</span>$ python manage.py makemigrations</span><br><span class="line">$ python manage.py migrate</span><br><span class="line"></span><br><span class="line"># 注意：</span><br><span class="line"># <span class="number">1</span>、makemigrations只是生成一个数据库迁移记录的文件，而migrate才是将更改真正提交到数据库执行</span><br><span class="line"># <span class="number">2</span>、数据库迁移记录的文件存放于app01下的migrations文件夹里</span><br><span class="line"># <span class="number">3</span>、了解：使用命令python manage.py showmigrations可以查看没有执行migrate的文件</span><br></pre></td></tr></table></figure>
+
+<p>注意1：在使用的是django1.x版本时，如果报如下错误</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copydjango.core.exceptions.ImproperlyConfigured: mysqlclient <span class="number">1.3</span><span class="number">.3</span> <span class="keyword">or</span> newer <span class="keyword">is</span> required; you have <span class="number">0.7</span><span class="number">.11</span>.<span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<p>那是因为MySQLclient目前只支持到python3.4，如果使用的更高版本的python，需要找到文件C:\Programs\Python\Python36-32\Lib\site-packages\Django-2.0-py3.6.egg\django\db\backends\mysql\base.py<br>这个路径里的文件(mac或linux请在终端执行pip show django查看django的安装路径，找到base.py即可)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 注释下述两行内容即可</span></span><br><span class="line"><span class="keyword">if</span> version &lt; (<span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>):</span><br><span class="line">     <span class="keyword">raise</span> ImproperlyConfigured(<span class="string">&quot;mysqlclient 1.3.3 or newer is required; you have %s&quot;</span> % Database.__version__)</span><br></pre></td></tr></table></figure>
+
+<p>注意2：当我们直接去数据库里查看生成的表时，会发现数据库中的表与orm规定的并不一致，这完全是正常的，事实上，orm的字段约束就是不会全部体现在数据库的表中，比如我们为字段gender设置的默认值default=1，去数据库中查看会发现该字段的default部分为null</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Copymysql&gt; desc app01_employee; <span class="comment"># 数据库中标签前会带有前缀app01_</span></span><br><span class="line">+------------+---------------+------+-----+---------+----------------+</span><br><span class="line">| Field      | Type          | Null | Key | Default | Extra          |</span><br><span class="line">+------------+---------------+------+-----+---------+----------------+</span><br><span class="line">| id         | int(<span class="number">11</span>)       | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| name       | varchar(<span class="number">16</span>)   | NO   |     | NULL    |                |</span><br><span class="line">| gender     | tinyint(<span class="number">1</span>)    | NO   |     | NULL    |                |</span><br><span class="line">| birth      | date          | NO   |     | NULL    |                |</span><br><span class="line">| department | varchar(<span class="number">30</span>)   | NO   |     | NULL    |                |</span><br><span class="line">| salary     | decimal(<span class="number">10</span>,<span class="number">1</span>) | NO   |     | NULL    |                |</span><br><span class="line">+------------+---------------+------+-----+---------+----------------+</span><br></pre></td></tr></table></figure>
+
+<p>,虽然数据库没有增加默认值,但是我们在使用orm插入值时，完全为gender字段插入空，orm会按照自己的约束将空转换成默认值后，再提交给数据库执行</p>
+<h5 id="2-1-8-在表生成之后，如果需要增加、删除、修改表中字段，需要这么做"><a href="#2-1-8-在表生成之后，如果需要增加、删除、修改表中字段，需要这么做" class="headerlink" title="2.1.8 在表生成之后，如果需要增加、删除、修改表中字段，需要这么做"></a>2.1.8 在表生成之后，如果需要增加、删除、修改表中字段，需要这么做</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 一：增加字段</span></span><br><span class="line"><span class="comment">#1.1、在模型类Employee里直接新增字段，强调：对于orm来说，新增的字段必须用default指定默认值</span></span><br><span class="line">publish = models.CharField(max_length=<span class="number">12</span>,default=<span class="string">&#x27;人民出版社&#x27;</span>,null=<span class="literal">True</span>)</span><br><span class="line"><span class="comment">#1.2、重新执行那两条数据库迁移命令</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 二：删除字段</span></span><br><span class="line"><span class="comment">#2.1 直接注释掉字段</span></span><br><span class="line"><span class="comment">#2.2 重新执行那两条数据库迁移命令</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 三：修改字段</span></span><br><span class="line"><span class="comment">#2.1 将模型类中字段修改</span></span><br><span class="line"><span class="comment">#2.2 重新执行那两条数据库迁移命令</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-添加记录"><a href="#2-2-添加记录" class="headerlink" title="2.2 添加记录"></a>2.2 添加记录</h2><p>方式一：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、用模型类创建一个对象，一个对象对应数据库表中的一条记录</span></span><br><span class="line">obj = Employee(name=<span class="string">&quot;Egon&quot;</span>, gender=<span class="number">0</span>, birth=<span class="string">&#x27;1997-01-27&#x27;</span>, department=<span class="string">&quot;财务部&quot;</span>, salary=<span class="number">100.1</span>)</span><br><span class="line"><span class="comment"># 2、调用对象下的save方法，即可以将一条记录插入数据库</span></span><br><span class="line">obj.save()</span><br></pre></td></tr></table></figure>
+
+<p>方式二：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 每个模型表下都有一个objects管理器，用于对该表中的记录进行增删改查操作，其中增加操作如下所示</span></span><br><span class="line">obj = Employee.objects.create(name=<span class="string">&quot;Egon&quot;</span>, gender=<span class="number">0</span>, birth=<span class="string">&#x27;1997-01-27&#x27;</span>, department=<span class="string">&quot;财务部&quot;</span>, salary=<span class="number">100.1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-查询记录"><a href="#2-3-查询记录" class="headerlink" title="2.3 查询记录"></a>2.3 查询记录</h2><h3 id="2-3-1-查询API"><a href="#2-3-1-查询API" class="headerlink" title="2.3.1 查询API"></a>2.3.1 查询API</h3><p>模型Employee对应表app01_employee，表app01_employee中的每条记录都对应类Employee的一个对象，我们以该表为例，来介绍查询API，读者可以自行添加下述记录，然后配置url、编写视图测试下述API</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Copymysql&gt; select * <span class="keyword">from</span> app01_employee;</span><br><span class="line">+----+-------+--------+------------+------------+--------+</span><br><span class="line">| id | name  | gender | birth      | department | salary |</span><br><span class="line">+----+-------+--------+------------+------------+--------+</span><br><span class="line">|  <span class="number">1</span> | Egon  |      <span class="number">0</span> | <span class="number">1997</span><span class="number">-01</span><span class="number">-27</span> | 财务部     |  <span class="number">100.1</span> |</span><br><span class="line">|  <span class="number">2</span> | Kevin |      <span class="number">1</span> | <span class="number">1998</span><span class="number">-02</span><span class="number">-27</span> | 技术部     |   <span class="number">10.1</span> |</span><br><span class="line">|  <span class="number">3</span> | Lili  |      <span class="number">0</span> | <span class="number">1990</span><span class="number">-02</span><span class="number">-27</span> | 运营部     |   <span class="number">20.1</span> |</span><br><span class="line">|  <span class="number">4</span> | Tom   |      <span class="number">1</span> | <span class="number">1991</span><span class="number">-02</span><span class="number">-27</span> | 运营部     |   <span class="number">30.1</span> |</span><br><span class="line">|  <span class="number">5</span> | Jack  |      <span class="number">1</span> | <span class="number">1992</span><span class="number">-02</span><span class="number">-27</span> | 技术部     |   <span class="number">11.2</span> |</span><br><span class="line">|  <span class="number">6</span> | Robin |      <span class="number">1</span> | <span class="number">1988</span><span class="number">-02</span><span class="number">-27</span> | 技术部     |  <span class="number">200.3</span> |</span><br><span class="line">|  <span class="number">7</span> | Rose  |      <span class="number">0</span> | <span class="number">1989</span><span class="number">-02</span><span class="number">-27</span> | 财务部     |   <span class="number">35.1</span> |</span><br><span class="line">|  <span class="number">8</span> | Egon  |      <span class="number">0</span> | <span class="number">1997</span><span class="number">-01</span><span class="number">-27</span> | 财务部     |  <span class="number">100.1</span> |</span><br><span class="line">|  <span class="number">9</span> | Egon  |      <span class="number">0</span> | <span class="number">1997</span><span class="number">-01</span><span class="number">-27</span> | 财务部     |  <span class="number">100.1</span> |</span><br><span class="line">+----+-------+--------+------------+------------+--------+</span><br></pre></td></tr></table></figure>
+
+<p>每个模型表下都有一个objects管理器,用于对该表中的记录进行增删改查操作,其中查询操作如下所示</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154428051-13811605.gif" alt="img"></p>
+<p>Part1：</p>
+<p>！！！强调！！！：下述方法(除了count外)的返回值都是一个模型类Employee的对象，为了后续描述方便，我们统一将模型类的对象称为”记录对象”，每一个”记录对象“都唯一对应表中的一条记录，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1. get(**kwargs)</span></span><br><span class="line"><span class="comment"># 1.1: 有参，参数为筛选条件</span></span><br><span class="line"><span class="comment"># 1.2: 返回值为一个符合筛选条件的记录对象(有且只有一个)，如果符合筛选条件的对象超过一个或者没有都会抛出错误。</span></span><br><span class="line">obj=Employee.objects.get(id=<span class="number">1</span>)</span><br><span class="line">print(obj.name,obj.birth,obj.salary) <span class="comment">#输出：Egon 1997-01-27 100.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、first()</span></span><br><span class="line"><span class="comment"># 2.1：无参</span></span><br><span class="line"><span class="comment"># 2.2：返回查询出的第一个记录对象</span></span><br><span class="line">obj=Employee.objects.first() <span class="comment"># 在表所有记录中取第一个</span></span><br><span class="line">print(obj.id,obj.name) <span class="comment"># 输出：1 Egon</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3、last()</span></span><br><span class="line"><span class="comment"># 3.1: 无参</span></span><br><span class="line"><span class="comment"># 3.2: 返回查询出的最后一个记录对象</span></span><br><span class="line">obj = Employee.objects.last() <span class="comment"># 在表所有记录中取最后一个</span></span><br><span class="line">print(obj.id, obj.name)  <span class="comment"># 输出：9 Egon</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4、count():</span></span><br><span class="line"><span class="comment"># 4.1：无参</span></span><br><span class="line"><span class="comment"># 4.2：返回包含记录对象的总数量</span></span><br><span class="line">res = Employee.objects.count() <span class="comment"># 统计表所有记录的个数</span></span><br><span class="line">print(res) <span class="comment"># 输出：9</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意：如果我们直接打印Employee的对象将没有任何有用的提示信息，我们可以在模型类中定义__str__来进行定制</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Employee</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="comment"># 在原有的基础上新增代码如下</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&lt;%s:%s&gt;&quot;</span> %(self.id,self.name)</span><br><span class="line"><span class="comment"># 此时我们print(obj)显示的结果就是: &lt;本条记录中id字段的值:本条记录中name字段的值&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Part2：</p>
+<p>！！！强调！！！：下述方法查询的结果都有可能包含多个记录对象，为了存放查询出的多个记录对象，django的ORM自定义了一种数据类型Queryeset，所以下述方法的返回值均为QuerySet类型的对象，QuerySet对象中包含了查询出的多个记录对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、filter(**kwargs):</span></span><br><span class="line"><span class="comment"># 1.1：有参，参数为过滤条件</span></span><br><span class="line"><span class="comment"># 1.2：返回值为QuerySet对象，QuerySet对象中包含了符合过滤条件的多个记录对象</span></span><br><span class="line">queryset_res=Employee.objects.filter(department=<span class="string">&#x27;技术部&#x27;</span>)</span><br><span class="line"><span class="comment"># print(queryset_res) # 输出： &lt;QuerySet [&lt;Employee: &lt;2:Kevin&gt;&gt;, &lt;Employee: &lt;5:Jack&gt;&gt;, &lt;Employee: &lt;6:Robin&gt;&gt;]&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、exclude(**kwargs)</span></span><br><span class="line"><span class="comment"># 2.1: 有参，参数为过滤条件</span></span><br><span class="line"><span class="comment"># 2.2: 返回值为QuerySet对象，QuerySet对象中包含了不符合过滤条件的多个记录对象</span></span><br><span class="line">queryset_res=Employee.objects.exclude(department=<span class="string">&#x27;技术部&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3、all()</span></span><br><span class="line"><span class="comment"># 3.1：无参</span></span><br><span class="line"><span class="comment"># 3.2：返回值为QuerySet对象，QuerySet对象中包含了查询出的所有记录对象</span></span><br><span class="line">queryset_res = Employee.objects.all() <span class="comment"># 查询出表中所有的记录对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4、order_by(*field):</span></span><br><span class="line"><span class="comment"># 4.1：有参，参数为排序字段，可以指定多个字段，在字段1相同的情况下，可以按照字段2进行排序，以此类推，默认升序排列，在字段前加横杆代表降序排（如&quot;-id&quot;）</span></span><br><span class="line"><span class="comment"># 4.2：返回值为QuerySet对象，QuerySet对象中包含了排序好的记录对象</span></span><br><span class="line">queryset_res = Employee.objects.order_by(<span class="string">&quot;salary&quot;</span>,<span class="string">&quot;-id&quot;</span>) <span class="comment"># 先按照salary字段升序排，如果salary相同则按照id字段降序排</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5、values(*field)</span></span><br><span class="line"><span class="comment"># 5.1：有参，参数为字段名，可以指定多个字段</span></span><br><span class="line"><span class="comment"># 5.2：返回值为QuerySet对象，QuerySet对象中包含的并不是一个个的记录对象，而上多个字典，字典的key即我们传入的字段名</span></span><br><span class="line">queryset_res = Employee.objects.values(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">print(queryset_res) <span class="comment"># 输出：&lt;QuerySet [&#123;&#x27;id&#x27;: 1, &#x27;name&#x27;: &#x27;Egon&#x27;&#125;, &#123;&#x27;id&#x27;: 2, &#x27;name&#x27;: &#x27;Kevin&#x27;&#125;, ......]&gt;</span></span><br><span class="line">print(queryset_res[<span class="number">0</span>][<span class="string">&#x27;name&#x27;</span>]) <span class="comment"># 输出：Egon</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 6、values_list(*field):</span></span><br><span class="line"><span class="comment"># 6.1：有参，参数为字段名，可以指定多个字段</span></span><br><span class="line"><span class="comment"># 6.2：返回值为QuerySet对象，QuerySet对象中包含的并不是一个个的记录对象，而上多个小元组，字典的key即我们传入的字段名</span></span><br><span class="line">queryset_res = Employee.objects.values_list(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">print(queryset_res) <span class="comment"># 输出：&lt;QuerySet [(1, &#x27;Egon&#x27;), (2, &#x27;Kevin&#x27;),), ......]&gt;</span></span><br><span class="line">print(queryset_res[<span class="number">0</span>][<span class="number">1</span>]) <span class="comment"># 输出：Egon</span></span><br></pre></td></tr></table></figure>
+
+<p>Part3：</p>
+<p>Part2中所示查询API的返回值都是QuerySet类型的对象，QuerySet类型是django ORM自定义的一种数据类型，专门用来存放查询出的多个记录对象，该类型的特殊之处在于<br>1、queryset类型类似于python中的列表，支持索引操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 过滤出符合条件的多个记录对象，然后存放到QuerySet对象中</span></span><br><span class="line">queryset_res=Employee.objects.filter(department=<span class="string">&#x27;技术部&#x27;</span>) </span><br><span class="line"><span class="comment"># 按照索引从QuerySet对象中取出第一个记录对象</span></span><br><span class="line">obj=queryset_res[<span class="number">0</span>]</span><br><span class="line">print(obj.name,obj.birth,obj.salary)</span><br></pre></td></tr></table></figure>
+
+<p>2、管理器objects下的方法queryset下同样可以调用，并且django的ORM支持链式操作，于是我们可以像下面这样使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 简单示范：</span></span><br><span class="line">res=Employee.objects.filter(gender=<span class="number">1</span>).order_by(<span class="string">&#x27;-id&#x27;</span>).values_list(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">print(res) <span class="comment"># 输出：&lt;QuerySet [(6, &#x27;Robin&#x27;), (5, &#x27;Jack&#x27;), (4, &#x27;Tom&#x27;), (2, &#x27;Kevin&#x27;)]&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Part4：</p>
+<p>其他查询API</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、reverse():</span></span><br><span class="line"><span class="comment"># 1.1：无参</span></span><br><span class="line"><span class="comment"># 1.2：对排序的结果取反，返回值为QuerySet对象</span></span><br><span class="line">queryset_res = Employee.objects.order_by(<span class="string">&quot;salary&quot;</span>, <span class="string">&quot;-id&quot;</span>).reverse()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、exists():</span></span><br><span class="line"><span class="comment"># 2.1：无参</span></span><br><span class="line"><span class="comment"># 2.2：返回值为布尔值，如果QuerySet包含数据，就返回True，否则返回False</span></span><br><span class="line">res = Employee.objects.filter(id=<span class="number">100</span>).exists()</span><br><span class="line">print(res)  <span class="comment"># 输出：False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3、distinct():</span></span><br><span class="line"><span class="comment"># 3.1：如果使用的是Mysql数据库,那么distinct()无需传入任何参数</span></span><br><span class="line"><span class="comment"># 3.2：从values或values_list的返回结果中剔除重复的记录对象，返回值为QuerySet对象</span></span><br><span class="line">res = Employee.objects.filter(name=<span class="string">&#x27;Egon&#x27;</span>).values(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;salary&#x27;</span>).distinct()</span><br><span class="line">print(res) <span class="comment"># 输出：&lt;QuerySet [&#123;&#x27;name&#x27;: &#x27;Egon&#x27;, &#x27;salary&#x27;: Decimal(&#x27;100.1&#x27;)&#125;]&gt;</span></span><br><span class="line"></span><br><span class="line">res1 = Employee.objects.filter(name=<span class="string">&#x27;Egon&#x27;</span>).values_list(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;salary&#x27;</span>).distinct()</span><br><span class="line">print(res1) <span class="comment"># 输出：&lt;QuerySet [(&#x27;Egon&#x27;, Decimal(&#x27;100.1&#x27;))]&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-2-基于双下划线的模糊查询"><a href="#2-3-2-基于双下划线的模糊查询" class="headerlink" title="2.3.2 基于双下划线的模糊查询"></a>2.3.2 基于双下划线的模糊查询</h3><p>插图4</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154428870-896477511.gif" alt="插图4"></p>
+<h3 id="2-3-3-F与Q查询"><a href="#2-3-3-F与Q查询" class="headerlink" title="2.3.3 F与Q查询"></a>2.3.3 F与Q查询</h3><h4 id="F查询"><a href="#F查询" class="headerlink" title="F查询"></a>F查询</h4><p>在上面所有的例子中，我们在进行条件过滤时，都只是用某个字段与某个具体的值做比较。如果我们要对两个字段的值做比较，那该怎么做呢？</p>
+<p>Django 提供 F() 来做这样的比较。F() 的实例可以在查询中引用字段，来比较两个不同字段的值，如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 一张书籍表中包含字段：评论数commentNum、收藏数keepNum，要求查询：评论数大于收藏数的书籍</span></span><br><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</span><br><span class="line">Book.objects.filter(commnetNum__lt=F(<span class="string">&#x27;keepNum&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>Django 支持 F() 对象之间以及 F() 对象和常数之间的加减乘除和取模的操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 查询评论数大于收藏数2倍的书籍</span></span><br><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</span><br><span class="line">Book.objects.filter(commnetNum__lt=F(<span class="string">&#x27;keepNum&#x27;</span>)*<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>修改操作也可以使用F函数,比如将每一本书的价格提高30元：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CopyBook.objects.all().update(price=F(<span class="string">&quot;price&quot;</span>)+<span class="number">30</span>)　</span><br></pre></td></tr></table></figure>
+
+<p>更新字段等于字段本身再拼接一个字符串应该这样做</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copyfrom django.db.models.functions <span class="keyword">import</span> Concat</span><br><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> Value</span><br><span class="line"></span><br><span class="line">Employee.objects.filter(nid__lte=<span class="number">3</span>).update(name=Concat(F(<span class="string">&#x27;name&#x27;</span>),Value(<span class="string">&#x27;_sb&#x27;</span>)))</span><br></pre></td></tr></table></figure>
+
+<h4 id="Q查询"><a href="#Q查询" class="headerlink" title="Q查询"></a>Q查询</h4><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154429608-819964630.gif" alt="img"></p>
+<p><code>filter()</code> 等方法中逗号分隔开的多个关键字参数都是逻辑与(AND) 的关系。 如果我们需要使用逻辑或(OR)来连接多个条件，就用到了Django的Q对象</p>
+<p>可以将条件传给类Q来实例化出一个对象，Q的对象可以使用<code>&amp;</code> 和<code>|</code> 操作符组合起来，&amp;等同于and，|等同于or</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copyfrom django.db.models <span class="keyword">import</span> Q</span><br><span class="line">Employee.objects.filter(Q(id__gt=<span class="number">5</span>) | Q(name=<span class="string">&quot;Egon&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 等同于sql：select * from app01_employee where id &lt; 5 or name = &#x27;Egon&#x27;;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>Q</code> 对象可以使用<code>~</code> 操作符取反，相当于NOT</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copyfrom django.db.models <span class="keyword">import</span> Q</span><br><span class="line">Employee.objects.filter(~Q(id__gt=<span class="number">5</span>) | Q(name=<span class="string">&quot;Egon&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 等同于sql：select * from app01_employee where not (id &lt; 5) or name = &#x27;Egon&#x27;;</span></span><br></pre></td></tr></table></figure>
+
+<p>当我们的过滤条件中既有or又有and，则需要混用Q对象与关键字参数，但<code>Q</code> 对象必须位于所有关键字参数的前面</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copyfrom django.db.models <span class="keyword">import</span> Q</span><br><span class="line">Employee.objects.filter(Q(id__gt=<span class="number">5</span>) | Q(name=<span class="string">&quot;Egon&quot;</span>),salary__lt=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 等同于sql：select * from app01_employee where (id &lt; 5 or name = &#x27;Egon&#x27;) and salary &lt; 100;</span></span><br></pre></td></tr></table></figure>
+
+<p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154429787-990698832..png" alt="1554205249918"></p>
+<h3 id="2-3-4-聚合查询"><a href="#2-3-4-聚合查询" class="headerlink" title="2.3.4 聚合查询"></a>2.3.4 聚合查询</h3><p>聚合查询aggregate()是把所有查询出的记录对象整体当做一个组，我们可以搭配聚合函数来对整体进行一个聚合操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Copyfrom django.db.models <span class="keyword">import</span> Avg, Max, Sum, Min, Max, Count <span class="comment"># 导入聚合函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 调用objects下的aggregate()方法，会把表中所有记录对象整体当做一组进行聚合</span></span><br><span class="line">res1=Employee.objects.aggregate(Avg(<span class="string">&quot;salary&quot;</span>)) <span class="comment"># select avg(salary) as salary__avg from app01_employee;</span></span><br><span class="line">print(res1) <span class="comment"># 输出：&#123;&#x27;salary__avg&#x27;: 70.73&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、aggregate()会把QuerySet对象中包含的所有记录对象当成一组进行聚合</span></span><br><span class="line">res2=Employee.objects.all().aggregate(Avg(<span class="string">&quot;salary&quot;</span>)) <span class="comment"># select avg(salary) as salary__avg from app01_employee;</span></span><br><span class="line">print(res2) <span class="comment"># 输出：&#123;&#x27;salary__avg&#x27;: 70.73&#125;</span></span><br><span class="line"></span><br><span class="line">res3=Employee.objects.filter(id__gt=<span class="number">3</span>).aggregate(Avg(<span class="string">&quot;salary&quot;</span>)) <span class="comment"># select avg(salary) as salary__avg from app01_employee where id &gt; 3;</span></span><br><span class="line">print(res3) <span class="comment"># 输出：&#123;&#x27;salary__avg&#x27;: 71.0&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>aggregate()的返回值为字典类型，字典的key是由”聚合字段的名称___聚合函数的名称”合成的,例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CopyAvg(<span class="string">&quot;salary&quot;</span>) 合成的名字为 <span class="string">&#x27;salary__avg&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>若我们想定制字典的key名，我们可以指定关键参数，如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Copyres1=Employee.objects.all().aggregate(avg_sal=Avg(<span class="string">&#x27;salary&#x27;</span>)) <span class="comment"># select avg(salary) as avg_sal from app01_employee;</span></span><br><span class="line"></span><br><span class="line">print(res1) <span class="comment"># 输出：&#123;&#x27;avg_sal&#x27;: 70.73&#125; # 关键字参数名就会被当做字典的key</span></span><br></pre></td></tr></table></figure>
+
+<p>如果我们想得到多个聚合结果，那就需要为aggregate传入多个参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copyres1=Employee.objects.all().aggregate(nums=Count(<span class="string">&#x27;id&#x27;</span>),avg_sal=Avg(<span class="string">&#x27;salary&#x27;</span>),max_sal=Max(<span class="string">&#x27;salary&#x27;</span>)) </span><br><span class="line"><span class="comment"># 相当于SQL：select count(id) as nums,avg(salary) as avg_sal,max(salary) as max_sal from app01_employee;</span></span><br><span class="line"></span><br><span class="line">print(res1) <span class="comment"># 输出：&#123;&#x27;nums&#x27;: 10, &#x27;avg_sal&#x27;: 70.73, &#x27;max_sal&#x27;: Decimal(&#x27;200.3&#x27;)&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154429995-1202096679..png" alt="1554205296521"></p>
+<h3 id="2-3-5-分组查询"><a href="#2-3-5-分组查询" class="headerlink" title="2.3.5 分组查询"></a>2.3.5 分组查询</h3><p>分组查询annotate()相当于sql语句中的group by，是在分组后，对每个组进行单独的聚合，需要强调的是，在进行单表查询时，annotate()必须搭配values()使用：values(“分组字段”).annotate(聚合函数)，如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 表中记录</span></span><br><span class="line">mysql&gt; select * <span class="keyword">from</span> app01_employee;</span><br><span class="line">+----+-------+--------+------------+------------+--------+</span><br><span class="line">| id | name  | gender | birth      | department | salary |</span><br><span class="line">+----+-------+--------+------------+------------+--------+</span><br><span class="line">|  <span class="number">1</span> | Egon  |      <span class="number">0</span> | <span class="number">1997</span><span class="number">-01</span><span class="number">-27</span> | 财务部     |  <span class="number">100.1</span> |</span><br><span class="line">|  <span class="number">2</span> | Kevin |      <span class="number">1</span> | <span class="number">1998</span><span class="number">-02</span><span class="number">-27</span> | 技术部     |   <span class="number">10.1</span> |</span><br><span class="line">|  <span class="number">3</span> | Lili  |      <span class="number">0</span> | <span class="number">1990</span><span class="number">-02</span><span class="number">-27</span> | 运营部     |   <span class="number">20.1</span> |</span><br><span class="line">|  <span class="number">4</span> | Tom   |      <span class="number">1</span> | <span class="number">1991</span><span class="number">-02</span><span class="number">-27</span> | 运营部     |   <span class="number">30.1</span> |</span><br><span class="line">|  <span class="number">5</span> | Jack  |      <span class="number">1</span> | <span class="number">1992</span><span class="number">-02</span><span class="number">-27</span> | 技术部     |   <span class="number">11.2</span> |</span><br><span class="line">|  <span class="number">6</span> | Robin |      <span class="number">1</span> | <span class="number">1988</span><span class="number">-02</span><span class="number">-27</span> | 技术部     |  <span class="number">200.3</span> |</span><br><span class="line">|  <span class="number">7</span> | Rose  |      <span class="number">0</span> | <span class="number">1989</span><span class="number">-02</span><span class="number">-27</span> | 财务部     |   <span class="number">35.1</span> |</span><br><span class="line">+----+-------+--------+------------+------------+--------+</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询每个部门下的员工数</span></span><br><span class="line">res=Employee.objects.values(<span class="string">&#x27;department&#x27;</span>).annotate(num=Count(<span class="string">&#x27;id&#x27;</span>)) </span><br><span class="line"><span class="comment"># 相当于sql：</span></span><br><span class="line"><span class="comment"># select department,count(id) as num from app01_employee group by department;</span></span><br><span class="line"></span><br><span class="line">print(res) </span><br><span class="line"><span class="comment"># 输出：&lt;QuerySet [&#123;&#x27;department&#x27;: &#x27;财务部&#x27;, &#x27;num&#x27;: 2&#125;, &#123;&#x27;department&#x27;: &#x27;技术部&#x27;, &#x27;num&#x27;: 3&#125;, &#123;&#x27;department&#x27;: &#x27;运营部&#x27;, &#x27;num&#x27;: 2&#125;]&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>跟在annotate前的values方法，是用来指定分组字段，即group by后的字段，而跟在annotate后的values方法，则是用来指定分组后要查询的字段，即select 后跟的字段</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Copyres=Employee.objects.values(<span class="string">&#x27;department&#x27;</span>).annotate(num=Count(<span class="string">&#x27;id&#x27;</span>)).values(<span class="string">&#x27;num&#x27;</span>)</span><br><span class="line"><span class="comment"># 相当于sql：</span></span><br><span class="line"><span class="comment"># select count(id) as num from app01_employee group by department;</span></span><br><span class="line"></span><br><span class="line">print(res)</span><br><span class="line"><span class="comment"># 输出：&lt;QuerySet [&#123;&#x27;num&#x27;: 2&#125;, &#123;&#x27;num&#x27;: 3&#125;, &#123;&#x27;num&#x27;: 2&#125;]&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>跟在annotate前的filter方法表示where条件，跟在annotate后的filter方法表示having条件，如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 查询男员工数超过2人的部门名</span></span><br><span class="line">res=Employee.objects.filter(gender=<span class="number">1</span>).values(<span class="string">&#x27;department&#x27;</span>).annotate(male_count=Count(<span class="string">&quot;id&quot;</span>)).filter(male_count__gt=<span class="number">2</span>).values(<span class="string">&#x27;department&#x27;</span>)</span><br><span class="line"></span><br><span class="line">print(res) <span class="comment"># 输出：&lt;QuerySet [&#123;&#x27;department&#x27;: &#x27;技术部&#x27;&#125;]&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解析：</span></span><br><span class="line"><span class="comment"># 1、跟在annotate前的filter(gender=1) 相当于 where gender = 1，先过滤出所有男员工信息</span></span><br><span class="line"><span class="comment"># 2、values(&#x27;department&#x27;).annotate(male_count=Count(&quot;id&quot;)) 相当于group by department，对过滤出的男员工按照部门分组，然后聚合出每个部门内的男员工数赋值给字段male_count</span></span><br><span class="line"><span class="comment"># 3、跟在annotate后的filter(male_count__gt=2) 相当于 having male_count &gt; 2,会过滤出男员工数超过2人的部门</span></span><br><span class="line"><span class="comment"># 4、最后的values(&#x27;department&#x27;)代表从最终的结果中只取部门名</span></span><br></pre></td></tr></table></figure>
+
+<p>总结：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copy1、values()在annotate()前表示group by的字段，在后表示取值</span><br><span class="line"><span class="number">1</span>、filter()在annotate()前表示where条件，在后表示having</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，如果我们在annotate前没有指定values()，那默认用表中的id字段作为分组依据，而id各不相同，如此分组是没有意义的，如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copyres=Employee.objects.annotate(Count(<span class="string">&#x27;name&#x27;</span>)) <span class="comment"># 每条记录都是一个分组</span></span><br><span class="line">res=Employee.objects.all().annotate(Count(<span class="string">&#x27;name&#x27;</span>)) <span class="comment"># 同上</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-4-修改记录"><a href="#2-4-修改记录" class="headerlink" title="2.4 修改记录"></a>2.4 修改记录</h2><h3 id="2-5-1-直接修改单条记录"><a href="#2-5-1-直接修改单条记录" class="headerlink" title="2.5.1 直接修改单条记录"></a>2.5.1 直接修改单条记录</h3><p>可以修改记录对象属性的值，然后执行save方法从而完成对单条记录的直接修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、获取记录对象</span></span><br><span class="line">obj=Employee.objects.filter(name=<span class="string">&#x27;Egon&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 2、修改记录对象属性的值</span></span><br><span class="line">obj.name=<span class="string">&#x27;EGON&#x27;</span></span><br><span class="line">obj.gender=<span class="number">1</span></span><br><span class="line"><span class="comment"># 3、重新保存</span></span><br><span class="line">obj.save()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-2-修改QuerySet中的所有记录对象"><a href="#2-5-2-修改QuerySet中的所有记录对象" class="headerlink" title="2.5.2 修改QuerySet中的所有记录对象"></a>2.5.2 修改QuerySet中的所有记录对象</h3><p>QuerySet对象下的update()方法可以更QuerySet中包含的所有对象，该方法会返回一个整型数值，表示受影响的记录条数（相当于sql语句执行结果的rows）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copyqueryset_obj=Employee.objects.filter(id__gt=<span class="number">5</span>)</span><br><span class="line">rows=queryset_obj.update(name=<span class="string">&#x27;EGON&#x27;</span>,gender=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-5-删除记录"><a href="#2-5-删除记录" class="headerlink" title="2.5 删除记录"></a>2.5 删除记录</h2><p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154430256-1231154195.gif" alt="img"></p>
+<h3 id="2-5-1-直接删除单条记录"><a href="#2-5-1-直接删除单条记录" class="headerlink" title="2.5.1 直接删除单条记录"></a>2.5.1 直接删除单条记录</h3><p>可以直接调用记录对象下的delete方法，该方法运行时立即删除本条记录而不返回任何值,如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copyobj=Employee.objects.first()</span><br><span class="line">obj.delete()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-2-删除QuerySet中的所有记录对象"><a href="#2-5-2-删除QuerySet中的所有记录对象" class="headerlink" title="2.5.2 删除QuerySet中的所有记录对象"></a>2.5.2 删除QuerySet中的所有记录对象</h3><p>每个 QuerySet下也都有一个 delete() 方法，它一次性删除 QuerySet 中所有的对象（如果QuerySet对象中只有一个记录对象，那也就只删一条），如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copyqueryset_obj=Employee.objects.filter(id__gt=<span class="number">5</span>)</span><br><span class="line">rows=queryset_obj.delete()</span><br></pre></td></tr></table></figure>
+
+<p>需要强调的是管理objects下并没有delete方法，这是一种保护机制，是为了避免意外地调用 Employee.objects.delete() 方法导致所有的记录被误删除从而跑路。但如果你确认要删除所有的记录，那么你必须显式地调用管理器下的all方法，拿到一个QuerySet对象后才能调用delete方法删除所有</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CopyEmployee.objects.all().delete()</span><br></pre></td></tr></table></figure>
+
+<p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191012154430491-350232440..png" alt="1554205424515"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"><i class="fas fa-cookie-bite"></i> Django</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E6%9D%BF-03/" rel="prev" title="Django进阶-模板-03">
+      <i class="fa fa-chevron-left"></i> Django进阶-模板-03
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B02-%E5%A4%9A%E8%A1%A8/" rel="next" title="Django进阶-模型02-多表">
+      Django进阶-模型02-多表 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-ORM%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">一 ORM简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E5%8D%95%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">二 单表操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E6%8C%89%E6%AD%A5%E9%AA%A4%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 按步骤创建表</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-%E5%88%9B%E5%BB%BAdjango%E9%A1%B9%E7%9B%AE%EF%BC%8C%E6%96%B0%E5%BB%BA%E5%90%8D%E4%B8%BAapp01%E7%9A%84app%EF%BC%8C%E5%9C%A8app01%E7%9A%84models-py%E4%B8%AD%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.0.0.1.</span> <span class="nav-text">2.1.1 创建django项目，新建名为app01的app，在app01的models.py中创建模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-django%E7%9A%84orm%E6%94%AF%E6%8C%81%E5%A4%9A%E7%A7%8D%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%83%B3%E5%B0%86%E4%B8%8A%E8%BF%B0%E6%A8%A1%E5%9E%8B%E8%BD%AC%E4%B8%BAmysql%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E8%A1%A8%EF%BC%8C%E9%9C%80%E8%A6%81settings-py%E4%B8%AD"><span class="nav-number">2.1.0.0.2.</span> <span class="nav-text">2.1.2 django的orm支持多种数据库，如果想将上述模型转为mysql数据库中的表，需要settings.py中</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-%E5%9C%A8%E9%93%BE%E6%8E%A5mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%89%8D%EF%BC%8C%E5%BF%85%E9%A1%BB%E4%BA%8B%E5%85%88%E5%88%9B%E5%BB%BA%E5%A5%BD%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.0.0.3.</span> <span class="nav-text">2.1.3 在链接mysql数据库前，必须事先创建好数据库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-4-%E5%85%B6%E5%AE%9Epython%E8%A7%A3%E9%87%8A%E5%99%A8%E5%9C%A8%E8%BF%90%E8%A1%8Cdjango%E7%A8%8B%E5%BA%8F%E6%97%B6%EF%BC%8Cdjango%E7%9A%84orm%E5%BA%95%E5%B1%82%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84python%E6%A8%A1%E5%9D%97%E9%BB%98%E8%AE%A4%E6%98%AFmysqldb%E8%80%8C%E9%9D%9Epymysql%EF%BC%8C%E7%84%B6%E8%80%8C%E5%AF%B9%E4%BA%8E%E8%A7%A3%E9%87%8A%E5%99%A8%E8%80%8C%E8%A8%80%EF%BC%8Cpython2-x%E8%A7%A3%E9%87%8A%E5%99%A8%E6%94%AF%E6%8C%81%E7%9A%84%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%A8%A1%E5%9D%97%E6%98%AFmysqldb%EF%BC%8C%E8%80%8Cpython3-x%E8%A7%A3%E9%87%8A%E5%99%A8%E6%94%AF%E6%8C%81%E7%9A%84%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%A8%A1%E5%9D%97%E5%88%99%E6%98%AFpymysql%EF%BC%8C%EF%BC%8C%E6%AF%AB%E6%97%A0%E7%96%91%E9%97%AE%EF%BC%8C%E7%9B%AE%E5%89%8D%E6%88%91%E4%BB%AC%E7%9A%84django%E7%A8%8B%E5%BA%8F%E9%83%BD%E6%98%AF%E8%BF%90%E8%A1%8C%E4%BA%8Epython3-x%E8%A7%A3%E9%87%8A%E5%99%A8%E4%B8%8B%EF%BC%8C%E4%BA%8E%E6%98%AF%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9django%E7%9A%84orm%E9%BB%98%E8%AE%A4%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%A8%A1%E5%9D%97%E4%B8%BApymysql%EF%BC%8C%E5%85%B7%E4%BD%93%E5%81%9A%E6%B3%95%E5%A6%82%E4%B8%8B"><span class="nav-number">2.1.0.0.4.</span> <span class="nav-text">2.1.4 其实python解释器在运行django程序时，django的orm底层操作数据库的python模块默认是mysqldb而非pymysql，然而对于解释器而言，python2.x解释器支持的操作数据库的模块是mysqldb，而python3.x解释器支持的操作数据库的模块则是pymysql，，毫无疑问，目前我们的django程序都是运行于python3.x解释器下，于是我们需要修改django的orm默认操作数据库的模块为pymysql，具体做法如下</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-5-%E7%A1%AE%E4%BF%9D%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6settings-py%E4%B8%AD%E7%9A%84INSTALLED-APPS%E4%B8%AD%E6%B7%BB%E5%8A%A0%E6%88%91%E4%BB%AC%E5%88%9B%E5%BB%BA%E7%9A%84app%E5%90%8D%E7%A7%B0-django2-x%E4%B8%8Edjango1-x%E5%A4%84%E7%90%86%E6%B7%BB%E5%8A%A0%E6%96%B9%E5%BC%8F%E4%B8%8D%E5%90%8C"><span class="nav-number">2.1.0.0.5.</span> <span class="nav-text">2.1.5 确保配置文件settings.py中的INSTALLED_APPS中添加我们创建的app名称,django2.x与django1.x处理添加方式不同</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-6-%E5%A6%82%E6%9E%9C%E6%83%B3%E6%89%93%E5%8D%B0orm%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84sql%EF%BC%8C%E9%9C%80%E8%A6%81%E5%9C%A8settings%E4%B8%AD%E8%BF%9B%E8%A1%8C%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%EF%BC%9A"><span class="nav-number">2.1.0.0.6.</span> <span class="nav-text">2.1.6 如果想打印orm转换过程中的sql，需要在settings中进行配置日志：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-7-%E6%9C%80%E5%90%8E%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%AD%E6%89%A7%E8%A1%8C%E4%B8%A4%E6%9D%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB%E5%91%BD%E4%BB%A4%EF%BC%8C%E5%8D%B3%E5%8F%AF%E5%9C%A8%E6%8C%87%E5%AE%9A%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93db1%E4%B8%AD%E5%88%9B%E5%BB%BA%E8%A1%A8-%EF%BC%9A"><span class="nav-number">2.1.0.0.7.</span> <span class="nav-text">2.1.7 最后在命令行中执行两条数据库迁移命令，即可在指定的数据库db1中创建表 ：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-8-%E5%9C%A8%E8%A1%A8%E7%94%9F%E6%88%90%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E5%A2%9E%E5%8A%A0%E3%80%81%E5%88%A0%E9%99%A4%E3%80%81%E4%BF%AE%E6%94%B9%E8%A1%A8%E4%B8%AD%E5%AD%97%E6%AE%B5%EF%BC%8C%E9%9C%80%E8%A6%81%E8%BF%99%E4%B9%88%E5%81%9A"><span class="nav-number">2.1.0.0.8.</span> <span class="nav-text">2.1.8 在表生成之后，如果需要增加、删除、修改表中字段，需要这么做</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%B7%BB%E5%8A%A0%E8%AE%B0%E5%BD%95"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 添加记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%9F%A5%E8%AF%A2%E8%AE%B0%E5%BD%95"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 查询记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-%E6%9F%A5%E8%AF%A2API"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 查询API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-%E5%9F%BA%E4%BA%8E%E5%8F%8C%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%84%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 基于双下划线的模糊查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-F%E4%B8%8EQ%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 F与Q查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#F%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">F查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">Q查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-4-%E8%81%9A%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4 聚合查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-5-%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.3.5.</span> <span class="nav-text">2.3.5 分组查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 修改记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-1-%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9%E5%8D%95%E6%9D%A1%E8%AE%B0%E5%BD%95"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.5.1 直接修改单条记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-2-%E4%BF%AE%E6%94%B9QuerySet%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E8%AE%B0%E5%BD%95%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.5.2 修改QuerySet中的所有记录对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-%E5%88%A0%E9%99%A4%E8%AE%B0%E5%BD%95"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 删除记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-1-%E7%9B%B4%E6%8E%A5%E5%88%A0%E9%99%A4%E5%8D%95%E6%9D%A1%E8%AE%B0%E5%BD%95"><span class="nav-number">2.5.1.</span> <span class="nav-text">2.5.1 直接删除单条记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-2-%E5%88%A0%E9%99%A4QuerySet%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E8%AE%B0%E5%BD%95%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.5.2.</span> <span class="nav-text">2.5.2 删除QuerySet中的所有记录对象</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">849k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">23:35</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

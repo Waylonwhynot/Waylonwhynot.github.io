@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Django Models 更多字段与参数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django进阶-模型03-更多字段与参数">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B03-%E6%9B%B4%E5%A4%9A%E5%AD%97%E6%AE%B5%E4%B8%8E%E5%8F%82%E6%95%B0/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Django Models 更多字段与参数">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-09T15:26:53.000Z">
+<meta property="article:modified_time" content="2021-05-09T15:57:28.093Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B03-%E6%9B%B4%E5%A4%9A%E5%AD%97%E6%AE%B5%E4%B8%8E%E5%8F%82%E6%95%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Django进阶-模型03-更多字段与参数 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B03-%E6%9B%B4%E5%A4%9A%E5%AD%97%E6%AE%B5%E4%B8%8E%E5%8F%82%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Django进阶-模型03-更多字段与参数
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-09 23:26:53 / 修改时间：23:57:28" itemprop="dateCreated datePublished" datetime="2021-05-09T23:26:53+08:00">2021-05-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>20 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Django Models 更多字段与参数</p>
+<a id="more"></a>
+
+<p>表格+案例</p>
+<p>参考：<a target="_blank" rel="noopener" href="http://www.liuqingzheng.top/python/Django%E6%A1%86%E6%9E%B6/10-%E6%A8%A1%E5%9E%8B%E5%B1%82-%E5%B8%B8%E7%94%A8%E9%9D%9E%E5%B8%B8%E7%94%A8%E5%AD%97%E6%AE%B5%E5%92%8C%E5%8F%82%E6%95%B0/">http://www.liuqingzheng.top/python/Django%E6%A1%86%E6%9E%B6/10-%E6%A8%A1%E5%9E%8B%E5%B1%82-%E5%B8%B8%E7%94%A8%E9%9D%9E%E5%B8%B8%E7%94%A8%E5%AD%97%E6%AE%B5%E5%92%8C%E5%8F%82%E6%95%B0/</a></p>
+<h2 id="1-ORM字段"><a href="#1-ORM字段" class="headerlink" title="1 ORM字段"></a>1 ORM字段</h2><h4 id="AutoField"><a href="#AutoField" class="headerlink" title="AutoField"></a>AutoField</h4><p>int自增列，必须填入参数 primary_key=True。当model中如果没有自增列，则自动会创建一个列名为id的列。</p>
+<h4 id="IntegerField"><a href="#IntegerField" class="headerlink" title="IntegerField"></a>IntegerField</h4><p>一个整数类型,范围在 -2147483648 to 2147483647。</p>
+<h4 id="CharField"><a href="#CharField" class="headerlink" title="CharField"></a>CharField</h4><p>字符类型，必须提供max_length参数， max_length表示字符长度。</p>
+<h4 id="DateField"><a href="#DateField" class="headerlink" title="DateField"></a>DateField</h4><p>日期字段，日期格式 YYYY-MM-DD，相当于Python中的datetime.date()实例。</p>
+<h4 id="DateTimeField"><a href="#DateTimeField" class="headerlink" title="DateTimeField"></a>DateTimeField</h4><p>日期时间字段，格式 YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]，相当于Python中的datetime.datetime()实例</p>
+<h3 id="常用和非常用字段"><a href="#常用和非常用字段" class="headerlink" title="常用和非常用字段"></a>常用和非常用字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line">AutoField(Field)</span><br><span class="line">- int自增列，必须填入参数 primary_key&#x3D;True</span><br><span class="line"></span><br><span class="line">BigAutoField(AutoField)</span><br><span class="line">- bigint自增列，必须填入参数 primary_key&#x3D;True</span><br><span class="line"></span><br><span class="line">注：当model中如果没有自增列，则自动会创建一个列名为id的列</span><br><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line">class UserInfo(models.Model):</span><br><span class="line"># 自动创建一个列名为id的且为自增的整数列</span><br><span class="line">username &#x3D; models.CharField(max_length&#x3D;32)</span><br><span class="line"></span><br><span class="line">class Group(models.Model):</span><br><span class="line"># 自定义自增列</span><br><span class="line">nid &#x3D; models.AutoField(primary_key&#x3D;True)</span><br><span class="line">name &#x3D; models.CharField(max_length&#x3D;32)</span><br><span class="line"></span><br><span class="line">SmallIntegerField(IntegerField):</span><br><span class="line">- 小整数 -32768 ～ 32767</span><br><span class="line"></span><br><span class="line">PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField)</span><br><span class="line">- 正小整数 0 ～ 32767</span><br><span class="line">IntegerField(Field)</span><br><span class="line">- 整数列(有符号的) -2147483648 ～ 2147483647</span><br><span class="line"></span><br><span class="line">PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField)</span><br><span class="line">- 正整数 0 ～ 2147483647</span><br><span class="line"></span><br><span class="line">BigIntegerField(IntegerField):</span><br><span class="line">- 长整型(有符号的) -9223372036854775808 ～ 9223372036854775807</span><br><span class="line"></span><br><span class="line">BooleanField(Field)</span><br><span class="line">- 布尔值类型</span><br><span class="line"></span><br><span class="line">NullBooleanField(Field):</span><br><span class="line">- 可以为空的布尔值</span><br><span class="line"></span><br><span class="line">CharField(Field)</span><br><span class="line">- 字符类型</span><br><span class="line">- 必须提供max_length参数， max_length表示字符长度</span><br><span class="line"></span><br><span class="line">TextField(Field)</span><br><span class="line">- 文本类型</span><br><span class="line"></span><br><span class="line">EmailField(CharField)：</span><br><span class="line">- 字符串类型，Django Admin以及ModelForm中提供验证机制</span><br><span class="line"></span><br><span class="line">IPAddressField(Field)</span><br><span class="line">- 字符串类型，Django Admin以及ModelForm中提供验证 IPV4 机制</span><br><span class="line"></span><br><span class="line">GenericIPAddressField(Field)</span><br><span class="line">- 字符串类型，Django Admin以及ModelForm中提供验证 Ipv4和Ipv6</span><br><span class="line">- 参数：</span><br><span class="line">protocol，用于指定Ipv4或Ipv6， &#39;both&#39;,&quot;ipv4&quot;,&quot;ipv6&quot;</span><br><span class="line">unpack_ipv4， 如果指定为True，则输入::ffff:192.0.2.1时候，可解析为192.0.2.1，开启此功能，需要protocol&#x3D;&quot;both&quot;</span><br><span class="line"></span><br><span class="line">URLField(CharField)</span><br><span class="line">- 字符串类型，Django Admin以及ModelForm中提供验证 URL</span><br><span class="line"></span><br><span class="line">SlugField(CharField)</span><br><span class="line">- 字符串类型，Django Admin以及ModelForm中提供验证支持 字母、数字、下划线、连接符（减号）</span><br><span class="line"></span><br><span class="line">CommaSeparatedIntegerField(CharField)</span><br><span class="line">- 字符串类型，格式必须为逗号分割的数字</span><br><span class="line"></span><br><span class="line">UUIDField(Field)</span><br><span class="line">- 字符串类型，Django Admin以及ModelForm中提供对UUID格式的验证</span><br><span class="line"></span><br><span class="line">FilePathField(Field)</span><br><span class="line">- 字符串，Django Admin以及ModelForm中提供读取文件夹下文件的功能</span><br><span class="line">- 参数：</span><br><span class="line">path,                      文件夹路径</span><br><span class="line">match&#x3D;None,                正则匹配</span><br><span class="line">recursive&#x3D;False,           递归下面的文件夹</span><br><span class="line">allow_files&#x3D;True,          允许文件</span><br><span class="line">allow_folders&#x3D;False,       允许文件夹</span><br><span class="line"></span><br><span class="line">FileField(Field)</span><br><span class="line">- 字符串，路径保存在数据库，文件上传到指定目录</span><br><span class="line">- 参数：</span><br><span class="line">upload_to &#x3D; &quot;&quot;      上传文件的保存路径</span><br><span class="line">storage &#x3D; None      存储组件，默认django.core.files.storage.FileSystemStorage</span><br><span class="line"></span><br><span class="line">ImageField(FileField)</span><br><span class="line">- 字符串，路径保存在数据库，文件上传到指定目录</span><br><span class="line">- 参数：</span><br><span class="line">upload_to &#x3D; &quot;&quot;      上传文件的保存路径</span><br><span class="line">storage &#x3D; None      存储组件，默认django.core.files.storage.FileSystemStorage</span><br><span class="line">width_field&#x3D;None,   上传图片的高度保存的数据库字段名（字符串）</span><br><span class="line">height_field&#x3D;None   上传图片的宽度保存的数据库字段名（字符串）</span><br><span class="line"></span><br><span class="line">DateTimeField(DateField)</span><br><span class="line">- 日期+时间格式 YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]</span><br><span class="line"></span><br><span class="line">DateField(DateTimeCheckMixin, Field)</span><br><span class="line">- 日期格式      YYYY-MM-DD</span><br><span class="line"></span><br><span class="line">TimeField(DateTimeCheckMixin, Field)</span><br><span class="line">- 时间格式      HH:MM[:ss[.uuuuuu]]</span><br><span class="line"></span><br><span class="line">DurationField(Field)</span><br><span class="line">- 长整数，时间间隔，数据库中按照bigint存储，ORM中获取的值为datetime.timedelta类型</span><br><span class="line"></span><br><span class="line">FloatField(Field)</span><br><span class="line">- 浮点型</span><br><span class="line"></span><br><span class="line">DecimalField(Field)</span><br><span class="line">- 10进制小数</span><br><span class="line">- 参数：</span><br><span class="line">max_digits，小数总长度</span><br><span class="line">decimal_places，小数位长度</span><br><span class="line"></span><br><span class="line">BinaryField(Field)</span><br><span class="line">- 二进制类型</span><br><span class="line">对应关系：</span><br><span class="line">    &#39;AutoField&#39;: &#39;integer AUTO_INCREMENT&#39;,</span><br><span class="line">    &#39;BigAutoField&#39;: &#39;bigint AUTO_INCREMENT&#39;,</span><br><span class="line">    &#39;BinaryField&#39;: &#39;longblob&#39;,</span><br><span class="line">    &#39;BooleanField&#39;: &#39;bool&#39;,</span><br><span class="line">    &#39;CharField&#39;: &#39;varchar(%(max_length)s)&#39;,</span><br><span class="line">    &#39;CommaSeparatedIntegerField&#39;: &#39;varchar(%(max_length)s)&#39;,</span><br><span class="line">    &#39;DateField&#39;: &#39;date&#39;,</span><br><span class="line">    &#39;DateTimeField&#39;: &#39;datetime&#39;,</span><br><span class="line">    &#39;DecimalField&#39;: &#39;numeric(%(max_digits)s, %(decimal_places)s)&#39;,</span><br><span class="line">    &#39;DurationField&#39;: &#39;bigint&#39;,</span><br><span class="line">    &#39;FileField&#39;: &#39;varchar(%(max_length)s)&#39;,</span><br><span class="line">    &#39;FilePathField&#39;: &#39;varchar(%(max_length)s)&#39;,</span><br><span class="line">    &#39;FloatField&#39;: &#39;double precision&#39;,</span><br><span class="line">    &#39;IntegerField&#39;: &#39;integer&#39;,</span><br><span class="line">    &#39;BigIntegerField&#39;: &#39;bigint&#39;,</span><br><span class="line">    &#39;IPAddressField&#39;: &#39;char(15)&#39;,</span><br><span class="line">    &#39;GenericIPAddressField&#39;: &#39;char(39)&#39;,</span><br><span class="line">    &#39;NullBooleanField&#39;: &#39;bool&#39;,</span><br><span class="line">    &#39;OneToOneField&#39;: &#39;integer&#39;,</span><br><span class="line">    &#39;PositiveIntegerField&#39;: &#39;integer UNSIGNED&#39;,</span><br><span class="line">    &#39;PositiveSmallIntegerField&#39;: &#39;smallint UNSIGNED&#39;,</span><br><span class="line">    &#39;SlugField&#39;: &#39;varchar(%(max_length)s)&#39;,</span><br><span class="line">    &#39;SmallIntegerField&#39;: &#39;smallint&#39;,</span><br><span class="line">    &#39;TextField&#39;: &#39;longtext&#39;,</span><br><span class="line">    &#39;TimeField&#39;: &#39;time&#39;,</span><br><span class="line">    &#39;UUIDField&#39;: &#39;char(32)&#39;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-ORM字段参数"><a href="#2-ORM字段参数" class="headerlink" title="2 ORM字段参数"></a>2 ORM字段参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">#### null</span><br><span class="line"></span><br><span class="line">用于表示某个字段可以为空。</span><br><span class="line"></span><br><span class="line">#### **unique**</span><br><span class="line"></span><br><span class="line">如果设置为unique&#x3D;True 则该字段在此表中必须是唯一的 。</span><br><span class="line"></span><br><span class="line">#### **db_index**</span><br><span class="line"></span><br><span class="line">如果db_index&#x3D;True 则代表着为此字段设置索引。</span><br><span class="line"></span><br><span class="line">#### **default**</span><br><span class="line"></span><br><span class="line">为该字段设置默认值。</span><br><span class="line"></span><br><span class="line">###  DateField和DateTimeField</span><br><span class="line"></span><br><span class="line">#### auto_now_add</span><br><span class="line"></span><br><span class="line">配置auto_now_add&#x3D;True，创建数据记录的时候会把当前时间添加到数据库。</span><br><span class="line"></span><br><span class="line">#### auto_now</span><br><span class="line"></span><br><span class="line">配置上auto_now&#x3D;True，每次更新数据记录的时候会更新该字段。</span><br><span class="line">null                数据库中字段是否可以为空</span><br><span class="line">db_column           数据库中字段的列名</span><br><span class="line">db_tablespace</span><br><span class="line">default             数据库中字段的默认值</span><br><span class="line">primary_key         数据库中字段是否为主键</span><br><span class="line">db_index            数据库中字段是否可以建立索引</span><br><span class="line">unique              数据库中字段是否可以建立唯一索引</span><br><span class="line">unique_for_date     数据库中字段【日期】部分是否可以建立唯一索引</span><br><span class="line">unique_for_month    数据库中字段【月】部分是否可以建立唯一索引</span><br><span class="line">unique_for_year     数据库中字段【年】部分是否可以建立唯一索引</span><br><span class="line"></span><br><span class="line">verbose_name        Admin中显示的字段名称</span><br><span class="line">blank               Admin中是否允许用户输入为空</span><br><span class="line">editable            Admin中是否可以编辑</span><br><span class="line">help_text           Admin中该字段的提示信息</span><br><span class="line">choices             Admin中显示选择框的内容，用不变动的数据放在内存中从而避免跨表操作</span><br><span class="line">如：gf &#x3D; models.IntegerField(choices&#x3D;[(0, &#39;何穗&#39;),(1, &#39;大表姐&#39;),],default&#x3D;1)</span><br><span class="line"></span><br><span class="line">error_messages      自定义错误信息（字典类型），从而定制想要显示的错误信息；</span><br><span class="line">字典健：null, blank, invalid, invalid_choice, unique, and unique_for_date</span><br><span class="line">如：&#123;&#39;null&#39;: &quot;不能为空.&quot;, &#39;invalid&#39;: &#39;格式错误&#39;&#125;</span><br><span class="line"></span><br><span class="line">validators          自定义错误验证（列表类型），从而定制想要的验证规则</span><br><span class="line">from django.core.validators import RegexValidator</span><br><span class="line">from django.core.validators import EmailValidator,URLValidator,DecimalValidator,\</span><br><span class="line">MaxLengthValidator,MinLengthValidator,MaxValueValidator,MinValueValidator</span><br><span class="line">如：</span><br><span class="line">test &#x3D; models.CharField(</span><br><span class="line">max_length&#x3D;32,</span><br><span class="line">error_messages&#x3D;&#123;</span><br><span class="line">&#39;c1&#39;: &#39;优先错信息1&#39;,</span><br><span class="line">&#39;c2&#39;: &#39;优先错信息2&#39;,</span><br><span class="line">&#39;c3&#39;: &#39;优先错信息3&#39;,</span><br><span class="line">&#125;,</span><br><span class="line">validators&#x3D;[</span><br><span class="line">RegexValidator(regex&#x3D;&#39;root_\d+&#39;, message&#x3D;&#39;错误了&#39;, code&#x3D;&#39;c1&#39;),</span><br><span class="line">RegexValidator(regex&#x3D;&#39;root_112233\d+&#39;, message&#x3D;&#39;又错误了&#39;, code&#x3D;&#39;c2&#39;),</span><br><span class="line">EmailValidator(message&#x3D;&#39;又错误了&#39;, code&#x3D;&#39;c3&#39;), ]</span><br><span class="line">                            )</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-关系字段"><a href="#3-关系字段" class="headerlink" title="3 关系字段"></a>3 关系字段</h2><h3 id="ForeignKey"><a href="#ForeignKey" class="headerlink" title="ForeignKey"></a>ForeignKey</h3><p>外键类型在ORM中用来表示外键关联关系，一般把ForeignKey字段设置在 ‘一对多’中’多’的一方。</p>
+<p>ForeignKey可以和其他表做关联关系同时也可以和自身做关联关系。</p>
+<h4 id="to"><a href="#to" class="headerlink" title="to"></a>to</h4><p>设置要关联的表</p>
+<h4 id="to-field"><a href="#to-field" class="headerlink" title="to_field"></a>to_field</h4><p>设置要关联的表的字段</p>
+<h4 id="related-name"><a href="#related-name" class="headerlink" title="related_name"></a>related_name</h4><p>反向操作时，使用的字段名，用于代替原反向查询时的’表名_set’。</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Classes(models.Model):</span><br><span class="line">    name &#x3D; models.CharField(max_length&#x3D;32)</span><br><span class="line"></span><br><span class="line">class Student(models.Model):</span><br><span class="line">    name &#x3D; models.CharField(max_length&#x3D;32)</span><br><span class="line">    theclass &#x3D; models.ForeignKey(to&#x3D;&quot;Classes&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>当我们要查询某个班级关联的所有学生（反向查询）时，我们会这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Classes.objects.first().student_set.all()</span><br></pre></td></tr></table></figure>
+
+<p>当我们在ForeignKey字段中添加了参数 related_name 后，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Student(models.Model):</span><br><span class="line">    name &#x3D; models.CharField(max_length&#x3D;32)</span><br><span class="line">    theclass &#x3D; models.ForeignKey(to&#x3D;&quot;Classes&quot;, related_name&#x3D;&quot;students&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>当我们要查询某个班级关联的所有学生（反向查询）时，我们会这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Classes.objects.first().students.all()</span><br></pre></td></tr></table></figure>
+
+<h4 id="related-query-name"><a href="#related-query-name" class="headerlink" title="related_query_name"></a><strong>related_query_name</strong></h4><p>反向查询操作时，使用的连接前缀，用于替换表名。</p>
+<h4 id="on-delete"><a href="#on-delete" class="headerlink" title="on_delete"></a><strong>on_delete</strong></h4><p>　　当删除关联表中的数据时，当前表与其关联的行的行为。</p>
+<p>　　<strong>models.CASCADE</strong><br>　　删除关联数据，与之关联也删除</p>
+<p>　　<strong>models.DO_NOTHING</strong><br>　　删除关联数据，引发错误IntegrityError</p>
+<p>　　<strong>models.PROTECT</strong><br>　　删除关联数据，引发错误ProtectedError</p>
+<p>　　<strong>models.SET_NULL</strong><br>　　删除关联数据，与之关联的值设置为null（前提FK字段需要设置为可空）</p>
+<p>　　<strong>models.SET_DEFAULT</strong><br>　　删除关联数据，与之关联的值设置为默认值（前提FK字段需要设置默认值）</p>
+<p>　　<strong>models.SET</strong></p>
+<p>　　删除关联数据，<br>　　a. 与之关联的值设置为指定值，设置：models.SET(值)<br>　　b. 与之关联的值设置为可执行对象的返回值，设置：models.SET(可执行对象)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def func():</span><br><span class="line">    return 10</span><br><span class="line"></span><br><span class="line">class MyModel(models.Model):</span><br><span class="line">    user &#x3D; models.ForeignKey(</span><br><span class="line">        to&#x3D;&quot;User&quot;,</span><br><span class="line">        to_field&#x3D;&quot;id&quot;，</span><br><span class="line">        on_delete&#x3D;models.SET(func)</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<h4 id="db-constraint"><a href="#db-constraint" class="headerlink" title="db_constraint"></a>db_constraint</h4><p>是否在数据库中创建外键约束，默认为True。</p>
+<h3 id="OneToOneField"><a href="#OneToOneField" class="headerlink" title="OneToOneField"></a>OneToOneField</h3><p>一对一字段。</p>
+<p>通常一对一字段用来扩展已有字段。</p>
+<p>一对一的关联关系多用在当一张表的不同字段查询频次差距过大的情况下，将本可以存储在一张表的字段拆开放置在两张表中，然后将两张表建立一对一的关联关系。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Author(models.Model):</span><br><span class="line">    name &#x3D; models.CharField(max_length&#x3D;32)</span><br><span class="line">    info &#x3D; models.OneToOneField(to&#x3D;&#39;AuthorInfo&#39;)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">class AuthorInfo(models.Model):</span><br><span class="line">    phone &#x3D; models.CharField(max_length&#x3D;11)</span><br><span class="line">    email &#x3D; models.EmailField()</span><br></pre></td></tr></table></figure>
+
+<h4 id="to-1"><a href="#to-1" class="headerlink" title="to"></a>to</h4><p>设置要关联的表。</p>
+<h4 id="to-field-1"><a href="#to-field-1" class="headerlink" title="to_field"></a>to_field</h4><p>设置要关联的字段。</p>
+<h4 id="on-delete-1"><a href="#on-delete-1" class="headerlink" title="on_delete"></a>on_delete</h4><p>同ForeignKey字段。</p>
+<h3 id="ManyToManyField"><a href="#ManyToManyField" class="headerlink" title="ManyToManyField"></a>ManyToManyField</h3><p>用于表示多对多的关联关系。在数据库中通过第三张表来建立关联关系</p>
+<h4 id="to-2"><a href="#to-2" class="headerlink" title="to"></a>to</h4><p>设置要关联的表</p>
+<h4 id="related-name-1"><a href="#related-name-1" class="headerlink" title="related_name"></a>related_name</h4><p>同ForeignKey字段。</p>
+<h4 id="related-query-name-1"><a href="#related-query-name-1" class="headerlink" title="related_query_name"></a>related_query_name</h4><p>同ForeignKey字段。</p>
+<h4 id="symmetrical"><a href="#symmetrical" class="headerlink" title="symmetrical"></a>symmetrical</h4><p>仅用于多对多自关联时，指定内部是否创建反向操作的字段。默认为True。</p>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Person(models.Model):</span><br><span class="line">    name &#x3D; models.CharField(max_length&#x3D;16)</span><br><span class="line">    friends &#x3D; models.ManyToManyField(&quot;self&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>此时，person对象就没有person_set属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Person(models.Model):</span><br><span class="line">    name &#x3D; models.CharField(max_length&#x3D;16)</span><br><span class="line">    friends &#x3D; models.ManyToManyField(&quot;self&quot;, symmetrical&#x3D;False)</span><br></pre></td></tr></table></figure>
+
+<p>此时，person对象现在就可以使用person_set属性进行反向查询。</p>
+<h4 id="through"><a href="#through" class="headerlink" title="through"></a>through</h4><p>在使用ManyToManyField字段时，Django将自动生成一张表来管理多对多的关联关系。</p>
+<p>但我们也可以手动创建第三张表来管理多对多关系，此时就需要通过through来指定第三张表的表名。</p>
+<h4 id="through-fields"><a href="#through-fields" class="headerlink" title="through_fields"></a><strong>through_fields</strong></h4><p>设置关联的字段。</p>
+<h4 id="db-table"><a href="#db-table" class="headerlink" title="db_table"></a>db_table</h4><p>默认创建第三张表时，数据库中表的名称。</p>
+<h2 id="4-多对多关联关系的三种方式"><a href="#4-多对多关联关系的三种方式" class="headerlink" title="4 多对多关联关系的三种方式"></a>4 多对多关联关系的三种方式</h2><h3 id="方式一：自行创建第三张表"><a href="#方式一：自行创建第三张表" class="headerlink" title="方式一：自行创建第三张表"></a>方式一：自行创建第三张表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Book(models.Model):</span><br><span class="line">    title &#x3D; models.CharField(max_length&#x3D;32, verbose_name&#x3D;&quot;书名&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Author(models.Model):</span><br><span class="line">    name &#x3D; models.CharField(max_length&#x3D;32, verbose_name&#x3D;&quot;作者姓名&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 自己创建第三张表，分别通过外键关联书和作者</span><br><span class="line">class Author2Book(models.Model):</span><br><span class="line">    author &#x3D; models.ForeignKey(to&#x3D;&quot;Author&quot;)</span><br><span class="line">    book &#x3D; models.ForeignKey(to&#x3D;&quot;Book&quot;)</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        unique_together &#x3D; (&quot;author&quot;, &quot;book&quot;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="方式二：通过ManyToManyField自动创建第三张表"><a href="#方式二：通过ManyToManyField自动创建第三张表" class="headerlink" title="方式二：通过ManyToManyField自动创建第三张表"></a>方式二：通过ManyToManyField自动创建第三张表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Book(models.Model):</span><br><span class="line">    title &#x3D; models.CharField(max_length&#x3D;32, verbose_name&#x3D;&quot;书名&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 通过ORM自带的ManyToManyField自动创建第三张表</span><br><span class="line">class Author(models.Model):</span><br><span class="line">    name &#x3D; models.CharField(max_length&#x3D;32, verbose_name&#x3D;&quot;作者姓名&quot;)</span><br><span class="line">    books &#x3D; models.ManyToManyField(to&#x3D;&quot;Book&quot;, related_name&#x3D;&quot;authors&quot;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="方式三：设置ManyTomanyField并指定自行创建的第三张表"><a href="#方式三：设置ManyTomanyField并指定自行创建的第三张表" class="headerlink" title="方式三：设置ManyTomanyField并指定自行创建的第三张表"></a>方式三：设置ManyTomanyField并指定自行创建的第三张表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Book(models.Model):</span><br><span class="line">    title &#x3D; models.CharField(max_length&#x3D;32, verbose_name&#x3D;&quot;书名&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 自己创建第三张表，并通过ManyToManyField指定关联</span><br><span class="line">class Author(models.Model):</span><br><span class="line">    name &#x3D; models.CharField(max_length&#x3D;32, verbose_name&#x3D;&quot;作者姓名&quot;)</span><br><span class="line">    books &#x3D; models.ManyToManyField(to&#x3D;&quot;Book&quot;, through&#x3D;&quot;Author2Book&quot;, through_fields&#x3D;(&quot;author&quot;, &quot;book&quot;))</span><br><span class="line">    # through_fields接受一个2元组（&#39;field1&#39;，&#39;field2&#39;）：</span><br><span class="line">    # 其中field1是定义ManyToManyField的模型外键的名（author），field2是关联目标模型（book）的外键名。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Author2Book(models.Model):</span><br><span class="line">    author &#x3D; models.ForeignKey(to&#x3D;&quot;Author&quot;)</span><br><span class="line">    book &#x3D; models.ForeignKey(to&#x3D;&quot;Book&quot;)</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        unique_together &#x3D; (&quot;author&quot;, &quot;book&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<p>当我们需要在第三张关系表中存储额外的字段时，就要使用第三种方式。</p>
+<p>但是当我们使用第三种方式创建多对多关联关系时，就无法使用set、add、remove、clear方法来管理多对多的关系了，需要通过第三张表的model来管理多对多关系。</p>
+<h2 id="5-元信息"><a href="#5-元信息" class="headerlink" title="5 元信息"></a>5 元信息</h2><p>ORM对应的类里面包含另一个Meta类，而Meta类封装了一些数据库的信息。主要字段如下:</p>
+<h4 id="db-table-1"><a href="#db-table-1" class="headerlink" title="db_table"></a><strong>db_table</strong></h4><p>ORM在数据库中的表名默认是 <strong>app_</strong>类名，可以通过<strong>db_table</strong>可以重写表名。</p>
+<h4 id="index-together"><a href="#index-together" class="headerlink" title="index_together"></a>index_together</h4><p>联合索引。</p>
+<h4 id="unique-together"><a href="#unique-together" class="headerlink" title="unique_together"></a>unique_together</h4><p>联合唯一索引。</p>
+<h4 id="ordering"><a href="#ordering" class="headerlink" title="ordering"></a>ordering</h4><p>指定默认按什么字段排序。</p>
+<p>只有设置了该属性，我们查询到的结果才可以被reverse()。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class UserInfo(models.Model):</span><br><span class="line">    nid &#x3D; models.AutoField(primary_key&#x3D;True)</span><br><span class="line">    username &#x3D; models.CharField(max_length&#x3D;32)</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        # 数据库中生成的表名称 默认 app名称 + 下划线 + 类名</span><br><span class="line">        db_table &#x3D; &quot;table_name&quot;</span><br><span class="line"></span><br><span class="line">        # 联合索引</span><br><span class="line">        index_together &#x3D; [</span><br><span class="line">            (&quot;pub_date&quot;, &quot;deadline&quot;),</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">        # 联合唯一索引</span><br><span class="line">        unique_together &#x3D; ((&quot;driver&quot;, &quot;restaurant&quot;),)</span><br><span class="line">        </span><br><span class="line">        ordering &#x3D; (&#39;name&#39;,)</span><br><span class="line">        </span><br><span class="line">        # admin中显示的表名称</span><br><span class="line">        verbose_name&#x3D;&#39;哈哈&#39;</span><br><span class="line"></span><br><span class="line">        # verbose_name加s</span><br><span class="line">        verbose_name_plural&#x3D;verbose_name</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-自定义字段（了解）"><a href="#6-自定义字段（了解）" class="headerlink" title="6 自定义字段（了解）"></a>6 自定义字段（了解）</h2><p>自定义char类型字段：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FixedCharField</span>(<span class="params">models.Field</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    自定义的char类型的字段类</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, max_length, *args, **kwargs</span>):</span></span><br><span class="line">        self.max_length = max_length</span><br><span class="line">        super(FixedCharField, self).__init__(max_length=max_length, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">db_type</span>(<span class="params">self, connection</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        限定生成数据库表的字段类型为char，长度为max_length指定的值</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;char(%s)&#x27;</span> % self.max_length</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Class</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    id = models.AutoField(primary_key=<span class="literal">True</span>)</span><br><span class="line">    title = models.CharField(max_length=<span class="number">25</span>)</span><br><span class="line">    <span class="comment"># 使用自定义的char类型的字段</span></span><br><span class="line">    cname = FixedCharField(max_length=<span class="number">25</span>)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"><i class="fas fa-cookie-bite"></i> Django</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B02-%E5%A4%9A%E8%A1%A8/" rel="prev" title="Django进阶-模型02-多表">
+      <i class="fa fa-chevron-left"></i> Django进阶-模型02-多表
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B04-%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C/" rel="next" title="Django进阶-模型04-进阶操作">
+      Django进阶-模型04-进阶操作 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-ORM%E5%AD%97%E6%AE%B5"><span class="nav-number">1.</span> <span class="nav-text">1 ORM字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AutoField"><span class="nav-number">1.0.1.</span> <span class="nav-text">AutoField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IntegerField"><span class="nav-number">1.0.2.</span> <span class="nav-text">IntegerField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CharField"><span class="nav-number">1.0.3.</span> <span class="nav-text">CharField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DateField"><span class="nav-number">1.0.4.</span> <span class="nav-text">DateField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DateTimeField"><span class="nav-number">1.0.5.</span> <span class="nav-text">DateTimeField</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%92%8C%E9%9D%9E%E5%B8%B8%E7%94%A8%E5%AD%97%E6%AE%B5"><span class="nav-number">1.1.</span> <span class="nav-text">常用和非常用字段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-ORM%E5%AD%97%E6%AE%B5%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">2 ORM字段参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%85%B3%E7%B3%BB%E5%AD%97%E6%AE%B5"><span class="nav-number">3.</span> <span class="nav-text">3 关系字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ForeignKey"><span class="nav-number">3.1.</span> <span class="nav-text">ForeignKey</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#to"><span class="nav-number">3.1.1.</span> <span class="nav-text">to</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#to-field"><span class="nav-number">3.1.2.</span> <span class="nav-text">to_field</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#related-name"><span class="nav-number">3.1.3.</span> <span class="nav-text">related_name</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#related-query-name"><span class="nav-number">3.1.4.</span> <span class="nav-text">related_query_name</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#on-delete"><span class="nav-number">3.1.5.</span> <span class="nav-text">on_delete</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#db-constraint"><span class="nav-number">3.1.6.</span> <span class="nav-text">db_constraint</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OneToOneField"><span class="nav-number">3.2.</span> <span class="nav-text">OneToOneField</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#to-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">to</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#to-field-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">to_field</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#on-delete-1"><span class="nav-number">3.2.3.</span> <span class="nav-text">on_delete</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ManyToManyField"><span class="nav-number">3.3.</span> <span class="nav-text">ManyToManyField</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#to-2"><span class="nav-number">3.3.1.</span> <span class="nav-text">to</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#related-name-1"><span class="nav-number">3.3.2.</span> <span class="nav-text">related_name</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#related-query-name-1"><span class="nav-number">3.3.3.</span> <span class="nav-text">related_query_name</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#symmetrical"><span class="nav-number">3.3.4.</span> <span class="nav-text">symmetrical</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#through"><span class="nav-number">3.3.5.</span> <span class="nav-text">through</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#through-fields"><span class="nav-number">3.3.6.</span> <span class="nav-text">through_fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#db-table"><span class="nav-number">3.3.7.</span> <span class="nav-text">db_table</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">4 多对多关联关系的三种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E8%87%AA%E8%A1%8C%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%89%E5%BC%A0%E8%A1%A8"><span class="nav-number">4.1.</span> <span class="nav-text">方式一：自行创建第三张表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E9%80%9A%E8%BF%87ManyToManyField%E8%87%AA%E5%8A%A8%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%89%E5%BC%A0%E8%A1%A8"><span class="nav-number">4.2.</span> <span class="nav-text">方式二：通过ManyToManyField自动创建第三张表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9A%E8%AE%BE%E7%BD%AEManyTomanyField%E5%B9%B6%E6%8C%87%E5%AE%9A%E8%87%AA%E8%A1%8C%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%89%E5%BC%A0%E8%A1%A8"><span class="nav-number">4.3.</span> <span class="nav-text">方式三：设置ManyTomanyField并指定自行创建的第三张表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%85%83%E4%BF%A1%E6%81%AF"><span class="nav-number">5.</span> <span class="nav-text">5 元信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#db-table-1"><span class="nav-number">5.0.1.</span> <span class="nav-text">db_table</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#index-together"><span class="nav-number">5.0.2.</span> <span class="nav-text">index_together</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unique-together"><span class="nav-number">5.0.3.</span> <span class="nav-text">unique_together</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ordering"><span class="nav-number">5.0.4.</span> <span class="nav-text">ordering</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E6%AE%B5%EF%BC%88%E4%BA%86%E8%A7%A3%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6 自定义字段（了解）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">849k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">23:35</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
