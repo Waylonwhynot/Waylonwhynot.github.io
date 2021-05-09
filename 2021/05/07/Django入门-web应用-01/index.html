@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="一 Web应用程序是什么Web应用程序是一种可以通过Web访问的应用程序，程序的最大好处是用户很容易访问应用程序，用户只需要有浏览器即可，不需要再安装其他软件 应用程序有两种模式C&#x2F;S、B&#x2F;S。C&#x2F;S是客户端&#x2F;服务器端程序，也就是说这类程序一般独立运行。而B&#x2F;S就是浏览器端&#x2F;服务器端应用程序，这类应用程序一般借助IE等浏览器来运行。WEB应用程序一般是B&#x2F;S模式。Web应用程序首先是“应用程序”，">
+  <meta name="description" content="web应用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Django入门-web应用-01">
 <meta property="og:url" content="https://waylon.whatyouneed.site/2021/05/07/Django%E5%85%A5%E9%97%A8-web%E5%BA%94%E7%94%A8-01/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="一 Web应用程序是什么Web应用程序是一种可以通过Web访问的应用程序，程序的最大好处是用户很容易访问应用程序，用户只需要有浏览器即可，不需要再安装其他软件 应用程序有两种模式C&#x2F;S、B&#x2F;S。C&#x2F;S是客户端&#x2F;服务器端程序，也就是说这类程序一般独立运行。而B&#x2F;S就是浏览器端&#x2F;服务器端应用程序，这类应用程序一般借助IE等浏览器来运行。WEB应用程序一般是B&#x2F;S模式。Web应用程序首先是“应用程序”，">
+<meta property="og:description" content="web应用">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-06T19:55:25.000Z">
-<meta property="article:modified_time" content="2021-05-06T20:02:07.914Z">
+<meta property="article:modified_time" content="2021-05-09T07:06:52.536Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Django">
 <meta name="twitter:card" content="summary">
@@ -213,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-05-07 03:55:25 / 修改时间：04:02:07" itemprop="dateCreated datePublished" datetime="2021-05-07T03:55:25+08:00">2021-05-07</time>
+              <time title="创建时间：2021-05-07 03:55:25" itemprop="dateCreated datePublished" datetime="2021-05-07T03:55:25+08:00">2021-05-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-09 15:06:52" itemprop="dateModified" datetime="2021-05-09T15:06:52+08:00">2021-05-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -252,7 +258,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="一-Web应用程序是什么"><a href="#一-Web应用程序是什么" class="headerlink" title="一 Web应用程序是什么"></a>一 Web应用程序是什么</h2><p>Web应用程序是一种可以通过Web访问的应用程序，程序的最大好处是用户很容易访问应用程序，用户只需要有浏览器即可，不需要再安装其他软件</p>
+        <p>web应用</p>
+<a id="more"></a>
+
+
+
+<h2 id="一-Web应用程序是什么"><a href="#一-Web应用程序是什么" class="headerlink" title="一 Web应用程序是什么"></a>一 Web应用程序是什么</h2><p>Web应用程序是一种可以通过Web访问的应用程序，程序的最大好处是用户很容易访问应用程序，用户只需要有浏览器即可，不需要再安装其他软件</p>
 <p>应用程序有两种模式C/S、B/S。C/S是客户端/服务器端程序，也就是说这类程序一般独立运行。而B/S就是浏览器端/服务器端应用程序，这类应用程序一般借助IE等浏览器来运行。WEB应用程序一般是B/S模式。Web应用程序首先是“应用程序”，和用标准的程序语言，如C、C++等编写出来的程序没有什么本质上的不同。然而Web应用程序又有自己独特的地方，就是它是基于Web的，而不是采用传统方法运行的。换句话说，它是典型的浏览器/服务器架构的产物。</p>
 <h3 id="1-1-Web应用程序的优点"><a href="#1-1-Web应用程序的优点" class="headerlink" title="1.1 Web应用程序的优点"></a>1.1 Web应用程序的优点</h3><ul>
 <li>网络应用程序不需要任何复杂的“展开”过程，你所需要的只是一个适用的浏览器；</li>
@@ -387,7 +398,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -444,12 +455,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">726k</span>
+    <span title="站点总字数">780k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:10</span>
+    <span title="站点阅读时长">21:39</span>
 </div>
 
 <!--

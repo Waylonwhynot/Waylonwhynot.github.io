@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Django 模板">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django进阶-模板-03">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E6%9D%BF-03/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Django 模板">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222640765-369316586..png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222641249-610103613.gif">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222641437-124544576..png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222641662-187439274..png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642064-1621101549.gif">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642387-355926049..png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642656-1421952922.gif">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642833-2013367995..png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222643406-368405519.gif">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222643654-1652402939..png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222644040-442921534..png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222644368-957691177.gif">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222644614-1112203537..png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222645014-1230254081.gif">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222645341-941881794..png">
+<meta property="article:published_time" content="2021-05-09T07:00:07.000Z">
+<meta property="article:modified_time" content="2021-05-09T07:17:15.283Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222640765-369316586..png">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E6%9D%BF-03/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Django进阶-模板-03 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E6%9D%BF-03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Django进阶-模板-03
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-09 15:00:07 / 修改时间：15:17:15" itemprop="dateCreated datePublished" datetime="2021-05-09T15:00:07+08:00">2021-05-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>25k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>41 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Django 模板</p>
+<a id="more"></a>
+
+<h1 id="Django之模板层"><a href="#Django之模板层" class="headerlink" title="Django之模板层"></a>Django之模板层</h1><p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222640765-369316586..png"><img src="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222640765-369316586..png" alt="1554199389194"></a></p>
+<h2 id="一-模板简介"><a href="#一-模板简介" class="headerlink" title="一 模板简介"></a>一 模板简介</h2><p>在刚刚介绍完的视图层中我们提到，浏览器发送的请求信息会转发给视图函数进行处理，而视图函数在经过一系列处理后必须要有返回信息给浏览器。如果我们要返回html标签、css等数据给浏览器进行渲染，我们可以在视图函数中这么做</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copydef current_datetime(request):</span><br><span class="line">    now = datetime.datetime.now()</span><br><span class="line">    html = <span class="string">&quot;&lt;html&gt;&lt;body&gt;It is now %s.&lt;/body&gt;&lt;/html&gt;&quot;</span> % now</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(html)</span><br></pre></td></tr></table></figure>
+
+<p>上例所示，我们直接将HTML代码放到视图函数里，然后进行返回，这可以使我们很直观地看清楚浏览器从发送请求到看到前端界面内容的这个过程中视图函数的基本工作原理，但是这种将前端代码与后端代码耦合到了一起开发方式，会存在以下问题</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Copy1、程序的可维护性与可扩展性问题</span><br><span class="line">前端界面一旦需要重新设计、修改，则必须对后端的Python代码进行相应的修改。 然而前端界面的修改往往比后端 Python 代码的修改要频繁得多，因此如果可以在不进行 Python 代码修改的情况下变更前端界面的设计，那将会方便得多。</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、开发效率问题</span><br><span class="line">Python 代码编写和 HTML 设计是两项不同的工作，大多数专业的网站开发环境都将它们分配给不同的人员（甚至不同部门）来完成。 专门的程序员去编写 Python代码、专门的设计人员去制作模板，这两项工作同时进行，效率才是最高的。</span><br></pre></td></tr></table></figure>
+
+<p>基于上述原因，将前端页面和Python的代码分离是一种不错的开发模式。 为此 Django专门提供了模板系统 (Template System，即模板层)来实现这种模式，这就是本章要具体讨论的问题。</p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222641249-610103613.gif"><img src="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222641249-610103613.gif" alt="img"></a></p>
+<p><strong>django的模板=HTML代码+模板语法</strong></p>
+<p>存放于templates目录下的html文件称之为模板文件，如果我们想要返回的html页面中的数据是动态的，那么必须在html页面中嵌入变量，这便用到了django的模板语法，具体来说，django的模板语法有以下重点</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Copy一、变量：&#123;&#123; 变量名 &#125;&#125;</span><br><span class="line">    <span class="number">1.1</span> 深度查询：句点符的应用</span><br><span class="line">    <span class="number">1.2</span> 过滤器</span><br><span class="line">二、标签：&#123;% 标签名 %&#125;</span><br><span class="line">三、自定义标签和过滤器</span><br><span class="line">四、模板的导入和继承</span><br></pre></td></tr></table></figure>
+
+<p>下面就让我们来一一介绍它们</p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222641437-124544576..png"><img src="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222641437-124544576..png" alt="1554199441038"></a></p>
+<h2 id="二-模板语法之变量"><a href="#二-模板语法之变量" class="headerlink" title="二 模板语法之变量"></a>二 模板语法之变量</h2><h4 id="2-1-变量的基本使用"><a href="#2-1-变量的基本使用" class="headerlink" title="2.1 变量的基本使用"></a>2.1 变量的基本使用</h4><p>如果html代码中的数据不是固定死的，而是动态变化的，则必须在html中嵌入变量，为此，模板语法提供了变量的概念，允许我们在html代码中嵌入变量，我们只需要在视图函数中用render方法为html文件中指定的变量赋值即可，具体用法如下</p>
+<p>test.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; msg &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; dic &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; obj &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; li &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们需要在视图函数中为模板test.html的变量名msg、li、dic、obj、obj_li赋值,views.py内容如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Copyfrom django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="comment"># 传给模板的变量值可以是任意python类型，如下</span></span><br><span class="line">    msg=<span class="string">&#x27;hello world&#x27;</span></span><br><span class="line">    dic=&#123;<span class="string">&#x27;k1&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;k2&#x27;</span>:<span class="number">2</span>&#125;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Person</span>(<span class="params">object</span>):</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,name,age</span>):</span></span><br><span class="line">            self.name=name</span><br><span class="line">            self.age=age</span><br><span class="line"></span><br><span class="line">    obj=Person(<span class="string">&#x27;egon&#x27;</span>,<span class="number">18</span>)</span><br><span class="line">    li = [<span class="number">1</span>,<span class="string">&#x27;aaa&#x27;</span>,obj]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render(request,<span class="string">&#x27;test.html&#x27;</span>,&#123;<span class="string">&#x27;msg&#x27;</span>:msg,<span class="string">&#x27;dic&#x27;</span>:dic,<span class="string">&#x27;obj&#x27;</span>:obj,<span class="string">&#x27;li&#x27;</span>:li&#125;)</span><br><span class="line">    <span class="comment"># 注意：</span></span><br><span class="line">    <span class="comment"># 1、render函数的第三个参数包含了要传给模板的变量值，是一个字典类型，该字典中的key必须与模板文件中的变量名相对应，render函数会去templates目录下找到模板文件，然后根据字典中的key对应到模板文件中的变量名进行赋值操作，最后将赋值后的模板文件内容返回给浏览器</span></span><br><span class="line">    <span class="comment"># 2、可以将render函数的第三个参数简写为locals(),如下</span></span><br><span class="line">    <span class="keyword">return</span> render(request,<span class="string">&#x27;test.html&#x27;</span>,locals()) <span class="comment">#locals()会将函数test内定义的名字与值转换为字典中的k与v</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-深度查询之句点符的使用"><a href="#2-2-深度查询之句点符的使用" class="headerlink" title="2.2 深度查询之句点符的使用"></a>2.2 深度查询之句点符的使用</h4><p>当视图函数传给模板的值中包含多个元素时，若想取出其中的单个元素，就必须使用句点符了。</p>
+<p>句点符既可以引用容器类型的元素，也可以引用对象的方法，如下</p>
+<p>test.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--调用字符串对象的upper方法，注意不要加括号--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; msg.upper &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--取字典中k1对应的值--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; dic.k1 &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--取对象的name属性--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; obj.name &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--取列表的第2个元素,然后变成大写--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; li.1.upper &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--取列表的第3个元素，并取该元素的age属性--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; li.2.age &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222641662-187439274..png"><img src="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222641662-187439274..png" alt="1554199486512"></a></p>
+<h4 id="2-3-过滤器"><a href="#2-3-过滤器" class="headerlink" title="2.3 过滤器"></a>2.3 过滤器</h4><p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642064-1621101549.gif"><img src="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642064-1621101549.gif" alt="img"></a></p>
+<p>过滤器类似于python的内置函数，用来把视图传入的变量值加以修饰后再显示，具体语法如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copy&#123;&#123; 变量名|过滤器名:传给过滤器的参数 &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>常用内置过滤器</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment">#1、default</span></span><br><span class="line"><span class="comment">#作用：如果一个变量值是False或者为空，使用default后指定的默认值，否则，使用变量本身的值，如果value=’‘则输出“nothing”</span></span><br><span class="line">&#123;&#123; value|default:<span class="string">&quot;nothing&quot;</span> &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#2、length</span></span><br><span class="line"><span class="comment">#作用：返回值的长度。它对字符串、列表、字典等容器类型都起作用，如果value是 [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;]，那么输出是4</span></span><br><span class="line">&#123;&#123; value|length &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#3、filesizeformat</span></span><br><span class="line"><span class="comment">#作用：将值的格式化为一个&quot;人类可读的&quot;文件尺寸(如13KB、4.1 MB、102bytes等等），如果 value 是 12312312321，输出将会是 11.5 GB</span></span><br><span class="line">&#123;&#123; value|filesizeformat &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#4、date</span></span><br><span class="line"><span class="comment">#作用：将日期按照指定的格式输出，如果value=datetime.datetime.now(),按照格式Y-m-d则输出2019-02-02</span></span><br><span class="line">&#123;&#123; value|date:<span class="string">&quot;Y-m-d&quot;</span> &#125;&#125;　　</span><br><span class="line"></span><br><span class="line"><span class="comment">#5、slice</span></span><br><span class="line"><span class="comment">#作用：对输出的字符串进行切片操作，顾头不顾尾,如果value=“egon“，则输出&quot;eg&quot;</span></span><br><span class="line">&#123;&#123; value|slice:<span class="string">&quot;0:2&quot;</span> &#125;&#125;　</span><br><span class="line"></span><br><span class="line"><span class="comment">#6、truncatechars</span></span><br><span class="line"><span class="comment">#作用：如果字符串字符多于指定的字符数量，那么会被截断。截断的字符串将以可翻译的省略号序列（“...”）结尾，如果value=”hello world egon 嘎嘎“，则输出&quot;hello...&quot;,注意8个字符也包含末尾的3个点</span></span><br><span class="line">&#123;&#123; value|truncatechars:<span class="number">8</span> &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#7、truncatewords</span></span><br><span class="line"><span class="comment">#作用：同truncatechars，但truncatewords是按照单词截断，注意末尾的3个点不算作单词，如果value=”hello world egon 嘎嘎“，则输出&quot;hello world ...&quot;</span></span><br><span class="line">&#123;&#123; value|truncatewords:<span class="number">2</span> &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#8、safe</span></span><br><span class="line"><span class="comment">#作用：出于安全考虑，Django的模板会对HTML标签、JS等语法标签进行自动转义,例如value=&quot;&lt;script&gt;alert(123)&lt;/script&gt;&quot;，模板变量&#123;&#123; value &#125;&#125;会被渲染成&amp;lt;script&amp;gt;alert(123)&amp;lt;/script&amp;gt;交给浏览器后会被解析成普通字符”&lt;script&gt;alert(123)&lt;/script&gt;“，失去了js代码的语法意义，但如果我们就想让模板变量&#123;&#123; value &#125;&#125;被渲染的结果又语法意义，那么就用到了过滤器safe，比如value=&#x27;&lt;a href=&quot;https://www.baidu.com&quot;&gt;点我啊&lt;/a&gt;&#x27;，在被safe过滤器处理后就成为了真正的超链接，不加safe过滤器则会当做普通字符显示’&lt;a href=&quot;https://www.baidu.com&quot;&gt;点我啊&lt;/a&gt;‘</span></span><br><span class="line">&#123;&#123; value|safe &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其他过滤器（了解）</p>
+<table>
+<thead>
+<tr>
+<th>过滤器</th>
+<th>描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>upper</td>
+<td>以大写方式输出</td>
+<td><code>&#123;&#123; user.name | upper &#125;&#125;</code></td>
+</tr>
+<tr>
+<td>add</td>
+<td>给value加上一个数值</td>
+<td><code>&#123;&#123; user.age | add:”5” &#125;&#125;</code></td>
+</tr>
+<tr>
+<td>addslashes</td>
+<td>单引号加上转义号</td>
+<td></td>
+</tr>
+<tr>
+<td>capfirst</td>
+<td>第一个字母大写</td>
+<td><code>&#123;&#123; ‘good’| capfirst &#125;&#125; 返回”Good”</code></td>
+</tr>
+<tr>
+<td>center</td>
+<td>输出指定长度的字符串，把变量居中</td>
+<td><code>&#123;&#123; “abcd”| center:”50” &#125;&#125;</code></td>
+</tr>
+<tr>
+<td>cut</td>
+<td>删除指定字符串</td>
+<td><code>&#123;&#123; “You are not a Englishman” | cut:”not” &#125;&#125;</code></td>
+</tr>
+<tr>
+<td>date</td>
+<td>格式化日期</td>
+<td></td>
+</tr>
+<tr>
+<td>default</td>
+<td>如果值不存在，则使用默认值代替</td>
+<td><code>&#123;&#123; value | default:”(N/A)” &#125;&#125;</code></td>
+</tr>
+<tr>
+<td>default_if_none</td>
+<td>如果值为None, 则使用默认值代替</td>
+<td></td>
+</tr>
+<tr>
+<td>dictsort</td>
+<td>按某字段排序，变量必须是一个dictionary</td>
+<td><code>&#123;% for moment in moments | dictsort:”id” %&#125;</code></td>
+</tr>
+<tr>
+<td>dictsortreversed</td>
+<td>按某字段倒序排序，变量必须是dictionary</td>
+<td></td>
+</tr>
+<tr>
+<td>divisibleby</td>
+<td>判断是否可以被数字整除</td>
+<td><code>&#123;&#123; 224 | divisibleby:2 &#125;&#125; 返回 True</code></td>
+</tr>
+<tr>
+<td>escape</td>
+<td>按HTML转义，比如将”&lt;”转换为”&amp;lt”</td>
+<td></td>
+</tr>
+<tr>
+<td>filesizeformat</td>
+<td>增加数字的可读性，转换结果为13KB,89MB,3Bytes等</td>
+<td><code>&#123;&#123; 1024 | filesizeformat &#125;&#125; 返回 1.0KB</code></td>
+</tr>
+<tr>
+<td>first</td>
+<td>返回列表的第1个元素，变量必须是一个列表</td>
+<td></td>
+</tr>
+<tr>
+<td>floatformat</td>
+<td>转换为指定精度的小数，默认保留1位小数</td>
+<td><code>&#123;&#123; 3.1415926 | floatformat:3 &#125;&#125; 返回 3.142 四舍五入</code></td>
+</tr>
+<tr>
+<td>get_digit</td>
+<td>从个位数开始截取指定位置的数字</td>
+<td><code>&#123;&#123; 123456 | get_digit:’1’&#125;&#125;</code></td>
+</tr>
+<tr>
+<td>join</td>
+<td>用指定分隔符连接列表</td>
+<td><code>&#123;&#123; [‘abc’,’45’] | join:’*’ &#125;&#125; 返回 abc*45</code></td>
+</tr>
+<tr>
+<td>length</td>
+<td>返回列表中元素的个数或字符串长度</td>
+<td></td>
+</tr>
+<tr>
+<td>length_is</td>
+<td>检查列表，字符串长度是否符合指定的值</td>
+<td><code>&#123;&#123; ‘hello’| length_is:’3’ &#125;&#125;</code></td>
+</tr>
+<tr>
+<td>linebreaks</td>
+<td>用或 标签包裹变量</td>
+<td><code>&#123;&#123; “Hi\n\nDavid”|linebreaks &#125;&#125; 返回HiDavid</code></td>
+</tr>
+<tr>
+<td>linebreaksbr</td>
+<td>用 标签代替换行符</td>
+<td></td>
+</tr>
+<tr>
+<td>linenumbers</td>
+<td>为变量中的每一行加上行号</td>
+<td></td>
+</tr>
+<tr>
+<td>ljust</td>
+<td>输出指定长度的字符串，变量左对齐</td>
+<td><code>&#123;&#123;‘ab’|ljust:5&#125;&#125;返回 ‘ab ’</code></td>
+</tr>
+<tr>
+<td>lower</td>
+<td>字符串变小写</td>
+<td></td>
+</tr>
+<tr>
+<td>make_list</td>
+<td>将字符串转换为列表</td>
+<td></td>
+</tr>
+<tr>
+<td>pluralize</td>
+<td>根据数字确定是否输出英文复数符号</td>
+<td></td>
+</tr>
+<tr>
+<td>random</td>
+<td>返回列表的随机一项</td>
+<td></td>
+</tr>
+<tr>
+<td>removetags</td>
+<td>删除字符串中指定的HTML标记</td>
+<td><code>&#123;&#123;value | removetags: “h1 h2”&#125;&#125;</code></td>
+</tr>
+<tr>
+<td>rjust</td>
+<td>输出指定长度的字符串，变量右对齐</td>
+<td></td>
+</tr>
+<tr>
+<td>slice</td>
+<td>切片操作， 返回列表</td>
+<td><code>&#123;&#123;[3,9,1] | slice:’:2’&#125;&#125; 返回 [3,9]</code> <code>&#123;&#123; 'asdikfjhihgie' | slice:':5' &#125;&#125; 返回 ‘asdik’</code></td>
+</tr>
+<tr>
+<td>slugify</td>
+<td>在字符串中留下减号和下划线，其它符号删除，空格用减号替换</td>
+<td><code>&#123;&#123; '5-2=3and5 2=3' | slugify &#125;&#125; 返回 5-23and5-23</code></td>
+</tr>
+<tr>
+<td>stringformat</td>
+<td>字符串格式化，语法同python</td>
+<td></td>
+</tr>
+<tr>
+<td>time</td>
+<td>返回日期的时间部分</td>
+<td></td>
+</tr>
+<tr>
+<td>timesince</td>
+<td>以“到现在为止过了多长时间”显示时间变量</td>
+<td>结果可能为 45days, 3 hours</td>
+</tr>
+<tr>
+<td>timeuntil</td>
+<td>以“从现在开始到时间变量”还有多长时间显示时间变量</td>
+<td></td>
+</tr>
+<tr>
+<td>title</td>
+<td>每个单词首字母大写</td>
+<td></td>
+</tr>
+<tr>
+<td>truncatewords</td>
+<td>将字符串转换为省略表达方式</td>
+<td><code>&#123;&#123; 'This is a pen' | truncatewords:2 &#125;&#125;返回``This is ...</code></td>
+</tr>
+<tr>
+<td>truncatewords_html</td>
+<td>同上，但保留其中的HTML标签</td>
+<td><code>&#123;&#123; '<p>This is a pen</p>' | truncatewords:2 &#125;&#125;返回``&lt;p&gt;This is ...&lt;/p&gt;</code></td>
+</tr>
+<tr>
+<td>urlencode</td>
+<td>将字符串中的特殊字符转换为url兼容表达方式</td>
+<td><code>&#123;&#123; ‘http://www.aaa.com/foo?a=b&b=c’ | urlencode&#125;&#125;</code></td>
+</tr>
+<tr>
+<td>urlize</td>
+<td>将变量字符串中的url由纯文本变为链接</td>
+<td></td>
+</tr>
+<tr>
+<td>wordcount</td>
+<td>返回变量字符串中的单词数</td>
+<td></td>
+</tr>
+<tr>
+<td>yesno</td>
+<td>将布尔变量转换为字符串yes, no 或maybe</td>
+<td><code>&#123;&#123; True | yesno &#125;&#125;&#123;&#123; False | yesno &#125;&#125;&#123;&#123; None | yesno &#125;&#125; ``返回 ``yes``no ``maybe</code></td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642387-355926049..png"><img src="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642387-355926049..png" alt="1554199519214"></a></p>
+<h2 id="三-模板语法之标签"><a href="#三-模板语法之标签" class="headerlink" title="三 模板语法之标签"></a>三 模板语法之标签</h2><p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642656-1421952922.gif"><img src="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642656-1421952922.gif" alt="img"></a></p>
+<p>标签是为了在模板中完成一些特殊功能,语法为<code>&#123;% 标签名 %&#125;</code>，一些标签还需要搭配结束标签 <code>&#123;% endtag %&#125;</code></p>
+<h4 id="3-1-常用标签之for标签"><a href="#3-1-常用标签之for标签" class="headerlink" title="3.1 常用标签之for标签"></a>3.1 常用标签之for标签</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment">#1、遍历每一个元素：</span></span><br><span class="line">&#123;% <span class="keyword">for</span> person <span class="keyword">in</span> person_list %&#125;</span><br><span class="line">    &lt;p&gt;&#123;&#123; person.name &#125;&#125;&lt;/p&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#2、可以利用&#123;% for obj in list reversed %&#125;反向循环。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3、遍历一个字典：</span></span><br><span class="line">&#123;% <span class="keyword">for</span> key,val <span class="keyword">in</span> dic.items %&#125;</span><br><span class="line">    &lt;p&gt;&#123;&#123; key &#125;&#125;:&#123;&#123; val &#125;&#125;&lt;/p&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#4、循环序号可以通过&#123;&#123; forloop &#125;&#125;显示　</span></span><br><span class="line">forloop.counter            当前循环的索引值（从<span class="number">1</span>开始）</span><br><span class="line">forloop.counter0           当前循环的索引值（从<span class="number">0</span>开始）</span><br><span class="line">forloop.revcounter         当前循环的倒序索引值（从<span class="number">1</span>开始）</span><br><span class="line">forloop.revcounter0        当前循环的倒序索引值（从<span class="number">0</span>开始）</span><br><span class="line">forloop.first              当前循环是第一次循环则返回<span class="literal">True</span>，否则返回<span class="literal">False</span></span><br><span class="line">forloop.last               当前循环是最后一次循环则返回<span class="literal">True</span>，否则返回<span class="literal">False</span></span><br><span class="line">forloop.parentloop         本层循环的外层循环</span><br><span class="line"></span><br><span class="line"><span class="comment">#5、for标签可以带有一个可选的&#123;% empty %&#125; 从句，在变量person_list为空或者没有被找到时，则执行empty子句</span></span><br><span class="line">&#123;% <span class="keyword">for</span> person <span class="keyword">in</span> person_list %&#125;</span><br><span class="line">    &lt;p&gt;&#123;&#123; person.name &#125;&#125;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&#123;% empty %&#125;</span><br><span class="line">    &lt;p&gt;sorry,no person here&lt;/p&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h5><p>url.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Copyfrom django.urls <span class="keyword">import</span> re_path</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    re_path(<span class="string">r&#x27;^test/&#x27;</span>,views.test)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>view.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Copydef test(request):</span><br><span class="line">    names=[<span class="string">&#x27;egon&#x27;</span>,<span class="string">&#x27;kevin&#x27;</span>]</span><br><span class="line">    dic=&#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;egon&#x27;</span>,<span class="string">&#x27;age&#x27;</span>:<span class="number">18</span>,<span class="string">&#x27;sex&#x27;</span>:<span class="string">&#x27;male&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line">    list1=[]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render(request,<span class="string">&#x27;test.html&#x27;</span>,locals())</span><br></pre></td></tr></table></figure>
+
+<p>test.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">&#123;% for name in names %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; forloop.counter0 &#125;&#125; &#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">输出结果为：</span></span><br><span class="line"><span class="comment">0 egon</span></span><br><span class="line"><span class="comment">1 kevin</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">&#123;% for name in names reversed %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; forloop.revcounter0 &#125;&#125; &#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">输出结果为：</span></span><br><span class="line"><span class="comment">1 kevin</span></span><br><span class="line"><span class="comment">0 egon</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">&#123;% for k,v in dic.items %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; forloop.counter &#125;&#125; &#123;&#123; k &#125;&#125; &#123;&#123; v &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">输出结果为：</span></span><br><span class="line"><span class="comment">1 name egon</span></span><br><span class="line"><span class="comment">2 age 18</span></span><br><span class="line"><span class="comment">3 sex male</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">&#123;% for item in list1 %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; item &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    &#123;% empty %&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>sorry,no value here<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">输出结果为：</span></span><br><span class="line"><span class="comment">sorry,no value here</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-常用标签之if标签"><a href="#3-2-常用标签之if标签" class="headerlink" title="3.2 常用标签之if标签"></a>3.2 常用标签之if标签</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 1、注意：</span></span><br><span class="line">&#123;% <span class="keyword">if</span> 条件 %&#125;条件为真时<span class="keyword">if</span>的子句才会生效，条件也可以是一个变量，<span class="keyword">if</span>会对变量进行求值，在变量值为空、或者视图没有为其传值的情况下均为<span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、具体语法</span></span><br><span class="line">&#123;% <span class="keyword">if</span> num &gt; <span class="number">100</span> <span class="keyword">or</span> num &lt; <span class="number">0</span> %&#125;</span><br><span class="line">    &lt;p&gt;无效&lt;/p&gt;</span><br><span class="line">&#123;% <span class="keyword">elif</span> num &gt; <span class="number">80</span> <span class="keyword">and</span> num &lt; <span class="number">100</span> %&#125;</span><br><span class="line">    &lt;p&gt;优秀&lt;/p&gt;</span><br><span class="line">&#123;% <span class="keyword">else</span> %&#125;</span><br><span class="line">    &lt;p&gt;凑活吧&lt;/p&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#3、if语句支持 and 、or、==、&gt;、&lt;、!=、&lt;=、&gt;=、in、not in、is、is not判断。</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642833-2013367995..png"><img src="https://img2018.cnblogs.com/blog/1825659/201910/1825659-20191011222642833-2013367995..png" alt="1554199669653"></a></p>
+<h5 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h5><p>urls.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Copyfrom django.urls <span class="keyword">import</span> path,register_converter,re_path</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="comment"># 输入http://127.0.0.1:8008/或者http://127.0.0.1:8008/index/都会转发给视图函数index</span></span><br><span class="line">    re_path(<span class="string">r&#x27;^$&#x27;</span>,views.index),</span><br><span class="line">    re_path(<span class="string">r&#x27;^index/$&#x27;</span>,views.index),</span><br><span class="line">    </span><br><span class="line">    re_path(<span class="string">r&#x27;^login/&#x27;</span>,views.login),</span><br><span class="line"></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>views.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Copyfrom django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">return</span> render(request,<span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render(request,<span class="string">&#x27;login.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    name=request.POST.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">    pwd=request.POST.get(<span class="string">&#x27;pwd&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> name == <span class="string">&#x27;egon&#x27;</span> <span class="keyword">and</span> pwd == <span class="string">&#x27;123&#x27;</span>:</span><br><span class="line">        current_user=name</span><br><span class="line">        <span class="keyword">return</span> render(request,<span class="string">&#x27;index.html&#x27;</span>,locals())</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        msg=<span class="string">&#x27;账号或密码错误&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> render(request,<span class="string">&#x27;login.html&#x27;</span>,locals())</span><br></pre></td></tr></table></figure>
+
+<p>在templates目录下新建模板文件index.html与login.html</p>
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">如果用户已经登录，则current_user变量有值，if判断结果为真，会打印变量current_user的值，为当前登录的用户名</span></span><br><span class="line"><span class="comment">如果用户没有登录，则current_user变量无值，if判断结果为假，会打印a标签要求用户先登录</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line">&#123;% if current_user %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>当前登录用户为：&#123;&#123; current_user &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% else %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/login/&quot;</span>&gt;</span>请先登录<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>login.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>登录页面<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    &#123;% csrf_token %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>用户名：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;pwd&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--输错账号密码时的提示信息--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">&quot;color: red&quot;</span>&gt;</span>&#123;&#123; msg &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copypython manage.py runserver <span class="number">8008</span> <span class="comment">#在浏览器输入http://127.0.0.1:8008/,然后点击登录，输入账号密码进行验证......</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-常用标签之with标签"><a href="#3-3-常用标签之with标签" class="headerlink" title="3.3 常用标签之with标签"></a>3.3 常用标签之with标签</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># with标签用来为一个复杂的变量名起别名,如果变量的值来自于数据库，在起别名后只需要使用别名即可，无需每次都向数据库发送请求来重新获取变量的值</span></span><br><span class="line">&#123;% <span class="keyword">with</span> li<span class="number">.1</span>.upper <span class="keyword">as</span> v %&#125;</span><br><span class="line">    &#123;&#123; v &#125;&#125;</span><br><span class="line">&#123;% endwith %&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-4-常用标签之csrf-token标签"><a href="#3-4-常用标签之csrf-token标签" class="headerlink" title="3.4 常用标签之csrf_token标签"></a>3.4 常用标签之csrf_token标签</h4><p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222643406-368405519.gif" alt="img"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 当用form表单提交POST请求时必须加上标签&#123;% csrf_token%&#125;，该标签用于防止跨站伪造请求</span></span><br><span class="line">&lt;form action=<span class="string">&quot;&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br><span class="line">    &#123;% csrf_token %&#125;</span><br><span class="line">    &lt;p&gt;用户名：&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;密码：&lt;input type=&quot;password&quot; name=&quot;pwd&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"><span class="comment"># 具体工作原理为：</span></span><br><span class="line"><span class="comment"># 1、在GET请求到form表单时，标签&#123;% csrf_token%&#125;会被渲染成一个隐藏的input标签，该标签包含了由服务端生成的一串随机字符串,如&lt;input type=&quot;hidden&quot; name=&quot;csrfmiddlewaretoken&quot; value=&quot;dmje28mFo...OvnZ5&quot;&gt;</span></span><br><span class="line"><span class="comment"># 2、在使用form表单提交POST请求时，会提交上述随机字符串，服务端在接收到该POST请求时会对比该随机字符串，对比成功则处理该POST请求，否则拒绝，以此来确定客户端的身份</span></span><br></pre></td></tr></table></figure>
+
+<p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222643654-1652402939..png" alt="1554199719796"></p>
+<h2 id="四-自定义过滤器和标签"><a href="#四-自定义过滤器和标签" class="headerlink" title="四 自定义过滤器和标签"></a>四 自定义过滤器和标签</h2><p>当内置的过滤器或标签无法满足我们需求时，我们可以自定义，具体操作步骤如下</p>
+<p>1、在settings中的INSTALLED_APPS添加当前app的名字，不然django无法找到自定义的过滤器或标签</p>
+<p>settings.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment"># 在settings.py中找到该列表，然后加以配置</span></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;app01.apps.App01Config&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;app01&#x27;</span>, <span class="comment"># 添加当前app的名字</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>2、在文件夹app01中创建子文件夹templatetags(文件夹名只能是templatetags)</p>
+<p>3、在templatetags新建任意.py文件，如my_tags.py，在该文件中自定义过滤器或标签，文件内容如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Copyfrom django <span class="keyword">import</span> template</span><br><span class="line">register = template.Library() <span class="comment"># 注意变量名必须为register,不可改变</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1、自定义过滤器</span></span><br><span class="line"><span class="meta">@register.filter</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_multi_filter</span>(<span class="params">v1 ,v2</span>):</span> <span class="comment"># 自定义的过滤器只能定义最多两个参数，针对&#123;&#123; value1 | filter_multi:value2 &#125;&#125;，参数传递为v1=value1,v2=value2</span></span><br><span class="line">    <span class="keyword">return</span>  v1 * v2</span><br><span class="line"></span><br><span class="line"><span class="comment">#2、自定义标签</span></span><br><span class="line"><span class="meta">@register.simple_tag</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_multi_tag</span>(<span class="params">v1, v2</span>):</span> <span class="comment"># 自定义的标签可以定义多个参数</span></span><br><span class="line">    <span class="keyword">return</span> v1 * v2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#3、自定义标签扩展之mark_safe</span></span><br><span class="line"><span class="comment"># 注释：我们可以用内置的标签safe来让标签内容有语法意义，如果我们想让自定义标签处理的结果也有语法意义，则不能使用内置标签safe了，需要使用mark_safe，可以实现与内置标签safe同样的功能</span></span><br><span class="line"><span class="keyword">from</span> django.utils.safestring <span class="keyword">import</span> mark_safe</span><br><span class="line"></span><br><span class="line"><span class="meta">@register.simple_tag</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_input_tag</span>(<span class="params">id, name</span>):</span></span><br><span class="line">    res = <span class="string">&quot;&lt;input type=&#x27;text&#x27; id=&#x27;%s&#x27; name=&#x27;%s&#x27; /&gt;&quot;</span> % (id, name)</span><br><span class="line">    <span class="keyword">return</span> mark_safe(res)</span><br></pre></td></tr></table></figure>
+
+<p>4、自定义过滤器或标签必须重新启动django方可生效</p>
+<p>5、自定义过滤器或标签的使用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--必须先加载存有自定义过滤器和标签的文件--&gt;</span></span><br><span class="line">&#123;% load my_tags %&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--salary的值为10，经过滤器my_multi_filter的处理结果为120--&gt;</span></span><br><span class="line">&#123;&#123; salary|my_multi_filter:12 &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--结果为2--&gt;</span></span><br><span class="line">&#123;% my_multi_tag 1 2 %&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">结果为一个input标签，该表的属性id=&quot;inp1&quot; name=&quot;username&quot;</span></span><br><span class="line"><span class="comment">注意：input的属性值均为字符串类型，所以my_input_tag后的两个值均为字符串类型</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line">&#123;% my_input_tag &quot;inp1&quot; &quot;username&quot; %&#125; </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>对比自定义标签与自定义过滤器</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment">#1、自定义过滤器只能传两个参数，而自定义标签却可以传多个参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2、过滤器可以用于if判断，而标签不能</span></span><br><span class="line">&#123;% <span class="keyword">if</span> salary|my_multi_filter:<span class="number">12</span> &gt; <span class="number">200</span> %&#125;</span><br><span class="line">    &lt;p&gt;优秀&lt;/p&gt;</span><br><span class="line">&#123;% <span class="keyword">else</span> %&#125;</span><br><span class="line">    &lt;p&gt;垃圾&lt;/p&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222644040-442921534..png" alt="1554199793392"></p>
+<h2 id="五-模板的导入和继承"><a href="#五-模板的导入和继承" class="headerlink" title="五 模板的导入和继承"></a>五 模板的导入和继承</h2><p>在实际开发中，模板文件彼此之间可能会有大量冗余代码，为此django提供了专门的语法来解决这个问题,主要围绕三种标签的使用：include标签、extends标签、block标签，详解如下</p>
+<h4 id="5-1、模板的导入之include标签"><a href="#5-1、模板的导入之include标签" class="headerlink" title="5.1、模板的导入之include标签"></a>5.1、模板的导入之include标签</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment">#作用：在一个模板文件中，引入/重用另外一个模板文件的内容，</span></span><br><span class="line">&#123;% include <span class="string">&#x27;模版名称&#x27;</span> %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>案例：</p>
+<p>可以把广告栏写到专门的文件里advertise.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;adv&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;panel panel-default&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;panel-heading&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">&quot;panel-title&quot;</span>&gt;</span>Panel title<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;panel-body&quot;</span>&gt;</span></span><br><span class="line">            Panel content</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;panel panel-danger&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;panel-heading&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">&quot;panel-title&quot;</span>&gt;</span>Panel title<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;panel-body&quot;</span>&gt;</span></span><br><span class="line">            Panel content</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;panel panel-warning&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;panel-heading&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">&quot;panel-title&quot;</span>&gt;</span>Panel title<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;panel-body&quot;</span>&gt;</span></span><br><span class="line">            Panel content</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在base.html文件中用include标签引入advertise.html文件的内容</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">integrity</span>=<span class="string">&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot;</span> <span class="attr">crossorigin</span>=<span class="string">&quot;anonymous&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">        * &#123;</span><br><span class="line">            margin: 0;</span><br><span class="line">            padding: 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.header</span> &#123;</span></span><br><span class="line">            height: 50px;</span><br><span class="line">            width: 100%;</span><br><span class="line">            background-color: black;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;header&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-3&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--在base.html引入advertise.html文件的内容--&gt;</span></span><br><span class="line">            &#123;% include &quot;advertise.html&quot; %&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-9&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-2、模板的继承-派生之extends标签、block标签"><a href="#5-2、模板的继承-派生之extends标签、block标签" class="headerlink" title="5.2、模板的继承\派生之extends标签、block标签"></a>5.2、模板的继承\派生之extends标签、block标签</h4><p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222644368-957691177.gif" alt="img"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment">#作用：在一个模板文件中，引入/重用另外一个模板文件的内容</span></span><br><span class="line">&#123;% extends <span class="string">&quot;模版名称&quot;</span> %&#125;</span><br><span class="line"><span class="comment">#  也就是说include有的功能extends全都有，但是extends可以搭配一个block标签，用于在继承的基础上定制新的内容</span></span><br></pre></td></tr></table></figure>
+
+<p>案例</p>
+<p>Django模版引擎中最复杂且最强大的部分就是模版继承了。我们以先创建一个基本的“骨架”模版，它包含我们站点中的全部元素，并且可以定义多处blocks ，例如我们创建base.html内容如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span></span><br><span class="line">        &#123;% block title %&#125;自定义title名&#123;% endblock %&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">integrity</span>=<span class="string">&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot;</span> <span class="attr">crossorigin</span>=<span class="string">&quot;anonymous&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">        * &#123;</span><br><span class="line">            margin: 0;</span><br><span class="line">            padding: 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.header</span> &#123;</span></span><br><span class="line">            height: 50px;</span><br><span class="line">            width: 100%;</span><br><span class="line"><span class="css">            <span class="selector-tag">background-color</span>: <span class="selector-id">#919191</span>;</span></span><br><span class="line">            margin-bottom: 20px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;header&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-3&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;list-group&quot;</span>&gt;</span></span><br><span class="line">                &#123;% block sidebar %&#125;</span><br><span class="line">                    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item active&quot;</span>&gt;</span>服装城<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>美妆馆<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>超市<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>全球购<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>闪购<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>团购<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                &#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-9&quot;</span>&gt;</span></span><br><span class="line">            &#123;% block content %&#125;</span><br><span class="line">                base.html页面内容</span><br><span class="line">            &#123;% endblock %&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>模板base.html 定义了一个可以用于两列排版页面的简单HTML骨架。我们新建子模板index.html的主要工作就是继承base.html然后填充/覆盖其内部的blocks。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Copy&#123;% extends <span class="string">&quot;base.html&quot;</span> %&#125;</span><br><span class="line"></span><br><span class="line">&lt;!--用新内容完全覆盖了父模板内容--&gt;</span><br><span class="line">&#123;% block title %&#125;</span><br><span class="line">    index页面</span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% block sidebar %&#125;</span><br><span class="line">    &lt;!--该变量会将父模板中sidebar中原来的内容继承过来，然后我们可以在此基础上新增，否则就是纯粹地覆盖--&gt;</span><br><span class="line">    &#123;&#123; block.super &#125;&#125;</span><br><span class="line"></span><br><span class="line">    &lt;!--在继承父模板内容的基础上新增的标签--&gt;</span><br><span class="line">    &lt;a href=&quot;#&quot; class=&quot;list-group-item&quot;&gt;拍卖&lt;/a&gt;</span><br><span class="line">    &lt;a href=&quot;#&quot; class=&quot;list-group-item&quot;&gt;金融&lt;/a&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line">    &lt;!--用新内容完全覆盖了父模板内容--&gt;</span><br><span class="line">    &lt;p&gt;index页面内容&lt;/p&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们通过django访问index.html看到内容如下(block标签的内容都完成了替换或更新)</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span></span><br><span class="line">        index页面</span><br><span class="line">    <span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">integrity</span>=<span class="string">&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot;</span> <span class="attr">crossorigin</span>=<span class="string">&quot;anonymous&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">        * &#123;</span><br><span class="line">            margin: 0;</span><br><span class="line">            padding: 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.header</span> &#123;</span></span><br><span class="line">            height: 50px;</span><br><span class="line">            width: 100%;</span><br><span class="line"><span class="css">            <span class="selector-tag">background-color</span>: <span class="selector-id">#919191</span>;</span></span><br><span class="line">            margin-bottom: 20px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;header&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-3&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;list-group&quot;</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!--该变量会将父模板中sidebar中原来的内容继承过来，然后我们可以在此基础上新增，否则就是纯粹地覆盖--&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item active&quot;</span>&gt;</span>服装城<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>美妆馆<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>超市<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>全球购<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>闪购<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>团购<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                <span class="comment">&lt;!--在继承父模板内容的基础上新增的标签--&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>拍卖<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-group-item&quot;</span>&gt;</span>金融<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-9&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--用新内容完全覆盖了父模板内容--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>index页面内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>总结与注意</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="comment">#1、标签extends必须放在首行，base.html中block越多可定制性越强</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2、include仅仅只是完全引用其他模板文件，而extends却可以搭配block在引用的基础上进行扩写</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3、变量&#123;&#123; block.super &#125;&#125; 可以重用父类的内容，然后在父类基础上增加新内容，而不是完全覆盖</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4、为了提升可读性，我们可以给标签&#123;% endblock %&#125; 起一个名字 。例如：</span></span><br><span class="line">    &#123;% block content %&#125;</span><br><span class="line">    ...</span><br><span class="line">    &#123;% endblock content %&#125;　　</span><br><span class="line"><span class="comment">#5、在一个模版中不能出现重名的block标签。</span></span><br></pre></td></tr></table></figure>
+
+<p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222644614-1112203537..png" alt="1554199941524"></p>
+<h2 id="静态文件配置"><a href="#静态文件配置" class="headerlink" title="静态文件配置"></a>静态文件配置</h2><p>我们在编写模板文件时，需要大量引用css、js、图片等静态文件，如果我们将这些文件在服务端存放的路径都固定写死那么将非常不利于后期的扩展，我们可以这么做</p>
+<p>1、settings.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CopySTATIC_URL = <span class="string">&#x27;/static/&#x27;</span> <span class="comment"># 找到这一行，然后新增下述代码</span></span><br><span class="line">STATICFILES_DIRS = [</span><br><span class="line">    os.path.join(BASE_DIR, <span class="string">&#x27;statics&#x27;</span>),<span class="comment"># 获取静态文件在服务端的绝对路径</span></span><br><span class="line">]</span><br><span class="line"><span class="comment">#STATIC_URL = &#x27;/static/&#x27;就是为静态文件的绝对路径起了一个别名，以后我们只需要用路径/static/即可</span></span><br></pre></td></tr></table></figure>
+
+<p>2、在项目根目录下新增文件夹statics，为了更便于管理，可以在statics下新建子文件夹css、js、img等</p>
+<p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222645014-1230254081.gif" alt="statics目录结构"></p>
+<p>3、新建模板文件index.html,在该文件中对静态文件的引用如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/static/css/my.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h4</span>&gt;</span>我是红色的，点我就绿<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/static/img/rb.jpeg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/static/js/jquery-3.3.1.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/static/js/my.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>综上，在配置完settings.py后，所有的静态文件路径都可以采用别名/static/作为起始，这在一定程度上会有利于程序的扩展性，但如果我们在项目后期维护时，连/static/这个值也需要修改，那意味着所有模板文件中也都需要跟着改了，扩展性依然很差，为此，django在一个名为static.py的文件中定义了标签static、get_static_prefix，二者都可以解决该问题</p>
+<p>test.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--注意：必须先加载文件static.py--&gt;</span></span><br><span class="line">    &#123;% load static %&#125;</span><br><span class="line">    <span class="comment">&lt;!--注意：此处的static是一个定义在static.py中的一个标签，名字与文件名一样而已，不要搞混--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;% static &#x27;css/my.css&#x27; %&#125;&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h4</span>&gt;</span>我是红色的，点我就绿<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;&#123;% static &#x27;img/rb.jpeg&#x27; %&#125;&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% load static %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;&#123;% static &#x27;js/jquery-3.3.1.min.js&#x27; %&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;&#123;% static &#x27;js/my.js&#x27; %&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>标签static会接收传入的参数，然后这根据settings.py中变量STATIC_URL的值拼接出一个完整的路径，如果<code>STATIC_URL = &#39;/static/&#39;</code>，那么<code>href=&quot;&#123;% static 'css/my.css' %&#125;&quot;</code>会被渲染成<code>href=&quot;/static/css/my.css&quot;</code>，如果<code>STATIC_URL = &#39;/static123/&#39;</code>，那么<code>href=&quot;&#123;% static 'css/my.css' %&#125;&quot;</code>会被渲染成href=”/static123/css/my.css”。</p>
+<p>标签get_static_prefix也可以完成同样的效果，只不过用法不同。我们不能为标签get_static_prefix传参，因为标签get_static_prefix代表的只是settings.py中STATIC_URL的值，所以我们需要做的是在get_static_prefix的基础上自行拼接路径，如下</p>
+<p>test.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Copy<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--注意：同样需要先加载文件static.py--&gt;</span></span><br><span class="line">    &#123;% load static %&#125;</span><br><span class="line">    <span class="comment">&lt;!--使用标签get_static_prefix拼接路径--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;% get_static_prefix %&#125;css/my.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h4</span>&gt;</span>我是红色的，点我就绿<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;&#123;% get_static_prefix %&#125;img/rb.jpeg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% load static %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;&#123;% get_static_prefix %&#125;js/jquery-3.3.1.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;&#123;% get_static_prefix %&#125;js/my.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果STATIC_URL = ‘/static/‘，那么<code>href=&quot;&#123;% get_static_prefix %&#125;css/my.css&quot;</code>会被渲染成href=”/static/css/my.css”，其它同理</p>
+<p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222645341-941881794..png" alt="1554200021270"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"><i class="fas fa-cookie-bite"></i> Django</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/09/Django%E8%BF%9B%E9%98%B6-%E8%A7%86%E5%9B%BE-02/" rel="prev" title="Django进阶-视图-02">
+      <i class="fa fa-chevron-left"></i> Django进阶-视图-02
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Django%E4%B9%8B%E6%A8%A1%E6%9D%BF%E5%B1%82"><span class="nav-number">1.</span> <span class="nav-text">Django之模板层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E6%A8%A1%E6%9D%BF%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">一 模板简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95%E4%B9%8B%E5%8F%98%E9%87%8F"><span class="nav-number">1.2.</span> <span class="nav-text">二 模板语法之变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%8F%98%E9%87%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">2.1 变量的基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E6%B7%B1%E5%BA%A6%E6%9F%A5%E8%AF%A2%E4%B9%8B%E5%8F%A5%E7%82%B9%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">2.2 深度查询之句点符的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">2.3 过滤器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95%E4%B9%8B%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.</span> <span class="nav-text">三 模板语法之标签</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE%E4%B9%8Bfor%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">3.1 常用标签之for标签</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B"><span class="nav-number">1.3.0.1.1.</span> <span class="nav-text">案例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE%E4%B9%8Bif%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">3.2 常用标签之if标签</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="nav-number">1.3.0.2.1.</span> <span class="nav-text">案例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE%E4%B9%8Bwith%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">3.3 常用标签之with标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE%E4%B9%8Bcsrf-token%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.0.4.</span> <span class="nav-text">3.4 常用标签之csrf_token标签</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%BB%A4%E5%99%A8%E5%92%8C%E6%A0%87%E7%AD%BE"><span class="nav-number">1.4.</span> <span class="nav-text">四 自定义过滤器和标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94-%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%AF%BC%E5%85%A5%E5%92%8C%E7%BB%A7%E6%89%BF"><span class="nav-number">1.5.</span> <span class="nav-text">五 模板的导入和继承</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1%E3%80%81%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%AF%BC%E5%85%A5%E4%B9%8Binclude%E6%A0%87%E7%AD%BE"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">5.1、模板的导入之include标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2%E3%80%81%E6%A8%A1%E6%9D%BF%E7%9A%84%E7%BB%A7%E6%89%BF-%E6%B4%BE%E7%94%9F%E4%B9%8Bextends%E6%A0%87%E7%AD%BE%E3%80%81block%E6%A0%87%E7%AD%BE"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">5.2、模板的继承\派生之extends标签、block标签</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">1.6.</span> <span class="nav-text">静态文件配置</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">780k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">21:39</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
