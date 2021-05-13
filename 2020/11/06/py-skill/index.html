@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://images2015.cnblogs.com/blog/997599/201701/997599-20170113091806338-1978303584.png">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/11/06/py-skill/jwt%E4%BB%8B%E7%BB%8D.png">
 <meta property="article:published_time" content="2020-11-05T22:45:35.000Z">
-<meta property="article:modified_time" content="2021-04-25T12:33:23.489Z">
+<meta property="article:modified_time" content="2021-05-12T18:35:54.326Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-25 20:33:23" itemprop="dateModified" datetime="2021-04-25T20:33:23+08:00">2021-04-25</time>
+                <time title="修改时间：2021-05-13 02:35:54" itemprop="dateModified" datetime="2021-05-13T02:35:54+08:00">2021-05-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,14 +242,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>15k</span>
+              <span>16k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>25 分钟</span>
+              <span>27 分钟</span>
             </span>
 
         </div>
@@ -403,7 +403,7 @@
 <li>Signature（签名）<blockquote>
 <p>Signature 部分是对前两部分的签名，防止数据篡改。并且通过secret加密。</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">base64UrlEncode(payload),</span><br><span class="line">secret)</span><br></pre></td></tr></table></figure>
-<p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用”点”（.）分隔，就可以返回给用户。</p>
+<p>  算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用”点”（.）分隔，就可以返回给用户。</p>
 </blockquote>
 </li>
 </ul>
@@ -564,7 +564,7 @@
 <li>各种数据类型删除操作</li>
 </ol>
 <ul>
-<li><p>列表<br>pop 弹出 ,根据索引删除<br>del 直接删除  根据索引删除<br>remove 直接删除 根据值删除</p>
+<li><p>列表<br>pop(index) 弹出 ,根据索引删除<br>del 直接删除  根据索引删除<br>remove(target) 直接删除 根据值删除</p>
 </li>
 <li><p>字典<br>data = info2.pop(“age”) ### 根据键来删除元素,返回值<br>data = info2.popitem:随机删除，返回元祖（key，value）<br>del info2[‘age’]</p>
 </li>
@@ -630,6 +630,18 @@
 <ol start="36">
 <li>distinct 去重(<strong>不要忽视主键</strong>)</li>
 </ol>
+<ol start="37">
+<li>变量使用</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Python</span><br><span class="line"># 变量</span><br><span class="line">下划线(推荐使用)</span><br><span class="line">age_of_oldboy &#x3D; 56 </span><br><span class="line"></span><br><span class="line"># 函数名(全小写)</span><br><span class="line">函数名只能包含字符串、下划线和数字且不能以数字开头。虽然函数名可以随便起，但我们给函数起名字还是要尽量简短，并能表达函数功能</span><br><span class="line">def ret_demo1():</span><br><span class="line">    &#39;&#39;&#39;返回多个值&#39;&#39;&#39; </span><br><span class="line">    return 1,2,3,4</span><br><span class="line"></span><br><span class="line"># 类名(首字母大写)</span><br><span class="line">class Person:  # 定义一个人类</span><br><span class="line">    role &#x3D; &#39;person&#39;  # 人的角色属性都是人</span><br><span class="line"></span><br><span class="line">    def __init__(self, name, aggressivity, life_value):</span><br><span class="line">        self.name &#x3D; name  # 每一个角色都有自己的昵称;</span><br><span class="line">        self.aggressivity &#x3D; aggressivity  # 每一个角色都有自己的攻击力;</span><br><span class="line">        self.life_value &#x3D; life_value  # 每一个角色都有自己的生命值;</span><br><span class="line"></span><br><span class="line">    def attack(self,dog):  </span><br><span class="line">        # 人可以攻击狗，这里的狗也是一个对象。</span><br><span class="line">        # 人攻击狗，那么狗的生命值就会根据人的攻击力而下降</span><br><span class="line">        dog.life_value -&#x3D; self.aggressivity</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">JS</span><br><span class="line"># 变量</span><br><span class="line">驼峰式命名(推荐使用)</span><br><span class="line">userName</span><br><span class="line">dataOfDb</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="38">
+<li>django名称空间不建议使用，下为推荐做法</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 路由正常分发</span><br><span class="line">re_path(r&#39;^app01&#x2F;&#39;, include(&#39;app01.urls&#39;)),</span><br><span class="line">re_path(r&#39;^app02&#x2F;&#39;, include(&#39;app02.urls&#39;)),</span><br><span class="line"></span><br><span class="line"># app01 和 app02 的urls</span><br><span class="line">re_path(r&#39;reg&#x2F;&#39;, views.reg, name&#x3D;&#39;app01_reg&#39;)</span><br><span class="line">re_path(r&#39;reg&#x2F;&#39;, views.reg, name&#x3D;&#39;app02_reg&#39;)</span><br><span class="line"></span><br><span class="line"># 后端</span><br><span class="line">url &#x3D; reverse(&#39;app01_reg&#39;)</span><br><span class="line">    return HttpResponse(&#39;from app01 reg, url是: %s&#39; %url)</span><br><span class="line">url &#x3D; reverse(&#39;app02_reg&#39;)</span><br><span class="line">    return HttpResponse(&#39;from app02 reg, url是: %s&#39; %url)</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -729,7 +741,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-count">66</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -786,12 +798,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">849k</span>
+    <span title="站点总字数">903k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">23:35</span>
+    <span title="站点阅读时长">25:05</span>
 </div>
 
 <!--
