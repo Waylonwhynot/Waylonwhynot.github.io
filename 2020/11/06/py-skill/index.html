@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://images2015.cnblogs.com/blog/997599/201701/997599-20170113091806338-1978303584.png">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/11/06/py-skill/jwt%E4%BB%8B%E7%BB%8D.png">
 <meta property="article:published_time" content="2020-11-05T22:45:35.000Z">
-<meta property="article:modified_time" content="2021-05-12T18:35:54.326Z">
+<meta property="article:modified_time" content="2021-05-15T18:27:17.733Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-13 02:35:54" itemprop="dateModified" datetime="2021-05-13T02:35:54+08:00">2021-05-13</time>
+                <time title="修改时间：2021-05-16 02:27:17" itemprop="dateModified" datetime="2021-05-16T02:27:17+08:00">2021-05-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,14 +242,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>16k</span>
+              <span>19k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>27 分钟</span>
+              <span>31 分钟</span>
             </span>
 
         </div>
@@ -642,6 +642,20 @@
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 路由正常分发</span><br><span class="line">re_path(r&#39;^app01&#x2F;&#39;, include(&#39;app01.urls&#39;)),</span><br><span class="line">re_path(r&#39;^app02&#x2F;&#39;, include(&#39;app02.urls&#39;)),</span><br><span class="line"></span><br><span class="line"># app01 和 app02 的urls</span><br><span class="line">re_path(r&#39;reg&#x2F;&#39;, views.reg, name&#x3D;&#39;app01_reg&#39;)</span><br><span class="line">re_path(r&#39;reg&#x2F;&#39;, views.reg, name&#x3D;&#39;app02_reg&#39;)</span><br><span class="line"></span><br><span class="line"># 后端</span><br><span class="line">url &#x3D; reverse(&#39;app01_reg&#39;)</span><br><span class="line">    return HttpResponse(&#39;from app01 reg, url是: %s&#39; %url)</span><br><span class="line">url &#x3D; reverse(&#39;app02_reg&#39;)</span><br><span class="line">    return HttpResponse(&#39;from app02 reg, url是: %s&#39; %url)</span><br></pre></td></tr></table></figure>
 
+<ol start="39">
+<li>django 测试脚本</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    os.environ.setdefault(<span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>, <span class="string">&#x27;singletable.settings&#x27;</span>)</span><br><span class="line">    <span class="keyword">import</span> django</span><br><span class="line">    django.setup()</span><br><span class="line">    <span class="comment"># 在这个代码块的下面就可以测试django里面的单个py文件了</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">from</span> app01 <span class="keyword">import</span> models</span><br><span class="line">    model.User.objects.All()</span><br></pre></td></tr></table></figure>
+
+<ol start="40">
+<li>orm相关</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.</span> model层</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>x 里面外键默认都是级联更新删除的</span><br><span class="line">但是到了<span class="number">2.</span>x和<span class="number">3.</span>x 中需要你自己手动配置参数</span><br><span class="line"></span><br><span class="line">publish = models.ForeignKey(to=<span class="string">&#x27;Publish&#x27;</span>)</span><br><span class="line">publish = models.ForeignKey(to=<span class="string">&#x27;Publish&#x27;</span>,on_delete=models.CASCADE)</span><br><span class="line"></span><br><span class="line">外键字典会自动在字段的后面加上_id</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">     <span class="keyword">return</span> <span class="string">&#x27;对象：%s&#x27;</span> % self.name  <span class="comment"># 如果不加这段函数，默认返回的数据对象是User object 形式，加上之后返回的数据对象是“对象：jack_sam”，方便我们看清楚数据</span></span><br><span class="line"></span><br><span class="line"> filter: 拿到的queryset列表，列表中元素是数据对象</span><br><span class="line"> get : 拿到直接就是数据对象</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="number">1.</span> 主键建议写pk</span><br><span class="line"><span class="comment"># 建议写pk，pk会自动查找当前表的主键字段，指代的就是当前表的主键字段，用了pk之后，我们不需要知道当前表的主键字段名称也可进行删除操作。</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 查询建议filter 不建议get</span><br><span class="line"><span class="comment"># 对象：jack_sam,get拿到的直接就是这个数据对象，就不需要用filter(pk=5).first()了。</span></span><br><span class="line">    <span class="comment"># 但是该方法不推荐使用，因为如果数据不存在，数据会直接报错；filter则不会报错</span></span><br><span class="line"><span class="number">3.</span> 推荐filter 不推荐get</span><br><span class="line">user_obj2 = models.User.objects.get(pk=<span class="number">5</span>)</span><br><span class="line">，因为如果数据不存在，get会直接报错；filter则不会报错</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span> 查询去重一定不要忽略主键</span><br><span class="line"><span class="comment"># distinct() 去重</span></span><br><span class="line">    res = models.User.objects.all()</span><br><span class="line">    print(res)</span><br><span class="line">    <span class="comment"># &lt;QuerySet [&lt;User: 对象：jack&gt;, &lt;User: 对象：nimoding&gt;, &lt;User: 对象：jack_sam&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：nimo&gt;, &lt;User: 对象：jack&gt;]&gt;</span></span><br><span class="line"></span><br><span class="line">    res = models.User.objects.values(<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;age&#x27;</span>).distinct()   <span class="comment"># 去重不要带主键</span></span><br><span class="line">    print(res)</span><br><span class="line">    <span class="comment"># &lt;QuerySet [&#123;&#x27;name&#x27;: &#x27;jack&#x27;, &#x27;age&#x27;: 19&#125;, &#123;&#x27;name&#x27;: &#x27;nimoding&#x27;, &#x27;age&#x27;: 18&#125;, &#123;&#x27;name&#x27;: &#x27;jack_sam&#x27;, &#x27;age&#x27;: 19&#125;, &#123;&#x27;name&#x27;: &#x27;ross&#x27;, &#x27;age&#x27;: 20&#125;, &#123;&#x27;name&#x27;: &#x27;nimo&#x27;, &#x27;age&#x27;: 18&#125;]&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">5.</span> 跨表查询</span><br><span class="line"><span class="comment">#子查询（先查数据对象，然后.字段）</span></span><br><span class="line">正向: 表名小写查数据对象</span><br><span class="line">author_obj = models.Author.objects.filter(name=<span class="string">&#x27;jason&#x27;</span>).first()</span><br><span class="line">res = author_obj.author_detail</span><br><span class="line">print(res.phone)</span><br><span class="line"></span><br><span class="line">反向: 表名小写_set 查数据对象</span><br><span class="line">publish_obj = models.Publish.objects.filter(name=<span class="string">&#x27;东方出版社&#x27;</span>).first()</span><br><span class="line">res = publish_obj.book_set.all()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 联表查询 关键字values</span></span><br><span class="line">正向: 关键字values(表名小写__字段)</span><br><span class="line">反向: filter() 关键字values(表名小写__字段)</span><br><span class="line"></span><br><span class="line">正</span><br><span class="line">res = models.Author.objects.filter(name=<span class="string">&#x27;jason&#x27;</span>).values(<span class="string">&#x27;author_detail__phone&#x27;</span>)</span><br><span class="line">print(res)</span><br><span class="line">反</span><br><span class="line">res = models.AuthorDetail.objects.filter(author__name=<span class="string">&#x27;jason&#x27;</span>).values(<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;author__name&#x27;</span>)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 
     </div>
 
@@ -798,12 +812,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">920k</span>
+    <span title="站点总字数">923k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">25:34</span>
+    <span title="站点阅读时长">25:38</span>
 </div>
 
 <!--
