@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154016681.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154039451.png">
 <meta property="article:published_time" content="2020-11-05T22:45:35.000Z">
-<meta property="article:modified_time" content="2021-05-16T12:48:03.359Z">
+<meta property="article:modified_time" content="2021-05-16T15:04:50.364Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-16 20:48:03" itemprop="dateModified" datetime="2021-05-16T20:48:03+08:00">2021-05-16</time>
+                <time title="修改时间：2021-05-16 23:04:50" itemprop="dateModified" datetime="2021-05-16T23:04:50+08:00">2021-05-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,7 +244,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>21k</span>
+              <span>22k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -625,10 +625,6 @@
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">配套不成熟，之前的那些模块，都是同步模块。操作mysql，redis等等。</span><br><span class="line">前面是用了异步框架，再用了同步模块，还不如不用。</span><br><span class="line"></span><br><span class="line">django 3.0以上可以支持异步，但是它的ORM用的还是同步，等于没用。</span><br><span class="line"></span><br><span class="line">一旦用到异步，后面全要用到异步； 也可以用线程池解决。</span><br></pre></td></tr></table></figure>
 
-
-
-
-
 <ol start="36">
 <li><p>distinct 去重(<strong>不要忽视主键</strong>)</p>
 </li>
@@ -641,6 +637,19 @@
 
 <p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154016681.png" alt="image-20210516154016681"></p>
 <p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154039451.png" alt="image-20210516154039451"></p>
+<ol start="39">
+<li>MySQL 事务 ACID</li>
+</ol>
+<p><strong>事务作用</strong>：<font color="red">从而保证数据库数据完整性和操作的安全性。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">原子性（Atomicity）：不可分割的最小单位</span><br><span class="line">一致性（Consistency）：跟原子性相辅相成</span><br><span class="line">隔离性（Isolation）：事务之间互相不干扰</span><br><span class="line">持久性（Durability）：事务一旦确认永久生效</span><br><span class="line"></span><br><span class="line">事务的回滚rollback</span><br><span class="line">事务的确认commit</span><br></pre></td></tr></table></figure>
+
+<p><strong>开启事务</strong>: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启事务</span></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> transaction</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> transaction.atomic():</span><br><span class="line">        <span class="comment"># sql1</span></span><br><span class="line">        <span class="comment"># sql2</span></span><br><span class="line">        <span class="comment"># 在with代码块内书写的所有orm操作都属于同一个事务</span></span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    print(e)</span><br><span class="line">print(<span class="string">&#x27;other operation&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 <ol start="37">
 <li>变量使用</li>
 </ol>
@@ -765,7 +774,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -778,7 +787,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -822,12 +831,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">949k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">25:59</span>
+    <span title="站点阅读时长">26:22</span>
 </div>
 
 <!--
