@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154016681.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154039451.png">
 <meta property="article:published_time" content="2020-11-05T22:45:35.000Z">
-<meta property="article:modified_time" content="2021-05-17T15:46:17.248Z">
+<meta property="article:modified_time" content="2021-05-18T13:19:50.696Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-17 23:46:17" itemprop="dateModified" datetime="2021-05-17T23:46:17+08:00">2021-05-17</time>
+                <time title="修改时间：2021-05-18 21:19:50" itemprop="dateModified" datetime="2021-05-18T21:19:50+08:00">2021-05-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -686,7 +686,10 @@
 <p>博客：<a target="_blank" rel="noopener" href="https://www.liujiangblog.com/course/django/139">https://www.liujiangblog.com/course/django/139</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## QuertDict</span></span><br><span class="line"></span><br><span class="line">一定要初一区分QueryDict和QuerySet，前者是对HTTP请求数据包中携带的数据的封装，后者是对从数据库中查询出来的数据进行的封装。</span><br><span class="line"></span><br><span class="line">在HttpRequest对象中，GET和POST属性都是一个django.http.QueryDict的实例。也就是说你可以按本文下面提供的方法操作request.POST和request.GET。</span><br><span class="line"></span><br><span class="line">request.POST或request.GET的QueryDict都是不可变，只读的。如果要修改它，需要使用QueryDict.copy()方法，获取它的一个拷贝，然后在这个拷贝上进行修改操作。</span><br><span class="line"></span><br><span class="line">字典的大部分方法都是用于QueryDict</span><br><span class="line"></span><br><span class="line"><span class="comment">## QuerySet</span></span><br><span class="line">想要从数据库内检索对象，你需要基于模型类，通过管理器（Manager）操作数据库并返回一个查询结果集（QuerySet）。</span><br><span class="line"></span><br><span class="line">每个QuerySet代表一些数据库对象的集合。它可以包含零个、一个或多个过滤器（filters）。Filters缩小查询结果的范围。在SQL语法中，一个QuerySet相当于一个SELECT语句，而filter则相当于WHERE或者LIMIT一类的子句。</span><br><span class="line"></span><br><span class="line">每个模型至少具有一个Manager，默认情况下，Django自动为我们提供了一个，也是最常用最重要的一个，<span class="number">99</span>%的情况下我们都只使用它。它被称作objects，可以通过模型类直接调用它，但不能通过模型类的实例调用它，以此实现“表级别”操作和“记录级别”操作的强制分离。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#### 补充</span></span><br><span class="line">QueryDict.get()， 返回键的对应的值，如果是有多个值（序列），只返回最后一个值 </span><br><span class="line">QueryDict.getlist()，返回键对应的值列表</span><br><span class="line"></span><br><span class="line">values 和 values_list , 返回值不是数据对象</span><br><span class="line">values()     返回值: 列表中嵌套字典 值字典</span><br><span class="line">values_list() 返回值: 列表中嵌套元祖 值元祖</span><br></pre></td></tr></table></figure>
 
-
+<ol start="44">
+<li>ORM更改字段名称(db_column)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;www.dazhuanlan.com&#x2F;2019&#x2F;12&#x2F;05&#x2F;5de7d9e271aa7&#x2F;</span><br><span class="line"></span><br><span class="line">username &#x3D; models.CharField(max_length&#x3D;32, verbose_name&#x3D;&#39;姓名&#39;,db_column&#x3D;&#39;username&#39;, null&#x3D;True)</span><br></pre></td></tr></table></figure>
 
 
 
@@ -853,7 +856,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">28:08</span>
+    <span title="站点阅读时长">28:13</span>
 </div>
 
 <!--
