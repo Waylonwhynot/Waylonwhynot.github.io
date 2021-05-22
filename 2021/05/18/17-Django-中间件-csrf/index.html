@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://zhstatic.zhihu.com/assets/zhihu/editor/zhihu-card-default.svg">
 <meta property="og:image" content="https://pic4.zhimg.com/80/v2-c9e6217eea418ec8cd0bbe601c94e00f_1440w.png">
 <meta property="article:published_time" content="2021-05-17T18:24:54.000Z">
-<meta property="article:modified_time" content="2021-05-17T18:35:55.835Z">
+<meta property="article:modified_time" content="2021-05-22T14:17:00.668Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Django">
 <meta name="twitter:card" content="summary">
@@ -222,10 +222,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-05-18 02:24:54 / 修改时间：02:35:55" itemprop="dateCreated datePublished" datetime="2021-05-18T02:24:54+08:00">2021-05-18</time>
+              <time title="创建时间：2021-05-18 02:24:54" itemprop="dateCreated datePublished" datetime="2021-05-18T02:24:54+08:00">2021-05-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-22 22:17:00" itemprop="dateModified" datetime="2021-05-22T22:17:00+08:00">2021-05-22</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -242,14 +248,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>10k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>17 分钟</span>
+              <span>19 分钟</span>
             </span>
 
         </div>
@@ -275,9 +281,11 @@
 <p>Django支持程序员自定义中间件并且提供了5个可以自定义的方法：</p>
 </blockquote>
 <p><strong>1、必须掌握</strong>：<br><strong>process_request</strong>：<br>1、请求来的时候需要经过每一个中间件里面的process_request方法，经过的顺序是按照配置文件中注册的中间件从上往下的顺序一次执行<br>2、如果中间件里面没有定义，则直接跳过执行下一个<br>3、如果该方法返回了HTTPResponse对象，那么请求将不再继续往后执行，而是原路返回(类似于校验失败不允许访问)<br>process_request方法就是用来做全局相关的所有限制功能。</p>
-<p><strong>process_response**<em>：</em><br>1、响应走的时候需要经过每一个中间件里面的process_response方法，该方法有两个额外的参数：request,response<br>2、该方法必须返回一个HTTPResponse对象，默认返回的就是形参response<br>3、顺序按照配置文件中注册了的中间件从下往上依次经过，若没有定义，则跳过<br>**如果在第一个process_request方法就已经返回了HttpResponse对象，那么响应走的时候是直接走同级别的process_response返回。(flask框架中也有类似的中间件，但是flask中只要返回响应就必须将所有类似于process_response的功能方法全都走一遍)</strong></p>
+<p>*<em>process_response**</em>：*<br>1、响应走的时候需要经过每一个中间件里面的process_response方法，该方法有两个额外的参数：request,response<br>2、该方法必须返回一个HTTPResponse对象(替换浏览器原有的HttpResponse对象)，默认返回的就是形参response<br>3、顺序按照配置文件中注册了的中间件从下往上依次经过，若没有定义，则跳过;有定义，继续执行。</p>
+<p><strong>如果在第一个process_request方法就已经返回了HttpResponse对象，那么响应走的时候是直接走同级别的process_response返回。(flask框架中也有类似的中间件，但是flask中只要返回响应就必须将所有类似于process_response的功能方法全都走一遍)</strong></p>
 <p>只要形参中带有response方法，那么该方法就必须返回response或者HTTPResponse对象。</p>
-<p><strong>2、了解即可</strong><br><strong>process_view</strong>：<br>路由匹配成功之后，执行视图函数之前，会自动执行中间件里面的该方法。顺序是按照配置文件中注册中间件从上往下的顺序依次执行。</p>
+<p><strong>2、了解即可</strong><br><strong>process_view</strong>：<br>路由匹配成功之后，执行视图函数之前，会自动执行中间件里面的该方法。</p>
+<p>顺序是按照配置文件中注册中间件从上往下的顺序依次执行。</p>
 <p><strong>process_template_response</strong>:<br>返回的HttpResponse对象有render属性的时候才会触发。顺序是按照从下往上依次经过。</p>
 <p><strong>process_exception</strong>：<br>当视图函数中出现异常情况会触发。</p>
 <blockquote>
@@ -320,6 +328,10 @@
 <h2 id="4、csrf相关装饰器"><a href="#4、csrf相关装饰器" class="headerlink" title="4、csrf相关装饰器"></a>4、csrf相关装饰器</h2><p><strong>from django.views.decorators.csrf import csrf_protect,csrf_exempt</strong><br><strong>‘’’</strong><br><strong>csrf_protect 需要校验</strong><br><strong>csrf_exempt 忽略校验</strong><br><strong>‘’’</strong></p>
 <p>当settings.py文件中的’django.middleware.<strong>csrf</strong>.CsrfViewMiddleware’中间件注释掉了时，我们给视图函数加上@csrf_protect装饰器，则表示此视图函数需要csrf校验；<br>当settings.py文件中的’django.middleware.<strong>csrf</strong>.CsrfViewMiddleware’中间件打开时，我们给视图函数加上@csrf_exempt装饰器，则表示此视图函数不需要csrf校验 。</p>
 <p><strong>这两个装饰器在FBV上使用方式一致，就是普通的装饰器；</strong><br><strong>但是在CBV上两者有区别：</strong><br><strong>csrf_protect支持装饰器的三种玩法；</strong><br><strong>csrf_exempt只能给dispatch方法加才有效果，另外两种方式加无效果。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.views.decorators.csrf <span class="keyword">import</span> csrf_exempt, csrf_protect</span><br><span class="line"><span class="keyword">from</span> django.utils.decorators <span class="keyword">import</span> method_decorator</span><br><span class="line"><span class="keyword">from</span> django.views <span class="keyword">import</span> View</span><br><span class="line"></span><br><span class="line"><span class="comment">#装饰器方式2,可以针对不同的方法添加不同的装饰器，扩展性强：</span></span><br><span class="line"><span class="comment"># @method_decorator(csrf_protect, name=&#x27;post&#x27;)</span></span><br><span class="line"><span class="comment"># @method_decorator(csrf_exempt, name=&#x27;post&#x27;) # csrf_exempt不行</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyCsrfToken</span>(<span class="params">View</span>):</span></span><br><span class="line">    <span class="comment"># 装饰器方式3</span></span><br><span class="line">    <span class="comment"># @method_decorator(csrf_protect) # csrf_protect 无影响</span></span><br><span class="line">    <span class="comment"># @method_decorator(csrf_exempt)  # csrf_exempt 无影响</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dispatch</span>(<span class="params">self, request, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">return</span> super(MyCsrfToken, self).dispatch(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;get&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 装饰器方式1：</span></span><br><span class="line">    <span class="comment"># @method_decorator(csrf_protect)</span></span><br><span class="line"><span class="meta">    @method_decorator(csrf_exempt) # csrf_exempt 不行</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;post&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
 <p>装饰器可参考：</p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/196412828">曾丁丁丁：Day69 Cookie\session\CBV添加装饰器zhuanlan.zhihu.com<img src="https://zhstatic.zhihu.com/assets/zhihu/editor/zhihu-card-default.svg" alt="图标"></a></p>
 <h2 id="5、模块补充"><a href="#5、模块补充" class="headerlink" title="5、模块补充"></a>5、模块补充</h2><p>两种方式获取到另一个py文件中的变量：</p>
@@ -491,7 +503,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">28:17</span>
+    <span title="站点阅读时长">28:26</span>
 </div>
 
 <!--
