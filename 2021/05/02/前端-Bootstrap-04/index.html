@@ -28,7 +28,7 @@
 <meta property="og:description" content="Bootstrap插件">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-02T06:43:44.000Z">
-<meta property="article:modified_time" content="2021-05-02T06:47:06.360Z">
+<meta property="article:modified_time" content="2021-05-25T00:53:03.007Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -213,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-05-02 14:43:44 / 修改时间：14:47:06" itemprop="dateCreated datePublished" datetime="2021-05-02T14:43:44+08:00">2021-05-02</time>
+              <time title="创建时间：2021-05-02 14:43:44" itemprop="dateCreated datePublished" datetime="2021-05-02T14:43:44+08:00">2021-05-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-25 08:53:03" itemprop="dateModified" datetime="2021-05-25T08:53:03+08:00">2021-05-25</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -233,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>40k</span>
+              <span>41k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:07</span>
+              <span>1:09</span>
             </span>
 
         </div>
@@ -293,7 +299,12 @@
 <h3 id="2-4-禁用过度效果"><a href="#2-4-禁用过度效果" class="headerlink" title="2.4 禁用过度效果"></a>2.4 禁用过度效果</h3><p>通过下面的 JavaScript 代码可以在全局范围禁用过渡效果，并且必须将此代码放在 <code>transition.js</code> （或 <code>bootstrap.js</code> 或 <code>bootstrap.min.js</code>）后面，确保在 js 文件加载完毕后再执行下面的代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.support.transition &#x3D; false</span><br></pre></td></tr></table></figure>
 
-<h2 id="3-模态框-modal-js"><a href="#3-模态框-modal-js" class="headerlink" title="3 模态框 modal.js"></a>3 模态框 modal.js</h2><blockquote>
+<h2 id="3-模态框-modal-js"><a href="#3-模态框-modal-js" class="headerlink" title="3 模态框 modal.js"></a>3 模态框 modal.js</h2><p><strong><a target="_blank" rel="noopener" href="https://www.runoob.com/bootstrap/bootstrap-modal-plugin.html">https://www.runoob.com/bootstrap/bootstrap-modal-plugin.html</a></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">使用模态窗口，您需要有某种触发器。您可以使用按钮或链接。这里我们使用的是按钮。</span><br><span class="line"></span><br><span class="line">data-target&#x3D;&quot;#myModal&quot; 是您想要在页面上加载的模态框的目标</span><br><span class="line">.fade class。当模态框被切换时，它会引起内容淡入淡出。</span><br><span class="line">data-dismiss&#x3D;&quot;modal&quot;，是一个自定义的 HTML5 data 属性。在这里它被用于关闭模态窗口。</span><br><span class="line">data-toggle&#x3D;&quot;modal&quot;，HTML5 自定义的 data 属性 data-toggle 用于打开模态窗口。</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
 <p>务必将模态框的 HTML 代码放在文档的最高层级内（也就是说，尽量作为 body 标签的直接子元素），以避免其他组件影响模态框的展现和/或功能。</p>
 </blockquote>
 <h3 id="3-1-模态框定义"><a href="#3-1-模态框定义" class="headerlink" title="3.1 模态框定义"></a>3.1 模态框定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Modal --&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;modal fade&quot; id&#x3D;&quot;myModal&quot; tabindex&#x3D;&quot;-1&quot; role&#x3D;&quot;dialog&quot; aria-labelledby&#x3D;&quot;myModalLabel&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;modal-dialog&quot; role&#x3D;&quot;document&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;modal-content&quot;&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-header&quot;&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;close&quot; data-dismiss&#x3D;&quot;modal&quot; aria-label&#x3D;&quot;Close&quot;&gt;&lt;span aria-hidden&#x3D;&quot;true&quot;&gt;&amp;times;&lt;&#x2F;span&gt;&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;h4 class&#x3D;&quot;modal-title&quot; id&#x3D;&quot;myModalLabel&quot;&gt;Modal title&lt;&#x2F;h4&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-body&quot;&gt;</span><br><span class="line">        ...</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-footer&quot;&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-default&quot; data-dismiss&#x3D;&quot;modal&quot;&gt;Close&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot;&gt;Save changes&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
@@ -1091,6 +1102,8 @@
 <td>This event is fired after the element has been affixed-bottom.</td>
 </tr>
 </tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Large modal --&gt;</span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot; data-toggle&#x3D;&quot;modal&quot; data-target&#x3D;&quot;.bs-example-modal-lg&quot;&gt;Large modal&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class&#x3D;&quot;modal fade&quot; tabindex&#x3D;&quot;-1&quot; role&#x3D;&quot;dialog&quot; aria-labelledby&#x3D;&quot;myLargeModalLabel&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;modal-dialog modal-lg&quot; role&#x3D;&quot;document&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;modal-content&quot;&gt;</span><br><span class="line">      ...</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Small modal --&gt;</span><br><span class="line">&lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot; data-toggle&#x3D;&quot;modal&quot; data-target&#x3D;&quot;.bs-example-modal-sm&quot;&gt;Small modal&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class&#x3D;&quot;modal fade&quot; tabindex&#x3D;&quot;-1&quot; role&#x3D;&quot;dialog&quot; aria-labelledby&#x3D;&quot;mySmallModalLabel&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;modal-dialog modal-sm&quot; role&#x3D;&quot;document&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;modal-content&quot;&gt;</span><br><span class="line">      ...</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -1252,7 +1265,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">28:39</span>
+    <span title="站点阅读时长">28:44</span>
 </div>
 
 <!--
