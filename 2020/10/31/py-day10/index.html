@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/10/31/py-day10/cookie-session.png">
 <meta property="og:image" content="https://waylon.whatyouneed.site/2020/10/31/py-day10/session-cookie2.png">
 <meta property="article:published_time" content="2020-10-30T19:27:33.000Z">
-<meta property="article:modified_time" content="2020-11-29T05:42:50.060Z">
+<meta property="article:modified_time" content="2021-05-31T04:00:13.749Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-29 13:42:50" itemprop="dateModified" datetime="2020-11-29T13:42:50+08:00">2020-11-29</time>
+                <time title="修改时间：2021-05-31 12:00:13" itemprop="dateModified" datetime="2021-05-31T12:00:13+08:00">2021-05-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,10 +263,6 @@
       
         <p>Django 分页<br>django的模型字段介绍<br>cookie-session<br>Auth模块</p>
 <a id="more"></a>
-
-
-<h3 id="0-django的admin"><a href="#0-django的admin" class="headerlink" title="0. django的admin"></a>0. django的admin</h3><p>就是django内置了了⼀一套后台管理理系统，因为⾃自带的东⻄西，扩展性不不是很好。临时拿来⽤用可以，但是如果 让⽤用户使⽤用，就不不太推荐<br>需要注册模型类 admin.py</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Register your models here.</span><br><span class="line">from app01 import models</span><br><span class="line">### 注册 admin.site.register(models.Book)</span><br></pre></td></tr></table></figure>
 
 <h3 id="cookie-session"><a href="#cookie-session" class="headerlink" title="cookie session"></a>cookie session</h3><p>session和token都是用来保持会话，功能相同</p>
 <p>一、session机制，原理<br>　　 <img src="/2020/10/31/py-day10/cookie-session.png" class title="objsort"><br>session是服务端存储的一个对象，主要用来存储所有访问过该服务端的客户端的用户信息（也可以存储其他信息），从而实现保持用户会话状态。但是服务器重启时，内存会被销毁，存储的用户信息也就消失了。<br>　　　　不同的用户访问服务端的时候会在session对象中存储键值对，“键”用来存储开启这个用户信息的“钥匙”，在登录成功后，“钥匙”通过cookie返回给客户端，客户端存储为sessionId记录在cookie中。当客户端再次访问时，会默认携带cookie中的sessionId来实现会话机制。</p>
@@ -465,7 +461,7 @@ session 删除，删除整条记录（包括 session_key、session_data、expire
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-django%E7%9A%84admin"><span class="nav-number">1.</span> <span class="nav-text">0. django的admin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie-session"><span class="nav-number">2.</span> <span class="nav-text">cookie session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-django%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%AD%97%E6%AE%B5%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text">二. django的模型字段介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Django-%E5%88%86%E9%A1%B5"><span class="nav-number">4.</span> <span class="nav-text">Django 分页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auth%E6%A8%A1%E5%9D%97"><span class="nav-number">5.</span> <span class="nav-text">auth模块</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie-session"><span class="nav-number">1.</span> <span class="nav-text">cookie session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-django%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%AD%97%E6%AE%B5%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">二. django的模型字段介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Django-%E5%88%86%E9%A1%B5"><span class="nav-number">3.</span> <span class="nav-text">Django 分页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auth%E6%A8%A1%E5%9D%97"><span class="nav-number">4.</span> <span class="nav-text">auth模块</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -543,7 +539,7 @@ session 删除，删除整条记录（包括 session_key、session_data、expire
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">29:35</span>
+    <span title="站点阅读时长">29:39</span>
 </div>
 
 <!--
