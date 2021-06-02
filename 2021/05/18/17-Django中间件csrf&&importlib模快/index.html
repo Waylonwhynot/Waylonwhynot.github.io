@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Django中间件&#x2F;csrf">
+  <meta name="description" content="Django中间件&#x2F;csrf  - importlib模块补充">
 <meta property="og:type" content="article">
-<meta property="og:title" content="17-Django-中间件-csrf">
-<meta property="og:url" content="https://waylon.whatyouneed.site/2021/05/18/17-Django-%E4%B8%AD%E9%97%B4%E4%BB%B6-csrf/index.html">
+<meta property="og:title" content="17-Django中间件csrf&amp;&amp;importlib模快">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/05/18/17-Django%E4%B8%AD%E9%97%B4%E4%BB%B6csrf&&importlib%E6%A8%A1%E5%BF%AB/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="Django中间件&#x2F;csrf">
+<meta property="og:description" content="Django中间件&#x2F;csrf  - importlib模块补充">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-62f29bbc290309ef43e001a0f1f66457_1440w.jpg">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-88f8de70fb56ea07ea7ce5d5b054e2fe_1440w.jpg">
@@ -35,14 +35,18 @@
 <meta property="og:image" content="https://pic3.zhimg.com/v2-130f82d81e682faf4e010a97aa9fba92_180x120.jpg">
 <meta property="og:image" content="https://zhstatic.zhihu.com/assets/zhihu/editor/zhihu-card-default.svg">
 <meta property="og:image" content="https://pic4.zhimg.com/80/v2-c9e6217eea418ec8cd0bbe601c94e00f_1440w.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210602163008291.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210602163202288.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210602163238778.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210602171721248.png">
 <meta property="article:published_time" content="2021-05-17T18:24:54.000Z">
-<meta property="article:modified_time" content="2021-05-22T14:17:00.668Z">
+<meta property="article:modified_time" content="2021-06-02T09:17:25.226Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Django">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-62f29bbc290309ef43e001a0f1f66457_1440w.jpg">
 
-<link rel="canonical" href="https://waylon.whatyouneed.site/2021/05/18/17-Django-%E4%B8%AD%E9%97%B4%E4%BB%B6-csrf/">
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/05/18/17-Django%E4%B8%AD%E9%97%B4%E4%BB%B6csrf&&importlib%E6%A8%A1%E5%BF%AB/">
 
 
 <script id="page-configurations">
@@ -55,7 +59,7 @@
   };
 </script>
 
-  <title>17-Django-中间件-csrf | YouNeed</title>
+  <title>17-Django中间件csrf&&importlib模快 | YouNeed</title>
   
 
 
@@ -200,7 +204,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/18/17-Django-%E4%B8%AD%E9%97%B4%E4%BB%B6-csrf/">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/18/17-Django%E4%B8%AD%E9%97%B4%E4%BB%B6csrf&&importlib%E6%A8%A1%E5%BF%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/timg.jpeg">
@@ -213,7 +217,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          17-Django-中间件-csrf
+          17-Django中间件csrf&&importlib模快
         </h1>
 
         <div class="post-meta">
@@ -230,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-22 22:17:00" itemprop="dateModified" datetime="2021-05-22T22:17:00+08:00">2021-05-22</time>
+                <time title="修改时间：2021-06-02 17:17:25" itemprop="dateModified" datetime="2021-06-02T17:17:25+08:00">2021-06-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,7 +271,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Django中间件/csrf</p>
+        <p>Django中间件/csrf  - importlib模块补充</p>
 <a id="more"></a>
 
 <h2 id="1、Django中间件"><a href="#1、Django中间件" class="headerlink" title="1、Django中间件"></a>1、Django中间件</h2><p>Django自带7个中间件，每个中间件都有各自对应的功能，并且Django还支持自定义中间件。<br>例如在用Django开发项目时，只要是涉及到全局相关的功能都可以使用中间件方便地完成。eg：全局用户身份校验、全局用户权限校验、全局用户访问频率校验。</p>
@@ -281,7 +285,7 @@
 <p>Django支持程序员自定义中间件并且提供了5个可以自定义的方法：</p>
 </blockquote>
 <p><strong>1、必须掌握</strong>：<br><strong>process_request</strong>：<br>1、请求来的时候需要经过每一个中间件里面的process_request方法，经过的顺序是按照配置文件中注册的中间件从上往下的顺序一次执行<br>2、如果中间件里面没有定义，则直接跳过执行下一个<br>3、如果该方法返回了HTTPResponse对象，那么请求将不再继续往后执行，而是原路返回(类似于校验失败不允许访问)<br>process_request方法就是用来做全局相关的所有限制功能。</p>
-<p>*<em>process_response**</em>：*<br>1、响应走的时候需要经过每一个中间件里面的process_response方法，该方法有两个额外的参数：request,response<br>2、该方法必须返回一个HTTPResponse对象(替换浏览器原有的HttpResponse对象)，默认返回的就是形参response<br>3、顺序按照配置文件中注册了的中间件从下往上依次经过，若没有定义，则跳过;有定义，继续执行。</p>
+<p>*<em>process_response**</em>：<br>1、响应走的时候需要经过每一个中间件里面的process_response方法，该方法有两个额外的参数：request,response<br>2、该方法必须返回一个HTTPResponse对象(替换浏览器原有的HttpResponse对象)，默认返回的就是形参response<br>3、顺序按照配置文件中注册了的中间件从下往上依次经过，若没有定义，则跳过;有定义，继续执行。</p>
 <p><strong>如果在第一个process_request方法就已经返回了HttpResponse对象，那么响应走的时候是直接走同级别的process_response返回。(flask框架中也有类似的中间件，但是flask中只要返回响应就必须将所有类似于process_response的功能方法全都走一遍)</strong></p>
 <p>只要形参中带有response方法，那么该方法就必须返回response或者HTTPResponse对象。</p>
 <p><strong>2、了解即可</strong><br><strong>process_view</strong>：<br>路由匹配成功之后，执行视图函数之前，会自动执行中间件里面的该方法。</p>
@@ -342,6 +346,13 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># qq.py文件:</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QQ</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send</span>(<span class="params">self,content</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;QQ通知&#123;&#125;&#x27;</span>.format(content))</span><br><span class="line"></span><br><span class="line"><span class="comment"># wechat.py文件：</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Wechat</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send</span>(<span class="params">self,content</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;微信通知&#123;&#125;&#x27;</span>.format(content))</span><br><span class="line"></span><br><span class="line"><span class="comment"># email.py文件：</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Email</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send</span>(<span class="params">self,content</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;邮箱通知&#123;&#125;&#x27;</span>.format(content))</span><br><span class="line"></span><br><span class="line"><span class="comment"># __init__文件：</span></span><br><span class="line"><span class="keyword">from</span> sendinfo02 <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">import</span> importlib</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_all</span>(<span class="params">content</span>):</span></span><br><span class="line">    <span class="keyword">for</span> path_str <span class="keyword">in</span> settings.NOTIFY_LIST:  <span class="comment"># 获取到&#x27;notify.email.Email&#x27;</span></span><br><span class="line">        module_path,class_name = path_str.rsplit(<span class="string">&#x27;.&#x27;</span>,maxsplit=<span class="number">1</span>)</span><br><span class="line">        <span class="comment"># module_path=&#x27;notify.email&#x27;,class_name=&#x27;Email&#x27;</span></span><br><span class="line">        <span class="comment"># 1、利用字符串导入模块</span></span><br><span class="line">        module = importlib.import_module(module_path) <span class="comment"># from notify import email</span></span><br><span class="line">        <span class="comment"># 2、利用反射获取类名</span></span><br><span class="line">        cls = getattr(module,class_name) <span class="comment"># 拿到类名：Email\QQ\Wechat</span></span><br><span class="line">        <span class="comment"># 3、生成类的对象</span></span><br><span class="line">        obj = cls()</span><br><span class="line">        <span class="comment"># 4、利用鸭子类型直接调用send方法</span></span><br><span class="line">        obj.send(content)</span><br><span class="line"></span><br><span class="line"><span class="comment"># settings.py文件：</span></span><br><span class="line">NOTIFY_LIST=[</span><br><span class="line">    <span class="string">&#x27;notify.email.Email&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;notify.qq.QQ&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;notify.wechat.Wechat&#x27;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># start.py文件：</span></span><br><span class="line"><span class="keyword">from</span> sendinfo02 <span class="keyword">import</span> notify</span><br><span class="line">notify.send_all(<span class="string">&#x27;hello world!&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">知识点：</span></span><br><span class="line"><span class="string">配置文件注册功能</span></span><br><span class="line"><span class="string">importlib模块</span></span><br><span class="line"><span class="string">字符串切割split</span></span><br><span class="line"><span class="string">反射</span></span><br><span class="line"><span class="string">面向对象</span></span><br><span class="line"><span class="string">鸭子类型</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <p>不需要哪个功能的话，直接到settings.py文件中注释掉即可。</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210602163008291.png" alt="image-20210602163008291"></p>
+<p>from django.conf import setttings</p>
+<p>class LazySettings(….)</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210602163202288.png" alt="image-20210602163202288"></p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210602163238778.png" alt="image-20210602163238778"></p>
+<p>![image-20210602171212264](/Users/waylonyan/Library/Application Support/typora-user-images/image-20210602171212264.png)</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210602171721248.png" alt="image-20210602171721248"></p>
 
     </div>
 
@@ -441,7 +452,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -503,7 +514,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">29:39</span>
+    <span title="站点阅读时长">30:50</span>
 </div>
 
 <!--
