@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="字符串格式化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go-06-字符串格式化">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/06/20/Go-06-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="字符串格式化">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-20T12:44:58.000Z">
+<meta property="article:modified_time" content="2021-06-20T12:45:44.904Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/06/20/Go-06-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Go-06-字符串格式化 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/06/20/Go-06-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go-06-字符串格式化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-20 20:44:58 / 修改时间：20:45:44" itemprop="dateCreated datePublished" datetime="2021-06-20T20:44:58+08:00">2021-06-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>字符串格式化</p>
+<a id="more"></a>
+
+<h1 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h1><p>Go语言用于控制文本输出常用的标准库是fmt</p>
+<p>fmt中主要用于输出的函数有:</p>
+<ul>
+<li>Print:   输出到控制台,不接受任何格式化操作</li>
+<li>Println: 输出到控制台并换行</li>
+<li>Printf : 只可以打印出格式化的字符串。只可以直接输出字符串类型的变量（不可以输出别的类型）</li>
+<li>Sprintf：格式化并返回一个字符串而不带任何输出</li>
+<li>Fprintf：来格式化并输出到 io.Writers 而不是 os.Stdout</li>
+</ul>
+<p>我们通过Printf函数来了解下，Go语言里面的字符串格式化:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fmt.Sprintf(格式化样式, 参数列表…)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>格式样式: 字符串形式，格式化符号以 % 开头， %s 字符串格式，%d 十进制的整数格式</li>
+<li>参数列表: 多个参数以逗号分隔，个数必须与格式化样式中的个数一一对应，否则运行时会报错</li>
+</ul>
+<p>比如:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">username := <span class="string">&quot;boy&quot;</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;welcome, %s&quot;</span>, username)</span><br></pre></td></tr></table></figure>
+
+<h2 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h2><table>
+<thead>
+<tr>
+<th>格  式</th>
+<th>描  述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%b</td>
+<td>整型以二进制方式显示</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>整型以八进制方式显示</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>整型以十进制方式显示</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>整型以十六进制方式显示</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>整型以十六进制、字母大写方式显示</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>相应Unicode码点所表示的字符</td>
+</tr>
+<tr>
+<td>%U</td>
+<td>Unicode 字符, Unicode格式：123，等同于 “U+007B”</td>
+</tr>
+</tbody></table>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a := <span class="number">255</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;二进制: %b\n&quot;</span>, a)</span><br><span class="line">fmt.Printf(<span class="string">&quot;八进制: %o\n&quot;</span>, a)</span><br><span class="line">fmt.Printf(<span class="string">&quot;十进制: %d\n&quot;</span>, a)</span><br><span class="line">fmt.Printf(<span class="string">&quot;十六进制: %x\n&quot;</span>, a)</span><br><span class="line">fmt.Printf(<span class="string">&quot;大写十六进制: %X\n&quot;</span>, a)</span><br><span class="line"></span><br><span class="line">fmt.Printf(<span class="string">&quot;十六进制: %d\n&quot;</span>, Hex2Dec(<span class="string">&quot;4E2D&quot;</span>))</span><br><span class="line">fmt.Printf(<span class="string">&quot;字符: %c\n&quot;</span>, <span class="number">20013</span>)</span><br><span class="line">fmt.Printf(<span class="string">&quot;Unicode格式: %U\n&quot;</span>, <span class="string">&#x27;中&#x27;</span>) <span class="comment">// U+4E2D</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h2><table>
+<thead>
+<tr>
+<th>格  式</th>
+<th>描  述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%e</td>
+<td>科学计数法，例如 -1234.456e+78</td>
+</tr>
+<tr>
+<td>%E</td>
+<td>科学计数法，例如 -1234.456E+78</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>有小数点而无指数，例如 123.456</td>
+</tr>
+<tr>
+<td>%g</td>
+<td>根据情况选择 %e 或 %f 以产生更紧凑的（无末尾的0）输出</td>
+</tr>
+<tr>
+<td>%G</td>
+<td>根据情况选择 %E 或 %f 以产生更紧凑的（无末尾的0）输出</td>
+</tr>
+</tbody></table>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fmt.Printf(<span class="string">&quot;%e&quot;</span>, <span class="number">12675757563.5345432567</span>) <span class="comment">//1.267576e+10</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%E&quot;</span>, <span class="number">12675757563.5345432567</span>) <span class="comment">// 1.267576E+10</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%f&quot;</span>, <span class="number">12675757563.5345432567</span>) <span class="comment">// 12675757563.534544</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%g&quot;</span>, <span class="number">12675757563.5345432567</span>) <span class="comment">// 1.2675757563534544e+10</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%G&quot;</span>, <span class="number">12675757563.5345432567</span>) <span class="comment">// 1.2675757563534544E+1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="布尔"><a href="#布尔" class="headerlink" title="布尔"></a>布尔</h2><table>
+<thead>
+<tr>
+<th>格  式</th>
+<th>描  述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%t</td>
+<td>true 或 false</td>
+</tr>
+</tbody></table>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fmt.Printf(<span class="string">&quot;%t&quot;</span>, <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><table>
+<thead>
+<tr>
+<th>格  式</th>
+<th>描  述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%s</td>
+<td>字符串或切片的无解译字节</td>
+</tr>
+<tr>
+<td>%q</td>
+<td>双引号围绕的字符串，由Go语法安全地转义</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>十六进制，小写字母，每字节两个字符</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>十六进制，大写字母，每字节两个字符</td>
+</tr>
+</tbody></table>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">str := <span class="string">&quot;I&#x27;m a boy&quot;</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%s&quot;</span>, str)</span><br><span class="line">fmt.Println()</span><br><span class="line">fmt.Printf(<span class="string">&quot;%q&quot;</span>, str)</span><br><span class="line">fmt.Println()</span><br><span class="line">fmt.Printf(<span class="string">&quot;%x&quot;</span>, str)</span><br><span class="line">fmt.Println()</span><br><span class="line">fmt.Printf(<span class="string">&quot;%X&quot;</span>, str)</span><br><span class="line">fmt.Println()</span><br></pre></td></tr></table></figure>
+
+<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><table>
+<thead>
+<tr>
+<th>格  式</th>
+<th>描  述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%p</td>
+<td>十六进制表示，前缀 0x</td>
+</tr>
+</tbody></table>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a := <span class="string">&quot;I&#x27;m a boy&quot;</span></span><br><span class="line">b := &amp;a</span><br><span class="line">fmt.Printf(<span class="string">&quot;%p&quot;</span>, b)</span><br></pre></td></tr></table></figure>
+
+<h2 id="通用的占位符"><a href="#通用的占位符" class="headerlink" title="通用的占位符"></a>通用的占位符</h2><table>
+<thead>
+<tr>
+<th>格  式</th>
+<th>描  述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%v</td>
+<td>值的默认格式。</td>
+</tr>
+<tr>
+<td>%+v</td>
+<td>类似%v，但输出结构体时会添加字段名</td>
+</tr>
+<tr>
+<td>%#v</td>
+<td>相应值的Go语法表示</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>相应值的类型的Go语法表示</td>
+</tr>
+<tr>
+<td>%%</td>
+<td>百分号,字面上的%,非占位符含义</td>
+</tr>
+</tbody></table>
+<p>默认格式%v下，对于不同的数据类型，底层会去调用默认的格式化方式：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span>:                    %t </span><br><span class="line"><span class="keyword">int</span>, <span class="keyword">int8</span> etc.:          %d </span><br><span class="line"><span class="keyword">uint</span>, <span class="keyword">uint8</span> etc.:        %d, %x <span class="keyword">if</span> printed with %#v</span><br><span class="line"><span class="keyword">float32</span>, <span class="keyword">complex64</span>, etc: %g</span><br><span class="line"><span class="keyword">string</span>:                  %s</span><br><span class="line"><span class="keyword">chan</span>:                    %p </span><br><span class="line">pointer:                 %p</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f := <span class="number">1010.0101</span></span><br><span class="line">s := <span class="string">&quot;hey boy!&quot;</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%v&quot;</span>, f)</span><br><span class="line">fmt.Println()</span><br><span class="line"></span><br><span class="line">fmt.Printf(<span class="string">&quot;%v&quot;</span>, s)</span><br><span class="line">fmt.Println()</span><br></pre></td></tr></table></figure>
+
+<p>如果是复杂对象的话,按照如下规则进行打印：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span>:            &#123;field0 field1 ...&#125; </span><br><span class="line">array, slice:      [elem0 elem1 ...] </span><br><span class="line">maps:              <span class="keyword">map</span>[key1:value1 key2:value2] </span><br><span class="line">pointer to above:  &amp;&#123;&#125;, &amp;[], &amp;<span class="keyword">map</span>[]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">user := User&#123;<span class="string">&quot;laowang&quot;</span>, <span class="number">33</span>&#125;</span><br><span class="line">fmt.Printf(<span class="string">&quot;%v&quot;</span>, user) <span class="comment">// Go默认形式 &#123;laowang 33&#125;</span></span><br><span class="line">fmt.Println()</span><br><span class="line">fmt.Printf(<span class="string">&quot;%#v&quot;</span>, user) <span class="comment">//类型+值对象 day2.User&#123;Name:&quot;laowang&quot;, Age:33&#125;</span></span><br><span class="line">fmt.Println()</span><br><span class="line">fmt.Printf(<span class="string">&quot;%+v&quot;</span>, user) <span class="comment">//输出字段名和字段值形式 &#123;Name:laowang Age:33&#125;</span></span><br><span class="line">fmt.Println()</span><br><span class="line">fmt.Printf(<span class="string">&quot;%T&quot;</span>, user) <span class="comment">//值类型的Go语法表示形式, day2.User</span></span><br><span class="line">fmt.Println()</span><br><span class="line">fmt.Printf(<span class="string">&quot;%%&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="宽度"><a href="#宽度" class="headerlink" title="宽度"></a>宽度</h2><p>我们输出时 可能需要控制字符串的宽度和小数的精度</p>
+<h3 id="字符串宽度控制"><a href="#字符串宽度控制" class="headerlink" title="字符串宽度控制"></a>字符串宽度控制</h3><p>宽度设置格式: 占位符中间加一个数字, 数字分正负, +: 右对齐, -: 左对齐</p>
+<p>1.最小宽度, 不够部分可以选择补0</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fmt.Printf(<span class="string">&quot;|%s|&quot;</span>, <span class="string">&quot;aa&quot;</span>) <span class="comment">// 不设置宽度</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;|%5s|&quot;</span>, <span class="string">&quot;aa&quot;</span>) <span class="comment">// 5个宽度,  默认+， 右对齐</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;|%-5s|&quot;</span>, <span class="string">&quot;aa&quot;</span>) <span class="comment">// 5个宽度, 左对齐</span></span><br><span class="line"></span><br><span class="line">fmt.Printf(<span class="string">&quot;|%05s|&quot;</span>, <span class="string">&quot;aa&quot;</span>) <span class="comment">// |000aa|</span></span><br></pre></td></tr></table></figure>
+
+<p>2.最大宽度, 超出的部分会被截断</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fmt.Printf(<span class="string">&quot;|%.2s|&quot;</span>, <span class="string">&quot;xxxx&quot;</span>) <span class="comment">// 最大宽度为5</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="浮点数精度控制"><a href="#浮点数精度控制" class="headerlink" title="浮点数精度控制"></a>浮点数精度控制</h3><p>你也可以指定浮点型的输出宽度，同时也可以通过 宽度.精度 的语法来指定输出的精度</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a := <span class="number">54.123456</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;|%f|&quot;</span>, a)</span><br><span class="line">fmt.Printf(<span class="string">&quot;|%5.1f|&quot;</span>, a)</span><br><span class="line">fmt.Printf(<span class="string">&quot;|%-5.1f|&quot;</span>, a)</span><br><span class="line">fmt.Printf(<span class="string">&quot;|%05.1f|&quot;</span>, a)</span><br></pre></td></tr></table></figure>
+
+<p>思考: 不同语言的文字宽度并不一定相同, 比如</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fmt.Printf(<span class="string">&quot;|%2s|&quot;</span>, <span class="string">&quot;中国&quot;</span>)</span><br><span class="line">fmt.Printf(<span class="string">&quot;|%2s|&quot;</span>, <span class="string">&quot;ab&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>可以参考: <a target="_blank" rel="noopener" href="http://www.nbtuan.vip/2017/05/10/golang-char-width/">获取字符的宽度</a></p>
+<h2 id="格式化错误"><a href="#格式化错误" class="headerlink" title="格式化错误"></a>格式化错误</h2><p>1.类型错误或未知: %!verb(type=value)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Printf(<span class="string">&quot;%d&quot;</span>, <span class="string">&quot;hi&quot;</span>) <span class="comment">// %!d(string=hi)</span></span><br></pre></td></tr></table></figure>
+
+<p>2.太多参数: %!(EXTRA type=value)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Printf(<span class="string">&quot;hi&quot;</span>, <span class="string">&quot;guys&quot;</span>) <span class="comment">// hi%!(EXTRA string=guys)</span></span><br></pre></td></tr></table></figure>
+
+<p>3.太少参数: %!verb(MISSING)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Printf(<span class="string">&quot;hi%d&quot;</span>) <span class="comment">// hi %!d(MISSING)</span></span><br></pre></td></tr></table></figure>
+
+<p>4.宽度/精度不是整数值: %!(BADWIDTH) or %!(BADPREC)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Printf(<span class="string">&quot;%d&quot;</span>, hi) <span class="comment">// %!d(string=hi)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>请将这段二进制翻译成中文(unicode编码)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1000 1000 0110 0011</span></span><br><span class="line"><span class="comment">// 0110 0111 0000 1101</span></span><br><span class="line"><span class="comment">// 0101 0101 1001 1100</span></span><br><span class="line"><span class="comment">// 0110 1011 0010 0010</span></span><br><span class="line"><span class="comment">// 0111 1010 0111 1111</span></span><br><span class="line"><span class="comment">// 0100 1110 0010 1101</span></span><br><span class="line"><span class="comment">// 0101 0110 1111 1101</span></span><br><span class="line"><span class="comment">// 0111 1110 1010 0010</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"><i class="fas fa-cookie-bite"></i> Go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/20/Go-08-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/" rel="prev" title="Go-08-流程控制">
+      <i class="fa fa-chevron-left"></i> Go-08-流程控制
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">字符串格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">浮点数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94"><span class="nav-number">1.3.</span> <span class="nav-text">布尔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.4.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E9%92%88"><span class="nav-number">1.5.</span> <span class="nav-text">指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E7%9A%84%E5%8D%A0%E4%BD%8D%E7%AC%A6"><span class="nav-number">1.6.</span> <span class="nav-text">通用的占位符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%BD%E5%BA%A6"><span class="nav-number">1.7.</span> <span class="nav-text">宽度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%BD%E5%BA%A6%E6%8E%A7%E5%88%B6"><span class="nav-number">1.7.1.</span> <span class="nav-text">字符串宽度控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%B2%BE%E5%BA%A6%E6%8E%A7%E5%88%B6"><span class="nav-number">1.7.2.</span> <span class="nav-text">浮点数精度控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E9%94%99%E8%AF%AF"><span class="nav-number">1.8.</span> <span class="nav-text">格式化错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.9.</span> <span class="nav-text">作业</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">94</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">35:22</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
