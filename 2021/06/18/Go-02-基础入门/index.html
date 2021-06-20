@@ -28,7 +28,7 @@
 <meta property="og:description" content="Go基础入门">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-17T21:38:14.000Z">
-<meta property="article:modified_time" content="2021-06-18T09:37:22.885Z">
+<meta property="article:modified_time" content="2021-06-19T15:05:03.331Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
@@ -213,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-18 05:38:14 / 修改时间：17:37:22" itemprop="dateCreated datePublished" datetime="2021-06-18T05:38:14+08:00">2021-06-18</time>
+              <time title="创建时间：2021-06-18 05:38:14" itemprop="dateCreated datePublished" datetime="2021-06-18T05:38:14+08:00">2021-06-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-19 23:05:03" itemprop="dateModified" datetime="2021-06-19T23:05:03+08:00">2021-06-19</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -233,7 +239,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>12k</span>
+              <span>13k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -254,6 +260,8 @@
       
         <p>Go基础入门</p>
 <a id="more"></a>
+
+
 
 <h2 id="1-输出"><a href="#1-输出" class="headerlink" title="1. 输出"></a>1. 输出</h2><p>输出，在运行代码时将内容在终端输出。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package mainimport &quot;fmt&quot;func main() &#123;    fmt.Println(&quot;叫爸爸&quot;)&#125;</span><br></pre></td></tr></table></figure>
@@ -276,7 +284,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; The print built-in function formats its arguments in an</span><br><span class="line">&#x2F;&#x2F; implementation-specific way and writes the result to standard error.</span><br><span class="line">&#x2F;&#x2F; Print is useful for bootstrapping and debugging; it is not guaranteed</span><br><span class="line">&#x2F;&#x2F; to stay in the language.</span><br><span class="line">func print(args ...Type)</span><br><span class="line">&#x2F;&#x2F; The println built-in function formats its arguments in an</span><br><span class="line">&#x2F;&#x2F; implementation-specific way and writes the result to standard error.</span><br><span class="line">&#x2F;&#x2F; Spaces are always added between arguments and a newline is appended.</span><br><span class="line">&#x2F;&#x2F; Println is useful for bootstrapping and debugging; it is not guaranteed</span><br><span class="line">&#x2F;&#x2F; to stay in the language.</span><br><span class="line">func println(args ...Type)</span><br></pre></td></tr></table></figure>
 </blockquote>
 <p>扩展：关于标准错误和标准输出，每个进程都各有一个 stdin，stdout 和 stderr 文件描述符。使用的标准方法是 stdout 作为进程输出，stderr 作为进程错误输出。</p>
-<h3 id="1-2-fmt标准库（推荐）"><a href="#1-2-fmt标准库（推荐）" class="headerlink" title="1.2 fmt标准库（推荐）"></a>1.2 fmt标准库（推荐）</h3><p>fmt是Go标准库中提供了用于进行输入、输出的模块（本节只聊输出，后面章节会讲解输入相关）。</p>
+<h3 id="1-2-fmt标准库（推荐）"><a href="#1-2-fmt标准库（推荐）" class="headerlink" title="1.2 fmt标准库（推荐）"></a>1.2 fmt标准库（推荐）</h3><p><a target="_blank" rel="noopener" href="https://www.choudalao.com/article/185">https://www.choudalao.com/article/185</a></p>
+<p>fmt是Go标准库中提供了用于进行输入、输出的模块（本节只聊输出，后面章节会讲解输入相关）。</p>
 <p>fmt模块中常见的输出相关函数有：</p>
 <ul>
 <li><code>fmt.Print</code>，输出。</li>
@@ -290,7 +299,7 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;男学生女学生&quot;</span>)</span><br><span class="line">    fmt.Println(<span class="string">&quot;男女学生生男女&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">&gt;&gt;&gt; 输出：</span><br><span class="line">男学生女学生</span><br><span class="line">男女学生生男女</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例3：</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// %s，占位符用于格式化字符串</span></span><br><span class="line">    <span class="comment">// %d，占位符用于格式化整型</span></span><br><span class="line">    <span class="comment">// %f，十进制小数</span></span><br><span class="line">    <span class="comment">// %.2f，保留小数点后两位（四舍五入）</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;老汉开着%s，去接alex这个%d货。\n&quot;</span>, <span class="string">&quot;兰博基尼&quot;</span>, <span class="number">2</span>)</span><br><span class="line">    fmt.Printf(<span class="string">&quot;您的账户余额为：%f，仅保留小数点后两位的话为：%.2f&quot;</span>, <span class="number">1999.213</span>, <span class="number">1999.216</span>)</span><br><span class="line">&#125;</span><br><span class="line">&gt;&gt;&gt; 输出：</span><br><span class="line">老汉开着兰博基尼，去接alex这个<span class="number">2</span>货。</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// %s，占位符用于格式化字符串</span></span><br><span class="line">      <span class="comment">// %d，占位符用于格式化整型(十进制)</span></span><br><span class="line">       %+d 表示对正整数带+符号</span><br><span class="line">             %nd 表示最小占位 n 个宽度且右对齐</span><br><span class="line">             %-nd 表示最小占位 n 个宽度且左对齐</span><br><span class="line">             %<span class="number">0</span>nd 表示最小占位 n 个宽度且右对齐，空字符使用 <span class="number">0</span> 填充             </span><br><span class="line">    <span class="comment">// %f，十进制小数</span></span><br><span class="line">    <span class="comment">// %.2f，保留小数点后两位（四舍五入）</span></span><br><span class="line">    <span class="comment">// %T  数据类型</span></span><br><span class="line">    <span class="comment">// %#v  占位符 优雅方式打印数值</span></span><br><span class="line">    <span class="comment">// %b  占位符打印二进制</span></span><br><span class="line">    <span class="comment">//  // 浮点数与复数</span></span><br><span class="line">        %b 无小数部分、二进制指数的科学计数法，如<span class="number">-123456</span>p<span class="number">-78</span>；  </span><br><span class="line">    <span class="comment">// %o  占位符打印十进制</span></span><br><span class="line">    <span class="comment">// %x  占位符打印16进制</span></span><br><span class="line">    <span class="comment">// %U  占位符打印Unicode码点</span></span><br><span class="line">    <span class="comment">// %c  占位符打印byte字节类型字符</span></span><br><span class="line">    <span class="comment">// %q  带单引号的字符</span></span><br><span class="line">    </span><br><span class="line">    fmt.Printf(<span class="string">&quot;老汉开着%s，去接alex这个%d货。\n&quot;</span>, <span class="string">&quot;兰博基尼&quot;</span>, <span class="number">2</span>)</span><br><span class="line">    fmt.Printf(<span class="string">&quot;您的账户余额为：%f，仅保留小数点后两位的话为：%.2f&quot;</span>, <span class="number">1999.213</span>, <span class="number">1999.216</span>)</span><br><span class="line">      fmt.Printf(<span class="string">&quot;%d %b %o %x %U %c %c&quot;</span>, achar, <span class="number">15</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="string">&#x27;中&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="number">65</span>)</span><br><span class="line">&#125;</span><br><span class="line">&gt;&gt;&gt; 输出：</span><br><span class="line">老汉开着兰博基尼，去接alex这个<span class="number">2</span>货。</span><br><span class="line"><span class="number">97</span> <span class="number">1111</span> <span class="number">17</span> f  U+<span class="number">4E2</span>D a A</span><br></pre></td></tr></table></figure>
 
 <p>格式化字符串的占位符有很多，现在没必要全部记住，目前仅需了解上述三个占位符即可。</p>
 <p>更多占位符和文档说明可在Go源码 <code>Go编译器安装目录/src/fmt/doc.go</code> 中查看：</p>
@@ -514,7 +523,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -571,12 +580,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">1.2m</span>
+    <span title="站点总字数">1.3m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">34:38</span>
+    <span title="站点阅读时长">35:15</span>
 </div>
 
 <!--

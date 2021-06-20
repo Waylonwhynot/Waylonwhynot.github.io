@@ -27,14 +27,13 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="变量&#x2F;常量, iota&#x2F;浮点型&#x2F;字符型&#x2F;布尔型">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/p2.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/p3.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/p3-20210619110956002.png">
 <meta property="article:published_time" content="2021-06-18T11:23:47.000Z">
-<meta property="article:modified_time" content="2021-06-18T11:43:48.839Z">
+<meta property="article:modified_time" content="2021-06-20T06:59:17.193Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/p2.png">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/p3-20210619110956002.png">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2021/06/18/Go-04-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
 
@@ -216,10 +215,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-18 19:23:47 / 修改时间：19:43:48" itemprop="dateCreated datePublished" datetime="2021-06-18T19:23:47+08:00">2021-06-18</time>
+              <time title="创建时间：2021-06-18 19:23:47" itemprop="dateCreated datePublished" datetime="2021-06-18T19:23:47+08:00">2021-06-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-20 14:59:17" itemprop="dateModified" datetime="2021-06-20T14:59:17+08:00">2021-06-20</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -236,14 +241,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6k</span>
+              <span>8.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>10 分钟</span>
+              <span>14 分钟</span>
             </span>
 
         </div>
@@ -290,7 +295,7 @@
 <p><code>var age,age2 = 10,11</code></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> num, num1 = <span class="number">10</span>, <span class="number">11</span></span><br><span class="line">    fmt.Println(num, num1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>3）短声明，省略var，<code>只能用在函数内部</code></p>
+<p>3）短声明，省略var，<strong>只能用在函数内部</strong></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    name := <span class="string">&quot;超哥&quot;</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;name的值是：&quot;</span>, name)</span><br><span class="line">    <span class="comment">//上述段声明等于如下方式</span></span><br><span class="line">    <span class="keyword">var</span> name2 <span class="keyword">string</span></span><br><span class="line">    name2 = <span class="string">&quot;超哥&quot;</span></span><br><span class="line">    fmt.Println(name2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>4）多变量声明</p>
@@ -312,6 +317,13 @@
 <p>输出结果</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">age默认值 : <span class="number">0</span></span><br><span class="line">name默认值 : </span><br><span class="line">gender默认值 : <span class="literal">false</span></span><br><span class="line">salary默认值 : <span class="number">0</span></span><br></pre></td></tr></table></figure>
 
+
+
+<p>注意变量赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main()  &#123;</span><br><span class="line">    var name string &#x3D; &quot;kk&quot;</span><br><span class="line">    fmt.Println(name)</span><br><span class="line"></span><br><span class="line">    name &#x3D; &quot;silence&quot; &#x2F;&#x2F; 更新变量值</span><br><span class="line">    fmt.Println(name)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; 不是定义，是赋值；修改的是外面的值</span><br><span class="line">        name &#x3D; &quot;aaaaaa&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">kk</span><br><span class="line">silence</span><br><span class="line">aaaaaa</span><br></pre></td></tr></table></figure>
+
+
+
 <h1 id="Go常量"><a href="#Go常量" class="headerlink" title="Go常量"></a>Go常量</h1><p>常量代表只读的，不可修改的值，用const关键字定义。</p>
 <p>如同用常量定义 “π”之类的常数。</p>
 <p>常量如同变量一样，可以批量声明，或者一组相关的常量。</p>
@@ -329,100 +341,200 @@
 <p>输出结果</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 1 c c 4 5</span><br></pre></td></tr></table></figure>
 
-<h1 id="3-2-Go整数类型"><a href="#3-2-Go整数类型" class="headerlink" title="3.2 Go整数类型"></a>3.2 Go整数类型</h1><p>Go语言的数值类型包含不同大小的整数型、浮点数和负数，每种数值类型都有大小范围以及正负符号。</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/p2.png" alt="img"></p>
-<p>整型的使用</p>
-<ol>
-<li>golang整数类型分为有符号和无符号</li>
-<li>golang默认整型是int型</li>
-</ol>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> n1 = <span class="number">100</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;n1的类型：%T \n&quot;</span>, n1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>输出结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n1的类型：int</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>查看变量的字节大小，和数据类型</li>
-</ol>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;unsafe&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> n2 <span class="keyword">int64</span> = <span class="number">100</span></span><br><span class="line">    <span class="comment">//unsafe包底下的Sizeof函数，返回变量占用字节数</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;n2的类型是：%T，占用的字节数是%d&quot;</span>, n2, unsafe.Sizeof(n2))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>输出结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n2的类型是：int64，占用的字节数是8</span><br></pre></td></tr></table></figure>
-
-<h2 id="数字类型"><a href="#数字类型" class="headerlink" title="数字类型"></a>数字类型</h2><table>
+<p>Go语言中有丰富的数据类型，除了基本的整型、浮点型、布尔型、字符串外，还有数组、切片、结构体、函数、map、通道（channel）等。Go 语言的基本类型和其他语言大同小异。</p>
+<h1 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h1><h2 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h2><p>整型分为以下两个大类： 按长度分为：int8、int16、int32、int64 对应的无符号整型：uint8、uint16、uint32、uint64</p>
+<p>其中，<code>uint8</code>就是我们熟知的<code>byte</code>型，<code>int16</code>对应C语言中的<code>short</code>型，<code>int64</code>对应C语言中的<code>long</code>型。</p>
+<table>
 <thead>
 <tr>
-<th align="left">序号</th>
-<th align="left">类型和描述</th>
+<th align="center">类型</th>
+<th align="center">描述</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">1</td>
-<td align="left"><strong>uint8</strong> 无符号 8 位整型 (0 到 255)</td>
+<td align="center">uint8</td>
+<td align="center">无符号 8位整型 (0 到 255)</td>
 </tr>
 <tr>
-<td align="left">2</td>
-<td align="left"><strong>uint16</strong> 无符号 16 位整型 (0 到 65535)</td>
+<td align="center">uint16</td>
+<td align="center">无符号 16位整型 (0 到 65535)</td>
 </tr>
 <tr>
-<td align="left">3</td>
-<td align="left"><strong>uint32</strong> 无符号 32 位整型 (0 到 4294967295)</td>
+<td align="center">uint32</td>
+<td align="center">无符号 32位整型 (0 到 4294967295)</td>
 </tr>
 <tr>
-<td align="left">4</td>
-<td align="left"><strong>uint64</strong> 无符号 64 位整型 (0 到 18446744073709551615)</td>
+<td align="center">uint64</td>
+<td align="center">无符号 64位整型 (0 到 18446744073709551615)</td>
 </tr>
 <tr>
-<td align="left">5</td>
-<td align="left"><strong>int8</strong> 有符号 8 位整型 (-128 到 127)</td>
+<td align="center">int8</td>
+<td align="center">有符号 8位整型 (-128 到 127)</td>
 </tr>
 <tr>
-<td align="left">6</td>
-<td align="left"><strong>int16</strong> 有符号 16 位整型 (-32768 到 32767)</td>
+<td align="center">int16</td>
+<td align="center">有符号 16位整型 (-32768 到 32767)</td>
 </tr>
 <tr>
-<td align="left">7</td>
-<td align="left"><strong>int32</strong> 有符号 32 位整型 (-2147483648 到 2147483647)</td>
+<td align="center">int32</td>
+<td align="center">有符号 32位整型 (-2147483648 到 2147483647)</td>
 </tr>
 <tr>
-<td align="left">8</td>
-<td align="left"><strong>int64</strong> 有符号 64 位整型 (-9223372036854775808 到 9223372036854775807)</td>
+<td align="center">int64</td>
+<td align="center">有符号 64位整型 (-9223372036854775808 到 9223372036854775807)</td>
 </tr>
 </tbody></table>
-<h1 id="3-3-Go浮点型"><a href="#3-3-Go浮点型" class="headerlink" title="3.3 Go浮点型"></a>3.3 Go浮点型</h1><p>Go 语言提供了两种精度的浮点数，float32 和 float64，编译器默认声明为float64</p>
-<p>小数类型就是存放小数的，如<code>1.2</code> <code>0.005</code> <code>-2.32</code></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   <span class="keyword">var</span> price <span class="keyword">float32</span> = <span class="number">100.02</span></span><br><span class="line">   fmt.Printf(<span class="string">&quot;price类型是：%T，值是%v&quot;</span>, price, price)<span class="comment">//%T 类型  %v 默认值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="特殊整型"><a href="#特殊整型" class="headerlink" title="特殊整型"></a>特殊整型</h3><table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">uint</td>
+<td align="center">32位操作系统上就是<code>uint32</code>，64位操作系统上就是<code>uint64</code></td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="center">32位操作系统上就是<code>int32</code>，64位操作系统上就是<code>int64</code></td>
+</tr>
+<tr>
+<td align="center">uintptr</td>
+<td align="center">无符号整型，用于存放一个指针</td>
+</tr>
+</tbody></table>
+<p><strong>注意：</strong> 在使用<code>int</code>和 <code>uint</code>类型时，不能假定它是32位或64位的整型，而是考虑<code>int</code>和<code>uint</code>可能在不同平台上的差异。</p>
+<p><strong>注意事项</strong> 获取对象的长度的内建<code>len()</code>函数返回的长度可以根据不同平台的字节长度进行变化。实际使用中，切片或 map 的元素数量等都可以用<code>int</code>来表示。在涉及到二进制传输、读写文件的结构描述时，为了保持文件的结构不会受到不同编译目标平台字节长度的影响，不要使用<code>int</code>和 <code>uint</code>。</p>
+<h3 id="数字字面量语法（Number-literals-syntax）"><a href="#数字字面量语法（Number-literals-syntax）" class="headerlink" title="数字字面量语法（Number literals syntax）"></a>数字字面量语法（Number literals syntax）</h3><p>Go1.13版本之后引入了数字字面量语法，这样便于开发者以二进制、八进制或十六进制浮点数的格式定义数字，例如：</p>
+<p><code>v := 0b00101101</code>， 代表二进制的 101101，相当于十进制的 45。 <code>v := 0o377</code>，代表八进制的 377，相当于十进制的 255。 <code>v := 0x1p-2</code>，代表十六进制的 1 除以 2²，也就是 0.25。</p>
+<p>而且还允许我们用 <code>_</code> 来分隔数字，比如说： <code>v := 123_456</code> 表示 v 的值等于 123456。</p>
+<p>我们可以借助fmt函数来将一个整数以不同进制形式展示。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// 十进制</span></span><br><span class="line">    <span class="keyword">var</span> a <span class="keyword">int</span> = <span class="number">10</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;%d \n&quot;</span>, a)  <span class="comment">// 10</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;%b \n&quot;</span>, a)  <span class="comment">// 1010  占位符%b表示二进制</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 八进制  以0开头</span></span><br><span class="line">    <span class="keyword">var</span> b <span class="keyword">int</span> = <span class="number">077</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;%o \n&quot;</span>, b)  <span class="comment">// 77</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 十六进制  以0x开头</span></span><br><span class="line">    <span class="keyword">var</span> c <span class="keyword">int</span> = <span class="number">0xff</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;%x \n&quot;</span>, c)  <span class="comment">// ff</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;%X \n&quot;</span>, c)  <span class="comment">// FF</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/p3.png" alt="img"></p>
-<h3 id="浮点数形式"><a href="#浮点数形式" class="headerlink" title="浮点数形式"></a>浮点数形式</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> price <span class="keyword">float32</span> = <span class="number">11.22</span> <span class="comment">//正数符号</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;price=&quot;</span>, price)</span><br><span class="line">    <span class="keyword">var</span> num1 <span class="keyword">float32</span> = <span class="number">-3.4</span> <span class="comment">//负数符号</span></span><br><span class="line">    <span class="keyword">var</span> num2 <span class="keyword">float64</span> = <span class="number">-8.23</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;num1=&quot;</span>, num1, <span class="string">&quot;num2=&quot;</span>, num2)</span><br><span class="line">    <span class="comment">//尾数可能丢失，精度缺损</span></span><br><span class="line">    <span class="keyword">var</span> num3 <span class="keyword">float32</span> = <span class="number">-123.11111111105</span><span class="comment">//精度丢失了    </span></span><br><span class="line">    <span class="keyword">var</span> num4 <span class="keyword">float64</span> = <span class="number">-123.11111111105</span><span class="comment">//float64的精度高于float32</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;num3=&quot;</span>, num3, <span class="string">&quot;num4=&quot;</span>, num4)</span><br><span class="line">    <span class="comment">//输出结果</span></span><br><span class="line">    <span class="comment">//num3= -123.111115 num4= -123.11111111105</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h2><p>（一般不做&gt;= &lt;= ==判断，因为不精确；所以如果想要判断 ==  !=  判断差值在一定取件范围内）</p>
+<p>Go语言支持两种浮点型数：<code>float32</code>和<code>float64</code>，编译器默认声明为float64。这两种浮点型数据格式遵循<code>IEEE 754</code>标准： <code>float32</code> 的浮点数的最大范围约为 <code>3.4e38</code>，可以使用常量定义：<code>math.MaxFloat32</code>。 <code>float64</code> 的浮点数的最大范围约为 <code>1.8e308</code>，可以使用一个常量定义：<code>math.MaxFloat64</code>。</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/p3-20210619110956002.png" alt="img"></p>
+<p>打印浮点数时，可以使用<code>fmt</code>包配合动词<code>%f</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> price <span class="keyword">float32</span> = <span class="number">11.22</span> <span class="comment">//正数符号</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;price=&quot;</span>, price)</span><br><span class="line">    <span class="keyword">var</span> num1 <span class="keyword">float32</span> = <span class="number">-3.4</span> <span class="comment">//负数符号</span></span><br><span class="line">    <span class="keyword">var</span> num2 <span class="keyword">float64</span> = <span class="number">-8.23</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;num1=&quot;</span>, num1, <span class="string">&quot;num2=&quot;</span>, num2)</span><br><span class="line">    <span class="comment">//尾数可能丢失，精度缺损</span></span><br><span class="line">    <span class="keyword">var</span> num3 <span class="keyword">float32</span> = <span class="number">-123.11111111105</span><span class="comment">//精度丢失了    </span></span><br><span class="line">    <span class="keyword">var</span> num4 <span class="keyword">float64</span> = <span class="number">-123.11111111105</span><span class="comment">//float64的精度高于float32</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;num3=&quot;</span>, num3, <span class="string">&quot;num4=&quot;</span>, num4)</span><br><span class="line">    <span class="comment">//输出结果</span></span><br><span class="line">    <span class="comment">//num3= -123.111115 num4= -123.11111111105</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="3-4-Go字符型"><a href="#3-4-Go字符型" class="headerlink" title="3.4 Go字符型"></a>3.4 Go字符型</h1><p>Golang 中没有专门的<code>字符</code>类型，如果要存储单个<code>字符(字母)</code>，一般使用 <strong>byte</strong> 来保存。</p>
-<p>普通字符串就是一串固定长度的字符连接起来的字符序列。</p>
-<p><strong>Go 的<code>字符串</code>是由单个<code>字节</code>连接起来的。</strong></p>
-<p>也 就是说对于传统的<code>字符串</code>是由<code>字符</code>组成的，而 <strong>Go</strong> 的字符串不同，它是由字节组成的。</p>
-<p>Go的字符用<code>单引号</code>表示</p>
-<p>Go的字符串用<code>双引号</code>表示</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> c1 <span class="keyword">byte</span> = <span class="string">&#x27;a&#x27;</span></span><br><span class="line">    <span class="keyword">var</span> c2 <span class="keyword">byte</span> = <span class="string">&#x27;2&#x27;</span> <span class="comment">//字符的2</span></span><br><span class="line">    <span class="comment">//直接输出byte的值，也就是输出对应的字符的码值</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;c1=&quot;</span>, c1)</span><br><span class="line">    fmt.Println(<span class="string">&quot;c2=&quot;</span>, c2)</span><br><span class="line">    <span class="comment">//输出字符的值，需要格式化输出</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;c1值=%c  c2值=%c\n&quot;</span>, c1, c2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="复数"><a href="#复数" class="headerlink" title="复数"></a>复数</h2><p>complex64和complex128</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c1 <span class="keyword">complex64</span></span><br><span class="line">c1 = <span class="number">1</span> + <span class="number">2i</span></span><br><span class="line"><span class="keyword">var</span> c2 <span class="keyword">complex128</span></span><br><span class="line">c2 = <span class="number">2</span> + <span class="number">3i</span></span><br><span class="line">fmt.Println(c1)</span><br><span class="line">fmt.Println(c2)</span><br></pre></td></tr></table></figure>
 
-<p>Go变量保存的byte 对应码值ASCII表，范围在[0-1,a-z,A-Z…]</p>
-<p>如果保存的字符对应码大于255，应该使用int而不是byte，否则overflows byte异常</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c3 <span class="keyword">int</span> = <span class="string">&#x27;皮&#x27;</span> <span class="comment">//正确</span></span><br><span class="line"><span class="keyword">var</span> c4 <span class="keyword">byte</span> = <span class="string">&#x27;皮&#x27;</span> <span class="comment">//overflows byte 报错</span></span><br></pre></td></tr></table></figure>
+<p>复数有实部和虚部，complex64的实部和虚部为32位，complex128的实部和虚部为64位。</p>
+<h2 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h2><p>Go语言中以<code>bool</code>类型进行声明布尔型数据，布尔型数据只有<code>true（真）</code>和<code>false（假）</code>两个值。</p>
+<p><strong>注意：</strong></p>
+<ol>
+<li>布尔类型变量的默认值为<code>false</code>。</li>
+<li>Go 语言中不允许将整型强制转换为布尔型.</li>
+<li>布尔型无法参与数值运算，也无法与其他类型进行转换。</li>
+</ol>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>Go语言中的字符串以原生数据类型出现，使用字符串就像使用其他原生数据类型（int、bool、float32、float64 等）一样。 Go 语言里的字符串的<strong>内部实现使用<code>UTF-8</code>编码</strong>。 字符串的值为<code>双引号(&quot;)</code>中的内容，可以在Go语言的源码中直接添加非ASCII码字符，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s1 := <span class="string">&quot;hello&quot;</span></span><br><span class="line">s2 := <span class="string">&quot;你好&quot;</span></span><br><span class="line">也可以直接定义原生的字符串，不会进行解析</span><br><span class="line">msgRaw = <span class="string">`我的名\n字是kk`</span></span><br></pre></td></tr></table></figure>
 
-<p>Go语言默认字符编码UTF-8，统一规定</p>
-<p>Go字符的本质是一个整数，直接打印是UTF-8编码的码值</p>
-<p>给与变量赋值整数，按%c格式化输出，得到的是unicode字符</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c4 <span class="keyword">int</span> = <span class="number">22269</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;c4=%c\n&quot;</span>, c4)</span><br><span class="line"><span class="comment">//输出结果c4=国</span></span><br></pre></td></tr></table></figure>
+<h3 id="字符串转义符"><a href="#字符串转义符" class="headerlink" title="字符串转义符"></a>字符串转义符</h3><p>Go 语言的字符串常见转义符包含回车、换行、单双引号、制表符等，如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th align="center">转义符</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>\r</code></td>
+<td align="center">回车符（返回行首）</td>
+</tr>
+<tr>
+<td align="center"><code>\n</code></td>
+<td align="center">换行符（直接跳到下一行的同列位置）</td>
+</tr>
+<tr>
+<td align="center"><code>\t</code></td>
+<td align="center">制表符</td>
+</tr>
+<tr>
+<td align="center"><code>\&#39;</code></td>
+<td align="center">单引号</td>
+</tr>
+<tr>
+<td align="center"><code>\&quot;</code></td>
+<td align="center">双引号</td>
+</tr>
+<tr>
+<td align="center"><code>\\</code></td>
+<td align="center">反斜杠</td>
+</tr>
+</tbody></table>
+<p>举个例子，我们要打印一个Windows平台下的一个文件路径：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;str := \&quot;c:\\Code\\lesson1\\go.exe\&quot;&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>Go语言允许使用转义符号”\”</p>
-<p>Go语言字符类型允许计算，相当于整数运算，因为字符拥有对应的Unicode码</p>
-<h1 id="3-5-Go布尔型"><a href="#3-5-Go布尔型" class="headerlink" title="3.5 Go布尔型"></a>3.5 Go布尔型</h1><p>一个布尔类型的值只有两种:true 和 false。</p>
-<p>if 和 for 语句的条件部分都是布尔类型的值，并且==和&lt;等比较操作也会产生布尔型的值。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;unsafe&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> b = <span class="literal">true</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;b=&quot;</span>, b)</span><br><span class="line">    fmt.Println(<span class="string">&quot;b字节数=&quot;</span>, unsafe.Sizeof(b))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="多行字符串"><a href="#多行字符串" class="headerlink" title="多行字符串"></a>多行字符串</h3><p>Go语言中要定义一个多行字符串时，就必须使用<code>反引号</code>字符：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s1 := <span class="string">`第一行</span></span><br><span class="line"><span class="string">第二行</span></span><br><span class="line"><span class="string">第三行</span></span><br><span class="line"><span class="string">`</span></span><br><span class="line">fmt.Println(s1)</span><br></pre></td></tr></table></figure>
 
-<p>输出结果</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b= <span class="literal">true</span></span><br><span class="line">b字节数= <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>反引号间换行将被作为字符串中的换行，但是所有的转义字符均无效，文本将会原样输出。</p>
+<h3 id="字符串的常用操作"><a href="#字符串的常用操作" class="headerlink" title="字符串的常用操作"></a>字符串的常用操作</h3><table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">len(str)</td>
+<td align="center">求长度</td>
+</tr>
+<tr>
+<td align="center">+或fmt.Sprintf</td>
+<td align="center">拼接字符串</td>
+</tr>
+<tr>
+<td align="center">strings.Split</td>
+<td align="center">分割</td>
+</tr>
+<tr>
+<td align="center">strings.contains</td>
+<td align="center">判断是否包含</td>
+</tr>
+<tr>
+<td align="center">strings.HasPrefix,strings.HasSuffix</td>
+<td align="center">前缀/后缀判断</td>
+</tr>
+<tr>
+<td align="center">strings.Index(),strings.LastIndex()</td>
+<td align="center">子串出现的位置</td>
+</tr>
+<tr>
+<td align="center">strings.Join(a[]string, sep string)</td>
+<td align="center">join操作</td>
+</tr>
+</tbody></table>
+<h3 id="byte和rune类型-字符类型（字节和码点）"><a href="#byte和rune类型-字符类型（字节和码点）" class="headerlink" title="byte和rune类型 字符类型（字节和码点）"></a>byte和rune类型 字符类型（字节和码点）</h3><p>组成每个字符串的元素叫做“字符”，可以通过遍历或者单个获取字符串元素获得字符。 字符用单引号（’）包裹起来，如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">&#x27;中&#x27;</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="string">&#x27;x&#x27;</span></span><br></pre></td></tr></table></figure>
 
+<p>Go 语言的字符有以下两种：</p>
+<ol>
+<li><code>uint8</code>类型，或者叫 byte 型，代表了<code>ASCII码</code>的一个字符。</li>
+<li><code>rune</code>类型，代表一个 <code>UTF-8字符</code>。</li>
+</ol>
+<p>当需要处理中文、日文或者其他复合字符时，则需要用到<code>rune</code>类型。<code>rune</code>类型实际是一个<code>int32</code>。</p>
+<p>Go 使用了特殊的 rune 类型来处理 Unicode，让基于 Unicode 的文本处理更为方便，也可以使用 byte 型进行默认字符串处理，性能和扩展性都有照顾。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 遍历字符串</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">traversalString</span><span class="params">()</span></span> &#123;</span><br><span class="line">    s := <span class="string">&quot;hello沙河&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); i++ &#123; <span class="comment">//byte</span></span><br><span class="line">        fmt.Printf(<span class="string">&quot;%v(%c) &quot;</span>, s[i], s[i])</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println()</span><br><span class="line">    <span class="keyword">for</span> _, r := <span class="keyword">range</span> s &#123; <span class="comment">//rune</span></span><br><span class="line">        fmt.Printf(<span class="string">&quot;%v(%c) &quot;</span>, r, r)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">104(h) 101(e) 108(l) 108(l) 111(o) 230(æ) 178(²) 153() 230(æ) 178(²) 179(³) </span><br><span class="line">104(h) 101(e) 108(l) 108(l) 111(o) 27801(沙) 27827(河) </span><br></pre></td></tr></table></figure>
+
+<p>因为UTF8编码下一个中文汉字由3~4个字节组成，所以我们不能简单的按照字节去遍历一个包含中文的字符串，否则就会出现上面输出中第一行的结果。</p>
+<p>字符串底层是一个byte数组，所以可以和<code>[]byte</code>类型相互转换。字符串是不能修改的 字符串是由byte字节组成，所以字符串的长度是byte字节的长度。 rune类型用来表示utf8字符，一个rune字符由一个或多个byte组成。</p>
+<h3 id="修改字符串"><a href="#修改字符串" class="headerlink" title="修改字符串"></a>修改字符串</h3><p>要修改字符串，需要先将其转换成<code>[]rune</code>或<code>[]byte</code>，完成后再转换为<code>string</code>。无论哪种转换，都会重新分配内存，并复制字节数组。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">changeString</span><span class="params">()</span></span> &#123;</span><br><span class="line">    s1 := <span class="string">&quot;big&quot;</span></span><br><span class="line">    <span class="comment">// 强制类型转换</span></span><br><span class="line">    byteS1 := []<span class="keyword">byte</span>(s1)</span><br><span class="line">    byteS1[<span class="number">0</span>] = <span class="string">&#x27;p&#x27;</span></span><br><span class="line">    fmt.Println(<span class="keyword">string</span>(byteS1))</span><br><span class="line"></span><br><span class="line">    s2 := <span class="string">&quot;白萝卜&quot;</span></span><br><span class="line">    runeS2 := []<span class="keyword">rune</span>(s2)</span><br><span class="line">    runeS2[<span class="number">0</span>] = <span class="string">&#x27;红&#x27;</span></span><br><span class="line">    fmt.Println(<span class="keyword">string</span>(runeS2))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p>Go语言中只有强制类型转换，没有隐式类型转换。该语法只能在两个类型之间支持相互转换的时候使用。</p>
+<p>强制类型转换的基本语法如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T(表达式)</span><br></pre></td></tr></table></figure>
+
+<p>其中，T表示要转换的类型。表达式包括变量、复杂算子和函数返回值等.</p>
+<p>比如计算直角三角形的斜边长时使用math包的Sqrt()函数，该函数接收的是float64类型的参数，而变量a和b都是int类型的，这个时候就需要将a和b强制类型转换为float64类型。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sqrtDemo</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> a, b = <span class="number">3</span>, <span class="number">4</span></span><br><span class="line">    <span class="keyword">var</span> c <span class="keyword">int</span></span><br><span class="line">    <span class="comment">// math.Sqrt()接收的参数是float64类型，需要强制转换</span></span><br><span class="line">    c = <span class="keyword">int</span>(math.Sqrt(<span class="keyword">float64</span>(a*a + b*b)))</span><br><span class="line">    fmt.Println(c)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -443,7 +555,10 @@
     <a href="/2021/06/18/Go-03-%E5%8F%98%E9%87%8F/" rel="prev" title="Go-03-变量">
       <i class="fa fa-chevron-left"></i> Go-03-变量
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/18/Go-05-%E8%BF%90%E7%AE%97%E7%AC%A6/" rel="next" title="Go-05-运算符">
+      Go-05-运算符 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -502,7 +617,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">变量定义方式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E5%B8%B8%E9%87%8F"><span class="nav-number"></span> <span class="nav-text">Go常量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E5%B8%B8%E9%87%8F%E4%B9%8Biota%E5%B8%B8%E9%87%8F%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number"></span> <span class="nav-text">Go常量之iota常量生成器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-2-Go%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">3.2 Go整数类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">数字类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-3-Go%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">3.3 Go浮点型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E5%BD%A2%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">浮点数形式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-4-Go%E5%AD%97%E7%AC%A6%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">3.4 Go字符型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-5-Go%E5%B8%83%E5%B0%94%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">3.5 Go布尔型</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">变量定义方式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E5%B8%B8%E9%87%8F"><span class="nav-number"></span> <span class="nav-text">Go常量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E5%B8%B8%E9%87%8F%E4%B9%8Biota%E5%B8%B8%E9%87%8F%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number"></span> <span class="nav-text">Go常量之iota常量生成器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">整型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E6%95%B4%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">特殊整型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F%E8%AF%AD%E6%B3%95%EF%BC%88Number-literals-syntax%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">数字字面量语法（Number literals syntax）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">浮点型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E6%95%B0"><span class="nav-number"></span> <span class="nav-text">复数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E5%80%BC"><span class="nav-number"></span> <span class="nav-text">布尔值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number"></span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E4%B9%89%E7%AC%A6"><span class="nav-number">1.</span> <span class="nav-text">字符串转义符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">2.</span> <span class="nav-text">多行字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">字符串的常用操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#byte%E5%92%8Crune%E7%B1%BB%E5%9E%8B-%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B%EF%BC%88%E5%AD%97%E8%8A%82%E5%92%8C%E7%A0%81%E7%82%B9%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">byte和rune类型 字符类型（字节和码点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">5.</span> <span class="nav-text">修改字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number"></span> <span class="nav-text">类型转换</span></a></div>
       </div>
       <!--/noindex-->
 
@@ -518,7 +633,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -575,12 +690,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">1.2m</span>
+    <span title="站点总字数">1.3m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">34:38</span>
+    <span title="站点阅读时长">35:15</span>
 </div>
 
 <!--
