@@ -28,7 +28,7 @@
 <meta property="og:description" content="Go 流程控制">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-20T04:52:42.000Z">
-<meta property="article:modified_time" content="2021-06-20T11:25:36.459Z">
+<meta property="article:modified_time" content="2021-06-20T17:54:07.285Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
@@ -213,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-20 12:52:42 / 修改时间：19:25:36" itemprop="dateCreated datePublished" datetime="2021-06-20T12:52:42+08:00">2021-06-20</time>
+              <time title="创建时间：2021-06-20 12:52:42" itemprop="dateCreated datePublished" datetime="2021-06-20T12:52:42+08:00">2021-06-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-21 01:54:07" itemprop="dateModified" datetime="2021-06-21T01:54:07+08:00">2021-06-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -233,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.2k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>15 分钟</span>
+              <span>18 分钟</span>
             </span>
 
         </div>
@@ -316,12 +322,17 @@
 <p>在上面的程序中，在循环过程中 i 的值会被判断。如果 i 的值大于 5 然后 <code>break</code> 语句就会执行，循环就会被终止。打印语句会在 <code>for</code> 循环结束后执行，上面程序会输出为</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 2 3 4 5  </span><br><span class="line">line after for loop</span><br></pre></td></tr></table></figure>
 
+<p>以下实例有多重循环，演示了使用标记和不使用标记的区别：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不使用标记</span></span><br><span class="line">fmt.Println(<span class="string">&quot;---- break ----&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i := <span class="number">1</span>; i &lt;= <span class="number">3</span>; i++ &#123;</span><br><span class="line">   fmt.Printf(<span class="string">&quot;i: %d\n&quot;</span>, i)</span><br><span class="line">            <span class="keyword">for</span> i2 := <span class="number">11</span>; i2 &lt;= <span class="number">13</span>; i2++ &#123;</span><br><span class="line">                  fmt.Printf(<span class="string">&quot;i2: %d\n&quot;</span>, i2)</span><br><span class="line">                  <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用标记</span></span><br><span class="line">fmt.Println(<span class="string">&quot;---- break label ----&quot;</span>)</span><br><span class="line">re:</span><br><span class="line">   <span class="keyword">for</span> i := <span class="number">1</span>; i &lt;= <span class="number">3</span>; i++ &#123;</span><br><span class="line">      fmt.Printf(<span class="string">&quot;i: %d\n&quot;</span>, i)</span><br><span class="line">      <span class="keyword">for</span> i2 := <span class="number">11</span>; i2 &lt;= <span class="number">13</span>; i2++ &#123;</span><br><span class="line">            fmt.Printf(<span class="string">&quot;i2: %d\n&quot;</span>, i2)</span><br><span class="line">            <span class="keyword">break</span> re</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h2><p><code>continue</code> 语句用来跳出 <code>for</code> 循环中当前循环。在 <code>continue</code> 语句后的所有的 <code>for</code> 循环语句都不会在本次循环中执行。循环体会在一下次循环中继续执行。</p>
 <p>让我们写一个打印出 1 到 10 并且使用 <code>continue</code> 的程序。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++ &#123;</span><br><span class="line">        <span class="keyword">if</span> i%<span class="number">2</span> == <span class="number">0</span> &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;%d &quot;</span>, i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在上面的程序中，这行代码 <code>if i%2==0</code> 会判断 i 除以 2 的余数是不是 0，如果是 0，这个数字就是偶数然后执行 <code>continue</code> 语句，从而控制程序进入下一个循环。因此在 <code>continue</code> 后面的打印语句不会被调用而程序会进入一下个循环。上面程序会输出 <code>1 3 5 7 9</code>。</p>
-<h2 id="更多例子-相当于while"><a href="#更多例子-相当于while" class="headerlink" title="更多例子:相当于while"></a>更多例子:相当于while</h2><p>让我们写更多的代码来演示 <code>for</code> 循环的多样性吧</p>
+<h2 id="相当于while"><a href="#相当于while" class="headerlink" title="相当于while"></a>相当于while</h2><p>让我们写更多的代码来演示 <code>for</code> 循环的多样性吧</p>
 <p>下面这个程序打印出从 0 到 10 所有的偶数。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    i := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> ;i &lt;= <span class="number">10</span>; &#123; <span class="comment">// initialisation and post are omitted</span></span><br><span class="line">        fmt.Printf(<span class="string">&quot;%d &quot;</span>, i)</span><br><span class="line">        i += <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -340,7 +351,33 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;Hello World&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在你本地系统上运行，来无限的打印 “Hello World” 。</p>
-<p>这里还有一个 <code>range</code> 结构，它可以被用来在 <code>for</code> 循环中操作数组对象。当我们学习数组时我们会补充这方面内容。</p>
+<p>好几种方式实现for的无限循环。只要省略for的条件判断部分就可以实现无限循环</p>
+<ul>
+<li>for i := 0;;i++</li>
+<li>for ;; { }</li>
+<li>for true { }</li>
+<li>for { }</li>
+</ul>
+<p>无限循环时，一般在循环体中加上退出语句，如break、os.Exit、return等</p>
+<p>实例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var sum int</span><br><span class="line">for &#123;</span><br><span class="line">   sum++</span><br><span class="line">   fmt.Println(sum)</span><br><span class="line">   if sum &#x3D;&#x3D; 100 &#123;</span><br><span class="line">      return</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="for-range遍历"><a href="#for-range遍历" class="headerlink" title="for range遍历"></a>for range遍历</h2><p>range关键字非常好用，可以用来迭代那些可迭代的对象。比如slice、map、array，还可以迭代字符串，甚至是Unicode的字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for index,value :&#x3D; range iterable &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>注意</code>：value是从iterable中拷贝的副本, 我们直接修改value是无效的, 我们应该通过index来修改它，因此: 在循环体中应该总是让value作为一个只读变量</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">iter := <span class="string">&quot;abcdefg&quot;</span></span><br><span class="line"><span class="keyword">for</span> index, value := <span class="keyword">range</span> iter &#123;</span><br><span class="line">   fmt.Println(index, value)</span><br><span class="line">   value = <span class="string">&#x27;x&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(iter)</span><br><span class="line">iter := []<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;</span><br><span class="line"><span class="keyword">for</span> index, value := <span class="keyword">range</span> iter &#123;</span><br><span class="line">   fmt.Println(index, value)</span><br><span class="line">   iter[index] = <span class="number">99</span></span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(iter)</span><br></pre></td></tr></table></figure>
+
+<h2 id="标签与跳转"><a href="#标签与跳转" class="headerlink" title="标签与跳转"></a>标签与跳转</h2><p>Go 语言的 goto 语句可以无条件地转移到过程中指定的行。 goto 语句通常与条件语句配合使用。可用来实现条件转移， 构成循环，跳出循环体等功能。 但是，在结构化程序设计中一般不主张使用 goto 语句， 以免造成程序流程的混乱，使理解和调试程序都产生困难</p>
+<p>语法</p>
+<p>goto 语法格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">goto label;</span><br><span class="line">..</span><br><span class="line">.</span><br><span class="line">label: statement;</span><br></pre></td></tr></table></figure>
+
+<p>实例: 在变量 a 等于 15 的时候跳过本次循环并回到循环的开始语句 LOOP 处</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 定义局部变量 *&#x2F;</span><br><span class="line">var a int &#x3D; 10</span><br><span class="line"></span><br><span class="line">&#x2F;* 循环 *&#x2F;</span><br><span class="line">LOOP:</span><br><span class="line">for a &lt; 20 &#123;</span><br><span class="line">   if a &#x3D;&#x3D; 15 &#123;</span><br><span class="line">      &#x2F;* 跳过迭代 *&#x2F;</span><br><span class="line">      a++</span><br><span class="line">      goto LOOP</span><br><span class="line">   &#125;</span><br><span class="line">   fmt.Printf(&quot;a的值为 : %d\n&quot;, a)</span><br><span class="line">   a++</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <h1 id="10-switch-语句"><a href="#10-switch-语句" class="headerlink" title="10. switch 语句"></a>10. switch 语句</h1><p>switch 是一个条件语句，用于将表达式的值与可能匹配的选项列表进行比较，并根据匹配情况执行相应的代码块。它可以被认为是替代多个 <code>if else</code> 子句的常用方式。</p>
 <p>看代码比文字更容易理解。让我们从一个简单的例子开始，它将把一个手指的编号作为输入，然后输出该手指对应的名字。比如 0 是拇指，1 是食指等等。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    finger := <span class="number">4</span></span><br><span class="line">    <span class="keyword">switch</span> finger &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        fmt.Println(<span class="string">&quot;Thumb&quot;</span>)</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        fmt.Println(<span class="string">&quot;Index&quot;</span>)</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">        fmt.Println(<span class="string">&quot;Middle&quot;</span>)</span><br><span class="line">    <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">        fmt.Println(<span class="string">&quot;Ring&quot;</span>)</span><br><span class="line">    <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">        fmt.Println(<span class="string">&quot;Pinky&quot;</span>)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -453,7 +490,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-if-else-%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.</span> <span class="nav-text">1. if-else 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-number">1.0.1.</span> <span class="nav-text">一个注意点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.</span> <span class="nav-text">9. 循环</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#for-%E5%BE%AA%E7%8E%AF%E8%AF%AD%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">for 循环语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">2.2.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#break"><span class="nav-number">2.3.</span> <span class="nav-text">break</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#continue"><span class="nav-number">2.4.</span> <span class="nav-text">continue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A%E4%BE%8B%E5%AD%90-%E7%9B%B8%E5%BD%93%E4%BA%8Ewhile"><span class="nav-number">2.5.</span> <span class="nav-text">更多例子:相当于while</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.6.</span> <span class="nav-text">无限循环</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-switch-%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.</span> <span class="nav-text">10. switch 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%EF%BC%88Default-Case%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">默认情况（Default Case）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%88%A4%E6%96%AD"><span class="nav-number">3.2.</span> <span class="nav-text">多表达式判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84-switch"><span class="nav-number">3.3.</span> <span class="nav-text">无表达式的 switch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fallthrough-%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.4.</span> <span class="nav-text">Fallthrough 语句</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-if-else-%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.</span> <span class="nav-text">1. if-else 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-number">1.0.1.</span> <span class="nav-text">一个注意点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.</span> <span class="nav-text">9. 循环</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#for-%E5%BE%AA%E7%8E%AF%E8%AF%AD%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">for 循环语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">2.2.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#break"><span class="nav-number">2.3.</span> <span class="nav-text">break</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#continue"><span class="nav-number">2.4.</span> <span class="nav-text">continue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%BD%93%E4%BA%8Ewhile"><span class="nav-number">2.5.</span> <span class="nav-text">相当于while</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.6.</span> <span class="nav-text">无限循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-range%E9%81%8D%E5%8E%86"><span class="nav-number">2.7.</span> <span class="nav-text">for range遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE%E4%B8%8E%E8%B7%B3%E8%BD%AC"><span class="nav-number">2.8.</span> <span class="nav-text">标签与跳转</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-switch-%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.</span> <span class="nav-text">10. switch 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%EF%BC%88Default-Case%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">默认情况（Default Case）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%88%A4%E6%96%AD"><span class="nav-number">3.2.</span> <span class="nav-text">多表达式判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84-switch"><span class="nav-number">3.3.</span> <span class="nav-text">无表达式的 switch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fallthrough-%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.4.</span> <span class="nav-text">Fallthrough 语句</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -469,7 +506,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">94</span>
+          <span class="site-state-item-count">96</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -531,7 +568,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">35:22</span>
+    <span title="站点阅读时长">35:36</span>
 </div>
 
 <!--
