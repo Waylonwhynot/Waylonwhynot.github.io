@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Docker-compose 部署 Django + Uwsgi + Nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="21-Docker-compost部署Django+uwsgi">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/06/22/21-Docker-compost%E9%83%A8%E7%BD%B2Django-uwsgi/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Docker-compose 部署 Django + Uwsgi + Nginx">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210622215310884.png">
+<meta property="article:published_time" content="2021-06-22T13:51:07.000Z">
+<meta property="article:modified_time" content="2021-06-22T14:05:44.195Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210622215310884.png">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/06/22/21-Docker-compost%E9%83%A8%E7%BD%B2Django-uwsgi/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>21-Docker-compost部署Django+uwsgi | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/06/22/21-Docker-compost%E9%83%A8%E7%BD%B2Django-uwsgi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          21-Docker-compost部署Django+uwsgi
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-22 21:51:07 / 修改时间：22:05:44" itemprop="dateCreated datePublished" datetime="2021-06-22T21:51:07+08:00">2021-06-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Docker-compose 部署 Django + Uwsgi + Nginx</p>
+<a id="more"></a>
+
+<h2 id="1-项目目录"><a href="#1-项目目录" class="headerlink" title="1.项目目录"></a>1.项目目录</h2><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210622215310884.png" alt="image-20210622215310884"></p>
+<h2 id="2-构建Django基础镜像"><a href="#2-构建Django基础镜像" class="headerlink" title="2.构建Django基础镜像"></a>2.构建Django基础镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">./build_django/Dockerfile</span><br><span class="line"><span class="meta">#</span><span class="bash"> 建立 python 3.6环境,构建Django环境底包</span></span><br><span class="line">FROM python:3.6</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装netcat</span></span><br><span class="line">RUN apt-get update &amp;&amp; apt install -y netcat</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 镜像作者</span></span><br><span class="line">MAINTAINER WaylonYan </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置 python 环境变量</span></span><br><span class="line">ENV PYTHONDONTWRITEBYTECODE 1</span><br><span class="line">ENV PYTHONUNBUFFERED 1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 可选：设置镜像源为国内</span></span><br><span class="line">COPY pip.conf /root/.pip/pip.conf</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 复制requirements</span></span><br><span class="line">RUN mkdir /code</span><br><span class="line">COPY requirements.txt /code/requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 更新pip版本</span></span><br><span class="line">RUN /usr/local/bin/python -m pip install --upgrade pip</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装项目依赖</span></span><br><span class="line">RUN pip install -r /code/requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 更改项目源码，decode改成encode</span></span><br><span class="line">RUN sed -i &#x27;146s/decode/encode/&#x27; /usr/local/lib/python3.6/site-packages/django/db/backends/mysql/operations.py </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">./build_django/pip.conf</span><br><span class="line">[global] </span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">[install]</span><br><span class="line">trusted-host = https://pypi.tuna.tsinghua.edu.cn </span><br><span class="line"></span><br><span class="line">./build_django/requirements.txt</span><br><span class="line">beautifulsoup4==4.9.3</span><br><span class="line">certifi==2020.12.5</span><br><span class="line">cffi==1.14.0</span><br><span class="line">cryptography==3.4.7</span><br><span class="line">Django==2.2</span><br><span class="line">django-simpleui==2021.6.2</span><br><span class="line">gevent==21.1.2</span><br><span class="line">greenlet==1.0.0</span><br><span class="line">Jinja2==2.11.3</span><br><span class="line">MarkupSafe==1.1.1</span><br><span class="line">olefile==0.46</span><br><span class="line">Pillow==8.2.0</span><br><span class="line">pycparser==2.20</span><br><span class="line">PyMySQL==1.0.2</span><br><span class="line">pytz==2021.1</span><br><span class="line">soupsieve==2.2.1</span><br><span class="line">sqlparse==0.4.1</span><br><span class="line">uwsgi==2.0.18</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-docker-compse"><a href="#3-docker-compse" class="headerlink" title="3.docker-compse"></a>3.docker-compse</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span> <span class="comment"># 自定义数据卷</span></span><br><span class="line">  <span class="attr">media_vol:</span></span><br><span class="line">  <span class="attr">static_vol:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span> <span class="comment"># 自定义网络(默认桥接), 不使用links通信</span></span><br><span class="line">  <span class="attr">nginx_network:</span></span><br><span class="line">    <span class="attr">driver:</span> <span class="string">bridge</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">./pybbs</span></span><br><span class="line">    <span class="attr">expose:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8000&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./pybbs:/var/www/html/pybbs</span> <span class="comment"># 挂载项目代码</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">static_vol:/var/www/html/pybbs/dist</span> <span class="comment"># 以数据卷挂载容器内static文件</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">media_vol:/var/www/html/pybbs/media</span> <span class="comment"># 以数据卷挂载容器内用户上传媒体文件</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./compose/uwsgi:/tmp</span> <span class="comment"># 挂载uwsgi日志</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">nginx_network</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">stdin_open:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">nginx:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">./compose/nginx</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;443:443&quot;</span></span><br><span class="line">    <span class="attr">expose:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./compose/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf</span> <span class="comment"># 挂载nginx配置文件</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./compose/nginx/ssl:/usr/share/nginx/ssl</span> <span class="comment"># 挂载ssl证书目录</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./compose/nginx/log:/var/log/nginx</span> <span class="comment"># 挂载日志</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">static_vol:/usr/share/nginx/html/static</span> <span class="comment"># 挂载静态文件</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">media_vol:/usr/share/nginx/html/media</span> <span class="comment"># 挂载用户上传媒体文件</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">nginx_network</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">web</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+
+<p>Django 项目启动配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> pybbs/start.sh</span><br><span class="line"><span class="meta"> #</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 从第一行到最后一行分别表示：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. 等待MySQL服务启动后再进行数据迁移。nc即netcat缩写</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改源码 decode换成encode</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2. 收集静态文件到根目录static文件夹，</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3. 生成数据库可执行文件，</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 4. 根据数据库可执行文件来修改数据库</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 5. 用 uwsgi启动 django 服务</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 6. tail空命令防止web容器执行脚本后退出</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="keyword">while</span> ! nc -z db 3306 ; <span class="keyword">do</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">    <span class="built_in">echo</span> <span class="string">&quot;Waiting for the MySQL Server&quot;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">    sleep 3</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="keyword">done</span></span></span><br><span class="line">python manage.py collectstatic --noinput&amp;&amp;</span><br><span class="line"><span class="meta">#</span><span class="bash">python manage.py makemigrations&amp;&amp;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">python manage.py migrate&amp;&amp;</span></span><br><span class="line">uwsgi --ini /var/www/html/pybbs/uwsgi.ini&amp;&amp;</span><br><span class="line">tail -f /dev/null</span><br><span class="line"></span><br><span class="line">exec &quot;$@&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">.pybbs/Dockerfile </span><br><span class="line"><span class="meta">#</span><span class="bash"> 建立 Django 2.2环境</span></span><br><span class="line">FROM django:2.2</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 镜像作者</span></span><br><span class="line">MAINTAINER WaylonYan </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置 python 环境变量</span></span><br><span class="line">ENV PYTHONDONTWRITEBYTECODE 1</span><br><span class="line">ENV PYTHONUNBUFFERED 1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 容器内创建 myproject 文件夹</span></span><br><span class="line">ENV APP_HOME=/var/www/html/pybbs</span><br><span class="line">RUN mkdir -p $APP_HOME</span><br><span class="line">WORKDIR $APP_HOME</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将当前目录加入到工作目录中（. 表示当前目录）</span></span><br><span class="line">ADD . $APP_HOME</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 移除\r <span class="keyword">in</span> windows</span></span><br><span class="line">RUN sed -i &#x27;s/\r//&#x27; ./start.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 给start.sh可执行权限</span></span><br><span class="line">RUN chmod +x ./start.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 数据迁移，并使用uwsgi启动服务</span></span><br><span class="line">ENTRYPOINT /bin/bash ./start.sh</span><br></pre></td></tr></table></figure>
+
+<p>Nginx 配置文件+Dockerfile</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> compose/nginx/nginx.conf</span></span><br><span class="line"></span><br><span class="line">upstream django &#123;</span><br><span class="line">    ip_hash;</span><br><span class="line">    server web:8000; # Docker-compose web服务端口</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置http请求，80端口</span></span><br><span class="line">server &#123;</span><br><span class="line">    listen 80; # 监听80端口</span><br><span class="line">    server_name 127.0.0.1; # 可以是nginx容器所在ip地址或127.0.0.1，不能写宿主机外网ip地址</span><br><span class="line"></span><br><span class="line">    charset utf-8;</span><br><span class="line">    client_max_body_size 10M; # 限制用户上传文件大小</span><br><span class="line"></span><br><span class="line">    access_log /var/log/nginx/access.log main;</span><br><span class="line">    error_log /var/log/nginx/error.log warn;</span><br><span class="line"></span><br><span class="line">    location /static &#123;</span><br><span class="line">        alias /usr/share/nginx/html/static; # 静态资源路径</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /media &#123;</span><br><span class="line">        alias /usr/share/nginx/html/media; # 媒体资源，用户上传文件路径</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        include /etc/nginx/uwsgi_params;</span><br><span class="line">        uwsgi_pass django;</span><br><span class="line">        uwsgi_read_timeout 600;</span><br><span class="line">        uwsgi_connect_timeout 600;</span><br><span class="line">        uwsgi_send_timeout 600;</span><br><span class="line"></span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_redirect off;</span><br><span class="line">        proxy_set_header X-Real-IP  $remote_addr;</span><br><span class="line">       # proxy_pass http://django;  # 使用uwsgi通信，而不是http，所以不使用proxy_pass。</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Dockerfile</span><br><span class="line"><span class="meta">#</span><span class="bash"> nginx镜像compose/nginx/Dockerfile</span></span><br><span class="line"></span><br><span class="line">FROM nginx:latest</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除原有配置文件，创建静态资源文件夹和ssl证书保存文件夹</span></span><br><span class="line">RUN rm /etc/nginx/conf.d/default.conf \</span><br><span class="line">&amp;&amp; mkdir -p /usr/share/nginx/html/static \</span><br><span class="line">&amp;&amp; mkdir -p /usr/share/nginx/html/media \</span><br><span class="line">&amp;&amp; mkdir -p /usr/share/nginx/ssl</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置Media文件夹用户和用户组为Linux默认www-data, 并给予可读和可执行权限,</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 否则用户上传的图片无法正确显示。</span></span><br><span class="line">RUN chown -R www-data:www-data /usr/share/nginx/html/media \</span><br><span class="line">&amp;&amp; chmod -R 775 /usr/share/nginx/html/media</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加配置文件</span></span><br><span class="line">ADD ./nginx.conf /etc/nginx/conf.d/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭守护模式</span></span><br><span class="line">CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>Django项目启动settings配置文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Static files (CSS, JavaScript, Images)</span></span><br><span class="line"><span class="comment"># https://docs.djangoproject.com/en/2.2/howto/static-files/</span></span><br><span class="line"></span><br><span class="line">STATIC_URL = <span class="string">&#x27;/static/&#x27;</span></span><br><span class="line"></span><br><span class="line">STATICFILES_DIRS = [</span><br><span class="line">    os.path.join(BASE_DIR, <span class="string">&#x27;static&#x27;</span>)</span><br><span class="line">]</span><br><span class="line">STATIC_ROOT = os.path.join(BASE_DIR, <span class="string">&#x27;dist&#x27;</span>)</span><br><span class="line"></span><br><span class="line">AUTH_USER_MODEL = <span class="string">&#x27;app01.Userinfo&#x27;</span></span><br><span class="line"></span><br><span class="line">LOGIN_URL = <span class="string">&#x27;/login/&#x27;</span></span><br><span class="line"></span><br><span class="line">MEDIA_ROOT = os.path.join(BASE_DIR, <span class="string">&#x27;media&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>引用博客:</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42134789/article/details/115878467">https://blog.csdn.net/weixin_42134789/article/details/115878467</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"><i class="fas fa-cookie-bite"></i> Django</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/22/%E4%B9%B1%E4%B8%83%E5%85%AB%E7%B3%9F/" rel="prev" title="乱七八糟">
+      <i class="fa fa-chevron-left"></i> 乱七八糟
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">1.项目目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%9E%84%E5%BB%BADjango%E5%9F%BA%E7%A1%80%E9%95%9C%E5%83%8F"><span class="nav-number">2.</span> <span class="nav-text">2.构建Django基础镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-docker-compse"><span class="nav-number">3.</span> <span class="nav-text">3.docker-compse</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">36:05</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
