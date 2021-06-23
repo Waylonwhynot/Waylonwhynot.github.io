@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Go 切片&#x2F;堆栈&#x2F;sort包&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go-11-Map">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/06/23/Go-11-Map/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Go 切片&#x2F;堆栈&#x2F;sort包&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/hmap_1-20210623100118375.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/hmap-20210623100142162.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/map_op.png">
+<meta property="article:published_time" content="2021-06-23T02:00:33.000Z">
+<meta property="article:modified_time" content="2021-06-23T02:04:29.633Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/hmap_1-20210623100118375.png">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/06/23/Go-11-Map/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Go-11-Map | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/06/23/Go-11-Map/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go-11-Map
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-23 10:00:33 / 修改时间：10:04:29" itemprop="dateCreated datePublished" datetime="2021-06-23T10:00:33+08:00">2021-06-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Go 切片/堆栈/sort包/</p>
+<a id="more"></a>
+
+
+<h1 id="Go语言Map"><a href="#Go语言Map" class="headerlink" title="Go语言Map"></a>Go语言Map</h1><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/hmap_1-20210623100118375.png" alt="img"></p>
+<p>map 的设计也被称为 “The dictionary problem”，它的任务是设计一种数据结构用来维护一个集合的数据，并且可以同时对集合进行增删查改的操作</p>
+<p>Go里的map用于存放key/value对，在其它地方常称为hash、dictionary、关联数组，这几种称呼都是对同一种数据结构的不同称呼，它们都用于将key经过hash函数处理，然后映射到value，实现一一对应的关系</p>
+<p>映射是存储一系列无序的 key/value 对，通过 key 来对 value 进行操作（增、删、改、查）。</p>
+<h2 id="声明与初始化"><a href="#声明与初始化" class="headerlink" title="声明与初始化"></a>声明与初始化</h2><p>1.声明</p>
+<p>map 声明需要指定组成元素 key 和 value 的类型，在声明后，会被初始化为 nil，表示 暂不存在的映射</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var m map[string]int &#x2F;&#x2F; *hmap</span><br><span class="line">fmt.Printf(&quot;%p\n&quot;, m)</span><br></pre></td></tr></table></figure>
+
+<p>2.初始化</p>
+<p>可以通过make()创建map，它会先创建好底层数据结构，然后再创建map，并让map指向底层数据结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var m map[string]int</span><br><span class="line">m &#x3D; make(map[string]int)</span><br><span class="line">fmt.Printf(&quot;%p\n&quot;, m)</span><br></pre></td></tr></table></figure>
+
+<p>3.声明并初始化</p>
+<p>也可以直接通过大括号创建并初始化赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m :&#x3D; map[string]int&#123;&quot;Tony&quot;: 22, &quot;Andy&quot;: 55&#125;</span><br><span class="line">fmt.Println(m)</span><br></pre></td></tr></table></figure>
+
+<p>4.限制</p>
+<p>Go 语言中只要是可比较的类型都可以作为 key。除开 slice，map，functions 这几种类型，其他类型都是 OK 的。 具体包括：布尔值、数字、字符串、指针、通道、接口类型、结构体、只包含上述类型的数组。 这些类型的共同特征是支持 == 和 != 操作符，k1 == k2 时，可认为 k1 和 k2 是同一个 key。 如果是结构体，则需要它们的字段值都相等，才被认为是相同的 key</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var m1 map[string]string</span><br><span class="line">var m2 map[int]int</span><br><span class="line">var m3 map[float64]string</span><br><span class="line">var m4 map[string]AddFunc</span><br></pre></td></tr></table></figure>
+
+<h2 id="nil-map和空map"><a href="#nil-map和空map" class="headerlink" title="nil map和空map"></a>nil map和空map</h2><p>空map是不做任何赋值的map：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a :&#x3D; map[int]string</span><br></pre></td></tr></table></figure>
+
+<p>nil map，它将不会做任何初始化，不会指向任何数据结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var a map[int]string</span><br></pre></td></tr></table></figure>
+
+<p>如何map没初始化，直接赋值会报空指针</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var a map[int]string</span><br><span class="line">var b []string</span><br><span class="line">fmt.Printf(&quot;%p, %p\n&quot;, a, b)</span><br><span class="line">&#x2F;&#x2F; a[0] &#x3D; &quot;a&quot;</span><br><span class="line">&#x2F;&#x2F; b[0] &#x3D; &quot;a&quot;</span><br><span class="line"></span><br><span class="line">a &#x3D; map[int]string&#123;0: &quot;a&quot;&#125;</span><br><span class="line">b &#x3D; []string&#123;&quot;a&quot;&#125;</span><br><span class="line">fmt.Printf(&quot;%p, %p\n&quot;, a, b)</span><br></pre></td></tr></table></figure>
+
+<p>所以，map类型实际上就是一个指针, 具体为 *hmap</p>
+<h2 id="元素访问"><a href="#元素访问" class="headerlink" title="元素访问"></a>元素访问</h2><p>1.访问key的值, 格式 key_value = map_var[key_value]</p>
+<p>检索map中key对应的value值。如果key不存在，则value返回值对应数据类型的0。例如int为数值0，布尔为false，字符串为空””</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a :&#x3D; map[int]string&#123;&#125;</span><br><span class="line">fmt.Println(a[0])</span><br></pre></td></tr></table></figure>
+
+<p>2.判断key是否存在, 格式: key_value, is_exist = map_var[key_value]</p>
+<p>当key存在时，value为对应的值，is_exist为true；当key不存在，value为0(同样是各数据类型所代表的0)，is_exist为false。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a :&#x3D; map[int]string&#123;&#125;</span><br><span class="line">fmt.Println(a[0])</span><br><span class="line"></span><br><span class="line">a[100] &#x3D; &quot;t1&quot;</span><br><span class="line">v1, ok1 :&#x3D; a[100]</span><br><span class="line">fmt.Println(ok1, v1)</span><br><span class="line">v2, ok2 :&#x3D; a[0]</span><br><span class="line">fmt.Println(ok2, v2)</span><br></pre></td></tr></table></figure>
+
+<p>3.测试map中元素是否存在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a[100] &#x3D; &quot;t1&quot;</span><br><span class="line">if v, ok :&#x3D; a[100]; ok &#123;</span><br><span class="line">    fmt.Println(v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="元素删除"><a href="#元素删除" class="headerlink" title="元素删除"></a>元素删除</h2><p>通过使用delete内置函数 用删除map中的元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a :&#x3D; map[int]string&#123;100: &quot;t1&quot;&#125;</span><br><span class="line">delete(a, 100)</span><br><span class="line">fmt.Println(a)</span><br></pre></td></tr></table></figure>
+
+<p>注意: 删除不存在的元素, 是不会有任何保存, 如果需要判断key是否存在，请自己判断</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a :&#x3D; map[int]string&#123;100: &quot;t1&quot;&#125;</span><br><span class="line">delete(a, 99)</span><br></pre></td></tr></table></figure>
+
+<h2 id="len"><a href="#len" class="headerlink" title="len"></a>len</h2><p>len()函数用于获取map中元素的个数，即有多个少key。delete()用于删除map中的某个key</p>
+<h2 id="元素迭代"><a href="#元素迭代" class="headerlink" title="元素迭代"></a>元素迭代</h2><p>因为map是key/value类型的数据结构，key就是map的index，所以range关键字对map操作时，将返回key和value</p>
+<p>1.迭代key和value</p>
+<p>2.只迭代key</p>
+<h2 id="map作为函数参数"><a href="#map作为函数参数" class="headerlink" title="map作为函数参数"></a>map作为函数参数</h2><p>map是一种指针，所以将map传递给函数，仅仅只是复制这个指针，所以函数内部对map的操作会直接修改外部的map</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a :&#x3D; map[int]string&#123;1: &quot;a&quot;, 2: &quot;b&quot;, 3: &quot;c&quot;&#125;</span><br><span class="line"></span><br><span class="line">func(map[int]string) &#123;</span><br><span class="line">    delete(a, 1)</span><br><span class="line">&#125;(a)</span><br><span class="line"></span><br><span class="line">fmt.Println(a)</span><br></pre></td></tr></table></figure>
+
+<h2 id="map值为函数"><a href="#map值为函数" class="headerlink" title="map值为函数"></a>map值为函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">op :&#x3D; map[string]func(x, y int) int&#123;</span><br><span class="line">    &quot;+&quot;: func(x, y int) int &#123;</span><br><span class="line">        return x + y</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;-&quot;: func(x, y int) int &#123;</span><br><span class="line">        return x - y</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;*&quot;: func(x, y int) int &#123;</span><br><span class="line">        return x * y</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;&#x2F;&quot;: func(x, y int) int &#123;</span><br><span class="line">        return x &#x2F; y</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fmt.Println(op[&quot;+&quot;](1, 2))</span><br><span class="line">fmt.Println(op[&quot;-&quot;](1, 2))</span><br></pre></td></tr></table></figure>
+
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>以下为Go Map源码相关解读, 源码位置: src/runtime/map.go,</p>
+<p>更详细的内容可以参考 曹大的笔记: <a target="_blank" rel="noopener" href="https://github.com/cch123/golang-notes">map</a></p>
+<h3 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h3><p>源码中，表示 map 的结构体是 hmap，它是 hashmap 的“缩写”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; A header for a Go map.</span><br><span class="line">type hmap struct &#123;</span><br><span class="line">    &#x2F;&#x2F; 元素个数，调用 len(map) 时，直接返回此值</span><br><span class="line">    count     int</span><br><span class="line">    flags     uint8</span><br><span class="line">    &#x2F;&#x2F; buckets 的对数 log_2</span><br><span class="line">    B         uint8</span><br><span class="line">    &#x2F;&#x2F; overflow 的 bucket 近似数</span><br><span class="line">    noverflow uint16</span><br><span class="line">    &#x2F;&#x2F; 计算 key 的哈希的时候会传入哈希函数</span><br><span class="line">    hash0     uint32</span><br><span class="line">    &#x2F;&#x2F; 指向 buckets 数组，大小为 2^B</span><br><span class="line">    &#x2F;&#x2F; 如果元素个数为0，就为 nil</span><br><span class="line">    buckets    unsafe.Pointer</span><br><span class="line">    &#x2F;&#x2F; 扩容的时候，buckets 长度会是 oldbuckets 的两倍</span><br><span class="line">    oldbuckets unsafe.Pointer</span><br><span class="line">    &#x2F;&#x2F; 指示扩容进度，小于此地址的 buckets 迁移完成</span><br><span class="line">    nevacuate  uintptr</span><br><span class="line">    extra *mapextra &#x2F;&#x2F; optional fields</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该结构中用于存储key value的数据结构是 buckets([]bmap), 其中bmap就是我们常说的“桶”，桶里面最多装 8 个元素(key-value)</p>
+<p>如果有第 9 个 元素 落入当前的 bucket，那就需要再构建一个 bucket ，通过 overflow 指针连接起来</p>
+<p>下面是一张全局图</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/hmap-20210623100142162.png" alt="hmap"></p>
+<h3 id="创建过程"><a href="#创建过程" class="headerlink" title="创建过程"></a>创建过程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">m1 :&#x3D; make(map[string]int)</span><br><span class="line">&#x2F;&#x2F; 指定 map 长度</span><br><span class="line">m2 :&#x3D; make(map[string]int, 8)</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到创建的核心是 根据用户提供的map大小，计算出需要初始化的bucket, 计算bucket数量的核心指标是 装载因子</p>
+<p>装载因子：用于衡量bucket的装载情况, 计算公式: loadFactor := count / (2^B)</p>
+<ul>
+<li>count: map 的元素个数</li>
+<li>2^B ：bucket 数量</li>
+</ul>
+<p>装载因子超过阈值，源码里定义的阈值是 6.5, 就需要分配一个扩展了(B++), 一次计算逻辑: count / 2^B &lt; 6.5</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; loadFactorNum 13</span><br><span class="line">&#x2F;&#x2F; overLoadFactor reports whether count items placed in 1&lt;&lt;B buckets is over loadFactor.</span><br><span class="line">func overLoadFactor(count int, B uint8) bool &#123;</span><br><span class="line">    return count &gt; bucketCnt &amp;&amp; uintptr(count) &gt; loadFactorNum*(bucketShift(B)&#x2F;loadFactorDen)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面是makemap的具体过程:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">func makemap(t *maptype, hint int64, h *hmap, bucket unsafe.Pointer) *hmap &#123;</span><br><span class="line">    &#x2F;&#x2F; 省略各种条件检查...</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 找到一个 B，使得 map 的装载因子在正常范围内</span><br><span class="line">    B :&#x3D; uint8(0)</span><br><span class="line">    for ; overLoadFactor(hint, B); B++ &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 初始化 hash table</span><br><span class="line">    &#x2F;&#x2F; 如果 B 等于 0，那么 buckets 就会在赋值的时候再分配</span><br><span class="line">    &#x2F;&#x2F; 如果长度比较大，分配内存会花费长一点</span><br><span class="line">    buckets :&#x3D; bucket</span><br><span class="line">    var extra *mapextra</span><br><span class="line">    if B !&#x3D; 0 &#123;</span><br><span class="line">        var nextOverflow *bmap</span><br><span class="line">        buckets, nextOverflow &#x3D; makeBucketArray(t, B)</span><br><span class="line">        if nextOverflow !&#x3D; nil &#123;</span><br><span class="line">            extra &#x3D; new(mapextra)</span><br><span class="line">            extra.nextOverflow &#x3D; nextOverflow</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 初始化 hamp</span><br><span class="line">    if h &#x3D;&#x3D; nil &#123;</span><br><span class="line">        h &#x3D; (*hmap)(newobject(t.hmap))</span><br><span class="line">    &#125;</span><br><span class="line">    h.count &#x3D; 0</span><br><span class="line">    h.B &#x3D; B</span><br><span class="line">    h.extra &#x3D; extra</span><br><span class="line">    h.flags &#x3D; 0</span><br><span class="line">    h.hash0 &#x3D; fastrand()</span><br><span class="line">    h.buckets &#x3D; buckets</span><br><span class="line">    h.oldbuckets &#x3D; nil</span><br><span class="line">    h.nevacuate &#x3D; 0</span><br><span class="line">    h.noverflow &#x3D; 0</span><br><span class="line"></span><br><span class="line">    return h</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="元素存取过程"><a href="#元素存取过程" class="headerlink" title="元素存取过程"></a>元素存取过程</h3><p>key 经过哈希计算后得到哈希值，共 64 个 bit 位, 然后通过这个hash来决定我们元素放那个桶的那个槽</p>
+<ul>
+<li>bucket编号: 用最后的5个bit位作为bucket的编号</li>
+<li>key放置槽: 用哈希值的高 8 位(top hash)标识存放的槽的位置, 最开始桶内还没有 key，新加入的 key 会找到第一个空位，放入</li>
+</ul>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/map_op.png" alt="hmap"></p>
+<h3 id="如何进行扩容"><a href="#如何进行扩容" class="headerlink" title="如何进行扩容"></a>如何进行扩容</h3><p>1.触发条件</p>
+<p>在向 map 插入新 key 的时候，会进行条件检测，符合下面这 2 个条件，就会触发扩容</p>
+<ul>
+<li>装载因子超过阈值，源码里定义的阈值是 6.5，表明很多 bucket 都快要装满了，查找效率和插入效率都变低了。在这个时候进行扩容是有必要的</li>
+<li>overflow 的 bucket 数量过多，即 map 里元素总数少，但是 bucket 数量多，导致 key 会很分散，查找插入效率都变低了, 这就像是一座空城，房子很多，但是住户很少，都分散了，找起人来很困难<ul>
+<li>当 B 小于 15，也就是 bucket 总数 2^B 小于 2^15 时，如果 overflow 的 bucket 数量超过 2^B</li>
+<li>当 B &gt;= 15，也就是 bucket 总数 2^B 大于等于 2^15，如果 overflow 的 bucket 数量超过 2^15</li>
+</ul>
+</li>
+</ul>
+<p>2.扩容策略:</p>
+<ul>
+<li>装载因子超过阈值的扩容策略:将 B 加 1，bucket 最大数量（2^B）直接变成原来 bucket 数量的 2 倍。于是，就有新老 bucket 了。注意，这时候元素都在老 bucket 里，还没迁移到新的 bucket 来。而且，新 bucket 只是最大数量变为原来最大数量（2^B）的 2 倍（2^B * 2）</li>
+<li>overflow 的 bucket 数量过多扩展策略: 开辟一个新 bucket 空间，将老 bucket 中的元素移动到新 bucket，使得同一个 bucket 中的 key 排列地更紧密, 这样，原来，在 overflow bucket 中的 key 可以移动到 bucket 中来。结果是节省空间，提高 bucket 利用率，map 的查找和插入效率自然就会提升</li>
+</ul>
+<p>3.元素搬迁</p>
+<p>经过上面的扩容， 但是元素并没有迁移</p>
+<p>由于 map 扩容需要将原有的 key/value 重新搬迁到新的内存地址，如果有大量的 key/value 需要搬迁，会非常影响性能。因此 Go map 的扩容采取了一种称为“渐进式”地方式，原有的 key 并不会一次性搬迁完毕，每次最多只会搬迁 2 个 bucket</p>
+<p>因此搬迁时(插入或修改、删除 key 的时候), 都会尝试进行搬迁 buckets 的工作, 根据bucketmask, 进行重新hash, 然后再次均衡 所谓的 bucketmask，作用就是将 key 计算出来的哈希值与 bucketmask 相与，得到的结果就是 key 应该落入的桶。比如 B = 5，那么 bucketmask 的低 5 位是 11111，其余位是 0，hash 值与其相与的意思是，只有 hash 值的低 5 位决策 key 到底落入哪个 bucket</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"><i class="fas fa-cookie-bite"></i> Go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/22/21-Docker-compost%E9%83%A8%E7%BD%B2Django-uwsgi/" rel="prev" title="21-Docker-compost部署Django+uwsgi">
+      <i class="fa fa-chevron-left"></i> 21-Docker-compost部署Django+uwsgi
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E8%AF%AD%E8%A8%80Map"><span class="nav-number">1.</span> <span class="nav-text">Go语言Map</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">声明与初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nil-map%E5%92%8C%E7%A9%BAmap"><span class="nav-number">1.2.</span> <span class="nav-text">nil map和空map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E8%AE%BF%E9%97%AE"><span class="nav-number">1.3.</span> <span class="nav-text">元素访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E5%88%A0%E9%99%A4"><span class="nav-number">1.4.</span> <span class="nav-text">元素删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#len"><span class="nav-number">1.5.</span> <span class="nav-text">len</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E8%BF%AD%E4%BB%A3"><span class="nav-number">1.6.</span> <span class="nav-text">元素迭代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">map作为函数参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map%E5%80%BC%E4%B8%BA%E5%87%BD%E6%95%B0"><span class="nav-number">1.8.</span> <span class="nav-text">map值为函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95"><span class="nav-number">1.9.</span> <span class="nav-text">扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.9.1.</span> <span class="nav-text">内存模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="nav-number">1.9.2.</span> <span class="nav-text">创建过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E5%AD%98%E5%8F%96%E8%BF%87%E7%A8%8B"><span class="nav-number">1.9.3.</span> <span class="nav-text">元素存取过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%89%A9%E5%AE%B9"><span class="nav-number">1.9.4.</span> <span class="nav-text">如何进行扩容</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">36:21</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
