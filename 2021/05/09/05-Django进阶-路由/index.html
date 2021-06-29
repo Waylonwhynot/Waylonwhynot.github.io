@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222445154-1444675186.gif">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222449112-578457427.gif">
 <meta property="article:published_time" content="2021-05-09T06:59:14.000Z">
-<meta property="article:modified_time" content="2021-05-28T02:30:35.579Z">
+<meta property="article:modified_time" content="2021-06-29T07:17:32.917Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Django">
 <meta name="twitter:card" content="summary">
@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-28 10:30:35" itemprop="dateModified" datetime="2021-05-28T10:30:35+08:00">2021-05-28</time>
+                <time title="修改时间：2021-06-29 15:17:32" itemprop="dateModified" datetime="2021-06-29T15:17:32+08:00">2021-06-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,7 +246,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>17k</span>
+              <span>18k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -313,7 +313,7 @@
 
 <h4 id="3-2-有名分组"><a href="#3-2-有名分组" class="headerlink" title="3.2 有名分组"></a>3.2 有名分组</h4><p><code>有名分组就是将括号内正则表达式匹配到的内容当做关键字参数传递给后面的视图函数</code></p>
 <p>urls.py文件</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r&#x27;^admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 该正则会匹配url地址的路径部分为:article/数字/，匹配成功的分组部分会以关键字参数（article_id=匹配成功的数字）的形式传给视图函数，有几个有名分组就会传几个关键字参数</span></span><br><span class="line">    url(<span class="string">r&#x27;^aritcle/(?P&lt;article_id&gt;\d+)/$&#x27;</span>,views.article), </span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r&#x27;^admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 该正则会匹配url地址的路径部分为:article/数字/，匹配成功的分组部分会以关键字参数（article_id=匹配成功的数字）的形式传给视图函数，有几个有名分组就会传几个关键字参数</span></span><br><span class="line">    url(<span class="string">r&#x27;^aritcle/(?P&lt;article_id&gt;\d+)/$&#x27;</span>,views.article), </span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.0版本</span></span><br><span class="line">path(<span class="string">&#x27;articles/&lt;int:year&gt;/&#x27;</span>, views.year_archive),</span><br></pre></td></tr></table></figure>
 
 <p>views.py文件</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="comment"># 需要额外增加一个形参，形参名必须为article_id</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">article</span>(<span class="params">request,article_id</span>):</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;id为 %s 的文章内容...&#x27;</span> %article_id)</span><br></pre></td></tr></table></figure>
@@ -661,7 +661,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">36:48</span>
+    <span title="站点阅读时长">36:50</span>
 </div>
 
 <!--
