@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gghkhucudgj315w0rmqv5.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gghkj4qalrj31yg0qo1kz.jpg">
 <meta property="article:published_time" content="2021-06-05T19:21:19.000Z">
-<meta property="article:modified_time" content="2021-06-30T18:30:58.000Z">
+<meta property="article:modified_time" content="2021-07-01T02:35:08.178Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-01 02:30:58" itemprop="dateModified" datetime="2021-07-01T02:30:58+08:00">2021-07-01</time>
+                <time title="修改时间：2021-07-01 10:35:08" itemprop="dateModified" datetime="2021-07-01T10:35:08+08:00">2021-07-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -641,7 +641,7 @@
 
 <p>引用博客地址：</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yoyoketang/p/14347488.html">https://www.cnblogs.com/yoyoketang/p/14347488.html</a></p>
-<h2 id="1-7-原生django-封装request-POST和body数据到request-data"><a href="#1-7-原生django-封装request-POST和body数据到request-data" class="headerlink" title="1.7 原生django 封装request.POST和body数据到request.data"></a>1.7 原生django 封装request.POST和body数据到request.data</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 装饰器</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transferdata</span>(<span class="params">func</span>):</span></span><br><span class="line">    <span class="keyword">import</span> json</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span>(<span class="params">request, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> request.POST:</span><br><span class="line">            request.data = request.POST.dict()</span><br><span class="line">        <span class="keyword">elif</span> request.body:</span><br><span class="line">            data = request.body</span><br><span class="line">            data_json = data.decode()</span><br><span class="line">            data_dict = json.loads(data_json)</span><br><span class="line">            request.data = data_dict</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">return</span> func(request, *args, **kwargs)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br></pre></td></tr></table></figure>
+<h2 id="1-7-原生django-封装request-POST和body数据到request-data"><a href="#1-7-原生django-封装request-POST和body数据到request-data" class="headerlink" title="1.7 原生django 封装request.POST和body数据到request.data"></a>1.7 原生django 封装request.POST和body数据到request.data</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 装饰器</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transferdata</span>(<span class="params">func</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span>(<span class="params">request, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">          res = json.loads(request.body)</span><br><span class="line">          request.data = res</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">          request.data = request.POST</span><br><span class="line">        res = func(request, *args, **kwargs)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br></pre></td></tr></table></figure>
 
 
     </div>
