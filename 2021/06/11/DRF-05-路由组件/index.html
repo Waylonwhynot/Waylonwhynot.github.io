@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggghbqkmx1j318y0j4wii.jpg">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggjy44i1y3j30v607otaa.jpg">
 <meta property="article:published_time" content="2021-06-11T15:11:52.000Z">
-<meta property="article:modified_time" content="2021-07-05T05:40:55.154Z">
+<meta property="article:modified_time" content="2021-07-05T14:25:38.394Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-05 13:40:55" itemprop="dateModified" datetime="2021-07-05T13:40:55+08:00">2021-07-05</time>
+                <time title="修改时间：2021-07-05 22:25:38" itemprop="dateModified" datetime="2021-07-05T22:25:38+08:00">2021-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,14 +245,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.5k</span>
+              <span>4.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -267,11 +267,11 @@
         <p>路由Routers</p>
 <a id="more"></a>
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.路由</span></span><br><span class="line"><span class="comment"># 2.3中写法</span></span><br><span class="line">  - django传统的路由(CBV路由), </span><br><span class="line">  path(<span class="string">&#x27;test/&#x27;</span>, views.TestView.as_view()),</span><br><span class="line">  - 只要继承ViewSetMixin: path(<span class="string">&#x27;books/&#x27;</span>, views.BookViewSet.as_view(&#123;<span class="string">&#x27;get&#x27;</span>:<span class="string">&#x27;list&#x27;</span>, <span class="string">&#x27;post&#x27;</span>:<span class="string">&#x27;create&#x27;</span>&#125;))</span><br><span class="line">  - 自动生成路由</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"><span class="comment">###### 只有视图继承 ViewSetMixin+ 9个视图子类 ；才能用router。 推荐用  include  可以加 前缀，比如 /api/v1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.路由</span></span><br><span class="line"><span class="comment"># 2.3中写法</span></span><br><span class="line">  - django传统的路由(CBV路由), </span><br><span class="line">  path(<span class="string">&#x27;test/&#x27;</span>, views.TestView.as_view()),</span><br><span class="line">  - 只要继承ViewSetMixin: path(<span class="string">&#x27;books/&#x27;</span>, views.BookViewSet.as_view(&#123;<span class="string">&#x27;get&#x27;</span>:<span class="string">&#x27;list&#x27;</span>, <span class="string">&#x27;post&#x27;</span>:<span class="string">&#x27;create&#x27;</span>&#125;))</span><br><span class="line">  - 自动生成路由</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"><span class="comment">###### 只有视图继承 ViewSetMixin+ 9个视图子类 (原因是视图子类有对应的list create 等等方法),才能用router。 </span></span><br><span class="line"><span class="comment">###### 推荐用  include  可以加 前缀，比如 /api/v1</span></span><br></pre></td></tr></table></figure>
 
 
 
-<h1 id="前提-重点"><a href="#前提-重点" class="headerlink" title="前提  #######重点"></a>前提  #######重点</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 只有视图继承 ViewSetMixin + 9个视图子类；才能用router。 </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 推荐用  include  可以加 前缀，比如 /api/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 项目url配置</span></span><br><span class="line">eg:</span><br><span class="line">path(<span class="string">&#x27;&#x27;</span>, include(<span class="string">&#x27;app01.urls&#x27;</span>))</span><br><span class="line"></span><br><span class="line">后续可以这种形式</span><br><span class="line">path(<span class="string">&#x27;api/&#x27;</span>, include(<span class="string">&#x27;app01.urls&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<h1 id="前提-重点"><a href="#前提-重点" class="headerlink" title="前提  #######重点"></a>前提  #######重点</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.自动生成路由的前提:</span></span><br><span class="line">(<span class="number">1</span>) 只有视图继承 ViewSetMixin + <span class="number">9</span>个视图子类；才能用router。 </span><br><span class="line">              = ViewSetMixin + GenericAPIView或APIView + 扩展类 （扩展类需配合GenericAPIView使用）</span><br><span class="line">(原因是视图子类有数据库对应的方法+ 对应的list create 方法, 而SimpleRouter自动生成的映射关系是&#123;<span class="string">&#x27;get&#x27;</span>:<span class="string">&#x27;list&#x27;</span>, <span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;create&#x27;</span>&#125;,&#123;<span class="string">&#x27;get&#x27;</span>:<span class="string">&#x27;retrieve&#x27;</span>, <span class="string">&#x27;put&#x27;</span>:<span class="string">&#x27;update&#x27;</span>, <span class="string">&#x27;delete&#x27;</span>:<span class="string">&#x27;destroy&#x27;</span>&#125;)</span><br><span class="line">如果想自动生成路由，那就需要有对应的方法:</span><br><span class="line">比如 ModelViewSet: GenericViewSet(GenericAPIView + ViewsetMixin) + <span class="number">5</span>个扩展类ListModelMixin(提供了list，create等方法....)</span><br><span class="line">比如ViewsetMixin + ListAPIView 可以自动生成路由: ViewsetMixin重写了as_view有了映射关系，分发时找方法，找到了list方法。</span><br><span class="line"></span><br><span class="line">(<span class="number">2</span>)可以用装饰器自动生成路由的前提</span><br><span class="line">    ViewSetMixin+视图类（APIView。。。） -----&gt; 实际是通过装饰器修改了SimpleRouter里面的默认映射关系</span><br><span class="line">  </span><br><span class="line"><span class="comment">############### -- -- - --- - - - - -#############</span></span><br><span class="line"><span class="comment"># 2.推荐用  include  可以加 前缀，比如 /api/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 项目url配置</span></span><br><span class="line">eg:</span><br><span class="line">path(<span class="string">&#x27;&#x27;</span>, include(<span class="string">&#x27;app01.urls&#x27;</span>))</span><br><span class="line"></span><br><span class="line">后续可以这种形式</span><br><span class="line">path(<span class="string">&#x27;api/&#x27;</span>, include(<span class="string">&#x27;app01.urls&#x27;</span>))</span><br></pre></td></tr></table></figure>
 
 <h1 id="一-路由Routers"><a href="#一-路由Routers" class="headerlink" title="一 路由Routers"></a>一 路由Routers</h1><p>对于视图集ViewSet，我们除了可以自己手动指明请求方式与动作action之间的对应关系外，还可以使用Routers来帮助我们快速实现路由信息。</p>
 <p>REST framework提供了两个router</p>
@@ -504,7 +504,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">37:26</span>
+    <span title="站点阅读时长">37:28</span>
 </div>
 
 <!--
