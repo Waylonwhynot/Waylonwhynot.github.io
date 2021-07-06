@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="JWT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DRF-09-JWT">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/07/07/DRF-09-JWT/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="JWT">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprivsr69j31i50u0tao.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggpriyyay5j31i80u03zl.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprj27cflj31fq0u0abx.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprj5moolj31ob0u0q4w.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggjrfa03aaj312z0u0afg.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggjrg9ots0j31d60rcjv6.jpg">
+<meta property="article:published_time" content="2021-07-06T17:51:41.000Z">
+<meta property="article:modified_time" content="2021-07-06T17:52:58.661Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprivsr69j31i50u0tao.jpg">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/07/07/DRF-09-JWT/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>DRF-09-JWT | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/07/07/DRF-09-JWT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DRF-09-JWT
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-07 01:51:41 / 修改时间：01:52:58" itemprop="dateCreated datePublished" datetime="2021-07-07T01:51:41+08:00">2021-07-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DRF/" itemprop="url" rel="index"><span itemprop="name">DRF</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>19 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>JWT</p>
+<a id="more"></a>
+
+<h1 id="一-JWT认证"><a href="#一-JWT认证" class="headerlink" title="一 JWT认证"></a>一 JWT认证</h1><p>在用户注册或登录后，我们想记录用户的登录状态，或者为用户创建身份认证的凭证。我们不再使用Session认证机制，而使用Json Web Token（本质就是token）认证机制。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprivsr69j31i50u0tao.jpg" alt="img"></p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggpriyyay5j31i80u03zl.jpg" alt="img"></p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprj27cflj31fq0u0abx.jpg" alt="img"></p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprj5moolj31ob0u0q4w.jpg" alt="img"></p>
+<h2 id="1-1-构成和工作原理"><a href="#1-1-构成和工作原理" class="headerlink" title="1.1 构成和工作原理"></a>1.1 构成和工作原理</h2><h3 id="JWT的构成"><a href="#JWT的构成" class="headerlink" title="JWT的构成"></a>JWT的构成</h3><p>JWT就是一段字符串，由三段信息构成的，将这三段信息文本用<code>.</code>链接一起就构成了Jwt字符串。就像这样:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</span><br></pre></td></tr></table></figure>
+
+<p>第一部分我们称它为头部（header),第二部分我们称其为载荷（payload, 类似于飞机上承载的物品)，第三部分是签证（signature).</p>
+<h3 id="1-1-1-header"><a href="#1-1-1-header" class="headerlink" title="1.1.1 header"></a>1.1.1 header</h3><p>jwt的头部承载两部分信息：</p>
+<ul>
+<li>声明类型，这里是jwt</li>
+<li>声明加密的算法 通常直接使用 HMAC SHA256</li>
+</ul>
+<p>完整的头部就像下面这样的JSON：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &#39;typ&#39;: &#39;JWT&#39;,</span><br><span class="line">  &#39;alg&#39;: &#39;HS256&#39;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后将头部进行base64加密（该加密是可以对称解密的),构成了第一部分.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-2-payload"><a href="#1-1-2-payload" class="headerlink" title="1.1.2 payload"></a>1.1.2 payload</h3><p>载荷就是存放有效信息的地方。这个名字像是特指飞机上承载的货品，这些有效信息包含三个部分</p>
+<ul>
+<li>标准中注册的声明</li>
+<li>公共的声明</li>
+<li>私有的声明</li>
+</ul>
+<p><strong>标准中注册的声明</strong> (建议但不强制使用) ：</p>
+<ul>
+<li><strong>iss</strong>: jwt签发者</li>
+<li><strong>sub</strong>: jwt所面向的用户</li>
+<li><strong>aud</strong>: 接收jwt的一方</li>
+<li><strong>exp</strong>: jwt的过期时间，这个过期时间必须要大于签发时间</li>
+<li><strong>nbf</strong>: 定义在什么时间之前，该jwt都是不可用的.</li>
+<li><strong>iat</strong>: jwt的签发时间</li>
+<li><strong>jti</strong>: jwt的唯一身份标识，主要用来作为一次性token,从而回避时序攻击。</li>
+</ul>
+<p><strong>公共的声明</strong> ： 公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息.但不建议添加敏感信息，因为该部分在客户端可解密.</p>
+<p><strong>私有的声明</strong> ： 私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解密的，意味着该部分信息可以归类为明文信息。</p>
+<p>定义一个payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;sub&quot;: &quot;1234567890&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;admin&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后将其进行base64加密，得到JWT的第二部分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-3-signature"><a href="#1-1-3-signature" class="headerlink" title="1.1.3 signature"></a>1.1.3 signature</h3><p>JWT的第三部分是一个签证信息，这个签证信息由三部分组成：</p>
+<ul>
+<li>header (base64后的)</li>
+<li>payload (base64后的)</li>
+<li>secret</li>
+</ul>
+<p>这个部分需要base64加密后的header和base64加密后的payload使用<code>.</code>连接组成的字符串，然后通过header中声明的加密方式进行加盐<code>secret</code>组合加密，然后就构成了jwt的第三部分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; javascript</span><br><span class="line">var encodedString &#x3D; base64UrlEncode(header) + &#39;.&#39; + base64UrlEncode(payload);</span><br><span class="line"></span><br><span class="line">var signature &#x3D; HMACSHA256(encodedString, &#39;secret&#39;); &#x2F;&#x2F; TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</span><br></pre></td></tr></table></figure>
+
+<p>将这三部分用<code>.</code>连接成一个完整的字符串,构成了最终的jwt:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</strong></p>
+<p><strong>关于签发和核验JWT，我们可以使用Django REST framework JWT扩展来完成。</strong></p>
+<p>文档网站：<a target="_blank" rel="noopener" href="http://getblimp.github.io/django-rest-framework-jwt/">http://getblimp.github.io/django-rest-framework-jwt/</a></p>
+<h2 id="1-2-本质原理"><a href="#1-2-本质原理" class="headerlink" title="1.2 本质原理"></a>1.2 本质原理</h2><h2 id="jwt认证算法：签发与校验"><a href="#jwt认证算法：签发与校验" class="headerlink" title="jwt认证算法：签发与校验"></a>jwt认证算法：签发与校验</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">1）jwt分三段式：头.体.签名 （head.payload.sgin）</span><br><span class="line">2）头和体是可逆加密，让服务器可以反解出user对象；签名是不可逆加密，保证整个token的安全性的</span><br><span class="line">3）头体签名三部分，都是采用json格式的字符串，进行加密，可逆加密一般采用base64算法，不可逆加密一般采用hash(md5)算法</span><br><span class="line">4）头中的内容是基本信息：公司信息、项目组信息、token采用的加密方式信息</span><br><span class="line">&#123;</span><br><span class="line">    &quot;company&quot;: &quot;公司信息&quot;,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">5）体中的内容是关键信息：用户主键、用户名、签发时客户端信息(设备号、地址)、过期时间</span><br><span class="line">&#123;</span><br><span class="line">    &quot;user_id&quot;: 1,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">6）签名中的内容时安全信息：头的加密结果 + 体的加密结果 + 服务器不对外公开的安全码 进行md5加密</span><br><span class="line">&#123;</span><br><span class="line">    &quot;head&quot;: &quot;头的加密字符串&quot;,</span><br><span class="line">    &quot;payload&quot;: &quot;体的加密字符串&quot;,</span><br><span class="line">    &quot;secret_key&quot;: &quot;安全码&quot;</span><br><span class="line">&#125;</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="签发：根据登录请求提交来的-账号-密码-设备信息-签发-token"><a href="#签发：根据登录请求提交来的-账号-密码-设备信息-签发-token" class="headerlink" title="签发：根据登录请求提交来的 账号 + 密码 + 设备信息 签发 token"></a>签发：根据登录请求提交来的 账号 + 密码 + 设备信息 签发 token</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">1）用基本信息存储json字典，采用base64算法加密得到 头字符串</span><br><span class="line">2）用关键信息存储json字典，采用base64算法加密得到 体字符串</span><br><span class="line">3）用头、体加密字符串再加安全码信息存储json字典，采用hash md5算法加密得到 签名字符串</span><br><span class="line"></span><br><span class="line">账号密码就能根据User表得到user对象，形成的三段字符串用 . 拼接成token返回给前台</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="校验：根据客户端带token的请求-反解出-user-对象"><a href="#校验：根据客户端带token的请求-反解出-user-对象" class="headerlink" title="校验：根据客户端带token的请求 反解出 user 对象"></a>校验：根据客户端带token的请求 反解出 user 对象</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">1）将token按 . 拆分为三段字符串，第一段 头加密字符串 一般不需要做任何处理</span><br><span class="line">2）第二段 体加密字符串，要反解出用户主键，通过主键从User表中就能得到登录用户，过期时间和设备信息都是安全信息，确保token没过期，且时同一设备来的</span><br><span class="line">3）再用 第一段 + 第二段 + 服务器安全码 不可逆md5加密，与第三段 签名字符串 进行碰撞校验，通过后才能代表第二段校验得到的user对象就是合法的登录用户</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="drf项目的jwt认证开发流程（重点）"><a href="#drf项目的jwt认证开发流程（重点）" class="headerlink" title="drf项目的jwt认证开发流程（重点）"></a>drf项目的jwt认证开发流程（重点）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">1）用账号密码访问登录接口，登录接口逻辑中调用 签发token 算法，得到token，返回给客户端，客户端自己存到cookies中</span><br><span class="line"></span><br><span class="line">2）校验token的算法应该写在认证类中(在认证类中调用)，全局配置给认证组件，所有视图类请求，都会进行认证校验，所以请求带了token，就会反解出user对象，在视图类中用request.user就能访问登录的用户</span><br><span class="line"></span><br><span class="line">注：登录接口需要做 认证 + 权限 两个局部禁用</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-1-补充base64编码解码"><a href="#1-2-1-补充base64编码解码" class="headerlink" title="1.2.1 补充base64编码解码"></a>1.2.1 补充base64编码解码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import base64</span><br><span class="line">import json</span><br><span class="line">dic_info&#x3D;&#123;</span><br><span class="line">  &quot;sub&quot;: &quot;1234567890&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;lqz&quot;,</span><br><span class="line">  &quot;admin&quot;: True</span><br><span class="line">&#125;</span><br><span class="line">byte_info&#x3D;json.dumps(dic_info).encode(&#39;utf-8&#39;)</span><br><span class="line"># base64编码</span><br><span class="line">base64_str&#x3D;base64.b64encode(byte_info)</span><br><span class="line">print(base64_str)</span><br><span class="line"># base64解码</span><br><span class="line">base64_str&#x3D;&#39;eyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogImxxeiIsICJhZG1pbiI6IHRydWV9&#39;</span><br><span class="line">str_url &#x3D; base64.b64decode(base64_str).decode(&quot;utf-8&quot;)</span><br><span class="line">print(str_url)</span><br></pre></td></tr></table></figure>
+
+<h2 id="二-drf-jwt安装和简单使用"><a href="#二-drf-jwt安装和简单使用" class="headerlink" title="二 drf-jwt安装和简单使用"></a>二 drf-jwt安装和简单使用</h2><h5 id="2-1-官网"><a href="#2-1-官网" class="headerlink" title="2.1 官网"></a>2.1 官网</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;getblimp.github.io&#x2F;django-rest-framework-jwt&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-安装"><a href="#2-2-安装" class="headerlink" title="2.2 安装"></a>2.2 安装</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install djangorestframework-jwt</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-使用："><a href="#2-3-使用：" class="headerlink" title="2.3 使用："></a>2.3 使用：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 1 创建超级用户</span><br><span class="line">python3 manage.py createsuperuser</span><br><span class="line"># 2 配置路由urls.py</span><br><span class="line">from django.urls import path</span><br><span class="line">from rest_framework_jwt.views import obtain_jwt_token</span><br><span class="line">urlpatterns &#x3D; [</span><br><span class="line">    path(&#39;login&#x2F;&#39;, obtain_jwt_token),</span><br><span class="line">]</span><br><span class="line"># 3 postman测试</span><br><span class="line">向后端接口发送post请求，携带用户名密码，即可看到生成的token</span><br><span class="line"></span><br><span class="line"># 4 setting.py中配置认证使用jwt提供的jsonwebtoken</span><br><span class="line"># 5 postman发送访问请求（必须带jwt空格）</span><br></pre></td></tr></table></figure>
+
+<h2 id="三-实战之使用Django-auth的User表自动签发"><a href="#三-实战之使用Django-auth的User表自动签发" class="headerlink" title="三 实战之使用Django auth的User表自动签发"></a>三 实战之使用Django auth的User表自动签发</h2><h3 id="3-1-配置setting-py"><a href="#3-1-配置setting-py" class="headerlink" title="3.1 配置setting.py"></a>3.1 配置setting.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import datetime</span><br><span class="line">JWT_AUTH &#x3D; &#123;</span><br><span class="line">    # 过期时间1天</span><br><span class="line">    &#39;JWT_EXPIRATION_DELTA&#39;: datetime.timedelta(days&#x3D;1),</span><br><span class="line">    # 自定义认证结果：见下方序列化user和自定义response</span><br><span class="line">      # 如果不自定义，返回的格式是固定的，只有token字段</span><br><span class="line">    &#39;JWT_RESPONSE_PAYLOAD_HANDLER&#39;: &#39;users.utils.jwt_response_payload_handler&#39;,  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-编写序列化类ser-py"><a href="#3-2-编写序列化类ser-py" class="headerlink" title="3.2 编写序列化类ser.py"></a>3.2 编写序列化类ser.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from rest_framework import serializers</span><br><span class="line">from users import models</span><br><span class="line">class UserModelSerializers(serializers.ModelSerializer):</span><br><span class="line">    class Meta:</span><br><span class="line">        model &#x3D; models.UserInfo</span><br><span class="line">        fields &#x3D; [&#39;username&#39;]</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-自定义认证返回结果（setting中配置的）"><a href="#3-3-自定义认证返回结果（setting中配置的）" class="headerlink" title="3.3 自定义认证返回结果（setting中配置的）"></a>3.3 自定义认证返回结果（setting中配置的）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#utils.py</span><br><span class="line">from users.ser import UserModelSerializers</span><br><span class="line">def jwt_response_payload_handler(token, user&#x3D;None, request&#x3D;None):</span><br><span class="line">    return &#123;</span><br><span class="line">        &#39;status&#39;: 0,</span><br><span class="line">        &#39;msg&#39;: &#39;ok&#39;,</span><br><span class="line">        &#39;data&#39;: &#123;</span><br><span class="line">            &#39;token&#39;: token,</span><br><span class="line">            &#39;user&#39;: UserModelSerializers(user).data</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-基于drf-jwt的全局认证："><a href="#3-4-基于drf-jwt的全局认证：" class="headerlink" title="3.4 基于drf-jwt的全局认证："></a>3.4 基于drf-jwt的全局认证：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#app_auth.py(自己创建)</span><br><span class="line">from rest_framework.exceptions import AuthenticationFailed</span><br><span class="line">from rest_framework_jwt.authentication import jwt_decode_handler</span><br><span class="line">from rest_framework_jwt.authentication import get_authorization_header,jwt_get_username_from_payload</span><br><span class="line">from rest_framework_jwt.authentication import BaseJSONWebTokenAuthentication</span><br><span class="line"></span><br><span class="line">class JSONWebTokenAuthentication(BaseJSONWebTokenAuthentication):</span><br><span class="line">    def authenticate(self, request):</span><br><span class="line">        jwt_value &#x3D; get_authorization_header(request)</span><br><span class="line"></span><br><span class="line">        if not jwt_value:</span><br><span class="line">            raise AuthenticationFailed(&#39;Authorization 字段是必须的&#39;)</span><br><span class="line">        try:</span><br><span class="line">            payload &#x3D; jwt_decode_handler(jwt_value)</span><br><span class="line">        except jwt.ExpiredSignature:</span><br><span class="line">            raise AuthenticationFailed(&#39;签名过期&#39;)</span><br><span class="line">        except jwt.InvalidTokenError:</span><br><span class="line">            raise AuthenticationFailed(&#39;非法用户&#39;)</span><br><span class="line">        user &#x3D; self.authenticate_credentials(payload)</span><br><span class="line"></span><br><span class="line">        return user, jwt_value</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-全局使用"><a href="#3-5-全局使用" class="headerlink" title="3.5 全局使用"></a>3.5 全局使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># setting.py</span><br><span class="line">REST_FRAMEWORK &#x3D; &#123;</span><br><span class="line">    # 认证模块</span><br><span class="line">    &#39;DEFAULT_AUTHENTICATION_CLASSES&#39;: (</span><br><span class="line">        &#39;users.app_auth.JSONWebTokenAuthentication&#39;,</span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-局部启用禁用"><a href="#3-6-局部启用禁用" class="headerlink" title="3.6 局部启用禁用"></a>3.6 局部启用禁用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 局部禁用</span><br><span class="line">authentication_classes &#x3D; []</span><br><span class="line"># 局部启用</span><br><span class="line">from user.authentications import JSONWebTokenAuthentication</span><br><span class="line">authentication_classes &#x3D; [JSONWebTokenAuthentication]</span><br><span class="line"># 实际代码如下view.py</span><br><span class="line"># 自定义Response</span><br><span class="line">class CommonResponse(Response):</span><br><span class="line">    def __init__(self,status,msg,data&#x3D;&#39;&#39;,*args,**kwargs):</span><br><span class="line">        dic&#x3D;&#123;&#39;status&#39;:status,&#39;msg&#39;:msg,&#39;data&#39;:data&#125;</span><br><span class="line">        super().__init__(data&#x3D;dic,*args,**kwargs)</span><br><span class="line"># 测试订单接口</span><br><span class="line">from users.app_auth import JSONWebTokenAuthentication</span><br><span class="line">class OrderView(APIView):</span><br><span class="line">    # authentication_classes &#x3D; [JSONWebTokenAuthentication]</span><br><span class="line">    authentication_classes &#x3D; []</span><br><span class="line">    def get(self,request):</span><br><span class="line">        return CommonResponse(&#39;100&#39;, &#39;成功&#39;,&#123;&#39;数据&#39;:&#39;测试&#39;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-多方式登录："><a href="#3-7-多方式登录：" class="headerlink" title="3.7 多方式登录："></a>3.7 多方式登录：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">## views.py</span><br><span class="line"># 重点：自定义login，完成多方式登录</span><br><span class="line">from rest_framework.viewsets import ViewSet</span><br><span class="line">from rest_framework.response import Response</span><br><span class="line">class LoginViewSet(ViewSet):</span><br><span class="line">    # 需要和mixins结合使用，继承GenericViewSet，不需要则继承ViewSet</span><br><span class="line">    # 为什么继承视图集，不去继承工具视图或视图基类，因为视图集可以自定义路由映射：</span><br><span class="line">    #       可以做到get映射get，get映射list，还可以做到自定义（灵活）</span><br><span class="line">    def login(self, request, *args, **kwargs):</span><br><span class="line">        serializer &#x3D; serializers.LoginSerializer(data&#x3D;request.data, context&#x3D;&#123;&#39;request&#39;: request&#125;)</span><br><span class="line">        serializer.is_valid(raise_exception&#x3D;True)</span><br><span class="line">        token &#x3D; serializer.context.get(&#39;token&#39;)</span><br><span class="line">        return Response(&#123;&quot;token&quot;: token&#125;)</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">## ser.py</span><br><span class="line"># 重点：自定义login，完成多方式登录</span><br><span class="line">class LoginSerializer(serializers.ModelSerializer):</span><br><span class="line">    # 登录请求，走的是post方法，默认post方法完成的是create入库校验，所以唯一约束的字段，会进行数据库唯一校验，导致逻辑相悖</span><br><span class="line">    # 需要覆盖系统字段，自定义校验规则，就可以避免完成多余的不必要校验，如唯一字段校验</span><br><span class="line">    username &#x3D; serializers.CharField()</span><br><span class="line">    class Meta:</span><br><span class="line">        model &#x3D; models.User</span><br><span class="line">        # 结合前台登录布局：采用账号密码登录，或手机密码登录，布局一致，所以不管账号还是手机号，都用username字段提交的</span><br><span class="line">        fields &#x3D; (&#39;username&#39;, &#39;password&#39;)</span><br><span class="line"></span><br><span class="line">    def validate(self, attrs):</span><br><span class="line">        # 在全局钩子中，才能提供提供的所需数据，整体校验得到user</span><br><span class="line">        # 再就可以调用签发token算法，将user信息转换为token</span><br><span class="line">        # 将token存放到context属性中，传给外键视图类使用</span><br><span class="line">        user &#x3D; self._get_user(attrs)</span><br><span class="line">        payload &#x3D; jwt_payload_handler(user)</span><br><span class="line">        token &#x3D; jwt_encode_handler(payload)</span><br><span class="line">        self.context[&#39;token&#39;] &#x3D; token</span><br><span class="line">        return attrs</span><br><span class="line"></span><br><span class="line">    # 多方式登录</span><br><span class="line">    def _get_user(self, attrs):</span><br><span class="line">        username &#x3D; attrs.get(&#39;username&#39;)</span><br><span class="line">        password &#x3D; attrs.get(&#39;password&#39;)</span><br><span class="line">        import re</span><br><span class="line">        if re.match(r&#39;^1[3-9][0-9]&#123;9&#125;$&#39;, username):</span><br><span class="line">            # 手机登录</span><br><span class="line">            user &#x3D; models.User.objects.filter(mobile&#x3D;username, is_active&#x3D;True).first()</span><br><span class="line">        elif re.match(r&#39;^.+@.+$&#39;, username):</span><br><span class="line">            # 邮箱登录</span><br><span class="line">            user &#x3D; models.User.objects.filter(email&#x3D;username, is_active&#x3D;True).first()</span><br><span class="line">        else:</span><br><span class="line">            # 账号登录</span><br><span class="line">            user &#x3D; models.User.objects.filter(username&#x3D;username, is_active&#x3D;True).first()</span><br><span class="line">        if user and user.check_password(password):</span><br><span class="line">            return user</span><br><span class="line"></span><br><span class="line">        raise ValidationError(&#123;&#39;user&#39;: &#39;user error&#39;&#125;)</span><br><span class="line"># utils.py</span><br><span class="line">import re</span><br><span class="line">from .models import User</span><br><span class="line">from django.contrib.auth.backends import ModelBackend</span><br><span class="line">class JWTModelBackend(ModelBackend):</span><br><span class="line">    def authenticate(self, request, username&#x3D;None, password&#x3D;None, **kwargs):</span><br><span class="line">        try:</span><br><span class="line">            if re.match(r&#39;^1[3-9]\d&#123;9&#125;$&#39;, username):</span><br><span class="line">                user &#x3D; User.objects.get(mobile&#x3D;username)</span><br><span class="line">            else:</span><br><span class="line">                user &#x3D; User.objects.get(username&#x3D;username)</span><br><span class="line">        except User.DoesNotExist:</span><br><span class="line">            return None</span><br><span class="line">        if user.check_password(password) and self.user_can_authenticate(user):</span><br><span class="line">            return user</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-8-配置多方式登录"><a href="#3-8-配置多方式登录" class="headerlink" title="3.8 配置多方式登录"></a>3.8 配置多方式登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">settings.py</span><br><span class="line">AUTHENTICATION_BACKENDS &#x3D; [&#39;user.utils.JWTModelBackend&#39;]</span><br></pre></td></tr></table></figure>
+
+<h2 id="四-实战之自定义User表，手动签发"><a href="#四-实战之自定义User表，手动签发" class="headerlink" title="四 实战之自定义User表，手动签发"></a>四 实战之自定义User表，手动签发</h2><h3 id="4-1-手动签发JWT："><a href="#4-1-手动签发JWT：" class="headerlink" title="4.1 手动签发JWT："></a>4.1 手动签发JWT：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 可以拥有原生登录基于Model类user对象签发JWT</span><br><span class="line">from rest_framework_jwt.settings import api_settings</span><br><span class="line">jwt_payload_handler &#x3D; api_settings.JWT_PAYLOAD_HANDLER</span><br><span class="line">jwt_encode_handler &#x3D; api_settings.JWT_ENCODE_HANDLER</span><br><span class="line"></span><br><span class="line">payload &#x3D; jwt_payload_handler(user)</span><br><span class="line">token &#x3D; jwt_encode_handler(payload)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-编写登陆视图类"><a href="#4-2-编写登陆视图类" class="headerlink" title="4.2 编写登陆视图类"></a>4.2 编写登陆视图类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># views.py</span><br><span class="line">from rest_framework_jwt.settings import api_settings</span><br><span class="line">jwt_payload_handler &#x3D; api_settings.JWT_PAYLOAD_HANDLER</span><br><span class="line">jwt_encode_handler &#x3D; api_settings.JWT_ENCODE_HANDLER</span><br><span class="line">from users.models import User</span><br><span class="line">class LoginView(APIView):</span><br><span class="line">    authentication_classes &#x3D; []</span><br><span class="line">    def post(self,request):</span><br><span class="line">        username&#x3D;request.data.get(&#39;username&#39;)</span><br><span class="line">        password&#x3D;request.data.get(&#39;password&#39;)</span><br><span class="line">        user&#x3D;User.objects.filter(username&#x3D;username,password&#x3D;password).first()</span><br><span class="line">        if user: # 能查到，登陆成功，手动签发</span><br><span class="line">            payload &#x3D; jwt_payload_handler(user)</span><br><span class="line">            token &#x3D; jwt_encode_handler(payload)</span><br><span class="line">            return CommonResponse(&#39;100&#39;,&#39;登陆成功&#39;,data&#x3D;&#123;&#39;token&#39;:token&#125;)</span><br><span class="line">        else:</span><br><span class="line">            return CommonResponse(&#39;101&#39;, &#39;登陆失败&#39;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-编写认证组件"><a href="#4-3-编写认证组件" class="headerlink" title="4.3 编写认证组件"></a>4.3 编写认证组件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># app_auth.py</span><br><span class="line">from users.models import User</span><br><span class="line">class MyJSONWebTokenAuthentication(BaseAuthentication):</span><br><span class="line">    def authenticate(self, request):</span><br><span class="line">        jwt_value &#x3D; get_authorization_header(request)</span><br><span class="line"></span><br><span class="line">        if not jwt_value:</span><br><span class="line">            raise AuthenticationFailed(&#39;Authorization 字段是必须的&#39;)</span><br><span class="line">        try:</span><br><span class="line">            payload &#x3D; jwt_decode_handler(jwt_value)</span><br><span class="line">        except jwt.ExpiredSignature:</span><br><span class="line">            raise AuthenticationFailed(&#39;签名过期&#39;)</span><br><span class="line">        except jwt.InvalidTokenError:</span><br><span class="line">            raise AuthenticationFailed(&#39;非法用户&#39;)</span><br><span class="line">        username &#x3D; jwt_get_username_from_payload(payload)</span><br><span class="line">        print(username)</span><br><span class="line">        user &#x3D; User.objects.filter(username&#x3D;username).first()</span><br><span class="line">        print(user)</span><br><span class="line"></span><br><span class="line">        return user, jwt_value</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-登陆获取token"><a href="#4-4-登陆获取token" class="headerlink" title="4.4 登陆获取token"></a>4.4 登陆获取token</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggjrfa03aaj312z0u0afg.jpg" alt="image-20200708185227693"></p>
+<h3 id="4-5-编写测试接口"><a href="#4-5-编写测试接口" class="headerlink" title="4.5 编写测试接口"></a>4.5 编写测试接口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from users.app_auth import JSONWebTokenAuthentication,MyJSONWebTokenAuthentication</span><br><span class="line">class OrderView(APIView):</span><br><span class="line">    # authentication_classes &#x3D; [JSONWebTokenAuthentication]</span><br><span class="line">    authentication_classes &#x3D; [MyJSONWebTokenAuthentication]</span><br><span class="line">    def get(self,request):</span><br><span class="line">        print(request.user)</span><br><span class="line">        return CommonResponse(&#39;100&#39;, &#39;成功&#39;,&#123;&#39;数据&#39;:&#39;测试&#39;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-6-测试"><a href="#4-6-测试" class="headerlink" title="4.6 测试"></a>4.6 测试</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggjrg9ots0j31d60rcjv6.jpg" alt="image-20200708185327976"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fas fa-cookie-bite"></i> python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/05/DRF-08-%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/" rel="prev" title="DRF-08-自动生成接口文档">
+      <i class="fa fa-chevron-left"></i> DRF-08-自动生成接口文档
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-JWT%E8%AE%A4%E8%AF%81"><span class="nav-number">1.</span> <span class="nav-text">一 JWT认证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%9E%84%E6%88%90%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 构成和工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JWT%E7%9A%84%E6%9E%84%E6%88%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">JWT的构成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-header"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.1 header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-payload"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.1.2 payload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-3-signature"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.1.3 signature</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%9C%AC%E8%B4%A8%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 本质原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jwt%E8%AE%A4%E8%AF%81%E7%AE%97%E6%B3%95%EF%BC%9A%E7%AD%BE%E5%8F%91%E4%B8%8E%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.3.</span> <span class="nav-text">jwt认证算法：签发与校验</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AD%BE%E5%8F%91%EF%BC%9A%E6%A0%B9%E6%8D%AE%E7%99%BB%E5%BD%95%E8%AF%B7%E6%B1%82%E6%8F%90%E4%BA%A4%E6%9D%A5%E7%9A%84-%E8%B4%A6%E5%8F%B7-%E5%AF%86%E7%A0%81-%E8%AE%BE%E5%A4%87%E4%BF%A1%E6%81%AF-%E7%AD%BE%E5%8F%91-token"><span class="nav-number">1.3.0.0.1.</span> <span class="nav-text">签发：根据登录请求提交来的 账号 + 密码 + 设备信息 签发 token</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%A1%E9%AA%8C%EF%BC%9A%E6%A0%B9%E6%8D%AE%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%B8%A6token%E7%9A%84%E8%AF%B7%E6%B1%82-%E5%8F%8D%E8%A7%A3%E5%87%BA-user-%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.3.0.0.2.</span> <span class="nav-text">校验：根据客户端带token的请求 反解出 user 对象</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#drf%E9%A1%B9%E7%9B%AE%E7%9A%84jwt%E8%AE%A4%E8%AF%81%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">drf项目的jwt认证开发流程（重点）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E8%A1%A5%E5%85%85base64%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.2.1 补充base64编码解码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-drf-jwt%E5%AE%89%E8%A3%85%E5%92%8C%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">二 drf-jwt安装和简单使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-%E5%AE%98%E7%BD%91"><span class="nav-number">1.5.0.0.1.</span> <span class="nav-text">2.1 官网</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-%E5%AE%89%E8%A3%85"><span class="nav-number">1.5.0.0.2.</span> <span class="nav-text">2.2 安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-%E4%BD%BF%E7%94%A8%EF%BC%9A"><span class="nav-number">1.5.0.0.3.</span> <span class="nav-text">2.3 使用：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E5%AE%9E%E6%88%98%E4%B9%8B%E4%BD%BF%E7%94%A8Django-auth%E7%9A%84User%E8%A1%A8%E8%87%AA%E5%8A%A8%E7%AD%BE%E5%8F%91"><span class="nav-number">1.6.</span> <span class="nav-text">三 实战之使用Django auth的User表自动签发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E9%85%8D%E7%BD%AEsetting-py"><span class="nav-number">1.6.1.</span> <span class="nav-text">3.1 配置setting.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E7%BC%96%E5%86%99%E5%BA%8F%E5%88%97%E5%8C%96%E7%B1%BBser-py"><span class="nav-number">1.6.2.</span> <span class="nav-text">3.2 编写序列化类ser.py</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%A4%E8%AF%81%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C%EF%BC%88setting%E4%B8%AD%E9%85%8D%E7%BD%AE%E7%9A%84%EF%BC%89"><span class="nav-number">1.6.2.0.1.</span> <span class="nav-text">3.3 自定义认证返回结果（setting中配置的）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E5%9F%BA%E4%BA%8Edrf-jwt%E7%9A%84%E5%85%A8%E5%B1%80%E8%AE%A4%E8%AF%81%EF%BC%9A"><span class="nav-number">1.6.3.</span> <span class="nav-text">3.4 基于drf-jwt的全局认证：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8"><span class="nav-number">1.6.4.</span> <span class="nav-text">3.5 全局使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-%E5%B1%80%E9%83%A8%E5%90%AF%E7%94%A8%E7%A6%81%E7%94%A8"><span class="nav-number">1.6.5.</span> <span class="nav-text">3.6 局部启用禁用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-%E5%A4%9A%E6%96%B9%E5%BC%8F%E7%99%BB%E5%BD%95%EF%BC%9A"><span class="nav-number">1.6.6.</span> <span class="nav-text">3.7 多方式登录：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%96%B9%E5%BC%8F%E7%99%BB%E5%BD%95"><span class="nav-number">1.6.7.</span> <span class="nav-text">3.8 配置多方式登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E5%AE%9E%E6%88%98%E4%B9%8B%E8%87%AA%E5%AE%9A%E4%B9%89User%E8%A1%A8%EF%BC%8C%E6%89%8B%E5%8A%A8%E7%AD%BE%E5%8F%91"><span class="nav-number">1.7.</span> <span class="nav-text">四 实战之自定义User表，手动签发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E6%89%8B%E5%8A%A8%E7%AD%BE%E5%8F%91JWT%EF%BC%9A"><span class="nav-number">1.7.1.</span> <span class="nav-text">4.1 手动签发JWT：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E7%BC%96%E5%86%99%E7%99%BB%E9%99%86%E8%A7%86%E5%9B%BE%E7%B1%BB"><span class="nav-number">1.7.2.</span> <span class="nav-text">4.2 编写登陆视图类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E7%BC%96%E5%86%99%E8%AE%A4%E8%AF%81%E7%BB%84%E4%BB%B6"><span class="nav-number">1.7.3.</span> <span class="nav-text">4.3 编写认证组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E7%99%BB%E9%99%86%E8%8E%B7%E5%8F%96token"><span class="nav-number">1.7.4.</span> <span class="nav-text">4.4 登陆获取token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E7%BC%96%E5%86%99%E6%B5%8B%E8%AF%95%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.7.5.</span> <span class="nav-text">4.5 编写测试接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E6%B5%8B%E8%AF%95"><span class="nav-number">1.7.6.</span> <span class="nav-text">4.6 测试</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.4m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">38:03</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
