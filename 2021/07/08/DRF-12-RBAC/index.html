@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggqmxia622j317j08gmy2.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggqmxvp38zj319t0jlgnb.jpg">
 <meta property="article:published_time" content="2021-07-08T00:49:55.000Z">
-<meta property="article:modified_time" content="2021-07-08T00:50:48.476Z">
+<meta property="article:modified_time" content="2021-07-08T02:15:38.576Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -218,7 +218,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-07-08 08:49:55 / 修改时间：08:50:48" itemprop="dateCreated datePublished" datetime="2021-07-08T08:49:55+08:00">2021-07-08</time>
+              <time title="创建时间：2021-07-08 08:49:55 / 修改时间：10:15:38" itemprop="dateCreated datePublished" datetime="2021-07-08T08:49:55+08:00">2021-07-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,7 +236,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -268,6 +268,12 @@
 
 <h2 id="二-Django的内置RBAC-六表"><a href="#二-Django的内置RBAC-六表" class="headerlink" title="二 Django的内置RBAC(六表)"></a>二 Django的内置RBAC(六表)</h2><h3 id="权限三表"><a href="#权限三表" class="headerlink" title="权限三表"></a>权限三表</h3><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggqmxia622j317j08gmy2.jpg" alt="权限三表"></p>
 <h3 id="权限六表"><a href="#权限六表" class="headerlink" title="权限六表"></a>权限六表</h3><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggqmxvp38zj319t0jlgnb.jpg" alt="权限六表"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">user表    permission表    group表</span><br><span class="line">user_groups表  是  user  和  group  中间表</span><br><span class="line">group_permissions表 是  group 和 permission中间表</span><br><span class="line">user_user_permission 是 user 和 permission中间表  （用户扩展权限）</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 <h2 id="三-实操"><a href="#三-实操" class="headerlink" title="三 实操"></a>三 实操</h2><h3 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line">from django.contrib.auth.models import AbstractUser</span><br><span class="line">class User(AbstractUser):</span><br><span class="line">    mobile &#x3D; models.CharField(max_length&#x3D;11, unique&#x3D;True)</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        return self.username</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Book(models.Model):</span><br><span class="line">    name &#x3D; models.CharField(max_length&#x3D;64)</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        return self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Car(models.Model):</span><br><span class="line">    name &#x3D; models.CharField(max_length&#x3D;64)</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        return self.name</span><br></pre></td></tr></table></figure>
 
 <h3 id="admin-py"><a href="#admin-py" class="headerlink" title="admin.py"></a>admin.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">from . import models</span><br><span class="line"></span><br><span class="line">from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin</span><br><span class="line"></span><br><span class="line"># 自定义User表后，admin界面管理User类</span><br><span class="line">class UserAdmin(DjangoUserAdmin):</span><br><span class="line">    # 添加用户课操作字段</span><br><span class="line">    add_fieldsets &#x3D; (</span><br><span class="line">        (None, &#123;</span><br><span class="line">            &#39;classes&#39;: (&#39;wide&#39;,),</span><br><span class="line">            &#39;fields&#39;: (&#39;username&#39;, &#39;password1&#39;, &#39;password2&#39;, &#39;is_staff&#39;, &#39;mobile&#39;, &#39;groups&#39;, &#39;user_permissions&#39;),</span><br><span class="line">        &#125;),</span><br><span class="line">    )</span><br><span class="line">    # 展示用户呈现的字段</span><br><span class="line">    list_display &#x3D; (&#39;username&#39;, &#39;mobile&#39;, &#39;is_staff&#39;, &#39;is_active&#39;, &#39;is_superuser&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">admin.site.register(models.User, UserAdmin)</span><br><span class="line">admin.site.register(models.Book)</span><br><span class="line">admin.site.register(models.Car)</span><br></pre></td></tr></table></figure>
@@ -434,7 +440,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">38:17</span>
+    <span title="站点阅读时长">38:29</span>
 </div>
 
 <!--
