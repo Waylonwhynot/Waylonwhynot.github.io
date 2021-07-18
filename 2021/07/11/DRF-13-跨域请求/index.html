@@ -28,7 +28,7 @@
 <meta property="og:description" content="跨域">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-11T05:11:31.000Z">
-<meta property="article:modified_time" content="2021-07-18T12:18:20.652Z">
+<meta property="article:modified_time" content="2021-07-18T13:50:36.000Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-18 20:18:20" itemprop="dateModified" datetime="2021-07-18T20:18:20+08:00">2021-07-18</time>
+                <time title="修改时间：2021-07-18 21:50:36" itemprop="dateModified" datetime="2021-07-18T21:50:36+08:00">2021-07-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5k</span>
+              <span>5.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
+              <span>9 分钟</span>
             </span>
 
         </div>
@@ -261,7 +261,7 @@
         <p>跨域</p>
 <a id="more"></a>
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">同源策略: 浏览器的安全策略。不允许不同域(ip+端口+协议)   </span><br><span class="line">  APP不存在跨域，前后端分离存在跨域</span><br><span class="line">同源策略: 请求的url地址，必须与浏览器上的url地址处于同域上, 也就是域名,端口,协议相同。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">跨域资源共享，CORS,本质就是在响应头部加入允许,允许某些域,允许某些头</span><br><span class="line">本质允许不同的域来我的服务器拿数据: </span><br><span class="line">  <span class="number">1.</span> 后端解决: 响应头上加允许(CORS: 跨域资源共享)</span><br><span class="line">  <span class="number">2.</span> 前端解决: 前端自己代理</span><br><span class="line">  <span class="number">3.</span> Nginx上解决</span><br><span class="line">location / &#123;  </span><br><span class="line">    add_header Access-Control-Allow-Origin *;</span><br><span class="line">    add_header Access-Control-Allow-Methods <span class="string">&#x27;GET, POST, OPTIONS&#x27;</span>;</span><br><span class="line">    add_header Access-Control-Allow-Headers <span class="string">&#x27;DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ($request_method = <span class="string">&#x27;OPTIONS&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">204</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># csrf: 跨站请求伪造(唯一字符串)   cors: 跨域资源共享   xss: 跨站脚本攻击</span></span><br><span class="line"><span class="comment">## 解决方式    </span></span><br><span class="line">csrf解决方式: csrf --&gt; django对提交数据的请求会要求携带一个随机字符串。</span><br><span class="line"></span><br><span class="line">xss解决方式: 后端在渲染的时候模板语言 将标签替换成特殊字符例如 &lt; 替换为 &amp;lt。</span><br><span class="line">    前端不转义: </span><br><span class="line">      value=<span class="string">&quot;&lt;a href=&quot;</span><span class="string">&quot;&gt;点击&lt;/a&gt;&quot;</span></span><br><span class="line">      &#123;&#123; value|safe&#125;&#125;</span><br><span class="line">      &lt;p&gt;&#123;&#123; label &#125;&#125;&lt;/p&gt;  &lt;!--为了安全系统会把标签变成字符串--&gt;</span><br><span class="line">      &lt;p&gt;&#123;&#123; label|safe &#125;&#125;&lt;/p&gt;    &lt;!--加上safe，确定你的数据是安全的才能被当成是标签--&gt;</span><br><span class="line">    后端不转义:</span><br><span class="line">      mark_safe 通过html特殊字符的替换</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">同源策略: 浏览器的安全策略。不允许不同域(ip+端口+协议)   </span><br><span class="line">  APP不存在跨域，前后端分离存在跨域</span><br><span class="line">同源策略: 请求的url地址，必须与浏览器上的url地址处于同域上, 也就是域名,端口,协议相同。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">跨域资源共享，CORS,本质就是在响应头部加入允许,允许某些域,允许某些头</span><br><span class="line">本质允许不同的域来我的服务器拿数据: </span><br><span class="line">  <span class="number">1.</span> 后端解决: 响应头上加允许(CORS: 跨域资源共享)  (<span class="number">1</span>)可以在中间件写 (<span class="number">2</span>)也可以用django-cors-headers模块</span><br><span class="line">  <span class="number">2.</span> 前端解决: 前端自己代理（假装自己是访问者，直接访问后端接口）</span><br><span class="line">  <span class="number">3.</span> Nginx上解决</span><br><span class="line">(<span class="number">1</span>)相同域名的项目，就用Nginx代理，不用配置跨域（原因是你访问前端页面是<span class="number">80</span>，访问后端接口也是<span class="number">80</span>代理的后端，浏览器认为是同源）</span><br><span class="line">访问<span class="number">192.168</span><span class="number">.1</span><span class="number">.100</span>/api路径转发到<span class="number">192.168</span><span class="number">.1</span><span class="number">.100</span>:<span class="number">8080</span>/api</span><br><span class="line">(<span class="number">2</span>) 不同域名的项目</span><br><span class="line">location / &#123;  </span><br><span class="line">    add_header Access-Control-Allow-Origin *;</span><br><span class="line">    add_header Access-Control-Allow-Methods <span class="string">&#x27;GET, POST, OPTIONS&#x27;</span>;</span><br><span class="line">    add_header Access-Control-Allow-Headers <span class="string">&#x27;DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ($request_method = <span class="string">&#x27;OPTIONS&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">204</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">###前端解决，一般不用</span></span><br><span class="line"><span class="comment"># 原理: </span></span><br><span class="line">在本地运行 npm run dev 等命令时实际上是用 node 运行了一个服务器，因此 proxyTable 实际上是将请求发给自己的服务器，再由服务器转发给后台服务器，做了一层代理。</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> vue.config.js中module.exports = &#123;</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    proxy: &#123;</span><br><span class="line">      <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">        target: <span class="string">&#x27;http://127.0.0.1:8000&#x27;</span>,</span><br><span class="line">        changeOrigin: true</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="number">2</span> 使用axios发送请求</span><br><span class="line">      mounted() &#123;</span><br><span class="line">            axios.get(&#x27;api/index/&#x27;).then(res =&gt; &#123;</span><br><span class="line">                console.log(res.data)</span><br><span class="line">                this.data_list = res.data.data.films</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># csrf: 跨站请求伪造(唯一字符串)   cors: 跨域资源共享   xss: 跨站脚本攻击</span></span><br><span class="line"><span class="comment">## 解决方式    </span></span><br><span class="line">csrf解决方式: csrf --&gt; django对提交数据的请求会要求携带一个随机字符串。</span><br><span class="line"></span><br><span class="line">xss解决方式: 后端在渲染的时候模板语言 将标签替换成特殊字符例如 &lt; 替换为 &amp;lt。</span><br><span class="line">    前端不转义: </span><br><span class="line">      value=<span class="string">&quot;&lt;a href=&quot;</span><span class="string">&quot;&gt;点击&lt;/a&gt;&quot;</span></span><br><span class="line">      &#123;&#123; value|safe&#125;&#125;</span><br><span class="line">      &lt;p&gt;&#123;&#123; label &#125;&#125;&lt;/p&gt;  &lt;!--为了安全系统会把标签变成字符串--&gt;</span><br><span class="line">      &lt;p&gt;&#123;&#123; label|safe &#125;&#125;&lt;/p&gt;    &lt;!--加上safe，确定你的数据是安全的才能被当成是标签--&gt;</span><br><span class="line">    后端不转义:</span><br><span class="line">      mark_safe 通过html特殊字符的替换</span><br></pre></td></tr></table></figure>
 
 <p>可以直接写在中间件:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyMiddle</span>(<span class="params">MiddlewareMixin</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_response</span>(<span class="params">self, request, response</span>):</span></span><br><span class="line">        response[<span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>] = <span class="string">&#x27;*&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> request.method == <span class="string">&#x27;OPTIONS&#x27;</span>:</span><br><span class="line">            <span class="comment"># 可以加</span></span><br><span class="line">            response[<span class="string">&quot;Access-Control-Allow-Headers&quot;</span>] = <span class="string">&quot;Content-Type&quot;</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
@@ -411,20 +411,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-count">112</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -473,7 +473,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">38:52</span>
+    <span title="站点阅读时长">38:53</span>
 </div>
 
 <!--
