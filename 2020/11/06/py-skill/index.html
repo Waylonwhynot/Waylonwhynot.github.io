@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154016681.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154039451.png">
 <meta property="article:published_time" content="2020-11-05T22:45:35.000Z">
-<meta property="article:modified_time" content="2021-07-08T03:26:48.349Z">
+<meta property="article:modified_time" content="2021-07-18T20:43:12.042Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-08 11:26:48" itemprop="dateModified" datetime="2021-07-08T11:26:48+08:00">2021-07-08</time>
+                <time title="修改时间：2021-07-19 04:43:12" itemprop="dateModified" datetime="2021-07-19T04:43:12+08:00">2021-07-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,14 +244,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>28k</span>
+              <span>30k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>47 分钟</span>
+              <span>50 分钟</span>
             </span>
 
         </div>
@@ -689,16 +689,6 @@
 <p>annotate总结</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、values()在annotate()前表示group by的字段，在后表示取值</span><br><span class="line">2、filter()在annotate()前表示where条件，在后表示having</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
-
-
 <ol start="43">
 <li>queryset 和 querydict区别</li>
 </ol>
@@ -730,19 +720,10 @@
 <p>48.pyqt做图形化界面</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python建议做GUI， python在qt平台做图形化界面，GUI编程</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 前后端混合的管理后台搭建</span><br><span class="line">http://x.xuebingsi.com/   X-admin</span><br><span class="line"><span class="number">2.</span> SimpleUI</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> 监控大屏</span><br><span class="line">https://gitee.com/kevin_chou/dataVIS?_from=gitee_search</span><br></pre></td></tr></table></figure>
+
+<p>49.models创建技巧</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseModel</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    is_delete = models.BooleanField(default=<span class="literal">False</span>)</span><br><span class="line">    <span class="comment"># 只要这条记录创建的时候，不需要手动插入时间，自动把当前时间插入</span></span><br><span class="line">    create_time = models.DateTimeField(auto_now_add=<span class="literal">True</span>)</span><br><span class="line">    update_time = models.DateTimeField(auto_now=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        abstract = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    id = models.AutoField(primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    price = models.DecimalField(max_digits=<span class="number">5</span>, decimal_places=<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 一对多的关系一旦确立，关联字段写在多的一方</span></span><br><span class="line">    <span class="comment"># to_field 默认不写，关联到Publish主键</span></span><br><span class="line">    <span class="comment"># db_constraint=False 逻辑上的关联，实质上没有外键联系，增删不会受外键影响，但是orm查询不受影响</span></span><br><span class="line">    publish = models.ForeignKey(to=<span class="string">&#x27;Publish&#x27;</span>, on_delete=models.DO_NOTHING, db_constraint=<span class="literal">False</span>)</span><br><span class="line">    <span class="comment"># 多对多, 写在查询 多的一方</span></span><br><span class="line">    authors = models.ManyToManyField(to=<span class="string">&#x27;Author&#x27;</span>, db_constraint=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        verbose_name_plural = <span class="string">&#x27;书籍&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">publish_name</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.publish.name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">author_list</span>(<span class="params">self</span>):</span></span><br><span class="line">        author_list = self.authors.all()</span><br><span class="line">        ll = []</span><br><span class="line">        <span class="keyword">for</span> author <span class="keyword">in</span> author_list:</span><br><span class="line">            ll.append(&#123;<span class="string">&#x27;name&#x27;</span>: author.name, <span class="string">&#x27;sex&#x27;</span>: author.get_sex_display()&#125;)</span><br><span class="line">        <span class="keyword">return</span> ll</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Publish</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    addr = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        verbose_name_plural = <span class="string">&#x27;出版社&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Author</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    sex = models.IntegerField(choices=((<span class="number">1</span>, <span class="string">&#x27;男&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;女&#x27;</span>)))</span><br><span class="line">    <span class="comment"># 一对一, 写在查询频率高的一方</span></span><br><span class="line">    <span class="comment"># OneToOneField 本质就是ForeignKey + Unique</span></span><br><span class="line">    authordetail = models.OneToOneField(to=<span class="string">&#x27;AuthorDetail&#x27;</span>, on_delete=models.CASCADE, db_constraint=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        verbose_name_plural = <span class="string">&#x27;作者&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthorDetail</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    phone = models.CharField(max_length=<span class="number">11</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        verbose_name_plural = <span class="string">&#x27;作者详情&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.phone</span><br></pre></td></tr></table></figure>
 
 
 
@@ -847,7 +828,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-count">113</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -909,7 +890,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">38:53</span>
+    <span title="站点阅读时长">39:06</span>
 </div>
 
 <!--
