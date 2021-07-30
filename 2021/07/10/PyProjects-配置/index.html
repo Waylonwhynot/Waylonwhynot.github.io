@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggqvp5d4egj31b90u07fi.jpg">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210710120935267.png">
 <meta property="article:published_time" content="2021-07-10T03:58:28.000Z">
-<meta property="article:modified_time" content="2021-07-21T18:23:50.588Z">
+<meta property="article:modified_time" content="2021-07-30T11:31:13.936Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-22 02:23:50" itemprop="dateModified" datetime="2021-07-22T02:23:50+08:00">2021-07-22</time>
+                <time title="修改时间：2021-07-30 19:31:13" itemprop="dateModified" datetime="2021-07-30T19:31:13+08:00">2021-07-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,14 +246,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>17k</span>
+              <span>18k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>29 分钟</span>
+              <span>30 分钟</span>
             </span>
 
         </div>
@@ -357,7 +357,15 @@
 
 <h3 id="短信注册接口"><a href="#短信注册接口" class="headerlink" title="短信注册接口"></a>短信注册接口</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> 手机号+验证码---》完成注册</span><br><span class="line"><span class="number">2</span> 路由：user/register  ----》post请求---》&#123;mobile：<span class="number">111111</span>，code:<span class="number">1234</span>,password:<span class="number">111</span>&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id><a href="#" class="headerlink" title></a></h3>
+<p>##缓存更新策略</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/liuqingzheng/p/11080680.html">https://www.cnblogs.com/liuqingzheng/p/11080680.html</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> 如果mysql数据变化了，轮播图表数据变化了，由于缓存没有更新，就会出现问题</span><br><span class="line"><span class="number">2</span> -redis+mysql：双写一致性</span><br><span class="line">    -(<span class="number">1</span>) 定期更新或者过期时间（取决于接口）,对数据准确性要求不是特别高的接口</span><br><span class="line">  -(<span class="number">2</span>) 修改了MySQL, 修改缓存</span><br><span class="line">        先改缓存，再改数据库 (很少这样操作，成本比较高。 找缓存，就比较麻烦)</span><br><span class="line">        先改数据库，再改缓存(比较多)</span><br><span class="line">  -(<span class="number">3</span>) 修改了MySQL，删除缓存</span><br><span class="line">       - 先删除缓存，再更新数据库</span><br><span class="line">       - 先更新数据库，再删除缓存（稍微好一些）</span><br><span class="line"><span class="number">3</span> 缓存更新策略是定时更新</span><br><span class="line">    -celery的定时任务</span><br><span class="line">    -使用celery的定时任务，完成首页缓存的更新</span><br></pre></td></tr></table></figure>
+
+<h2 id="对象存储"><a href="#对象存储" class="headerlink" title="对象存储"></a>对象存储</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">方式有三</span><br><span class="line">1. 运营直接上传七牛云 后台更新表</span><br><span class="line">2. 前端 ---&gt;  后端 ---&gt; 公有云   后端保存字段</span><br><span class="line">3. 前端 JS直接上传(SDK) ---&gt; 七牛云       然后把响应的视频地址 发送给后端---&gt;  后端保存字段</span><br></pre></td></tr></table></figure>
+
+<p>对象存储: OSS/七牛云/minio/ceph/go-fasdfs/fastdfs</p>
+<p>对象存储，就是把文件当做对象操作了</p>
+
     </div>
 
     
@@ -440,7 +448,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">虚拟环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#wsgi%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">3.1.</span> <span class="nav-text">wsgi文件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#settings-dev-py%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">settings(dev.py配置)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">3.3.</span> <span class="nav-text">配置开发环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%85%8Dpycharm%E9%A3%98%E7%BA%A2"><span class="nav-number">3.4.</span> <span class="nav-text">避免pycharm飘红</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">数据库配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E5%AA%92%E4%BD%93%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">上传媒体文件配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User%E8%A1%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">User表配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1"><span class="nav-number">7.</span> <span class="nav-text">路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E5%8F%B0%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">8.</span> <span class="nav-text">后台处理跨域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E5%BF%97"><span class="nav-number">9.</span> <span class="nav-text">日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#utils-logging-py"><span class="nav-number">9.1.</span> <span class="nav-text">utils&#x2F;logging.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E9%A1%B9%E7%9B%AE%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86-utils-exception-py"><span class="nav-number">9.2.</span> <span class="nav-text">封装项目异常处理(utils&#x2F;exception.py)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#settings-py"><span class="nav-number">9.3.</span> <span class="nav-text">settings.py</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%B0%81%E8%A3%85Response%E6%A8%A1%E5%9D%97"><span class="nav-number">10.</span> <span class="nav-text">二次封装Response模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#utils-response-py"><span class="nav-number">10.0.0.1.</span> <span class="nav-text">utils&#x2F;response.py</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%BB%84%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">11.</span> <span class="nav-text">路由组件配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#utils-router-py"><span class="nav-number">11.0.0.1.</span> <span class="nav-text">utils&#x2F;router.py</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E9%85%8D%E7%BD%AE"><span class="nav-number">12.</span> <span class="nav-text">跨域配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E6%89%93%E9%80%9A"><span class="nav-number">13.</span> <span class="nav-text">前后端打通</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%B4%E9%83%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">14.</span> <span class="nav-text">头部组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%8F%B0%E9%85%8D%E7%BD%AE"><span class="nav-number">15.</span> <span class="nav-text">前台配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86"><span class="nav-number">15.1.</span> <span class="nav-text">后台管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E4%BF%A1%E6%8E%A5%E5%8F%A3"><span class="nav-number">15.2.</span> <span class="nav-text">短信接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%95%E6%8E%A5%E5%8F%A3"><span class="nav-number">15.3.</span> <span class="nav-text">短信登录接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E4%BF%A1%E6%B3%A8%E5%86%8C%E6%8E%A5%E5%8F%A3"><span class="nav-number">15.4.</span> <span class="nav-text">短信注册接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">15.5.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">虚拟环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#wsgi%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">3.1.</span> <span class="nav-text">wsgi文件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#settings-dev-py%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">settings(dev.py配置)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">3.3.</span> <span class="nav-text">配置开发环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%85%8Dpycharm%E9%A3%98%E7%BA%A2"><span class="nav-number">3.4.</span> <span class="nav-text">避免pycharm飘红</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">数据库配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E5%AA%92%E4%BD%93%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">上传媒体文件配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User%E8%A1%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">User表配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1"><span class="nav-number">7.</span> <span class="nav-text">路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E5%8F%B0%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">8.</span> <span class="nav-text">后台处理跨域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E5%BF%97"><span class="nav-number">9.</span> <span class="nav-text">日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#utils-logging-py"><span class="nav-number">9.1.</span> <span class="nav-text">utils&#x2F;logging.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E9%A1%B9%E7%9B%AE%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86-utils-exception-py"><span class="nav-number">9.2.</span> <span class="nav-text">封装项目异常处理(utils&#x2F;exception.py)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#settings-py"><span class="nav-number">9.3.</span> <span class="nav-text">settings.py</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%B0%81%E8%A3%85Response%E6%A8%A1%E5%9D%97"><span class="nav-number">10.</span> <span class="nav-text">二次封装Response模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#utils-response-py"><span class="nav-number">10.0.0.1.</span> <span class="nav-text">utils&#x2F;response.py</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%BB%84%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">11.</span> <span class="nav-text">路由组件配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#utils-router-py"><span class="nav-number">11.0.0.1.</span> <span class="nav-text">utils&#x2F;router.py</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E9%85%8D%E7%BD%AE"><span class="nav-number">12.</span> <span class="nav-text">跨域配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E6%89%93%E9%80%9A"><span class="nav-number">13.</span> <span class="nav-text">前后端打通</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%B4%E9%83%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">14.</span> <span class="nav-text">头部组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%8F%B0%E9%85%8D%E7%BD%AE"><span class="nav-number">15.</span> <span class="nav-text">前台配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86"><span class="nav-number">15.1.</span> <span class="nav-text">后台管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E4%BF%A1%E6%8E%A5%E5%8F%A3"><span class="nav-number">15.2.</span> <span class="nav-text">短信接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%95%E6%8E%A5%E5%8F%A3"><span class="nav-number">15.3.</span> <span class="nav-text">短信登录接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E4%BF%A1%E6%B3%A8%E5%86%8C%E6%8E%A5%E5%8F%A3"><span class="nav-number">15.4.</span> <span class="nav-text">短信注册接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8"><span class="nav-number">16.</span> <span class="nav-text">对象存储</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -456,20 +464,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -518,7 +526,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">41:48</span>
+    <span title="站点阅读时长">42:06</span>
 </div>
 
 <!--

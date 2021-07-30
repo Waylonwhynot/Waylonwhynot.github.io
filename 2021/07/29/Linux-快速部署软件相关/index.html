@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="常用软件快速部署">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux-快速部署软件相关">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/07/29/Linux-%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E8%BD%AF%E4%BB%B6%E7%9B%B8%E5%85%B3/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="常用软件快速部署">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-29T01:46:22.000Z">
+<meta property="article:modified_time" content="2021-07-30T02:12:10.499Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="software">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/07/29/Linux-%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E8%BD%AF%E4%BB%B6%E7%9B%B8%E5%85%B3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux-快速部署软件相关 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/07/29/Linux-%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E8%BD%AF%E4%BB%B6%E7%9B%B8%E5%85%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux-快速部署软件相关
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-29 09:46:22" itemprop="dateCreated datePublished" datetime="2021-07-29T09:46:22+08:00">2021-07-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-30 10:12:10" itemprop="dateModified" datetime="2021-07-30T10:12:10+08:00">2021-07-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>常用软件快速部署</p>
+<a id="more"></a>
+
+<h2 id="开发者工具包"><a href="#开发者工具包" class="headerlink" title="开发者工具包"></a>开发者工具包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum update -y</span><br><span class="line"></span><br><span class="line">yum -y groupinstall &quot;Development tools&quot;   # 开发相关的工具包 git unzip。。。</span><br><span class="line"></span><br><span class="line">yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel psmisc libffi-devel</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-安装MySQL-5-7"><a href="#1-安装MySQL-5-7" class="headerlink" title="1. 安装MySQL 5.7"></a>1. 安装MySQL 5.7</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">1）前往用户根目录</span><br><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line"></span><br><span class="line">2）下载mysql57</span><br><span class="line">wget http://dev.mysql.com/get/mysql57-community-release-el7-10.noarch.rpm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3）安装mysql57</span><br><span class="line">yum -y install mysql57-community-release-el7-10.noarch.rpm</span><br><span class="line">yum -y install mysql-community-server</span><br><span class="line"></span><br><span class="line">4）启动mysql57并查看启动状态</span><br><span class="line">systemctl start mysqld.service</span><br><span class="line">systemctl status mysqld.service</span><br><span class="line"></span><br><span class="line">5）查看默认密码并登录</span><br><span class="line">grep <span class="string">&quot;password&quot;</span> /var/<span class="built_in">log</span>/mysqld.log   <span class="comment"># kkqg?H&gt;jz8P:</span></span><br><span class="line">mysql -uroot -p</span><br><span class="line"></span><br><span class="line">6）修改密码</span><br><span class="line">ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;Lqz12345?&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-安装redis"><a href="#2-安装redis" class="headerlink" title="2.安装redis"></a>2.安装redis</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">1）前往用户根目录</span><br><span class="line">&gt;: <span class="built_in">cd</span> ~</span><br><span class="line"></span><br><span class="line">2）下载redis-5.0.5</span><br><span class="line">&gt;: wget http://download.redis.io/releases/redis-5.0.5.tar.gz</span><br><span class="line"></span><br><span class="line">3）解压安装包</span><br><span class="line">&gt;: tar -xf redis-5.0.5.tar.gz</span><br><span class="line"></span><br><span class="line">4）进入目标文件</span><br><span class="line">&gt;: <span class="built_in">cd</span> redis-5.0.5</span><br><span class="line"></span><br><span class="line">5）编译环境</span><br><span class="line">&gt;: make&amp;&amp;make install</span><br><span class="line"></span><br><span class="line">6）复制环境到指定路径完成安装</span><br><span class="line">&gt;: cp -r ~/redis-5.0.5 /usr/<span class="built_in">local</span>/redis</span><br><span class="line"></span><br><span class="line">7）配置redis可以后台启动：修改下方内容</span><br><span class="line">&gt;: vim /usr/<span class="built_in">local</span>/redis/redis.conf</span><br><span class="line"></span><br><span class="line">daemonize yes</span><br><span class="line"></span><br><span class="line">8）完成配置修改</span><br><span class="line">&gt;: esc</span><br><span class="line">&gt;: :wq</span><br><span class="line"></span><br><span class="line">9）建立软连接(user/bin 有没有这几个可执行文件，如果没有，需要建软连接)</span><br><span class="line">&gt;: ln -s /usr/<span class="built_in">local</span>/redis/src/redis-server /usr/bin/redis-server</span><br><span class="line">&gt;: ln -s /usr/<span class="built_in">local</span>/redis/src/redis-cli /usr/bin/redis-cli</span><br><span class="line"></span><br><span class="line">10）后台运行redis</span><br><span class="line">&gt;: <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/redis</span><br><span class="line">&gt;: redis-server ./redis.conf &amp;</span><br><span class="line"></span><br><span class="line">ctrl + c</span><br><span class="line"></span><br><span class="line">11）测试redis环境</span><br><span class="line">&gt;: redis-cli</span><br><span class="line">ctrl + c</span><br><span class="line"></span><br><span class="line">12）关闭redis服务</span><br><span class="line">&gt;: pkill -f redis -9</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-多实例安装redis-6-2-1-编译"><a href="#3-多实例安装redis-6-2-1-编译" class="headerlink" title="3.多实例安装redis(6.2.1) - 编译"></a>3.多实例安装redis(6.2.1) - 编译</h2><p>文档 <a target="_blank" rel="noopener" href="https://redis.io/download">https://redis.io/download</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">yum install -y gcc gcc-c++ tcl</span><br><span class="line"></span><br><span class="line">wget  -O /opt/tgzs/redis-6.2.1.tar.gz https://download.redis.io/releases/redis-6.2.1.tar.gz</span><br><span class="line"><span class="built_in">cd</span> /opt/tgzs/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#解压redis</span></span><br><span class="line">tar xf redis-6.2.1.tar.gz</span><br><span class="line"><span class="comment">#进入解压后的目录</span></span><br><span class="line"><span class="built_in">cd</span> redis-6.2.1</span><br><span class="line"><span class="comment">#分配器allocator，如果有MALLOC  这个 环境变量， 会有用这个环境变量的 去建立Redis。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#而且libc 并不是默认的分配器， 默认的是 jemalloc, 因为 jemalloc 被证明 有更少的 fragmentation problems 比libc。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#但是如果你又没有jemalloc而只有 libc 当然 make 出错。 所以加这么一个参数,运行如下命令：</span></span><br><span class="line"></span><br><span class="line">make MALLOC=libc -j 20</span><br><span class="line"></span><br><span class="line"><span class="comment">#编译</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># make -j 20</span></span><br><span class="line"><span class="comment">#创建redis安装目录，主要用于存放redis所需bin文件</span></span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/redis</span><br><span class="line"><span class="comment">#安装redis并指定安装目录</span></span><br><span class="line">make PREFIX=/usr/<span class="built_in">local</span>/redis/ install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置path</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/redis/bin</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#复制默认配置文件到/etc</span></span><br><span class="line">egrep -v  <span class="string">&quot;^$|#&quot;</span> redis.conf   &gt; redis_sample.conf</span><br><span class="line"><span class="comment">#修改配置文件监听IP为0.0.0.0，否则只能本地登录</span></span><br><span class="line">sed -i s/<span class="built_in">bind</span>\ 127.0.0.1/<span class="built_in">bind</span>\ 0.0.0.0/g redis_sample.conf</span><br><span class="line"><span class="comment">#修改运行方式为后台运行</span></span><br><span class="line">sed -i s/daemonize\ no/daemonize\ yes/g redis_sample.conf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/bin/cp -f redis_sample.conf /etc/redis_6379.conf </span><br><span class="line">/bin/cp -f redis_sample.conf /etc/redis_6479.conf </span><br><span class="line"></span><br><span class="line"><span class="comment">#设置日志文件路径</span></span><br><span class="line">sed -i s@logfile\ \&quot;\&quot;@logfile\ \&quot;/opt/logs/redis_6379.log\&quot;@g /etc/redis_6379.conf </span><br><span class="line">sed -i s@logfile\ \&quot;\&quot;@logfile\ \&quot;/opt/logs/redis_6479.log\&quot;@g /etc/redis_6479.conf </span><br><span class="line"></span><br><span class="line"><span class="comment">#设置数据目录</span></span><br><span class="line">sed -i s@dir\ \./@dir\ /var/lib/redis_6379@g /etc/redis_6379.conf </span><br><span class="line">sed -i s@dir\ \./@dir\ /var/lib/redis_6479@g /etc/redis_6479.conf </span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改port</span></span><br><span class="line">sed -i <span class="string">&#x27;s/port 6379/port 6379/g&#x27;</span> /etc/redis_6379.conf </span><br><span class="line">sed -i <span class="string">&#x27;s/port 6379/port 6479/g&#x27;</span> /etc/redis_6479.conf </span><br><span class="line"></span><br><span class="line">mkdir  /var/lib/redis_6379</span><br><span class="line">mkdir  /var/lib/redis_6479</span><br><span class="line">mkdir  /opt/logs</span><br><span class="line"></span><br><span class="line">cat &lt;&lt;EOF &gt; /etc/systemd/system/redis_6379.service </span><br><span class="line">[Unit]</span><br><span class="line">Description=The redis-server Process Manager</span><br><span class="line">After=syslog.target network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/usr/<span class="built_in">local</span>/redis/bin/redis-server /etc/redis_6379.conf</span><br><span class="line"><span class="comment">#ExecStop=/usr/local/redis/bin/redis-shutdown</span></span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cat &lt;&lt;EOF &gt; /etc/systemd/system/redis_6479.service </span><br><span class="line">[Unit]</span><br><span class="line">Description=The redis-server Process Manager</span><br><span class="line">After=syslog.target network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/usr/<span class="built_in">local</span>/redis/bin/redis-server /etc/redis_6479.conf</span><br><span class="line"><span class="comment">#ExecStop=/usr/local/redis/bin/redis-shutdown</span></span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">systemctl daemon-reload</span><br><span class="line"><span class="comment">#设置redis开机自启</span></span><br><span class="line">system <span class="built_in">enable</span> redis_6379</span><br><span class="line">system <span class="built_in">enable</span> redis_6479</span><br><span class="line"><span class="comment">#启动redis</span></span><br><span class="line">systemctl restart redis_6379</span><br><span class="line">systemctl restart redis_6479</span><br><span class="line"><span class="comment">#查看redis状态</span></span><br><span class="line">systemctl status redis_6379</span><br><span class="line">systemctl status redis_6479</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Python-安装"><a href="#4-Python-安装" class="headerlink" title="4.Python 安装"></a>4.Python 安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">1）前往用户根目录</span><br><span class="line">&gt;: <span class="built_in">cd</span> ~</span><br><span class="line"></span><br><span class="line">2）下载 或 上传 Python3.6.7</span><br><span class="line"><span class="comment"># 服务器终端</span></span><br><span class="line">&gt;: wget https://www.python.org/ftp/python/3.6.7/Python-3.6.7.tar.xz</span><br><span class="line"></span><br><span class="line">3）解压安装包</span><br><span class="line">&gt;: tar -xf Python-3.6.7.tar.xz</span><br><span class="line"></span><br><span class="line">4）进入目标文件</span><br><span class="line">&gt;: <span class="built_in">cd</span> Python-3.6.7</span><br><span class="line"></span><br><span class="line">5）配置安装路径：/usr/<span class="built_in">local</span>/python3</span><br><span class="line">&gt;: ./configure --prefix=/usr/<span class="built_in">local</span>/python3</span><br><span class="line"></span><br><span class="line">6）编译并安装</span><br><span class="line">&gt;: make &amp;&amp; sudo make install</span><br><span class="line"></span><br><span class="line">7）建立软连接：终端命令 python3，pip3</span><br><span class="line">&gt;: ln -s /usr/<span class="built_in">local</span>/python3/bin/python3.6 /usr/bin/python3</span><br><span class="line">&gt;: ln -s /usr/<span class="built_in">local</span>/python3/bin/pip3.6 /usr/bin/pip3</span><br><span class="line"></span><br><span class="line">8）删除安装包与文件：</span><br><span class="line">&gt;: rm -rf Python-3.6.7</span><br><span class="line">&gt;: rm -rf Python-3.6.7.tar.xz</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Uwsgi"><a href="#5-Uwsgi" class="headerlink" title="5.Uwsgi"></a>5.Uwsgi</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1）在真实环境下安装</span><br><span class="line">pip3 install uwsgi</span><br><span class="line"></span><br><span class="line">2）建立软连接</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/python3/bin/uwsgi /usr/bin/uwsgi</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-Python虚拟环境-virtualenv和virtualenvwrapper"><a href="#6-Python虚拟环境-virtualenv和virtualenvwrapper" class="headerlink" title="6. Python虚拟环境(virtualenv和virtualenvwrapper)"></a>6. Python虚拟环境(virtualenv和virtualenvwrapper)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一.  virtualenv</span></span><br><span class="line">1）安装依赖</span><br><span class="line">pip3 install virtualenv</span><br><span class="line">pip3 install virtualenvwrapper</span><br><span class="line"></span><br><span class="line">2）建立虚拟环境软连接</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/python3/bin/virtualenv /usr/bin/virtualenv</span><br><span class="line"></span><br><span class="line">3）配置虚拟环境：填入下方内容</span><br><span class="line">&gt;: vim ~/.bash_profile</span><br><span class="line"></span><br><span class="line">VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3</span><br><span class="line"><span class="built_in">source</span> /usr/<span class="built_in">local</span>/python3/bin/virtualenvwrapper.sh</span><br><span class="line"></span><br><span class="line">4）更新配置文件内容</span><br><span class="line">&gt;: <span class="built_in">source</span> ~/.bash_profile</span><br><span class="line"></span><br><span class="line">5）虚拟环境默认根目录：~/.virtualenvs</span><br><span class="line"></span><br><span class="line"><span class="comment">## ## ## 使用</span></span><br><span class="line">假设我们把这个工程放在 /path/to/project/spider/ 目录下，并且这里我们把虚拟环境直接放在工程目录下。首先，我们在这个目录下建立一个虚拟环境。</span><br><span class="line">(1)创建 </span><br><span class="line">virtualenv /path/to/project/spider (这个就是环境名称)</span><br><span class="line">(2)激活</span><br><span class="line"><span class="built_in">source</span> /path/to/project/spider/bin/activate</span><br><span class="line">(3)退出</span><br><span class="line">deactivate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 二. virtualenvwrapper</span></span><br><span class="line">virtualenv 的一个最大的缺点就是，每次开启虚拟环境之前要去虚拟环境所在目录下的 bin 目录下 <span class="built_in">source</span> 一下 activate，这就需要我们记住每个虚拟环境所在的目录。</span><br><span class="line"></span><br><span class="line">一种可行的解决方案是，将所有的虚拟环境目录全都集中起来，比如放到 ~/virtualenvs/，并对不同的虚拟环境使用不同的目录来管理。virtualenvwrapper 正是这样做的。并且，它还省去了每次开启虚拟环境时候的 <span class="built_in">source</span> 操作，使得虚拟环境更加好用。</span><br><span class="line"></span><br><span class="line">(1)安装</span><br><span class="line">pip install virtualenvwrapper</span><br><span class="line"><span class="built_in">export</span> WORKON_HOME=<span class="string">&#x27;~/.virtualenvs&#x27;</span>  <span class="comment"># 默认</span></span><br><span class="line"><span class="built_in">source</span> /usr/<span class="built_in">local</span>/bin/virtualenvwrapper.sh</span><br><span class="line"></span><br><span class="line">(2) 创建虚拟环境</span><br><span class="line">mkvirtualenv spider</span><br><span class="line"></span><br><span class="line">(3) 激活</span><br><span class="line">workon spider</span><br><span class="line"></span><br><span class="line">(4) 退出</span><br><span class="line">deactivate</span><br><span class="line"></span><br><span class="line">(5) 删除环境</span><br><span class="line">rmvirtualenv spider</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 三 更改pip源</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#添加阿里PIP源</span></span><br><span class="line">mkdir -p ~/.pip &amp;&amp; <span class="built_in">cd</span> ~/.pip &amp;&amp; cat &gt; pip.conf &lt;&lt; eof</span><br><span class="line">[global]</span><br><span class="line">index-url = http://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br><span class="line">eof</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 四. 拉代码</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">#创建git秘钥后执行clone操作</span></span><br><span class="line"><span class="variable">$cd</span> /opt/webroot</span><br><span class="line"><span class="variable">$git</span> <span class="built_in">clone</span> ssh://git@git.ppdaicorp.com:22/devops/cmp.git</span><br><span class="line"> </span><br><span class="line"><span class="comment">#安装依赖</span></span><br><span class="line"> </span><br><span class="line">$ /opt/webroot/cmp/requirements</span><br><span class="line">$ pip install -r pro.txt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">###### 普通用户</span></span><br><span class="line"><span class="comment">#授权给ops用户</span></span><br><span class="line"><span class="comment">#chown -R ops. /opt/py3venv/</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#创建代码目录</span></span><br><span class="line">mkdir /opt/webroot</span><br><span class="line"> </span><br><span class="line"><span class="comment">#切换ops用户执行以下操作</span></span><br><span class="line">su - ops</span><br><span class="line"> </span><br><span class="line"><span class="comment">#添加虚拟化环境到配置文件</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;source /opt/py3venv/bin/activate&quot;</span> &gt;&gt; ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-Nginx编译安装"><a href="#7-Nginx编译安装" class="headerlink" title="7.Nginx编译安装"></a>7.Nginx编译安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">1）前往用户根目录</span><br><span class="line">&gt;: <span class="built_in">cd</span> ~</span><br><span class="line"></span><br><span class="line">2）下载nginx1.13.7</span><br><span class="line">&gt;: wget http://nginx.org/download/nginx-1.13.7.tar.gz</span><br><span class="line"></span><br><span class="line">3）解压安装包</span><br><span class="line">&gt;: tar -xf nginx-1.13.7.tar.gz</span><br><span class="line"></span><br><span class="line">4）进入目标文件</span><br><span class="line">&gt;: <span class="built_in">cd</span> nginx-1.13.7</span><br><span class="line"></span><br><span class="line">5）配置安装路径：/usr/<span class="built_in">local</span>/nginx</span><br><span class="line">&gt;: ./configure --prefix=/usr/<span class="built_in">local</span>/nginx</span><br><span class="line"></span><br><span class="line">6）编译并安装</span><br><span class="line">&gt;: make &amp;&amp; sudo make install</span><br><span class="line"></span><br><span class="line">7）建立软连接：终端命令 nginx</span><br><span class="line">&gt;: ln -s /usr/<span class="built_in">local</span>/nginx/sbin/nginx /usr/bin/nginx</span><br><span class="line"></span><br><span class="line">8）删除安装包与文件：</span><br><span class="line">&gt;: <span class="built_in">cd</span> ~</span><br><span class="line">&gt;: rm -rf nginx-1.13.7</span><br><span class="line">&gt;: rm -rf nginx-1.13.7.tar.xz</span><br><span class="line"></span><br><span class="line">9）测试Nginx环境，服务器运行nginx，本地访问服务器ip</span><br><span class="line">&gt;: nginx</span><br><span class="line">&gt;: 服务器绑定的域名 或 ip:80</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1）启动</span><br><span class="line">&gt;: nginx</span><br><span class="line"></span><br><span class="line">2）关闭nginx</span><br><span class="line">&gt;: nginx -s stop</span><br><span class="line"></span><br><span class="line">3）重启nginx</span><br><span class="line">&gt;: nginx -s reload</span><br><span class="line"></span><br><span class="line">4）查看端口，强行关闭</span><br><span class="line">&gt;: ps -aux|grep nginx</span><br><span class="line">&gt;: <span class="built_in">kill</span> &lt;pid:进程编号&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-rpm安装Grafana"><a href="#8-rpm安装Grafana" class="headerlink" title="8.rpm安装Grafana"></a>8.rpm安装Grafana</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 地址 https://grafana.com/grafana/download</span></span><br><span class="line">wget -O /opt/tgzs/grafana-7.5.1-1.x86_64.rpm https://dl.grafana.com/oss/release/grafana-7.5.1-1.x86_64.rpm</span><br><span class="line">sudo yum install grafana-7.5.1-1.x86_64.rpm</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>mysql中创建数据库</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE IF NOT EXISTS grafana DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>修改配置文件 填写mysql路径等</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/grafana/grafana.ini</span><br><span class="line"></span><br><span class="line">type = mysql</span><br><span class="line">host = 127.0.0.1:3306</span><br><span class="line">name = grafana</span><br><span class="line">user = root</span><br><span class="line"><span class="meta">#</span><span class="bash"> If the password contains <span class="comment"># or ; you have to wrap it with triple quotes. Ex &quot;&quot;&quot;#password;&quot;&quot;&quot;</span></span></span><br><span class="line">password = 123</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>启动服务 </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl start grafana-server</span><br><span class="line">systemctl enable grafana-server</span><br><span class="line">systemctl status grafana-server</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>查看日志 有无报错</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/log/grafana/grafana.log</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="9-前端项目部署"><a href="#9-前端项目部署" class="headerlink" title="9.前端项目部署"></a>9.前端项目部署</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 前端项目部署</span></span><br><span class="line"></span><br><span class="line">​```python</span><br><span class="line"><span class="number">1</span> setting.js中</span><br><span class="line">    export default &#123;</span><br><span class="line">        base_url: <span class="string">&#x27;http://47.116.2.159:8000&#x27;</span>, <span class="comment"># 你们自己服务器的地址</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"><span class="number">2</span> build（vue---》html,css,js）</span><br><span class="line">    npm run build</span><br><span class="line">    </span><br><span class="line"><span class="number">3</span> 上传到服务器，使用nginx代理</span><br><span class="line">​```</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> 路飞项目 接口部分是前后端分离的</span><br><span class="line"><span class="number">2</span> xdamin后台管理，还是混合开发----》收集静态文件，做动静分离</span><br><span class="line"></span><br><span class="line">python /soft/luffyapi/manage_prod.py collectstatic</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysqldump -uroot   luffy &gt;luffydb.sql;</span><br></pre></td></tr></table></figure>
+
+<h2 id="10-node环境安装"><a href="#10-node环境安装" class="headerlink" title="10.node环境安装"></a>10.node环境安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">wget https://nodejs.org/download/release/v13.6.0/node-v13.6.0-linux-x64.tar.gz</span><br><span class="line">tar xf node-v13.6.0-linux-x64.tar.gz -C /usr/<span class="built_in">local</span>/</span><br><span class="line"></span><br><span class="line">chown -R root:root  /usr/<span class="built_in">local</span>/node-v13.6.0-linux-x64/</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/node-v13.6.0-linux-x64/bin/node /usr/<span class="built_in">local</span>/bin/node</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/node-v13.6.0-linux-x64/bin/npm /usr/<span class="built_in">local</span>/bin/npm</span><br><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br><span class="line">npm install pm2 -g --verbose</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/node-v13.6.0-linux-x64/bin/pm2 /usr/<span class="built_in">local</span>/bin/pm2</span><br><span class="line"></span><br><span class="line">pm2 install pm2-logrotate</span><br></pre></td></tr></table></figure>
+
+<h2 id="11-安装unrar-解压软件"><a href="#11-安装unrar-解压软件" class="headerlink" title="11. 安装unrar 解压软件"></a>11. 安装unrar 解压软件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget   http://www.rarlab.com/rar/rarlinux-x64-4.2.0.tar.gz</span><br><span class="line">tar zxvf rarlinux-x64-4.2.0.tar.gz -C /usr/<span class="built_in">local</span></span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/rar/rar /usr/<span class="built_in">local</span>/bin/rar</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/rar/unrar /usr/<span class="built_in">local</span>/bin/unrar</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/software/" rel="tag"><i class="fas fa-cookie-bite"></i> software</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/29/DB-%E8%BD%AC%E8%BD%BD-python-redis/" rel="prev" title="DB-转载-python-redis">
+      <i class="fa fa-chevron-left"></i> DB-转载-python-redis
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">开发者工具包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85MySQL-5-7"><span class="nav-number">2.</span> <span class="nav-text">1. 安装MySQL 5.7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85redis"><span class="nav-number">3.</span> <span class="nav-text">2.安装redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%A4%9A%E5%AE%9E%E4%BE%8B%E5%AE%89%E8%A3%85redis-6-2-1-%E7%BC%96%E8%AF%91"><span class="nav-number">4.</span> <span class="nav-text">3.多实例安装redis(6.2.1) - 编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Python-%E5%AE%89%E8%A3%85"><span class="nav-number">5.</span> <span class="nav-text">4.Python 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Uwsgi"><span class="nav-number">6.</span> <span class="nav-text">5.Uwsgi</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Python%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83-virtualenv%E5%92%8Cvirtualenvwrapper"><span class="nav-number">7.</span> <span class="nav-text">6. Python虚拟环境(virtualenv和virtualenvwrapper)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Nginx%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85"><span class="nav-number">8.</span> <span class="nav-text">7.Nginx编译安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-rpm%E5%AE%89%E8%A3%85Grafana"><span class="nav-number">9.</span> <span class="nav-text">8.rpm安装Grafana</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2"><span class="nav-number">10.</span> <span class="nav-text">9.前端项目部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-node%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">11.</span> <span class="nav-text">10.node环境安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E5%AE%89%E8%A3%85unrar-%E8%A7%A3%E5%8E%8B%E8%BD%AF%E4%BB%B6"><span class="nav-number">12.</span> <span class="nav-text">11. 安装unrar 解压软件</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.5m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">42:06</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
