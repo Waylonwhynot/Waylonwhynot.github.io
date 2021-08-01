@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Redis持久化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DB-转载-redis-持久化">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/08/02/DB-%E8%BD%AC%E8%BD%BD-redis-%E6%8C%81%E4%B9%85%E5%8C%96/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Redis持久化">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1ga9zt9svljj30oo0d644s.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006tNbRwgy1gadsmknx2sj30fy0hw78l.jpg">
+<meta property="article:published_time" content="2021-08-01T16:37:52.000Z">
+<meta property="article:modified_time" content="2021-08-01T16:38:48.345Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="DB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1ga9zt9svljj30oo0d644s.jpg">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/02/DB-%E8%BD%AC%E8%BD%BD-redis-%E6%8C%81%E4%B9%85%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>DB-转载-redis-持久化 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/02/DB-%E8%BD%AC%E8%BD%BD-redis-%E6%8C%81%E4%B9%85%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DB-转载-redis-持久化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-02 00:37:52 / 修改时间：00:38:48" itemprop="dateCreated datePublished" datetime="2021-08-02T00:37:52+08:00">2021-08-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Redis持久化</p>
+<a id="more"></a>
+
+<h2 id="一-持久化的作用"><a href="#一-持久化的作用" class="headerlink" title="一 持久化的作用"></a>一 持久化的作用</h2><h3 id="1-1-什么是持久化"><a href="#1-1-什么是持久化" class="headerlink" title="1.1 什么是持久化"></a>1.1 什么是持久化</h3><p>redis的所有数据保存在内存中，对数据的更新将异步的保存到硬盘上</p>
+<h3 id="1-2-持久化的实现方式"><a href="#1-2-持久化的实现方式" class="headerlink" title="1.2 持久化的实现方式"></a>1.2 持久化的实现方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">快照：某时某刻数据的一个完成备份，</span><br><span class="line">    -mysql的Dump</span><br><span class="line">    -redis的RDB</span><br><span class="line">写日志：任何操作记录日志，要恢复数据，只要把日志重新走一遍即可</span><br><span class="line">    -mysql的 Binlog</span><br><span class="line">    -Hhase的 HLog</span><br><span class="line">    -Redis的 AOF</span><br></pre></td></tr></table></figure>
+
+<h2 id="二-RDB"><a href="#二-RDB" class="headerlink" title="二 RDB"></a>二 RDB</h2><h3 id="2-1-什么是RDB"><a href="#2-1-什么是RDB" class="headerlink" title="2.1 什么是RDB"></a>2.1 什么是RDB</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1ga9zt9svljj30oo0d644s.jpg" alt="image-20191226120500154"></p>
+<h3 id="2-2-触发机制-主要三种方式"><a href="#2-2-触发机制-主要三种方式" class="headerlink" title="2.2 触发机制-主要三种方式"></a>2.2 触发机制-主要三种方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&#39;&#39;&#39;</span><br><span class="line">save(同步)</span><br><span class="line">1 客户端执行save命令----》redis服务端----》同步创建RDB二进制文件</span><br><span class="line">2 会造成redis的阻塞（数据量非常大的时候）</span><br><span class="line">3 文件策略：如果老的RDB存在，会替换老的</span><br><span class="line">4 复杂度 o(n)</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line"></span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">bgsave(异步，Backgroud saving started)</span><br><span class="line"></span><br><span class="line">1 客户端执行save命令----》redis服务端----》异步创建RDB二进制文件（fork函数生成一个子进程（fork会阻塞reids），执行createRDB，执行成功，返回给reids消息）</span><br><span class="line">2 此时访问redis，会正常响应客户端</span><br><span class="line">3 文件策略：跟save相同，如果老的RDB存在，会替换老的</span><br><span class="line">4 复杂度 o(n)</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line"></span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">自动（通过配置）</span><br><span class="line">配置   seconds   changes</span><br><span class="line">save   900        1</span><br><span class="line">save   300        10</span><br><span class="line">save   60         10000</span><br><span class="line">如果60s中改变了1w条数据，自动生成rdb</span><br><span class="line">如果300s中改变了10条数据，自动生成rdb</span><br><span class="line">如果900s中改变了1条数据，自动生成rdb</span><br><span class="line"></span><br><span class="line">以上三条符合任意一条，就自动生成rdb，内部使用bgsave</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line"></span><br><span class="line">#配置：</span><br><span class="line">save 900 1 #配置一条</span><br><span class="line">save 300 10 #配置一条</span><br><span class="line">save 60 10000 #配置一条</span><br><span class="line">dbfilename dump.rdb  #rdb文件的名字，默认为dump.rdb</span><br><span class="line">dir .&#x2F; #rdb文件存在当前目录</span><br><span class="line"></span><br><span class="line">stop-writes-on-bgsave-error yes #如果bgsave出现错误，是否停止写入，默认为yes</span><br><span class="line">rdbcompression yes #采用压缩格式</span><br><span class="line">rdbchecksum yes #是否对rdb文件进行校验和检验</span><br><span class="line"></span><br><span class="line">#最佳配置</span><br><span class="line">save 900 1 </span><br><span class="line">save 300 10 </span><br><span class="line">save 60 10000 </span><br><span class="line">dbfilename dump-$&#123;port&#125;.rdb  #以端口号作为文件名，可能一台机器上很多reids，不会乱</span><br><span class="line">dir &#x2F;bigdiskpath #保存路径放到一个大硬盘位置目录</span><br><span class="line">stop-writes-on-bgsave-error yes #出现错误停止</span><br><span class="line">rdbcompression yes #压缩</span><br><span class="line">rdbchecksum yes #校验</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-触发机制-不容忽略的方式"><a href="#2-3-触发机制-不容忽略的方式" class="headerlink" title="2.3 触发机制-不容忽略的方式"></a>2.3 触发机制-不容忽略的方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 全量复制 #没有执行save和bgsave没有添加rdb策略，还会生成rdb文件，如果开启主从复制，主会自动生成rdb</span><br><span class="line">2 debug reload #debug级别的重启，不会将内存中的数据清空</span><br><span class="line">3 shutdown save#关闭会出发rdb的生成</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-试验"><a href="#2-4-试验" class="headerlink" title="2.4 试验"></a>2.4 试验</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="三-AOF"><a href="#三-AOF" class="headerlink" title="三 AOF"></a>三 AOF</h3><h3 id="3-1-RDB问题"><a href="#3-1-RDB问题" class="headerlink" title="3.1 RDB问题"></a>3.1 RDB问题</h3><p>耗时，耗性能：</p>
+<p>不可控，可能会丢失数据</p>
+<h3 id="3-2-AOF介绍"><a href="#3-2-AOF介绍" class="headerlink" title="3.2 AOF介绍"></a>3.2 AOF介绍</h3><p>客户端每写入一条命令，都记录一条日志，放到日志文件中，如果出现宕机，可以将数据完全恢复</p>
+<h3 id="3-3-AOF的三种策略"><a href="#3-3-AOF的三种策略" class="headerlink" title="3.3 AOF的三种策略"></a>3.3 AOF的三种策略</h3><p>日志不是直接写到硬盘上，而是先放在缓冲区，缓冲区根据一些策略，写到硬盘上</p>
+<p>always：redis–》写命令刷新的缓冲区—》每条命令fsync到硬盘—》AOF文件</p>
+<p>everysec（默认值）：redis——》写命令刷新的缓冲区—》每秒把缓冲区fsync到硬盘–》AOF文件</p>
+<p>no:redis——》写命令刷新的缓冲区—》操作系统决定，缓冲区fsync到硬盘–》AOF文件</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>always</th>
+<th>everysec</th>
+<th>no</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>优点</td>
+<td>不丢失数据</td>
+<td>每秒一次fsync，丢失1秒数据</td>
+<td>不用管</td>
+</tr>
+<tr>
+<td>缺点</td>
+<td>IO开销大，一般的sata盘只有几百TPS</td>
+<td>丢1秒数据</td>
+<td>不可控</td>
+</tr>
+</tbody></table>
+<h3 id="3-4-AOF-重写"><a href="#3-4-AOF-重写" class="headerlink" title="3.4 AOF 重写"></a>3.4 AOF 重写</h3><p>随着命令的逐步写入，并发量的变大， AOF文件会越来越大，通过AOF重写来解决该问题</p>
+<table>
+<thead>
+<tr>
+<th>原生AOF</th>
+<th>AOF重写</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>set hello world set hello java set hello hehe incr counter incr counter rpush mylist a rpush mylist b rpush mylist c 过期数据</td>
+<td>set hello hehe set counter 2 rpush mylist a b c</td>
+</tr>
+</tbody></table>
+<p>本质就是把过期的，无用的，重复的，可以优化的命令，来优化</p>
+<p>这样可以减少磁盘占用量，加速恢复速度</p>
+<h4 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h4><p>bgrewriteaof：</p>
+<p>客户端向服务端发送bgrewriteaof命令，服务端会起一个fork进程，完成AOF重写</p>
+<h4 id="AOF重写配置："><a href="#AOF重写配置：" class="headerlink" title="AOF重写配置："></a>AOF重写配置：</h4><table>
+<thead>
+<tr>
+<th>配置名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>auto-aof-rewrite-min-size</td>
+<td>AOF文件重写需要尺寸</td>
+</tr>
+<tr>
+<td>auto-aof-rewrite-percentage</td>
+<td>AOF文件增长率</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>统计名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>aof_current_size</td>
+<td>AOF当前尺寸（单位：字节）</td>
+</tr>
+<tr>
+<td>aof_base_size</td>
+<td>AOF上次启动和重写的尺寸（单位：字节）</td>
+</tr>
+</tbody></table>
+<p>自动触发时机（两个条件同时满足）：</p>
+<p>aof_current_size&gt;auto-aof-rewrite-min-size：当前尺寸大于重写需要尺寸</p>
+<p>(aof_current_size-aof_base_size)/aof_base_size&gt;auto-aof-rewrite-percentage:（增长率）当前尺寸减去上次重写的尺寸，除以上次重写的尺寸如果大于配置中的增长率</p>
+<h4 id="重写流程"><a href="#重写流程" class="headerlink" title="重写流程"></a>重写流程</h4><p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gadsmknx2sj30fy0hw78l.jpg" alt="image-20191229185839519"></p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">appendonly yes #将该选项设置为yes，打开</span><br><span class="line">appendfilename &quot;appendonly-$&#123;port&#125;.aof&quot; #文件保存的名字</span><br><span class="line">appendfsync everysec #采用第二种策略</span><br><span class="line">dir &#x2F;bigdiskpath #存放的路径</span><br><span class="line">no-appendfsync-on-rewrite yes #在aof重写的时候，是否要做aof的append操作，因为aof重写消耗性能，磁盘消耗，正常aof写磁盘有一定的冲突，这段期间的数据，允许丢失</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-AOF-重写演示"><a href="#3-5-AOF-重写演示" class="headerlink" title="3.5 AOF 重写演示"></a>3.5 AOF 重写演示</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="四-RDB和AOF的选择"><a href="#四-RDB和AOF的选择" class="headerlink" title="四 RDB和AOF的选择"></a>四 RDB和AOF的选择</h2><h3 id="4-1-rdb和aof的比较"><a href="#4-1-rdb和aof的比较" class="headerlink" title="4.1 rdb和aof的比较"></a>4.1 rdb和aof的比较</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>rdb</th>
+<th>aof</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动优先级</td>
+<td>低</td>
+<td>高(挂掉重启，会加载aof的数据)</td>
+</tr>
+<tr>
+<td>体积</td>
+<td>小</td>
+<td>大</td>
+</tr>
+<tr>
+<td>恢复速度</td>
+<td>快</td>
+<td>慢</td>
+</tr>
+<tr>
+<td>数据安全性</td>
+<td>丢数据</td>
+<td>根据策略决定</td>
+</tr>
+<tr>
+<td>轻重</td>
+<td>重</td>
+<td>轻</td>
+</tr>
+</tbody></table>
+<h3 id="4-2-rdb最佳策略"><a href="#4-2-rdb最佳策略" class="headerlink" title="4.2 rdb最佳策略"></a>4.2 rdb最佳策略</h3><p>rdb关掉，主从操作时</p>
+<p>集中管理：按天，按小时备份数据</p>
+<p>主从配置，从节点打开</p>
+<h3 id="4-3-aof最佳策略"><a href="#4-3-aof最佳策略" class="headerlink" title="4.3 aof最佳策略"></a>4.3 aof最佳策略</h3><p>开：缓存和存储，大部分情况都打开，</p>
+<p>aof重写集中管理</p>
+<p>everysec：通过每秒刷新的策略</p>
+<h3 id="4-4-最佳策略"><a href="#4-4-最佳策略" class="headerlink" title="4.4 最佳策略"></a>4.4 最佳策略</h3><p>小分片：每个redis的最大内存为4g</p>
+<p>缓存或存储：根据特性，使用不通策略</p>
+<p>时时监控硬盘，内存，负载网络等</p>
+<p>有足够内存</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DB/" rel="tag"><i class="fas fa-cookie-bite"></i> DB</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/01/DB-%E8%BD%AC%E8%BD%BD-redis-%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/" rel="prev" title="DB-转载-redis-高级用法">
+      <i class="fa fa-chevron-left"></i> DB-转载-redis-高级用法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">一 持久化的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 什么是持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 持久化的实现方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-RDB"><span class="nav-number">2.</span> <span class="nav-text">二 RDB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BB%80%E4%B9%88%E6%98%AFRDB"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 什么是RDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E8%A7%A6%E5%8F%91%E6%9C%BA%E5%88%B6-%E4%B8%BB%E8%A6%81%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 触发机制-主要三种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E8%A7%A6%E5%8F%91%E6%9C%BA%E5%88%B6-%E4%B8%8D%E5%AE%B9%E5%BF%BD%E7%95%A5%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 触发机制-不容忽略的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E8%AF%95%E9%AA%8C"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 试验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89-AOF"><span class="nav-number">2.5.</span> <span class="nav-text">三 AOF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-RDB%E9%97%AE%E9%A2%98"><span class="nav-number">2.6.</span> <span class="nav-text">3.1 RDB问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-AOF%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.7.</span> <span class="nav-text">3.2 AOF介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-AOF%E7%9A%84%E4%B8%89%E7%A7%8D%E7%AD%96%E7%95%A5"><span class="nav-number">2.8.</span> <span class="nav-text">3.3 AOF的三种策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-AOF-%E9%87%8D%E5%86%99"><span class="nav-number">2.9.</span> <span class="nav-text">3.4 AOF 重写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">2.9.1.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AOF%E9%87%8D%E5%86%99%E9%85%8D%E7%BD%AE%EF%BC%9A"><span class="nav-number">2.9.2.</span> <span class="nav-text">AOF重写配置：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%86%99%E6%B5%81%E7%A8%8B"><span class="nav-number">2.9.3.</span> <span class="nav-text">重写流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">2.9.4.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-AOF-%E9%87%8D%E5%86%99%E6%BC%94%E7%A4%BA"><span class="nav-number">2.10.</span> <span class="nav-text">3.5 AOF 重写演示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-RDB%E5%92%8CAOF%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">3.</span> <span class="nav-text">四 RDB和AOF的选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-rdb%E5%92%8Caof%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">3.1.</span> <span class="nav-text">4.1 rdb和aof的比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-rdb%E6%9C%80%E4%BD%B3%E7%AD%96%E7%95%A5"><span class="nav-number">3.2.</span> <span class="nav-text">4.2 rdb最佳策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-aof%E6%9C%80%E4%BD%B3%E7%AD%96%E7%95%A5"><span class="nav-number">3.3.</span> <span class="nav-text">4.3 aof最佳策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E6%9C%80%E4%BD%B3%E7%AD%96%E7%95%A5"><span class="nav-number">3.4.</span> <span class="nav-text">4.4 最佳策略</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.5m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">42:36</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
