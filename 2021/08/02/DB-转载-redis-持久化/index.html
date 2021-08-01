@@ -29,8 +29,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1ga9zt9svljj30oo0d644s.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006tNbRwgy1gadsmknx2sj30fy0hw78l.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1gadtfor4exj30hu0ke434.jpg">
 <meta property="article:published_time" content="2021-08-01T16:37:52.000Z">
-<meta property="article:modified_time" content="2021-08-01T16:38:48.345Z">
+<meta property="article:modified_time" content="2021-08-01T17:57:47.453Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="DB">
 <meta name="twitter:card" content="summary">
@@ -218,7 +219,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-08-02 00:37:52 / 修改时间：00:38:48" itemprop="dateCreated datePublished" datetime="2021-08-02T00:37:52+08:00">2021-08-02</time>
+              <time title="创建时间：2021-08-02 00:37:52 / 修改时间：01:57:47" itemprop="dateCreated datePublished" datetime="2021-08-02T00:37:52+08:00">2021-08-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,14 +237,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
+              <span>4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -257,6 +258,19 @@
       
         <p>Redis持久化</p>
 <a id="more"></a>
+
+<p><strong>如果只是缓存场景，rdb足够用</strong></p>
+<p>rdb最佳配置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 两种：</span></span><br><span class="line">    -rdb：缓存</span><br><span class="line">  -aof：对数据准确性要求高一些</span><br><span class="line"><span class="comment"># rdb：触发方式三种</span></span><br><span class="line">    -手动 save</span><br><span class="line">        </span><br><span class="line">    -手动 bgsave</span><br><span class="line">    </span><br><span class="line">    -配置文件</span><br><span class="line">    配置   seconds   changes</span><br><span class="line">    save   <span class="number">900</span>        <span class="number">1</span></span><br><span class="line">    save   <span class="number">300</span>        <span class="number">10</span></span><br><span class="line">    save   <span class="number">60</span>         <span class="number">10000</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment"># 最佳配置</span></span><br><span class="line">save <span class="number">900</span> <span class="number">1</span> </span><br><span class="line">save <span class="number">300</span> <span class="number">10</span> </span><br><span class="line">save <span class="number">60</span> <span class="number">10000</span> </span><br><span class="line">dbfilename dump<span class="number">-3306.</span>rdb  <span class="comment">#以端口号作为文件名，可能一台机器上很多reids，不会乱</span></span><br><span class="line">dir /bigdiskpath <span class="comment">#保存路径放到一个大硬盘位置目录</span></span><br><span class="line">stop-writes-on-bgsave-error yes <span class="comment">#出现错误停止</span></span><br><span class="line">rdbcompression yes <span class="comment">#压缩</span></span><br><span class="line">rdbchecksum yes <span class="comment">#校验</span></span><br></pre></td></tr></table></figure>
+
+<p>aof最佳配置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">客户端每写入一条命令，都记录一条日志，放到日志文件中，如果出现宕机，可以将数据完全恢复</span><br><span class="line"></span><br><span class="line"><span class="comment"># AOF 重写</span></span><br><span class="line">    本质就是把过期的，无用的，重复的，可以优化的命令，来优化</span><br><span class="line">    这样可以减少磁盘占用量，加速恢复速度</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment"># aof的最佳配置</span></span><br><span class="line">appendonly yes <span class="comment">#将该选项设置为yes，打开</span></span><br><span class="line">appendfilename <span class="string">&quot;appendonly-3306.aof&quot;</span> <span class="comment">#文件保存的名字</span></span><br><span class="line">appendfsync everysec <span class="comment">#采用第二种策略</span></span><br><span class="line">dir /data <span class="comment">#存放的路径</span></span><br><span class="line">no-appendfsync-on-rewrite yes</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
 
 <h2 id="一-持久化的作用"><a href="#一-持久化的作用" class="headerlink" title="一 持久化的作用"></a>一 持久化的作用</h2><h3 id="1-1-什么是持久化"><a href="#1-1-什么是持久化" class="headerlink" title="1.1 什么是持久化"></a>1.1 什么是持久化</h3><p>redis的所有数据保存在内存中，对数据的更新将异步的保存到硬盘上</p>
 <h3 id="1-2-持久化的实现方式"><a href="#1-2-持久化的实现方式" class="headerlink" title="1.2 持久化的实现方式"></a>1.2 持久化的实现方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">快照：某时某刻数据的一个完成备份，</span><br><span class="line">    -mysql的Dump</span><br><span class="line">    -redis的RDB</span><br><span class="line">写日志：任何操作记录日志，要恢复数据，只要把日志重新走一遍即可</span><br><span class="line">    -mysql的 Binlog</span><br><span class="line">    -Hhase的 HLog</span><br><span class="line">    -Redis的 AOF</span><br></pre></td></tr></table></figure>
@@ -398,6 +412,31 @@
 <p>缓存或存储：根据特性，使用不通策略</p>
 <p>时时监控硬盘，内存，负载网络等</p>
 <p>有足够内存</p>
+<hr>
+<h2 id="一-子进程开销和优化"><a href="#一-子进程开销和优化" class="headerlink" title="一 子进程开销和优化"></a>一 子进程开销和优化</h2><p>1 cpu</p>
+<p>开销：rdb和aof文件生成，属于cpu密集型</p>
+<p>优化：不做cpu绑定，不和cpu密集型的服务一起部署</p>
+<p>2 内存</p>
+<p>开销：fork内存开销，copy-on-write，</p>
+<p>优化：单机部署尽量少重写</p>
+<p>3 硬盘</p>
+<p>开销：aof和rdb写入，可以结合分析工具使用</p>
+<p>优化：</p>
+<p>1 不要和高硬盘负载的服务部署在一起：存储服务，消息队列</p>
+<p>2 在aof重写期间，不要对aof进行追加：no-appendfsync-on-rewrite=yes</p>
+<p>3 根据写入量决定磁盘类型：例如ssd</p>
+<p>4 单机多实例持久化考虑分盘</p>
+<h2 id="二-fork操作"><a href="#二-fork操作" class="headerlink" title="二 fork操作"></a>二 fork操作</h2><p>1 fork是同步操作</p>
+<p>2 与内存量嘻嘻相关：内存越大，耗时越长，跟机型也有关系</p>
+<p>3 info：latest_fok_usec:查看持久化执行时间</p>
+<p>改善fork</p>
+<p>1 有限使用无机或高效支持fork操作的虚拟化技术</p>
+<p>2 控制redis实例最大可用内存：maxmemory</p>
+<p>3 合理配置linux内存分配策略</p>
+<p>4 降低fork频率，例如放宽aof重写自动触发时机，不必要的全量复制</p>
+<h2 id="三-aof追加阻塞"><a href="#三-aof追加阻塞" class="headerlink" title="三 aof追加阻塞"></a>三 aof追加阻塞</h2><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1gadtfor4exj30hu0ke434.jpg" alt="image-20191229192629198"></p>
+<p>aof阻塞：看日志定位</p>
+<p>info Persistence：每次阻塞一次就会+1</p>
 
     </div>
 
@@ -478,7 +517,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">一 持久化的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 什么是持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 持久化的实现方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-RDB"><span class="nav-number">2.</span> <span class="nav-text">二 RDB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BB%80%E4%B9%88%E6%98%AFRDB"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 什么是RDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E8%A7%A6%E5%8F%91%E6%9C%BA%E5%88%B6-%E4%B8%BB%E8%A6%81%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 触发机制-主要三种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E8%A7%A6%E5%8F%91%E6%9C%BA%E5%88%B6-%E4%B8%8D%E5%AE%B9%E5%BF%BD%E7%95%A5%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 触发机制-不容忽略的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E8%AF%95%E9%AA%8C"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 试验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89-AOF"><span class="nav-number">2.5.</span> <span class="nav-text">三 AOF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-RDB%E9%97%AE%E9%A2%98"><span class="nav-number">2.6.</span> <span class="nav-text">3.1 RDB问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-AOF%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.7.</span> <span class="nav-text">3.2 AOF介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-AOF%E7%9A%84%E4%B8%89%E7%A7%8D%E7%AD%96%E7%95%A5"><span class="nav-number">2.8.</span> <span class="nav-text">3.3 AOF的三种策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-AOF-%E9%87%8D%E5%86%99"><span class="nav-number">2.9.</span> <span class="nav-text">3.4 AOF 重写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">2.9.1.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AOF%E9%87%8D%E5%86%99%E9%85%8D%E7%BD%AE%EF%BC%9A"><span class="nav-number">2.9.2.</span> <span class="nav-text">AOF重写配置：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%86%99%E6%B5%81%E7%A8%8B"><span class="nav-number">2.9.3.</span> <span class="nav-text">重写流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">2.9.4.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-AOF-%E9%87%8D%E5%86%99%E6%BC%94%E7%A4%BA"><span class="nav-number">2.10.</span> <span class="nav-text">3.5 AOF 重写演示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-RDB%E5%92%8CAOF%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">3.</span> <span class="nav-text">四 RDB和AOF的选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-rdb%E5%92%8Caof%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">3.1.</span> <span class="nav-text">4.1 rdb和aof的比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-rdb%E6%9C%80%E4%BD%B3%E7%AD%96%E7%95%A5"><span class="nav-number">3.2.</span> <span class="nav-text">4.2 rdb最佳策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-aof%E6%9C%80%E4%BD%B3%E7%AD%96%E7%95%A5"><span class="nav-number">3.3.</span> <span class="nav-text">4.3 aof最佳策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E6%9C%80%E4%BD%B3%E7%AD%96%E7%95%A5"><span class="nav-number">3.4.</span> <span class="nav-text">4.4 最佳策略</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">一 持久化的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 什么是持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 持久化的实现方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-RDB"><span class="nav-number">2.</span> <span class="nav-text">二 RDB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BB%80%E4%B9%88%E6%98%AFRDB"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 什么是RDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E8%A7%A6%E5%8F%91%E6%9C%BA%E5%88%B6-%E4%B8%BB%E8%A6%81%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 触发机制-主要三种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E8%A7%A6%E5%8F%91%E6%9C%BA%E5%88%B6-%E4%B8%8D%E5%AE%B9%E5%BF%BD%E7%95%A5%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 触发机制-不容忽略的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E8%AF%95%E9%AA%8C"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 试验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89-AOF"><span class="nav-number">2.5.</span> <span class="nav-text">三 AOF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-RDB%E9%97%AE%E9%A2%98"><span class="nav-number">2.6.</span> <span class="nav-text">3.1 RDB问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-AOF%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.7.</span> <span class="nav-text">3.2 AOF介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-AOF%E7%9A%84%E4%B8%89%E7%A7%8D%E7%AD%96%E7%95%A5"><span class="nav-number">2.8.</span> <span class="nav-text">3.3 AOF的三种策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-AOF-%E9%87%8D%E5%86%99"><span class="nav-number">2.9.</span> <span class="nav-text">3.4 AOF 重写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">2.9.1.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AOF%E9%87%8D%E5%86%99%E9%85%8D%E7%BD%AE%EF%BC%9A"><span class="nav-number">2.9.2.</span> <span class="nav-text">AOF重写配置：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%86%99%E6%B5%81%E7%A8%8B"><span class="nav-number">2.9.3.</span> <span class="nav-text">重写流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">2.9.4.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-AOF-%E9%87%8D%E5%86%99%E6%BC%94%E7%A4%BA"><span class="nav-number">2.10.</span> <span class="nav-text">3.5 AOF 重写演示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-RDB%E5%92%8CAOF%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">3.</span> <span class="nav-text">四 RDB和AOF的选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-rdb%E5%92%8Caof%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">3.1.</span> <span class="nav-text">4.1 rdb和aof的比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-rdb%E6%9C%80%E4%BD%B3%E7%AD%96%E7%95%A5"><span class="nav-number">3.2.</span> <span class="nav-text">4.2 rdb最佳策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-aof%E6%9C%80%E4%BD%B3%E7%AD%96%E7%95%A5"><span class="nav-number">3.3.</span> <span class="nav-text">4.3 aof最佳策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E6%9C%80%E4%BD%B3%E7%AD%96%E7%95%A5"><span class="nav-number">3.4.</span> <span class="nav-text">4.4 最佳策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%BC%80%E9%94%80%E5%92%8C%E4%BC%98%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">一 子进程开销和优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-fork%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">二 fork操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-aof%E8%BF%BD%E5%8A%A0%E9%98%BB%E5%A1%9E"><span class="nav-number">6.</span> <span class="nav-text">三 aof追加阻塞</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -551,12 +590,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">1.5m</span>
+    <span title="站点总字数">1.6m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">42:36</span>
+    <span title="站点阅读时长">43:23</span>
 </div>
 
 <!--
