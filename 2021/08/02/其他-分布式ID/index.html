@@ -20,17 +20,20 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="tech life sharing">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YouNeed">
-<meta property="og:url" content="https://waylon.whatyouneed.site/archives/2021/06/index.html">
+  <meta name="description" content="分布式ID方案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="其他-分布式ID">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/08/02/%E5%85%B6%E4%BB%96-%E5%88%86%E5%B8%83%E5%BC%8FID/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="tech life sharing">
+<meta property="og:description" content="分布式ID方案">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-02T11:59:36.000Z">
+<meta property="article:modified_time" content="2021-08-02T12:01:50.529Z">
 <meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="review">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://waylon.whatyouneed.site/archives/2021/06/">
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/02/%E5%85%B6%E4%BB%96-%E5%88%86%E5%B8%83%E5%BC%8FID/">
 
 
 <script id="page-configurations">
@@ -38,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | YouNeed</title>
+  <title>其他-分布式ID | YouNeed</title>
   
 
 
@@ -181,235 +184,107 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">很好! 目前共计 124 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/02/%E5%85%B6%E4%BB%96-%E5%88%86%E5%B8%83%E5%BC%8FID/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          其他-分布式ID
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-02 19:59:36 / 修改时间：20:01:50" itemprop="dateCreated datePublished" datetime="2021-08-02T19:59:36+08:00">2021-08-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">杂记</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>70</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
+        <p>分布式ID方案</p>
+<a id="more"></a>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-06-29T08:51:55+08:00"
-              content="2021-06-29">
-          06-29
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/06/29/DevOps%E5%AE%9E%E8%B7%B5/" itemprop="url">
-            <span itemprop="name">DevOps实践</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-06-24T02:35:52+08:00"
-              content="2021-06-24">
-          06-24
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/06/24/Go-%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="url">
-            <span itemprop="name">Go-常见排序算法</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-06-23T21:30:36+08:00"
-              content="2021-06-23">
-          06-23
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/06/23/Go-12-%E5%AD%97%E7%AC%A6%E4%B8%B2/" itemprop="url">
-            <span itemprop="name">Go-12-字符串</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-06-23T10:00:33+08:00"
-              content="2021-06-23">
-          06-23
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/06/23/Go-11-Map/" itemprop="url">
-            <span itemprop="name">Go-11-Map</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-06-22T21:51:07+08:00"
-              content="2021-06-22">
-          06-22
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/06/22/21-Docker-compost%E9%83%A8%E7%BD%B2Django-uwsgi/" itemprop="url">
-            <span itemprop="name">21-Docker-compost部署Django+uwsgi</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-06-22T08:47:14+08:00"
-              content="2021-06-22">
-          06-22
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/06/22/%E4%B9%B1%E4%B8%83%E5%85%AB%E7%B3%9F/" itemprop="url">
-            <span itemprop="name">乱七八糟</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-06-21T20:59:10+08:00"
-              content="2021-06-21">
-          06-21
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/06/21/Go-%E6%9D%82%E8%AE%B0/" itemprop="url">
-            <span itemprop="name">Go-杂记</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-06-21T11:18:57+08:00"
-              content="2021-06-21">
-          06-21
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/06/21/Go-10-%E5%88%87%E7%89%87/" itemprop="url">
-            <span itemprop="name">Go-10-切片</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-06-21T02:13:58+08:00"
-              content="2021-06-21">
-          06-21
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/06/21/Go-09-%E6%95%B0%E7%BB%84/" itemprop="url">
-            <span itemprop="name">Go-09-数组</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-06-21T02:01:46+08:00"
-              content="2021-06-21">
-          06-21
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/06/21/Go-07-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" itemprop="url">
-            <span itemprop="name">Go-07-数据类型转换</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+<p>python可能执行速度慢，我用go写了雪花算法，编译成动态链接库, 然后用python调用；安卓反编译  类似Java 调用C的代码</p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/review/" rel="tag"><i class="fas fa-cookie-bite"></i> review</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/02/DB-%E8%BD%AC%E8%BD%BD-redis-%E6%8C%81%E4%B9%85%E5%8C%96/" rel="prev" title="DB-转载-redis-持久化">
+      <i class="fa fa-chevron-left"></i> DB-转载-redis-持久化
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2021/06/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2021/06/page/4/">4</a><a class="extend next" rel="next" href="/archives/2021/06/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+  
+  
 
 
 
