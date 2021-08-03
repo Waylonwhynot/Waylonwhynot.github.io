@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Rquest 和 Response">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DRF-03-请求与响应">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/06/06/DRF-03-%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Rquest 和 Response">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-06T12:15:12.000Z">
+<meta property="article:modified_time" content="2021-07-21T00:35:24.107Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/06/06/DRF-03-%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>DRF-03-请求与响应 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/06/06/DRF-03-%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DRF-03-请求与响应
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-06 20:15:12" itemprop="dateCreated datePublished" datetime="2021-06-06T20:15:12+08:00">2021-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-21 08:35:24" itemprop="dateModified" datetime="2021-07-21T08:35:24+08:00">2021-07-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DRF/" itemprop="url" rel="index"><span itemprop="name">DRF</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Rquest 和 Response</p>
+<a id="more"></a>
+
+
+<h1 id="一-请求与响应"><a href="#一-请求与响应" class="headerlink" title="一 请求与响应"></a>一 请求与响应</h1><h2 id="1-1-Request"><a href="#1-1-Request" class="headerlink" title="1.1 Request"></a>1.1 Request</h2><h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.request <span class="keyword">import</span> Request</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, request, parsers=None, authenticators=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 negotiator=None, parser_context=None</span>):</span></span><br><span class="line">        <span class="keyword">assert</span> isinstance(request, HttpRequest), (</span><br><span class="line">            <span class="string">&#x27;The `request` argument must be an instance of &#x27;</span></span><br><span class="line">            <span class="string">&#x27;`django.http.HttpRequest`, not `&#123;&#125;.&#123;&#125;`.&#x27;</span></span><br><span class="line">            .format(request.__class__.__module__, request.__class__.__name__)</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># 二次封装request，将原生request作为drf request对象的_request属性</span></span><br><span class="line">        self._request = request</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span>(<span class="params">self, attr</span>):</span></span><br><span class="line">      <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> getattr(self._request, attr)</span><br><span class="line">      <span class="keyword">except</span> AttributeError:</span><br><span class="line">        <span class="keyword">return</span> self.__getattribute__(attr)</span><br><span class="line">      </span><br><span class="line"><span class="comment"># 请求对象.data: 前端以三种编码方式传入的数据，都可以取出来</span></span><br><span class="line"><span class="comment"># 请求对象.query_params 与Django 标准的request.GET相同，只是更换了更正确的名称。</span></span><br></pre></td></tr></table></figure>
+
+<p>REST framework 传入视图的request对象不再是Django默认的HttpRequest对象，而是REST framework提供的扩展了HttpRequest类的<strong>Request</strong>类的对象。</p>
+<p>REST framework 提供了<strong>Parser</strong>解析器，在接收到请求后会自动根据Content-Type指明的请求数据类型（如url-encoded 或者form-date表单等）将请求数据进行parse解析，解析为类字典**[QueryDict]<strong>对象保存到</strong>Request<strong>对象中。如JSON，解析为</strong>字典**保存在对象中。</p>
+<p><strong>Request对象的数据是自动根据前端发送数据的格式进行解析之后的结果。</strong></p>
+<p>无论前端发送的哪种格式的数据，我们都可以以统一的方式读取数据。</p>
+<h3 id="1-1-1-1-常用属性"><a href="#1-1-1-1-常用属性" class="headerlink" title="1.1.1.1 常用属性"></a>1.1.1.1 常用属性</h3><h5 id="1）-data"><a href="#1）-data" class="headerlink" title="1）.data"></a>1）.data</h5><p><code>request.data</code> 返回解析之后的请求体数据。类似于Django中标准的<code>request.POST</code>和 <code>request.FILES</code>属性，但提供如下特性：</p>
+<ul>
+<li>包含了解析之后的文件和非文件数据</li>
+<li>包含了对POST、PUT、PATCH请求方式解析后的数据</li>
+<li>利用了REST framework的parsers解析器，不仅支持表单类型数据，也支持JSON数据</li>
+</ul>
+<h5 id="2）-query-params"><a href="#2）-query-params" class="headerlink" title="2）.query_params"></a>2）.query_params</h5><p><code>request.query_params</code>与Django标准的<code>request.GET</code>相同，只是更换了更正确的名称而已。</p>
+<h2 id="1-2-Response"><a href="#1-2-Response" class="headerlink" title="1.2 Response"></a>1.2 Response</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rest_framework.response.Response</span><br></pre></td></tr></table></figure>
+
+<h3 id="源码分析-1"><a href="#源码分析-1" class="headerlink" title="源码分析"></a>源码分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.response imoport Response</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, data=None, status=None,</span></span></span><br><span class="line"><span class="function"><span class="params">             template_name=None, headers=None,</span></span></span><br><span class="line"><span class="function"><span class="params">             exception=False, content_type=None</span>):</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># data: 你想要返回的数据，字典</span></span><br><span class="line"><span class="comment"># status: 返回的状态码，默认是200</span></span><br><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> status <span class="comment"># 所有的状态码都定义成了常量，直接用即可</span></span><br><span class="line"><span class="comment"># template_name 渲染的模板名字(自定义模板), 不需要了解</span></span><br><span class="line"><span class="comment"># headers: 响应头，可以往响应头里放东西，就是一个字符串</span></span><br><span class="line"><span class="comment"># content_type: 响应的编码格式，application/json 和 text/html</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 浏览器响应成浏览器格式，postman响应成json格式，通过配置实现的(默认配置)</span></span><br><span class="line"><span class="comment"># 不管是postman 还是浏览器，都返回json格式数据</span></span><br><span class="line"><span class="comment"># drf有默认的配置文件--&gt;先从自己类中找(局部)--&gt;项目settings去找(全局)--&gt; 找不到采用默认的</span></span><br><span class="line">   - 局部使用: 对某个视图有效</span><br><span class="line">   - 全局使用：全局的视图(默认)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">全局配置：settings.py</span><br><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">&#x27;DEFAULT_RENDERER_CLASSES&#x27;</span>: (  <span class="comment"># 默认响应渲染类</span></span><br><span class="line">        <span class="string">&#x27;rest_framework.renderers.JSONRenderer&#x27;</span>,  <span class="comment"># json渲染器</span></span><br><span class="line">        <span class="string">&#x27;rest_framework.renderers.BrowsableAPIRenderer&#x27;</span>,  <span class="comment"># 浏览API渲染器</span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">局部配置:</span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span>(<span class="params">APIView</span>):</span></span><br><span class="line">    renderer_classes = [JSONRenderer]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        print(request)</span><br><span class="line">        <span class="keyword">return</span> Response(data=&#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;WaylonYan&#x27;</span>,<span class="string">&#x27;age&#x27;</span>:<span class="number">18</span>&#125;, status=status.HTTP_200_OK, headers=&#123;<span class="string">&#x27;xxx&#x27;</span>:<span class="number">111</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>REST framework提供了一个响应类<code>Response</code>，使用该类构造响应对象时，响应的具体数据内容会被转换（render渲染）成符合前端需求的类型。</p>
+<p>REST framework提供了<code>Renderer</code> 渲染器，用来根据请求头中的<code>Accept</code>（接收数据类型声明）来自动转换响应数据到对应格式。如果前端请求中未进行Accept声明，则会采用默认方式处理响应数据，我们可以通过配置来修改默认响应格式。</p>
+<p>可以在<strong>rest_framework.settings</strong>查找所有的drf默认配置项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK &#x3D; &#123;</span><br><span class="line">    &#39;DEFAULT_RENDERER_CLASSES&#39;: (  # 默认响应渲染类</span><br><span class="line">        &#39;rest_framework.renderers.JSONRenderer&#39;,  # json渲染器</span><br><span class="line">        &#39;rest_framework.renderers.BrowsableAPIRenderer&#39;,  # 浏览API渲染器</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-2-1-构造方式"><a href="#1-1-2-1-构造方式" class="headerlink" title="1.1.2.1 构造方式"></a>1.1.2.1 构造方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Response(data, status&#x3D;None, template_name&#x3D;None, headers&#x3D;None, content_type&#x3D;None)</span><br></pre></td></tr></table></figure>
+
+<p><code>data</code>数据不要是render处理之后的数据，只需传递python的内建类型数据即可，REST framework会使用<code>renderer</code>渲染器处理<code>data</code>。</p>
+<p><code>data</code>不能是复杂结构的数据，如Django的模型类对象，对于这样的数据我们可以使用<code>Serializer</code>序列化器序列化处理后（转为了Python字典类型）再传递给<code>data</code>参数。</p>
+<p>参数说明：</p>
+<ul>
+<li><code>data</code>: 为响应准备的序列化处理后的数据；</li>
+<li><code>status</code>: 状态码，默认200；</li>
+<li><code>template_name</code>: 模板名称，如果使用<code>HTMLRenderer</code> 时需指明；</li>
+<li><code>headers</code>: 用于存放响应头信息的字典；</li>
+<li><code>content_type</code>: 响应数据的Content-Type，通常此参数无需传递，REST framework会根据前端所需类型数据来设置该参数。</li>
+</ul>
+<h3 id="1-1-2-2-常用属性"><a href="#1-1-2-2-常用属性" class="headerlink" title="1.1.2.2 常用属性"></a>1.1.2.2 常用属性</h3><p>错误：response.data.get(‘detail’)</p>
+<h5 id="1）-data-1"><a href="#1）-data-1" class="headerlink" title="1）.data"></a>1）.data</h5><p>传给response对象的序列化后，但尚未render处理的数据</p>
+<h5 id="2）-status-code"><a href="#2）-status-code" class="headerlink" title="2）.status_code"></a>2）.status_code</h5><p>状态码的数字</p>
+<h5 id="3）-content"><a href="#3）-content" class="headerlink" title="3）.content"></a>3）.content</h5><p>经过render处理后的响应数据</p>
+<h3 id="1-1-2-3-状态码"><a href="#1-1-2-3-状态码" class="headerlink" title="1.1.2.3 状态码"></a>1.1.2.3 状态码</h3><p>为了方便设置状态码，REST framewrok在<code>rest_framework.status</code>模块中提供了常用状态码常量。</p>
+<h5 id="1）信息告知-1xx"><a href="#1）信息告知-1xx" class="headerlink" title="1）信息告知 - 1xx"></a>1）信息告知 - 1xx</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP_100_CONTINUE</span><br><span class="line">HTTP_101_SWITCHING_PROTOCOLS</span><br></pre></td></tr></table></figure>
+
+<h5 id="2）成功-2xx"><a href="#2）成功-2xx" class="headerlink" title="2）成功 - 2xx"></a>2）成功 - 2xx</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP_200_OK</span><br><span class="line">HTTP_201_CREATED</span><br><span class="line">HTTP_202_ACCEPTED</span><br><span class="line">HTTP_203_NON_AUTHORITATIVE_INFORMATION</span><br><span class="line">HTTP_204_NO_CONTENT</span><br><span class="line">HTTP_205_RESET_CONTENT</span><br><span class="line">HTTP_206_PARTIAL_CONTENT</span><br><span class="line">HTTP_207_MULTI_STATUS</span><br></pre></td></tr></table></figure>
+
+<h5 id="3）重定向-3xx"><a href="#3）重定向-3xx" class="headerlink" title="3）重定向 - 3xx"></a>3）重定向 - 3xx</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP_300_MULTIPLE_CHOICES</span><br><span class="line">HTTP_301_MOVED_PERMANENTLY</span><br><span class="line">HTTP_302_FOUND</span><br><span class="line">HTTP_303_SEE_OTHER</span><br><span class="line">HTTP_304_NOT_MODIFIED</span><br><span class="line">HTTP_305_USE_PROXY</span><br><span class="line">HTTP_306_RESERVED</span><br><span class="line">HTTP_307_TEMPORARY_REDIRECT</span><br></pre></td></tr></table></figure>
+
+<h5 id="4）客户端错误-4xx"><a href="#4）客户端错误-4xx" class="headerlink" title="4）客户端错误 - 4xx"></a>4）客户端错误 - 4xx</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">HTTP_400_BAD_REQUEST</span><br><span class="line">HTTP_401_UNAUTHORIZED</span><br><span class="line">HTTP_402_PAYMENT_REQUIRED</span><br><span class="line">HTTP_403_FORBIDDEN</span><br><span class="line">HTTP_404_NOT_FOUND</span><br><span class="line">HTTP_405_METHOD_NOT_ALLOWED</span><br><span class="line">HTTP_406_NOT_ACCEPTABLE</span><br><span class="line">HTTP_407_PROXY_AUTHENTICATION_REQUIRED</span><br><span class="line">HTTP_408_REQUEST_TIMEOUT</span><br><span class="line">HTTP_409_CONFLICT</span><br><span class="line">HTTP_410_GONE</span><br><span class="line">HTTP_411_LENGTH_REQUIRED</span><br><span class="line">HTTP_412_PRECONDITION_FAILED</span><br><span class="line">HTTP_413_REQUEST_ENTITY_TOO_LARGE</span><br><span class="line">HTTP_414_REQUEST_URI_TOO_LONG</span><br><span class="line">HTTP_415_UNSUPPORTED_MEDIA_TYPE</span><br><span class="line">HTTP_416_REQUESTED_RANGE_NOT_SATISFIABLE</span><br><span class="line">HTTP_417_EXPECTATION_FAILED</span><br><span class="line">HTTP_422_UNPROCESSABLE_ENTITY</span><br><span class="line">HTTP_423_LOCKED</span><br><span class="line">HTTP_424_FAILED_DEPENDENCY</span><br><span class="line">HTTP_428_PRECONDITION_REQUIRED</span><br><span class="line">HTTP_429_TOO_MANY_REQUESTS</span><br><span class="line">HTTP_431_REQUEST_HEADER_FIELDS_TOO_LARGE</span><br><span class="line">HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS</span><br></pre></td></tr></table></figure>
+
+<h5 id="5）服务器错误-5xx"><a href="#5）服务器错误-5xx" class="headerlink" title="5）服务器错误 - 5xx"></a>5）服务器错误 - 5xx</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP_500_INTERNAL_SERVER_ERROR</span><br><span class="line">HTTP_501_NOT_IMPLEMENTED</span><br><span class="line">HTTP_502_BAD_GATEWAY</span><br><span class="line">HTTP_503_SERVICE_UNAVAILABLE</span><br><span class="line">HTTP_504_GATEWAY_TIMEOUT</span><br><span class="line">HTTP_505_HTTP_VERSION_NOT_SUPPORTED</span><br><span class="line">HTTP_507_INSUFFICIENT_STORAGE</span><br><span class="line">HTTP_511_NETWORK_AUTHENTICATION_REQUIRED</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="封装Response对象"><a href="#封装Response对象" class="headerlink" title="封装Response对象"></a>封装Response对象</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">APIResponse</span>(<span class="params">Response</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, code=<span class="number">100</span>, msg=<span class="string">&#x27;成功&#x27;</span>, result=None, status=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 template_name=None, headers=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 exception=False, content_type=None, **kwargs</span>):</span></span><br><span class="line">        response_dic = &#123;<span class="string">&#x27;code&#x27;</span>: code, <span class="string">&#x27;msg&#x27;</span>: msg&#125;</span><br><span class="line">        <span class="keyword">if</span> result:</span><br><span class="line">            response_dic = &#123;<span class="string">&#x27;code&#x27;</span>: status, <span class="string">&#x27;msg&#x27;</span>: msg, <span class="string">&#x27;data&#x27;</span>: result&#125;</span><br><span class="line">        response_dic.update(kwargs)</span><br><span class="line"></span><br><span class="line">        super(APIResponse, self).__init__(data=response_dic, status=status,</span><br><span class="line">                                          template_name=template_name, headers=headers,</span><br><span class="line">                                          exception=exception, content_type=content_type)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fas fa-cookie-bite"></i> python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/06/DRF-02-%E5%BA%8F%E5%88%97%E5%8C%96%E7%BB%84%E4%BB%B6/" rel="prev" title="DRF-02-序列化组件">
+      <i class="fa fa-chevron-left"></i> DRF-02-序列化组件
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/06/DRF-04-%E8%A7%86%E5%9B%BE%E7%BB%84%E4%BB%B6/" rel="next" title="DRF-04-视图组件">
+      DRF-04-视图组件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94"><span class="nav-number">1.</span> <span class="nav-text">一 请求与响应</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Request"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Request</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">源码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-1-%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.1.1 常用属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%EF%BC%89-data"><span class="nav-number">1.1.2.0.1.</span> <span class="nav-text">1）.data</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%EF%BC%89-query-params"><span class="nav-number">1.1.2.0.2.</span> <span class="nav-text">2）.query_params</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Response"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Response</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">源码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-1-%E6%9E%84%E9%80%A0%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.1.2.1 构造方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-2-%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.1.2.2 常用属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%EF%BC%89-data-1"><span class="nav-number">1.2.3.0.1.</span> <span class="nav-text">1）.data</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%EF%BC%89-status-code"><span class="nav-number">1.2.3.0.2.</span> <span class="nav-text">2）.status_code</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3%EF%BC%89-content"><span class="nav-number">1.2.3.0.3.</span> <span class="nav-text">3）.content</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-3-%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">1.2.4.</span> <span class="nav-text">1.1.2.3 状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%EF%BC%89%E4%BF%A1%E6%81%AF%E5%91%8A%E7%9F%A5-1xx"><span class="nav-number">1.2.4.0.1.</span> <span class="nav-text">1）信息告知 - 1xx</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%EF%BC%89%E6%88%90%E5%8A%9F-2xx"><span class="nav-number">1.2.4.0.2.</span> <span class="nav-text">2）成功 - 2xx</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3%EF%BC%89%E9%87%8D%E5%AE%9A%E5%90%91-3xx"><span class="nav-number">1.2.4.0.3.</span> <span class="nav-text">3）重定向 - 3xx</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4%EF%BC%89%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%94%99%E8%AF%AF-4xx"><span class="nav-number">1.2.4.0.4.</span> <span class="nav-text">4）客户端错误 - 4xx</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5%EF%BC%89%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%94%99%E8%AF%AF-5xx"><span class="nav-number">1.2.4.0.5.</span> <span class="nav-text">5）服务器错误 - 5xx</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85Response%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.2.5.</span> <span class="nav-text">封装Response对象</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">43:24</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

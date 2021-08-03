@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Consul单机简介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux-Consul简介">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/08/03/Linux-Consul%E7%AE%80%E4%BB%8B/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Consul单机简介">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/consul-arch-20210803114518294.png">
+<meta property="og:image" content="https://www.hi-linux.com/img/linux/consul1.png">
+<meta property="article:published_time" content="2021-08-03T03:43:56.000Z">
+<meta property="article:modified_time" content="2021-08-03T03:47:58.860Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="consul">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/consul-arch-20210803114518294.png">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/03/Linux-Consul%E7%AE%80%E4%BB%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux-Consul简介 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/03/Linux-Consul%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux-Consul简介
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-03 11:43:56 / 修改时间：11:47:58" itemprop="dateCreated datePublished" datetime="2021-08-03T11:43:56+08:00">2021-08-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>17k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>28 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Consul单机简介</p>
+<a id="more"></a>
+
+
+
+<h3 id="Consul简介"><a href="#Consul简介" class="headerlink" title="Consul简介"></a>Consul简介</h3><p>Consul是HashiCorp公司推出的开源工具，用于实现分布式系统的服务发现与配置。Consul是分布式的、高可用的、 可横向扩展的。它具备以下特性:</p>
+<ul>
+<li>服务发现: Consul提供了通过DNS或者HTTP接口的方式来注册服务和发现服务。一些外部的服务通过Consul很容易的找到它所依赖的服务。</li>
+<li>健康检测: Consul的Client提供了健康检查的机制，可以通过用来避免流量被转发到有故障的服务上。</li>
+<li>Key/Value存储: 应用程序可以根据自己的需要使用Consul提供的Key/Value存储。 Consul提供了简单易用的HTTP接口，结合其他工具可以实现动态配置、功能标记、领袖选举等等功能。</li>
+<li>多数据中心: Consul支持开箱即用的多数据中心. 这意味着用户不需要担心需要建立额外的抽象层让业务扩展到多个区域。</li>
+</ul>
+<p><strong>Consul架构</strong></p>
+<p>Consul架构图</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/consul-arch-20210803114518294.png" alt="img"></p>
+<ul>
+<li>Consul Cluster由部署和运行了Consul Agent的节点组成。在Cluster中有两种角色:Server和 Client。</li>
+<li>Server和Client的角色和Consul Cluster上运行的应用服务无关, 是基于Consul层面的一种角色划分.</li>
+<li>Consul Server: 用于维护Consul Cluster的状态信息。 官方建议是: 至少要运行3个或者3个以上的Consul Server。 多个server之中需要选举一个leader, 这个选举过程Consul基于Raft协议实现. 多个Server节点上的Consul数据信息保持强一致性。在局域网内与本地客户端通讯，通过广域网与其他数据中心通讯。</li>
+<li>Consul Client: 只维护自身的状态, 并将HTTP和DNS接口请求转发给服务端。</li>
+</ul>
+<p>项目官方网址：<a target="_blank" rel="noopener" href="https://www.consul.io/">https://www.consul.io/</a></p>
+<h3 id="Consul安装"><a href="#Consul安装" class="headerlink" title="Consul安装"></a>Consul安装</h3><p>Consul用Golang实现，因此具有天然可移植性(支持 Linux、windows 和macOS)。安装包仅包含一个可执行文件。Consul安装非常简单，只需要下载对应系统的软件包并解压后就可使用。</p>
+<ul>
+<li>Consul安装</li>
+</ul>
+<p>这里以Linux系统为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://releases.hashicorp.com/consul/0.8.1/consul_0.8.1_linux_amd64.zip</span><br><span class="line">$ unzip consul_0.8.1_linux_amd64.zip</span><br><span class="line">$ mv consul /usr/<span class="built_in">local</span>/bin/</span><br></pre></td></tr></table></figure>
+
+<p>其它系统版本可在这里下载：<a target="_blank" rel="noopener" href="https://www.consul.io/downloads.html">https://www.consul.io/downloads.html</a></p>
+<ul>
+<li>验证安装</li>
+</ul>
+<p>安装Consul后，通过执行consul命令，你可以看到类似的输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$ consul</span><br><span class="line">usage: consul [--version] [--<span class="built_in">help</span>] &lt;<span class="built_in">command</span>&gt; [&lt;args&gt;]</span><br><span class="line"></span><br><span class="line">Available commands are:</span><br><span class="line">   agent          Runs a Consul agent</span><br><span class="line">   event          Fire a new event</span><br><span class="line">   <span class="built_in">exec</span>           Executes a <span class="built_in">command</span> on Consul nodes</span><br><span class="line">   force-leave    Forces a member of the cluster to enter the <span class="string">&quot;left&quot;</span> state</span><br><span class="line">   info           Provides debugging information <span class="keyword">for</span> operators.</span><br><span class="line">   join           Tell Consul agent to join cluster</span><br><span class="line">   keygen         Generates a new encryption key</span><br><span class="line">   keyring        Manages gossip layer encryption keys</span><br><span class="line">   kv             Interact with the key-value store</span><br><span class="line">   leave          Gracefully leaves the Consul cluster and shuts down</span><br><span class="line">   lock           Execute a <span class="built_in">command</span> holding a lock</span><br><span class="line">   maint          Controls node or service maintenance mode</span><br><span class="line">   members        Lists the members of a Consul cluster</span><br><span class="line">   monitor        Stream logs from a Consul agent</span><br><span class="line">   operator       Provides cluster-level tools <span class="keyword">for</span> Consul operators</span><br><span class="line">   reload         Triggers the agent to reload configuration files</span><br><span class="line">   rtt            Estimates network round trip time between nodes</span><br><span class="line">   snapshot       Saves, restores and inspects snapshots of Consul server state</span><br><span class="line">   validate       Validate config files/directories</span><br><span class="line">   version        Prints the Consul version</span><br><span class="line">   watch          Watch <span class="keyword">for</span> changes <span class="keyword">in</span> Consul</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行Consul代理"><a href="#运行Consul代理" class="headerlink" title="运行Consul代理"></a>运行Consul代理</h3><p>Consul是典型的C/S架构，可以运行服务模式或客户模式。</p>
+<p>每一个数据中心必须有至少一个服务节点，3到5个服务节点最好。非常不建议只运行一个服务节点，因为在节点失效的情况下数据有极大的丢失风险。</p>
+<p>其它的所有节点都运行在客户端模式下，一个客户节点是非常轻量的注册服务进程，用来处理健康检查，转发请求到服务节点等事务，代理必须在集群中的每个节点上运行。</p>
+<p>为了简单起见，我们将暂时在开发者模式中启动Consul代理。这个模式可以非常容易快速地启动一个单节点的Consul环境。但是由于并不保存状态，所以不要在生产环境中使用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ consul agent -dev -<span class="built_in">bind</span>=0.0.0.0</span><br></pre></td></tr></table></figure>
+
+<p>在有多个IP的环境下必须指定IP，否则会报如下类似错误：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">==&gt; Error starting agent: Failed to get advertise address: Multiple private IPs found. Please configure one.</span><br></pre></td></tr></table></figure>
+
+<p>我的环境是多IP的情况，这里就显示指定IP:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$ consul agent -dev -<span class="built_in">bind</span>=192.168.2.210</span><br><span class="line">==&gt; Starting Consul agent...</span><br><span class="line">==&gt; Consul agent running!</span><br><span class="line">           Version: <span class="string">&#x27;v0.8.1&#x27;</span></span><br><span class="line">           Node ID: <span class="string">&#x27;b76ff298-accd-05ff-8c64-5d79d866dfa9&#x27;</span></span><br><span class="line">         Node name: <span class="string">&#x27;dev-master-01&#x27;</span></span><br><span class="line">        Datacenter: <span class="string">&#x27;dc1&#x27;</span></span><br><span class="line">            Server: <span class="literal">true</span> (bootstrap: <span class="literal">false</span>)</span><br><span class="line">       Client Addr: 127.0.0.1 (HTTP: 8500, HTTPS: -1, DNS: 8600)</span><br><span class="line">      Cluster Addr: 192.168.2.210 (LAN: 8301, WAN: 8302)</span><br><span class="line">    Gossip encrypt: <span class="literal">false</span>, RPC-TLS: <span class="literal">false</span>, TLS-Incoming: <span class="literal">false</span></span><br><span class="line">             Atlas: &lt;disabled&gt;</span><br><span class="line"></span><br><span class="line">==&gt; Log data will now stream <span class="keyword">in</span> as it occurs:</span><br><span class="line"></span><br><span class="line">    2017/05/09 09:57:06 [DEBUG] Using unique ID <span class="string">&quot;b76ff298-accd-05ff-8c64-5d79d866dfa9&quot;</span> from host as node ID</span><br><span class="line">    2017/05/09 09:57:06 [INFO] raft: Initial configuration (index=1): [&#123;Suffrage:Voter ID:192.168.2.210:8300 Address:192.168.2.210:8300&#125;]</span><br><span class="line">    2017/05/09 09:57:06 [INFO] serf: EventMemberJoin: dev-master-01 192.168.2.210</span><br><span class="line">    2017/05/09 09:57:06 [INFO] serf: EventMemberJoin: dev-master-01.dc1 192.168.2.210</span><br><span class="line">    2017/05/09 09:57:06 [INFO] raft: Node at 192.168.2.210:8300 [Follower] entering Follower state (Leader: <span class="string">&quot;&quot;</span>)</span><br><span class="line">    2017/05/09 09:57:06 [INFO] consul: Adding LAN server dev-master-01 (Addr: tcp/192.168.2.210:8300) (DC: dc1)</span><br><span class="line">    2017/05/09 09:57:06 [INFO] consul: Handled member-join event <span class="keyword">for</span> server <span class="string">&quot;dev-master-01.dc1&quot;</span> <span class="keyword">in</span> area <span class="string">&quot;wan&quot;</span></span><br><span class="line">    2017/05/09 09:57:13 [ERR] agent: failed to sync remote state: No cluster leader</span><br><span class="line">    2017/05/09 09:57:14 [WARN] raft: Heartbeat timeout from <span class="string">&quot;&quot;</span> reached, starting election</span><br><span class="line">    2017/05/09 09:57:14 [INFO] raft: Node at 192.168.2.210:8300 [Candidate] entering Candidate state <span class="keyword">in</span> term 2</span><br><span class="line">    2017/05/09 09:57:14 [DEBUG] raft: Votes needed: 1</span><br><span class="line">    2017/05/09 09:57:14 [DEBUG] raft: Vote granted from 192.168.2.210:8300 <span class="keyword">in</span> term 2. Tally: 1</span><br><span class="line">    2017/05/09 09:57:14 [INFO] raft: Election won. Tally: 1</span><br><span class="line">    2017/05/09 09:57:14 [INFO] raft: Node at 192.168.2.210:8300 [Leader] entering Leader state</span><br><span class="line">    2017/05/09 09:57:14 [INFO] consul: cluster leadership acquired</span><br><span class="line">    2017/05/09 09:57:14 [INFO] consul: New leader elected: dev-master-01</span><br><span class="line">    2017/05/09 09:57:14 [DEBUG] consul: reset tombstone GC to index 3</span><br><span class="line">    2017/05/09 09:57:14 [INFO] consul: member <span class="string">&#x27;dev-master-01&#x27;</span> joined, marking health alive</span><br><span class="line">    2017/05/09 09:57:16 [INFO] agent: Synced service <span class="string">&#x27;consul&#x27;</span></span><br><span class="line">    2017/05/09 09:57:16 [DEBUG] agent: Node info <span class="keyword">in</span> sync</span><br></pre></td></tr></table></figure>
+
+<p>从上面Consul代理启动过程中输出的日志信息可以看到代理运行在服务器模式并且声明集群的leadship。另外，本地的成员已经被标记为一个健康的集群成员。</p>
+<p>启动consul后，系统会监听如下端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ netstat  -tunpea | grep consul</span><br><span class="line">tcp        0      0 192.168.2.210:8300      0.0.0.0:*               LISTEN      0          26525       5058/consul</span><br><span class="line">tcp        0      0 192.168.2.210:8301      0.0.0.0:*               LISTEN      0          26526       5058/consul</span><br><span class="line">tcp        0      0 192.168.2.210:8302      0.0.0.0:*               LISTEN      0          26528       5058/consul</span><br><span class="line">tcp        0      0 127.0.0.1:8500          0.0.0.0:*               LISTEN      0          26530       5058/consul</span><br><span class="line">tcp        0      0 127.0.0.1:8600          0.0.0.0:*               LISTEN      0          26536       5058/consul</span><br><span class="line">tcp        0      0 192.168.2.210:58670     192.168.2.210:8300      ESTABLISHED 0          26952       5058/consul</span><br><span class="line">tcp        0      0 192.168.2.210:8300      192.168.2.210:58670     ESTABLISHED 0          27735       5058/consul</span><br><span class="line">udp        0      0 192.168.2.210:8301      0.0.0.0:*                           0          26527       5058/consul</span><br><span class="line">udp        0      0 192.168.2.210:8302      0.0.0.0:*                           0          26529       5058/consul</span><br><span class="line">udp        0      0 127.0.0.1:8600          0.0.0.0:*                           0          26535       5058/consul</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看集群成员"><a href="#查看集群成员" class="headerlink" title="查看集群成员"></a>查看集群成员</h4><ul>
+<li>使用member命令</li>
+</ul>
+<p>在另一个终端中运行下面的指令，就能看到Consul集群所有的节点。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ consul members</span><br><span class="line">Node           Address             Status  Type    Build  Protocol  DC</span><br><span class="line">dev-master-01  192.168.2.210:8301  alive   server  0.8.1  2         dc1</span><br></pre></td></tr></table></figure>
+
+<p>输出结果显示了节点名称，运行的地址，健康状态，在集群中的角色，以及一些版本信息。如果查看更详细的信息可通过<code>-detailed</code>选项来查看。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ consul members -detailed</span><br><span class="line">Node           Address             Status  Tags</span><br><span class="line">dev-master-01  192.168.2.210:8301  alive   build=0.8.1:<span class="string">&#x27;e9ca44d,dc=dc1,id=b76ff298-accd-05ff-8c64-5d79d866dfa9,port=8300,raft_vsn=2,role=consul,vsn=2,vsn_max=3,vsn_min=2,wan_join_port=8302</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用HTTP API</li>
+</ul>
+<p>members命令选项的输出是基于<code>gossip</code>协议的并且其内容是最终一致。也就是说，在任何时候你在本地代理看到的内容可能与当前服务器中的状态并不是绝对一致的。</p>
+<p>如果需要强一致性的状态信息，使用HTTP API向Consul服务器发送请求：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ curl localhost:8500/v1/catalog/nodes</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;ID&quot;</span>: <span class="string">&quot;b76ff298-accd-05ff-8c64-5d79d866dfa9&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Node&quot;</span>: <span class="string">&quot;dev-master-01&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Address&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span>,</span><br><span class="line">        <span class="string">&quot;TaggedAddresses&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;lan&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span>,</span><br><span class="line">            <span class="string">&quot;wan&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;Meta&quot;</span>: &#123;&#125;,</span><br><span class="line">        <span class="string">&quot;CreateIndex&quot;</span>: 5,</span><br><span class="line">        <span class="string">&quot;ModifyIndex&quot;</span>: 6</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用DNS API</li>
+</ul>
+<p>除了HTTP API，DNS接口也可用被用来查询节点信息。启动服务后，本地的8600一直处于监听状态，可以接受DNS请求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ netstat  -tunpea | grep consul | grep 8600</span><br><span class="line">tcp        0      0 127.0.0.1:8600          0.0.0.0:*               LISTEN      0          26536       5058&#x2F;consul</span><br><span class="line">udp        0      0 127.0.0.1:8600          0.0.0.0:*                           0          26535       5058&#x2F;consul</span><br></pre></td></tr></table></figure>
+
+<p>使用dig查看节点IP</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ dig @127.0.0.1 -p 8600  dev-master-01.node.consul</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.10.3-P4-Ubuntu &lt;&lt;&gt;&gt; @127.0.0.1 -p 8600 dev-master-01.node.consul</span><br><span class="line">; (1 server found)</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 63199</span><br><span class="line">;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0</span><br><span class="line">;; WARNING: recursion requested but not available</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;dev-master-01.node.consul.    IN    A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">dev-master-01.node.consul. 0    IN    A    192.168.2.210</span><br><span class="line"></span><br><span class="line">;; Query time: 1 msec</span><br><span class="line">;; SERVER: 127.0.0.1<span class="comment">#8600(127.0.0.1)</span></span><br><span class="line">;; WHEN: Tue May 09 10:21:18 CST 2017</span><br><span class="line">;; MSG SIZE  rcvd: 59</span><br></pre></td></tr></table></figure>
+
+<h4 id="停止服务"><a href="#停止服务" class="headerlink" title="停止服务"></a>停止服务</h4><p>在终端前台运行的情况下，可使用<code>Ctrl-C</code>来平滑地停止代理。停止代理后，你可以看到它脱离集群并且关闭的信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">2017/05/09 10:32:13 [DEBUG] manager: Rebalanced 1 servers, next active server is dev-master-01.dc1 (Addr: tcp/192.168.2.210:8300) (DC: dc1)</span><br><span class="line">2017/05/09 10:33:22 [DEBUG] agent: Service <span class="string">&#x27;consul&#x27;</span> <span class="keyword">in</span> sync</span><br><span class="line">2017/05/09 10:33:22 [DEBUG] agent: Node info <span class="keyword">in</span> sync</span><br><span class="line">^C==&gt; Caught signal: interrupt</span><br><span class="line">2017/05/09 10:34:17 [DEBUG] http: Shutting down http server (127.0.0.1:8500)</span><br><span class="line">2017/05/09 10:34:17 [INFO] agent: requesting shutdown</span><br><span class="line">2017/05/09 10:34:17 [INFO] consul: shutting down server</span><br><span class="line">2017/05/09 10:34:17 [WARN] serf: Shutdown without a Leave</span><br><span class="line">2017/05/09 10:34:17 [ERR] dns: error starting tcp server: accept tcp 127.0.0.1:8600: use of closed network connection</span><br><span class="line">2017/05/09 10:34:17 [WARN] serf: Shutdown without a Leave</span><br><span class="line">2017/05/09 10:34:17 [INFO] manager: shutting down</span><br><span class="line">2017/05/09 10:34:17 [INFO] agent: shutdown complete</span><br></pre></td></tr></table></figure>
+
+<p>为了优雅地离开集群，Consul会通知其他的集群成员自己已经脱离了。如果你强制杀死代理的进程，那么其他的集群成员需要侦测节点是否失效。当一个成员离开，它的服务以及健康状态将从目录中移除。当一个成员失效，它的健康会简单地标记为critical，但它并不会被从目录中移除。Consul将自动尝试重新连接到失效的节点，并允许它在某些网络状况下恢复。如果一个代理以服务器模式启动，优雅地离开是非常重要的，因为这可以避免潜在的可用性问题。</p>
+<h4 id="启动Web界面"><a href="#启动Web界面" class="headerlink" title="启动Web界面"></a>启动Web界面</h4><p>Consul自带一个界面美观，功能强大的，开箱即用的Web界面。通过该界面我们可以查看所有的服务以及节点，查看所有的健康监测及其当前的状态，以及读取和设置键/值数据。</p>
+<p>该界面被映射到/ui上，和HTTP API使用相同的端口。默认就是<code>http://localhost:8500/ui</code>。</p>
+<p><img src="https://www.hi-linux.com/img/linux/consul1.png" alt="img"></p>
+<p>如果你要在其它机器上访问，可以加上<code>-client</code>参数指定绑定的IP。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ consul agent -dev -<span class="built_in">bind</span>=192.168.2.210 -client 0.0.0.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="注册一个服务"><a href="#注册一个服务" class="headerlink" title="注册一个服务"></a>注册一个服务</h3><p>服务能够通过提供一个服务定义或者调用适当的HTTP API来注册。</p>
+<h4 id="使用配置文件进行服务定义"><a href="#使用配置文件进行服务定义" class="headerlink" title="使用配置文件进行服务定义"></a>使用配置文件进行服务定义</h4><p>Consul会加载配置目录中的所有配置文件，配置文件是以<code>.json</code>结尾，并且以字典顺序加载。</p>
+<h5 id="创建配置文件"><a href="#创建配置文件" class="headerlink" title="创建配置文件"></a>创建配置文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建配置目录</span></span><br><span class="line">$ mkdir /etc/consul.d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个服务定义配置文件，假设有一个名为web服务，它运行在80端口。</span></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;&#123;&quot;service&quot;: &#123;&quot;name&quot;: &quot;web&quot;, &quot;tags&quot;: [&quot;rails&quot;], &quot;port&quot;: 80&#125;&#125;&#x27;</span> &gt;/etc/consul.d/web.json</span><br></pre></td></tr></table></figure>
+
+<h5 id="用指定配置文件启动服务"><a href="#用指定配置文件启动服务" class="headerlink" title="用指定配置文件启动服务"></a>用指定配置文件启动服务</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">$ consul agent -dev -<span class="built_in">bind</span>=192.168.2.210 -config-dir /etc/consul.d/</span><br><span class="line"></span><br><span class="line">==&gt; Starting Consul agent...</span><br><span class="line">==&gt; Consul agent running!</span><br><span class="line">           Version: <span class="string">&#x27;v0.8.1&#x27;</span></span><br><span class="line">           Node ID: <span class="string">&#x27;b76ff298-accd-05ff-8c64-5d79d866dfa9&#x27;</span></span><br><span class="line">         Node name: <span class="string">&#x27;dev-master-01&#x27;</span></span><br><span class="line">        Datacenter: <span class="string">&#x27;dc1&#x27;</span></span><br><span class="line">            Server: <span class="literal">true</span> (bootstrap: <span class="literal">false</span>)</span><br><span class="line">       Client Addr: 127.0.0.1 (HTTP: 8500, HTTPS: -1, DNS: 8600)</span><br><span class="line">      Cluster Addr: 192.168.2.210 (LAN: 8301, WAN: 8302)</span><br><span class="line">    Gossip encrypt: <span class="literal">false</span>, RPC-TLS: <span class="literal">false</span>, TLS-Incoming: <span class="literal">false</span></span><br><span class="line">             Atlas: &lt;disabled&gt;</span><br><span class="line"></span><br><span class="line">==&gt; Log data will now stream <span class="keyword">in</span> as it occurs:</span><br><span class="line"></span><br><span class="line">    2017/05/09 10:43:05 [DEBUG] Using unique ID <span class="string">&quot;b76ff298-accd-05ff-8c64-5d79d866dfa9&quot;</span> from host as node ID</span><br><span class="line">    2017/05/09 10:43:05 [INFO] raft: Initial configuration (index=1): [&#123;Suffrage:Voter ID:192.168.2.210:8300 Address:192.168.2.210:8300&#125;]</span><br><span class="line">    2017/05/09 10:43:05 [INFO] raft: Node at 192.168.2.210:8300 [Follower] entering Follower state (Leader: <span class="string">&quot;&quot;</span>)</span><br><span class="line">    2017/05/09 10:43:05 [INFO] serf: EventMemberJoin: dev-master-01 192.168.2.210</span><br><span class="line">    2017/05/09 10:43:05 [INFO] consul: Adding LAN server dev-master-01 (Addr: tcp/192.168.2.210:8300) (DC: dc1)</span><br><span class="line">    2017/05/09 10:43:05 [INFO] serf: EventMemberJoin: dev-master-01.dc1 192.168.2.210</span><br><span class="line">    2017/05/09 10:43:05 [INFO] consul: Handled member-join event <span class="keyword">for</span> server <span class="string">&quot;dev-master-01.dc1&quot;</span> <span class="keyword">in</span> area <span class="string">&quot;wan&quot;</span></span><br><span class="line">    2017/05/09 10:43:11 [WARN] raft: Heartbeat timeout from <span class="string">&quot;&quot;</span> reached, starting election</span><br><span class="line">    2017/05/09 10:43:11 [INFO] raft: Node at 192.168.2.210:8300 [Candidate] entering Candidate state <span class="keyword">in</span> term 2</span><br><span class="line">    2017/05/09 10:43:11 [DEBUG] raft: Votes needed: 1</span><br><span class="line">    2017/05/09 10:43:11 [DEBUG] raft: Vote granted from 192.168.2.210:8300 <span class="keyword">in</span> term 2. Tally: 1</span><br><span class="line">    2017/05/09 10:43:11 [INFO] raft: Election won. Tally: 1</span><br><span class="line">    2017/05/09 10:43:11 [INFO] raft: Node at 192.168.2.210:8300 [Leader] entering Leader state</span><br><span class="line">    2017/05/09 10:43:11 [INFO] consul: cluster leadership acquired</span><br><span class="line">    2017/05/09 10:43:11 [DEBUG] consul: reset tombstone GC to index 3</span><br><span class="line">    2017/05/09 10:43:11 [INFO] consul: member <span class="string">&#x27;dev-master-01&#x27;</span> joined, marking health alive</span><br><span class="line">    2017/05/09 10:43:11 [INFO] consul: New leader elected: dev-master-01</span><br><span class="line">    2017/05/09 10:43:11 [INFO] agent: Synced service <span class="string">&#x27;consul&#x27;</span></span><br><span class="line">    2017/05/09 10:43:11 [INFO] agent: Synced service <span class="string">&#x27;web&#x27;</span></span><br><span class="line">    2017/05/09 10:43:11 [DEBUG] agent: Node info <span class="keyword">in</span> sync</span><br></pre></td></tr></table></figure>
+
+<p>输出结果中有<code>Synced service &#39;web&#39;</code>，说明定义的服务已经成功注册到服务目录中。如果要注册更多的服务，可以在Consul配置目录中创建多个服务定义文件。</p>
+<h5 id="查看服务"><a href="#查看服务" class="headerlink" title="查看服务"></a>查看服务</h5><p>一旦代理启动并且服务已经同步，我们就可以使用DNS或者HTTP API来查询服务了。</p>
+<ul>
+<li>使用DNS API查看</li>
+</ul>
+<p>对于DNS API，服务的DNS名称是<code>NAME.service.consul</code> 。默认所有的DNS名称都是在consul名称空间下，当然这个是可配置的。service子域名告诉Consul我们正在查询服务，并且NAME就是要查询的服务的名称。</p>
+<p>a) 使用DNS API的方式查看服务对应的IP</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ dig @127.0.0.1 -p 8600  web.service.consul</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.10.3-P4-Ubuntu &lt;&lt;&gt;&gt; @127.0.0.1 -p 8600 web.service.consul</span><br><span class="line">; (1 server found)</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 37039</span><br><span class="line">;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0</span><br><span class="line">;; WARNING: recursion requested but not available</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;web.service.consul.        IN    A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">web.service.consul.    0    IN    A    192.168.2.210</span><br><span class="line"></span><br><span class="line">;; Query time: 1 msec</span><br><span class="line">;; SERVER: 127.0.0.1<span class="comment">#8600(127.0.0.1)</span></span><br><span class="line">;; WHEN: Tue May 09 10:48:54 CST 2017</span><br><span class="line">;; MSG SIZE  rcvd: 52</span><br></pre></td></tr></table></figure>
+
+<p>b) 使用DNS API来获取完整的地址/端口的SRV记录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ dig @127.0.0.1 -p 8600 web.service.consul SRV</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.10.3-P4-Ubuntu &lt;&lt;&gt;&gt; @127.0.0.1 -p 8600 web.service.consul SRV</span><br><span class="line">; (1 server found)</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 3941</span><br><span class="line">;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1</span><br><span class="line">;; WARNING: recursion requested but not available</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;web.service.consul.        IN    SRV</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">web.service.consul.    0    IN    SRV    1 1 80 dev-master-01.node.dc1.consul.</span><br><span class="line"></span><br><span class="line">;; ADDITIONAL SECTION:</span><br><span class="line">dev-master-01.node.dc1.consul. 0 IN    A    192.168.2.210</span><br><span class="line"></span><br><span class="line">;; Query time: 0 msec</span><br><span class="line">;; SERVER: 127.0.0.1<span class="comment">#8600(127.0.0.1)</span></span><br><span class="line">;; WHEN: Tue May 09 10:52:39 CST 2017</span><br><span class="line">;; MSG SIZE  rcvd: 95</span><br></pre></td></tr></table></figure>
+
+<p>SRV记录显示了web服务证运行在节点dev-master-01.node.dc1.consul的80端口上。</p>
+<p>c) 使用DNS API结合tag来过滤服务</p>
+<p>基于标记的服务查询的格式是<code>TAG.NAME.service.consul</code>。 这里以查询Consul中所有含”rails”标记的web服务为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ dig @127.0.0.1 -p 8600  rails.web.service.consul</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.10.3-P4-Ubuntu &lt;&lt;&gt;&gt; @127.0.0.1 -p 8600 rails.web.service.consul</span><br><span class="line">; (1 server found)</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 44287</span><br><span class="line">;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0</span><br><span class="line">;; WARNING: recursion requested but not available</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;rails.web.service.consul.    IN    A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">rails.web.service.consul. 0    IN    A    192.168.2.210</span><br><span class="line"></span><br><span class="line">;; Query time: 0 msec</span><br><span class="line">;; SERVER: 127.0.0.1<span class="comment">#8600(127.0.0.1)</span></span><br><span class="line">;; WHEN: Tue May 09 10:58:16 CST 2017</span><br><span class="line">;; MSG SIZE  rcvd: 58</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用HTTP API查看</li>
+</ul>
+<p>除了DNS API，HTTP API也可以用于服务查询。</p>
+<p>a) 查询指定节点以及指定的服务信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:8500/v1/catalog/service/web</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;ID&quot;</span>: <span class="string">&quot;b76ff298-accd-05ff-8c64-5d79d866dfa9&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Node&quot;</span>: <span class="string">&quot;dev-master-01&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Address&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span>,</span><br><span class="line">        <span class="string">&quot;TaggedAddresses&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;lan&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span>,</span><br><span class="line">            <span class="string">&quot;wan&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;NodeMeta&quot;</span>: &#123;&#125;,</span><br><span class="line">        <span class="string">&quot;ServiceID&quot;</span>: <span class="string">&quot;web&quot;</span>,</span><br><span class="line">        <span class="string">&quot;ServiceName&quot;</span>: <span class="string">&quot;web&quot;</span>,</span><br><span class="line">        <span class="string">&quot;ServiceTags&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;rails&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">&quot;ServiceAddress&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;ServicePort&quot;</span>: 80,</span><br><span class="line">        <span class="string">&quot;ServiceEnableTagOverride&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="string">&quot;CreateIndex&quot;</span>: 7,</span><br><span class="line">        <span class="string">&quot;ModifyIndex&quot;</span>: 7</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>b) 查看服务的健康状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">$ curl <span class="string">&#x27;http://localhost:8500/v1/health/service/web?passing&#x27;</span></span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;Node&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;ID&quot;</span>: <span class="string">&quot;b76ff298-accd-05ff-8c64-5d79d866dfa9&quot;</span>,</span><br><span class="line">            <span class="string">&quot;Node&quot;</span>: <span class="string">&quot;dev-master-01&quot;</span>,</span><br><span class="line">            <span class="string">&quot;Address&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span>,</span><br><span class="line">            <span class="string">&quot;TaggedAddresses&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;lan&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span>,</span><br><span class="line">                <span class="string">&quot;wan&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&quot;Meta&quot;</span>: &#123;&#125;,</span><br><span class="line">            <span class="string">&quot;CreateIndex&quot;</span>: 5,</span><br><span class="line">            <span class="string">&quot;ModifyIndex&quot;</span>: 6</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;Service&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;ID&quot;</span>: <span class="string">&quot;web&quot;</span>,</span><br><span class="line">            <span class="string">&quot;Service&quot;</span>: <span class="string">&quot;web&quot;</span>,</span><br><span class="line">            <span class="string">&quot;Tags&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;rails&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;Address&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="string">&quot;Port&quot;</span>: 80,</span><br><span class="line">            <span class="string">&quot;EnableTagOverride&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="string">&quot;CreateIndex&quot;</span>: 7,</span><br><span class="line">            <span class="string">&quot;ModifyIndex&quot;</span>: 7</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;Checks&quot;</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&quot;Node&quot;</span>: <span class="string">&quot;dev-master-01&quot;</span>,</span><br><span class="line">                <span class="string">&quot;CheckID&quot;</span>: <span class="string">&quot;serfHealth&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;Serf Health Status&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Status&quot;</span>: <span class="string">&quot;passing&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Notes&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Output&quot;</span>: <span class="string">&quot;Agent alive and reachable&quot;</span>,</span><br><span class="line">                <span class="string">&quot;ServiceID&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                <span class="string">&quot;ServiceName&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                <span class="string">&quot;CreateIndex&quot;</span>: 5,</span><br><span class="line">                <span class="string">&quot;ModifyIndex&quot;</span>: 5</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h4 id="调用HTTP-API进行定义"><a href="#调用HTTP-API进行定义" class="headerlink" title="调用HTTP API进行定义"></a>调用HTTP API进行定义</h4><p>Consul提供RESTful HTTP API. API可对节点、服务、健康检查、配置等执行CRUD操作(CRUD是指在做计算处理时的增加(Create)、读取查询(Retrieve)、更新(Update)和删除(Delete))。</p>
+<p>Consul Endpoint主要支持以下接口:</p>
+<blockquote>
+<ol>
+<li>acl – 访问控制列表</li>
+<li>agent – Agent控制</li>
+<li>catalog – 管理nodes和services</li>
+<li>coordinate – 网络协同</li>
+<li>event – 用户事件</li>
+<li>health – 管理健康监测</li>
+<li>kv – K/V存储</li>
+<li>query - Prepared Queries</li>
+<li>session – 管理会话</li>
+<li>status – Consul系统状态</li>
+</ol>
+</blockquote>
+<ul>
+<li>注册一个服务</li>
+</ul>
+<p>建立一个服务定义文件，格式是JSON的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ vim redis.json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;ID&quot;</span>: <span class="string">&quot;redis1&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;redis&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Tags&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;primary&quot;</span>,</span><br><span class="line">    <span class="string">&quot;v1&quot;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="string">&quot;Address&quot;</span>: <span class="string">&quot;127.0.0.1&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Port&quot;</span>: 8000,</span><br><span class="line">  <span class="string">&quot;EnableTagOverride&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="string">&quot;Check&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;DeregisterCriticalServiceAfter&quot;</span>: <span class="string">&quot;90m&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Script&quot;</span>: <span class="string">&quot;/usr/local/bin/check_redis.py&quot;</span>,</span><br><span class="line">    <span class="string">&quot;HTTP&quot;</span>: <span class="string">&quot;http://localhost:5000/health&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Interval&quot;</span>: <span class="string">&quot;10s&quot;</span>,</span><br><span class="line">    <span class="string">&quot;TTL&quot;</span>: <span class="string">&quot;15s&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过API接口提交</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl --request PUT --data @redis.json http://127.0.0.1:8500/v1/agent/service/register</span><br></pre></td></tr></table></figure>
+
+<p>查询指定节点以及指定的服务信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:8500/v1/catalog/service/redis</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;ID&quot;</span>: <span class="string">&quot;b76ff298-accd-05ff-8c64-5d79d866dfa9&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Node&quot;</span>: <span class="string">&quot;dev-master-01&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Address&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span>,</span><br><span class="line">        <span class="string">&quot;TaggedAddresses&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;lan&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span>,</span><br><span class="line">            <span class="string">&quot;wan&quot;</span>: <span class="string">&quot;192.168.2.210&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;NodeMeta&quot;</span>: &#123;&#125;,</span><br><span class="line">        <span class="string">&quot;ServiceID&quot;</span>: <span class="string">&quot;redis1&quot;</span>,</span><br><span class="line">        <span class="string">&quot;ServiceName&quot;</span>: <span class="string">&quot;redis&quot;</span>,</span><br><span class="line">        <span class="string">&quot;ServiceTags&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;primary&quot;</span>,</span><br><span class="line">            <span class="string">&quot;v1&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">&quot;ServiceAddress&quot;</span>: <span class="string">&quot;127.0.0.1&quot;</span>,</span><br><span class="line">        <span class="string">&quot;ServicePort&quot;</span>: 8000,</span><br><span class="line">        <span class="string">&quot;ServiceEnableTagOverride&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="string">&quot;CreateIndex&quot;</span>: 182,</span><br><span class="line">        <span class="string">&quot;ModifyIndex&quot;</span>: 182</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除一个服务</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl --request PUT http://127.0.0.1:8500/v1/agent/service/deregister/redis1</span><br></pre></td></tr></table></figure>
+
+<p>再次查询指定节点以及指定的服务信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:8500/v1/catalog/service/redis</span><br><span class="line">[]</span><br></pre></td></tr></table></figure>
+
+<p>更多API使用可参考：<a target="_blank" rel="noopener" href="https://www.consul.io/api/index.html">https://www.consul.io/api/index.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/consul/" rel="tag"><i class="fas fa-cookie-bite"></i> consul</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/03/Linux-Consul%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/" rel="prev" title="Linux-Consul集群部署">
+      <i class="fa fa-chevron-left"></i> Linux-Consul集群部署
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Consul%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">Consul简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Consul%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">Consul安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8CConsul%E4%BB%A3%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">运行Consul代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%9B%86%E7%BE%A4%E6%88%90%E5%91%98"><span class="nav-number">3.1.</span> <span class="nav-text">查看集群成员</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.2.</span> <span class="nav-text">停止服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Web%E7%95%8C%E9%9D%A2"><span class="nav-number">3.3.</span> <span class="nav-text">启动Web界面</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E4%B8%80%E4%B8%AA%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.</span> <span class="nav-text">注册一个服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E6%9C%8D%E5%8A%A1%E5%AE%9A%E4%B9%89"><span class="nav-number">4.1.</span> <span class="nav-text">使用配置文件进行服务定义</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.1.</span> <span class="nav-text">创建配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%A8%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.1.2.</span> <span class="nav-text">用指定配置文件启动服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.1.3.</span> <span class="nav-text">查看服务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E7%94%A8HTTP-API%E8%BF%9B%E8%A1%8C%E5%AE%9A%E4%B9%89"><span class="nav-number">4.2.</span> <span class="nav-text">调用HTTP API进行定义</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">44:55</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
