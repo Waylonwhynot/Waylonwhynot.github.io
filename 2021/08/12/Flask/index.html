@@ -20,17 +20,20 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="tech life sharing">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YouNeed">
-<meta property="og:url" content="https://waylon.whatyouneed.site/archives/2020/page/2/index.html">
+  <meta name="description" content="Flask">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/08/12/Flask/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="tech life sharing">
+<meta property="og:description" content="Flask">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-11T18:37:12.000Z">
+<meta property="article:modified_time" content="2021-08-11T19:22:07.070Z">
 <meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://waylon.whatyouneed.site/archives/2020/page/2/">
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/12/Flask/">
 
 
 <script id="page-configurations">
@@ -38,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | YouNeed</title>
+  <title>Flask | YouNeed</title>
   
 
 
@@ -181,175 +184,112 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">很好! 目前共计 129 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/12/Flask/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flask
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-12 02:37:12 / 修改时间：03:22:07" itemprop="dateCreated datePublished" datetime="2021-08-12T02:37:12+08:00">2021-08-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Flask/" itemprop="url" rel="index"><span itemprop="name">Flask</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
-    </div>
+        <p>Flask</p>
+<a id="more"></a>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<h2 id="1-Flask-核心"><a href="#1-Flask-核心" class="headerlink" title="1. Flask 核心"></a>1. Flask 核心</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># flask的路由是基于装饰器</span></span><br><span class="line"><span class="comment"># request对象是个全局对象，request.args---&gt;不同请求取出来是不同请求携带的数据</span></span><br><span class="line"><span class="comment"># 通过不同协程/线程来区分是哪个request</span></span><br><span class="line"><span class="meta">@app.route(&#x27;/&#x27;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    print(request)</span><br><span class="line">    print(request.method)  <span class="comment"># method</span></span><br><span class="line">    print(request.cookies) <span class="comment"># cookie</span></span><br><span class="line">    print(request.environ) <span class="comment"># meta</span></span><br><span class="line">    print(request.form)    <span class="comment"># POST</span></span><br><span class="line">    print(request.query_string) <span class="comment"># BODY</span></span><br><span class="line">    print(request.args)    <span class="comment"># GET</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;lqz&#x27;</span>,<span class="string">&#x27;age&#x27;</span>:<span class="number">18</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(&#x27;/home/&#x27;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">home</span>():</span></span><br><span class="line">    print(request.method)</span><br><span class="line">    print(request.args)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;我是home&#x27;</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(port=<span class="number">8000</span>) </span><br><span class="line">    <span class="comment"># flask请求来了会执行，执行app()---&gt; run_simple(host, port, self, **options)</span></span><br><span class="line">    <span class="comment"># 请求来了--&gt; Flask对象() --&gt; 触发类的__call__</span></span><br><span class="line">    <span class="comment"># app.__call__----&gt;self.wsgi_app(environ, start_response)</span></span><br><span class="line">    <span class="comment"># 请求来了以后，会执行Md对象的__call__</span></span><br><span class="line">    <span class="comment"># aaa(environ, start_response)---&gt;Md类的__call__()</span></span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-08-23T11:14:32+08:00"
-              content="2020-08-23">
-          08-23
-        </time>
-      </div>
+<h2 id="2-session存在哪"><a href="#2-session存在哪" class="headerlink" title="2.session存在哪"></a>2.session存在哪</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> django 默认存在orm数据库中</span><br><span class="line">  request.session[<span class="string">&#x27;user_info&#x27;</span>] = <span class="string">&#x27;lqz&#x27;</span></span><br><span class="line">  生成一个随机字符串: dsadsdasd</span><br><span class="line">  往cookie 中写入 sessionid = asasdsad</span><br><span class="line">  请求来:</span><br><span class="line">     session_id = asasdsad 根据随机字符串去数据库查, 查到以后把数据取出来</span><br><span class="line">     赋值给request.SESSION</span><br><span class="line">     </span><br><span class="line"><span class="number">2.</span>  flask中根本不涉及到数据库, 以cookie形式，放到了客户端</span><br><span class="line">   session[<span class="string">&#x27;user_info&#x27;</span>] = <span class="string">&#x27;lqz&#x27;</span></span><br><span class="line">   把session字典通过秘钥加密 --&gt; asdasdsda加密串</span><br><span class="line">   请求来:</span><br><span class="line">        sessionid = asdsadsadsad把后面的加密串解密</span><br><span class="line">        赋值给session</span><br><span class="line">   flask 的 加密算法是可逆的</span><br></pre></td></tr></table></figure>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/23/py-day03/" itemprop="url">
-            <span itemprop="name">py-day03</span>
-          </a>
-      </div>
 
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-08-16T01:06:36+08:00"
-              content="2020-08-16">
-          08-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/16/py-day02/" itemprop="url">
-            <span itemprop="name">py-day02</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-08-13T02:34:18+08:00"
-              content="2020-08-13">
-          08-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/13/%E5%8F%91%E5%B8%83%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94/" itemprop="url">
-            <span itemprop="name">发布方式对比</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-08-11T23:34:55+08:00"
-              content="2020-08-11">
-          08-11
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/11/kubernetes%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" itemprop="url">
-            <span itemprop="name">kubernetes网络通信原理</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-08-09T23:11:58+08:00"
-              content="2020-08-09">
-          08-09
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/09/py-day02-exercise/" itemprop="url">
-            <span itemprop="name">py_day02_exercise</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-08-09T23:11:58+08:00"
-              content="2020-08-09">
-          08-09
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/09/py-day01-exercise/" itemprop="url">
-            <span itemprop="name">py_day01_exercise</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-08-09T17:04:28+08:00"
-              content="2020-08-09">
-          08-09
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/09/py-day01/" itemprop="url">
-            <span itemprop="name">py_day01</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
 
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fas fa-cookie-bite"></i> python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/06/Nginx-DevOps-System/" rel="prev" title="Nginx-DevOps-System">
+      <i class="fa fa-chevron-left"></i> Nginx-DevOps-System
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2020/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2020/">1</a><span class="page-number current">2</span>
-  </nav>
+  
+  
 
 
 
@@ -401,6 +341,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Flask-%E6%A0%B8%E5%BF%83"><span class="nav-number">1.</span> <span class="nav-text">1. Flask 核心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-session%E5%AD%98%E5%9C%A8%E5%93%AA"><span class="nav-number">2.</span> <span class="nav-text">2.session存在哪</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
