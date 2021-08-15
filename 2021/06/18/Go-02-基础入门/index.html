@@ -28,7 +28,7 @@
 <meta property="og:description" content="Go基础入门">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-17T21:38:14.000Z">
-<meta property="article:modified_time" content="2021-06-19T15:05:03.331Z">
+<meta property="article:modified_time" content="2021-08-15T08:03:28.726Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-19 23:05:03" itemprop="dateModified" datetime="2021-06-19T23:05:03+08:00">2021-06-19</time>
+                <time title="修改时间：2021-08-15 16:03:28" itemprop="dateModified" datetime="2021-08-15T16:03:28+08:00">2021-08-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -264,7 +264,7 @@
 
 
 <h2 id="1-输出"><a href="#1-输出" class="headerlink" title="1. 输出"></a>1. 输出</h2><p>输出，在运行代码时将内容在终端输出。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package mainimport &quot;fmt&quot;func main() &#123;    fmt.Println(&quot;叫爸爸&quot;)&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;叫爸爸&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>上一节的代码中使用了<code>fmt.Println</code>方法进行了输出。</p>
 <p>在Go中提供了多种输出的方式，接下来我们就来详细聊聊。</p>
@@ -274,10 +274,10 @@
 <li>println，输出并在最后位置添加换行符</li>
 </ul>
 <p>示例1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package mainfunc main() &#123;    print(&quot;好吃不过饺子&quot;)    print(&quot;好玩不过嫂子&quot;)&#125;&gt;&gt;&gt; 最终输出：好吃不过饺子好玩不过嫂子</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;好吃不过饺子&quot;</span>)    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;好玩不过嫂子&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">&gt;&gt;&gt; 最终输出：好吃不过饺子好玩不过嫂子</span><br></pre></td></tr></table></figure>
 
 <p>示例2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package mainfunc main() &#123;    println(&quot;好吃不过饺子&quot;)    println(&quot;好玩不过嫂子&quot;)&#125;&gt;&gt;&gt;最终输出：好吃不过饺子好玩不过嫂子</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="built_in">println</span>(<span class="string">&quot;好吃不过饺子&quot;</span>)    </span><br><span class="line">    <span class="built_in">println</span>(<span class="string">&quot;好玩不过嫂子&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">&gt;&gt;&gt;最终输出：好吃不过饺子好玩不过嫂子</span><br></pre></td></tr></table></figure>
 
 <p>上述函数虽然可以实现输出的功能，但在实际开发中不建议使用，原因有两点：1.官方不保证会一直在Go中保留此功能，在之后的版本可能会被移除；2.这两个函数是用于做标准错误输出而非标准输出。</p>
 <blockquote>
@@ -523,7 +523,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">136</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -585,7 +585,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">45:54</span>
+    <span title="站点阅读时长">46:41</span>
 </div>
 
 <!--

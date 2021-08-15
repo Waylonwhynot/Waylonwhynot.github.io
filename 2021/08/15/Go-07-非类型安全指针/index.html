@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Go 非类型安全指针">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go-07-非类型安全指针">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/08/15/Go-07-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E6%8C%87%E9%92%88/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Go 非类型安全指针">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/infraboard/go-course/raw/master/image/go-unsafe-pointer.png">
+<meta property="article:published_time" content="2021-08-15T13:17:08.000Z">
+<meta property="article:modified_time" content="2021-08-15T13:17:46.318Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/infraboard/go-course/raw/master/image/go-unsafe-pointer.png">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/15/Go-07-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E6%8C%87%E9%92%88/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Go-07-非类型安全指针 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/15/Go-07-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E6%8C%87%E9%92%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go-07-非类型安全指针
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-15 21:17:08 / 修改时间：21:17:46" itemprop="dateCreated datePublished" datetime="2021-08-15T21:17:08+08:00">2021-08-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Go 非类型安全指针</p>
+<a id="more"></a>
+
+<h1 id="非类型安全指针"><a href="#非类型安全指针" class="headerlink" title="非类型安全指针"></a>非类型安全指针</h1><p><img src="https://gitee.com/infraboard/go-course/raw/master/image/go-unsafe-pointer.png" alt="img"></p>
+<p>为了安全起见，Go指针在使用上相对于C指针有很多限制。 通过施加这些限制，Go指针保留了C指针的好处，同时也避免了C指针的危险性。</p>
+<p>在基础篇中，我们介绍了Go指针是有类型限制的: *T, 这种具有类型限制的指针我们称为类型安全的指针,在使用上有些限制，比如:</p>
+<p>1.Go指针不支持算术运算</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str :&#x3D; &quot;pointer_test&quot;</span><br><span class="line">a :&#x3D; &amp;str</span><br><span class="line">&#x2F;&#x2F; a++ a-- 是不合法的</span><br></pre></td></tr></table></figure>
+
+<p>2.一个指针类型的值不能被随意转换为另一个指针类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var x int64 &#x3D; 20</span><br><span class="line">a :&#x3D; &amp;x</span><br><span class="line">fmt.Println(a)</span><br><span class="line">&#x2F;&#x2F; 没有办法指针a的值进行如下转换: *int64 --&gt; *uint64</span><br></pre></td></tr></table></figure>
+
+<p>3.一个指针类型的值不能被赋值给其它任意类型的指针值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var x int64 &#x3D; 20</span><br><span class="line">a :&#x3D; &amp;x</span><br><span class="line">fmt.Println(a)</span><br><span class="line"></span><br><span class="line">var y uint64 &#x3D; 20</span><br><span class="line">b :&#x3D; &amp;y</span><br><span class="line">fmt.Println(b)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 我们不能进行 a &#x3D; b</span><br></pre></td></tr></table></figure>
+
+<p>unsafe标准库包中提供的非类型安全指针（unsafe.Pointer）机制可以被用来打破上述Go指针的安全限制。 unsafe.Pointer类型类似于C语言中的void*。 但是，通常地，非类型安全指针机制不推荐在Go日常编程中使用</p>
+<h2 id="关于unsafe标准库包"><a href="#关于unsafe标准库包" class="headerlink" title="关于unsafe标准库包"></a>关于unsafe标准库包</h2><p>非类型安全指针在Go中为一种特别的类型。 我们必须引入unsafe标准库包来使用非类型安全指针</p>
+<p>非类型安全指针unsafe.Pointer被声明定义为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; ArbitraryType is here for the purposes of documentation only and is not actually</span><br><span class="line">&#x2F;&#x2F; part of the unsafe package. It represents the type of an arbitrary Go expression.</span><br><span class="line">type ArbitraryType int</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Pointer represents a pointer to an arbitrary type. There are four special operations</span><br><span class="line">&#x2F;&#x2F; available for type Pointer that are not available for other types:</span><br><span class="line">&#x2F;&#x2F;    - A pointer value of any type can be converted to a Pointer.</span><br><span class="line">&#x2F;&#x2F;    - A Pointer can be converted to a pointer value of any type.</span><br><span class="line">&#x2F;&#x2F;    - A uintptr can be converted to a Pointer.</span><br><span class="line">&#x2F;&#x2F;    - A Pointer can be converted to a uintptr.</span><br><span class="line">&#x2F;&#x2F; Pointer therefore allows a program to defeat the type system and read and write</span><br><span class="line">&#x2F;&#x2F; arbitrary memory. It should be used with extreme care.</span><br><span class="line">&#x2F;&#x2F; ...</span><br><span class="line">type Pointer *ArbitraryType</span><br></pre></td></tr></table></figure>
+
+<p>其中uintptr是被定义在build中内置类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; uintptr is an integer type that is large enough to hold the bit pattern of</span><br><span class="line">&#x2F;&#x2F; any pointer.</span><br><span class="line">type uintptr uintptr</span><br></pre></td></tr></table></figure>
+
+<p>有了Pointer类型，我们就可以进行如下转换:</p>
+<ul>
+<li>任意类型的指针的值 &lt;–&gt; Pointer</li>
+<li>uintptr &lt;–&gt; Pointer</li>
+</ul>
+<p>unsafe标准库包只提供了三个函数：</p>
+<ul>
+<li>Alignof: 此函数用来取得一个值在内存中的地址对齐保证（address alignment guarantee）。 注意，同一个类型的值做为结构体字段和非结构体字段时地址对齐保证可能是不同的。 当然，这和具体编译器的实现有关。对于目前的标准编译器，同一个类型的值做为结构体字段和非结构体字段时的地址对齐保证总是相同的。 gccgo编译器对这两种情形是区别对待的。</li>
+<li>Offsetof: 此函数用来取得一个结构体值的某个字段的地址相对于此结构体值的地址的偏移。 在一个程序中，对于同一个结构体类型的不同值的对应相同字段，此函数的返回值总是相同的。</li>
+<li>Sizeof: 此函数用来取得一个值的尺寸（亦即此值的类型的尺寸）。 在一个程序中，对于同一个类型的不同值，此函数的返回值总是相同的</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">m :&#x3D; Man&#123;Name: &quot;John&quot;, Age: 20&#125;</span><br><span class="line">fmt.Println(unsafe.Sizeof(m.Name), unsafe.Sizeof(m.Age), unsafe.Sizeof(m)) &#x2F;&#x2F; 16 8 24</span><br><span class="line"></span><br><span class="line">fmt.Println(unsafe.Offsetof(m.Name)) &#x2F;&#x2F; 0</span><br><span class="line">fmt.Println(unsafe.Offsetof(m.Age))  &#x2F;&#x2F; 16</span><br></pre></td></tr></table></figure>
+
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>通过使用这些转换规则，我们可以将任意两个类型安全指针转换为对方的类型，我们也可以将一个安全指针值和一个uintptr值转换为对方的类型 然而，尽管这些转换在编译时刻是合法的，但是它们中一些在运行时刻并非是合法和安全的。 这些转换摧毁了Go的类型系统（不包括非类型安全指针部分）精心设立的内存安全屏障</p>
+<h3 id="Pointer与uintptr的区别"><a href="#Pointer与uintptr的区别" class="headerlink" title="Pointer与uintptr的区别"></a>Pointer与uintptr的区别</h3><p>Go是一门支持垃圾回收的语言。 当一个Go程序在运行中，Go运行时（runtime）将不时地检查哪些内存块将不再被程序中的任何仍在使用中的值所引用并且回收这些内存块。 指针在这一过程中扮演着重要的角色。值与值之间和内存块与值之间的引用关系是通过指针来表征的</p>
+<p>所以Ponter是安全的, 有应该关系时，内存块不会被GC回收, 但是一个uintptr值并不引用任何值，它被看作是一个整数，尽管常常它存储的是一个地址的数字表示, 所以uintptr存储的地址 有可能会被GC回收变成一个无效地址</p>
+<p>总结:</p>
+<ul>
+<li>Pointer 是安全的, 表征的是一种关系, 有引用就回不回收</li>
+<li>uintptr 是一个整数, 表征的是一个值(内存地址的数字表示), 这个值表示的内存地址的值 有可能已经被GC回收</li>
+</ul>
+<h3 id="uintptr地址被GC回收"><a href="#uintptr地址被GC回收" class="headerlink" title="uintptr地址被GC回收"></a>uintptr地址被GC回收</h3><p>在运行时刻，一次新的垃圾回收过程可能在一个不确定的时间启动，并且此过程可能需要一段不确定的时长才能完成。 所以一个不再被使用的内存块的回收时间点是不确定的</p>
+<p>比如, 下面我们直接使用内存地址访问数组的其他元素:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">a :&#x3D; [3]int64&#123;1, 2, 3&#125;</span><br><span class="line">fmt.Printf(&quot;%p\n&quot;, &amp;a)</span><br><span class="line"></span><br><span class="line">s1 :&#x3D; unsafe.Sizeof(a[0])</span><br><span class="line">fmt.Printf(&quot;%d\n&quot;, s1)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 我们把 Pointer -&gt; uintptr (一波操作) -&gt; Pointer, 这一系列动作是一次性完成的</span><br><span class="line">p1 :&#x3D; (*int64)(unsafe.Pointer(uintptr(unsafe.Pointer(&amp;a)) + s1))</span><br><span class="line">fmt.Println(*p1)</span><br></pre></td></tr></table></figure>
+
+<p>如果我们把 p1 该写成2条语句:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 我们把 Pointer -&gt; uintptr (一波操作)</span><br><span class="line">p1Addr :&#x3D; uintptr(unsafe.Pointer(&amp;a)) + s1 </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; uintptr -&gt; Pointer, 此时 p1Addr 的地址有可能被回收</span><br><span class="line">p1 :&#x3D; (*int64)(unsafe.Pointer(p1Addr))</span><br></pre></td></tr></table></figure>
+
+<h3 id="Runtime的小动作"><a href="#Runtime的小动作" class="headerlink" title="Runtime的小动作"></a>Runtime的小动作</h3><p>一个值的地址在程序运行中可能改变, 比如当一个协程的栈的大小改变时，开辟在此栈上的内存块需要移动，从而相应的值的地址将改变 而这个变化当中Pointer会跟随变化，但是uintptr是值 则不会</p>
+<h2 id="正确使用非类型安全指针"><a href="#正确使用非类型安全指针" class="headerlink" title="正确使用非类型安全指针"></a>正确使用非类型安全指针</h2><p>unsafe标准库包的文档中列出了<a target="_blank" rel="noopener" href="https://golang.google.cn/pkg/unsafe/#Pointer">六种非类型安全指针的使用模式</a></p>
+<h3 id="获取地址"><a href="#获取地址" class="headerlink" title="获取地址"></a>获取地址</h3><p>模式：Pointer –&gt; uintptr</p>
+<p>此模式不是很有用。一般我们将最终的转换结果uintptr值输出到日志中用来调试，但是有很多其它安全并且简洁的途径也可以实现此目的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type T struct&#123; a int &#125;</span><br><span class="line">var t1 T</span><br><span class="line">fmt.Printf(&quot;%p\n&quot;, &amp;t1)                          &#x2F;&#x2F; 0xc0000a0200</span><br><span class="line">println(&amp;t1)                                     &#x2F;&#x2F; 0xc0000a0200</span><br><span class="line">fmt.Printf(&quot;%x\n&quot;, uintptr(unsafe.Pointer(&amp;t1))) &#x2F;&#x2F; c0000a0200</span><br></pre></td></tr></table></figure>
+
+<h3 id="指针类型转换"><a href="#指针类型转换" class="headerlink" title="指针类型转换"></a>指针类型转换</h3><p>将类型<em>T1的一个值转换为非类型安全指针值，然后将此非类型安全指针值转换为类型</em>T2</p>
+<p>例如 math标准库包中的Float64bits函数。 此函数将一个float64值转换为一个uint64值。 在此转换过程中，此float64值在内存中的每个位（bit）都保持不变</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 模式： *T1 --&gt; Pointer --&gt; *T2</span><br><span class="line">func Float64bits(f float64) uint64 &#123;</span><br><span class="line">    return *(*uint64)(unsafe.Pointer(&amp;f))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再如, 将一个int8的整数转换成一个string, 同样内存中的值保持不变, 实现zero copy转换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func bInt8(n int8) string &#123;</span><br><span class="line">    fmt.Println(*(*uint8)(unsafe.Pointer(&amp;n))) &#x2F;&#x2F; 1111 1111</span><br><span class="line">    return strconv.FormatUint(uint64(*(*uint8)(unsafe.Pointer(&amp;n))), 2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="直接操作内存地址"><a href="#直接操作内存地址" class="headerlink" title="直接操作内存地址"></a>直接操作内存地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 模式: Pointer --&gt; uintptr --&gt; (一波计算) --&gt; uintptr --&gt; Pointer</span><br><span class="line">p &#x3D; unsafe.Pointer(uintptr(p) + offset)</span><br></pre></td></tr></table></figure>
+
+<p>将一个非类型安全指针转换为一个uintptr值，然后此uintptr值参与各种算术运算，再将算术运算的结果uintptr值转回非类型安全指针</p>
+<p>例如 我们直接通过指针访问结构体的属性, 下面是直接通过地址访问y的第3个元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">type T struct &#123;</span><br><span class="line">    x bool</span><br><span class="line">    y [3]int16</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const (</span><br><span class="line">    N &#x3D; unsafe.Offsetof(T&#123;&#125;.y)</span><br><span class="line">    M &#x3D; unsafe.Sizeof(T&#123;&#125;.y[0])</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func TestUnsafePointer4() &#123;</span><br><span class="line">    t1 :&#x3D; T&#123;y: [3]int16&#123;123, 456, 789&#125;&#125;</span><br><span class="line">    p :&#x3D; unsafe.Pointer(&amp;t1)</span><br><span class="line">    &#x2F;&#x2F; &quot;uintptr(p) + N + M + M&quot;为t.y[2]的内存地址。</span><br><span class="line">    ty2 :&#x3D; (*int16)(unsafe.Pointer(uintptr(p) + N + M + M))</span><br><span class="line">    fmt.Println(*ty2) &#x2F;&#x2F; 789</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 模式: Pointer --&gt; uintptr --&gt; syscall.Syscall</span><br><span class="line">syscall.Syscall(SYS_READ, uintptr(fd), uintptr(unsafe.Pointer(p)), uintptr(n))</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; INVALID: uintptr cannot be stored in variable</span><br><span class="line">&#x2F;&#x2F; before implicit conversion back to Pointer during system call.</span><br><span class="line">u :&#x3D; uintptr(unsafe.Pointer(p))</span><br><span class="line">syscall.Syscall(SYS_READ, uintptr(fd), u, uintptr(n))</span><br></pre></td></tr></table></figure>
+
+<p>将非类型安全指针值转换为uintptr值并传递给syscall.Syscall函数调用</p>
+<p>为啥uintptr传给Syscall的时候是安全的？</p>
+<p>编译器针对每个syscall.Syscall函数调用中的每个被转换为uintptr类型的非类型安全指针实参添加了一些指令，从而保证此非类型安全指针所引用着的内存块在此调用返回之前不会被垃圾回收和移动</p>
+<h3 id="其他2种"><a href="#其他2种" class="headerlink" title="其他2种"></a>其他2种</h3><p>由于涉及到反射这里暂不讲解</p>
+<ul>
+<li>将reflect.Value.Pointer或者reflect.Value.UnsafeAddr方法的uintptr返回值立即转换为非类型安全指针</li>
+<li>将一个reflect.SliceHeader或者reflect.StringHeader值的Data字段转换为非类型安全指针，以及其逆转换</li>
+</ul>
+<h2 id="声明与总结"><a href="#声明与总结" class="headerlink" title="声明与总结"></a>声明与总结</h2><p>go1 并不保证unsafe的兼容, 我们应该知晓当前的非类型安全机制规则和使用模式可能在以后的Go版本中完全失效, 几率很小， 因此，在实践中，请尽量保证能够将使用了非类型安全机制的代码轻松改为使用安全途径实现</p>
+<p>从上面解释中，我们得知，对于某些情形，非类型安全机制可以帮助我们写出运行效率更高的代码。 但是，使用非类型安全指针也使得我们可能轻易地写出一些重现几率非常低的微妙的bug。 一个含有这样的bug的程序很可能在很长一段时间内都运行正常，但是突然变得不正常甚至崩溃。 这样的bug很难发现和调试</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"><i class="fas fa-cookie-bite"></i> Go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/15/Go-13-defer%E4%B8%8E%E5%BC%82%E5%B8%B8/" rel="prev" title="Go-13-defer与异常">
+      <i class="fa fa-chevron-left"></i> Go-13-defer与异常
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E6%8C%87%E9%92%88"><span class="nav-number">1.</span> <span class="nav-text">非类型安全指针</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Eunsafe%E6%A0%87%E5%87%86%E5%BA%93%E5%8C%85"><span class="nav-number">1.1.</span> <span class="nav-text">关于unsafe标准库包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.2.</span> <span class="nav-text">注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pointer%E4%B8%8Euintptr%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.2.1.</span> <span class="nav-text">Pointer与uintptr的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uintptr%E5%9C%B0%E5%9D%80%E8%A2%ABGC%E5%9B%9E%E6%94%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">uintptr地址被GC回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Runtime%E7%9A%84%E5%B0%8F%E5%8A%A8%E4%BD%9C"><span class="nav-number">1.2.3.</span> <span class="nav-text">Runtime的小动作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E6%8C%87%E9%92%88"><span class="nav-number">1.3.</span> <span class="nav-text">正确使用非类型安全指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80"><span class="nav-number">1.3.1.</span> <span class="nav-text">获取地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.3.2.</span> <span class="nav-text">指针类型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9C%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80"><span class="nav-number">1.3.3.</span> <span class="nav-text">直接操作内存地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">1.3.4.</span> <span class="nav-text">系统调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%962%E7%A7%8D"><span class="nav-number">1.3.5.</span> <span class="nav-text">其他2种</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E4%B8%8E%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">声明与总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">136</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">46:41</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
