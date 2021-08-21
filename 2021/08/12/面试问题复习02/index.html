@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210812224749071.png">
 <meta property="article:published_time" content="2021-08-12T14:19:40.000Z">
-<meta property="article:modified_time" content="2021-08-15T05:01:59.437Z">
+<meta property="article:modified_time" content="2021-08-20T02:22:44.949Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="review">
 <meta name="twitter:card" content="summary">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-15 13:01:59" itemprop="dateModified" datetime="2021-08-15T13:01:59+08:00">2021-08-15</time>
+                <time title="修改时间：2021-08-20 10:22:44" itemprop="dateModified" datetime="2021-08-20T10:22:44+08:00">2021-08-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,14 +241,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
+              <span>4.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -271,6 +271,8 @@
 <h2 id="2-缓存更新策略（redis的算法剔除）"><a href="#2-缓存更新策略（redis的算法剔除）" class="headerlink" title="2.缓存更新策略（redis的算法剔除）"></a>2.缓存更新策略（redis的算法剔除）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">LRU/LFU/FIFO算法剔除</span><br><span class="line">LRU Least Recently Used 最长时间未被使用的</span><br><span class="line">LFU Least Frequenty User 一定时间内使用次数最少的</span><br><span class="line">FIFO First In First Out 先进先出</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过配置文件配置</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="穿透，击穿，雪崩"><a href="#穿透，击穿，雪崩" class="headerlink" title="穿透，击穿，雪崩"></a>穿透，击穿，雪崩</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###  缓存穿透</span></span><br><span class="line"><span class="comment">#描述：</span></span><br><span class="line">缓存穿透是指缓存和数据库中都没有的数据，而用户不断发起请求，如发起为id为“<span class="number">-1</span>”的数据或id为特别大不存在的数据。这时的用户很可能是攻击者，攻击会导致数据库压力过大。</span><br><span class="line"><span class="comment">#解决方案：</span></span><br><span class="line"><span class="number">1</span> 接口层增加校验，如用户鉴权校验，id做基础校验，id&lt;=<span class="number">0</span>的直接拦截；DRF 认证可以拦截</span><br><span class="line"><span class="number">2</span> 从缓存取不到的数据，在数据库中也没有取到，这时也可以将key-value对写为key-null，缓存有效时间可以设置短点，如<span class="number">30</span>秒（设置太长会导致正常情况也没法使用）。这样可以防止攻击用户反复用同一个id暴力攻击</span><br><span class="line"><span class="number">3</span> 通过布隆过滤器实现</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 缓存击穿</span></span><br><span class="line"><span class="comment">#描述：</span></span><br><span class="line">缓存击穿是指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力</span><br><span class="line"><span class="comment">#解决方案：</span></span><br><span class="line">设置热点数据永远不过期。</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 缓存雪崩</span></span><br><span class="line"><span class="comment">#描述：</span></span><br><span class="line">缓存雪崩是指缓存中数据大批量到过期时间，而查询数据量巨大，引起数据库压力过大甚至down机。和缓存击穿不同的是，缓存击穿指并发查同一条数据，缓存雪崩是不同数据都过期了，很多数据都查不到从而查数据库。</span><br><span class="line"><span class="comment"># 解决方案：</span></span><br><span class="line"><span class="number">1</span> 缓存数据的过期时间设置随机，防止同一时间大量数据过期现象发生。</span><br><span class="line"><span class="number">2</span> 如果缓存数据库是分布式部署，将热点数据均匀分布在不同搞得缓存数据库中。</span><br><span class="line"><span class="number">3</span> 设置热点数据永远不过期。</span><br></pre></td></tr></table></figure>
+
+<h3 id="面试闲扯"><a href="#面试闲扯" class="headerlink" title="面试闲扯"></a>面试闲扯</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">面试闲扯系列</span><br><span class="line"></span><br><span class="line">settings源码 </span><br><span class="line">￼</span><br><span class="line">admin源码</span><br><span class="line"></span><br><span class="line">drf源码</span><br><span class="line"></span><br><span class="line">中间件</span><br><span class="line"></span><br><span class="line">数据库字段优化</span><br><span class="line"># 当评论表或者点赞点踩表有记录的时候， 顺带修改上述是三个普通字段即可；查询的时候避免跨表查询</span><br><span class="line"></span><br><span class="line">接口幂等性</span><br><span class="line"></span><br><span class="line">Map底层存储</span><br><span class="line">- 基于数组</span><br><span class="line">- Python底层存储及3.6有序   必看 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;xiaoyuanqujing&#x2F;articles&#x2F;12008689.htm;</span><br><span class="line">- Hash冲突问题，解决方法</span><br><span class="line">    - 不同key值，通过hash运算完，得到同一个值</span><br><span class="line">    - 开放地址方法</span><br><span class="line">        - 线性探测</span><br><span class="line">        - 再平方探测</span><br><span class="line">    - 链地址法</span><br><span class="line">        - 平衡二叉树</span><br><span class="line">        - 红黑树</span><br><span class="line">  - 可能会存在hash冲突 （视频必看）</span><br><span class="line"></span><br><span class="line">Drf 频率限制 修改密码次数(根据token反解出用户id)</span><br><span class="line"></span><br><span class="line">提交订单生成订单号，根据订单号生成key，商品value；超时30分钟，把redis删除，再落到mysql</span><br><span class="line"></span><br><span class="line">商品库存有3个，提交要校验库存；</span><br><span class="line">极限情况下，1件商品同时提交订单，一个人成功，进入视图函数枷锁，悲观锁，悲观的认为此次购买商品会有人购买；</span><br><span class="line">无论支付还是不支付 ，提交订单 起个异步任务删除购物车，不会影响主订单流程。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">项目</span><br><span class="line">sandbox</span><br><span class="line">工作流管理： https:&#x2F;&#x2F;github.com&#x2F;blackholll&#x2F;loonflow</span><br><span class="line">Nginx 系统：告警管理，监控管理，es管理，访问日志，公有云SLB管理，执行命令管理</span><br><span class="line">备份系统： etcd nginx 备份系统管理</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -355,7 +357,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%BA%BF%E7%A8%8B%EF%BC%8C%E8%BF%9B%E7%A8%8B%EF%BC%8C%E5%8D%8F%E7%A8%8B%EF%BC%8C%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81"><span class="nav-number">1.</span> <span class="nav-text">1.线程，进程，协程，猴子补丁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81"><span class="nav-number">1.1.</span> <span class="nav-text">实现一个猴子补丁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BC%93%E5%AD%98%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5%EF%BC%88redis%E7%9A%84%E7%AE%97%E6%B3%95%E5%89%94%E9%99%A4%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">2.缓存更新策略（redis的算法剔除）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BF%E9%80%8F%EF%BC%8C%E5%87%BB%E7%A9%BF%EF%BC%8C%E9%9B%AA%E5%B4%A9"><span class="nav-number">2.1.</span> <span class="nav-text">穿透，击穿，雪崩</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%BA%BF%E7%A8%8B%EF%BC%8C%E8%BF%9B%E7%A8%8B%EF%BC%8C%E5%8D%8F%E7%A8%8B%EF%BC%8C%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81"><span class="nav-number">1.</span> <span class="nav-text">1.线程，进程，协程，猴子补丁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81"><span class="nav-number">1.1.</span> <span class="nav-text">实现一个猴子补丁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BC%93%E5%AD%98%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5%EF%BC%88redis%E7%9A%84%E7%AE%97%E6%B3%95%E5%89%94%E9%99%A4%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">2.缓存更新策略（redis的算法剔除）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BF%E9%80%8F%EF%BC%8C%E5%87%BB%E7%A9%BF%EF%BC%8C%E9%9B%AA%E5%B4%A9"><span class="nav-number">2.1.</span> <span class="nav-text">穿透，击穿，雪崩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%97%B2%E6%89%AF"><span class="nav-number">2.2.</span> <span class="nav-text">面试闲扯</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -371,7 +373,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">136</span>
+          <span class="site-state-item-count">137</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -384,7 +386,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -433,7 +435,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">46:41</span>
+    <span title="站点阅读时长">47:36</span>
 </div>
 
 <!--
