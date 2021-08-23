@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Go 结构体取代类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go-25-结构体取代类">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/08/23/Go-25-%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%96%E4%BB%A3%E7%B1%BB/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Go 结构体取代类">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-23T01:25:27.000Z">
+<meta property="article:modified_time" content="2021-08-23T01:35:26.147Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/23/Go-25-%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%96%E4%BB%A3%E7%B1%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Go-25-结构体取代类 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-25-%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%96%E4%BB%A3%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go-25-结构体取代类
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-23 09:25:27 / 修改时间：09:35:26" itemprop="dateCreated datePublished" datetime="2021-08-23T09:25:27+08:00">2021-08-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Go 结构体取代类</p>
+<a id="more"></a>
+
+<h2 id="Go-支持面向对象吗？"><a href="#Go-支持面向对象吗？" class="headerlink" title="Go 支持面向对象吗？"></a>Go 支持面向对象吗？</h2><p>Go 并不是完全面向对象的编程语言。Go 官网回答了 Go 是否是面向对象语言，摘录如下。</p>
+<blockquote>
+<p>可以说是，也可以说不是。虽然 Go 有类型和方法，支持面向对象的编程风格，但却没有类型的层次结构。Go 中的“接口”概念提供了一种不同的方法，我们认为它易于使用，也更为普遍。Go 也可以将结构体嵌套使用，这与子类化（Subclassing）类似，但并不完全相同。此外，Go 提供的特性比 C++ 或 Java 更为通用：子类可以由任何类型的数据来定义，甚至是内建类型（如简单的“未装箱的”整型）。这在结构体（类）中没有受到限制。</p>
+</blockquote>
+<p>在接下来的教程里，我们会讨论如何使用 Go 来实现面向对象编程概念。与其它面向对象语言（如 Java）相比，Go 有很多完全不同的特性。</p>
+<h2 id="使用结构体，而非类"><a href="#使用结构体，而非类" class="headerlink" title="使用结构体，而非类"></a>使用结构体，而非类</h2><p>Go 不支持类，而是提供了[结构体]。结构体中可以添加[方法]。这样可以将数据和操作数据的方法绑定在一起，实现与类相似的效果。</p>
+<p>为了加深理解，我们来编写一个示例吧。</p>
+<p>在示例中，我们创建一个自定义[包]，它帮助我们更好地理解，结构体是如何有效地取代类的。</p>
+<p>在你的 Go 工作区创建一个名为 <code>oop</code> 的文件夹。在 <code>opp</code> 中再创建子文件夹 <code>employee</code>。在 <code>employee</code> 内，创建一个名为 <code>employee.go</code> 的文件。</p>
+<p>文件夹结构会是这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">workspacepath -&gt; oop -&gt; employee -&gt; employee.go</span><br></pre></td></tr></table></figure>
+
+<p>请将 <code>employee.go</code> 里的内容替换为如下所示的代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> employee</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Employee <span class="keyword">struct</span> &#123;  </span><br><span class="line">    FirstName   <span class="keyword">string</span></span><br><span class="line">    LastName    <span class="keyword">string</span></span><br><span class="line">    TotalLeaves <span class="keyword">int</span></span><br><span class="line">    LeavesTaken <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e Employee)</span> <span class="title">LeavesRemaining</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    fmt.Printf(<span class="string">&quot;%s %s has %d leaves remaining&quot;</span>, e.FirstName, e.LastName, (e.TotalLeaves - e.LeavesTaken))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序里，第 1 行指定了该文件属于 <code>employee</code> 包。而第 7 行声明了一个 <code>Employee</code> 结构体。在第 14 行，结构体 <code>Employee</code> 添加了一个名为 <code>LeavesRemaining</code> 的方法。该方法会计算和显示员工的剩余休假数。于是现在我们有了一个结构体，并绑定了结构体的方法，这与类很相似。</p>
+<p>接着在 <code>oop</code> 文件夹里创建一个文件，命名为 <code>main.go</code>。</p>
+<p>现在目录结构如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">workspacepath -&gt; oop -&gt; employee -&gt; employee.go  </span><br><span class="line">workspacepath -&gt; oop -&gt; main.go</span><br></pre></td></tr></table></figure>
+
+<p><code>main.go</code> 的内容如下所示：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;oop/employee&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    e := employee.Employee &#123;</span><br><span class="line">        FirstName: <span class="string">&quot;Sam&quot;</span>,</span><br><span class="line">        LastName: <span class="string">&quot;Adolf&quot;</span>,</span><br><span class="line">        TotalLeaves: <span class="number">30</span>,</span><br><span class="line">        LeavesTaken: <span class="number">20</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    e.LeavesRemaining()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在第 3 行引用了 <code>employee</code> 包。在 <code>main()</code>（第 12 行），我们调用了 <code>Employee</code> 的 <code>LeavesRemaining()</code> 方法。</p>
+<p>由于有自定义包，这个程序不能在 go playground 上运行。你可以在你的本地运行，在 <code>workspacepath/bin/oop</code> 下输入命令 <code>go install opp</code>，程序会打印输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sam Adolf has 10 leaves remaining</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-New-函数，而非构造器"><a href="#使用-New-函数，而非构造器" class="headerlink" title="使用 New() 函数，而非构造器"></a>使用 New() 函数，而非构造器</h2><p>我们上面写的程序看起来没什么问题，但还是有一些细节问题需要注意。我们看看当定义一个零值的 <code>employee</code> 结构体变量时，会发生什么。将 <code>main.go</code> 的内容修改为如下代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;oop/employee&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> e employee.Employee</span><br><span class="line">    e.LeavesRemaining()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们的修改只是创建一个零值的 <code>Employee</code> 结构体变量（第 6 行）。该程序会输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">has 0 leaves remaining</span><br></pre></td></tr></table></figure>
+
+<p>你可以看到，使用 <code>Employee</code> 创建的零值变量没有什么用。它没有合法的姓名，也没有合理的休假细节。</p>
+<p>在像 Java 这样的 OOP 语言中，是使用构造器来解决这种问题的。一个合法的对象必须使用参数化的构造器来创建。</p>
+<p>Go 并不支持构造器。如果某类型的零值不可用，需要程序员来隐藏该类型，避免从其他包直接访问。程序员应该提供一种名为 <code>NewT(parameters)</code> 的 [函数]，按照要求来初始化 <code>T</code> 类型的变量。按照 Go 的惯例，应该把创建 <code>T</code> 类型变量的函数命名为 <code>NewT(parameters)</code>。这就类似于构造器了。如果一个包只含有一种类型，按照 Go 的惯例，应该把函数命名为 <code>New(parameters)</code>， 而不是 <code>NewT(parameters)</code>。</p>
+<p>让我修改一下原先的代码，使得每当创建 <code>employee</code> 的时候，它都是可用的。</p>
+<p>首先应该让 <code>Employee</code> 结构体不可引用，然后创建一个 <code>New</code> 函数，用于创建 <code>Employee</code> 结构体变量。在 <code>employee.go</code> 中输入下面代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> employee</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> employee <span class="keyword">struct</span> &#123;  </span><br><span class="line">    firstName   <span class="keyword">string</span></span><br><span class="line">    lastName    <span class="keyword">string</span></span><br><span class="line">    totalLeaves <span class="keyword">int</span></span><br><span class="line">    leavesTaken <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">New</span><span class="params">(firstName <span class="keyword">string</span>, lastName <span class="keyword">string</span>, totalLeave <span class="keyword">int</span>, leavesTaken <span class="keyword">int</span>)</span> <span class="title">employee</span></span> &#123;  </span><br><span class="line">    e := employee &#123;firstName, lastName, totalLeave, leavesTaken&#125;</span><br><span class="line">    <span class="keyword">return</span> e</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e employee)</span> <span class="title">LeavesRemaining</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    fmt.Printf(<span class="string">&quot;%s %s has %d leaves remaining&quot;</span>, e.firstName, e.lastName, (e.totalLeaves - e.leavesTaken))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们进行了一些重要的修改。我们把 <code>Employee</code> 结构体的首字母改为小写 <code>e</code>，也就是将 <code>type Employee struct</code> 改为了 <code>type employee struct</code>。通过这种方法，我们把 <code>employee</code> 结构体变为了不可引用的，防止其他包对它的访问。除非有特殊需求，否则也要隐藏所有不可引用的结构体的所有字段，这是 Go 的最佳实践。由于我们不会在外部包需要 <code>employee</code> 的字段，因此我们也让这些字段无法引用。</p>
+<p>同样，我们还修改了 <code>LeavesRemaining()</code> 的方法。</p>
+<p>现在由于 <code>employee</code> 不可引用，因此不能在其他包内直接创建 <code>Employee</code> 类型的变量。于是我们在第 14 行提供了一个可引用的 <code>New</code> 函数，该函数接收必要的参数，返回一个新创建的 <code>employee</code> 结构体变量。</p>
+<p>这个程序还需要一些必要的修改，但现在先运行这个程序，理解一下当前的修改。如果运行当前程序，编译器会报错，如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go/src/constructor/main.go:6: undefined: employee.Employee</span><br></pre></td></tr></table></figure>
+
+<p>这是因为我们将 <code>Employee</code> 设置为不可引用，因此编译器会报错，提示该类型没有在 <code>main.go</code> 中定义。很完美，正如我们期望的一样，其他包现在不能轻易创建零值的 <code>employee</code> 变量了。我们成功地避免了创建不可用的 <code>employee</code> 结构体变量。现在创建 <code>employee</code> 变量的唯一方法就是使用 <code>New</code> 函数。</p>
+<p>如下所示，修改 <code>main.go</code> 里的内容。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main  </span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;oop/employee&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    e := employee.New(<span class="string">&quot;Sam&quot;</span>, <span class="string">&quot;Adolf&quot;</span>, <span class="number">30</span>, <span class="number">20</span>)</span><br><span class="line">    e.LeavesRemaining()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该文件唯一的修改就是第 6 行。通过向 <code>New</code> 函数传入所需变量，我们创建了一个新的 <code>employee</code> 结构体变量。</p>
+<p>下面是修改后的两个文件的内容。</p>
+<p>employee.go</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> employee</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> employee <span class="keyword">struct</span> &#123;  </span><br><span class="line">    firstName   <span class="keyword">string</span></span><br><span class="line">    lastName    <span class="keyword">string</span></span><br><span class="line">    totalLeaves <span class="keyword">int</span></span><br><span class="line">    leavesTaken <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">New</span><span class="params">(firstName <span class="keyword">string</span>, lastName <span class="keyword">string</span>, totalLeave <span class="keyword">int</span>, leavesTaken <span class="keyword">int</span>)</span> <span class="title">employee</span></span> &#123;  </span><br><span class="line">    e := employee &#123;firstName, lastName, totalLeave, leavesTaken&#125;</span><br><span class="line">    <span class="keyword">return</span> e</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e employee)</span> <span class="title">LeavesRemaining</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    fmt.Printf(<span class="string">&quot;%s %s has %d leaves remaining&quot;</span>, e.firstName, e.lastName, (e.totalLeaves - e.leavesTaken))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>main.go</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main  </span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;oop/employee&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    e := employee.New(<span class="string">&quot;Sam&quot;</span>, <span class="string">&quot;Adolf&quot;</span>, <span class="number">30</span>, <span class="number">20</span>)</span><br><span class="line">    e.LeavesRemaining()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行该程序，会输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sam Adolf has 10 leaves remaining</span><br></pre></td></tr></table></figure>
+
+<p>现在你能明白了，虽然 Go 不支持类，但结构体能够很好地取代类，而以 <code>New(parameters)</code> 签名的方法可以替代构造器。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"><i class="fas fa-cookie-bite"></i> Go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/23/Go-24-Mutex/" rel="prev" title="Go-24-Mutex">
+      <i class="fa fa-chevron-left"></i> Go-24-Mutex
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/23/Go-26-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/" rel="next" title="Go-26-组合取代继承">
+      Go-26-组合取代继承 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-%E6%94%AF%E6%8C%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%90%97%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">Go 支持面向对象吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%EF%BC%8C%E8%80%8C%E9%9D%9E%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">使用结构体，而非类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-New-%E5%87%BD%E6%95%B0%EF%BC%8C%E8%80%8C%E9%9D%9E%E6%9E%84%E9%80%A0%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">使用 New() 函数，而非构造器</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.9m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">51:31</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

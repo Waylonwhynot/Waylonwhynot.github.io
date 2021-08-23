@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Go异常处理 panic 和 recover">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go-30-异常处理panic_recover">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/08/23/Go-30-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86panic-recover/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Go异常处理 panic 和 recover">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-23T01:46:07.000Z">
+<meta property="article:modified_time" content="2021-08-23T01:51:47.857Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/23/Go-30-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86panic-recover/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Go-30-异常处理panic_recover | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-30-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86panic-recover/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go-30-异常处理panic_recover
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-23 09:46:07 / 修改时间：09:51:47" itemprop="dateCreated datePublished" datetime="2021-08-23T09:46:07+08:00">2021-08-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Go异常处理 panic 和 recover</p>
+<a id="more"></a>
+
+
+
+<h2 id="什么是-panic？"><a href="#什么是-panic？" class="headerlink" title="什么是 panic？"></a>什么是 panic？</h2><p>在 Go 语言中，程序中一般是使用[错误]来处理异常情况。对于程序中出现的大部分异常情况，错误就已经够用了。</p>
+<p>但在有些情况，当程序发生异常时，无法继续运行。在这种情况下，我们会使用 <code>panic</code> 来终止程序。当[函数]发生 panic 时，它会终止运行，在执行完所有的[延迟]函数后，程序控制返回到该函数的调用方。这样的过程会一直持续下去，直到当前[协程]的所有函数都返回退出，然后程序会打印出 panic 信息，接着打印出堆栈跟踪（Stack Trace），最后程序终止。在编写一个示例程序后，我们就能很好地理解这个概念了。</p>
+<p>在本教程里，我们还会接着讨论，当程序发生 panic 时，使用 <code>recover</code> 可以重新获得对该程序的控制。</p>
+<p>可以认为 <code>panic</code> 和 <code>recover</code> 与其他语言中的 <code>try-catch-finally</code> 语句类似，只不过一般我们很少使用 <code>panic</code> 和 <code>recover</code>。而当我们使用了 <code>panic</code> 和 <code>recover</code> 时，也会比 <code>try-catch-finally</code> 更加优雅，代码更加整洁。</p>
+<h2 id="什么时候应该使用-panic？"><a href="#什么时候应该使用-panic？" class="headerlink" title="什么时候应该使用 panic？"></a>什么时候应该使用 panic？</h2><p><strong>需要注意的是，你应该尽可能地使用错误，而不是使用 panic 和 recover。只有当程序不能继续运行的时候，才应该使用 panic 和 recover 机制</strong>。</p>
+<p>panic 有两个合理的用例。</p>
+<ol>
+<li><strong>发生了一个不能恢复的错误，此时程序不能继续运行</strong>。 一个例子就是 web 服务器无法绑定所要求的端口。在这种情况下，就应该使用 panic，因为如果不能绑定端口，啥也做不了。</li>
+<li><strong>发生了一个编程上的错误</strong>。 假如我们有一个接收指针参数的方法，而其他人使用 <code>nil</code> 作为参数调用了它。在这种情况下，我们可以使用 panic，因为这是一个编程错误：用 <code>nil</code> 参数调用了一个只能接收合法指针的方法。</li>
+</ol>
+<h2 id="panic-示例"><a href="#panic-示例" class="headerlink" title="panic 示例"></a>panic 示例</h2><p>内建函数 <code>panic</code> 的签名如下所示：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">panic</span><span class="params">(<span class="keyword">interface</span>&#123;&#125;)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>当程序终止时，会打印传入 <code>panic</code> 的参数。我们写一个示例，你就会清楚它的用途了。我们现在就开始吧。</p>
+<p>我们会写一个例子，来展示 <code>panic</code> 如何工作。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fullName</span><span class="params">(firstName *<span class="keyword">string</span>, lastName *<span class="keyword">string</span>)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">if</span> firstName == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(<span class="string">&quot;runtime error: first name cannot be nil&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> lastName == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(<span class="string">&quot;runtime error: last name cannot be nil&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;%s %s\n&quot;</span>, *firstName, *lastName)</span><br><span class="line">    fmt.Println(<span class="string">&quot;returned normally from fullName&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    firstName := <span class="string">&quot;Elon&quot;</span></span><br><span class="line">    fullName(&amp;firstName, <span class="literal">nil</span>)</span><br><span class="line">    fmt.Println(<span class="string">&quot;returned normally from main&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的程序很简单，会打印一个人的全名。第 7 行的 <code>fullName</code> 函数会打印出一个人的全名。该函数在第 8 行和第 11 行分别检查了 <code>firstName</code> 和 <code>lastName</code> 的指针是否为 <code>nil</code>。如果是 <code>nil</code>，<code>fullName</code> 函数会调用含有不同的错误信息的 <code>panic</code>。当程序终止时，会打印出该错误信息。</p>
+<p>运行该程序，会有如下输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">panic: runtime error: last name cannot be nil</span><br><span class="line"></span><br><span class="line">goroutine 1 [running]:  </span><br><span class="line">main.fullName(0x1040c128, 0x0)  </span><br><span class="line">    &#x2F;tmp&#x2F;sandbox135038844&#x2F;main.go:12 +0x120</span><br><span class="line">main.main()  </span><br><span class="line">    &#x2F;tmp&#x2F;sandbox135038844&#x2F;main.go:20 +0x80</span><br></pre></td></tr></table></figure>
+
+<p>我们来分析这个输出，理解一下 panic 是如何工作的，并且思考当程序发生 panic 时，会怎样打印堆栈跟踪。</p>
+<p>在第 19 行，我们将 <code>Elon</code> 赋值给了 <code>firstName</code>。在第 20 行，我们调用了 <code>fullName</code> 函数，其中 <code>lastName</code> 等于 <code>nil</code>。因此，满足了第 11 行的条件，程序发生 panic。当出现了 panic 时，程序就会终止运行，打印出传入 panic 的参数，接着打印出堆栈跟踪。因此，第 14 行和第 15 行的代码并不会在发生 panic 之后执行。程序首先会打印出传入 <code>panic</code> 函数的信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">panic: runtime error: last name cannot be empty</span><br></pre></td></tr></table></figure>
+
+<p>接着打印出堆栈跟踪。</p>
+<p>程序在 <code>fullName</code> 函数的第 12 行发生 panic，因此，首先会打印出如下所示的输出。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">main.fullName(0x1040c128, 0x0)  </span><br><span class="line">    &#x2F;tmp&#x2F;sandbox135038844&#x2F;main.go:12 +0x120</span><br></pre></td></tr></table></figure>
+
+<p>接着会打印出堆栈的下一项。在本例中，堆栈跟踪中的下一项是第 20 行（因为发生 panic 的 <code>fullName</code> 调用就在这一行），因此接下来会打印出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">main.main()  </span><br><span class="line">    &#x2F;tmp&#x2F;sandbox135038844&#x2F;main.go:20 +0x80</span><br></pre></td></tr></table></figure>
+
+<p>现在我们已经到达了导致 panic 的顶层函数，这里没有更多的层级，因此结束打印。</p>
+<h2 id="发生-panic-时的-defer"><a href="#发生-panic-时的-defer" class="headerlink" title="发生 panic 时的 defer"></a>发生 panic 时的 defer</h2><p>我们重新总结一下 panic 做了什么。<strong>当函数发生 panic 时，它会终止运行，在执行完所有的延迟函数后，程序控制返回到该函数的调用方。这样的过程会一直持续下去，直到当前协程的所有函数都返回退出，然后程序会打印出 panic 信息，接着打印出堆栈跟踪，最后程序终止</strong>。</p>
+<p>在上面的例子中，我们没有延迟调用任何函数。如果有延迟函数，会先调用它，然后程序控制返回到函数调用方。</p>
+<p>我们来修改上面的示例，使用一个延迟语句。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fullName</span><span class="params">(firstName *<span class="keyword">string</span>, lastName *<span class="keyword">string</span>)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;deferred call in fullName&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> firstName == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(<span class="string">&quot;runtime error: first name cannot be nil&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> lastName == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(<span class="string">&quot;runtime error: last name cannot be nil&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;%s %s\n&quot;</span>, *firstName, *lastName)</span><br><span class="line">    fmt.Println(<span class="string">&quot;returned normally from fullName&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;deferred call in main&quot;</span>)</span><br><span class="line">    firstName := <span class="string">&quot;Elon&quot;</span></span><br><span class="line">    fullName(&amp;firstName, <span class="literal">nil</span>)</span><br><span class="line">    fmt.Println(<span class="string">&quot;returned normally from main&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中，我们只修改了两处，分别在第 8 行和第 20 行添加了延迟函数的调用。</p>
+<p>该函数会打印：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">This program prints,</span><br><span class="line"></span><br><span class="line">deferred call in fullName  </span><br><span class="line">deferred call in main  </span><br><span class="line">panic: runtime error: last name cannot be nil</span><br><span class="line"></span><br><span class="line">goroutine 1 [running]:  </span><br><span class="line">main.fullName(0x1042bf90, 0x0)  </span><br><span class="line">    &#x2F;tmp&#x2F;sandbox060731990&#x2F;main.go:13 +0x280</span><br><span class="line">main.main()  </span><br><span class="line">    &#x2F;tmp&#x2F;sandbox060731990&#x2F;main.go:22 +0xc0</span><br></pre></td></tr></table></figure>
+
+<p>当程序在第 13 行发生 panic 时，首先执行了延迟函数，接着控制返回到函数调用方，调用方的延迟函数继续运行，直到到达顶层调用函数。</p>
+<p>在我们的例子中，首先执行 <code>fullName</code> 函数中的 <code>defer</code> 语句（第 8 行）。程序打印出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deferred call in fullName</span><br></pre></td></tr></table></figure>
+
+<p>接着程序返回到 <code>main</code> 函数，执行了 <code>main</code> 函数的延迟调用，因此会输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deferred call in main</span><br></pre></td></tr></table></figure>
+
+<p>现在程序控制到达了顶层函数，因此该函数会打印出 panic 信息，然后是堆栈跟踪，最后终止程序。</p>
+<h2 id="recover"><a href="#recover" class="headerlink" title="recover"></a>recover</h2><p><code>recover</code> 是一个内建函数，用于重新获得 panic 协程的控制。</p>
+<p><code>recover</code> 函数的标签如下所示：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">recover</span><span class="params">()</span> <span class="title">interface</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只有在延迟函数的内部，调用 <code>recover</code> 才有用。在延迟函数内调用 <code>recover</code>，可以取到 <code>panic</code> 的错误信息，并且停止 panic 续发事件（Panicking Sequence），程序运行恢复正常。如果在延迟函数的外部调用 <code>recover</code>，就不能停止 panic 续发事件。</p>
+<p>我们来修改一下程序，在发生 panic 之后，使用 <code>recover</code> 来恢复正常的运行。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">recoverName</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">if</span> r := <span class="built_in">recover</span>(); r!= <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;recovered from &quot;</span>, r)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fullName</span><span class="params">(firstName *<span class="keyword">string</span>, lastName *<span class="keyword">string</span>)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">defer</span> recoverName()</span><br><span class="line">    <span class="keyword">if</span> firstName == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(<span class="string">&quot;runtime error: first name cannot be nil&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> lastName == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(<span class="string">&quot;runtime error: last name cannot be nil&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;%s %s\n&quot;</span>, *firstName, *lastName)</span><br><span class="line">    fmt.Println(<span class="string">&quot;returned normally from fullName&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;deferred call in main&quot;</span>)</span><br><span class="line">    firstName := <span class="string">&quot;Elon&quot;</span></span><br><span class="line">    fullName(&amp;firstName, <span class="literal">nil</span>)</span><br><span class="line">    fmt.Println(<span class="string">&quot;returned normally from main&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在第 7 行，<code>recoverName()</code> 函数调用了 <code>recover()</code>，返回了调用 <code>panic</code> 的传参。在这里，我们只是打印出 <code>recover</code> 的返回值（第 8 行）。在 <code>fullName</code> 函数内，我们在第 14 行延迟调用了 <code>recoverNames()</code>。</p>
+<p>当 <code>fullName</code> 发生 panic 时，会调用延迟函数 <code>recoverName()</code>，它使用了 <code>recover()</code> 来停止 panic 续发事件。</p>
+<p>该程序会输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">recovered from  runtime error: last name cannot be <span class="literal">nil</span>  </span><br><span class="line">returned normally from main  </span><br><span class="line">deferred call in main</span><br></pre></td></tr></table></figure>
+
+<p>当程序在第 19 行发生 panic 时，会调用延迟函数 <code>recoverName</code>，它反过来会调用 <code>recover()</code> 来重新获得 panic 协程的控制。第 8 行调用了 <code>recover</code>，返回了 <code>panic</code> 的传参，因此会打印：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">recovered from  runtime error: last name cannot be nil</span><br></pre></td></tr></table></figure>
+
+<p>在执行完 <code>recover()</code> 之后，panic 会停止，程序控制返回到调用方（在这里就是 <code>main</code> 函数），程序在发生 panic 之后，从第 29 行开始会继续正常地运行。程序会打印 <code>returned normally from main</code>，之后是 <code>deferred call in main</code>。</p>
+<h2 id="panic，recover-和-Go-协程"><a href="#panic，recover-和-Go-协程" class="headerlink" title="panic，recover 和 Go 协程"></a>panic，recover 和 Go 协程</h2><p>只有在相同的 [Go 协程]中调用 recover 才管用。<code>recover</code> 不能恢复一个不同协程的 panic。我们用一个例子来理解这一点。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">recovery</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">if</span> r := <span class="built_in">recover</span>(); r != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;recovered:&quot;</span>, r)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">a</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">defer</span> recovery()</span><br><span class="line">    fmt.Println(<span class="string">&quot;Inside A&quot;</span>)</span><br><span class="line">    <span class="keyword">go</span> b()</span><br><span class="line">    time.Sleep(<span class="number">1</span> * time.Second)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">b</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    fmt.Println(<span class="string">&quot;Inside B&quot;</span>)</span><br><span class="line">    <span class="built_in">panic</span>(<span class="string">&quot;oh! B panicked&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a()</span><br><span class="line">    fmt.Println(<span class="string">&quot;normally returned from main&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序中，函数 <code>b()</code> 在第 23 行发生 panic。函数 <code>a()</code> 调用了一个延迟函数 <code>recovery()</code>，用于恢复 panic。在第 17 行，函数 <code>b()</code> 作为一个不同的协程来调用。下一行的 <code>Sleep</code> 只是保证 <code>a()</code> 在 <code>b()</code> 运行结束之后才退出。</p>
+<p>你认为程序会输出什么？panic 能够恢复吗？答案是否定的，panic 并不会恢复。因为调用 <code>recovery</code> 的协程和 <code>b()</code> 中发生 panic 的协程并不相同，因此不可能恢复 panic。</p>
+<p>运行该程序会输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Inside A  </span><br><span class="line">Inside B  </span><br><span class="line"><span class="built_in">panic</span>: oh! B panicked</span><br><span class="line"></span><br><span class="line">goroutine <span class="number">5</span> [running]:  </span><br><span class="line">main.b()  </span><br><span class="line">    /tmp/sandbox388039916/main.<span class="keyword">go</span>:<span class="number">23</span> +<span class="number">0x80</span></span><br><span class="line">created by main.a  </span><br><span class="line">    /tmp/sandbox388039916/main.<span class="keyword">go</span>:<span class="number">17</span> +<span class="number">0xc0</span></span><br></pre></td></tr></table></figure>
+
+<p>从输出可以看出，panic 没有恢复。</p>
+<p>如果函数 <code>b()</code> 在相同的协程里调用，panic 就可以恢复。</p>
+<p>如果程序的第 17 行由 <code>go b()</code> 修改为 <code>b()</code>，就可以恢复 panic 了，因为 panic 发生在与 recover 相同的协程里。如果运行这个修改后的程序，会输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Inside A  </span><br><span class="line">Inside B  </span><br><span class="line">recovered: oh! B panicked  </span><br><span class="line">normally returned from main</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行时-panic"><a href="#运行时-panic" class="headerlink" title="运行时 panic"></a>运行时 panic</h2><p>运行时错误（如数组越界）也会导致 panic。这等价于调用了内置函数 <code>panic</code>，其参数由接口类型 [runtime.Error]给出。<code>runtime.Error</code> 接口的定义如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Error <span class="keyword">interface</span> &#123;  </span><br><span class="line">    error</span><br><span class="line">    <span class="comment">// RuntimeError is a no-op function but</span></span><br><span class="line">    <span class="comment">// serves to distinguish types that are run time</span></span><br><span class="line">    <span class="comment">// errors from ordinary errors: a type is a</span></span><br><span class="line">    <span class="comment">// run time error if it has a RuntimeError method.</span></span><br><span class="line">    RuntimeError()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而 <code>runtime.Error</code> 接口满足内建接口类型 [<code>error</code>]。</p>
+<p>我们来编写一个示例，创建一个运行时 panic。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">a</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    n := []<span class="keyword">int</span>&#123;<span class="number">5</span>, <span class="number">7</span>, <span class="number">4</span>&#125;</span><br><span class="line">    fmt.Println(n[<span class="number">3</span>])</span><br><span class="line">    fmt.Println(<span class="string">&quot;normally returned from a&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a()</span><br><span class="line">    fmt.Println(<span class="string">&quot;normally returned from main&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序中，第 9 行我们试图访问 <code>n[3]</code>，这是一个对[切片]的错误引用。该程序会发生 panic，输出如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">panic</span>: runtime error: index out of <span class="keyword">range</span></span><br><span class="line"></span><br><span class="line">goroutine <span class="number">1</span> [running]:  </span><br><span class="line">main.a()  </span><br><span class="line">    /tmp/sandbox780439659/main.<span class="keyword">go</span>:<span class="number">9</span> +<span class="number">0x40</span></span><br><span class="line">main.main()  </span><br><span class="line">    /tmp/sandbox780439659/main.<span class="keyword">go</span>:<span class="number">13</span> +<span class="number">0x20</span></span><br></pre></td></tr></table></figure>
+
+<p>你也许想知道，是否可以恢复一个运行时 panic？当然可以！我们来修改一下上面的代码，恢复这个 panic。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">r</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">if</span> r := <span class="built_in">recover</span>(); r != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;Recovered&quot;</span>, r)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">a</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">defer</span> r()</span><br><span class="line">    n := []<span class="keyword">int</span>&#123;<span class="number">5</span>, <span class="number">7</span>, <span class="number">4</span>&#125;</span><br><span class="line">    fmt.Println(n[<span class="number">3</span>])</span><br><span class="line">    fmt.Println(<span class="string">&quot;normally returned from a&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a()</span><br><span class="line">    fmt.Println(<span class="string">&quot;normally returned from main&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行上面程序会输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Recovered runtime error: index out of <span class="keyword">range</span>  </span><br><span class="line">normally returned from main</span><br></pre></td></tr></table></figure>
+
+<p>从输出可以知道，我们已经恢复了这个 panic。</p>
+<h2 id="恢复后获得堆栈跟踪"><a href="#恢复后获得堆栈跟踪" class="headerlink" title="恢复后获得堆栈跟踪"></a>恢复后获得堆栈跟踪</h2><p>当我们恢复 panic 时，我们就释放了它的堆栈跟踪。实际上，在上述程序里，恢复 panic 之后，我们就失去了堆栈跟踪。</p>
+<p>有办法可以打印出堆栈跟踪，就是使用 [<code>Debug</code>]包中的 [<code>PrintStack</code>]函数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;runtime/debug&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">r</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">if</span> r := <span class="built_in">recover</span>(); r != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;Recovered&quot;</span>, r)</span><br><span class="line">        debug.PrintStack()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">a</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">defer</span> r()</span><br><span class="line">    n := []<span class="keyword">int</span>&#123;<span class="number">5</span>, <span class="number">7</span>, <span class="number">4</span>&#125;</span><br><span class="line">    fmt.Println(n[<span class="number">3</span>])</span><br><span class="line">    fmt.Println(<span class="string">&quot;normally returned from a&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a()</span><br><span class="line">    fmt.Println(<span class="string">&quot;normally returned from main&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序中，我们在第 11 行使用了 <code>debug.PrintStack()</code> 打印堆栈跟踪。</p>
+<p>该程序会输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Recovered runtime error: index out of <span class="keyword">range</span>  </span><br><span class="line">goroutine <span class="number">1</span> [running]:  </span><br><span class="line">runtime/debug.Stack(<span class="number">0x1042beb8</span>, <span class="number">0x2</span>, <span class="number">0x2</span>, <span class="number">0x1c</span>)  </span><br><span class="line">    /usr/local/<span class="keyword">go</span>/src/runtime/debug/stack.<span class="keyword">go</span>:<span class="number">24</span> +<span class="number">0xc0</span></span><br><span class="line">runtime/debug.PrintStack()  </span><br><span class="line">    /usr/local/<span class="keyword">go</span>/src/runtime/debug/stack.<span class="keyword">go</span>:<span class="number">16</span> +<span class="number">0x20</span></span><br><span class="line">main.r()  </span><br><span class="line">    /tmp/sandbox949178097/main.<span class="keyword">go</span>:<span class="number">11</span> +<span class="number">0xe0</span></span><br><span class="line"><span class="built_in">panic</span>(<span class="number">0xf0a80</span>, <span class="number">0x17cd50</span>)  </span><br><span class="line">    /usr/local/<span class="keyword">go</span>/src/runtime/<span class="built_in">panic</span>.<span class="keyword">go</span>:<span class="number">491</span> +<span class="number">0x2c0</span></span><br><span class="line">main.a()  </span><br><span class="line">    /tmp/sandbox949178097/main.<span class="keyword">go</span>:<span class="number">18</span> +<span class="number">0x80</span></span><br><span class="line">main.main()  </span><br><span class="line">    /tmp/sandbox949178097/main.<span class="keyword">go</span>:<span class="number">23</span> +<span class="number">0x20</span></span><br><span class="line">normally returned from main</span><br></pre></td></tr></table></figure>
+
+<p>从输出我们可以看出，首先已经恢复了 panic，打印出 <code>Recovered runtime error: index out of range</code>。此外，我们也打印出了堆栈跟踪。在恢复了 panic 之后，还打印出 <code>normally returned from main</code>。</p>
+<p>本教程到此结束。</p>
+<p>简单概括一下本教程讨论的内容：</p>
+<ul>
+<li>什么是 panic？</li>
+<li>什么时候应该使用 panic？</li>
+<li>panic 示例</li>
+<li>发生 panic 时的 defer</li>
+<li>recover</li>
+<li>panic，recover 和 Go 协程</li>
+<li>运行时 panic</li>
+<li>恢复后获得堆栈跟踪</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"><i class="fas fa-cookie-bite"></i> Go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/23/recover/" rel="prev" title="recover">
+      <i class="fa fa-chevron-left"></i> recover
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/23/Go-29-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%99%E8%AF%AF/" rel="next" title="Go-29-自定义错误">
+      Go-29-自定义错误 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-panic%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是 panic？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%BA%94%E8%AF%A5%E4%BD%BF%E7%94%A8-panic%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">什么时候应该使用 panic？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#panic-%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">panic 示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E7%94%9F-panic-%E6%97%B6%E7%9A%84-defer"><span class="nav-number">4.</span> <span class="nav-text">发生 panic 时的 defer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#recover"><span class="nav-number">5.</span> <span class="nav-text">recover</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#panic%EF%BC%8Crecover-%E5%92%8C-Go-%E5%8D%8F%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">panic，recover 和 Go 协程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6-panic"><span class="nav-number">7.</span> <span class="nav-text">运行时 panic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D%E5%90%8E%E8%8E%B7%E5%BE%97%E5%A0%86%E6%A0%88%E8%B7%9F%E8%B8%AA"><span class="nav-number">8.</span> <span class="nav-text">恢复后获得堆栈跟踪</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.9m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">51:31</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

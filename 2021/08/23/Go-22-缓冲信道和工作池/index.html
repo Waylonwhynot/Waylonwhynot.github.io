@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Go 缓冲信道和工作池">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go-22-缓冲信道和工作池">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/08/23/Go-22-%E7%BC%93%E5%86%B2%E4%BF%A1%E9%81%93%E5%92%8C%E5%B7%A5%E4%BD%9C%E6%B1%A0/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Go 缓冲信道和工作池">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-23T01:19:08.000Z">
+<meta property="article:modified_time" content="2021-08-23T01:20:51.969Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/23/Go-22-%E7%BC%93%E5%86%B2%E4%BF%A1%E9%81%93%E5%92%8C%E5%B7%A5%E4%BD%9C%E6%B1%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Go-22-缓冲信道和工作池 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-22-%E7%BC%93%E5%86%B2%E4%BF%A1%E9%81%93%E5%92%8C%E5%B7%A5%E4%BD%9C%E6%B1%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go-22-缓冲信道和工作池
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-23 09:19:08 / 修改时间：09:20:51" itemprop="dateCreated datePublished" datetime="2021-08-23T09:19:08+08:00">2021-08-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Go 缓冲信道和工作池</p>
+<a id="more"></a>
+
+
+
+<h2 id="什么是缓冲信道？"><a href="#什么是缓冲信道？" class="headerlink" title="什么是缓冲信道？"></a>什么是缓冲信道？</h2><p>在[上一教程]里，我们讨论的主要是无缓冲信道。我们在[信道]的教程里详细讨论了，无缓冲信道的发送和接收过程是阻塞的。</p>
+<p>我们还可以创建一个有缓冲（Buffer）的信道。只在缓冲已满的情况，才会阻塞向缓冲信道（Buffered Channel）发送数据。同样，只有在缓冲为空的时候，才会阻塞从缓冲信道接收数据。</p>
+<p>通过向 <code>make</code> 函数再传递一个表示容量的参数（指定缓冲的大小），可以创建缓冲信道。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">type</span>, capacity)</span><br></pre></td></tr></table></figure>
+
+<p>要让一个信道有缓冲，上面语法中的 <code>capacity</code> 应该大于 0。无缓冲信道的容量默认为 0，因此我们在[上一教程]创建信道时，省略了容量参数。</p>
+<p>我们开始编写代码，创建一个缓冲信道。</p>
+<h2 id="示例一"><a href="#示例一" class="headerlink" title="示例一"></a>示例一</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">2</span>)</span><br><span class="line">    ch &lt;- <span class="string">&quot;naveen&quot;</span></span><br><span class="line">    ch &lt;- <span class="string">&quot;paul&quot;</span></span><br><span class="line">    fmt.Println(&lt;- ch)</span><br><span class="line">    fmt.Println(&lt;- ch)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序里的第 9 行，我们创建了一个缓冲信道，其容量为 2。由于该信道的容量为 2，因此可向它写入两个字符串，而且不会发生阻塞。在第 10 行和第 11 行，我们向信道写入两个字符串，该信道并没有发生阻塞。我们又在第 12 行和第 13 行分别读取了这两个字符串。该程序输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">naveen  </span><br><span class="line">paul</span><br></pre></td></tr></table></figure>
+
+<h2 id="示例二"><a href="#示例二" class="headerlink" title="示例二"></a>示例二</h2><p>我们再看一个缓冲信道的示例，其中有一个并发的 Go 协程来向信道写入数据，而 Go 主协程负责读取数据。该示例帮助我们进一步理解，在向缓冲信道写入数据时，什么时候会发生阻塞。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">write</span><span class="params">(ch <span class="keyword">chan</span> <span class="keyword">int</span>)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">        ch &lt;- i</span><br><span class="line">        fmt.Println(<span class="string">&quot;successfully wrote&quot;</span>, i, <span class="string">&quot;to ch&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">close</span>(ch)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">go</span> write(ch)</span><br><span class="line">    time.Sleep(<span class="number">2</span> * time.Second)</span><br><span class="line">    <span class="keyword">for</span> v := <span class="keyword">range</span> ch &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;read value&quot;</span>, v,<span class="string">&quot;from ch&quot;</span>)</span><br><span class="line">        time.Sleep(<span class="number">2</span> * time.Second)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序中，第 16 行在 Go 主协程中创建了容量为 2 的缓冲信道 <code>ch</code>，而第 17 行把 <code>ch</code> 传递给了 <code>write</code> 协程。接下来 Go 主协程休眠了两秒。在这期间，<code>write</code> 协程在并发地运行。<code>write</code> 协程有一个 for 循环，依次向信道 <code>ch</code> 写入 0～4。而缓冲信道的容量为 2，因此 <code>write</code> 协程里立即会向 <code>ch</code> 写入 0 和 1，接下来发生阻塞，直到 <code>ch</code> 内的值被读取。因此，该程序立即打印出下面两行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">successfully wrote 0 to ch  </span><br><span class="line">successfully wrote 1 to ch</span><br></pre></td></tr></table></figure>
+
+<p>打印上面两行之后，<code>write</code> 协程中向 <code>ch</code> 的写入发生了阻塞，直到 <code>ch</code> 有值被读取到。而 Go 主协程休眠了两秒后，才开始读取该信道，因此在休眠期间程序不会打印任何结果。主协程结束休眠后，在第 19 行使用 for range 循环，开始读取信道 <code>ch</code>，打印出了读取到的值后又休眠两秒，这个循环一直到 <code>ch</code> 关闭才结束。所以该程序在两秒后会打印下面两行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">read value 0 from ch  </span><br><span class="line">successfully wrote 2 to ch</span><br></pre></td></tr></table></figure>
+
+<p>该过程会一直进行，直到信道读取完所有的值，并在 <code>write</code> 协程中关闭信道。最终输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">successfully wrote 0 to ch  </span><br><span class="line">successfully wrote 1 to ch  </span><br><span class="line">read value 0 from ch  </span><br><span class="line">successfully wrote 2 to ch  </span><br><span class="line">read value 1 from ch  </span><br><span class="line">successfully wrote 3 to ch  </span><br><span class="line">read value 2 from ch  </span><br><span class="line">successfully wrote 4 to ch  </span><br><span class="line">read value 3 from ch  </span><br><span class="line">read value 4 from ch</span><br></pre></td></tr></table></figure>
+
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">2</span>)</span><br><span class="line">    ch &lt;- <span class="string">&quot;naveen&quot;</span></span><br><span class="line">    ch &lt;- <span class="string">&quot;paul&quot;</span></span><br><span class="line">    ch &lt;- <span class="string">&quot;steve&quot;</span></span><br><span class="line">    fmt.Println(&lt;-ch)</span><br><span class="line">    fmt.Println(&lt;-ch)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序里，我们向容量为 2 的缓冲信道写入 3 个字符串。当在程序控制到达第 3 次写入时（第 11 行），由于它超出了信道的容量，因此这次写入发生了阻塞。现在想要这次写操作能够进行下去，必须要有其它协程来读取这个信道的数据。但在本例中，并没有并发协程来读取这个信道，因此这里会发生<strong>死锁</strong>（deadlock）。程序会在运行时触发 panic，信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fatal error: all goroutines are asleep - deadlock!</span><br><span class="line"></span><br><span class="line">goroutine 1 [chan send]:  </span><br><span class="line">main.main()  </span><br><span class="line">    &#x2F;tmp&#x2F;sandbox274756028&#x2F;main.go:11 +0x100</span><br></pre></td></tr></table></figure>
+
+<h2 id="长度-vs-容量"><a href="#长度-vs-容量" class="headerlink" title="长度 vs 容量"></a>长度 vs 容量</h2><p>缓冲信道的容量是指信道可以存储的值的数量。我们在使用 <code>make</code> 函数创建缓冲信道的时候会指定容量大小。</p>
+<p>缓冲信道的长度是指信道中当前排队的元素个数。</p>
+<p>代码可以把一切解释得很清楚。😃</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">3</span>)</span><br><span class="line">    ch &lt;- <span class="string">&quot;naveen&quot;</span></span><br><span class="line">    ch &lt;- <span class="string">&quot;paul&quot;</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;capacity is&quot;</span>, <span class="built_in">cap</span>(ch))</span><br><span class="line">    fmt.Println(<span class="string">&quot;length is&quot;</span>, <span class="built_in">len</span>(ch))</span><br><span class="line">    fmt.Println(<span class="string">&quot;read value&quot;</span>, &lt;-ch)</span><br><span class="line">    fmt.Println(<span class="string">&quot;new length is&quot;</span>, <span class="built_in">len</span>(ch))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序里，我们创建了一个容量为 3 的信道，于是它可以保存 3 个字符串。接下来，我们分别在第 9 行和第 10 行向信道写入了两个字符串。于是信道有两个字符串排队，因此其长度为 2。在第 13 行，我们又从信道读取了一个字符串。现在该信道内只有一个字符串，因此其长度变为 1。该程序会输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">capacity is 3  </span><br><span class="line">length is 2  </span><br><span class="line">read value naveen  </span><br><span class="line">new length is 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="WaitGroup"><a href="#WaitGroup" class="headerlink" title="WaitGroup"></a>WaitGroup</h2><p>在本教程的下一节里，我们会讲到<strong>工作池</strong>（Worker Pools）。而 <code>WaitGroup</code> 用于实现工作池，因此要理解工作池，我们首先需要学习 <code>WaitGroup</code>。</p>
+<p><code>WaitGroup</code> 用于等待一批 Go 协程执行结束。程序控制会一直阻塞，直到这些协程全部执行完毕。假设我们有 3 个并发执行的 Go 协程（由 Go 主协程生成）。Go 主协程需要等待这 3 个协程执行结束后，才会终止。这就可以用 <code>WaitGroup</code> 来实现。</p>
+<p>理论说完了，我们编写点儿代码吧。😃</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;sync&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">process</span><span class="params">(i <span class="keyword">int</span>, wg *sync.WaitGroup)</span></span> &#123;  </span><br><span class="line">    fmt.Println(<span class="string">&quot;started Goroutine &quot;</span>, i)</span><br><span class="line">    time.Sleep(<span class="number">2</span> * time.Second)</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Goroutine %d ended\n&quot;</span>, i)</span><br><span class="line">    wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    no := <span class="number">3</span></span><br><span class="line">    <span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; no; i++ &#123;</span><br><span class="line">        wg.Add(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">go</span> process(i, &amp;wg)</span><br><span class="line">    &#125;</span><br><span class="line">    wg.Wait()</span><br><span class="line">    fmt.Println(<span class="string">&quot;All go routines finished executing&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>[WaitGroup]是一个结构体类型，我们在第 18 行创建了 <code>WaitGroup</code> 类型的变量，其初始值为零值。<code>WaitGroup</code> 使用计数器来工作。当我们调用 <code>WaitGroup</code> 的 <code>Add</code> 并传递一个 <code>int</code> 时，<code>WaitGroup</code> 的计数器会加上 <code>Add</code> 的传参。要减少计数器，可以调用 <code>WaitGroup</code> 的 <code>Done()</code> 方法。<code>Wait()</code> 方法会阻塞调用它的 Go 协程，直到计数器变为 0 后才会停止阻塞。</p>
+<p>上述程序里，for 循环迭代了 3 次，我们在循环内调用了 <code>wg.Add(1)</code>（第 20 行）。因此计数器变为 3。for 循环同样创建了 3 个 <code>process</code> 协程，然后在第 23 行调用了 <code>wg.Wait()</code>，确保 Go 主协程等待计数器变为 0。在第 13 行，<code>process</code> 协程内调用了 <code>wg.Done</code>，可以让计数器递减。一旦 3 个子协程都执行完毕（即 <code>wg.Done()</code> 调用了 3 次），那么计数器就变为 0，于是主协程会解除阻塞。</p>
+<p><strong>在第 21 行里，传递 wg 的地址是很重要的。如果没有传递 wg 的地址，那么每个 Go 协程将会得到一个 WaitGroup 值的拷贝，因而当它们执行结束时，main 函数并不会知道</strong>。</p>
+<p>该程序输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">started Goroutine  2  </span><br><span class="line">started Goroutine  0  </span><br><span class="line">started Goroutine  1  </span><br><span class="line">Goroutine 0 ended  </span><br><span class="line">Goroutine 2 ended  </span><br><span class="line">Goroutine 1 ended  </span><br><span class="line">All go routines finished executing</span><br></pre></td></tr></table></figure>
+
+<p>由于 Go 协程的执行顺序不一定，因此你的输出可能和我不一样。😃</p>
+<h2 id="工作池的实现"><a href="#工作池的实现" class="headerlink" title="工作池的实现"></a>工作池的实现</h2><p>缓冲信道的重要应用之一就是实现[工作池]。</p>
+<p>一般而言，工作池就是一组等待任务分配的线程。一旦完成了所分配的任务，这些线程可继续等待任务的分配。</p>
+<p>我们会使用缓冲信道来实现工作池。我们工作池的任务是计算所输入数字的每一位的和。例如，如果输入 234，结果会是 9（即 2 + 3 + 4）。向工作池输入的是一列伪随机数。</p>
+<p>我们工作池的核心功能如下：</p>
+<ul>
+<li>创建一个 Go 协程池，监听一个等待作业分配的输入型缓冲信道。</li>
+<li>将作业添加到该输入型缓冲信道中。</li>
+<li>作业完成后，再将结果写入一个输出型缓冲信道。</li>
+<li>从输出型缓冲信道读取并打印结果。</li>
+</ul>
+<p>我们会逐步编写这个程序，让代码易于理解。</p>
+<p>第一步就是创建一个结构体，表示作业和结果。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Job <span class="keyword">struct</span> &#123;  </span><br><span class="line">    id       <span class="keyword">int</span></span><br><span class="line">    randomno <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> Result <span class="keyword">struct</span> &#123;  </span><br><span class="line">    job         Job</span><br><span class="line">    sumofdigits <span class="keyword">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所有 <code>Job</code> 结构体变量都会有 <code>id</code> 和 <code>randomno</code> 两个字段，<code>randomno</code> 用于计算其每位数之和。</p>
+<p>而 <code>Result</code> 结构体有一个 <code>job</code> 字段，表示所对应的作业，还有一个 <code>sumofdigits</code> 字段，表示计算的结果（每位数字之和）。</p>
+<p>第二步是分别创建用于接收作业和写入结果的缓冲信道。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jobs = <span class="built_in">make</span>(<span class="keyword">chan</span> Job, <span class="number">10</span>)  </span><br><span class="line"><span class="keyword">var</span> results = <span class="built_in">make</span>(<span class="keyword">chan</span> Result, <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p>工作协程（Worker Goroutine）会监听缓冲信道 <code>jobs</code> 里更新的作业。一旦工作协程完成了作业，其结果会写入缓冲信道 <code>results</code>。</p>
+<p>如下所示，<code>digits</code> 函数的任务实际上就是计算整数的每一位之和，最后返回该结果。为了模拟出 <code>digits</code> 在计算过程中花费了一段时间，我们在函数内添加了两秒的休眠时间。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">digits</span><span class="params">(number <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;  </span><br><span class="line">    sum := <span class="number">0</span></span><br><span class="line">    no := number</span><br><span class="line">    <span class="keyword">for</span> no != <span class="number">0</span> &#123;</span><br><span class="line">        digit := no % <span class="number">10</span></span><br><span class="line">        sum += digit</span><br><span class="line">        no /= <span class="number">10</span></span><br><span class="line">    &#125;</span><br><span class="line">    time.Sleep(<span class="number">2</span> * time.Second)</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后，我们写一个创建工作协程的函数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">worker</span><span class="params">(wg *sync.WaitGroup)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">for</span> job := <span class="keyword">range</span> jobs &#123;</span><br><span class="line">        output := Result&#123;job, digits(job.randomno)&#125;</span><br><span class="line">        results &lt;- output</span><br><span class="line">    &#125;</span><br><span class="line">    wg.Done()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的函数创建了一个工作者（Worker），读取 <code>jobs</code> 信道的数据，根据当前的 <code>job</code> 和 <code>digits</code> 函数的返回值，创建了一个 <code>Result</code> 结构体变量，然后将结果写入 <code>results</code> 缓冲信道。<code>worker</code> 函数接收了一个 <code>WaitGroup</code> 类型的 <code>wg</code> 作为参数，当所有的 <code>jobs</code> 完成的时候，调用了 <code>Done()</code> 方法。</p>
+<p><code>createWorkerPool</code> 函数创建了一个 Go 协程的工作池。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">createWorkerPool</span><span class="params">(noOfWorkers <span class="keyword">int</span>)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; noOfWorkers; i++ &#123;</span><br><span class="line">        wg.Add(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">go</span> worker(&amp;wg)</span><br><span class="line">    &#125;</span><br><span class="line">    wg.Wait()</span><br><span class="line">    <span class="built_in">close</span>(results)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面函数的参数是需要创建的工作协程的数量。在创建 Go 协程之前，它调用了 <code>wg.Add(1)</code> 方法，于是 <code>WaitGroup</code> 计数器递增。接下来，我们创建工作协程，并向 <code>worker</code> 函数传递 <code>wg</code> 的地址。创建了需要的工作协程后，函数调用 <code>wg.Wait()</code>，等待所有的 Go 协程执行完毕。所有协程完成执行之后，函数会关闭 <code>results</code> 信道。因为所有协程都已经执行完毕，于是不再需要向 <code>results</code> 信道写入数据了。</p>
+<p>现在我们已经有了工作池，我们继续编写一个函数，把作业分配给工作者。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">allocate</span><span class="params">(noOfJobs <span class="keyword">int</span>)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; noOfJobs; i++ &#123;</span><br><span class="line">        randomno := rand.Intn(<span class="number">999</span>)</span><br><span class="line">        job := Job&#123;i, randomno&#125;</span><br><span class="line">        jobs &lt;- job</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">close</span>(jobs)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的 <code>allocate</code> 函数接收所需创建的作业数量作为输入参数，生成了最大值为 998 的伪随机数，并使用该随机数创建了 <code>Job</code> 结构体变量。这个函数把 for 循环的计数器 <code>i</code> 作为 id，最后把创建的结构体变量写入 <code>jobs</code> 信道。当写入所有的 <code>job</code> 时，它关闭了 <code>jobs</code> 信道。</p>
+<p>下一步是创建一个读取 <code>results</code> 信道和打印输出的函数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">result</span><span class="params">(done <span class="keyword">chan</span> <span class="keyword">bool</span>)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">for</span> result := <span class="keyword">range</span> results &#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;Job id %d, input random no %d , sum of digits %d\n&quot;</span>, result.job.id, result.job.randomno, result.sumofdigits)</span><br><span class="line">    &#125;</span><br><span class="line">    done &lt;- <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>result</code> 函数读取 <code>results</code> 信道，并打印出 <code>job</code> 的 <code>id</code>、输入的随机数、该随机数的每位数之和。<code>result</code> 函数也接受 <code>done</code> 信道作为参数，当打印所有结果时，<code>done</code> 会被写入 true。</p>
+<p>现在一切准备充分了。我们继续完成最后一步，在 <code>main()</code> 函数中调用上面所有的函数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    startTime := time.Now()</span><br><span class="line">    noOfJobs := <span class="number">100</span></span><br><span class="line">    <span class="keyword">go</span> allocate(noOfJobs)</span><br><span class="line">    done := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>)</span><br><span class="line">    <span class="keyword">go</span> result(done)</span><br><span class="line">    noOfWorkers := <span class="number">10</span></span><br><span class="line">    createWorkerPool(noOfWorkers)</span><br><span class="line">    &lt;-done</span><br><span class="line">    endTime := time.Now()</span><br><span class="line">    diff := endTime.Sub(startTime)</span><br><span class="line">    fmt.Println(<span class="string">&quot;total time taken &quot;</span>, diff.Seconds(), <span class="string">&quot;seconds&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们首先在 <code>main</code> 函数的第 2 行，保存了程序的起始时间，并在最后一行（第 12 行）计算了 <code>endTime</code> 和 <code>startTime</code> 的差值，显示出程序运行的总时间。由于我们想要通过改变协程数量，来做一点基准指标（Benchmark），所以需要这么做。</p>
+<p>我们把 <code>noOfJobs</code> 设置为 100，接下来调用了 <code>allocate</code>，向 <code>jobs</code> 信道添加作业。</p>
+<p>我们创建了 <code>done</code> 信道，并将其传递给 <code>result</code> 协程。于是该协程会开始打印结果，并在完成打印时发出通知。</p>
+<p>通过调用 <code>createWorkerPool</code> 函数，我们最终创建了一个有 10 个协程的工作池。<code>main</code> 函数会监听 <code>done</code> 信道的通知，等待所有结果打印结束。</p>
+<p>为了便于参考，下面是整个程序。我还引用了必要的包。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;math/rand&quot;</span></span><br><span class="line">    <span class="string">&quot;sync&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Job <span class="keyword">struct</span> &#123;  </span><br><span class="line">    id       <span class="keyword">int</span></span><br><span class="line">    randomno <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> Result <span class="keyword">struct</span> &#123;  </span><br><span class="line">    job         Job</span><br><span class="line">    sumofdigits <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> jobs = <span class="built_in">make</span>(<span class="keyword">chan</span> Job, <span class="number">10</span>)  </span><br><span class="line"><span class="keyword">var</span> results = <span class="built_in">make</span>(<span class="keyword">chan</span> Result, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">digits</span><span class="params">(number <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;  </span><br><span class="line">    sum := <span class="number">0</span></span><br><span class="line">    no := number</span><br><span class="line">    <span class="keyword">for</span> no != <span class="number">0</span> &#123;</span><br><span class="line">        digit := no % <span class="number">10</span></span><br><span class="line">        sum += digit</span><br><span class="line">        no /= <span class="number">10</span></span><br><span class="line">    &#125;</span><br><span class="line">    time.Sleep(<span class="number">2</span> * time.Second)</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">worker</span><span class="params">(wg *sync.WaitGroup)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">for</span> job := <span class="keyword">range</span> jobs &#123;</span><br><span class="line">        output := Result&#123;job, digits(job.randomno)&#125;</span><br><span class="line">        results &lt;- output</span><br><span class="line">    &#125;</span><br><span class="line">    wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">createWorkerPool</span><span class="params">(noOfWorkers <span class="keyword">int</span>)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; noOfWorkers; i++ &#123;</span><br><span class="line">        wg.Add(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">go</span> worker(&amp;wg)</span><br><span class="line">    &#125;</span><br><span class="line">    wg.Wait()</span><br><span class="line">    <span class="built_in">close</span>(results)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">allocate</span><span class="params">(noOfJobs <span class="keyword">int</span>)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; noOfJobs; i++ &#123;</span><br><span class="line">        randomno := rand.Intn(<span class="number">999</span>)</span><br><span class="line">        job := Job&#123;i, randomno&#125;</span><br><span class="line">        jobs &lt;- job</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">close</span>(jobs)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">result</span><span class="params">(done <span class="keyword">chan</span> <span class="keyword">bool</span>)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">for</span> result := <span class="keyword">range</span> results &#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;Job id %d, input random no %d , sum of digits %d\n&quot;</span>, result.job.id, result.job.randomno, result.sumofdigits)</span><br><span class="line">    &#125;</span><br><span class="line">    done &lt;- <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    startTime := time.Now()</span><br><span class="line">    noOfJobs := <span class="number">100</span></span><br><span class="line">    <span class="keyword">go</span> allocate(noOfJobs)</span><br><span class="line">    done := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>)</span><br><span class="line">    <span class="keyword">go</span> result(done)</span><br><span class="line">    noOfWorkers := <span class="number">10</span></span><br><span class="line">    createWorkerPool(noOfWorkers)</span><br><span class="line">    &lt;-done</span><br><span class="line">    endTime := time.Now()</span><br><span class="line">    diff := endTime.Sub(startTime)</span><br><span class="line">    fmt.Println(<span class="string">&quot;total time taken &quot;</span>, diff.Seconds(), <span class="string">&quot;seconds&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了更精确地计算总时间，请在你的本地机器上运行该程序。</p>
+<p>该程序输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Job id 1, input random no 636, sum of digits 15  </span><br><span class="line">Job id 0, input random no 878, sum of digits 23  </span><br><span class="line">Job id 9, input random no 150, sum of digits 6  </span><br><span class="line">...</span><br><span class="line">total time taken  20.01081009 seconds</span><br></pre></td></tr></table></figure>
+
+<p>程序总共会打印 100 行，对应着 100 项作业，然后最后会打印一行程序消耗的总时间。你的输出会和我的不同，因为 Go 协程的运行顺序不一定，同样总时间也会因为硬件而不同。在我的例子中，运行程序大约花费了 20 秒。</p>
+<p>现在我们把 <code>main</code> 函数里的 <code>noOfWorkers</code> 增加到 20。我们把工作者的数量加倍了。由于工作协程增加了（准确说来是两倍），因此程序花费的总时间会减少（准确说来是一半）。在我的例子里，程序会打印出 10.004364685 秒。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">total time taken  10.004364685 seconds</span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以理解了，随着工作协程数量增加，完成作业的总时间会减少。你们可以练习一下：在 <code>main</code> 函数里修改 <code>noOfJobs</code> 和 <code>noOfWorkers</code> 的值，并试着去分析一下结果。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"><i class="fas fa-cookie-bite"></i> Go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/23/Go-21-%E4%BF%A1%E9%81%93/" rel="prev" title="Go-21-信道">
+      <i class="fa fa-chevron-left"></i> Go-21-信道
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/23/Go-23-Select/" rel="next" title="Go-23-Select">
+      Go-23-Select <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%93%E5%86%B2%E4%BF%A1%E9%81%93%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是缓冲信道？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%B8%80"><span class="nav-number">2.</span> <span class="nav-text">示例一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BA%8C"><span class="nav-number">3.</span> <span class="nav-text">示例二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%BB%E9%94%81"><span class="nav-number">4.</span> <span class="nav-text">死锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%BF%E5%BA%A6-vs-%E5%AE%B9%E9%87%8F"><span class="nav-number">5.</span> <span class="nav-text">长度 vs 容量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WaitGroup"><span class="nav-number">6.</span> <span class="nav-text">WaitGroup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B1%A0%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">7.</span> <span class="nav-text">工作池的实现</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.9m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">51:31</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

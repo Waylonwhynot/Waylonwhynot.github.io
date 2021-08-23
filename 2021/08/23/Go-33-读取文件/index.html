@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Go 读取文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go-33-读取文件">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/08/23/Go-33-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Go 读取文件">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-23T01:57:35.000Z">
+<meta property="article:modified_time" content="2021-08-23T01:59:31.769Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/23/Go-33-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Go-33-读取文件 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-33-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go-33-读取文件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-23 09:57:35 / 修改时间：09:59:31" itemprop="dateCreated datePublished" datetime="2021-08-23T09:57:35+08:00">2021-08-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Go 读取文件</p>
+<a id="more"></a>
+
+
+
+<p>文件读取是所有编程语言中最常见的操作之一。本教程我们会学习如何使用 Go 读取文件。</p>
+<p>本教程分为如下小节。</p>
+<ul>
+<li>将整个文件读取到内存<ul>
+<li>使用绝对文件路径</li>
+<li>使用命令行标记来传递文件路径</li>
+<li>将文件绑定在二进制文件中</li>
+</ul>
+</li>
+<li>分块读取文件</li>
+<li>逐行读取文件</li>
+</ul>
+<h2 id="将整个文件读取到内存"><a href="#将整个文件读取到内存" class="headerlink" title="将整个文件读取到内存"></a>将整个文件读取到内存</h2><p>将整个文件读取到内存是最基本的文件操作之一。这需要使用 <code>ioutil</code>]包中的 <a target="_blank" rel="noopener" href="https://golang.org/pkg/io/ioutil/#ReadFile"><code>ReadFile</code></a> 函数。</p>
+<p>让我们在 Go 程序所在的目录中，读取一个文件。我已经在 GOPATH（译注：原文是 GOROOT，应该是笔误）中创建了文件夹，在该文件夹内部，有一个文本文件 <code>test.txt</code>，我们会使用 Go 程序 <code>filehandling.go</code> 来读取它。<code>test.txt</code> 包含文本 “Hello World. Welcome to file handling in Go”。我的文件夹结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">src</span><br><span class="line">    filehandling</span><br><span class="line">        filehandling.go</span><br><span class="line">        test.txt</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们来看看代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;io/ioutil&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    data, err := ioutil.ReadFile(<span class="string">&quot;test.txt&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;File reading error&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(<span class="string">&quot;Contents of file:&quot;</span>, <span class="keyword">string</span>(data))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于无法在 playground 上读取文件，因此请在你的本地环境运行这个程序。</p>
+<p>在上述程序的第 9 行，程序会读取文件，并返回一个字节<a target="_blank" rel="noopener" href="https://studygolang.com/articles/12121">切片</a>，而这个切片保存在 <code>data</code> 中。在第 14 行，我们将 <code>data</code> 转换为 <code>string</code>，显示出文件的内容。</p>
+<p>请在 <strong>test.txt</strong> 所在的位置运行该程序。</p>
+<p>例如，对于 <strong>linux/mac</strong>，如果 <strong>test.txt</strong> 位于 <strong>/home/naveen/go/src/filehandling</strong>，可以使用下列步骤来运行程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /home/naveen/go/src/filehandling/</span><br><span class="line">$ go install filehandling</span><br><span class="line">$ workspacepath/bin/filehandling</span><br></pre></td></tr></table></figure>
+
+<p>对于 <strong>windows</strong>，如果 <strong>test.txt</strong> 位于 <strong>C:\Users\naveen.r\go\src\filehandling</strong>，则使用下列步骤。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">cd</span> C:\Users\naveen.r\go\src\filehandling</span><br><span class="line">&gt; go install filehandling</span><br><span class="line">&gt; workspacepath\bin\filehandling.exe</span><br></pre></td></tr></table></figure>
+
+<p>该程序会输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Contents of file: Hello World. Welcome to file handling in Go.</span><br></pre></td></tr></table></figure>
+
+<p>如果在其他位置运行这个程序（比如 <code>/home/userdirectory</code>），会打印下面的错误。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">File reading error open test.txt: The system cannot find the file specified.</span><br></pre></td></tr></table></figure>
+
+<p>这是因为 Go 是编译型语言。<code>go install</code> 会根据源代码创建一个二进制文件。二进制文件独立于源代码，可以在任何位置上运行。由于在运行二进制文件的位置上没有找到 <code>test.txt</code>，因此程序会报错，提示无法找到指定的文件。</p>
+<p>有三种方法可以解决这个问题。</p>
+<ol>
+<li>使用绝对文件路径</li>
+<li>使用命令行标记来传递文件路径</li>
+<li>将文件绑定在二进制文件中</li>
+</ol>
+<p>让我们来依次介绍。</p>
+<h3 id="1-使用绝对文件路径"><a href="#1-使用绝对文件路径" class="headerlink" title="1. 使用绝对文件路径"></a>1. 使用绝对文件路径</h3><p>要解决问题，最简单的方法就是传入绝对文件路径。我已经修改了程序，把路径改成了绝对路径。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;io/ioutil&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    data, err := ioutil.ReadFile(<span class="string">&quot;/home/naveen/go/src/filehandling/test.txt&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;File reading error&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(<span class="string">&quot;Contents of file:&quot;</span>, <span class="keyword">string</span>(data))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在可以在任何位置上运行程序，打印出 <code>test.txt</code> 的内容。</p>
+<p>例如，可以在我的家目录运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> <span class="variable">$HOME</span></span><br><span class="line">$ go install filehandling</span><br><span class="line">$ workspacepath/bin/filehandling</span><br></pre></td></tr></table></figure>
+
+<p>该程序打印出了 <code>test.txt</code> 的内容。</p>
+<p>看似这是一个简单的方法，但它的缺点是：文件必须放在程序指定的路径中，否则就会出错。</p>
+<h3 id="2-使用命令行标记来传递文件路径"><a href="#2-使用命令行标记来传递文件路径" class="headerlink" title="2. 使用命令行标记来传递文件路径"></a>2. 使用命令行标记来传递文件路径</h3><p>另一种解决方案是使用命令行标记来传递文件路径。使用 <a target="_blank" rel="noopener" href="https://golang.org/pkg/flag/">flag</a> 包，我们可以从输入的命令行获取到文件路径，接着读取文件内容。</p>
+<p>首先我们来看看 <code>flag</code> 包是如何工作的。<code>flag</code> 包有一个名为 <a target="_blank" rel="noopener" href="https://golang.org/pkg/flag/#String"><code>String</code></a> 的<a target="_blank" rel="noopener" href="https://studygolang.com/articles/11892">函数</a>。该函数接收三个参数。第一个参数是标记名，第二个是默认值，第三个是标记的简短描述。</p>
+<p>让我们来编写程序，从命令行读取文件名。将 <code>filehandling.go</code> 的内容替换如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;flag&quot;</span></span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fptr := flag.String(<span class="string">&quot;fpath&quot;</span>, <span class="string">&quot;test.txt&quot;</span>, <span class="string">&quot;file path to read from&quot;</span>)</span><br><span class="line">    flag.Parse()</span><br><span class="line">    fmt.Println(<span class="string">&quot;value of fpath is&quot;</span>, *fptr)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序中第 8 行，通过 <code>String</code> 函数，创建了一个字符串标记，名称是 <code>fpath</code>，默认值是 <code>test.txt</code>，描述为 <code>file path to read from</code>。这个函数返回存储 flag 值的字符串<a target="_blank" rel="noopener" href="https://studygolang.com/articles/11756">变量</a>的地址。</p>
+<p>在程序访问 flag 之前，必须先调用 <code>flag.Parse()</code>。</p>
+<p>在第 10 行，程序会打印出 flag 值。</p>
+<p>使用下面命令运行程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrkspacepath/bin/filehandling -fpath=/path-of-file/test.txt</span><br></pre></td></tr></table></figure>
+
+<p>我们传入 <code>/path-of-file/test.txt</code>，赋值给了 <code>fpath</code> 标记。</p>
+<p>该程序输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value of fpath is /path-of-file/test.txt</span><br></pre></td></tr></table></figure>
+
+<p>这是因为 <code>fpath</code> 的默认值是 <code>test.txt</code>。</p>
+<p>现在我们知道如何从命令行读取文件路径了，让我们继续完成我们的文件读取程序。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;flag&quot;</span></span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;io/ioutil&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fptr := flag.String(<span class="string">&quot;fpath&quot;</span>, <span class="string">&quot;test.txt&quot;</span>, <span class="string">&quot;file path to read from&quot;</span>)</span><br><span class="line">    flag.Parse()</span><br><span class="line">    data, err := ioutil.ReadFile(*fptr)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;File reading error&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(<span class="string">&quot;Contents of file:&quot;</span>, <span class="keyword">string</span>(data))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序里，命令行传入文件路径，程序读取了该文件的内容。使用下面命令运行该程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrkspacepath/bin/filehandling -fpath=/path-of-file/test.txt</span><br></pre></td></tr></table></figure>
+
+<p>请将 <code>/path-of-file/</code> 替换为 <code>test.txt</code> 的真实路径。该程序将打印：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Contents of file: Hello World. Welcome to file handling in Go.</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-将文件绑定在二进制文件中"><a href="#3-将文件绑定在二进制文件中" class="headerlink" title="3. 将文件绑定在二进制文件中"></a>3. 将文件绑定在二进制文件中</h3><p>虽然从命令行获取文件路径的方法很好，但还有一种更好的解决方法。如果我们能够将文本文件捆绑在二进制文件，岂不是很棒？这就是我们下面要做的事情。</p>
+<p>有很多<a target="_blank" rel="noopener" href="https://studygolang.com/articles/11893">包</a>可以帮助我们实现。我们会使用 <a target="_blank" rel="noopener" href="https://github.com/gobuffalo/packr">packr</a>，因为它很简单，并且我在项目中使用它时，没有出现任何问题。</p>
+<p>第一步就是安装 <code>packr</code> 包。</p>
+<p>在命令提示符中输入下面命令，安装 <code>packr</code> 包。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get -u github.com/gobuffalo/packr/...</span><br></pre></td></tr></table></figure>
+
+<p><code>packr</code> 会把静态文件（例如 <code>.txt</code> 文件）转换为 <code>.go</code> 文件，接下来，<code>.go</code> 文件会直接嵌入到二进制文件中。<code>packer</code> 非常智能，在开发过程中，可以从磁盘而非二进制文件中获取静态文件。在开发过程中，当仅仅静态文件变化时，可以不必重新编译。</p>
+<p>我们通过程序来更好地理解它。用以下内容来替换 <code>handling.go</code> 文件。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;github.com/gobuffalo/packr&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    box := packr.NewBox(<span class="string">&quot;../filehandling&quot;</span>)</span><br><span class="line">    data := box.String(<span class="string">&quot;test.txt&quot;</span>)</span><br><span class="line">    fmt.Println(<span class="string">&quot;Contents of file:&quot;</span>, data)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 10 行，我们创建了一个新盒子（New Box）。盒子表示一个文件夹，其内容会嵌入到二进制中。在这里，我指定了 <code>filehandling</code> 文件夹，其内容包含 <code>test.txt</code>。在下一行，我们读取了文件内容，并打印出来。</p>
+<p>在开发阶段时，我们可以使用 <code>go install</code> 命令来运行程序。程序可以正常运行。<code>packr</code> 非常智能，在开发阶段可以从磁盘加载文件。</p>
+<p>使用下面命令来运行程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go install filehandling</span><br><span class="line">workspacepath/bin/filehandling</span><br></pre></td></tr></table></figure>
+
+<p>该命令可以在其他位置运行。<code>packr</code> 很聪明，可以获取传递给 <code>NewBox</code> 命令的目录的绝对路径。</p>
+<p>该程序会输出：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Contents of file: Hello World. Welcome to file handling in Go.</span><br></pre></td></tr></table></figure>
+
+<p>你可以试着改变 <code>test.txt</code> 的内容，然后再运行 <code>filehandling</code>。可以看到，无需再次编译，程序打印出了 <code>test.txt</code> 的更新内容。完美！</p>
+<p>现在我们来看看如何将 <code>test.txt</code> 打包到我们的二进制文件中。我们使用 <code>packr</code> 命令来实现。</p>
+<p>运行下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">packr install -v filehandling</span><br></pre></td></tr></table></figure>
+
+<p>它会打印：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">building box ../filehandling</span><br><span class="line">packing file filehandling.go</span><br><span class="line">packed file filehandling.go</span><br><span class="line">packing file test.txt</span><br><span class="line">packed file test.txt</span><br><span class="line">built box ../filehandling with [<span class="string">&quot;filehandling.go&quot;</span> <span class="string">&quot;test.txt&quot;</span>]</span><br><span class="line">filehandling</span><br></pre></td></tr></table></figure>
+
+<p>该命令将静态文件绑定到了二进制文件中。</p>
+<p>在运行上述命令之后，使用命令 <code>workspacepath/bin/filehandling</code> 来运行程序。程序会打印出 <code>test.txt</code> 的内容。于是从二进制文件中，我们读取了 <code>test.txt</code> 的内容。</p>
+<p>如果你不知道文件到底是由二进制还是磁盘来提供，我建议你删除 <code>test.txt</code>，并在此运行 <code>filehandling</code> 命令。你将看到，程序打印出了 <code>test.txt</code> 的内容。太棒了:D。我们已经成功将静态文件嵌入到了二进制文件中。</p>
+<h2 id="分块读取文件"><a href="#分块读取文件" class="headerlink" title="分块读取文件"></a>分块读取文件</h2><p>在前面的章节，我们学习了如何把整个文件读取到内存。当文件非常大时，尤其在 RAM 存储量不足的情况下，把整个文件都读入内存是没有意义的。更好的方法是分块读取文件。这可以使用 <a target="_blank" rel="noopener" href="https://golang.org/pkg/bufio">bufio</a> 包来完成。</p>
+<p>让我们来编写一个程序，以 3 个字节的块为单位读取 <code>test.txt</code> 文件。如下所示，替换 <code>filehandling.go</code> 的内容。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;bufio&quot;</span></span><br><span class="line">    <span class="string">&quot;flag&quot;</span></span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;log&quot;</span></span><br><span class="line">    <span class="string">&quot;os&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fptr := flag.String(<span class="string">&quot;fpath&quot;</span>, <span class="string">&quot;test.txt&quot;</span>, <span class="string">&quot;file path to read from&quot;</span>)</span><br><span class="line">    flag.Parse()</span><br><span class="line"></span><br><span class="line">    f, err := os.Open(*fptr)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> err = f.Close(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            log.Fatal(err)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    r := bufio.NewReader(f)</span><br><span class="line">    b := <span class="built_in">make</span>([]<span class="keyword">byte</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        _, err := r.Read(b)</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            fmt.Println(<span class="string">&quot;Error reading file:&quot;</span>, err)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println(<span class="keyword">string</span>(b))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序的第 15 行，我们使用命令行标记传递的路径，打开文件。</p>
+<p>在第 19 行，我们延迟了文件的关闭操作。</p>
+<p>在上面程序的第 24 行，我们新建了一个缓冲读取器（buffered reader）。在下一行，我们创建了长度和容量为 3 的字节切片，程序会把文件的字节读取到切片中。</p>
+<p>第 27 行的 <code>Read</code> <a target="_blank" rel="noopener" href="https://studygolang.com/articles/12264">方法</a>会读取 len(b) 个字节（达到 3 字节），并返回所读取的字节数。当到达文件最后时，它会返回一个 EOF 错误。程序的其他地方比较简单，不做解释。</p>
+<p>如果我们使用下面命令来运行程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go install filehandling</span><br><span class="line">$ wrkspacepath/bin/filehandling -fpath=/path-of-file/test.txt</span><br></pre></td></tr></table></figure>
+
+<p>会得到以下输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Hel</span><br><span class="line">lo</span><br><span class="line">Wor</span><br><span class="line">ld.</span><br><span class="line"> We</span><br><span class="line">lco</span><br><span class="line">me</span><br><span class="line">to</span><br><span class="line">fil</span><br><span class="line">e h</span><br><span class="line">and</span><br><span class="line">lin</span><br><span class="line">g i</span><br><span class="line">n G</span><br><span class="line">o.</span><br><span class="line">Error reading file: EOF</span><br></pre></td></tr></table></figure>
+
+<h2 id="逐行读取文件"><a href="#逐行读取文件" class="headerlink" title="逐行读取文件"></a>逐行读取文件</h2><p>本节我们讨论如何使用 Go 逐行读取文件。这可以使用 <a target="_blank" rel="noopener" href="https://golang.org/pkg/bufio/">bufio</a> 来实现。</p>
+<p>请将 <code>test.txt</code> 替换为以下内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hello World. Welcome to file handling in Go.</span><br><span class="line">This is the second line of the file.</span><br><span class="line">We have reached the end of the file.</span><br></pre></td></tr></table></figure>
+
+<p>逐行读取文件涉及到以下步骤。</p>
+<ol>
+<li>打开文件；</li>
+<li>在文件上新建一个 scanner；</li>
+<li>扫描文件并且逐行读取。</li>
+</ol>
+<p>将 <code>filehandling.go</code> 替换为以下内容。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;bufio&quot;</span></span><br><span class="line">    <span class="string">&quot;flag&quot;</span></span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;log&quot;</span></span><br><span class="line">    <span class="string">&quot;os&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fptr := flag.String(<span class="string">&quot;fpath&quot;</span>, <span class="string">&quot;test.txt&quot;</span>, <span class="string">&quot;file path to read from&quot;</span>)</span><br><span class="line">    flag.Parse()</span><br><span class="line"></span><br><span class="line">    f, err := os.Open(*fptr)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> err = f.Close(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    s := bufio.NewScanner(f)</span><br><span class="line">    <span class="keyword">for</span> s.Scan() &#123;</span><br><span class="line">        fmt.Println(s.Text())</span><br><span class="line">    &#125;</span><br><span class="line">    err = s.Err()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序的第 15 行，我们用命令行标记传入的路径，打开文件。在第 24 行，我们用文件创建了一个新的 scanner。第 25 行的 <code>Scan()</code> 方法读取文件的下一行，如果可以读取，就可以使用 <code>Text()</code> 方法。</p>
+<p>当 <code>Scan</code> 返回 false 时，除非已经到达文件末尾（此时 <code>Err()</code> 返回 <code>nil</code>），否则 <code>Err()</code> 就会返回扫描过程中出现的错误。</p>
+<p>如果我使用下面命令来运行程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go install filehandling</span><br><span class="line">$ workspacepath/bin/filehandling -fpath=/path-of-file/test.txt</span><br></pre></td></tr></table></figure>
+
+<p>程序会输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hello World. Welcome to file handling <span class="keyword">in</span> Go.</span><br><span class="line">This is the second line of the file.</span><br><span class="line">We have reached the end of the file.</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"><i class="fas fa-cookie-bite"></i> Go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/23/Go-32-%E5%8F%8D%E5%B0%84/" rel="prev" title="Go-32-反射">
+      <i class="fa fa-chevron-left"></i> Go-32-反射
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/23/Go-33-%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6/" rel="next" title="Go-33-写入文件">
+      Go-33-写入文件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E6%95%B4%E4%B8%AA%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%88%B0%E5%86%85%E5%AD%98"><span class="nav-number">1.</span> <span class="nav-text">将整个文件读取到内存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8%E7%BB%9D%E5%AF%B9%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">1.1.</span> <span class="nav-text">1. 使用绝对文件路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A0%87%E8%AE%B0%E6%9D%A5%E4%BC%A0%E9%80%92%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">1.2.</span> <span class="nav-text">2. 使用命令行标记来传递文件路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%B0%86%E6%96%87%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%9C%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E4%B8%AD"><span class="nav-number">1.3.</span> <span class="nav-text">3. 将文件绑定在二进制文件中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%9D%97%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">分块读取文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%90%E8%A1%8C%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">逐行读取文件</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.9m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">51:31</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
