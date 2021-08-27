@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="需要记住">
+<meta property="og:type" content="article">
+<meta property="og:title" content="py-skill">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2019/11/06/py-skill/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="需要记住">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/997599/201701/997599-20170113091806338-1978303584.png">
+<meta property="og:image" content="https://waylon.whatyouneed.site/2019/11/06/py-skill/jwt%E4%BB%8B%E7%BB%8D.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154016681.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154039451.png">
+<meta property="article:published_time" content="2019-11-05T22:45:35.000Z">
+<meta property="article:modified_time" content="2021-08-27T09:29:14.529Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="note">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/997599/201701/997599-20170113091806338-1978303584.png">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2019/11/06/py-skill/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>py-skill | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2019/11/06/py-skill/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          py-skill
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-06 06:45:35" itemprop="dateCreated datePublished" datetime="2019-11-06T06:45:35+08:00">2019-11-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 17:29:14" itemprop="dateModified" datetime="2021-08-27T17:29:14+08:00">2021-08-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">杂记</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>30k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>50 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>需要记住</p>
+<a id="more"></a>
+
+<ol start="0">
+<li>字符串前加r的意思<br>r/R 表示非转义的原始字符串,比如在字符串中如果出现\n是换行,但是如果在字符串的前面添加r则表示\和n两个字符,一般常见于正则表达式中。</li>
+</ol>
+<ol>
+<li>Python __dict__与dir()区别</li>
+</ol>
+<p>__dict__与dir()的区别：</p>
+<p>1.dir()是一个函数，返回的是list；<br>2.__dict__是一个字典，键为属性名，值为属性值；<br>3.dir()用来寻找一个对象的所有属性，包括__dict__中的属性，__dict__是dir()的子集；</p>
+<ol start="2">
+<li>字符串和字节相互转换<br>通过decode encode 方式太麻烦，不好理解</li>
+</ol>
+<p>字符串转换成字节</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bytes(tmp_二进制, encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>字节转换成字符串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<ol start="3">
+<li>class 中什么时候用classmethod</li>
+</ol>
+<ul>
+<li>想通过类的方法得到对象，会用到classmethod</li>
+</ul>
+<ol start="4">
+<li>Django 模板语法 如何处理xss攻击的</li>
+</ol>
+<ul>
+<li>safe<br>Django的模板中会对HTML标签和JS等语法标签进行自动转义，原因显而易见，这样是为了安全。但是有的时候我们可能不希望这些HTML元素被转义，比如我们做一个内容管理系统，后台添加的文章中是经过修饰的，这些修饰可能是通过一个类似于FCKeditor编辑加注了HTML修饰符的文本，如果自动转义的话显示的就是保护HTML标签的源文件。为了在Django中关闭HTML的自动转义有两种方式，如果是一个单独的变量我们可以通过过滤器“|safe”的方式告诉Django这段代码是安全的不必转义。比如：<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">value=<span class="string">&quot;&lt;a href=&quot;</span><span class="string">&quot;&gt;点击&lt;/a&gt;&quot;</span></span><br><span class="line">&#123;&#123; value|safe&#125;&#125;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;&#123;&#123; label &#125;&#125;&lt;/p&gt;  &lt;!--为了安全系统会把标签变成字符串--&gt;</span><br><span class="line">&lt;p&gt;&#123;&#123; label|safe &#125;&#125;&lt;/p&gt;    &lt;!--加上safe，确定你的数据是安全的才能被当成是标签--&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>底层实现原理：mark_safe 通过html特殊字符的替换</p>
+<ol start="5">
+<li>csrf跨站请求伪造<br>什么是csrf：<br>其原理是攻击者构造网站后台某个功能接口的请求地址，诱导用户去点击或者用特殊方法让该请求地址自动加载。用户在登录状态下这个请求被服务端接收后会被误以为是用户合法的操作。对于 GET 形式的接口地址可轻易被攻击，对于 POST 形式的接口地址也不是百分百安全，攻击者可诱导用户进入带 Form 表单可用POST方式提交参数的页面</li>
+</ol>
+<p>原理：<br>当用post提交数据的时候，django会去检查是否有一个csrf的随机字符串，如果没有就会报错，这也是之前我们一直将其注释的原因，错误如下：403</p>
+<ul>
+<li>通过form提交<br>在form表单里面需要添加<code>&#123;%csrf_token%&#125;</code>，<br>这样当你查看页面源码的时候,可以看到form中有一个input是隐藏的<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;h3&gt;scrf_token&lt;/h3&gt;&lt;form action=&quot;/tag/&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &#123;% csrf_token %&#125;</span><br><span class="line">    &lt;p&gt;&lt;input type=&quot;text&quot; name=&quot;haiyan&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;submit&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<img src="https://images2015.cnblogs.com/blog/997599/201701/997599-20170113091806338-1978303584.png">
+
+
+<p>总结原理：当用户访问login页面的时候，会生成一个csrf的随机字符串，，并且cookie中也存放了这个随机字符串，当用户再次提交数据的时候会带着这个随机字符串提交，如果没有这个随机字符串则无法提交成功</p>
+<ul>
+<li>通过ajax提交</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jinxf/p/9186923.html">https://www.cnblogs.com/jinxf/p/9186923.html</a></p>
+<ol start="6">
+<li>orm 相关问题</li>
+</ol>
+<p>values和values_list 在annotate（分组查询）  前后的区别<br><a target="_blank" rel="noopener" href="https://www.runoob.com/django/django-orm-3.html">https://www.runoob.com/django/django-orm-3.html</a></p>
+<ol start="7">
+<li>Ajax<br>AJAX（Asynchronous Javascript And XML）翻译成中文就是“异步Javascript和XML”。即使用Javascript语言与服务器进行异步交互，传输的数据为XML（当然，传输的数据不只是XML,现在更多使用json数据）。</li>
+</ol>
+<ul>
+<li>同步交互：客户端发出一个请求后，需要等待服务器响应结束后，才能发出第二个请求；</li>
+<li>异步交互：客户端发出一个请求后，无需等待服务器响应结束，就可以发出第二个请求。</li>
+</ul>
+<p><strong>AJAX除了异步的特点外，还有一个就是：浏览器页面局部刷新；（这一特点给用户的感受是在不知不觉中完成请求和响应过程）</strong><br>局部刷新：Ajax 发请求，把数据拿过来，再勇敢Dom渲染局部</p>
+<p><code>$.ajax 是Jquery封装的，会根据不同参数和配置的type组装不同的http请求</code></p>
+<ol start="8">
+<li>forms组件</li>
+</ol>
+<ul>
+<li>使用它的字段检验功能<ul>
+<li><ol>
+<li>写一个类(UserForm)，继承Form</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>在类中写字段，pwd=forms.CharField(max_length=32,min_length=4)</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>在视图函数中使用: form=UserForm(检验的字典)</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>form.is_valid()里面做校验；通过，存起来；不通过，forms.errors会有错误信息</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>默认的校验规则还不够，需要自己写钩子函数<ul>
+<li>局部钩子：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean_</span>字段名():</span></span><br><span class="line">    val=self.cleaned_data.get(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">    通过<span class="keyword">return</span></span><br><span class="line">    不通过抛出</span><br></pre></td></tr></table></figure></li>
+<li>全局钩子：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean</span>(<span class="params">self</span>):</span></span><br><span class="line">    pwd=self.cleaned_data.get(<span class="string">&#x27;pwd&#x27;</span>)</span><br><span class="line">    r_pwd=self.cleaned_data.get(<span class="string">&#x27;r_pwd&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> pwd <span class="keyword">and</span> r_pwd:</span><br><span class="line">        <span class="keyword">if</span> pwd==r_pwd:</span><br><span class="line">            <span class="keyword">return</span> self.cleaned_data</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValidationError(<span class="string">&#x27;两次密码不一致&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> self.cleaned_data</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ol start="9">
+<li><p>捕捉错误模块<br>import traceback<br>return response.ServerErrorResponse(content=traceback.format_exc())</p>
+</li>
+<li><p>QuerySet转成字典<br>引入模块 from django.forms import model_to_dict</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> model_to_dict</span><br><span class="line"></span><br><span class="line">ret = models.Publish.objects.all()</span><br><span class="line">res = [model_to_dict(obj) <span class="keyword">for</span> obj <span class="keyword">in</span> ret]</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>request.POST 和 request.body 获取数据</p>
+</li>
+</ol>
+<p>前端发送数据格式为 json，是在body里的，且header是application/json,数据在request.body<br>发送数据是form 表单的，request.POST</p>
+<ol start="12">
+<li>Cors跨域问题</li>
+</ol>
+<ol start="12">
+<li>JWT<br>面试问题：JWT底层实现原理<img src="/2019/11/06/py-skill/jwt%E4%BB%8B%E7%BB%8D.png" class title="objsort">
+<a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html">https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html</a></li>
+</ol>
+<ul>
+<li><p>传统token方式</p>
+<blockquote>
+<p>用户登录成功后，服务端生成一个随机token给用户，并且在服务端(数据库或缓存)中保存一份token，以后用户再来访问时需携带token，服务端接收到token之后，去数据库或缓存中进行校验token的是否超时、是否合法。</p>
+</blockquote>
+</li>
+<li><p>为什么使用JWT<br>传统方式需要考虑session共享问题,存储中间件压力也很大;<br>使用JWT把后端的压力分摊给前端;<br>和session方式不一样的地方:服务端不再保存session的信息了,而是前端将信息保存在客户端,保存在cookie里面，仅仅是保存。下一次再去请求的时候,从cookie里面把信息拿出来,放到请求的header里面,然后发给服务端,后端进行验证的时候只是从header头里面把token拿出来,进行解密,拿到用户信息以及一些权限,再进行展示处理或者操作。</p>
+</li>
+</ul>
+<ul>
+<li><p>jwt方式</p>
+<blockquote>
+<p>用户登录成功后，服务端通过jwt生成一个随机token给用户（服务端无需保留token），以后用户再来访问时需携带token，服务端接收到token之后，通过jwt对token进行校验是否超时、是否合法。</p>
+</blockquote>
+</li>
+<li><p>三部分</p>
+<ul>
+<li>Header（头部）<blockquote>
+<p>是一个 JSON 对象,主要放JWT元信息;Base64URL进行加密；</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;alg&quot;: &quot;HS256&quot;,</span><br><span class="line">&quot;typ&quot;: &quot;JWT&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></blockquote>
+</li>
+<li>Payload（负载）<blockquote>
+<p>也是一个 JSON 对象，主要放实际的数据，用来存放实际需要传递的数据。Base64URL进行加密；如name或者工号</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;sub&quot;: &quot;1234567890&quot;,</span><br><span class="line">&quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">&quot;admin&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></blockquote>
+</li>
+<li>Signature（签名）<blockquote>
+<p>Signature 部分是对前两部分的签名，防止数据篡改。并且通过secret加密。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">base64UrlEncode(payload),</span><br><span class="line">secret)</span><br></pre></td></tr></table></figure>
+<p>  算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用”点”（.）分隔，就可以返回给用户。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>JWT 的使用方式<br>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
+</li>
+</ul>
+<p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
+<p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
+<p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
+<p>前端登录—&gt; 后端验证，返回JWT—&gt;前端把jwt写入cookie（键为token）—&gt;登录验证成功—&gt;跳转前要经过路由守卫,请求前端的Getuserinfo，检验用户是否有权限跳转目标页面；(获取token，如没有，跳转登录页面，如果有token，有权限，然后请求getUserInfo—&gt;getuserinfo作用：查看用户是访问权限，是否有权限访问home页面；访问的时候要求带着token—&gt; 前端的getuserinfo，axios请求到后端的getuserinfo，后端从header头中拿出来进行jwt解密token，验证是否为合法用户(middleware进行进行验证:如果没有token或者为undefined，request.user设置为匿名用户;如果有token，jwt进行解密，可以获取name和id，name和id就是用户登录的时候自定义的数据jwt_data)；解密之后赋值给request.user; —&gt; 后端接口getuserinfo，判断request.user数据是否有值,返回. –&gt;前端判断权限信息</p>
+<p>后端接口逻辑:根据业务拿到id或者名字，到DB查询该用户是否有权限，有的话，返回True，没有的话，返回false。一般后端接口data是一些权限的信息</p>
+<p>中间件解密，login的时候加密</p>
+<ol start="14">
+<li>动静态页面区别<br>动态页面：数据每次请求可能不一样，数据是从数据库拿出来渲染的，数据改了，页面就变了。<br>静态页面：数据是固定的，写死的，就是静态页面</li>
+</ol>
+<p>访问速度：静态&gt;动态</p>
+<p>页面静态化：并发量比较高的首页（电商），后台数据如果发生变化，重新生成静态页面</p>
+<ol start="15">
+<li>web开发模式<blockquote>
+<p>前后端混合开发:（前后端不分离）请求动态页面–&gt;查询数据库–&gt;渲染模板–&gt;返回HTML内容(JS在客户端浏览器上执行，所以Ajax是从浏览器里发出去的)</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>前后端分离: 返给前端数据,JS处理数据,JS拿到数据进行DOM渲染</p>
+</blockquote>
+<ul>
+<li>过程:浏览器请求静态页面(不是Django转发的);看到页面后,里面写了一些JS的代码,可以向后端发起请求;返回Json/XML格式的数据,前端就可以渲染页面了.</li>
+</ul>
+<ol start="16">
+<li><p>api接口<br>通过网络,规定了前后台信息交互规则的url连接,也就是前后台交互的媒介。</p>
+</li>
+<li><p>RESTful API规范</p>
+</li>
+</ol>
+<ol start="18">
+<li>生产消费模型</li>
+</ol>
+<ul>
+<li>redis</li>
+<li>kafka</li>
+<li>rabbitmq</li>
+<li>rocketmq<br>消息队列存在哪些问题</li>
+<li>如何保证redis/kafka的高可用性</li>
+<li>生产的速度&gt;消费的速度 ？ 消息堆积的情况？ 增加消费者</li>
+<li>如果保证消息的顺序的可靠性</li>
+<li>如何保证生产者消费消息的时候，不重复消费(幂等性)</li>
+<li>待补充<br>消息队列的作用：</li>
+<li>程序的解耦</li>
+<li>削峰</li>
+</ul>
+<ol start="19">
+<li>函数对象（经常用）<br>利用该特性，优雅的取代多分支的if<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>():</span></span><br><span class="line">    print(<span class="string">&quot;登录&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span>():</span></span><br><span class="line">    print(<span class="string">&quot;注册&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transfer</span>():</span></span><br><span class="line">    print(<span class="string">&quot;转账&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">withdraw</span>():</span></span><br><span class="line">    print(<span class="string">&quot;提现&quot;</span>.center(<span class="number">50</span>,<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>():</span></span><br><span class="line">    func_dic = &#123;</span><br><span class="line">        <span class="string">&quot;1&quot;</span>:[<span class="string">&quot;登录&quot;</span>,register],</span><br><span class="line">        <span class="string">&quot;2&quot;</span>:[<span class="string">&quot;注册&quot;</span>,login],</span><br><span class="line">        <span class="string">&quot;3&quot;</span>:[<span class="string">&quot;转账&quot;</span>,transfer],</span><br><span class="line">        <span class="string">&quot;4&quot;</span>:[<span class="string">&quot;提现&quot;</span>,withdraw],</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> func_dic:</span><br><span class="line">            print(k, func_dic[k][<span class="number">0</span>])</span><br><span class="line">        print(<span class="string">&quot;0 退出&quot;</span>)</span><br><span class="line"></span><br><span class="line">        choice = input(<span class="string">&quot;请输入您的命令编号: &quot;</span>).strip()</span><br><span class="line">        <span class="keyword">if</span> choice == <span class="string">&quot;0&quot;</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> choice <span class="keyword">in</span> func_dic:</span><br><span class="line">            func_dic[choice][<span class="number">1</span>]()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">&quot;请输入正确编号&quot;</span>)</span><br><span class="line"></span><br><span class="line">run()</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<ol start="20">
+<li>for循环原理<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>, <span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>, <span class="string">&#x27;c&#x27;</span>:<span class="number">3</span>&#125;</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> 迭代器对象.__iter__():</span><br><span class="line">    可以不加区分的调用可迭代对象或者迭代器对象</span><br><span class="line"><span class="keyword">for</span>循环工作原理：</span><br><span class="line">可以称之为迭代器循环</span><br><span class="line"><span class="number">1.</span> d.__iter__()得到一个迭代器对象</span><br><span class="line"><span class="number">2.</span> 迭代器对象.__next__()拿到一个返回值,然后将返回值赋值给k</span><br><span class="line"><span class="number">3.</span> 循环往复步骤<span class="number">2</span>,直到抛出Stopiteration异常<span class="keyword">for</span>循环会捕捉异常然后结束循环</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<ol start="21">
+<li>变量问题</li>
+</ol>
+<ul>
+<li>os.environ 系统环境变量(所有文件都能看的到) key:value必须为字符串<pre><code>       os.environ[&#39;aaaaaa&#39;] = &#39;111111&#39;</code></pre>
+</li>
+<li>sys.path   模块的搜索路径</li>
+<li>os.path    主要是用于对系统路径文件的操作</li>
+<li>PATH       命令执行路径</li>
+</ul>
+<p>补充：模块的查找顺序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">模块的查询顺序</span><br><span class="line">    1.先从内存中找可能已经加载了的</span><br><span class="line">    2.python 内置模块  </span><br><span class="line">    3.sys.path列表里面每一个路径下去找, 需要知道sys.path列表中第一个路径就是当前被执行文件所在的文件夹（pycharm会加上根路径，不要考虑）</span><br></pre></td></tr></table></figure>
+
+<p>项目中，推荐使用相对导入模块（原因: Pycharm每次都会自动加入项目的环境变量，其他环境可能没有）</p>
+<ol start="22">
+<li>路径append<h4 id="项目里面需要注意："><a href="#项目里面需要注意：" class="headerlink" title="项目里面需要注意："></a>项目里面需要注意：</h4></li>
+<li>项目内文件相互引用，选择在环境变量里append在启动文件所在的项目根目录。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">print(__file__)) #当前文件的绝对路径</span><br><span class="line">BASE_DIR &#x3D; os.path.dirname(os.path.dirname(__file__))</span><br><span class="line">print(BASE_DIR)</span><br><span class="line">sys.path.append(BASE_DIR)</span><br><span class="line"></span><br><span class="line">LOG_PATH &#x3D; os.path.join(BASE_DIR,&#39;log&#39;,&#39;access.log&#39;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pathlib import Path</span><br><span class="line">res &#x3D; Path(__file__).parent.parent</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<ol start="23">
+<li><p>原始办法序列化和反序列化<br>str 序列化，eval反序列化<br>eval其实就是执行字符串语句，里面是个字典，那就运行一下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a = &#123;<span class="string">&#x27;aaa&#x27;</span>:<span class="number">111</span>, <span class="string">&#x27;bbb&#x27;</span>:<span class="number">222</span>&#125;</span><br><span class="line"></span><br><span class="line">print(a,type(a))</span><br><span class="line"></span><br><span class="line">str_a = str(a)</span><br><span class="line"></span><br><span class="line">print(str_a, type(str_a))</span><br><span class="line"></span><br><span class="line">dict_a = eval(str_a)</span><br><span class="line">print(dict_a,type(dict_a))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>日志生产配置</p>
+</li>
+</ol>
+<ul>
+<li>生产配置<br>1、日志配置字典<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">logging配置</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 记录三种日志输出格式</span></span><br><span class="line">standard_format = <span class="string">&#x27;[%(asctime)s][%(threadName)s:%(thread)d][task_id:%(name)s][%(filename)s:%(lineno)d]&#x27;</span> \</span><br><span class="line">                  <span class="string">&#x27;[%(levelname)s][%(message)s]&#x27;</span> <span class="comment"># 其中name为getlogger指定的名字</span></span><br><span class="line">simple_format = <span class="string">&#x27;[%(levelname)s][%(asctime)s][%(filename)s:%(lineno)d]%(message)s&#x27;</span></span><br><span class="line">test_format = <span class="string">&#x27;%(asctime)s] %(message)s&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 记录三种日志输出格式 结束</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># *******************注意1: log文件的目录</span></span><br><span class="line">BASE_PATH = os.path.dirname(os.path.dirname(__file__))</span><br><span class="line">logfile_dir = os.path.join(BASE_PATH, <span class="string">&#x27;log&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># *******************注意2: log文件名</span></span><br><span class="line">logfile_name = <span class="string">&#x27;atm.log&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果不存在定义的日志目录就创建一个</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(logfile_dir):</span><br><span class="line">    os.mkdir(logfile_dir)</span><br><span class="line"></span><br><span class="line"><span class="comment"># log文件的全路径</span></span><br><span class="line">logfile_path = os.path.join(logfile_dir, logfile_name)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3、日志配置字典</span></span><br><span class="line">LOGGING_DIC = &#123;</span><br><span class="line">    <span class="string">&#x27;version&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">&#x27;disable_existing_loggers&#x27;</span>: <span class="literal">False</span>,</span><br><span class="line">    <span class="string">&#x27;formatters&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;standard&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;format&#x27;</span>: standard_format</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&#x27;simple&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;format&#x27;</span>: simple_format</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&#x27;filters&#x27;</span>: &#123;&#125;,</span><br><span class="line">    <span class="string">&#x27;handlers&#x27;</span>: &#123;</span><br><span class="line">        <span class="comment"># 打印到终端的日志</span></span><br><span class="line">        <span class="string">&#x27;console&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;level&#x27;</span>: <span class="string">&#x27;DEBUG&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;logging.StreamHandler&#x27;</span>,  <span class="comment"># 打印到屏幕</span></span><br><span class="line">            <span class="string">&#x27;formatter&#x27;</span>: <span class="string">&#x27;simple&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment"># 打印到文件的日志,收集info及以上的日志</span></span><br><span class="line">        <span class="string">&#x27;default&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;level&#x27;</span>: <span class="string">&#x27;DEBUG&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;logging.handlers.RotatingFileHandler&#x27;</span>,  <span class="comment"># 保存到文件,日志轮转</span></span><br><span class="line">            <span class="string">&#x27;formatter&#x27;</span>: <span class="string">&#x27;standard&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;filename&#x27;</span>: logfile_path,</span><br><span class="line">            <span class="string">&#x27;maxBytes&#x27;</span>: <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">5</span>,  <span class="comment"># 日志大小 5M</span></span><br><span class="line">            <span class="string">&#x27;backupCount&#x27;</span>: <span class="number">5</span>,</span><br><span class="line">            <span class="string">&#x27;encoding&#x27;</span>: <span class="string">&#x27;utf-8&#x27;</span>,  <span class="comment"># 日志文件编码，不用担心中文乱码</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&#x27;loggers&#x27;</span>: &#123;</span><br><span class="line">        <span class="comment"># logging.getLogger(__name__)拿到的logger配置</span></span><br><span class="line">        <span class="string">&#x27;&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;handlers&#x27;</span>: [<span class="string">&#x27;console&#x27;</span>, <span class="string">&#x27;default&#x27;</span>, ],</span><br><span class="line">            <span class="string">&#x27;level&#x27;</span>: <span class="string">&#x27;DEBUG&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;propagate&#x27;</span>: <span class="literal">True</span>, <span class="comment"># 向上(更高level的logger)传递</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>2、使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> settings</span><br><span class="line"></span><br><span class="line"><span class="comment"># !!!强调!!!</span></span><br><span class="line"><span class="comment"># 1、logging是一个包，需要使用其下的config、getLogger，可以如下导入</span></span><br><span class="line"><span class="comment"># from logging import config</span></span><br><span class="line"><span class="comment"># from logging import getLogger</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、也可以使用如下导入</span></span><br><span class="line"><span class="keyword">import</span> logging.config <span class="comment"># 这样连同logging.getLogger都一起导入了,然后使用前缀logging.config.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3、加载配置</span></span><br><span class="line">logging.config.dictConfig(settings.LOGGING_DIC)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4、输出日志</span></span><br><span class="line">logger1=logging.getLogger(<span class="string">&#x27;用户交易&#x27;</span>)</span><br><span class="line">logger1.info(<span class="string">&#x27;egon儿子alex转账3亿冥币&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># logger2=logging.getLogger(&#x27;专门的采集&#x27;) # 名字传入的必须是&#x27;专门的采集&#x27;，与LOGGING_DIC中的配置唯一对应</span></span><br><span class="line"><span class="comment"># logger2.debug(&#x27;专门采集的日志&#x27;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">====================================================================</span><br><span class="line">common.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加日志功能：日志功能在接口层使用</span></span><br><span class="line"><span class="comment"># 获取日志对象</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_logger</span>(<span class="params">log_type</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    :param log_type: 比如是user日志，bank日志，购物商城日志</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="comment"># 1. 加载日志配置信息</span></span><br><span class="line">    logging.config.dictConfig(</span><br><span class="line">        settings.LOGGING_DIC</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2. 获取日志对象</span></span><br><span class="line">    logger = logging.getLogger(log_type)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> logger</span><br><span class="line"></span><br><span class="line">接口层配置==============================================</span><br><span class="line">user_logger = common.get_logger(<span class="string">&#x27;user&#x27;</span>)</span><br><span class="line"></span><br><span class="line">程序位置放置user_logger.info(msg)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># formatters 多个日志格式，想用哪一个，直接去取</span><br><span class="line"># handlers 是日志的接收者，不同的handler控制日志输出到不同的位置.console，log</span><br><span class="line"># loggers  日志生产者，产生的日志将会传递给handler然后控制输出</span><br><span class="line"></span><br><span class="line"># 注意：loggers(第一层日志级别关限制)---&gt;handlers(第二层日志级别关卡限制)；loggers 和 handler 通常设置成一样就可以了。</span><br><span class="line"># 如果需要配置多个应用打到一个日志，为了避免重复配置，可配置空key</span><br></pre></td></tr></table></figure>
+
+<ol start="25">
+<li>hashlib模块<br>hashlib 加密的必须是bytes类型</li>
+</ol>
+<ul>
+<li><p>字符串加密</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">m = hashlib.md5()</span><br><span class="line">m.update(<span class="string">&#x27;hello&#x27;</span>.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">m.update(<span class="string">&#x27;world&#x27;</span>.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">res = m.hexdigest()</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line">m1 = hashlib.md5(<span class="string">&#x27;he&#x27;</span>.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">m1.update(<span class="string">&#x27;llo&#x27;</span>.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">m1.update(<span class="string">&#x27;wor&#x27;</span>.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">m1.update(<span class="string">&#x27;ld&#x27;</span>.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">res = m1.hexdigest()</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>文件校验（seek随机位置，读取2000个字符）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">m2 = hashlib.md5()</span><br><span class="line">f = open(<span class="string">&#x27;a2.log&#x27;</span>, mode=<span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">f.seek(<span class="number">5</span>)</span><br><span class="line">f.read(<span class="number">20</span>)</span><br><span class="line">m2.update(f.read(<span class="number">20</span>))</span><br><span class="line">res4 = m2.hexdigest()</span><br><span class="line">print(res4)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="26">
+<li>Python - r’’, b’’, u’’, f’’ 的含义</li>
+</ol>
+<ul>
+<li>字符串前加 f（重点！敲黑板！）<br>作用：相当于 format() 函数<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;帅哥&quot;</span></span><br><span class="line">age = <span class="number">12</span></span><br><span class="line">print(<span class="string">f&quot;my name is <span class="subst">&#123;name&#125;</span>,age is <span class="subst">&#123;age&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>执行结果</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my name is 帅哥,age is 12</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>字符串前加 r<br>r””  的作用是：去除转义字符<br>场景：想复制某个文件夹的目录，假设是 F:\Python_Easy\n4\test.py<br>当你不用 r”” ，你有三种写法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&quot;F:\Python_Easy\n4\test.py &quot;</span>)</span><br><span class="line">print(<span class="string">&quot;F:\\Python_Easy\\n4\\test.py &quot;</span>)</span><br><span class="line">print(<span class="string">&quot;F:/Python_Easy/n4/test.py &quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>而通常如果直接复制目录路径的话，你就粘贴出来的字符串就是第一行代码所示，所有 \ 会<br>当成转义符；而为了消除转义作用，需要手动再加一个 \ ，否则你也得手动改成第三行代码一样<br><strong>执行结果</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">F:\Python_Easy</span><br><span class="line"><span class="number">4</span>    est.py </span><br><span class="line">F:\Python_Easy\n4\test.py </span><br><span class="line">F:/Python_Easy/n4/test.py </span><br></pre></td></tr></table></figure>
+<p>而 r”” 的出现就是为了避免这种情况，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(r&quot;F:\Python_Easy\n4\test.py &quot;)</span><br></pre></td></tr></table></figure>
+<p><strong>执行结果</strong><br>F:\Python_Easy\n4\test.py </p>
+<ul>
+<li>字符串前加 b<br>b” “的作用是：后面字符串是bytes 类型<br>话不多说，直接上代码<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&quot;中文&quot;</span>.encode(encoding=<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line">print(<span class="string">b&#x27;\xe4\xb8\xad\xe6\x96\x87&#x27;</span>.decode())</span><br><span class="line">print(<span class="string">r&#x27;\xe4\xb8\xad\xe6\x96\x87&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>执行结果</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">b&#x27;\xe4\xb8\xad\xe6\x96\x87&#x27;</span></span><br><span class="line">中文</span><br><span class="line">\xe4\xb8\xad\xe6\x96\x87</span><br></pre></td></tr></table></figure>
+<p>可以看到，当你不加 b”” 时，他也就是个普通的字符串而已，不会识别为字节类型</p>
+<p>bytes应用场景：像图片、音视频等文件的读写就是用bytes数据<br>顺便可以看看字符串和bytes之间的转换是怎么样的：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/poloyy/p/12341746.html">https://www.cnblogs.com/poloyy/p/12341746.html</a></p>
+<ul>
+<li><p>字符串前加 u<br>作用：后面字符串以 Unicode 格式 进行编码<br>实际场景：一般用在中文字符串前面，防止因为源码储存格式问题，导致再次使用时出现乱码。<br>建议所有编码方式采用utf8</p>
+</li>
+<li><p>每次打印换行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">recv_size = <span class="number">0</span></span><br><span class="line">total_size = <span class="number">33333</span></span><br><span class="line"></span><br><span class="line">res = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> recv_size &lt; total_size:</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br><span class="line">    recv_size += <span class="number">1024</span></span><br><span class="line">    percent = recv_size / total_size</span><br><span class="line">    <span class="keyword">if</span> percent &gt; <span class="number">1</span>:</span><br><span class="line">        percent = <span class="number">1</span></span><br><span class="line">    res = int(<span class="number">50</span> * percent) * <span class="string">&#x27;#&#x27;</span></span><br><span class="line"></span><br><span class="line">    print(<span class="string">&#x27;\r[%-50s] %d%%&#x27;</span> % (res,int(percent*<span class="number">100</span>)),end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">print(<span class="string">&#x27;\r[%-50s] %d%%&#x27;</span> % (res,int(percent*<span class="number">100</span>)),end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="27">
+<li>可变不可变，有序无序<br>不可变数据类型： 是指变量的值发生改变时，其对应的内存地址<strong>发生改变</strong>。<br>数字、字符串、元祖、布尔</li>
+</ol>
+<p>可变数据类型：是指变量的值发生改变时，其对应的内存地址<strong>不发生改变</strong>。<br>字典、集合、列表</p>
+<p>整型（不可变）<br>列表（有序可变）<br>字符串（有序不可变）<br>元组（有序不可变）<br>字典（无序可变）<br>集合（无序可变）</p>
+<ol start="28">
+<li>需要掌握的<strong>内置方法</strong></li>
+<li>isinstance（做类型判断，不推荐用type）<br>判断一个对象是不是累的实例</li>
+<li>issubclass<br>判断类是否属于xx子类</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">obj=Foo()</span><br><span class="line"><span class="comment">#判断Foo 是不是 obj 的实例</span></span><br><span class="line"><span class="comment"># print(isinstance(obj,Foo))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(isinstance([],list))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(type(obj) is Foo)</span></span><br><span class="line"><span class="comment"># print(type([1,2]) is list) </span></span><br><span class="line"></span><br><span class="line">print(issubclass(Foo,object))</span><br></pre></td></tr></table></figure>
+
+
+<ol start="29">
+<li>各种数据类型删除操作</li>
+</ol>
+<ul>
+<li><p>列表<br>pop(index) 弹出 ,根据索引删除<br>del 直接删除  根据索引删除<br>remove(target) 直接删除 根据值删除</p>
+</li>
+<li><p>字典<br>data = info2.pop(“age”) ### 根据键来删除元素,返回值<br>data = info2.popitem:随机删除，返回元祖（key，value）<br>del info2[‘age’]</p>
+</li>
+</ul>
+<ol start="30">
+<li>网络相关问题<br>网络号: （ip与掩码位运算）标明是否在同一个局域网<br>ARP协议: 二层交换机工作所在层级，IP –&gt; MAC 地址的映射关系<br>三层为路由协议（公网）<br>网卡（工作在2层）<br>帧：头16字节(源地址mac + 目标地址mac) + 数据部分 1500MTU 一次最多接受1500字节</li>
+</ol>
+<ul>
+<li>子网划分</li>
+</ul>
+<ol>
+<li>192.168.1.2/24 网络位 192.168.1  主机位 .2<br>子网划分，借用主机位，比如划分2个子网<br>2 的 n次方  借用主机位，给后面的主机划分几个子网<br>可用主机地址 2的 y次方 -2   y是为0的主机位个数</li>
+</ol>
+<ol start="31">
+<li>继承经常用的方法</li>
+</ol>
+<p><strong>不知道父类里面写了啥，就用super调用一下，剩下该写什么写什么</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span>(<span class="params">Thread</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">      <span class="comment"># 重写了别人的方法，父类的init永远不能找到。但是又不知道别人的方法里写了啥，你就调用父类的方法</span></span><br><span class="line"></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;%s is running&#x27;</span> % self.name)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">        print(<span class="string">&#x27;egon dsb&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    t = MyThread(<span class="string">&#x27;egon&#x27;</span>)   <span class="comment"># 会用</span></span><br><span class="line">    t.start()</span><br><span class="line">    print(<span class="string">&#x27;主&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="32">
+<li>Python内存管理机制</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">内存管理 - （垃圾回收机制）</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 引用计数 </span><br><span class="line">    当一个在内存里的值身上有引用的时候(变量名有指向的时候), 引用计数+<span class="number">1</span>，绑定变量名销毁了，引用计数<span class="number">-1</span></span><br><span class="line">  </span><br><span class="line"><span class="number">2.</span> 标记清除</span><br><span class="line">    当程序在运行的时候，发现程序占用内存比较大的时候（<span class="number">80</span>%），自动停止当前整个程序运行，然后自动扫描一遍当前程序的所有变量名的引用计数，把引用计数为<span class="number">0</span>的打标记，最后一次性把所有标记为<span class="number">0</span>的数据清除掉，从而一次性释放大量内存。</span><br><span class="line">  </span><br><span class="line"><span class="number">3.</span> 分代回收</span><br><span class="line">   有一些变量名的引用计数存活率很长（分为青春代，老年代），越往下GC巡逻时间越长；因为垃圾回收机制也是功能，需要消耗资源，分代回收，减少垃圾回收机制消耗的内存。当某个变量每一次扫描引用计数都不为<span class="number">0</span>，那么就会被打上“常用”标签，GC机制就会减少扫描这个变量的次数，以此提高程序运行效率</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="33">
+<li>锁的理解</li>
+</ol>
+<p>在一个python的进程内，不仅有test.py的主线程或者由该主线程开启的其他线程，还有解释器开启的垃圾回收等解释器级别的线程，总之，所有线程都运行在这一个进程内，毫无疑问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#1 所有数据都是共享的，这其中，代码作为一种数据也是被所有线程共享的（test.py的所有代码以及Cpython解释器的所有代码）</span><br><span class="line">例如：test.py定义一个函数work（代码内容如下图），在进程内所有线程都能访问到work的代码，于是我们可以开启三个线程然后target都指向该代码，能访问到意味着就是可以执行。</span><br><span class="line"></span><br><span class="line">#2 所有线程的任务，都需要将任务的代码当做参数传给解释器的代码去执行，即所有的线程要想运行自己的任务，首先需要解决的是能够访问到解释器的代码。</span><br></pre></td></tr></table></figure>
+
+
+
+<p>垃圾回收线程也会运行，也会进行数据扫描，所有需要GIL锁保证数据安全。GIL锁理解对线程的锁，互斥锁理解为进程级别的锁</p>
+<p>同一进程下面开启多线程，因为有GIL 解释器锁存在，并行变成了串行；多进程的为了保证数据安全采用互斥锁。进程锁线程锁可以用队列，数据库解决。</p>
+<ol start="34">
+<li>有了GIL锁，为什么还需要线程锁</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 本身GIL和线程锁，都是线程级别的锁，GIL是内置的，解释器里的</span><br><span class="line">- 线程锁：开发者定义的</span><br><span class="line">线程执行太快了，同一时刻 读到的值是相同的，操作数据完成后，释放GIL锁，线程2进行修改数据，但是读到的值是未修改之前的。</span><br><span class="line">为了保证数据安全，需要线程锁。</span><br></pre></td></tr></table></figure>
+
+<ol start="35">
+<li>多线程多进程</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">其他语言都是开多线程利用多核心CPU。</span><br><span class="line"></span><br><span class="line">每个进程有各自独立的GIL，互不干扰，这样就可以真正意义上的并行执行，所以在python中，多进程的执行效率优于多线程(仅仅针对多核CPU而言)。</span><br><span class="line"></span><br><span class="line">所以我们能够得出结论：多核下，想做并行提升效率，比较通用的方法是使用多进程，能够有效提高执行效率</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">我们有四个任务需要处理，处理方式肯定是要玩出并发的效果，解决方案可以是：</span><br><span class="line">方案一：开启四个进程</span><br><span class="line">方案二：一个进程下，开启四个线程</span><br><span class="line"><span class="comment">#多核情况下，分析结果：</span></span><br><span class="line">　　如果四个任务是计算密集型，多核意味着并行计算，在python中一个进程中同一时刻只有一个线程执行用不上多核，方案一胜</span><br><span class="line">　　如果四个任务是I/O密集型，再多的核也解决不了I/O问题，方案二胜</span><br></pre></td></tr></table></figure>
+
+<ol start="36">
+<li>asyncio模块</li>
+<li>异步框架没有用那么多的原因</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">配套不成熟，之前的那些模块，都是同步模块。操作mysql，redis等等。</span><br><span class="line">前面是用了异步框架，再用了同步模块，还不如不用。</span><br><span class="line"></span><br><span class="line">django 3.0以上可以支持异步，但是它的ORM用的还是同步，等于没用。</span><br><span class="line"></span><br><span class="line">一旦用到异步，后面全要用到异步； 也可以用线程池解决。</span><br></pre></td></tr></table></figure>
+
+<ol start="37">
+<li>语言变量使用</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Python</span><br><span class="line"># 变量</span><br><span class="line">下划线(推荐使用)</span><br><span class="line">age_of_oldboy &#x3D; 56 </span><br><span class="line"></span><br><span class="line"># 函数名(全小写)</span><br><span class="line">函数名只能包含字符串、下划线和数字且不能以数字开头。虽然函数名可以随便起，但我们给函数起名字还是要尽量简短，并能表达函数功能</span><br><span class="line">def ret_demo1():</span><br><span class="line">    &#39;&#39;&#39;返回多个值&#39;&#39;&#39; </span><br><span class="line">    return 1,2,3,4</span><br><span class="line"></span><br><span class="line"># 类名(首字母大写)</span><br><span class="line">class Person:  # 定义一个人类</span><br><span class="line">    role &#x3D; &#39;person&#39;  # 人的角色属性都是人</span><br><span class="line"></span><br><span class="line">    def __init__(self, name, aggressivity, life_value):</span><br><span class="line">        self.name &#x3D; name  # 每一个角色都有自己的昵称;</span><br><span class="line">        self.aggressivity &#x3D; aggressivity  # 每一个角色都有自己的攻击力;</span><br><span class="line">        self.life_value &#x3D; life_value  # 每一个角色都有自己的生命值;</span><br><span class="line"></span><br><span class="line">    def attack(self,dog):  </span><br><span class="line">        # 人可以攻击狗，这里的狗也是一个对象。</span><br><span class="line">        # 人攻击狗，那么狗的生命值就会根据人的攻击力而下降</span><br><span class="line">        dog.life_value -&#x3D; self.aggressivity</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">JS</span><br><span class="line"># 变量</span><br><span class="line">驼峰式命名(推荐使用)</span><br><span class="line">userName</span><br><span class="line">dataOfDb</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="36">
+<li><p>distinct 去重(<strong>不要忽视主键</strong>)</p>
+</li>
+<li><p>inner join  left join right join 区别</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">INNER JOIN（内连接,或等值连接）：只取两张表有对应关系的部分(共有的数据部分)</span><br><span class="line">LEFT JOIN（左连接）：在inner join的基础上保留左表中的记录(没有则NULL顶着)</span><br><span class="line">RIGHT JOIN（右连接）： 与 LEFT JOIN 相反，用于获取右表所有记录，即使左表没有对应匹配的记录。</span><br><span class="line"></span><br><span class="line">MySQL left join 与 join 有所不同。 MySQL LEFT JOIN 会读取左边数据表的全部数据，即便右边表无对应数据。</span><br><span class="line">MySQL RIGHT JOIN 会读取右边数据表的全部数据，即便左边边表无对应数据。</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154016681.png" alt="image-20210516154016681"></p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154039451.png" alt="image-20210516154039451"></p>
+<ol start="39">
+<li>MySQL 事务 ACID</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kismetv/p/10331633.html">https://www.cnblogs.com/kismetv/p/10331633.html</a></p>
+<p><strong>事务作用</strong>：<font color="red">保证数据库数据完整性和操作的安全性。</font></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 事务是MySQL等关系型数据库区别于NoSQL的重要方面，是保证数据一致性的重要手段。</span></span><br><span class="line"><span class="comment"># 按照严格的标准，只有同时满足ACID特性才是事务；</span></span><br><span class="line"><span class="comment"># 事务的ACID特性及其实现原理：</span></span><br><span class="line">原子性：语句要么全执行，要么全不执行，是事务最核心的特性，事务本身就是以原子性来定义的；实现主要基于undo log</span><br><span class="line">持久性：保证事务提交后不会因为宕机等原因导致数据丢失；实现主要基于redo log</span><br><span class="line">隔离性：保证事务执行尽可能不受其他事务影响；InnoDB默认的隔离级别是RR，RR的实现主要基于锁机制（包含next-key lock）、MVCC（包括数据的隐藏列、基于undo log的版本链、ReadView）</span><br><span class="line">一致性：一致性是指事务执行结束后，数据库的完整性约束没有被破坏，事务执行的前后都是合法的数据状态。；事务追求的最终目标，一致性的实现既需要数据库层面的保障，也需要应用层面的保障；</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">事务的回滚rollback</span><br><span class="line">事务的确认commit</span><br></pre></td></tr></table></figure>
+
+<p><strong>开启事务</strong>: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启事务</span></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> transaction</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> transaction.atomic():</span><br><span class="line">        <span class="comment"># sql1</span></span><br><span class="line">        <span class="comment"># sql2</span></span><br><span class="line">        <span class="comment"># 在with代码块内书写的所有orm操作都属于同一个事务</span></span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    print(e)</span><br><span class="line">print(<span class="string">&#x27;other operation&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>数据库三大设计范式</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.huaweicloud.com/articles/c1c4f2d4c72b61eab44114ae8286835f.html">https://www.huaweicloud.com/articles/c1c4f2d4c72b61eab44114ae8286835f.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/92991575">https://zhuanlan.zhihu.com/p/92991575</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 概念：为了建立冗余较小、结构合理的数据库，设计数据库时必须遵循一定的规则。在关系型数据库中这种规则就称为范式。范式是符合某一种设计要求的总结。要想设计一个结构合理的关系型数据库，必须满足一定的范式。</span></span><br><span class="line"></span><br><span class="line"><span class="number">1</span>．第一范式(确保每列保持原子性)</span><br><span class="line">第一范式是最基本的范式。如果数据库表中的所有字段值都是不可分解的原子值，就说明该数据库表满足了第一范式。</span><br><span class="line"></span><br><span class="line">第一范式的合理遵循需要根据系统的实际需求来定。比如某些数据库系统中需要用到“地址”这个属性，本来直接将“地址”属性设计成一个数据库表的字段就行。但是如果系统经常会访问“地址”属性中的“城市”部分，那么就非要将“地址”这个属性重新拆分为省份、城市、详细地址等多个部分进行存储，这样在对地址中某一部分操作的时候将非常方便。这样设计才算满足了数据库的第一范式</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 第二范式(确保表中的每列都和主键相关)</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>．第三范式(确保每列都和主键列直接相关,而不是间接相关)</span><br><span class="line"></span><br><span class="line">第三范式需要确保数据表中的每一列数据都和主键直接相关，而不能间接相关。</span><br><span class="line"></span><br><span class="line">比如在设计一个订单数据表的时候，可以将客户编号作为一个外键和订单表建立相应的关系。而不可以在订单表中添加关于客户其它信息（比如姓名、所属公司等）的字段。如下面这两个表所示的设计就是一个满足第三范式的数据库表。</span><br></pre></td></tr></table></figure>
+
+<ol start="40">
+<li>ORM常用字段</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 所有的字段都有一个verbose_name 参数，用来对字段进行描述</span></span><br><span class="line">AutoField</span><br><span class="line">    - int自增列，必须填入参数 primary_key=<span class="literal">True</span></span><br><span class="line"></span><br><span class="line">CharField</span><br><span class="line">    <span class="comment"># 字符类型</span></span><br><span class="line">    - 必须: max_length表示字符长度</span><br><span class="line"> </span><br><span class="line">IntegerField     - 整数列(有符号的) <span class="number">-2147483648</span> ～ <span class="number">2147483647</span></span><br><span class="line">BigIntegerField  - 长整型(有符号的) <span class="number">-9223372036854775808</span> ～ <span class="number">9223372036854775807</span></span><br><span class="line"></span><br><span class="line">DecimalField</span><br><span class="line">    - max_digits 小数总长度</span><br><span class="line">  - decimal_places 小数位长度</span><br><span class="line"></span><br><span class="line">DateField     <span class="comment"># 年月日</span></span><br><span class="line">DateTimeField <span class="comment"># 年月日时分秒</span></span><br><span class="line">  - auto_now: 每次更新数据记录的时候会更新该字段。</span><br><span class="line">  - auto_now_add: 创建数据记录的时候会把当前时间添加到数据库。</span><br><span class="line"></span><br><span class="line">EmailField </span><br><span class="line"><span class="comment"># 字符串类型，Django Admin以及ModelForm中提供验证机制,本质上是varchar(254)</span></span><br><span class="line"></span><br><span class="line">BoolField</span><br><span class="line">   传布尔值   存<span class="number">0</span>/<span class="number">1</span></span><br><span class="line"></span><br><span class="line">TextField  <span class="comment"># 文本类型</span></span><br><span class="line">   存大段文本(博客/日记/文章)</span><br><span class="line"></span><br><span class="line">FileField</span><br><span class="line">     - 字符串，路径保存在数据库，文件上传到指定目录</span><br><span class="line">     - 参数：</span><br><span class="line">         upload_to = <span class="string">&quot;&quot;</span>      上传文件的保存路径</span><br><span class="line">         storage = <span class="literal">None</span>      存储组件，默认django.core.files.storage.FileSystemStorage</span><br><span class="line"></span><br><span class="line"><span class="comment"># 外键字段及参数</span></span><br><span class="line">    to        <span class="comment"># 设置要关联的表</span></span><br><span class="line">    to_field  <span class="comment"># 设置要关联的表的字段</span></span><br><span class="line">    on_delete <span class="comment"># 当删除关联表中的数据时，当前表与其关联的行的行为</span></span><br><span class="line">    db_index  <span class="comment"># 数据库中字段是否可以建立索引</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 了解  一对一其实可以有两种指定方式</span></span><br><span class="line">  OneToOneField()</span><br><span class="line">  ForeignKey(unique=<span class="literal">True</span>)  不推荐</span><br><span class="line">  </span><br><span class="line"><span class="comment"># Django不同， 级联更新级联删除可能需要自己指定</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 支持自定义字段</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FixedCharField</span>(<span class="params">models.Field</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    自定义的char类型的字段类</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, max_length, *args, **kwargs</span>):</span></span><br><span class="line">        self.max_length = max_length</span><br><span class="line">        super(FixedCharField, self).__init__(max_length=max_length, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">db_type</span>(<span class="params">self, connection</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        限定生成数据库表的字段类型为char，长度为max_length指定的值</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;char(%s)&#x27;</span> % self.max_length</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Class</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    id = models.AutoField(primary_key=<span class="literal">True</span>)</span><br><span class="line">    title = models.CharField(max_length=<span class="number">25</span>)</span><br><span class="line">    <span class="comment"># 使用自定义的char类型的字段</span></span><br><span class="line">    cname = FixedCharField(max_length=<span class="number">25</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="38">
+<li>django名称空间不建议使用，下为推荐做法</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 路由正常分发</span><br><span class="line">re_path(r&#39;^app01&#x2F;&#39;, include(&#39;app01.urls&#39;)),</span><br><span class="line">re_path(r&#39;^app02&#x2F;&#39;, include(&#39;app02.urls&#39;)),</span><br><span class="line"></span><br><span class="line"># app01 和 app02 的urls</span><br><span class="line">re_path(r&#39;reg&#x2F;&#39;, views.reg, name&#x3D;&#39;app01_reg&#39;)</span><br><span class="line">re_path(r&#39;reg&#x2F;&#39;, views.reg, name&#x3D;&#39;app02_reg&#39;)</span><br><span class="line"></span><br><span class="line"># 后端</span><br><span class="line">url &#x3D; reverse(&#39;app01_reg&#39;)</span><br><span class="line">    return HttpResponse(&#39;from app01 reg, url是: %s&#39; %url)</span><br><span class="line">url &#x3D; reverse(&#39;app02_reg&#39;)</span><br><span class="line">    return HttpResponse(&#39;from app02 reg, url是: %s&#39; %url)</span><br></pre></td></tr></table></figure>
+
+<ol start="39">
+<li>django 测试脚本</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    os.environ.setdefault(<span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>, <span class="string">&#x27;singletable.settings&#x27;</span>)</span><br><span class="line">    <span class="keyword">import</span> django</span><br><span class="line">    django.setup()</span><br><span class="line">    <span class="comment"># 在这个代码块的下面就可以测试django里面的单个py文件了</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">from</span> app01 <span class="keyword">import</span> models</span><br><span class="line">    model.User.objects.All()</span><br></pre></td></tr></table></figure>
+
+<ol start="40">
+<li>orm相关</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.</span> model层</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>x 里面外键默认都是级联更新删除的</span><br><span class="line">但是到了<span class="number">2.</span>x和<span class="number">3.</span>x 中需要你自己手动配置参数</span><br><span class="line"></span><br><span class="line">publish = models.ForeignKey(to=<span class="string">&#x27;Publish&#x27;</span>)</span><br><span class="line">publish = models.ForeignKey(to=<span class="string">&#x27;Publish&#x27;</span>,on_delete=models.CASCADE)</span><br><span class="line"></span><br><span class="line">外键字典会自动在字段的后面加上_id</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">     <span class="keyword">return</span> <span class="string">&#x27;对象：%s&#x27;</span> % self.name  <span class="comment"># 如果不加这段函数，默认返回的数据对象是User object 形式，加上之后返回的数据对象是“对象：jack_sam”，方便我们看清楚数据</span></span><br><span class="line"></span><br><span class="line"> filter: 拿到的queryset列表，列表中元素是数据对象</span><br><span class="line"> get : 拿到直接就是数据对象</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="number">1.</span> 主键建议写pk</span><br><span class="line"><span class="comment"># 建议写pk，pk会自动查找当前表的主键字段，指代的就是当前表的主键字段，用了pk之后，我们不需要知道当前表的主键字段名称也可进行删除操作。</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 查询建议filter 不建议get</span><br><span class="line"><span class="comment"># 对象：jack_sam,get拿到的直接就是这个数据对象，就不需要用filter(pk=5).first()了。</span></span><br><span class="line">    <span class="comment"># 但是该方法不推荐使用，因为如果数据不存在，数据会直接报错；filter则不会报错</span></span><br><span class="line"><span class="number">3.</span> 推荐filter 不推荐get</span><br><span class="line">user_obj2 = models.User.objects.get(pk=<span class="number">5</span>)</span><br><span class="line">，因为如果数据不存在，get会直接报错；filter则不会报错</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span> 查询去重一定不要忽略主键</span><br><span class="line"><span class="comment"># distinct() 去重</span></span><br><span class="line">    res = models.User.objects.all()</span><br><span class="line">    print(res)</span><br><span class="line">    <span class="comment"># &lt;QuerySet [&lt;User: 对象：jack&gt;, &lt;User: 对象：nimoding&gt;, &lt;User: 对象：jack_sam&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：ross&gt;, &lt;User: 对象：nimo&gt;, &lt;User: 对象：jack&gt;]&gt;</span></span><br><span class="line"></span><br><span class="line">    res = models.User.objects.values(<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;age&#x27;</span>).distinct()   <span class="comment"># 去重不要带主键</span></span><br><span class="line">    print(res)</span><br><span class="line">    <span class="comment"># &lt;QuerySet [&#123;&#x27;name&#x27;: &#x27;jack&#x27;, &#x27;age&#x27;: 19&#125;, &#123;&#x27;name&#x27;: &#x27;nimoding&#x27;, &#x27;age&#x27;: 18&#125;, &#123;&#x27;name&#x27;: &#x27;jack_sam&#x27;, &#x27;age&#x27;: 19&#125;, &#123;&#x27;name&#x27;: &#x27;ross&#x27;, &#x27;age&#x27;: 20&#125;, &#123;&#x27;name&#x27;: &#x27;nimo&#x27;, &#x27;age&#x27;: 18&#125;]&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="number">5.</span> 跨表查询</span><br><span class="line"><span class="comment">#子查询（先查数据对象，然后.字段）  基于对象的查询（思路为先拿对象，再拿对象去写）</span></span><br><span class="line"><span class="comment"># 正向: 表名小写查数据对象</span></span><br><span class="line">author_obj = models.Author.objects.filter(name=<span class="string">&#x27;jason&#x27;</span>).first()</span><br><span class="line">res = author_obj.author_detail</span><br><span class="line">print(res.phone)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 反向: 查询结果可以有多个时，就必须加_set.all()，当你的结果只有一个时，不需要加_set.all()</span></span><br><span class="line">publish_obj = models.Publish.objects.filter(name=<span class="string">&#x27;东方出版社&#x27;</span>).first()</span><br><span class="line">res = publish_obj.book_set.all()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 联表查询 关键字values,双下划线(联表操作) 基于双下划线可以跨多张表</span></span><br><span class="line">正向: 关键字values(表名小写__字段)</span><br><span class="line">反向: filter() 关键字values(表名小写__字段)</span><br><span class="line"></span><br><span class="line">正</span><br><span class="line">res = models.Author.objects.filter(name=<span class="string">&#x27;jason&#x27;</span>).values(<span class="string">&#x27;author_detail__phone&#x27;</span>)</span><br><span class="line">print(res)</span><br><span class="line">反</span><br><span class="line">res = models.AuthorDetail.objects.filter(author__name=<span class="string">&#x27;jason&#x27;</span>).values(<span class="string">&#x27;phone&#x27;</span>,<span class="string">&#x27;author__name&#x27;</span>)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">######################聚合、分组、F、Q#########</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 聚合查询关键字(如果不想分组需要关键字: aggregate)</span></span><br><span class="line"></span><br><span class="line">聚合查询一般都是配合分组一起使用的</span><br><span class="line"><span class="number">1</span>、统计所有书的平均价格（查询这张表的某一个字段 他的平均值）</span><br><span class="line">res = models.Book.objects.aggregate(Avg(<span class="string">&#x27;price&#x27;</span>)) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分组查询(关键字: annotate)</span></span><br><span class="line">在进行单表查询时，annotate()必须搭配values()使用：values(<span class="string">&quot;分组字段&quot;</span>).annotate(聚合函数)</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">查询每个部门下的员工数</span></span><br><span class="line"><span class="string">res=Employee.objects.values(&#x27;department&#x27;).annotate(num=Count(&#x27;id&#x27;)) </span></span><br><span class="line"><span class="string"># 相当于sql：</span></span><br><span class="line"><span class="string"># select department,count(id) as num from app01_employee group by department;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">跟在annotate前的values方法，是用来指定分组字段，即group by后的字段，而跟在annotate后的values方法，则是用来指定分组后要查询的字段，即select 后跟的字段</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">res=Employee.objects.values(&#x27;department&#x27;).annotate(num=Count(&#x27;id&#x27;)).values(&#x27;num&#x27;)</span></span><br><span class="line"><span class="string"># 相当于sql：</span></span><br><span class="line"><span class="string"># select count(id) as num from app01_employee group by department;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">print(res)</span></span><br><span class="line"><span class="string"># 输出：&lt;QuerySet [&#123;&#x27;num&#x27;: 2&#125;, &#123;&#x27;num&#x27;: 3&#125;, &#123;&#x27;num&#x27;: 2&#125;]&gt;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">跟在annotate前的filter方法表示where条件，跟在annotate后的filter方法表示having条件，如下</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"># 查询男员工数超过2人的部门名</span></span><br><span class="line"><span class="string">res=Employee.objects.filter(gender=1).values(&#x27;department&#x27;).annotate(male_count=Count(&quot;id&quot;)).filter(male_count__gt=2).values(&#x27;department&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">print(res) # 输出：&lt;QuerySet [&#123;&#x27;department&#x27;: &#x27;技术部&#x27;&#125;]&gt;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">这里需要注意的是annotate分组依据就是他前面的值，</span></span><br><span class="line"><span class="string">如果前面没有特点的字段，则默认按照ID分组，</span></span><br><span class="line"><span class="string">这里有dept字段，所以按照dept字段分组</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">                                      </span><br><span class="line"><span class="number">1</span>、统计每一本书的作者个数</span><br><span class="line">res = models.Book.objects.annotate()   <span class="comment"># 默认按照models.后面的表来分组</span></span><br><span class="line">res = models.Book.objects.annotate(author_num = Count(<span class="string">&#x27;authors__pk&#x27;</span>))</span><br><span class="line">res = models.Book.objects.annotate(author_num = Count(<span class="string">&#x27;authors&#x27;</span>)).values(<span class="string">&#x27;title&#x27;</span>,<span class="string">&#x27;author_num&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &lt;QuerySet [&#123;&#x27;title&#x27;: &#x27;三国演义&#x27;, &#x27;author_num&#x27;: 3&#125;, &#123;&#x27;title&#x27;: &#x27;红楼梦&#x27;, &#x27;author_num&#x27;: 0&#125;, &#123;&#x27;title&#x27;: &#x27;三国演义&#x27;, &#x27;author_num&#x27;: 0&#125;, &#123;&#x27;title&#x27;: &#x27;红楼梦&#x27;, &#x27;author_num&#x27;: 0&#125;, &#123;&#x27;title&#x27;: &#x27;三国演义&#x27;, &#x27;author_num&#x27;: 0&#125;, &#123;&#x27;title&#x27;: &#x27;红楼梦&#x27;, &#x27;author_num&#x27;: 0&#125;, &#123;&#x27;title&#x27;: &#x27;三国演义&#x27;, &#x27;author_num&#x27;: 0&#125;, &#123;&#x27;title&#x27;: &#x27;红楼梦&#x27;, &#x27;author_num&#x27;: 0&#125;, &#123;&#x27;title&#x27;: &#x27;三国演义&#x27;, &#x27;author_num&#x27;: 0&#125;, &#123;&#x27;title&#x27;: &#x27;红楼梦&#x27;, &#x27;author_num&#x27;: 0&#125;, &#123;&#x27;title&#x27;: &#x27;你今天真好看&#x27;, &#x27;author_num&#x27;: 0&#125;, &#123;&#x27;title&#x27;: &#x27;人性的弱点&#x27;, &#x27;author_num&#x27;: 0&#125;, &#123;&#x27;title&#x27;: &#x27;次第花开&#x27;, &#x27;author_num&#x27;: 0&#125;]&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">########注意: ORM 没有 group_concat 功能，需要自己实现###########</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># F 查询  和 Q 查询</span></span><br><span class="line"></span><br><span class="line">F: 帮助你获取到表中某个字段对应的数据</span><br><span class="line"><span class="comment"># 卖出大于库存</span></span><br><span class="line">res = models.Book.objects.filter(sale__gt=F(<span class="string">&#x27;inventory&#x27;</span>))</span><br><span class="line">res = models.Book.objects.update(price = F(<span class="string">&#x27;price&#x27;</span>)+<span class="number">50</span>)</span><br><span class="line">res = models.Book.objects.update(name=Concat(F(<span class="string">&#x27;name&#x27;</span>), Value(<span class="string">&#x27;爆款&#x27;</span>)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Q: 多个where 条件 and or not 关系表达</span></span><br><span class="line">   高阶用法: 将数据字段变量 用 字符串方式拼接起来</span><br><span class="line">      </span><br><span class="line">查询卖出数大于<span class="number">1000</span>或者价格小于<span class="number">300</span>的书籍</span><br><span class="line">filter括号内多个参数默认是<span class="keyword">and</span>的关系</span><br><span class="line"></span><br><span class="line">res = models.Book.objects.filter(Q(sale__gt=<span class="number">100</span>) , Q(price__lt=<span class="number">600</span>))</span><br><span class="line">res = models.Book.objects.filter(Q(sale__gt=<span class="number">100</span>) | Q(price__lt=<span class="number">600</span>))</span><br><span class="line">res = models.Book.objects.filter(~Q(sale__gt=<span class="number">100</span>) | ~Q(price__lt=<span class="number">600</span>)</span><br><span class="line">print(res)</span><br><span class="line">                                 </span><br><span class="line"><span class="comment"># Q的高阶用法：能够将查询条件的左边也变成字符串的形式，而不再是变量名的形式</span></span><br><span class="line">q = Q()</span><br><span class="line">q.connector = <span class="string">&#x27;OR&#x27;</span></span><br><span class="line">q.children.append((<span class="string">&#x27;sale__gt&#x27;</span>, <span class="number">100</span>))</span><br><span class="line">q.children.append((<span class="string">&#x27;price__lt&#x27;</span>, <span class="number">600</span>))</span><br><span class="line">res = models.Book.objects.filter(q)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+
+<ol start="41">
+<li>数据库查询优化</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 和values 的区别</span></span><br><span class="line">    <span class="number">0.</span>values获取的是queryset 里面是列表套的字典，里面不是数据对象，无法通过.获取属性数据。</span><br><span class="line">      如果获取其他字段，还需要走数据库查询。</span><br><span class="line"><span class="comment"># only和defer区别</span></span><br><span class="line">    <span class="number">1.</span>values获取的是queryset 里面是列表套的数据对象 点only括号内的字段，不会走数据库; 点only括号内没有的字段，会重新走数据库查询</span><br><span class="line">    <span class="number">2.</span>defer和only刚好相反，查询defer括号内放的字段，需要重新走数据库，查询非defer括号内的字段则不需要走数据库。</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># select_related与prefetch_related区别</span></span><br><span class="line"><span class="number">1.</span> 使用方法上无差异</span><br><span class="line"><span class="number">2.</span> select_related内部本质是联表inner join，然后一次性将大表里面的所有数据全部查询出来封装到对象中，之后对象点.表字段也不会走数据库了。</span><br><span class="line">    <span class="comment"># 这时无论是.book数据还是.publish数据都无需再走数据库查询了。</span></span><br><span class="line">    <span class="comment"># 注意select_related括号内只能放外键字段(可以放一对多、一对一，不支持多对多)</span></span><br><span class="line">    <span class="comment">#  可以是这种形式select_related(外键字段1__外键字段2__外键字段3……)</span></span><br><span class="line">   prefetch_related该方法内部其实就是子查询，将子查询查询出来的所有结果也封装到了对象中。 看起来比select_related多执行了几句sql语句。</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> 性能差异：需要看具体情况，看起来比select_related多执行了几句sql语句，但是因为联表操作也有可能很耗时，子查询反而更快。</span><br></pre></td></tr></table></figure>
+
+<p>annotate总结</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、values()在annotate()前表示group by的字段，在后表示取值</span><br><span class="line">2、filter()在annotate()前表示where条件，在后表示having</span><br></pre></td></tr></table></figure>
+
+<ol start="43">
+<li>queryset 和 querydict区别</li>
+</ol>
+<p>博客：<a target="_blank" rel="noopener" href="https://www.liujiangblog.com/course/django/139">https://www.liujiangblog.com/course/django/139</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## QuertDict</span></span><br><span class="line"></span><br><span class="line">一定要初一区分QueryDict和QuerySet，前者是对HTTP请求数据包中携带的数据的封装，后者是对从数据库中查询出来的数据进行的封装。</span><br><span class="line"></span><br><span class="line">在HttpRequest对象中，GET和POST属性都是一个django.http.QueryDict的实例。也就是说你可以按本文下面提供的方法操作request.POST和request.GET。</span><br><span class="line"></span><br><span class="line">request.POST或request.GET的QueryDict都是不可变，只读的。如果要修改它，需要使用QueryDict.copy()方法，获取它的一个拷贝，然后在这个拷贝上进行修改操作。</span><br><span class="line"></span><br><span class="line">字典的大部分方法都是用于QueryDict</span><br><span class="line"></span><br><span class="line"><span class="comment">## QuerySet</span></span><br><span class="line">想要从数据库内检索对象，你需要基于模型类，通过管理器（Manager）操作数据库并返回一个查询结果集（QuerySet）。</span><br><span class="line"></span><br><span class="line">每个QuerySet代表一些数据库对象的集合。它可以包含零个、一个或多个过滤器（filters）。Filters缩小查询结果的范围。在SQL语法中，一个QuerySet相当于一个SELECT语句，而filter则相当于WHERE或者LIMIT一类的子句。</span><br><span class="line"></span><br><span class="line">每个模型至少具有一个Manager，默认情况下，Django自动为我们提供了一个，也是最常用最重要的一个，<span class="number">99</span>%的情况下我们都只使用它。它被称作objects，可以通过模型类直接调用它，但不能通过模型类的实例调用它，以此实现“表级别”操作和“记录级别”操作的强制分离。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#### 补充</span></span><br><span class="line">QueryDict.get()， 返回键的对应的值，如果是有多个值（序列），只返回最后一个值 </span><br><span class="line">QueryDict.getlist()，返回键对应的值列表</span><br><span class="line"></span><br><span class="line">values 和 values_list , 返回值不是数据对象</span><br><span class="line">values()     返回值: 列表中嵌套字典 值字典</span><br><span class="line">values_list() 返回值: 列表中嵌套元祖 值元祖</span><br></pre></td></tr></table></figure>
+
+<ol start="44">
+<li>ORM更改字段名称(db_column)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;www.dazhuanlan.com&#x2F;2019&#x2F;12&#x2F;05&#x2F;5de7d9e271aa7&#x2F;</span><br><span class="line"></span><br><span class="line">username &#x3D; models.CharField(max_length&#x3D;32, verbose_name&#x3D;&#39;姓名&#39;,db_column&#x3D;&#39;username&#39;, null&#x3D;True)</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="45">
+<li>Json格式化时间字符串</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class MyJSONEncoder(json.JSONEncoder):</span><br><span class="line"></span><br><span class="line">    def default(self, obj):</span><br><span class="line">        if isinstance(obj, datetime.datetime):</span><br><span class="line">            return obj.strftime(&#39;%Y-%m-%d %H:%M:%S&#39;)</span><br><span class="line">        elif isinstance(obj, datetime.date):</span><br><span class="line">            return obj.strftime(&#39;%Y-%m-%d&#39;)</span><br><span class="line">        else:</span><br><span class="line">            return json.JSONEncoder.default(self, obj)</span><br><span class="line">json_str1 &#x3D; json.dumps(data1, ensure_ascii&#x3D;False, cls&#x3D;MyJSONEncoder)</span><br></pre></td></tr></table></figure>
+
+<p>46.类或者对象中如果使用<code>_属性</code>  或者<code>_方法</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对象中如果使用`_属性`  或者`_方法` 本意是不像让使用者在外部使用，如果使用者想使用，也可以用。</span><br></pre></td></tr></table></figure>
+
+
+
+<p>47.json loads 二进制字符串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">json.loads(<span class="string">b&#x27;xxxx&#x27;</span>)   <span class="comment"># json支持直接loads字符串</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 仅限于 Python 3.5以上的版本</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>48.pyqt做图形化界面</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python建议做GUI， python在qt平台做图形化界面，GUI编程</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 前后端混合的管理后台搭建</span><br><span class="line">http://x.xuebingsi.com/   X-admin</span><br><span class="line"><span class="number">2.</span> SimpleUI</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> 监控大屏</span><br><span class="line">https://gitee.com/kevin_chou/dataVIS?_from=gitee_search</span><br></pre></td></tr></table></figure>
+
+<p>49.models创建技巧</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseModel</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    is_delete = models.BooleanField(default=<span class="literal">False</span>)</span><br><span class="line">    <span class="comment"># 只要这条记录创建的时候，不需要手动插入时间，自动把当前时间插入</span></span><br><span class="line">    create_time = models.DateTimeField(auto_now_add=<span class="literal">True</span>)</span><br><span class="line">    update_time = models.DateTimeField(auto_now=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        abstract = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    id = models.AutoField(primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    price = models.DecimalField(max_digits=<span class="number">5</span>, decimal_places=<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 一对多的关系一旦确立，关联字段写在多的一方</span></span><br><span class="line">    <span class="comment"># to_field 默认不写，关联到Publish主键</span></span><br><span class="line">    <span class="comment"># db_constraint=False 逻辑上的关联，实质上没有外键联系，增删不会受外键影响，但是orm查询不受影响</span></span><br><span class="line">    publish = models.ForeignKey(to=<span class="string">&#x27;Publish&#x27;</span>, on_delete=models.DO_NOTHING, db_constraint=<span class="literal">False</span>)</span><br><span class="line">    <span class="comment"># 多对多, 写在查询 多的一方</span></span><br><span class="line">    authors = models.ManyToManyField(to=<span class="string">&#x27;Author&#x27;</span>, db_constraint=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        verbose_name_plural = <span class="string">&#x27;书籍&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">publish_name</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.publish.name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">author_list</span>(<span class="params">self</span>):</span></span><br><span class="line">        author_list = self.authors.all()</span><br><span class="line">        ll = []</span><br><span class="line">        <span class="keyword">for</span> author <span class="keyword">in</span> author_list:</span><br><span class="line">            ll.append(&#123;<span class="string">&#x27;name&#x27;</span>: author.name, <span class="string">&#x27;sex&#x27;</span>: author.get_sex_display()&#125;)</span><br><span class="line">        <span class="keyword">return</span> ll</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Publish</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    addr = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        verbose_name_plural = <span class="string">&#x27;出版社&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Author</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    sex = models.IntegerField(choices=((<span class="number">1</span>, <span class="string">&#x27;男&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;女&#x27;</span>)))</span><br><span class="line">    <span class="comment"># 一对一, 写在查询频率高的一方</span></span><br><span class="line">    <span class="comment"># OneToOneField 本质就是ForeignKey + Unique</span></span><br><span class="line">    authordetail = models.OneToOneField(to=<span class="string">&#x27;AuthorDetail&#x27;</span>, on_delete=models.CASCADE, db_constraint=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        verbose_name_plural = <span class="string">&#x27;作者&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthorDetail</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    phone = models.CharField(max_length=<span class="number">11</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        verbose_name_plural = <span class="string">&#x27;作者详情&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.phone</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/note/" rel="tag"><i class="fas fa-cookie-bite"></i> note</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/31/py-%E5%9F%BA%E7%A1%8010/" rel="prev" title="py-基础10">
+      <i class="fa fa-chevron-left"></i> py-基础10
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/21/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-01/" rel="next" title="并发编程-01">
+      并发编程-01 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E9%87%8C%E9%9D%A2%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">项目里面需要注意：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">163</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.9m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">51:48</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

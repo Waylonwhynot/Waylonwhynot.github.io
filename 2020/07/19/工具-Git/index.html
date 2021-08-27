@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="GIt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工具-Git">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2020/07/19/%E5%B7%A5%E5%85%B7-Git/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="GIt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719184422436.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719184533993.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggqvthch46j30wv0ejmy1.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggqvtp3d2zj310v0bmq3h.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/wpsrwX9hv.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/wpsW3wlrr.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/wpsMJ3lTi.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185355479.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185448231.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185510846.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185537771.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185610594.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185907304.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185928461.png">
+<meta property="article:published_time" content="2020-07-18T17:14:59.000Z">
+<meta property="article:modified_time" content="2021-08-27T09:37:04.653Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Tools">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719184422436.png">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2020/07/19/%E5%B7%A5%E5%85%B7-Git/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>工具-Git | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2020/07/19/%E5%B7%A5%E5%85%B7-Git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          工具-Git
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-19 01:14:59" itemprop="dateCreated datePublished" datetime="2020-07-19T01:14:59+08:00">2020-07-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 17:37:04" itemprop="dateModified" datetime="2021-08-27T17:37:04+08:00">2021-08-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>18k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>30 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>GIt</p>
+<a id="more"></a>
+
+<p>git 变基</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">合并分支 :  </span><br><span class="line">扁平化分之合: 变基rebase, 把多个更改合并成一个(master分支线络看起来更清晰)</span><br><span class="line"></span><br><span class="line">作用：优化分支日志</span><br></pre></td></tr></table></figure>
+
+<p>git pull 和 git fetch</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- git fetch 相当于是从远程获取最新到本地，不会自动merge</span><br><span class="line">- git pull 相当于兄远程获取最新版本并merge到本地</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="Git与SVN的区别"><a href="#Git与SVN的区别" class="headerlink" title="Git与SVN的区别"></a><strong>Git与SVN的区别</strong></h3><p>1、GIT是分布式的，SVN不是：这是GIT和其它非分布式的版本控制系统，例如SVN，CVS等，最核心的区别。</p>
+<p>2、GIT把内容按元数据方式存储，而SVN是按文件：所有的资源控制系统都是把文件的元信息隐藏在一个类似.svn,.cvs等的文件夹里。</p>
+<p>3、GIT分支和SVN的分支不同：分支在SVN中一点不特别，就是版本库中的另外的一个目录。</p>
+<p>4、GIT没有一个全局的版本号，而SVN有：目前为止这是跟SVN相比GIT缺少的最大的一个特征。</p>
+<p>5、GIT的内容完整性要优于SVN：GIT的内容存储使用的是SHA-1哈希算法。这能确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。</p>
+<h3 id="Git安装"><a href="#Git安装" class="headerlink" title="Git安装"></a><strong>Git安装</strong></h3><p>Centos下安装Git</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">默认在CentOS下，我们可以通过yum的方式来安装Git</span><br><span class="line"></span><br><span class="line">root@ci-node1 ~]<span class="comment"># yum install git –y</span></span><br><span class="line"></span><br><span class="line">root@ci-node1 ~]<span class="comment"># git version</span></span><br><span class="line"></span><br><span class="line">git version 1.8.3.1</span><br><span class="line"></span><br><span class="line">使用yum安装的Git的版本是1.8，版本较低，我们还可以通过源码编译的方式来安装Git的最新版本。</span><br><span class="line"></span><br><span class="line">首先需要安装依赖的库：</span><br><span class="line"></span><br><span class="line">root@ci-node1 ~]<span class="comment"># yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker -y</span></span><br><span class="line"></span><br><span class="line">下载最新的源码包</span><br><span class="line"></span><br><span class="line">root@ci-node1 src]<span class="comment"># cd /usr/local/src/</span></span><br><span class="line"></span><br><span class="line">root@ci-node1 src]<span class="comment"># wget https://www.kernel.org/pub/software/scm/git/git-2.9.5.tar.gz</span></span><br><span class="line"></span><br><span class="line">root@ci-node1 src]<span class="comment"># ll</span></span><br><span class="line"></span><br><span class="line">total 5792 -rw-r--r-- 1 root root 5928730 Aug 11 01:57 git-2.9.5.tar.gz</span><br><span class="line"></span><br><span class="line">解压安装：</span><br><span class="line"></span><br><span class="line">root@ci-node1 src]<span class="comment"># tar xf git-2.9.5.tar.gz</span></span><br><span class="line"></span><br><span class="line">root@ci-node1 src]<span class="comment"># cd git-2.9.5</span></span><br><span class="line"></span><br><span class="line">root@ci-node1 git-2.9.5]<span class="comment"># make prefix=/usr/local/git all</span></span><br><span class="line"></span><br><span class="line">root@ci-node1 git-2.9.5]<span class="comment"># make prefix=/usr/local/git install</span></span><br><span class="line"></span><br><span class="line">root@ci-node1 git-2.9.5]<span class="comment"># rm -rf /usr/bin/git</span></span><br><span class="line"></span><br><span class="line">root@ci-node1 git-2.9.5]<span class="comment"># ln -s /usr/local/git/bin/git /usr/bin/git</span></span><br><span class="line"></span><br><span class="line">root@ci-node1 git-2.9.5]<span class="comment"># git --version</span></span><br><span class="line"></span><br><span class="line">git version 2.9.5</span><br><span class="line"></span><br><span class="line">至此，我们已经完成了Git的编译安装，现在Git可以安装在windows、MAC操作系统上，具体请参考：</span><br><span class="line"></span><br><span class="line">https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git </span><br></pre></td></tr></table></figure>
+
+<h3 id="Git的配置"><a href="#Git的配置" class="headerlink" title="Git的配置"></a><strong>Git的配置</strong></h3><p>Git的配置从上到下分三层system/global/local,使用三个不同参数进行设置，每个层次的配置存储在不同的位置，</p>
+<p>1）./etc/gitconfig 文件：包含了适用于系统所有用户和所有库的值。如果你传递参数选项’–system’ 给 git config，它将明确的读和写这个文件。 </p>
+<p>2）.~/.gitconfig 文件 ：具体到你的用户。你可以通过传递–global 选项使Git 读或写这个特定的文件。</p>
+<p>3）.位于git目录的config文件 (也就是 .git/config) ：无论你当前在用的库是什么，特定指向该单一的库。每个级别重写前一个级别的值。因此，在.git/config中的值覆盖了在/etc/gitconfig中的同一个值。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// 设置本仓库的配置信息（用户名）</span><br><span class="line"></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git config --local user.name wending</span></span><br><span class="line"></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git config --local user.email wendong866@163.com</span></span><br><span class="line"></span><br><span class="line">//查看<span class="built_in">local</span>层次的config配置信息</span><br><span class="line"></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git config --local --list</span></span><br><span class="line"></span><br><span class="line">core.repositoryformatversion=0</span><br><span class="line"></span><br><span class="line">core.filemode=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line">core.bare=<span class="literal">false</span></span><br><span class="line"></span><br><span class="line">core.logallrefupdates=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line">user.name=wendong</span><br><span class="line"></span><br><span class="line">[user.email=wendong866@163.com](mailto:user.email=wendong866@163.com)</span><br><span class="line"></span><br><span class="line">通常我们只配置global级别。</span><br><span class="line"></span><br><span class="line">[root@ci-node1~]<span class="comment"># git config --global user.name wendong866</span></span><br><span class="line"></span><br><span class="line">[root@ci-node1 ~]<span class="comment"># git config --global user.email wendong866@163.com</span></span><br><span class="line"></span><br><span class="line">[root@ci-node1 ~]<span class="comment"># git config --list</span></span><br><span class="line">user.name=wendong866</span><br><span class="line">[user.email=wendong866@163.com](mailto:user.email=wendong866@163.com)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Git仓库初始化"><a href="#Git仓库初始化" class="headerlink" title="Git仓库初始化"></a><strong>Git仓库初始化</strong></h3><h4 id="1．建仓库"><a href="#1．建仓库" class="headerlink" title="1．建仓库"></a><strong>1．建仓库</strong></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">第一步是创建一个空仓库，这是后续操作的前提。</span><br><span class="line"></span><br><span class="line">// 使用bash命令，切换到用户家目录下：</span><br><span class="line"></span><br><span class="line">[root@ci-node1 ~]<span class="comment"># cd</span></span><br><span class="line"></span><br><span class="line">// 在指定目录下创建存放repo的文件夹，示例为git_test</span><br><span class="line"></span><br><span class="line">[root@ci-node1 ~]<span class="comment"># mkdir git_test</span></span><br><span class="line"></span><br><span class="line">// 切换到git_test目录下</span><br><span class="line"></span><br><span class="line">[root@ci-node1 ~]<span class="comment"># cd git_test/</span></span><br><span class="line"></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># pwd</span></span><br><span class="line"></span><br><span class="line">/root/git_test</span><br><span class="line"></span><br><span class="line">// 使用git init命令创建一个空仓库// 使用git init命令创建一个空仓库</span><br><span class="line"></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git init</span></span><br><span class="line"></span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> /root/git_test/.git/</span><br><span class="line"></span><br><span class="line">// 空仓库创建完成后gittest文件夹下会生成一个.git隐藏文件夹。仓库默认包含一个主支，即master，默认操作都是在主分支master上进行的。</span><br><span class="line"></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># ll -a</span></span><br><span class="line"></span><br><span class="line">total 0</span><br><span class="line"></span><br><span class="line">drwxr-xr-x. 3 root root  18 Jul 20 08:47 .</span><br><span class="line"></span><br><span class="line">dr-xr-x---. 4 root root 197 Jul 20 08:46 ..</span><br><span class="line"></span><br><span class="line">drwxr-xr-x. 7 root root 119 Jul 20 08:47 .git </span><br></pre></td></tr></table></figure>
+
+<h4 id="2-设置过滤文件"><a href="#2-设置过滤文件" class="headerlink" title="2.设置过滤文件"></a><strong>2.设置过滤文件</strong></h4><p>  有了仓库，我们便可以在git_test文件夹下的工作区做文件增删修改工作了，但很多时候，我们只在意开发过程中的源文件，并不需要管理自动产生的其他临时文件。这时候我们便需要一个过滤文件，在这个文件中设置过滤规则，让Git能够自动过滤掉那些临时文件，这个文件便是.gitignore文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">  //在仓库目录下创建.gitignore文件 (gitignore是需要被管理起来的，人人都用)</span><br><span class="line"></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># touch .gitignore</span></span><br><span class="line"></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># vim .gitignore </span></span><br><span class="line"></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># cat .gitignore </span></span><br><span class="line"></span><br><span class="line">test.txt  //过滤test.txt文件</span><br><span class="line"></span><br><span class="line">/<span class="built_in">test</span>/  //过滤<span class="built_in">test</span>目录</span><br><span class="line"></span><br><span class="line">*.txt   //过滤所有以.txt结尾的文件</span><br><span class="line"></span><br><span class="line">/aa/aa.txt 忽略这个文件夹下的文件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#####</span></span><br><span class="line">常用的通配规则：</span><br><span class="line"></span><br><span class="line">以斜杠“/”开头表示目录</span><br><span class="line"></span><br><span class="line">以星号“*”通配多个字符</span><br><span class="line"></span><br><span class="line">以问号“?”通配单个字符</span><br><span class="line"></span><br><span class="line">以方括号“[]”包含单个字符的匹配列表</span><br><span class="line"></span><br><span class="line">以叹号“!”表示不忽略(跟踪)匹配到的文件或目录</span><br></pre></td></tr></table></figure>
+
+<h2 id="Git仓库基础操作"><a href="#Git仓库基础操作" class="headerlink" title="Git仓库基础操作"></a><strong>Git仓库基础操作</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">git</span><br><span class="line">-git分布式管理，如果不想跟别人协同开发，只是自己做版本管理，不需要连接远程</span><br><span class="line"> -工作区，暂存区，版本库</span><br><span class="line"> -红色    绿色    没有颜色</span><br><span class="line"> -git init  （文件夹）<span class="comment">#******</span></span><br><span class="line"> -git status       <span class="comment"># *****查看状态</span></span><br><span class="line"> -git add 文件名字  <span class="comment"># *****提交到暂存区</span></span><br><span class="line"> -git reset .      <span class="comment"># 从暂存区拉回工作区</span></span><br><span class="line"> -git commit -m <span class="string">&#x27;注释&#x27;</span> <span class="comment">#***** 把暂存区提交到版本库，加注释</span></span><br><span class="line"> -git checkout .   <span class="comment"># 回滚</span></span><br><span class="line"> -git reset --hard 版本号   <span class="comment"># 回到哪个版本，前提是有很多版本了</span></span><br><span class="line"> -git <span class="built_in">log</span>        <span class="comment"># *****查看日志</span></span><br><span class="line"> -git reflog     <span class="comment"># *****查看精简日志</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Git的四个区域"><a href="#Git的四个区域" class="headerlink" title="Git的四个区域"></a>Git的四个区域</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719184422436.png" alt="image-20210719184422436"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Workspace：工作区（他持有实际文件）</span><br><span class="line">Index &#x2F; Stage &#x2F; Cached：工作区更改，提交到暂存区。暂存区（它像一个结存区域，临时保存你的改动）一般存放在 &quot;.git目录下&quot; 下的index文件（.git&#x2F;index）中，所以我们把暂存区有时也叫作索引（index）</span><br><span class="line">Repository：本地仓库工作区有一个隐藏目录.git，这个不算工作区，而是Git的版本库。</span><br><span class="line">Remote：远程仓库</span><br></pre></td></tr></table></figure>
+
+<h3 id="Git的四种状态"><a href="#Git的四种状态" class="headerlink" title="Git的四种状态"></a>Git的四种状态</h3><p>前面讲了Git有四个区域，而单就文件改动状态层面而言，Git区域内的文件也有4种状态（需要注意的是文件状态并不是与Git区域一一对应的），这是Git第二个重要概念。</p>
+<p><strong>Untracked</strong>：新增的文件的状态，未受Git管理，记录在工作区</p>
+<p><strong>Modified</strong>：受Git管理过的文件的改动状态（包括改动内容、删除文件），记录在工作区</p>
+<p><strong>Staged</strong>：将记录在工作区的文件变动状态通知了Git，记录在暂存区</p>
+<p><strong>Unmodified</strong>：受Git管理中的文件状态（没有变动），记录在本地仓库/远程仓库</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719184533993.png" alt="image-20210719184533993"></p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggqvthch46j30wv0ejmy1.jpg" alt="img"></p>
+<h4 id="1、查看git仓库文件改动状态"><a href="#1、查看git仓库文件改动状态" class="headerlink" title="1、查看git仓库文件改动状态"></a><strong>1、查看git仓库文件改动状态</strong></h4><p>前面讲过Git仓库内文件改动有4种状态，除了Unmodified状态的文件因为并未改动默认没有状态不做显示之外，其他文件改动状态都可以通过git status来查看。让我们开始在工作区创建a、b、c三个文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//创建文件a、b、c</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># touch a</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># touch b</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># touch c</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># ll</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r--r--. 1 root root 0 Jul 20 09:42 a</span><br><span class="line">-rw-r--r--. 1 root root 0 Jul 20 09:42 b</span><br><span class="line">-rw-r--r--. 1 root root 0 Jul 20 09:42 c</span><br><span class="line">//我们来看看Git记录的状态，从下面结果可知，新增的3个文件在Git空间里都属于Untracked文件，存放在工作区内</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git status</span></span><br><span class="line"><span class="comment"># On branch master</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Initial commit</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Untracked files:</span></span><br><span class="line"><span class="comment">#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    .gitignore</span></span><br><span class="line"><span class="comment">#    a</span></span><br><span class="line"><span class="comment">#    b</span></span><br><span class="line"><span class="comment">#    c</span></span><br><span class="line">nothing added to commit but untracked files present (use <span class="string">&quot;git add&quot;</span> to track)</span><br><span class="line">[root@ci-node1 git_test]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<p>Git仓库目录下的文件改动操作默认都发生在Git工作区内，Git并不会主动管理。如果希望Git能够管理这些变动，你需要主动通知Git。共有3种通知Git的命令(git add/rm/mv)</p>
+<h4 id="2、将工作区文件改动添加到暂存区git-add"><a href="#2、将工作区文件改动添加到暂存区git-add" class="headerlink" title="2、将工作区文件改动添加到暂存区git add"></a>2、将工作区文件改动添加到暂存区git add</h4><p>git add是第一种通知Git命令，这个命令用于告诉Git我们新增了文件改动，被git add命令操作过的文件(改动)便会处于Git暂存区。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 添加单文件改动到暂存区</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git add a</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git add b</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git add c</span></span><br><span class="line">// 查看此时的文件状态，3个文件都已在暂存区中了</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git status</span></span><br><span class="line"><span class="comment"># On branch master</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Initial commit</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Changes to be committed:</span></span><br><span class="line"><span class="comment">#   (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    new file:   a</span></span><br><span class="line"><span class="comment">#    new file:   b</span></span><br><span class="line"><span class="comment">#    new file:   c</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"> [root@ci-node1 git_test]<span class="comment">#</span></span><br><span class="line">同时我们可以使用git add . git add * 可以一次将多个文件改动添加到暂存区。</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="3、将暂存区文件改动回退git-rm"><a href="#3、将暂存区文件改动回退git-rm" class="headerlink" title="3、将暂存区文件改动回退git rm"></a>3、将暂存区文件改动回退git rm</h4><p>Git rm命令用于告诉Git我们想把之前用git add添加的文件改动从Git暂存区里拿出去，不需要Git记录了。拿出去有两种拿法，一种是从暂存区退回到工作区，另一种是直接丢弃文件改动。让我们试着将b退回到工作区，c直接丢弃。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">//将b的改动从暂存区工作区</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git rm --cached b</span></span><br><span class="line">rm <span class="string">&#x27;b&#x27;</span></span><br><span class="line">//查看b是否已经移回工作区</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git status</span></span><br><span class="line"><span class="comment"># On branch master</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Initial commit</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Changes to be committed:</span></span><br><span class="line"><span class="comment">#   (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    new file:   a</span></span><br><span class="line"><span class="comment">#    new file:   c</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Untracked files:</span></span><br><span class="line"><span class="comment">#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    .gitignore</span></span><br><span class="line"><span class="comment">#    b</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment">#</span></span><br><span class="line"></span><br><span class="line">//将c文件直接从git空间里删除，也是就是从暂存区和工作区都删除。</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git rm -f c</span></span><br><span class="line">rm <span class="string">&#x27;c&#x27;</span></span><br><span class="line"></span><br><span class="line">//查看状态</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git status</span></span><br><span class="line"><span class="comment"># On branch master</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Initial commit</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Changes to be committed:</span></span><br><span class="line"><span class="comment">#   (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    new file:   a</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Untracked files:</span></span><br><span class="line"><span class="comment">#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    .gitignore</span></span><br><span class="line"><span class="comment">#    b</span></span><br><span class="line">//当前目录中已经没有文件c</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># ll</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r--r--. 1 root root 0 Jul 20 09:42 a</span><br><span class="line">-rw-r--r--. 1 root root 0 Jul 20 09:42 b</span><br></pre></td></tr></table></figure>
+
+<h4 id="4、将暂存区文件移动位置-重命名git-mv"><a href="#4、将暂存区文件移动位置-重命名git-mv" class="headerlink" title="4、将暂存区文件移动位置/重命名git mv"></a><strong>4、将暂存区文件移动位置/重命名git mv</strong></h4><p>Git mv命令用于告诉Git我们想把之前用git add添加的文件直接在暂存区里重新命名或移动到新位置。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//将a文件改名为a.txt</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git mv a a.txt</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git status</span></span><br><span class="line"><span class="comment"># On branch master</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Initial commit</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Changes to be committed:</span></span><br><span class="line"><span class="comment">#   (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    new file:   a.txt</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Untracked files:</span></span><br><span class="line"><span class="comment">#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    .gitignore</span></span><br><span class="line"><span class="comment">#    b</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># ll</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r--r--. 1 root root 0 Jul 20 09:42 a.txt</span><br><span class="line">-rw-r--r--. 1 root root 0 Jul 20 09:42 b</span><br><span class="line">[root@ci-node1 git_test]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5、提交git-commit"><a href="#5、提交git-commit" class="headerlink" title="5、提交git commit"></a>5、提交git commit</h4><p>当我们在仓库工作区下完成了文件增删改操作之后，并且使用git add将文件改动记录在暂存区之后，便可以开始将其提交到Git本地仓库。</p>
+<p>将暂存区内容提交git commit –m </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/将暂存区内的文件a.txt提交到本地仓库</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git commit -m &quot;commit a&quot;</span></span><br><span class="line">[master (root-commit) 1f5fb04] commit a</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 a.txt</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git status</span></span><br><span class="line"><span class="comment"># On branch master</span></span><br><span class="line"><span class="comment"># Untracked files:</span></span><br><span class="line"><span class="comment">#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    .gitignore</span></span><br><span class="line"><span class="comment">#    b</span></span><br><span class="line">nothing added to commit but untracked files present (use <span class="string">&quot;git add&quot;</span> to track)</span><br><span class="line">[root@ci-node1 git_test]<span class="comment">#</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="6、查看Git区域文件的具体改动git-diff"><a href="#6、查看Git区域文件的具体改动git-diff" class="headerlink" title="6、查看Git区域文件的具体改动git diff"></a>6、查看Git区域文件的具体改动git diff</h4><p>git status只能让我们知道文件在Git区域内的改动状态，但如果我们想查看某个文件内具体改了什么（也可以理解为在不同Git区域中的差异），此时需要用git diff命令。<br>　　对于b文件，由于是新增的文件，其只存在于工作区，且处于Untracked状态，Git认为无论是哪两个Git区域之间的比对都没有意义，得到的结果是没有区别。<br>而对于a.txt文件，由于已经被提交到仓库了，处于Git管理中，所以这个文件同时存在于三个Git空间（工作区，暂存区，仓库），我们在工作区内对其进行了文件改动，无论是比对工作区vs暂存区或者工作区vs仓库，得到的结果应该都是a.txt文件里的具体变化内容。而如果比对暂存区vs仓库，得到的结果也应该是没有区别。<br>查看文件当前变动(工作区vs暂存区)git diff</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">//查看b文件得不到任何结果</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git diff b</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># </span></span><br><span class="line">//改动a.txt文件后可看到文件的具体变化</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># echo &quot;test&quot; &gt;&gt;a.txt </span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git diff a.txt </span></span><br><span class="line">diff --git a/a.txt b/a.txt</span><br><span class="line">index e69de29..9daeafb 100644</span><br><span class="line">--- a/a.txt</span><br><span class="line">+++ b/a.txt</span><br><span class="line">@@ -0,0 +1 @@</span><br><span class="line">+<span class="built_in">test</span></span><br><span class="line"></span><br><span class="line">查看文件当前变动(工作区vs暂存区)git diff –cached</span><br><span class="line">//将a.txt文件的变动暂存后，查看变化</span><br><span class="line"></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git add a.txt </span></span><br><span class="line">//对比工作区与暂存区，无变化</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git diff a.txt</span></span><br><span class="line">//对比暂存区与本地仓库，可以看到具体变化。</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git diff --cached a.txt </span></span><br><span class="line">diff --git a/a.txt b/a.txt</span><br><span class="line">index e69de29..9daeafb 100644</span><br><span class="line">--- a/a.txt</span><br><span class="line">+++ b/a.txt</span><br><span class="line">@@ -0,0 +1 @@</span><br><span class="line">+<span class="built_in">test</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="7、查看历史提交git-log"><a href="#7、查看历史提交git-log" class="headerlink" title="7、查看历史提交git log"></a>7、查看历史提交git log</h4><p>当我们在仓库里做了很多次提交之后，免不了需要回看提交记录，看看自己之前的改动。有两种Git命令可以帮我们查看记录，</p>
+<p>git log是最直接的查看历史提交的命令，git log可直接用也可带参数用，常用的有下面几种：</p>
+<p>标准查看：git log</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">// 显示所有历史提交标准信息，每个提交信息包括SHA号，作者，时间以及标题</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git log</span></span><br><span class="line">commit 8982c79e30d7ad590aa9e728e875bfbbfe75d64e</span><br><span class="line">Author: wendong &lt;wendong866@163.com&gt;</span><br><span class="line">Date:   Tue Jul 31 23:02:49 2018 +0800</span><br><span class="line"></span><br><span class="line">    commit b</span><br><span class="line"></span><br><span class="line">commit 1f5fb041fe61e5cf57ee836177a3a961bf854cf1</span><br><span class="line">Author: wendong &lt;wendong866@163.com&gt;</span><br><span class="line">Date:   Tue Jul 31 21:53:20 2018 +0800</span><br><span class="line"></span><br><span class="line">commit a</span><br><span class="line"></span><br><span class="line">精简查看git <span class="built_in">log</span> -- oneline</span><br><span class="line">//显示所有历史提交精简信息，每个提交信息仅占一行，信息包括SHA号以及标题。</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git log --oneline</span></span><br><span class="line">8982c79 commit b</span><br><span class="line">1f5fb04 commit a</span><br><span class="line"></span><br><span class="line">完整查看git <span class="built_in">log</span> -p</span><br><span class="line">// 显示所有历史提交完整信息，比标准查看多了提交的具体文件改动信息。</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git log -p</span></span><br><span class="line">commit 8982c79e30d7ad590aa9e728e875bfbbfe75d64e</span><br><span class="line">Author: wendong &lt;wendong866@163.com&gt;</span><br><span class="line">Date:   Tue Jul 31 23:02:49 2018 +0800</span><br><span class="line"></span><br><span class="line">    commit b</span><br><span class="line"></span><br><span class="line">diff --git a/.gitignore b/.gitignore</span><br><span class="line">new file mode 100644</span><br><span class="line">index 0000000..73cb75a</span><br><span class="line">--- /dev/null</span><br><span class="line">+++ b/.gitignore</span><br><span class="line">@@ -0,0 +1,3 @@</span><br><span class="line">+test.txt</span><br><span class="line">+/<span class="built_in">test</span>/</span><br><span class="line">+*.txt</span><br><span class="line">diff --git a/a.txt b/a.txt</span><br><span class="line">index e69de29..9daeafb 100644</span><br><span class="line">--- a/a.txt</span><br><span class="line">+++ b/a.txt</span><br><span class="line">@@ -0,0 +1 @@</span><br><span class="line">+<span class="built_in">test</span></span><br><span class="line">diff --git a/b b/b</span><br><span class="line">new file mode 100644</span><br><span class="line">index 0000000..e69de29</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="8、查看本地历史操作git-reflog"><a href="#8、查看本地历史操作git-reflog" class="headerlink" title="8、查看本地历史操作git reflog"></a>8、查看本地历史操作git reflog</h4><p>git log仅能查看最终在仓库存在的提交信息，无法查看被删除的提交，以及在本地具体Git命令操作记录，这时候你需要使用git reflog。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@ci-node1 git_test]<span class="comment"># git reflog</span></span><br><span class="line">8982c79 HEAD@&#123;0&#125;: commit: commit b</span><br><span class="line">1f5fb04 HEAD@&#123;1&#125;: commit (initial): commit a</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="9、签出git-checkout"><a href="#9、签出git-checkout" class="headerlink" title="9、签出git checkout"></a>9、签出git checkout</h3><p>如果仓库中已经存在文件a.txt，在工作区中对a.txt修改了，如果想撤销可以使用checkout，签出覆盖。检出命令git checkout是git最常用的命令之一，同时也是一个很危险的命令，因为这条命令会重写工作区。</p>
+<p>git checkout – filename</p>
+<p>//用暂存区中filename文件来覆盖工作区中的filename文件。相当于取消自上次执行git add filename以来（如果执行过）的本地修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@ci-node1 git_test]<span class="comment"># cat a.txt </span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># echo &quot;111&quot;&gt;&gt;a.txt </span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># cat a.txt </span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">111</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git checkout -- a.txt </span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># cat a.txt </span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment">#</span></span><br><span class="line">***注意：git checkout . 这条命令最危险，相当于用暂存区的所有文件直接覆盖本地文件，不给用户任何确认的机会！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="10、撤销提交（commit）"><a href="#10、撤销提交（commit）" class="headerlink" title="10、撤销提交（commit）"></a>10、撤销提交（commit）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">原理就是放弃工作区和index的改动，同时HEAD指针指向前一个commit对象。</span><br><span class="line">//撤销上一次的提交</span><br><span class="line">git reset –hard HEAD ^1</span><br><span class="line"></span><br><span class="line">//要通过git <span class="built_in">log</span>查看提交日志，也可直接指定提交编号或序号</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git log --oneline</span></span><br><span class="line">8982c79 commit b</span><br><span class="line">1f5fb04 commit a</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git reset --hard 8982c79</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Git分支"><a href="#Git分支" class="headerlink" title="Git分支"></a>Git分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-新建：git branch dev</span><br><span class="line"> -删除分支:git branch -d dev  <span class="comment"># 不在当前分支上才能删除</span></span><br><span class="line"> -查看分支:git branch</span><br><span class="line"> -切换分支：git checkout dev   <span class="comment"># 切换到dev分支</span></span><br><span class="line"> -新建并切换到分支：git checkout -b pro</span><br><span class="line"> -合并分支：git merge dev      <span class="comment"># 把dev合并到当前所在分支</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggqvtp3d2zj310v0bmq3h.jpg" alt="img"></p>
+<p>Git 中的分支，其实本质上仅仅是个指向 commit 对象的可变指针。Git 会使用 master 作为分支的默认名字。在若干次提交后，你其实已经有了一个指向最后一次提交对象的 master 分支，它在每次提交的时候都会自动向前移动。</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/wpsrwX9hv.jpg" alt="img"></p>
+<h3 id="创建新分支"><a href="#创建新分支" class="headerlink" title="创建新分支"></a>创建新分支</h3><p>我们可以使用git branch命令创建一个新的分支指针</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@ci-node1 git_test]<span class="comment"># git branch testing</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git branch</span></span><br><span class="line">* master</span><br><span class="line">  Testing</span><br><span class="line">这会在当前 commit 对象上新建一个分支指针</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Testing</p>
+<p>这会在当前 commit 对象上新建一个分支指针</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/wpsW3wlrr.jpg" alt="img"> </p>
+<p>Git保存着一个名为 HEAD 的特别指针。在 Git 中，它是一个指向你正在工作中的本地分支的指针（译注：将 HEAD 想象为当前分支的别名。）。运行 git branch 命令，仅仅是建立了一个新的分支，但不会自动切换到这个分支中去，所以在这个例子中，我们依然还在 master 分支里工作。</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/wpsMJ3lTi.jpg" alt="img"></p>
+<h3 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h3><p>要切换到其他分支，可以执行 git checkout 命令。我们现在转换到新建的 testing 分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@ci-node1 git_test]<span class="comment"># git checkout testing</span></span><br><span class="line">Switched to branch <span class="string">&#x27;testing&#x27;</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git branch</span></span><br><span class="line">  master</span><br><span class="line">* testing</span><br></pre></td></tr></table></figure>
+
+<p>这样 HEAD 就指向了 testing 分支</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185355479.png" alt="image-20210719185355479"></p>
+<h3 id="查看分支"><a href="#查看分支" class="headerlink" title="查看分支"></a>查看分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">列出所有本地分支git branch</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git branch</span></span><br><span class="line">  master</span><br><span class="line">* testing</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="分支合并"><a href="#分支合并" class="headerlink" title="分支合并"></a>分支合并</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">我们在前面的基本上，在testing分支创建新文件c，然后做一次commit。</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git branch --help</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># touch c</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git add .</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git commit -m &quot;commit c on branch testing&quot;</span></span><br><span class="line">[testing b3f92ea] commit c on branch testing</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 c</span><br><span class="line">提交后的结果：</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185448231.png" alt="image-20210719185448231"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">现在 testing 分支向前移动了一格，而 master 分支仍然指向原先 git checkout 时所在的 commit 对象。现在我们回到 master 分支看看：</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git checkout master</span></span><br><span class="line">Switched to branch <span class="string">&#x27;master&#x27;</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 5 Aug  1 00:12 a.txt</span><br><span class="line">-rw-r--r-- 1 root root 0 Jul 31 22:05 b</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git branch</span></span><br><span class="line">* master</span><br><span class="line">  Testing</span><br><span class="line">如下图所示：</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185510846.png" alt="image-20210719185510846"></p>
+<p>刚才的操作我们其实做了两件事，第一把HEAD指针移回到master分支，第二把工作目录中的文件换成了master分支所指向的快照的内容。也就是说，现在开始所做的改动，将始于本项目中一个较老的版本。它的主要作用是将 testing 分支里作出的修改暂时取消，这样你就可以向另一个方向进行开发。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">我们现在新建d文件，然后再次提交</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># touch d</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git add .</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git commit -m &quot;commit d on branch master&quot;</span></span><br><span class="line">[master 286061a] commit d on branch master</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 d</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 5 Aug  1 00:12 a.txt</span><br><span class="line">-rw-r--r-- 1 root root 0 Jul 31 22:05 b</span><br><span class="line">-rw-r--r-- 1 root root 0 Aug  1 16:54 d</span><br><span class="line"></span><br><span class="line">提交后如下图所示：</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185537771.png" alt="image-20210719185537771"></p>
+<p>现在我们的仓库提交历史产生了分叉，我们可以在不同分支之间来回切换，做修改相互不影响，也可以在适当的时机把他们合并到一起。现在我们把testing分支的内容合并到master分支上。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//切换到master分支</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git checkout master</span></span><br><span class="line">Already on <span class="string">&#x27;master&#x27;</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git branch</span></span><br><span class="line">* master</span><br><span class="line">  Testing</span><br><span class="line">//合并testing分支到master，输入提示信息</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git merge testing</span></span><br><span class="line">Merge made by the <span class="string">&#x27;recursive&#x27;</span> strategy.</span><br><span class="line"> c | 0</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 c</span><br><span class="line">//我们看到testing分支的内容已经合并到master分支。</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 5 Aug  1 00:12 a.txt</span><br><span class="line">-rw-r--r-- 1 root root 0 Jul 31 22:05 b</span><br><span class="line">-rw-r--r-- 1 root root 0 Aug  1 17:28 c</span><br><span class="line">-rw-r--r-- 1 root root 0 Aug  1 16:54 d</span><br><span class="line">//通过查看commit信息我们可以看到，testing分支做的那次commit已经合并到了master的commit日志中了，而且合并后重新生成了一次commit。</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git log --oneline</span></span><br><span class="line">2c56b27 Merge branch <span class="string">&#x27;testing&#x27;</span></span><br><span class="line">286061a commit d on branch master</span><br><span class="line">b3f92ea commit c on branch testing</span><br><span class="line">8982c79 commit b</span><br><span class="line">1f5fb04 commit a</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185610594.png" alt="image-20210719185610594"></p>
+<p>有时候合并操作并不会如此顺利，如果在不同的分支中都修改同一个文件的同一部分，Git就无法干静地把两者合并了。这时Git做了合并，但没有提交，它会停下来等你解决冲突。要看看哪些文件在合并时发生冲突，我们使用git status查阅：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">[root@ci-node1 git_test]<span class="comment"># echo &quot;111&quot;&gt;&gt;a.txt </span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git add .</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git commit -m &quot;modify a.txt on master&quot;</span></span><br><span class="line">[master 0d2d2a5] modify a.txt on master</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git checkout testing</span></span><br><span class="line">Switched to branch <span class="string">&#x27;testing&#x27;</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># echo &quot;222&quot;&gt;&gt;a.txt </span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git add .</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git commit -m &quot;modify a.txt on testing&quot;</span></span><br><span class="line">[testing 3da0eb7] modify a.txt on testing</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># cat a.txt </span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">222</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git checkout master</span></span><br><span class="line">Switched to branch <span class="string">&#x27;master&#x27;</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># cat a.txt </span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">111</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git merge testing</span></span><br><span class="line">Auto-merging a.txt</span><br><span class="line">CONFLICT (content): Merge conflict <span class="keyword">in</span> a.txt</span><br><span class="line">Automatic merge failed; fix conflicts and <span class="keyword">then</span> commit the result.</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># cat a.txt </span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span><br><span class="line">111</span><br><span class="line">=======</span><br><span class="line">222</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; testing</span><br><span class="line">[root@ci-node1 git_test]<span class="comment">#</span></span><br><span class="line">//修改合并后的冲突文件a.txt，然后再做一次commit，即完成了本次合并。</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># cat a.txt </span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">111</span><br><span class="line">222</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git add .</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git commit -m &quot;commit modify a.txt&quot;</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git log --oneline</span></span><br><span class="line">9740430 commit modify a.txt</span><br><span class="line">3da0eb7 modify a.txt on testing</span><br><span class="line">0d2d2a5 modify a.txt on master</span><br><span class="line">2c56b27 Merge branch <span class="string">&#x27;testing&#x27;</span></span><br><span class="line">286061a commit d on branch master</span><br><span class="line">b3f92ea commit c on branch testing</span><br><span class="line">8982c79 commit b</span><br><span class="line">1f5fb04 commit a</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">分支合并完成后，即可以删除分支。</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git branch -d testing</span></span><br><span class="line">Deleted branch testing (was 3da0eb7).</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git branch</span></span><br><span class="line">* master</span><br><span class="line">[root@ci-node1 git_test]<span class="comment">#</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Git标签"><a href="#Git标签" class="headerlink" title="Git标签"></a>Git标签</h2><p>标签也是版本库的一个快照。Git 的标签虽然是版本库的快照，但其实它就是指向某个 commit 的指针</p>
+<p>如果你达到一个重要的阶段，并希望永远记住那个特别的提交快照，你可以使用 git tag 给它打上标签。</p>
+<p>比如说，我们想为我们的 项目发布一个”1.0”版本。 我们可以用 git tag -a v1.0 命令给最新一次提交打上（HEAD）”v1.0”的标签。-a 选项意为”创建一个带注解的标签”。 不用 -a 选项也可以执行的，但它不会记录这标签是啥时候打的，谁打的，也不会让你添加个标签的注解。 我推荐一直创建带注解的标签。</p>
+<h3 id="创建标签"><a href="#创建标签" class="headerlink" title="创建标签"></a>创建标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@ci-node1 git_test]<span class="comment"># git tag -a v1.0</span></span><br><span class="line"></span><br><span class="line">当你执行 git tag -a 命令时，Git 会打开你的编辑器，让你写一句标签注解，就像你给提交写注解一样。</span><br><span class="line"></span><br><span class="line">现在，注意当我们执行 git tag时，我们可以看到我们的标签了：</span><br><span class="line"></span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git tag</span></span><br><span class="line"></span><br><span class="line">v1.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看标签"><a href="#查看标签" class="headerlink" title="查看标签"></a>查看标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">我们可以使用git show v1.0来查看标签的内容</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git show v1.0</span></span><br><span class="line">tag v1.0</span><br><span class="line">Tagger: wendong &lt;wendong866@163.com&gt;</span><br><span class="line">Date:   Wed Aug 1 19:10:23 2018 +0800</span><br><span class="line"></span><br><span class="line">merge testing after</span><br><span class="line"></span><br><span class="line">commit 97404309c95d7344f23bffc8f3f17480698895ae</span><br><span class="line">Merge: 0d2d2a5 3da0eb7</span><br><span class="line">Author: wendong &lt;wendong866@163.com&gt;</span><br><span class="line">Date:   Wed Aug 1 18:42:46 2018 +0800</span><br><span class="line"></span><br><span class="line">    commit modify a.txt</span><br><span class="line"></span><br><span class="line">diff --cc a.txt</span><br><span class="line">index 72167ef,3c4f069..732fac4</span><br><span class="line">--- a/a.txt</span><br><span class="line">+++ b/a.txt</span><br><span class="line">@@@ -1,2 -1,2 +1,3 @@@</span><br><span class="line">  <span class="built_in">test</span></span><br><span class="line"> +111</span><br><span class="line">+ 222</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除标签"><a href="#删除标签" class="headerlink" title="删除标签"></a>删除标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@ci-node1 git_test]<span class="comment"># git tag -d v1.0</span></span><br><span class="line">Deleted tag <span class="string">&#x27;v1.0&#x27;</span> (was 919d2a3)</span><br><span class="line">[root@ci-node1 git_test]<span class="comment"># git tag</span></span><br><span class="line">[root@ci-node1 git_test]<span class="comment">#</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Git远程仓库"><a href="#Git远程仓库" class="headerlink" title="Git远程仓库"></a>Git远程仓库</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">拉取最新代码 git pull origin master  (可以没事就拉)</span><br><span class="line"><span class="built_in">cd</span> luffyapi</span><br><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;first commit&quot;</span></span><br><span class="line">git remote add origin https://gitee.com/liuqingzheng/luffyapi_s15.git</span><br><span class="line">git push origin master</span><br><span class="line"><span class="comment"># 输入用户名密码，提交上去</span></span><br><span class="line"></span><br><span class="line">4 其它命令</span><br><span class="line"><span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">1）查看仓库已配置的远程源</span></span><br><span class="line"><span class="string">&gt;: git remote</span></span><br><span class="line"><span class="string">&gt;: git remote -v</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2）查看remote命令帮助文档</span></span><br><span class="line"><span class="string">&gt;: git remote -h</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">3）删除远程源</span></span><br><span class="line"><span class="string">&gt;: git remote remove 源名</span></span><br><span class="line"><span class="string">eg: git remote remove origin</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">4）添加远程源</span></span><br><span class="line"><span class="string">&gt;: git remote add 源名 源地址</span></span><br><span class="line"><span class="string">&gt;: git remote add orgin git@gitee.com:doctor_owen/luffyapi.git</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">5）提交代码到远程源</span></span><br><span class="line"><span class="string">&gt;: git push 源码 分支名</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">6）克隆远程源</span></span><br><span class="line"><span class="string">&gt;: git clone 远程源地址</span></span><br><span class="line"><span class="string">&quot;</span><span class="string">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="连接远程仓库的两种情况"><a href="#连接远程仓库的两种情况" class="headerlink" title="连接远程仓库的两种情况"></a>连接远程仓库的两种情况</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">1 首次提交代码连接</span><br><span class="line">    <span class="built_in">cd</span> luffyapi</span><br><span class="line">    git init</span><br><span class="line">    git add .</span><br><span class="line">    git commit -m <span class="string">&quot;first commit&quot;</span></span><br><span class="line">    git remote add origin https://gitee.com/liuqingzheng/luffyapi_s15.git</span><br><span class="line">    git push origin master</span><br><span class="line">2 作为参与开发者，操作远程</span><br><span class="line">    git <span class="built_in">clone</span> https://gitee.com/liuqingzheng/luffyapi_s15.git</span><br><span class="line">    <span class="comment"># 使用pycharmn打开项目（直接使用pycharm拉取项目）</span></span><br><span class="line">    </span><br><span class="line">3 开发了，更改文件</span><br><span class="line">    -张三和李四协同开发</span><br><span class="line">    -假设张三提交了代码</span><br><span class="line">    -李四在提交之前需要先（以后你们每次提交代码之前，都需要先拉取：拉取可能会出冲突）</span><br><span class="line">        git pull origin master  <span class="comment"># 拉取，拉到最新版本,自动merge</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- git fetch 相当于是从远程获取最新到本地，不会自动merge</span><br><span class="line">- git pull 相当于兄远程获取最新版本并merge搭配本地</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Git是分布式版本控制系统，同一个Git仓库，可以分布到不同的机器上，但开发参与者必须在同一个网络中，且必须有一个项目的原始版本，通常的办法是让一台电脑充当服务器的角色，每天24小时开机，其他每个人都从这个“服务器”仓库克隆一份到自己的电脑上，并且各自把各自的提交推送到服务器仓库里，也从服务器仓库中拉取别人的提交。完全可以自己搭建一台运行Git的服务器但现在更适合的做法是使用免费的托管平台。</p>
+<p>Git代码托管平台，首先推荐的是GitHub，好多好的开源项目都来自GitHub，但是GitHub只能新建公开的Git仓库，私有仓库要收费，有时候访问比较卡，如果你做的是一个开源项目，可以首选GitHub、coding。如果是公司自己内部使用的代码托管建议使用Gitlab。</p>
+<h3 id="Github公有仓库使用"><a href="#Github公有仓库使用" class="headerlink" title="Github公有仓库使用"></a><strong>Github公有仓库使用</strong></h3><p>github是一个基于git的代码托管平台，付费用户可以建私人仓库，我们一般的免费用户只能使用公共仓库，也就是代码要公开。</p>
+<p>GitHub的地址：<a target="_blank" rel="noopener" href="https://github.com/%EF%BC%8C%E5%85%B6%E9%A6%96%E9%A1%B5%E5%A6%82%E4%B8%8B%E5%9B%BE%EF%BC%9A">https://github.com/，其首页如下图：</a></p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185907304.png" alt="image-20210719185907304"></p>
+<p>仓库空仓库后，页面列出了三种使用该仓库的方式</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210719185928461.png" alt="image-20210719185928461"></p>
+<p>好了，到这里我们的第一个仓库就创建完成了，接下来我们要什么呢？当然就是把远程的仓库和我们本地客户端的仓库连接起来，有两种情况：一是本地已经存在一个仓库，二是本地没有仓库。</p>
+<h3 id="Gitlab配置"><a href="#Gitlab配置" class="headerlink" title="Gitlab配置"></a>Gitlab配置</h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Tools/" rel="tag"><i class="fas fa-cookie-bite"></i> Tools</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/13/%E5%89%8D%E7%AB%AF-jQuery-%E6%B1%87%E6%80%BB/" rel="prev" title="前端-jQuery-汇总">
+      <i class="fa fa-chevron-left"></i> 前端-jQuery-汇总
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/02/%E5%85%B6%E4%BB%96-%E5%88%86%E5%B8%83%E5%BC%8FID/" rel="next" title="其他-分布式ID">
+      其他-分布式ID <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E4%B8%8ESVN%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">Git与SVN的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">Git安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">Git的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E4%BB%93%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">Git仓库初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%8E%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="nav-number">4.1.</span> <span class="nav-text">1．建仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%AE%BE%E7%BD%AE%E8%BF%87%E6%BB%A4%E6%96%87%E4%BB%B6"><span class="nav-number">4.2.</span> <span class="nav-text">2.设置过滤文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git%E4%BB%93%E5%BA%93%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="nav-number"></span> <span class="nav-text">Git仓库基础操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%8C%BA%E5%9F%9F"><span class="nav-number">1.</span> <span class="nav-text">Git的四个区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%8A%B6%E6%80%81"><span class="nav-number">2.</span> <span class="nav-text">Git的四种状态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%9F%A5%E7%9C%8Bgit%E4%BB%93%E5%BA%93%E6%96%87%E4%BB%B6%E6%94%B9%E5%8A%A8%E7%8A%B6%E6%80%81"><span class="nav-number">2.1.</span> <span class="nav-text">1、查看git仓库文件改动状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%B0%86%E5%B7%A5%E4%BD%9C%E5%8C%BA%E6%96%87%E4%BB%B6%E6%94%B9%E5%8A%A8%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%9A%82%E5%AD%98%E5%8C%BAgit-add"><span class="nav-number">2.2.</span> <span class="nav-text">2、将工作区文件改动添加到暂存区git add</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E5%B0%86%E6%9A%82%E5%AD%98%E5%8C%BA%E6%96%87%E4%BB%B6%E6%94%B9%E5%8A%A8%E5%9B%9E%E9%80%80git-rm"><span class="nav-number">2.3.</span> <span class="nav-text">3、将暂存区文件改动回退git rm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E5%B0%86%E6%9A%82%E5%AD%98%E5%8C%BA%E6%96%87%E4%BB%B6%E7%A7%BB%E5%8A%A8%E4%BD%8D%E7%BD%AE-%E9%87%8D%E5%91%BD%E5%90%8Dgit-mv"><span class="nav-number">2.4.</span> <span class="nav-text">4、将暂存区文件移动位置&#x2F;重命名git mv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81%E6%8F%90%E4%BA%A4git-commit"><span class="nav-number">2.5.</span> <span class="nav-text">5、提交git commit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%E3%80%81%E6%9F%A5%E7%9C%8BGit%E5%8C%BA%E5%9F%9F%E6%96%87%E4%BB%B6%E7%9A%84%E5%85%B7%E4%BD%93%E6%94%B9%E5%8A%A8git-diff"><span class="nav-number">2.6.</span> <span class="nav-text">6、查看Git区域文件的具体改动git diff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7%E3%80%81%E6%9F%A5%E7%9C%8B%E5%8E%86%E5%8F%B2%E6%8F%90%E4%BA%A4git-log"><span class="nav-number">2.7.</span> <span class="nav-text">7、查看历史提交git log</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8%E3%80%81%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E5%8E%86%E5%8F%B2%E6%93%8D%E4%BD%9Cgit-reflog"><span class="nav-number">2.8.</span> <span class="nav-text">8、查看本地历史操作git reflog</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%E3%80%81%E7%AD%BE%E5%87%BAgit-checkout"><span class="nav-number">3.</span> <span class="nav-text">9、签出git checkout</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#10%E3%80%81%E6%92%A4%E9%94%80%E6%8F%90%E4%BA%A4%EF%BC%88commit%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">10、撤销提交（commit）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git%E5%88%86%E6%94%AF"><span class="nav-number"></span> <span class="nav-text">Git分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E5%88%86%E6%94%AF"><span class="nav-number">1.</span> <span class="nav-text">创建新分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF"><span class="nav-number">2.</span> <span class="nav-text">切换分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%88%86%E6%94%AF"><span class="nav-number">3.</span> <span class="nav-text">查看分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6"><span class="nav-number">4.</span> <span class="nav-text">分支合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="nav-number">5.</span> <span class="nav-text">删除分支</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git%E6%A0%87%E7%AD%BE"><span class="nav-number"></span> <span class="nav-text">Git标签</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%87%E7%AD%BE"><span class="nav-number">1.</span> <span class="nav-text">创建标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%A0%87%E7%AD%BE"><span class="nav-number">2.</span> <span class="nav-text">查看标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%A0%87%E7%AD%BE"><span class="nav-number">3.</span> <span class="nav-text">删除标签</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number"></span> <span class="nav-text">Git远程仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%83%85%E5%86%B5"><span class="nav-number">1.</span> <span class="nav-text">连接远程仓库的两种情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Github%E5%85%AC%E6%9C%89%E4%BB%93%E5%BA%93%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">Github公有仓库使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitlab%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">Gitlab配置</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">163</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.9m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">51:48</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

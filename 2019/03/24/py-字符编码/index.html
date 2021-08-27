@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="字符编码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="py-字符编码">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2019/03/24/py-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="字符编码">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-03-24T05:58:49.000Z">
+<meta property="article:modified_time" content="2021-08-27T09:35:39.703Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="note">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2019/03/24/py-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>py-字符编码 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2019/03/24/py-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          py-字符编码
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-24 13:58:49" itemprop="dateCreated datePublished" datetime="2019-03-24T13:58:49+08:00">2019-03-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 17:35:39" itemprop="dateModified" datetime="2021-08-27T17:35:39+08:00">2021-08-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>字符编码</p>
+<a id="more"></a>
+
+<h4 id="1-文本编辑器存取文件的原理（nodepad-，pycharm，word）"><a href="#1-文本编辑器存取文件的原理（nodepad-，pycharm，word）" class="headerlink" title="1.文本编辑器存取文件的原理（nodepad++，pycharm，word）"></a>1.文本编辑器存取文件的原理（nodepad++，pycharm，word）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#1、打开编辑器就打开了启动了一个进程，是在内存中的，所以，用编辑器编写的内容也都是存放与内存中的，断电后数据丢失</span><br><span class="line"></span><br><span class="line">#2、要想永久保存，需要点击保存按钮：编辑器把内存的数据刷到了硬盘上。</span><br><span class="line"></span><br><span class="line">#3、在我们编写一个py文件（没有执行），跟编写其他文件没有任何区别，都只是在编写一堆字符而已。</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-python解释器执行py文件的原理-，例如python-test-py"><a href="#2-python解释器执行py文件的原理-，例如python-test-py" class="headerlink" title="2.python解释器执行py文件的原理 ，例如python test.py"></a>2.python解释器执行py文件的原理 ，例如python test.py</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#第一阶段：python解释器启动，此时就相当于启动了一个文本编辑器</span><br><span class="line"></span><br><span class="line">#第二阶段：python解释器相当于文本编辑器，去打开test.py文件，从硬盘上将test.py的文件内容读入到内存中(小复习：pyhon的解释性，决定了解释器只关心文件内容，不关心文件后缀名)</span><br><span class="line">此时，python解释器会读取test.py的第一行内容，#coding:utf-8，来决定以什么编码格式来读入内存，这一行就是来设定python解释器这个软件的编码使用的编码格式这个编码，</span><br><span class="line">可以用sys.getdefaultencoding()查看，如果不在python文件指定头信息＃-*-coding:utf-8-*-,那就使用默认的</span><br><span class="line"></span><br><span class="line">python2中默认使用ascii，python3中默认使用utf-8 </span><br><span class="line"></span><br><span class="line">#第三阶段：python解释器解释执行刚刚加载到内存中test.py的代码( ps：在该阶段，即真正执行代码时，才会识别python的语法，执行文件内代码，当执行到name&#x3D;&quot;egon&quot;时,会开辟内存空间存放字符串&quot;egon&quot;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-总结python解释器与文件本编辑的异同"><a href="#3-总结python解释器与文件本编辑的异同" class="headerlink" title="3.总结python解释器与文件本编辑的异同"></a>3.总结python解释器与文件本编辑的异同</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#1、相同点：python解释器是解释执行文件内容的，因而python解释器具备读py文件的功能，这一点与文本编辑器一样</span><br><span class="line"></span><br><span class="line">#2、不同点：文本编辑器将文件内容读入内存后，是为了显示或者编辑，根本不去理会python的语法，而python解释器将文件内容读入内存后，可不是为了给你瞅一眼python代码写的啥，而是为了执行python代码、会识别python语法。</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">字符--------（翻译过程）-------&gt;数字 </span><br><span class="line">这个过程实际就是一个字符如何对应一个特定数字的标准，这个标准称之为字符编码</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-以下两个场景下涉及到字符编码的问题："><a href="#1-以下两个场景下涉及到字符编码的问题：" class="headerlink" title="1.以下两个场景下涉及到字符编码的问题："></a>1.以下两个场景下涉及到字符编码的问题：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#1、一个python文件中的内容是由一堆字符组成的，存取均涉及到字符编码问题（python文件并未执行，前两个阶段均属于该范畴）</span><br><span class="line"></span><br><span class="line">#2、python中的数据类型字符串是由一串字符组成的（python文件执行时，即第三个阶段）</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-字符编码的发展史"><a href="#2-字符编码的发展史" class="headerlink" title="2.字符编码的发展史"></a>2.字符编码的发展史</h4><p>Unicode（内存中统一使用unicode）统一用2Bytes代表一个字符<br>UTF-8 对英文字符只用1Bytes表示，对中文字符用3Bytes</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#阶段一：现代计算机起源于美国，最早诞生也是基于英文考虑的ASCII</span><br><span class="line">ASCII:8位二进制数&#x3D;1个Bytes代表一个字符（英文字符&#x2F;键盘上的所有其他字符），1Bytes&#x3D;8bit，8bit可以表示0-2**8-1种变化，即可以表示256个字符</span><br><span class="line"></span><br><span class="line">ASCII最初只用了后七位，127个数字，已经完全能够代表键盘上所有的字符了（英文字符&#x2F;键盘的所有其他字符），后来为了将拉丁文也编码进了ASCII表，将最高位也占用了</span><br><span class="line"></span><br><span class="line">#阶段二:为了满足中文和英文，中国人定制了GBK</span><br><span class="line">GBK:2Bytes代表一个中文字符，1Bytes表示一个英文字符</span><br><span class="line">为了满足其他国家，各个国家纷纷定制了自己的编码</span><br><span class="line">日本把日文编到Shift_JIS里，韩国把韩文编到Euc-kr里</span><br><span class="line"></span><br><span class="line">#阶段三：各国有各国的标准，就会不可避免地出现冲突，结果就是，在多语言混合的文本中，显示出来会有乱码。如何解决这个问题呢？？？</span><br><span class="line"></span><br><span class="line">#！！！！！！！！！！！！非常重要！！！！！！！！！！！！</span><br><span class="line">说白了乱码问题的本质就是不统一，如果我们能统一全世界，规定全世界只能使用一种文字符号，然后统一使用一种编码，那么乱码问题将不复存在，</span><br><span class="line">ps：就像当年秦始皇统一中国一样，书同文车同轨，所有的麻烦事全部解决</span><br><span class="line">很明显，上述的假设是不可能成立的。很多地方或老的系统、应用软件仍会采用各种各样的编码，这是历史遗留问题。于是我们必须找出一种解决方案或者说编码方案，需要同时满足：</span><br><span class="line">#1、能够兼容万国字符</span><br><span class="line">#2、与全世界所有的字符编码都有映射关系，这样就可以转换成任意国家的字符编码</span><br><span class="line"></span><br><span class="line">这就是unicode（定长），　统一用2Bytes代表一个字符，　虽然2**16-1&#x3D;65535，但unicode却可以存放100w+个字符，因为unicode存放了与其他编码的映射关系，准确地说unicode并不是一种严格意义上的字符编码表，下载pdf来查看unicode的详情：</span><br><span class="line">链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1dEV3RYp</span><br><span class="line"></span><br><span class="line">很明显对于通篇都是英文的文本来说，unicode的式无疑是多了一倍的存储空间（二进制最终都是以电或者磁的方式存储到存储介质中的）</span><br><span class="line"></span><br><span class="line">于是产生了UTF-8（可变长，全称Unicode Transformation Format），对英文字符只用1Bytes表示，对中文字符用3Bytes，对其他生僻字用更多的Bytes去存</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#总结：内存中统一采用unicode，浪费空间来换取可以转换成任意编码（不乱码），硬盘可以采用各种编码，如utf-8，保证存放于硬盘或者基于网络传输的数据量很小，提高传输效率与稳定性。</span><br><span class="line"></span><br><span class="line">！！！重点！！！</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-结论"><a href="#3-结论" class="headerlink" title="3.结论"></a>3.结论</h4><ol>
+<li><p>内存固定使用Unicode，我们可以改变的是存入硬盘的编码格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">英文+汉字 -&gt; Unicode -&gt; gbk</span><br><span class="line">英文+日文 -&gt; unicode -&gt; shift-jis</span><br><span class="line">万国软件  -&gt; Unicode -&gt; utf-8</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>文本文件存取乱码问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">存乱了：编码格式应该设置成支持文件内容字符串的格式</span><br><span class="line">取乱了: 解决方法是，文件是以什么编码格式存硬盘的，就以什么格式取</span><br></pre></td></tr></table></figure></li>
+<li><p>解释器默认读文件的编码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python3： 默认读文件的编码utf-8</span><br><span class="line">python2： ASCII</span><br><span class="line"></span><br><span class="line">指定文件头，修改默认的编码：</span><br><span class="line"># coding:gbk</span><br></pre></td></tr></table></figure></li>
+<li><p>保证python程序前两个阶段不乱码的核心法则：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">指定文件头</span><br><span class="line"># coding:文件当初存入硬盘时的编码格式</span><br></pre></td></tr></table></figure></li>
+<li><p>执行阶段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 的str类型默认直接存成Unicode格式，无论如何都不会乱码</span><br><span class="line">保证python2 的str类型不乱码</span><br><span class="line">    x &#x3D; u&#39;上&#39;  将字符串存成Unicode</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>python2有两种类型字符串：str unicode<br>x = ‘dfs’<br>x = u’dfsdf’</p>
+</li>
+<li><p>编码解码</p>
+
+<p>unicode—–&gt;encode——–&gt;utf-8<br>utf-8——–&gt;decode———-&gt;unicode</p>
+</li>
+</ol>
+<h4 id="4-使用如何解决乱码问题"><a href="#4-使用如何解决乱码问题" class="headerlink" title="4.使用如何解决乱码问题"></a>4.使用如何解决乱码问题</h4><ol>
+<li><p>如何解决python2乱码问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">前两个阶段: 1.读文件  文件头  # coding: utf-8  与文件存储的编码格式一致</span><br><span class="line">          2.加载到内存 字符串 x &#x3D; u&#39;sad&#39;</span><br></pre></td></tr></table></figure></li>
+<li><p>如何解决python3乱码问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1.读文件  文件头  # coding: utf-8  与文件存储的编码格式一致</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编码解码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3</span><br><span class="line">x&#x3D;&#39;上&#39; # str类型被存成unicode</span><br><span class="line">print(x) --&gt; 内存地址 ，应该是数字--&gt;print功能中间做了转换(unicode转成了字符)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="需要记住"><a href="#需要记住" class="headerlink" title="需要记住"></a>需要记住</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1.内存的编码使用unicode，不代表内存中全都是unicode，</span><br><span class="line">2.字符类型</span><br><span class="line">python2 字符串类型 str 和 unicode</span><br><span class="line">当python解释器执行到产生字符串的代码时（例如x&#x3D;&#39;上&#39;），会申请新的内存地址，然后将&#39;上&#39;编码成文件开头指定的编码格式</span><br><span class="line">如果不指定表头，默认以ASCII码存，存汉字则会报错。</span><br><span class="line">##########</span><br><span class="line">所以python2 一般以u(&#39;xxx&#39;) unicode方式存</span><br><span class="line">##########</span><br><span class="line"></span><br><span class="line">python3 中也有两种字符串类型str和bytes</span><br><span class="line">str是unicode方式存</span><br><span class="line">#coding:gbk</span><br><span class="line">x&#x3D;&#39;上&#39; #当程序执行时，无需加u，&#39;上&#39;也会被以unicode形式保存新的内存空间中,</span><br><span class="line">print(type(x)) #&lt;class &#39;str&#39;&gt;</span><br><span class="line"></span><br><span class="line">#x可以直接encode成任意编码格式</span><br><span class="line">print(x.encode(&#39;gbk&#39;)) #b&#39;\xc9\xcf&#39;</span><br><span class="line">print(type(x.encode(&#39;gbk&#39;))) #&lt;class &#39;bytes&#39;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>很重要的一点是：看到python3中x.encode(‘gbk’) 的结果\xc9\xcf正是python2中的str类型的值,而在python3是bytes类型，在python2中则是str类型</p>
+<p>pycharm的终端编码格式是utf-8</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/note/" rel="tag"><i class="fas fa-cookie-bite"></i> note</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/09/py-%E5%9F%BA%E7%A1%8001/" rel="next" title="py_基础01">
+      py_基础01 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%98%E5%8F%96%E6%96%87%E4%BB%B6%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%88nodepad-%EF%BC%8Cpycharm%EF%BC%8Cword%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">1.文本编辑器存取文件的原理（nodepad++，pycharm，word）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-python%E8%A7%A3%E9%87%8A%E5%99%A8%E6%89%A7%E8%A1%8Cpy%E6%96%87%E4%BB%B6%E7%9A%84%E5%8E%9F%E7%90%86-%EF%BC%8C%E4%BE%8B%E5%A6%82python-test-py"><span class="nav-number">2.</span> <span class="nav-text">2.python解释器执行py文件的原理 ，例如python test.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%80%BB%E7%BB%93python%E8%A7%A3%E9%87%8A%E5%99%A8%E4%B8%8E%E6%96%87%E4%BB%B6%E6%9C%AC%E7%BC%96%E8%BE%91%E7%9A%84%E5%BC%82%E5%90%8C"><span class="nav-number">3.</span> <span class="nav-text">3.总结python解释器与文件本编辑的异同</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="nav-number"></span> <span class="nav-text">字符编码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BB%A5%E4%B8%8B%E4%B8%A4%E4%B8%AA%E5%9C%BA%E6%99%AF%E4%B8%8B%E6%B6%89%E5%8F%8A%E5%88%B0%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">1.以下两个场景下涉及到字符编码的问题：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E7%9A%84%E5%8F%91%E5%B1%95%E5%8F%B2"><span class="nav-number">2.</span> <span class="nav-text">2.字符编码的发展史</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%BB%93%E8%AE%BA"><span class="nav-number">3.</span> <span class="nav-text">3.结论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">4.使用如何解决乱码问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E8%AE%B0%E4%BD%8F"><span class="nav-number">5.</span> <span class="nav-text">需要记住</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">163</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.9m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">51:48</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

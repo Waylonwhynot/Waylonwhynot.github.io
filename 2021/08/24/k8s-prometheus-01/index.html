@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="基础概念">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s-prometheus-01">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/08/24/k8s-prometheus-01/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="基础概念">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210824161734852.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210824162053060.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210824161803981.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210824162140587.png">
+<meta property="og:image" content="https://waylon.whatyouneed.site/Users/waylonyan/Desktop/prometheus%25E7%259B%25B8%25E5%2585%25B3/%25E8%25AF%25BE%25E4%25BB%25B6/day01/pic/blackbox%25E6%258E%25A2%25E6%25B5%258B.png">
+<meta property="article:published_time" content="2021-08-24T08:11:15.000Z">
+<meta property="article:modified_time" content="2021-08-24T10:23:15.221Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="note">
+<meta property="article:tag" content="prometheus">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210824161734852.png">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/24/k8s-prometheus-01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>k8s-prometheus-01 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/24/k8s-prometheus-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          k8s-prometheus-01
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-24 16:11:15 / 修改时间：18:23:15" itemprop="dateCreated datePublished" datetime="2021-08-24T16:11:15+08:00">2021-08-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/prometheus/" itemprop="url" rel="index"><span itemprop="name">prometheus</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>23k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>39 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>基础概念</p>
+<a id="more"></a>
+
+<h1 id="prometheus-基本概念"><a href="#prometheus-基本概念" class="headerlink" title="prometheus 基本概念"></a>prometheus 基本概念</h1><blockquote>
+<p>sample 数据点</p>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> sample <span class="keyword">struct</span> &#123;</span><br><span class="line">    t <span class="keyword">int64</span></span><br><span class="line">    v <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>sample代表一个数据点</li>
+<li>size:16byte: 包含 1个8byte int64时间戳和1个8byte float64 value<br><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210824161734852.png" alt="image-20210824161734852"></li>
+</ul>
+<blockquote>
+<p>Label 标签</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type Label struct &#123;</span><br><span class="line">    Name, Value string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一对label 比如 <code>cpu=&quot;0&quot;</code> <code>mode: &quot;user&quot;</code></li>
+</ul>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210824162053060.png" alt="image-20210824162053060"></p>
+<blockquote>
+<p>Labels 标签组</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type Labels []Label</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>就是metric 一个指标的所有tag values</li>
+</ul>
+<h1 id="prometheus四种查询类型"><a href="#prometheus四种查询类型" class="headerlink" title="prometheus四种查询类型"></a>prometheus四种查询类型</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://prometheus.io/docs/prometheus/latest/querying/basics/">文档地址</a></li>
+</ul>
+<ol>
+<li><p>即时向量 <code>Instant vector</code> : 一组时间序列，每个时间序列包含一个样本，所有样本共享相同的时间戳 </p>
+<blockquote>
+<p>在prometheus页面上就是table查询 ，对应查询接口 /api/v1/query<br><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210824161803981.png" alt="image-20210824161803981"></p>
+</blockquote>
+<blockquote>
+<p>vector 向量 </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type Vector []Sample</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>vector 向量,是samples的别名,但是所有sample具有相同timestamp ,常用作instance_query的结果</li>
+</ul>
+</li>
+<li><p>范围向量 <code>Range vector</code> : 一组时间序列，每个时间序列包含一个样本，所有样本共享相同的时间戳</p>
+<blockquote>
+<p>在prometheus页面上就是graph查询 ，对应查询接口 /api/v1/query </p>
+</blockquote>
+<blockquote>
+<p>Matrix 矩阵</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type Matrix []Series</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Matrix是series的切片，一般的range_query返回的结果</li>
+</ul>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210824162140587.png" alt="image-20210824162140587"></p>
+</li>
+<li><p>标量 <code>Scalar</code> 一个简单的数字浮点值</p>
+</li>
+<li><p>String 一个简单的字符串值；目前未使用</p>
+</li>
+</ol>
+<h1 id="四种标签匹配模式"><a href="#四种标签匹配模式" class="headerlink" title="四种标签匹配模式"></a>四种标签匹配模式</h1><ol>
+<li><code>=</code> 等于<ul>
+<li>查询: cpu第一个核并且是用户态的数据  node_cpu_seconds_total{mode=”user”,cpu=”0”}</li>
+</ul>
+</li>
+<li><code>!=</code> 不等于<ul>
+<li>查询: 非lo网卡的接收字节数  node_network_receive_bytes_total{device!=”lo”}</li>
+</ul>
+</li>
+<li><code>=~</code> 正则匹配<ul>
+<li>查询: 挂载点以/run开头的文件系统剩余字节数  node_filesystem_avail_bytes{mountpoint=~”^/run.*”}</li>
+</ul>
+</li>
+<li><code>!~</code> 正则非匹配<ul>
+<li>查询: 块设备名字不包含vda的读字节数  node_disk_read_bytes_total{device!~”.<em>vda.</em>“}</li>
+</ul>
+</li>
+</ol>
+<h1 id="四种数据类型"><a href="#四种数据类型" class="headerlink" title="四种数据类型"></a>四种数据类型</h1><ul>
+<li><code>gauge</code> 当前值 </li>
+</ul>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_memory_MemFree_bytes</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>counter</code>   计数器是代表一个累积指标单调递增计数器，其价值只能在重新启动增加或归零。例如，您可以使用计数器来表示已服务请求，已完成任务或错误的数量。</li>
+</ul>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_request_total</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>histogram</code> 直方图样本观测（通常之类的东西请求持续时间或响应大小）和计数它们配置的桶中。它还提供所有观察值的总和。</li>
+</ul>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> http所有接口 总的95分位值</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sum/count 可以算平均值</span></span><br><span class="line">prometheus_http_request_duration_seconds_sum/ prometheus_http_request_duration_seconds_count</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> histogram_quantile(0.95, sum(rate(prometheus_http_request_duration_seconds_bucket[5m])) by (le,handler))</span></span><br><span class="line"></span><br><span class="line">histogram_quantile(0.95, sum(rate(prometheus_http_request_duration_seconds_bucket[1m])) by (le))</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> range_query接口的95分位值</span></span><br><span class="line">histogram_quantile(0.95, sum(rate(prometheus_http_request_duration_seconds_bucket&#123;handler=&quot;/api/v1/query_range&quot;&#125;[5m])) by (le))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>summary</code>   摘要会采样观察值（通常是请求持续时间和响应大小之类的东西）。尽管它还提供了观测值的总数和所有观测值的总和，但它可以计算滑动时间窗口内的可配置分位数。</li>
+</ul>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> gc耗时</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE go_gc_duration_seconds summary</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=&quot;0&quot;&#125; 0.000135743</span><br><span class="line">go_gc_duration_seconds&#123;quantile=&quot;0.25&quot;&#125; 0.000872805</span><br><span class="line">go_gc_duration_seconds&#123;quantile=&quot;0.5&quot;&#125; 0.000965516</span><br><span class="line">go_gc_duration_seconds&#123;quantile=&quot;0.75&quot;&#125; 0.001055636</span><br><span class="line">go_gc_duration_seconds&#123;quantile=&quot;1&quot;&#125; 0.006464756</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> summary 平均值</span></span><br><span class="line">go_gc_duration_seconds_sum /go_gc_duration_seconds_count</span><br></pre></td></tr></table></figure>
+
+<h1 id="范围向量选择器-Range-Vector-Selectors"><a href="#范围向量选择器-Range-Vector-Selectors" class="headerlink" title="范围向量选择器 Range Vector Selectors"></a>范围向量选择器 Range Vector Selectors</h1><ul>
+<li>范围矢量的工作方式与即时矢量一样，不同之处在于它们从当前即时中选择了一定范围的样本。语法上，将持续时间附加在[]向量选择器末尾的方括号（）中，以指定应为每个结果范围向量元素提取多远的时间值。</li>
+<li>只能作用在<code>counter</code>上</li>
+</ul>
+<blockquote>
+<p>时间范围 </p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ms -毫秒</span><br><span class="line">s -秒</span><br><span class="line">m - 分钟</span><br><span class="line">h - 小时</span><br><span class="line">d -天-假设一天总是24小时</span><br><span class="line">w -周-假设一周始终为7天</span><br><span class="line">y -年-假设一年始终为365天</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>直接查询报错   node_network_receive_bytes_total{device!=”lo”}[1m]</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error executing query: invalid expression type &quot;range vector&quot; for range query, must be Scalar or instant Vector</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>需要叠加一个非聚合函数 如 rate irate delta idelta sum 等</p>
+</blockquote>
+<ul>
+<li>计算网卡入流量<br>rate(node_network_receive_bytes_total{device!=”lo”}[1m])</li>
+</ul>
+<blockquote>
+<p>时间范围 ，不能低于采集间隔</p>
+</blockquote>
+<ul>
+<li>采集30秒 ，查询10秒则无数据</li>
+<li>rate(node_network_receive_bytes_total{device!=”lo”}[10s])</li>
+</ul>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://prometheus.io/docs/practices/histograms/#histograms-and-summaries">prometheus官方文档中对于两种类型的对比说明</a></li>
+<li>下面我总结一些对比点</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>对比点</th>
+<th>histogram</th>
+<th>summary</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>查询表达式对比</td>
+<td><code>histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))</code></td>
+<td><code>http_request_duration_seconds_summary&#123;quantile=&quot;0.95&quot;&#125;</code></td>
+</tr>
+<tr>
+<td>所需配置</td>
+<td>选择合适的buckets</td>
+<td>选择所需的φ分位数和滑动窗口。其他φ分位数和滑动窗口以后无法计算。</td>
+</tr>
+<tr>
+<td>客户端性能开销</td>
+<td>开销低，因为它们只需要增加计数器</td>
+<td>开销高，由于流式分位数计算</td>
+</tr>
+<tr>
+<td>服务端性能开销</td>
+<td>开销高，因为需要在服务端实时计算(而且bucket值指标基数高)</td>
+<td>开销低，可以看做是gauge指标上传，仅查询即可</td>
+</tr>
+<tr>
+<td>分位值误差</td>
+<td>随bucket精度变大而变大(线性插值法计算问题)</td>
+<td>误差在φ维度上受可配置值限制</td>
+</tr>
+<tr>
+<td>是否支持聚合</td>
+<td>支持</td>
+<td>不支持(配置sum avg等意义不大)</td>
+</tr>
+<tr>
+<td>是否提供全局分位值</td>
+<td>支持(根据promql匹配维度决定)</td>
+<td>不支持(因为数据在每个实例/pod/agent侧已经算好，无法聚合)</td>
+</tr>
+</tbody></table>
+<h1 id="histogram-线性插值法"><a href="#histogram-线性插值法" class="headerlink" title="histogram 线性插值法"></a>histogram 线性插值法</h1><h2 id="histogram-quantile为何需要先算rate"><a href="#histogram-quantile为何需要先算rate" class="headerlink" title="histogram_quantile为何需要先算rate"></a>histogram_quantile为何需要先算<code>rate</code></h2><ul>
+<li>因为每个bucket都是<code>counter</code>型的，如果不算rate那么分位值的结果曲线是一条直线</li>
+<li>原理是因为<code>counter</code>型累加，不算rate并不知道当前bucket的增长情况，换句话说不知道这些bucket是多久积攒到现在这个值的</li>
+</ul>
+<h2 id="什么是线性插值法"><a href="#什么是线性插值法" class="headerlink" title="什么是线性插值法"></a>什么是线性插值法</h2><ul>
+<li>之前阅读很多文章都提到<code>histogram</code>采用<code>线性插值法</code>计算分位值会导致一定的误差</li>
+<li>对这个<code>线性插值法</code>总是理解的不到位</li>
+<li>在查看完代码之后明白了</li>
+</ul>
+<h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><ul>
+<li>代码位置：<code>D:\work\go_work\pkg\mod\github.com\prometheus\prometheus@v0.0.0-20201209205804-66f47e116e00\promql\quantile.go</code></li>
+</ul>
+<h3 id="bucket数据结构"><a href="#bucket数据结构" class="headerlink" title="bucket数据结构"></a>bucket数据结构</h3><ul>
+<li>其中<code>bucket</code> 代表事先定义好的bucket</li>
+<li><code>upperBound</code>代表这个bucket的上限值</li>
+<li><code>count</code> 代表这个小于等于这个<code>upperBound</code>的个数/次数</li>
+<li><code>workqueue_work_duration_seconds_bucket&#123;name=&quot;crd_openapi_controller&quot;,le=&quot;10&quot;&#125; 65246 </code></li>
+<li>所以上述表达式含义为 <code>workqueue_work_duration_seconds</code>小于<code>10</code>秒的有<code>65246 </code>个</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> bucket <span class="keyword">struct</span> &#123;</span><br><span class="line">    upperBound <span class="keyword">float64</span></span><br><span class="line">    count      <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> buckets []bucket</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b buckets)</span> <span class="title">Len</span><span class="params">()</span> <span class="title">int</span></span>           &#123; <span class="keyword">return</span> <span class="built_in">len</span>(b) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b buckets)</span> <span class="title">Swap</span><span class="params">(i, j <span class="keyword">int</span>)</span></span>      &#123; b[i], b[j] = b[j], b[i] &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b buckets)</span> <span class="title">Less</span><span class="params">(i, j <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123; <span class="keyword">return</span> b[i].upperBound &lt; b[j].upperBound &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="核心计算函数"><a href="#核心计算函数" class="headerlink" title="核心计算函数"></a>核心计算函数</h3><ul>
+<li>核心函数如下</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">bucketQuantile</span><span class="params">(q <span class="keyword">float64</span>, buckets buckets)</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> q &lt; <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> math.Inf(<span class="number">-1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> q &gt; <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> math.Inf(+<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    sort.Sort(buckets)</span><br><span class="line">    <span class="keyword">if</span> !math.IsInf(buckets[<span class="built_in">len</span>(buckets)<span class="number">-1</span>].upperBound, +<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> math.NaN()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    buckets = coalesceBuckets(buckets)</span><br><span class="line">    ensureMonotonic(buckets)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(buckets) &lt; <span class="number">2</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> math.NaN()</span><br><span class="line">    &#125;</span><br><span class="line">    observations := buckets[<span class="built_in">len</span>(buckets)<span class="number">-1</span>].count</span><br><span class="line">    <span class="keyword">if</span> observations == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> math.NaN()</span><br><span class="line">    &#125;</span><br><span class="line">    rank := q * observations</span><br><span class="line">    b := sort.Search(<span class="built_in">len</span>(buckets)<span class="number">-1</span>, <span class="function"><span class="keyword">func</span><span class="params">(i <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123; <span class="keyword">return</span> buckets[i].count &gt;= rank &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> b == <span class="built_in">len</span>(buckets)<span class="number">-1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> buckets[<span class="built_in">len</span>(buckets)<span class="number">-2</span>].upperBound</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span> &amp;&amp; buckets[<span class="number">0</span>].upperBound &lt;= <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> buckets[<span class="number">0</span>].upperBound</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> (</span><br><span class="line">        bucketStart <span class="keyword">float64</span></span><br><span class="line">        bucketEnd   = buckets[b].upperBound</span><br><span class="line">        count       = buckets[b].count</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">if</span> b &gt; <span class="number">0</span> &#123;</span><br><span class="line">        bucketStart = buckets[b<span class="number">-1</span>].upperBound</span><br><span class="line">        count -= buckets[b<span class="number">-1</span>].count</span><br><span class="line">        rank -= buckets[b<span class="number">-1</span>].count</span><br><span class="line">    &#125;</span><br><span class="line">    sql:=fmt.Sprintf(<span class="string">&quot;%v+(%v-%v)*(%v/%v)&quot;</span>,</span><br><span class="line">        bucketStart,</span><br><span class="line">        bucketEnd,</span><br><span class="line">        bucketStart,</span><br><span class="line">        rank,</span><br><span class="line">        count,</span><br><span class="line"></span><br><span class="line">    )</span><br><span class="line">    log.Println(sql)</span><br><span class="line">    <span class="keyword">return</span> bucketStart + (bucketEnd-bucketStart)*(rank/count)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>我们现在有这些数据，然后求75分位值</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">a := []bucket&#123;</span><br><span class="line">    &#123;upperBound: <span class="number">0.05</span>, count: <span class="number">199881</span>&#125;,</span><br><span class="line">    &#123;upperBound: <span class="number">0.1</span>, count: <span class="number">212210</span>&#125;,</span><br><span class="line">    &#123;upperBound: <span class="number">0.2</span>, count: <span class="number">215395</span>&#125;,</span><br><span class="line">    &#123;upperBound: <span class="number">0.4</span>, count: <span class="number">319435</span>&#125;,</span><br><span class="line">    &#123;upperBound: <span class="number">0.8</span>, count: <span class="number">419576</span>&#125;,</span><br><span class="line">    &#123;upperBound: <span class="number">1.6</span>, count: <span class="number">469593</span>&#125;,</span><br><span class="line">    &#123;upperBound: math.Inf(<span class="number">1</span>), count: <span class="number">519593</span>&#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">q75 := bucketQuantile(<span class="number">0.75</span>, a)</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>其计算逻辑为：根据记录总数和分位值求目标落在第几个bucket段<code>b</code></li>
+<li>根据<code>b</code>得到起始bucket大小<code>bucketStart</code>,终止bucket大小<code>bucketStart</code> ，本bucket宽度 ，本bucket记录数</li>
+<li>根据本段记录数和分位值算出目标分位数在本bucket排行<code>rank</code></li>
+<li>最终的计算方式为<code>分位值=起始bucket大小+(本bucket宽度)*(目标分位数在本bucket排行/本bucket记录数)</code></li>
+<li>换成本例中： <code>q75=0.4+(0.8-0.4)*(70259.75/100141) = 0.6806432929569308</code></li>
+</ul>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2021/02/02 19:08:55 记录总数 = 519593</span><br><span class="line">2021/02/02 19:08:55 目标落在第几个bucket段= 4</span><br><span class="line">2021/02/02 19:08:55 起始bucket大小= 0.4</span><br><span class="line">2021/02/02 19:08:55 终止bucket大小= 0.8</span><br><span class="line">2021/02/02 19:08:55 本bucket宽度= 0.4</span><br><span class="line">2021/02/02 19:08:55 本bucket记录数= 100141</span><br><span class="line">2021/02/02 19:08:55 目标分位数在本bucket排行= 70259.75</span><br><span class="line">2021/02/02 19:08:55 分位值=起始bucket大小+(本bucket宽度)*(目标分位数在本bucket排行/本bucket记录数)</span><br><span class="line">2021/02/02 19:08:55 0.4+(0.8-0.4)*(70259.75/100141) = 0.6806432929569308</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="那线性插值法的含义体现在哪里呢"><a href="#那线性插值法的含义体现在哪里呢" class="headerlink" title="那线性插值法的含义体现在哪里呢"></a>那线性插值法的含义体现在哪里呢</h3><ul>
+<li>就是这里 <code>本bucket宽度*(目标分位数在本bucket排行/本bucket记录数)</code></li>
+<li>有个假定：样本数据这个目标bucket中按照平均间隔均匀分布</li>
+<li>举例 100141个样本在0.4-0.8 bucket中均匀分布</li>
+<li>如果真实值分布靠近0.4一些，则计算出的值偏大</li>
+<li>如果真实值分布靠近0.8一些，则计算出的值偏小</li>
+<li>这就是线性插值法的含义</li>
+</ul>
+<h2 id="histogram-高基数问题"><a href="#histogram-高基数问题" class="headerlink" title="histogram 高基数问题"></a>histogram 高基数问题</h2><ul>
+<li>具体可以看我之前写的文章<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/228042105">prometheus高基数问题和其解决方案</a></li>
+</ul>
+<h3 id="危害在哪里"><a href="#危害在哪里" class="headerlink" title="危害在哪里"></a>危害在哪里</h3><ul>
+<li>一个高基数的查询会把存储打挂</li>
+<li>一个50w基数查询1小时数据内存大概的消耗为1G，再叠加cpu等消耗</li>
+</ul>
+<h3 id="为何会出现"><a href="#为何会出现" class="headerlink" title="为何会出现"></a>为何会出现</h3><ul>
+<li>label乘积太多 ，比如bucket有50种，再叠加4个10种的业务标签，所以总基数为 <code>50*10*10*10*10=50w</code></li>
+</ul>
+<h1 id="summary-流式聚合"><a href="#summary-流式聚合" class="headerlink" title="summary 流式聚合"></a>summary 流式聚合</h1><h2 id="一个qps为1万的http服务接口的分位值如何计算"><a href="#一个qps为1万的http服务接口的分位值如何计算" class="headerlink" title="一个qps为1万的http服务接口的分位值如何计算"></a>一个qps为1万的http服务接口的分位值如何计算</h2><ul>
+<li>假设以1秒为窗口拿到1万个请求的响应时间，排序算分位值即可</li>
+<li>但是1秒窗口期内，快的请求会多，慢的请求会少</li>
+<li>原理分析：<strong>说来惭愧，没看太明白</strong>，但是可以确定就是hold一段时间的点计算的<ul>
+<li>使用库<code>&quot;github.com/beorn7/perks/quantile&quot;</code></li>
+</ul>
+</li>
+<li>感兴趣的可以自己研究</li>
+</ul>
+<h1 id="实用的PromQL"><a href="#实用的PromQL" class="headerlink" title="实用的PromQL"></a>实用的PromQL</h1><blockquote>
+<p>文档地址</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://prometheus.io/docs/prometheus/latest/querying/basics/">https://prometheus.io/docs/prometheus/latest/querying/basics/</a></li>
+</ul>
+<h2 id="同环比-offset"><a href="#同环比-offset" class="headerlink" title="同环比 offset"></a>同环比 offset</h2><ul>
+<li><p>思考 同环比的本质是什么</p>
+</li>
+<li><p>常用例子</p>
+</li>
+<li><p>举例 查询一小时前的网卡数据 <code>rate(node_network_receive_bytes_total&#123;device!=&quot;lo&quot;&#125;[1m] offset 1h)</code></p>
+</li>
+<li><p>offset修饰符始终需要立即跟随选择器</p>
+</li>
+<li><p>rate(node_network_receive_bytes_total{device=”eth0”}[1m] ) offset 1h 会报错</p>
+</li>
+</ul>
+<h2 id="默认禁用的选项"><a href="#默认禁用的选项" class="headerlink" title="默认禁用的选项"></a>默认禁用的选项</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://prometheus.io/docs/prometheus/latest/disabled_features/">https://prometheus.io/docs/prometheus/latest/disabled_features/</a></li>
+</ul>
+<blockquote>
+<p>@ 修饰符指定时间</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--enable-feature=promql-at-modifier</span><br><span class="line"></span><br><span class="line">该@修改器可以指定评估时间为即时矢量选择，范围矢量选择和子查询。可以在这里找到更多详细信息。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>负偏移  offset -1w</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">默认情况下会禁用此负偏移量，因为它打破了PromQL不会在样本评估时间之前进行查找的不变性。</span><br><span class="line"></span><br><span class="line">--enable-feature=promql-negative-offset</span><br><span class="line"></span><br><span class="line">与正偏移量修改器相比，负偏移量修改器使向量选择器可以移至将来。一个可能要使用负偏移量的示例是查看过去的数据并与最新数据进行时间比较。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 远程写接收器</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--enable-feature=remote-write-receiver</span><br><span class="line"></span><br><span class="line">远程写接收器允许Prometheus接受来自其他Prometheus服务器的远程写请求。可以在这里找到更多详细信息。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.robustperception.io/promql-subqueries-and-alignment">https://www.robustperception.io/promql-subqueries-and-alignment</a></li>
+</ul>
+<h2 id="运算符-operators"><a href="#运算符-operators" class="headerlink" title="运算符 operators"></a>运算符 operators</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://prometheus.io/docs/prometheus/latest/querying/operators/">https://prometheus.io/docs/prometheus/latest/querying/operators/</a></li>
+</ul>
+<h2 id><a href="#" class="headerlink" title="+ - * /"></a>+ - * /</h2><blockquote>
+<p>加</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看已用内存 = 总内存 - 可用内存</span></span><br><span class="line">node_memory_MemTotal_bytes&#123;instance=~&quot;$node&quot;&#125; - node_memory_MemAvailable_bytes&#123;instance=~&quot;$node&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<ul>
+<li>*</li>
+</ul>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看利用率</span></span><br><span class="line">(1 - avg(rate(node_cpu_seconds_total&#123;instance=~&quot;172\\.20\\.70\\.205:9100&quot;,mode=&quot;idle&quot;&#125;[2m])) by (instance))*100</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>过滤值 用于配置告警</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 平均user态 cpu利用率大于 4就告警</span></span><br><span class="line">avg(rate(node_cpu_seconds_total&#123;mode=&quot;user&quot;&#125;[1m])) by (instance) * 100  &gt; 4</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="组合条件-and"><a href="#组合条件-and" class="headerlink" title="组合条件 and"></a>组合条件 and</h2><blockquote>
+<p>要求前后label一致 </p>
+<ul>
+<li>举例: m3db read 大于并且 db_write 大于1000   <code>avg by(cluster) (rate(database_read_success&#123;cluster=&quot;hawkeye-inf&quot;,instance=&quot;10.21.72.147:9004&quot;&#125;[1m]) ) &gt; 100 and avg by(cluster)  (rate(service_writeTaggedBatchRaw_success&#123;cluster=&quot;hawkeye-inf&quot;,instance=&quot;10.21.77.55:9004&quot;&#125;[1m]) ) &gt;1000</code></li>
+</ul>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">  mem Buffers 和cacahe </span></span><br><span class="line">node_memory_Buffers_bytes &gt; 10000 and node_memory_Cached_bytes &gt; 100000</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>前后label一致 </li>
+</ul>
+<h2 id="或条件-or"><a href="#或条件-or" class="headerlink" title="或条件 or"></a>或条件 or</h2><figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go_gc_duration_seconds &gt; 0.01 or node_memory_Cached_bytes &gt; 100000</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="实用功能总结"><a href="#实用功能总结" class="headerlink" title="实用功能总结"></a>实用功能总结</h2><h3 id="label-正则-正则非匹配"><a href="#label-正则-正则非匹配" class="headerlink" title="label 正则/正则非匹配"></a>label 正则/正则非匹配</h3><ul>
+<li>举例：pod状态 <code>kube_pod_status_phase&#123;pod!~&quot;filebeat.*&quot;,job=&quot;kube-state-metrics&quot;, namespace !~&quot;druid&quot;,phase=~&quot;Pending|Unknown&quot;&#125;</code></li>
+</ul>
+<h3 id="agg-去掉-保留-label-，分布情况"><a href="#agg-去掉-保留-label-，分布情况" class="headerlink" title="agg 去掉/保留 label ，分布情况"></a>agg 去掉/保留 label ，分布情况</h3><ul>
+<li>去掉举例： <code>sum without(code) (rate(apiserver_request_total[2m] ) )  </code></li>
+<li>保留举例： <code>sum by(code) (rate(apiserver_request_total[2m] ) )  </code></li>
+<li>举例：apiserver 请求qps和按动作分布 <code>sum (rate(apiserver_request_total[2m] ) ) by(verb)</code></li>
+<li>举例：apiserver 请求qps和按动作,code分布 <code>sum (rate(apiserver_request_total[2m] ) ) by(verb,code)</code></li>
+</ul>
+<h3 id="label-replace-变化label"><a href="#label-replace-变化label" class="headerlink" title="label_replace 变化label"></a>label_replace 变化label</h3><ul>
+<li>举例：新增host标签内容为instance的ipaddr <code>label_replace(up, &quot;host&quot;, &quot;$1&quot;, &quot;instance&quot;,  &quot;(.*):.*&quot;)</code>  </li>
+<li>原始series   ``` up{instance=”localhost:8080”,job=”cadvisor”}   1 ``</li>
+<li>改造后series ``` up{host=”localhost”,instance=”localhost:8080”,job=”cadvisor”}   1 ``</li>
+<li>将 instance标签替换为host <code>sum without(instance )(label_replace(up, &quot;host&quot;, &quot;$1&quot;, &quot;instance&quot;, &quot;(.*):.*&quot;))</code></li>
+</ul>
+<h3 id="topk-bottomK-看top"><a href="#topk-bottomK-看top" class="headerlink" title="topk bottomK 看top"></a>topk bottomK 看top</h3><ul>
+<li>举例：查看容器cpu使用率top5 <code>topk(5,sum(rate (container_cpu_usage_seconds_total[1m])) by(pod))</code></li>
+</ul>
+<h3 id="同环比-相减"><a href="#同环比-相减" class="headerlink" title="同环比 相减"></a>同环比 相减</h3><ul>
+<li>举例：qps环比1小时 掉10 <code>sum (rate(apiserver_request_total[2m] offset 1h) ) - sum (rate(apiserver_request_total[2m] ) )  &gt; 10 </code></li>
+</ul>
+<h3 id="absent-nodata报警"><a href="#absent-nodata报警" class="headerlink" title="absent nodata报警"></a>absent nodata报警</h3><ul>
+<li>==1代表absent生效</li>
+<li>举例：<code>absent(container_cpu_usage_seconds_total&#123;pod=~&quot;k8s-mon.*jddj2&quot;&#125;)</code></li>
+</ul>
+<h3 id="查询时直接添加value过滤"><a href="#查询时直接添加value过滤" class="headerlink" title="查询时直接添加value过滤"></a>查询时直接添加value过滤</h3><ul>
+<li>举例:容器处于waiting状态 <code>kube_pod_container_status_waiting==1</code></li>
+<li>举例: 过滤cpu核数大于8的节点  <code>kube_node_status_capacity_cpu_cores&gt;8</code></li>
+<li>举例：pod状态异常：<code>sum by (namespace, pod,cluster,phase) (kube_pod_status_phase&#123;pod!~&quot;filebeat.*&quot;,job=&quot;kube-state-metrics&quot;, namespace !~&quot;druid&quot;,phase=~&quot;Pending|Unknown&quot;&#125;) &gt; 0</code></li>
+</ul>
+<h3 id="查询时直接做value计算"><a href="#查询时直接做value计算" class="headerlink" title="查询时直接做value计算"></a>查询时直接做value计算</h3><ul>
+<li>举例: 根据idle算util百分比 <code>100 * (1 - avg by(instance)(irate(node_cpu&#123;mode=&#39;idle&#39;&#125;[5m])))</code> </li>
+</ul>
+<h3 id="组合条件-and-1"><a href="#组合条件-and-1" class="headerlink" title="组合条件 and"></a>组合条件 and</h3><ul>
+<li>举例: m3db read 大于并且 db_write 大于1000   <code>avg by(cluster) (rate(database_read_success&#123;cluster=&quot;hawkeye-inf&quot;,instance=&quot;10.21.72.147:9004&quot;&#125;[1m]) ) &gt; 100 and avg by(cluster)  (rate(service_writeTaggedBatchRaw_success&#123;cluster=&quot;hawkeye-inf&quot;,instance=&quot;10.21.77.55:9004&quot;&#125;[1m]) ) &gt;1000</code></li>
+<li>前后label一致 </li>
+<li>or 同理</li>
+</ul>
+<h3 id="分位值histogram-quantile"><a href="#分位值histogram-quantile" class="headerlink" title="分位值histogram_quantile"></a>分位值histogram_quantile</h3><ul>
+<li>举例查看apiserver 请求延迟90分位 <code>histogram_quantile(0.90, sum(rate(apiserver_request_duration_seconds_bucket&#123;verb!~&quot;CONNECT|WATCH&quot;&#125;[5m])) by (le))</code></li>
+</ul>
+<h3 id="两组series关联-成功率，灭火图"><a href="#两组series关联-成功率，灭火图" class="headerlink" title="两组series关联  成功率，灭火图"></a>两组series关联  成功率，灭火图</h3><ul>
+<li>举例：apiserver 请求成功率 <code>sum(apiserver_request_total&#123;code=~&quot;2.*|3.*&quot;&#125;)/  sum(apiserver_request_total)</code></li>
+<li>sum(rate(http_request_total{statuscode=~”2.<em>|3.</em>“}[1m])) / sum(rate(http_request_total{}[1m]))</li>
+</ul>
+<h3 id="agg-over-time-给所有ts的value做agg"><a href="#agg-over-time-给所有ts的value做agg" class="headerlink" title="agg_over_time 给所有ts的value做agg"></a>agg_over_time 给所有ts的value做agg</h3><ul>
+<li>举例查看一天的alert <code>sort_desc(sum(sum_over_time(ALERTS&#123;alertstate=`firing`&#125;[24h])) by (alertname))</code></li>
+<li>举例查看一天的alert <code>sort_desc(sum(sum_over_time(ALERTS&#123;alertstate=`firing`&#125;[24h])) by (alertname))</code></li>
+</ul>
+<blockquote>
+<p>在机器上部署 blackbox_exporter</p>
+</blockquote>
+<ul>
+<li>项目地址 <a target="_blank" rel="noopener" href="https://github.com/prometheus/blackbox_exporter">https://github.com/prometheus/blackbox_exporter</a></li>
+</ul>
+<blockquote>
+<p>使用ansible部署 blackbox_exporter</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook -i host_file  service_deploy.yaml  -e &quot;tgz=blackbox_exporter-0.18.0.linux-amd64.tar.gz&quot; -e &quot;app=blackbox_exporter&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>页面访问blackbox </p>
+</blockquote>
+<ul>
+<li>地址 <a target="_blank" rel="noopener" href="http://172.20.70.205:9115/">http://172.20.70.205:9115/</a></li>
+</ul>
+<blockquote>
+<p>页面访问target http探测</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://172.20.70.205:9115/probe?target=https://www.baidu.com&amp;module=http_2xx&amp;debug=true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>结果解读</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">Logs for the probe:</span><br><span class="line">ts=2021-03-30T07:28:17.405299592Z caller=main.go:304 module=http_2xx target=https://www.baidu.com level=info msg=&quot;Beginning probe&quot; probe=http timeout_seconds=119.5</span><br><span class="line">ts=2021-03-30T07:28:17.40563586Z caller=http.go:342 module=http_2xx target=https://www.baidu.com level=info msg=&quot;Resolving target address&quot; ip_protocol=ip6</span><br><span class="line">ts=2021-03-30T07:28:17.414113889Z caller=http.go:342 module=http_2xx target=https://www.baidu.com level=info msg=&quot;Resolved target address&quot; ip=110.242.68.4</span><br><span class="line">ts=2021-03-30T07:28:17.414249109Z caller=client.go:252 module=http_2xx target=https://www.baidu.com level=info msg=&quot;Making HTTP request&quot; url=https://110.242.68.4 host=www.baidu.com</span><br><span class="line">ts=2021-03-30T07:28:17.459576352Z caller=main.go:119 module=http_2xx target=https://www.baidu.com level=info msg=&quot;Received HTTP response&quot; status_code=200</span><br><span class="line">ts=2021-03-30T07:28:17.459696667Z caller=main.go:119 module=http_2xx target=https://www.baidu.com level=info msg=&quot;Response timings for roundtrip&quot; roundtrip=0 start=2021-03-30T15:28:17.414370915+08:00 dnsDone=2021-03-30T15:28:17.414370915+08:00 connectDone=2021-03-30T15:28:17.423500145+08:00 gotConn=2021-03-30T15:28:17.449441723+08:00 responseStart=2021-03-30T15:28:17.459467652+08:00 end=2021-03-30T15:28:17.459684294+08:00</span><br><span class="line">ts=2021-03-30T07:28:17.459886914Z caller=main.go:304 module=http_2xx target=https://www.baidu.com level=info msg=&quot;Probe succeeded&quot; duration_seconds=0.054504338</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Metrics that would have been returned:</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_dns_lookup_time_seconds Returns the time taken <span class="keyword">for</span> probe dns lookup <span class="keyword">in</span> seconds</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_dns_lookup_time_seconds gauge</span></span><br><span class="line">probe_dns_lookup_time_seconds 0.008485086</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_duration_seconds Returns how long the probe took to complete <span class="keyword">in</span> seconds</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_duration_seconds gauge</span></span><br><span class="line">probe_duration_seconds 0.054504338</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_failed_due_to_regex Indicates <span class="keyword">if</span> probe failed due to regex</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_failed_due_to_regex gauge</span></span><br><span class="line">probe_failed_due_to_regex 0</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_http_content_length Length of http content response</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_http_content_length gauge</span></span><br><span class="line">probe_http_content_length 227</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_http_duration_seconds Duration of http request by phase, summed over all redirects</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_http_duration_seconds gauge</span></span><br><span class="line">probe_http_duration_seconds&#123;phase=&quot;connect&quot;&#125; 0.009129316</span><br><span class="line">probe_http_duration_seconds&#123;phase=&quot;processing&quot;&#125; 0.01002596</span><br><span class="line">probe_http_duration_seconds&#123;phase=&quot;resolve&quot;&#125; 0.008485086</span><br><span class="line">probe_http_duration_seconds&#123;phase=&quot;tls&quot;&#125; 0.035070878</span><br><span class="line">probe_http_duration_seconds&#123;phase=&quot;transfer&quot;&#125; 0.000216612</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_http_redirects The number of redirects</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_http_redirects gauge</span></span><br><span class="line">probe_http_redirects 0</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_http_ssl Indicates <span class="keyword">if</span> SSL was used <span class="keyword">for</span> the final redirect</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_http_ssl gauge</span></span><br><span class="line">probe_http_ssl 1</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_http_status_code Response HTTP status code</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_http_status_code gauge</span></span><br><span class="line">probe_http_status_code 200</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_http_uncompressed_body_length Length of uncompressed response body</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_http_uncompressed_body_length gauge</span></span><br><span class="line">probe_http_uncompressed_body_length 227</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_http_version Returns the version of HTTP of the probe response</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_http_version gauge</span></span><br><span class="line">probe_http_version 1.1</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_ip_addr_hash Specifies the <span class="built_in">hash</span> of IP address. It<span class="string">&#x27;s useful to detect if the IP address changes.</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_ip_addr_hash gauge</span></span><br><span class="line">probe_ip_addr_hash 4.37589817e+08</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_ip_protocol Specifies whether probe ip protocol is IP4 or IP6</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_ip_protocol gauge</span></span><br><span class="line">probe_ip_protocol 4</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_ssl_earliest_cert_expiry Returns earliest SSL cert expiry <span class="keyword">in</span> unixtime</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_ssl_earliest_cert_expiry gauge</span></span><br><span class="line">probe_ssl_earliest_cert_expiry 1.627277462e+09</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_ssl_last_chain_expiry_timestamp_seconds Returns last SSL chain expiry <span class="keyword">in</span> timestamp seconds</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_ssl_last_chain_expiry_timestamp_seconds gauge</span></span><br><span class="line">probe_ssl_last_chain_expiry_timestamp_seconds 1.627277462e+09</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_ssl_last_chain_info Contains SSL leaf certificate information</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_ssl_last_chain_info gauge</span></span><br><span class="line">probe_ssl_last_chain_info&#123;fingerprint_sha256=&quot;2ed189349f818f3414132ebea309e36f620d78a0507a2fa523305f275062d73c&quot;&#125; 1</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_success Displays whether or not the probe was a success</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_success gauge</span></span><br><span class="line">probe_success 1</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_tls_version_info Contains the TLS version used</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_tls_version_info gauge</span></span><br><span class="line">probe_tls_version_info&#123;version=&quot;TLS 1.2&quot;&#125; 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Module configuration:</span><br><span class="line">prober: http</span><br><span class="line">http:</span><br><span class="line">    ip_protocol_fallback: true</span><br><span class="line">tcp:</span><br><span class="line">    ip_protocol_fallback: true</span><br><span class="line">icmp:</span><br><span class="line">    ip_protocol_fallback: true</span><br><span class="line">dns:</span><br><span class="line">    ip_protocol_fallback: true</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>http trace中对于http各个状态的描述</p>
+<ul>
+<li>dns解析时间:              DNSDone-DNSStart</li>
+<li>tls握手时间:              gotConn - DNSDone</li>
+<li>tls connect连接时间:      connectDone - DNSDone</li>
+<li>非tls connect连接时间:    gotConn - DNSDone</li>
+</ul>
+</blockquote>
+<ul>
+<li>processing 服务端处理时间: responseStart - gotConn</li>
+<li>transfer 数据传输时间:     end - responseStart</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">trace := &amp;httptrace.ClientTrace&#123;</span><br><span class="line">    DNSStart:             tt.DNSStart,</span><br><span class="line">    DNSDone:              tt.DNSDone,</span><br><span class="line">    ConnectStart:         tt.ConnectStart,</span><br><span class="line">    ConnectDone:          tt.ConnectDone,</span><br><span class="line">    GotConn:              tt.GotConn,</span><br><span class="line">    GotFirstResponseByte: tt.GotFirstResponseByte,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>blackbox_exporter 需要传入target 和 module 参数，采用下列方式加入的采集池中 </p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">&#x27;blackbox-http&#x27;</span></span><br><span class="line">  <span class="comment"># metrics的path 注意不都是/metrics</span></span><br><span class="line">  <span class="attr">metrics_path:</span> <span class="string">/probe</span></span><br><span class="line">  <span class="comment"># 传入的参数</span></span><br><span class="line">  <span class="attr">params:</span></span><br><span class="line">    <span class="attr">module:</span> [<span class="string">http_2xx</span>]  <span class="comment"># Look for a HTTP 200 response.</span></span><br><span class="line">    <span class="attr">target:</span> [<span class="string">prometheus.io</span>,<span class="string">www.baidu.com</span>,<span class="number">172.20</span><span class="number">.70</span><span class="number">.205</span><span class="string">:3000</span>]</span><br><span class="line">  <span class="attr">static_configs:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">targets:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">172.20</span><span class="number">.70</span><span class="number">.205</span><span class="string">:9115</span> </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>会发现如此配置之后 实例数据只有blackbox_exporter的地址 而没有target的地址</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">probe_duration_seconds&#123;instance=&quot;172.20.70.205:9115&quot;, job=&quot;blackbox-http&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>请看015 多实例采集的说明</p>
+</blockquote>
+<blockquote>
+<p>blackbox_exporter 采集加入的采集池中 </p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">scrape_configs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">&#x27;blackbox-http&#x27;</span></span><br><span class="line">    <span class="comment"># metrics的path 注意不都是/metrics</span></span><br><span class="line">    <span class="attr">metrics_path:</span> <span class="string">/probe</span></span><br><span class="line">    <span class="comment"># 传入的参数</span></span><br><span class="line">    <span class="attr">params:</span></span><br><span class="line">      <span class="attr">module:</span> [<span class="string">http_2xx</span>]  <span class="comment"># Look for a HTTP 200 response.</span></span><br><span class="line">    <span class="attr">static_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">targets:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">http://prometheus.io</span>    <span class="comment"># Target to probe with http.</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">https://www.baidu.com</span>   <span class="comment"># Target to probe with https.</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">http://172.20.70.205:3000</span> <span class="comment"># Target to probe with http on port 3000.</span></span><br><span class="line">    <span class="attr">relabel_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__address__</span>]</span><br><span class="line">        <span class="attr">target_label:</span> <span class="string">__param_target</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__param_target</span>]</span><br><span class="line">        <span class="attr">target_label:</span> <span class="string">instance</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">target_label:</span> <span class="string">__address__</span></span><br><span class="line">        <span class="attr">replacement:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:9115</span>  <span class="comment"># The blackbox exporter&#x27;s real hostname:port.</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">&#x27;blackbox-ssh&#x27;</span></span><br><span class="line">    <span class="comment"># metrics的path 注意不都是/metrics</span></span><br><span class="line">    <span class="attr">metrics_path:</span> <span class="string">/probe</span></span><br><span class="line">    <span class="comment"># 传入的参数</span></span><br><span class="line">    <span class="attr">params:</span></span><br><span class="line">      <span class="attr">module:</span> [<span class="string">ssh_banner</span>]  <span class="comment"># Look for a HTTP 200 response.</span></span><br><span class="line">    <span class="attr">static_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">targets:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="number">172.20</span><span class="number">.70</span><span class="number">.205</span>    <span class="comment"># Target to probe with http.</span></span><br><span class="line">        <span class="bullet">-</span> <span class="number">172.20</span><span class="number">.70</span><span class="number">.215</span>   <span class="comment"># Target to probe with https.</span></span><br><span class="line">    <span class="attr">relabel_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__address__</span>]</span><br><span class="line">        <span class="attr">target_label:</span> <span class="string">__param_target</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__param_target</span>]</span><br><span class="line">        <span class="attr">target_label:</span> <span class="string">instance</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">target_label:</span> <span class="string">__address__</span></span><br><span class="line">        <span class="attr">replacement:</span> <span class="number">172.20</span><span class="number">.70</span><span class="number">.205</span><span class="string">:9115</span>  <span class="comment"># The blackbox exporter&#x27;s real hostname:port.</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>grafana 上导入 blackbox_exporter dashboard</p>
+</blockquote>
+<ul>
+<li>地址 <a target="_blank" rel="noopener" href="https://grafana.com/grafana/dashboards/13659">https://grafana.com/grafana/dashboards/13659</a></li>
+</ul>
+<p><img src="/Users/waylonyan/Desktop/prometheus%25E7%259B%25B8%25E5%2585%25B3/%25E8%25AF%25BE%25E4%25BB%25B6/day01/pic/blackbox%25E6%258E%25A2%25E6%25B5%258B.png" alt="image"></p>
+<blockquote>
+<p>ssh探测 基于tcp</p>
+</blockquote>
+<ul>
+<li>页面访问探测</li>
+</ul>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 模块使用 ssh_banner 探测172.20.70.215:22</span></span><br><span class="line">http://172.20.70.205:9115/probe?module=ssh_banner&amp;target=172.20.70.215:22</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 结果解读</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_dns_lookup_time_seconds Returns the time taken <span class="keyword">for</span> probe dns lookup <span class="keyword">in</span> seconds</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_dns_lookup_time_seconds gauge</span></span><br><span class="line">probe_dns_lookup_time_seconds 2.5331e-05</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_duration_seconds Returns how long the probe took to complete <span class="keyword">in</span> seconds</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_duration_seconds gauge</span></span><br><span class="line">probe_duration_seconds 0.02228226</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_failed_due_to_regex Indicates <span class="keyword">if</span> probe failed due to regex</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_failed_due_to_regex gauge</span></span><br><span class="line">probe_failed_due_to_regex 0</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_ip_addr_hash Specifies the <span class="built_in">hash</span> of IP address. It<span class="string">&#x27;s useful to detect if the IP address changes.</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_ip_addr_hash gauge</span></span><br><span class="line">probe_ip_addr_hash 9.51584696e+08</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_ip_protocol Specifies whether probe ip protocol is IP4 or IP6</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_ip_protocol gauge</span></span><br><span class="line">probe_ip_protocol 4</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_success Displays whether or not the probe was a success</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_success gauge</span></span><br><span class="line">probe_success 1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> ssh_banner 模块解读</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用tcp进行探测，并且 期望得到 SSH-2.0-的响应</span></span><br><span class="line">  ssh_banner:</span><br><span class="line">    prober: tcp</span><br><span class="line">    tcp:</span><br><span class="line">      query_response:</span><br><span class="line">      - expect: &quot;^SSH-2.0-&quot;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 和telnet结果一致</span></span><br><span class="line">[root@prome_master_01 blackbox_exporter]# telnet 172.20.70.215 22</span><br><span class="line">Trying 172.20.70.215...</span><br><span class="line">Connected to 172.20.70.215.</span><br><span class="line">Escape character is &#x27;^]&#x27;.</span><br><span class="line">SSH-2.0-OpenSSH_7.4</span><br><span class="line"></span><br><span class="line">Protocol mismatch.</span><br><span class="line">Connection closed by foreign host.</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">&#x27;blackbox-ssh&#x27;</span></span><br><span class="line">  <span class="comment"># metrics的path 注意不都是/metrics</span></span><br><span class="line">  <span class="attr">metrics_path:</span> <span class="string">/probe</span></span><br><span class="line">  <span class="comment"># 传入的参数</span></span><br><span class="line">  <span class="attr">params:</span></span><br><span class="line">    <span class="attr">module:</span> [<span class="string">ssh_banner</span>]  <span class="comment"># Look for a HTTP 200 response.</span></span><br><span class="line">  <span class="attr">static_configs:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">targets:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">172.20</span><span class="number">.70</span><span class="number">.205</span><span class="string">:22</span>    <span class="comment"># Target to probe with http.</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">172.20</span><span class="number">.70</span><span class="number">.215</span><span class="string">:22</span>   <span class="comment"># Target to probe with https.</span></span><br><span class="line">  <span class="attr">relabel_configs:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__address__</span>]</span><br><span class="line">      <span class="attr">target_label:</span> <span class="string">__param_target</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__param_target</span>]</span><br><span class="line">      <span class="attr">target_label:</span> <span class="string">instance</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">target_label:</span> <span class="string">__address__</span></span><br><span class="line">      <span class="attr">replacement:</span> <span class="number">172.20</span><span class="number">.70</span><span class="number">.205</span><span class="string">:9115</span>  <span class="comment"># The blackbox exporter&#x27;s real hostname:port.</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>进行ping探测</p>
+</blockquote>
+<ul>
+<li>页面访问</li>
+</ul>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">http://172.20.70.205:9115/probe?module=icmp&amp;target=www.baidu.com</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 结果解读</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_dns_lookup_time_seconds Returns the time taken <span class="keyword">for</span> probe dns lookup <span class="keyword">in</span> seconds</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_dns_lookup_time_seconds gauge</span></span><br><span class="line">probe_dns_lookup_time_seconds 0.195704171</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_duration_seconds Returns how long the probe took to complete <span class="keyword">in</span> seconds</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_duration_seconds gauge</span></span><br><span class="line">probe_duration_seconds 0.378563375</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_icmp_duration_seconds Duration of icmp request by phase</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_icmp_duration_seconds gauge</span></span><br><span class="line">probe_icmp_duration_seconds&#123;phase=&quot;resolve&quot;&#125; 0.195704171</span><br><span class="line">probe_icmp_duration_seconds&#123;phase=&quot;rtt&quot;&#125; 0.182456226</span><br><span class="line">probe_icmp_duration_seconds&#123;phase=&quot;setup&quot;&#125; 0.000145827</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_icmp_reply_hop_limit Replied packet hop <span class="built_in">limit</span> (TTL <span class="keyword">for</span> ipv4)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_icmp_reply_hop_limit gauge</span></span><br><span class="line">probe_icmp_reply_hop_limit 49</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_ip_addr_hash Specifies the <span class="built_in">hash</span> of IP address. It<span class="string">&#x27;s useful to detect if the IP address changes.</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_ip_addr_hash gauge</span></span><br><span class="line">probe_ip_addr_hash 2.282787449e+09</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_ip_protocol Specifies whether probe ip protocol is IP4 or IP6</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_ip_protocol gauge</span></span><br><span class="line">probe_ip_protocol 4</span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP probe_success Displays whether or not the probe was a success</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE probe_success gauge</span></span><br><span class="line">probe_success 1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>ssh探测过程说明</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prometheus --&gt; blackbox_exporter 使用配置 http://192.168.0.112:9115/probe?module=ssh_banner&amp;target=192.168.0.127%3A22  --&gt; 192.168.0.127:22</span><br></pre></td></tr></table></figure>
+
+<h2 id="relabel"><a href="#relabel" class="headerlink" title="relabel"></a>relabel</h2><blockquote>
+<p>文档地址 </p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config">https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config</a></li>
+</ul>
+<blockquote>
+<p>relabel说明</p>
+</blockquote>
+<ul>
+<li>relabel是一种强大的工具，可以在采集目标之前动态重写目标的标签集</li>
+</ul>
+<blockquote>
+<p>relabel_action 动作说明 </p>
+</blockquote>
+<ul>
+<li><p>replace： regex匹配source_labels，然后把replacement设置为target_label，可以使用匹配组的引用（${1}，${2}，…）</p>
+<ul>
+<li>举例 k8s中采集 容器基础指标时如下配置</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">kubernetes-nodes-cadvisor</span></span><br><span class="line">  <span class="attr">honor_timestamps:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">scrape_interval:</span> <span class="string">30s</span></span><br><span class="line">  <span class="attr">scrape_timeout:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">metrics_path:</span> <span class="string">/metrics</span></span><br><span class="line">  <span class="attr">scheme:</span> <span class="string">https</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">kubernetes_sd_configs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">role:</span> <span class="string">node</span></span><br><span class="line">  <span class="attr">bearer_token_file:</span> <span class="string">/var/run/secrets/kubernetes.io/serviceaccount/token</span></span><br><span class="line">  <span class="attr">tls_config:</span></span><br><span class="line">    <span class="attr">ca_file:</span> <span class="string">/var/run/secrets/kubernetes.io/serviceaccount/ca.crt</span></span><br><span class="line">    <span class="attr">insecure_skip_verify:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">relabel_configs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">separator:</span> <span class="string">;</span></span><br><span class="line">    <span class="attr">regex:</span> <span class="string">__meta_kubernetes_node_label_(.+)</span></span><br><span class="line">    <span class="attr">replacement:</span> <span class="string">$1</span></span><br><span class="line">    <span class="attr">action:</span> <span class="string">labelmap</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">separator:</span> <span class="string">;</span></span><br><span class="line">    <span class="attr">regex:</span> <span class="string">(.*)</span></span><br><span class="line">    <span class="attr">target_label:</span> <span class="string">__metrics_path__</span></span><br><span class="line">    <span class="attr">replacement:</span> <span class="string">/metrics/cadvisor</span></span><br><span class="line">    <span class="attr">action:</span> <span class="string">replace</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这里的 表示服务发现后的node中标签以<code>_meta_kubernetes_node_label_</code>开头的key，替换为后面的字符串</li>
+<li>举例<code>__meta_kubernetes_node_label_kubernetes_io_arch=&quot;amd64&quot; </code>这组keyv将被替换为 <code>kubernetes_io_arch=&quot;amd64&quot;</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>keep：source_labels regex匹配的目标被keep，白名单</p>
+</li>
+<li><p>drop：source_labels regex匹配的目标被drop，黑名单</p>
+<ul>
+<li>配置样例</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__name__</span>]</span><br><span class="line"><span class="attr">separator:</span> <span class="string">;</span></span><br><span class="line"><span class="comment"># 标签key前缀匹配到的drop</span></span><br><span class="line"><span class="attr">regex:</span> <span class="string">&#x27;(kubelet_|apiserver_|container_fs_).*&#x27;</span></span><br><span class="line"><span class="attr">replacement:</span> <span class="string">$1</span></span><br><span class="line"><span class="attr">action:</span> <span class="string">drop</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>hashmod：设置target_label为的modulus哈希值的source_labels</p>
+<ul>
+<li>这个prome数据量太大了，需要启动多个prome，需要做的是：在这个namespace再启动一个prome ，在所有的scrape job中添加如下relabel_configs配置  ， 第一个实例 regex:         ^0$，第二个实例 regex:         ^1$</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">relabel_configs:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__address__</span>]</span><br><span class="line">   <span class="attr">regex:</span> <span class="string">(.*)</span></span><br><span class="line">   <span class="attr">modulus:</span> <span class="number">2</span></span><br><span class="line">   <span class="attr">target_label:</span> <span class="string">__tmp_hash</span></span><br><span class="line">   <span class="attr">replacement:</span> <span class="string">$1</span></span><br><span class="line">   <span class="attr">action:</span> <span class="string">hashmod</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__tmp_hash</span>]</span><br><span class="line">   <span class="attr">regex:</span> <span class="string">^0$</span></span><br><span class="line">   <span class="attr">replacement:</span> <span class="string">$1</span></span><br><span class="line">   <span class="attr">action:</span> <span class="string">keep</span></span><br><span class="line"> <span class="attr">relabel_configs:</span></span><br><span class="line">   <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__address__</span>]</span><br><span class="line">     <span class="attr">modulus:</span>       <span class="number">2</span></span><br><span class="line">     <span class="attr">target_label:</span>  <span class="string">__tmp_hash</span></span><br><span class="line">     <span class="attr">action:</span>        <span class="string">hashmod</span></span><br><span class="line">   <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__tmp_hash</span>]</span><br><span class="line">     <span class="attr">regex:</span>         <span class="string">^0$</span></span><br><span class="line">     <span class="attr">action:</span>        <span class="string">keep</span>  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>labelmap：regex与所有标签名称匹配。然后匹配标签的值复制到由给定的标签名称replacement与匹配组的参考（${1}，${2}，…）在replacement由他们的价值取代。</p>
+</li>
+<li><p>labeldrop：将regex匹配到的标签删除</p>
+</li>
+<li><p>labelkeep：将regex没匹配到的标签删除</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/note/" rel="tag"><i class="fas fa-cookie-bite"></i> note</a>
+              <a href="/tags/prometheus/" rel="tag"><i class="fas fa-cookie-bite"></i> prometheus</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/23/Linux-ELK/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/24/k8s-prometheus-02/" rel="next" title="k8s-prometheus-02">
+      k8s-prometheus-02 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#prometheus-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">prometheus 基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#prometheus%E5%9B%9B%E7%A7%8D%E6%9F%A5%E8%AF%A2%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">prometheus四种查询类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E6%A0%87%E7%AD%BE%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">四种标签匹配模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">四种数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4%E5%90%91%E9%87%8F%E9%80%89%E6%8B%A9%E5%99%A8-Range-Vector-Selectors"><span class="nav-number">5.</span> <span class="nav-text">范围向量选择器 Range Vector Selectors</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">6.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#histogram-%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">histogram 线性插值法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#histogram-quantile%E4%B8%BA%E4%BD%95%E9%9C%80%E8%A6%81%E5%85%88%E7%AE%97rate"><span class="nav-number">7.1.</span> <span class="nav-text">histogram_quantile为何需要先算rate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E6%B3%95"><span class="nav-number">7.2.</span> <span class="nav-text">什么是线性插值法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">7.2.1.</span> <span class="nav-text">代码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bucket%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">7.2.2.</span> <span class="nav-text">bucket数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E8%AE%A1%E7%AE%97%E5%87%BD%E6%95%B0"><span class="nav-number">7.2.3.</span> <span class="nav-text">核心计算函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%82%A3%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E6%B3%95%E7%9A%84%E5%90%AB%E4%B9%89%E4%BD%93%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%E5%91%A2"><span class="nav-number">7.2.4.</span> <span class="nav-text">那线性插值法的含义体现在哪里呢</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#histogram-%E9%AB%98%E5%9F%BA%E6%95%B0%E9%97%AE%E9%A2%98"><span class="nav-number">7.3.</span> <span class="nav-text">histogram 高基数问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B1%E5%AE%B3%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="nav-number">7.3.1.</span> <span class="nav-text">危害在哪里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E4%BC%9A%E5%87%BA%E7%8E%B0"><span class="nav-number">7.3.2.</span> <span class="nav-text">为何会出现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#summary-%E6%B5%81%E5%BC%8F%E8%81%9A%E5%90%88"><span class="nav-number">8.</span> <span class="nav-text">summary 流式聚合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AAqps%E4%B8%BA1%E4%B8%87%E7%9A%84http%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%88%86%E4%BD%8D%E5%80%BC%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97"><span class="nav-number">8.1.</span> <span class="nav-text">一个qps为1万的http服务接口的分位值如何计算</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%94%A8%E7%9A%84PromQL"><span class="nav-number">9.</span> <span class="nav-text">实用的PromQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E7%8E%AF%E6%AF%94-offset"><span class="nav-number">9.1.</span> <span class="nav-text">同环比 offset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E7%A6%81%E7%94%A8%E7%9A%84%E9%80%89%E9%A1%B9"><span class="nav-number">9.2.</span> <span class="nav-text">默认禁用的选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-number">9.3.</span> <span class="nav-text">子查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6-operators"><span class="nav-number">9.4.</span> <span class="nav-text">运算符 operators</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">9.5.</span> <span class="nav-text">+ - * &#x2F;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E6%9D%A1%E4%BB%B6-and"><span class="nav-number">9.6.</span> <span class="nav-text">组合条件 and</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%96%E6%9D%A1%E4%BB%B6-or"><span class="nav-number">9.7.</span> <span class="nav-text">或条件 or</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%94%A8%E5%8A%9F%E8%83%BD%E6%80%BB%E7%BB%93"><span class="nav-number">9.8.</span> <span class="nav-text">实用功能总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#label-%E6%AD%A3%E5%88%99-%E6%AD%A3%E5%88%99%E9%9D%9E%E5%8C%B9%E9%85%8D"><span class="nav-number">9.8.1.</span> <span class="nav-text">label 正则&#x2F;正则非匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#agg-%E5%8E%BB%E6%8E%89-%E4%BF%9D%E7%95%99-label-%EF%BC%8C%E5%88%86%E5%B8%83%E6%83%85%E5%86%B5"><span class="nav-number">9.8.2.</span> <span class="nav-text">agg 去掉&#x2F;保留 label ，分布情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#label-replace-%E5%8F%98%E5%8C%96label"><span class="nav-number">9.8.3.</span> <span class="nav-text">label_replace 变化label</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#topk-bottomK-%E7%9C%8Btop"><span class="nav-number">9.8.4.</span> <span class="nav-text">topk bottomK 看top</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E7%8E%AF%E6%AF%94-%E7%9B%B8%E5%87%8F"><span class="nav-number">9.8.5.</span> <span class="nav-text">同环比 相减</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#absent-nodata%E6%8A%A5%E8%AD%A6"><span class="nav-number">9.8.6.</span> <span class="nav-text">absent nodata报警</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%97%B6%E7%9B%B4%E6%8E%A5%E6%B7%BB%E5%8A%A0value%E8%BF%87%E6%BB%A4"><span class="nav-number">9.8.7.</span> <span class="nav-text">查询时直接添加value过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%97%B6%E7%9B%B4%E6%8E%A5%E5%81%9Avalue%E8%AE%A1%E7%AE%97"><span class="nav-number">9.8.8.</span> <span class="nav-text">查询时直接做value计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E6%9D%A1%E4%BB%B6-and-1"><span class="nav-number">9.8.9.</span> <span class="nav-text">组合条件 and</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E4%BD%8D%E5%80%BChistogram-quantile"><span class="nav-number">9.8.10.</span> <span class="nav-text">分位值histogram_quantile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E7%BB%84series%E5%85%B3%E8%81%94-%E6%88%90%E5%8A%9F%E7%8E%87%EF%BC%8C%E7%81%AD%E7%81%AB%E5%9B%BE"><span class="nav-number">9.8.11.</span> <span class="nav-text">两组series关联  成功率，灭火图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#agg-over-time-%E7%BB%99%E6%89%80%E6%9C%89ts%E7%9A%84value%E5%81%9Aagg"><span class="nav-number">9.8.12.</span> <span class="nav-text">agg_over_time 给所有ts的value做agg</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relabel"><span class="nav-number">9.9.</span> <span class="nav-text">relabel</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">163</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.9m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">51:48</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
