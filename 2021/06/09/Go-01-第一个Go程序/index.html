@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://gitee.com/infraboard/go-course/raw/master/image/vscode_ext_src_dir.png">
 <meta property="og:image" content="https://gitee.com/infraboard/go-course/raw/master/image/vscode_ext_exe_dir.png">
 <meta property="article:published_time" content="2021-06-09T02:43:22.000Z">
-<meta property="article:modified_time" content="2021-06-09T02:51:46.810Z">
+<meta property="article:modified_time" content="2021-10-07T13:38:46.264Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
@@ -219,10 +219,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-09 10:43:22 / 修改时间：10:51:46" itemprop="dateCreated datePublished" datetime="2021-06-09T10:43:22+08:00">2021-06-09</time>
+              <time title="创建时间：2021-06-09 10:43:22" itemprop="dateCreated datePublished" datetime="2021-06-09T10:43:22+08:00">2021-06-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-07 21:38:46" itemprop="dateModified" datetime="2021-10-07T21:38:46+08:00">2021-10-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -239,14 +245,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
+              <span>6.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -261,6 +267,198 @@
         <p>第一个Go程序</p>
 <a id="more"></a>
 
+
+
+<h2 id="历程"><a href="#历程" class="headerlink" title="历程"></a>历程</h2><p>Go 语言是由谷歌的开发工程师(罗伯特·格瑞史莫、罗勃·派克、肯·汤普逊等)于 2007 年 开始设计，利用 20%的自由时间开发的实验项目，并于 2009 年以 BSD-style 授权（完全开 源）首次公开发布，于 2012 年正式发布</p>
+<p>历史上的Go版本: <a target="_blank" rel="noopener" href="https://golang.google.cn/doc/devel/release.html">https://golang.google.cn/doc/devel/release.html</a></p>
+<ul>
+<li>go1.16 (released 2021/02/16)<ul>
+<li>runtime/metrics</li>
+<li>GO111MODULE的默认值为on, 可以把GO111MODULE设置回auto</li>
+<li>io/ioutil为废弃，函数被转移到了os和io这两个包里</li>
+<li>1.16优化了链接器，现在它在linux/amd64上比1.15快了20-25%，内存占用减少了5-15%</li>
+</ul>
+</li>
+<li>go1.15 (released 2020/08/11)<ul>
+<li>Go 1.15版本不再对darwin/386和darwin/arm两个32位平台提供支持</li>
+<li>新版linker的起点，新链接器的性能要提高20%，内存占用减少30% 后续持续优化</li>
+<li>GOPROXY支持设置为多个proxy的列表，多个proxy之间采用逗号分隔,默认值依旧为<a target="_blank" rel="noopener" href="https://proxy.golang.org,direct/">https://proxy.golang.org,direct</a></li>
+</ul>
+</li>
+<li>go1.14 (released 2020/02/25)<ul>
+<li>Go Module 已经可以用于生产环境</li>
+<li>defer zero overhead</li>
+</ul>
+</li>
+<li>go1.13 (released 2019/09/03)<ul>
+<li>重写了逃逸分析，减少了 Go 程序中堆上的内存申请的空间，1.3版本被诟病后改了</li>
+<li>defer 性能提升30%</li>
+<li>GO111MODULE auto</li>
+</ul>
+</li>
+<li>go1.12 (released 2019/02/25)<ul>
+<li>内存分配优化</li>
+<li>GO111MODULE off</li>
+</ul>
+</li>
+<li>go1.11 (released 2018/08/24)<ul>
+<li>Go modules， 社区积怨已久</li>
+<li>实验性的 WebAssembly</li>
+</ul>
+</li>
+<li>go1.10 (released 2018/02/16)<ul>
+<li>gc快优化到头了</li>
+<li>为了加快构建速度，go build 引入了构建缓存</li>
+</ul>
+</li>
+<li>go1.9 (released 2017/08/24)<ul>
+<li>type alias</li>
+<li>Concurrent Map sync.Map结构</li>
+</ul>
+</li>
+<li>go1.8 (released 2017/02/16)<ul>
+<li>gc 的停顿时间减少到了 1 毫秒以下(100 microseconds and often as low as 10 microseconds)</li>
+<li>defer 开销降低到原来的一半</li>
+</ul>
+</li>
+<li>go1.7 (released 2016/08/15)<ul>
+<li>对编译工具链也作了优化，编译速度更快</li>
+<li>gc进一步提升</li>
+<li>Context包推出 对goroutine的生命周期管理提出的标准方案</li>
+</ul>
+</li>
+<li>go1.6 (released 2016/02/17)<ul>
+<li>gc进一步提升</li>
+</ul>
+</li>
+<li>go1.5 (released 2015/08/19) 发布时间推迟了两个月2个大招<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1wmjrocXIWTr1JxU-3EQBI6BK6KgtiFArkG47XK73xIQ/edit#">Go 1.5 concurrent garbage collector pacing</a></li>
+<li>完成了自举，.c文件被全部重写，用Go语言编写Go语言的编译器，来回测X，直到全部通过</li>
+</ul>
+</li>
+<li>go1.4 (released 2014/12/10)<ul>
+<li>继续优化GC， go generate诞生</li>
+</ul>
+</li>
+<li>go1.3 (released 2014/06/18)<ul>
+<li>尝试优化GC，同时推出了 sync.Pool</li>
+</ul>
+</li>
+<li>go1.2 (released 2013/12/01) 语言层面的优化<ul>
+<li>基础库的性能提升</li>
+<li>SetMaxThreads defaults (10000)</li>
+</ul>
+</li>
+<li>go1.1 (released 2013/05/13)<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1TTj4T2JO42uD5ID9e89oa0sLKhJYD0Y_kqxDv3I3XMw/edit#heading=h.mmq8lm48qfcw">Scalable Go Scheduler Design Doc</a></li>
+</ul>
+</li>
+<li>go1 (released 2012/03/28)<ul>
+<li><a target="_blank" rel="noopener" href="https://golang.org/doc/go1compat">Go 1 and the Future of Go Programs</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ul>
+<li>简单的部署方式<ul>
+<li>可直接编译成机械码</li>
+<li>不依赖其他库</li>
+<li>直接运行即可部署</li>
+</ul>
+</li>
+<li>静态类型语言<ul>
+<li>编译的时候可以检测出隐藏的大多数问题</li>
+<li>强类型方便阅读与重构</li>
+</ul>
+</li>
+<li>语言层面的并发<ul>
+<li>天生的基于支持</li>
+<li>充分利用多核</li>
+</ul>
+</li>
+<li>工程化比较优秀<ul>
+<li>GoDoc 可以直接从代码和注释生成漂亮的文档</li>
+<li>GoFmt 统一的代码格式</li>
+<li>GoLint 代码语法提示</li>
+<li>测试框架内置</li>
+</ul>
+</li>
+<li>强大的标准库<ul>
+<li>Runtime系统调度机制</li>
+<li>高效的GC垃圾回收</li>
+<li>丰富的标准库</li>
+</ul>
+</li>
+<li>简单易学<ul>
+<li>25个关键字</li>
+<li>C语言简洁基因，内嵌C语言语法支持</li>
+<li>面向对象特征(继承, 多态，封装)</li>
+<li>跨平台</li>
+</ul>
+</li>
+</ul>
+<h2 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h2><ul>
+<li>包管理, 大部分都在 github上<ul>
+<li>作者修改项目名称</li>
+<li>作者删库跑路</li>
+<li>vendor 到 mod 迁移麻烦，很多遗留依赖问题</li>
+</ul>
+</li>
+<li>无泛型， 2.0 有计划加上 (传言)<ul>
+<li>interface{}可以解决该问题, 但是不易于代码阅读</li>
+</ul>
+</li>
+<li>没有Exception，使用Error来处理异常<ul>
+<li>error处理不太优雅, 很多重复代码</li>
+</ul>
+</li>
+</ul>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>Go 语言主要用于服务端开发，其定位是开发大型软件，常用于：</p>
+<ul>
+<li>服务器编程：日志处理、数据打包、虚拟机处理、文件系统、分布式系统、数据库代理等</li>
+<li>网络编程：Web 应用、API 应用、下载应用</li>
+<li>内存数据库</li>
+<li>云平台</li>
+<li>机器学习</li>
+<li>区块链</li>
+<li>……</li>
+</ul>
+<p>使用 Go 开发的项目列表：<a target="_blank" rel="noopener" href="https://github.com/golang/go/wiki/Projects">https://github.com/golang/go/wiki/Projects</a></p>
+<ul>
+<li>Go</li>
+<li>docker</li>
+<li>kubernetes</li>
+<li>lantern</li>
+<li>etcd</li>
+<li>Prometheus</li>
+<li>Influxdb</li>
+<li>Consul</li>
+<li>nsq</li>
+<li>nats</li>
+<li>beego</li>
+<li>……</li>
+</ul>
+<p>使用 Go 开发的组织：<a target="_blank" rel="noopener" href="http://go-lang.cat-v.org/organizations-using-go">http://go-lang.cat-v.org/organizations-using-go</a></p>
+<ul>
+<li>国外：Google、CloudFlare……</li>
+<li>国内：阿里、腾讯、百度、京东、爱奇艺、小米、今日头条、滴滴、美团、饿了么、360、七牛、B 站、盛大、搜狗……</li>
+</ul>
+<h2 id="学习Golang的一些方法"><a href="#学习Golang的一些方法" class="headerlink" title="学习Golang的一些方法"></a>学习Golang的一些方法</h2><ul>
+<li>官网: <a target="_blank" rel="noopener" href="https://golang.google.cn/doc/">https://golang.google.cn/doc/</a></li>
+<li>不错的gitbook入门:<ul>
+<li><a target="_blank" rel="noopener" href="https://yar999.gitbook.io/gopl-zh/">Go语言圣经</a></li>
+<li><a target="_blank" rel="noopener" href="https://astaxie.gitbooks.io/build-web-application-with-golang/content/zh/">Go Web 编程</a></li>
+<li>不错的微信公众号: 现在还在更新的就只有GoCN了</li>
+</ul>
+</li>
+<li>阅读一些优秀的项目的源码<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/kubernetes/kubernetes">kubernetes</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nats-io/nats-server">nats</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/influxdata/telegraf">telegraf</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/elastic/beats">beats</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/etcd-io/etcd/tree/main/raft">etcd raft</a></li>
+</ul>
+</li>
+</ul>
 <h1 id="第一个Go程序"><a href="#第一个Go程序" class="headerlink" title="第一个Go程序"></a>第一个Go程序</h1><p>编写一个hello world程序, 并可以运行它</p>
 <h2 id="工作目录"><a href="#工作目录" class="headerlink" title="工作目录"></a>工作目录</h2><p>go语言有2种工程结构:</p>
 <ul>
@@ -462,7 +660,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AAGo%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">第一个Go程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">工作目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.2.</span> <span class="nav-text">编写程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.3.</span> <span class="nav-text">运行程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E8%BF%90%E8%A1%8C"><span class="nav-number">1.3.1.</span> <span class="nav-text">快速运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C"><span class="nav-number">1.3.2.</span> <span class="nav-text">编译运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="nav-number">1.4.</span> <span class="nav-text">扩展知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#go-env"><span class="nav-number">1.4.1.</span> <span class="nav-text">go env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-tool"><span class="nav-number">1.4.2.</span> <span class="nav-text">go tool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-get-%E4%B8%8E-go-install"><span class="nav-number">1.4.3.</span> <span class="nav-text">go get 与 go install</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-clean"><span class="nav-number">1.4.4.</span> <span class="nav-text">go clean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-fmt"><span class="nav-number">1.4.5.</span> <span class="nav-text">go fmt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-vet"><span class="nav-number">1.4.6.</span> <span class="nav-text">go vet</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%86%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">历程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF"><span class="nav-number">2.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E9%99%B7"><span class="nav-number">3.</span> <span class="nav-text">缺陷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0Golang%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">学习Golang的一些方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AAGo%E7%A8%8B%E5%BA%8F"><span class="nav-number"></span> <span class="nav-text">第一个Go程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">工作目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">编写程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text">运行程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E8%BF%90%E8%A1%8C"><span class="nav-number">3.1.</span> <span class="nav-text">快速运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C"><span class="nav-number">3.2.</span> <span class="nav-text">编译运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="nav-number">4.</span> <span class="nav-text">扩展知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#go-env"><span class="nav-number">4.1.</span> <span class="nav-text">go env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-tool"><span class="nav-number">4.2.</span> <span class="nav-text">go tool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-get-%E4%B8%8E-go-install"><span class="nav-number">4.3.</span> <span class="nav-text">go get 与 go install</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-clean"><span class="nav-number">4.4.</span> <span class="nav-text">go clean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-fmt"><span class="nav-number">4.5.</span> <span class="nav-text">go fmt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-vet"><span class="nav-number">4.6.</span> <span class="nav-text">go vet</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -540,7 +738,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">52:59</span>
+    <span title="站点阅读时长">53:03</span>
 </div>
 
 <!--

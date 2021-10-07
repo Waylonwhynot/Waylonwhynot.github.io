@@ -28,7 +28,7 @@
 <meta property="og:description" content="cmdb">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-15T11:24:02.000Z">
-<meta property="article:modified_time" content="2021-03-24T03:40:41.871Z">
+<meta property="article:modified_time" content="2021-10-06T07:50:28.680Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="cmdb">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-24 11:40:41" itemprop="dateModified" datetime="2021-03-24T11:40:41+08:00">2021-03-24</time>
+                <time title="修改时间：2021-10-06 15:50:28" itemprop="dateModified" datetime="2021-10-06T15:50:28+08:00">2021-10-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,7 +283,7 @@
         excel表格 
             最后信息会变得不准确
             导致年底进行审计的时候，资产变得无法进行准确的统计</code></pre>
-<p>​<br>    CMDB：</p>
+<p>​    CMDB：<br>​        </p>
 <pre><code>    配置管理数据库      
     记录服务器的资产信息（包括 机架位置， 主机名，硬盘， 网卡， 产品线， 管理员等）的      
     位置：
@@ -327,9 +327,27 @@
 </ul>
 <p>目录结构：<br>    bin  ： 核心的启动文件  start.py<br>    conf : 配置文件夹<br>    lib  ：库文件<br>    log  : 不建议将日志文件夹放在项目中   /var/log  mkidr /logs/cmdb/<br>    src  : 核心的源代码目录<br>    test : 开发的过程中， 需要进行代码的调试<br>​            </p>
 <ol>
-<li>高级配置文件的实现 ： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">    django的配置：</span><br><span class="line">        <span class="keyword">from</span> django.conf <span class="keyword">import</span> global_settings, settings</span><br><span class="line">        settings.TIME_ZONE</span><br><span class="line">    ```    </span><br><span class="line">        将自定制的配置和全局的配置集成在一个对象上， 之后想要使用任何属性的时候， 直接可以通过此对象获得</span><br><span class="line">    </span><br><span class="line">    技术要点：</span><br><span class="line">        getattr : 反射获取 对应的值</span><br><span class="line">        setattr : 反射设置</span><br><span class="line">​        </span><br><span class="line"><span class="number">2.</span> 编程思想：</span><br><span class="line">    </span><br><span class="line">高内聚低耦合</span><br><span class="line">    </span><br><span class="line">写一个类或者一个函数的时候， 我们需要明确一下次函数或者此类主要负责干啥的</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span>():</span></span><br><span class="line">    <span class="comment">#### 和用户相关的一些逻辑</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getUserInfo</span>():</span></span><br><span class="line">        <span class="comment">#### 获取用户的信息</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">### 处理订单相关的业务逻辑</span></span><br><span class="line">        </span><br><span class="line">​            </span><br><span class="line">可插拔式的配置：</span><br><span class="line">```python</span><br><span class="line">settings.py:</span><br><span class="line">    PLUGINS_DICT = &#123;</span><br><span class="line">        <span class="string">&quot;basic&quot;</span> : <span class="string">&#x27;src.plugins.basic.Basic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;disk&quot;</span> : <span class="string">&#x27;src.plugins.disk.Disk&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;memory&quot;</span> : <span class="string">&#x27;src.plugins.memory.Memory&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;nic&quot;</span> : <span class="string">&#x27;src.plugins.nic.Nic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;cpu&quot;</span> : <span class="string">&#x27;src.plugins.cpu.Cpu&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    参考django的中间件</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">execute</span>(<span class="params">self</span>):</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.plugins_dict.items():</span><br><span class="line">            <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">            k: basic </span></span><br><span class="line"><span class="string">            v: src.plugins.basic.Basic  字符串</span></span><br><span class="line"><span class="string">            &#x27;&#x27;&#x27;</span></span><br><span class="line">            module_path, cls_name = v.rsplit(<span class="string">&#x27;.&#x27;</span>, <span class="number">1</span>)</span><br><span class="line">            module = importlib.import_module(module_path)  <span class="comment">#### 导入路径</span></span><br><span class="line">            cls = getattr(module, cls_name)   <span class="comment">##### 获取对应的类名</span></span><br><span class="line">            cls().process()    <span class="comment">#### 执行该类对应的方法</span></span><br></pre></td></tr></table></figure>
-插件的代码：</li>
+<li><p>高级配置文件的实现 ：</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">django的配置：</span><br><span class="line">    <span class="keyword">from</span> django.conf <span class="keyword">import</span> global_settings, settings</span><br><span class="line">    settings.TIME_ZONE</span><br></pre></td></tr></table></figure>
+<pre><code> 将自定制的配置和全局的配置集成在一个对象上， 之后想要使用任何属性的时候， 直接可以通过此对象获得</code></pre>
+<p> 技术要点：</p>
+<pre><code> getattr : 反射获取 对应的值
+ setattr : 反射设置</code></pre>
+<p> ​        </p>
+</li>
+<li><p>编程思想：</p>
+</li>
 </ol>
+<p>高内聚低耦合</p>
+<p>写一个类或者一个函数的时候， 我们需要明确一下次函数或者此类主要负责干啥的</p>
+<p>class User():<br>    #### 和用户相关的一些逻辑</p>
+<pre><code>def getUserInfo():
+    #### 获取用户的信息
+
+    ### 处理订单相关的业务逻辑</code></pre>
+<p>​<br>可插拔式的配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">settings.py:</span><br><span class="line">    PLUGINS_DICT = &#123;</span><br><span class="line">        <span class="string">&quot;basic&quot;</span> : <span class="string">&#x27;src.plugins.basic.Basic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;disk&quot;</span> : <span class="string">&#x27;src.plugins.disk.Disk&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;memory&quot;</span> : <span class="string">&#x27;src.plugins.memory.Memory&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;nic&quot;</span> : <span class="string">&#x27;src.plugins.nic.Nic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;cpu&quot;</span> : <span class="string">&#x27;src.plugins.cpu.Cpu&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    参考django的中间件</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">execute</span>(<span class="params">self</span>):</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.plugins_dict.items():</span><br><span class="line">            <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">            k: basic </span></span><br><span class="line"><span class="string">            v: src.plugins.basic.Basic  字符串</span></span><br><span class="line"><span class="string">            &#x27;&#x27;&#x27;</span></span><br><span class="line">            module_path, cls_name = v.rsplit(<span class="string">&#x27;.&#x27;</span>, <span class="number">1</span>)</span><br><span class="line">            module = importlib.import_module(module_path)  <span class="comment">#### 导入路径</span></span><br><span class="line">            cls = getattr(module, cls_name)   <span class="comment">##### 获取对应的类名</span></span><br><span class="line">            cls().process()    <span class="comment">#### 执行该类对应的方法</span></span><br></pre></td></tr></table></figure>
+<p>插件的代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Memory</span>():</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;memory&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>​<br>​<br>3. 插件代码重复：</p>
@@ -466,6 +484,11 @@
 </li>
 </ul>
 <p>问题：<br>业务线调整，变换主机名，我需要提前注册到数据库里吗？<br>如果没有提前注册，数据库中没有我的这个hostname，就不会接收我的消息</p>
+<hr>
+<p>区分物理机还是会虚拟机</p>
+<p>云厂商虚拟机  SN == UUID ； SN 是空，也是虚拟机</p>
+<p>SN   –&gt; 物理机</p>
+<p>UUID –&gt; 虚拟机</p>
 
     </div>
 
@@ -627,7 +650,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">52:59</span>
+    <span title="站点阅读时长">53:03</span>
 </div>
 
 <!--
