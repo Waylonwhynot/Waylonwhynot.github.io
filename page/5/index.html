@@ -187,6 +187,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/04/CGI-FastCGI-WSGI-uWSGI-uwsgi%E5%8C%BA%E5%88%AB%E8%81%94%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/04/CGI-FastCGI-WSGI-uWSGI-uwsgi%E5%8C%BA%E5%88%AB%E8%81%94%E7%B3%BB/" class="post-title-link" itemprop="url">CGI-FastCGI-WSGI-uWSGI-uwsgi区别联系</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-04 08:45:35 / 修改时间：08:46:19" itemprop="dateCreated datePublished" datetime="2021-08-04T08:45:35+08:00">2021-08-04</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="CGI-FastCGI-WSGI-uWSGI-uwsgi一文搞懂"><a href="#CGI-FastCGI-WSGI-uWSGI-uwsgi一文搞懂" class="headerlink" title="CGI, FastCGI, WSGI, uWSGI, uwsgi一文搞懂"></a>CGI, FastCGI, WSGI, uWSGI, uwsgi一文搞懂</h1><h2 id="一-CGI"><a href="#一-CGI" class="headerlink" title="一 CGI"></a>一 CGI</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 1、通用网关接口（Common Gateway Interface&#x2F;CGI）是一种重要的互联网技术，可以让一个客户端，从网页浏览器向执行在网络服务器上的程序请求数据。CGI描述了服务器和请求处理程序之间传输数据的一种标准。</span><br><span class="line"></span><br><span class="line"># 2、CGI程序可以用任何脚本语言或者是完全独立编程语言实现，只要这个语言可以在这个系统上运行。</span><br><span class="line"></span><br><span class="line"># 3、用来规范web服务器传输到php解释器中的数据类型以及数据格式，包括URL、查询字符串、POST数据、HTTP header等，也就是为了保证web server传递过来的数据是标准格式的</span><br><span class="line"></span><br><span class="line"># 4、一句话总结： 一个标准，定义了客户端服务器之间如何传数据</span><br></pre></td></tr></table></figure>
+
+<h2 id="二-FastCGI"><a href="#二-FastCGI" class="headerlink" title="二 FastCGI"></a>二 FastCGI</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 1、快速通用网关接口（Fast Common Gateway Interface／FastCGI）是一种让交互程序与Web服务器通信的协议。FastCGI是早期通用网关接口（CGI）的增强版本。</span><br><span class="line"></span><br><span class="line"># 2、FastCGI致力于减少网页服务器与CGI程序之间互动的开销，从而使服务器可以同时处理更多的网页请求。</span><br><span class="line"></span><br><span class="line"># 3、使用FastCGI的服务器：</span><br><span class="line">    Apache HTTP Server (部分)</span><br><span class="line">    Cherokee HTTP Server</span><br><span class="line">    Hiawatha Webserver</span><br><span class="line">    Lighttpd</span><br><span class="line">    Nginx</span><br><span class="line">    LiteSpeed Web Server</span><br><span class="line">    Microsoft IIS</span><br><span class="line"># 4、一句话总结： CGI的升级版</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/00831rSTly1gcy7m2g0j9j310q0gqjtv.jpg" alt="image-20200318002154734"></p>
+<h2 id="三-WSGI"><a href="#三-WSGI" class="headerlink" title="三 WSGI"></a>三 WSGI</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 1、Web服务器网关接口（Python Web Server Gateway Interface，缩写为WSGI）是为Python语言定义的Web服务器和Web应用程序或框架之间的一种简单而通用的接口。自从WSGI被开发出来以后，许多其它语言中也出现了类似接口。</span><br><span class="line"></span><br><span class="line"># 2、wsgi server (比如uWSGI） 要和 wsgi application（比如django ）交互，uwsgi需要将过来的请求转给django 处理，那么uWSGI 和 django的交互和调用就需要一个统一的规范，这个规范就是WSGI WSGI（Web Server Gateway Interface）</span><br><span class="line"></span><br><span class="line"># 3、WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。</span><br><span class="line"></span><br><span class="line"># 4、WSGI 的官方定义是，the Python Web Server Gateway Interface。从名字就可以看出来，这东西是一个Gateway，也就是网关。网关的作用就是在协议之间进行转换。</span><br><span class="line"></span><br><span class="line"># 5、WSGI 是作为 Web 服务器与 Web 应用程序或应用框架之间的一种低级别的接口，以提升可移植 Web 应用开发的共同点。WSGI 是基于现存的 CGI 标准而设计的</span><br><span class="line"></span><br><span class="line"># 6、一句话总结： 为Python定义的web服务器和web框架之间的接口标准</span><br></pre></td></tr></table></figure>
+
+<h2 id="四-uWSGI"><a href="#四-uWSGI" class="headerlink" title="四 uWSGI"></a>四 uWSGI</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wsgiref，werkzeug（一个是符合wsgi协议的web服务器+工具包（封装了一些东西））</span><br><span class="line">uWSGI 用c语言写的，性能比较高</span><br><span class="line">gunicorn：python写的</span><br><span class="line">tornado：也可以部署django项目</span><br><span class="line"># 1、它是一个Web服务器（类似的有wsgiref，gunicorn），它实现了WSGI协议、uwsgi、http等协议。用于接收前端服务器转发的动态请求并处理后发给 web 应用程序。</span><br><span class="line"></span><br><span class="line"># 2、Nginx中HttpUwsgiModule的作用是与uWSGI服务器进行交换</span><br><span class="line"></span><br><span class="line"># 3、一句话总结： 一个Web Server，即一个实现了WSGI的服务器，大体和Apache是一个类型的东西，处理发来的请求。</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/00831rSTly1gcy7ly6362j31060e244f.jpg" alt="image-20200318000134358"></p>
+<h2 id="五-uwsgi"><a href="#五-uwsgi" class="headerlink" title="五 uwsgi"></a>五 uwsgi</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">location &#x2F; &#123;</span><br><span class="line">          #方式一</span><br><span class="line">          #include uwsgi_params; # 导入一个Nginx模块他是用来和uWSGI进行通讯的</span><br><span class="line">             #uwsgi_connect_timeout 30; # 设置连接uWSGI超时时间</span><br><span class="line">          #uwsgi_pass 101.133.225.166:8080;</span><br><span class="line">          #方式二</span><br><span class="line">          #include uwsgi_params; # 导入一个Nginx模块他是用来和uWSGI进行通讯的</span><br><span class="line">          #uwsgi_pass unix:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;script&#x2F;uwsgi.sock; # 指定uwsgi的sock文件所有动态请求</span><br><span class="line">          #方式三</span><br><span class="line">          proxy_pass http:&#x2F;&#x2F;101.133.225.166:8088</span><br><span class="line">    </span><br><span class="line">        &#125;</span><br><span class="line"># 1、它是uWSGI服务器实现的独有的协议，用于定义传输信息的类型，是用于前端服务器与 uwsgi 的通信规范。</span><br><span class="line"></span><br><span class="line"># 1、一句话总结： uWSGI自有的一个协议</span><br><span class="line">uWSGI：web服务器，等同于wsgiref</span><br><span class="line">uwsgi:uWSGI自有的协议</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcy7lt147ij31gu0ekqbq.jpg" alt="image-20200318000713341"><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/00831rSTly1gcy7ln056dj30u0151jwj.jpg" alt="image-20200318001134520"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/03/Nginx-Consul-Upsync%E5%8A%A8%E6%80%81%E8%B4%9F%E8%BD%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1014,101 +1099,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/07/23/py-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/23/py-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B/" class="post-title-link" itemprop="url">py-设计模式-单例</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-07-23 18:47:25" itemprop="dateCreated datePublished" datetime="2021-07-23T18:47:25+08:00">2021-07-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-04 13:48:54" itemprop="dateModified" datetime="2021-09-04T13:48:54+08:00">2021-09-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>12 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>设计模式之单例</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/23/py-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1180,7 +1170,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">165</span>
+          <span class="site-state-item-count">166</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1193,7 +1183,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1242,7 +1232,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">53:03</span>
+    <span title="站点阅读时长">53:25</span>
 </div>
 
 <!--

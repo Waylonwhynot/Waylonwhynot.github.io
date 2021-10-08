@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="负载均衡相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ApiSix简单使用">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2021/10/08/ApiSix%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="负载均衡相关">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-08T14:15:48.000Z">
+<meta property="article:modified_time" content="2021-10-08T14:18:27.008Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Load Balance">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2021/10/08/ApiSix%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ApiSix简单使用 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/10/08/ApiSix%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ApiSix简单使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-08 22:15:48 / 修改时间：22:18:27" itemprop="dateCreated datePublished" datetime="2021-10-08T22:15:48+08:00">2021-10-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>22 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>负载均衡相关</p>
+<a id="more"></a>
+
+<h1 id="ApiSix安装文档"><a href="#ApiSix安装文档" class="headerlink" title="ApiSix安装文档"></a>ApiSix安装文档</h1><table>
+<thead>
+<tr>
+<th align="left">单机测试</th>
+<th align="left">Etcd</th>
+<th align="left">Apisix</th>
+<th align="left">Openresty</th>
+<th align="left">Apisix-Dashboard</th>
+<th align="left">Dashboard Url</th>
+<th align="left">Grafana Url</th>
+<th align="left">Log Url</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">10.13.3.11</td>
+<td align="left">3.4.13</td>
+<td align="left">2.9</td>
+<td align="left">1.19.9.1</td>
+<td align="left">v2.8</td>
+<td align="left"><a target="_blank" rel="noopener" href="http://10.13.3.11:9000/">http://10.13.3.11:9000</a></td>
+<td align="left"><a target="_blank" rel="noopener" href="http://10.13.3.11:3000/d/bLlNuRLWz/apache-apisix">http://10.13.3.11:3000/d/bLlNuRLWz/apache-apisix</a></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">集群/HostName</th>
+<th align="left">Address</th>
+<th align="left">EtcdName</th>
+<th align="left">Etcd</th>
+<th align="left">Apisix</th>
+<th align="left">Openresty</th>
+<th align="left">Apisix-Dashboard</th>
+<th align="left">Dashboard Url</th>
+<th align="left">BLB</th>
+<th align="left">Grafana Url</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">prod-app-gw-00001.su.baidu.internal</td>
+<td align="left">10.10.30.6</td>
+<td align="left">etcd1</td>
+<td align="left">3.4.15</td>
+<td align="left">2.9</td>
+<td align="left">1.19.9.1</td>
+<td align="left">v2.8</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://horus.jiduauto.com/d/CSauFYN7z/apache-apisix">https://horus.jiduauto.com/d/CSauFYN7z/apache-apisix</a></td>
+</tr>
+<tr>
+<td align="left">prod-app-gw-00002.su.baidu.internal</td>
+<td align="left">10.10.30.5</td>
+<td align="left">etcd2</td>
+<td align="left">3.4.15</td>
+<td align="left">2.9</td>
+<td align="left">1.19.9.1</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">prod-app-gw-00003.su.baidu.internal</td>
+<td align="left">10.10.30.4</td>
+<td align="left">etcd3</td>
+<td align="left">3.4.15</td>
+<td align="left">2.9</td>
+<td align="left">1.19.9.1</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h3 id="单机安装"><a href="#单机安装" class="headerlink" title="单机安装"></a>单机安装</h3><h4 id="1-etcd-单机安装（依赖）"><a href="#1-etcd-单机安装（依赖）" class="headerlink" title="1. etcd 单机安装（依赖）"></a>1. etcd 单机安装（依赖）</h4><p><strong>下载解压安装</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 下载</span></span><br><span class="line">wget https://github.com/etcd-io/etcd/releases/download/v3.4.13/etcd-v3.4.13-linux-amd64.tar.gz</span><br><span class="line">     </span><br><span class="line"><span class="comment"># 2. 解压</span></span><br><span class="line">tar -xvf etcd-v3.4.13-linux-amd64.tar.gz &amp;&amp;    <span class="built_in">cd</span> etcd-v3.4.13-linux-amd64 &amp;&amp;    sudo cp -a etcd etcdctl /usr/bin/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.etcd配置文件</span></span><br><span class="line">vim /etc/etcd/etcd.conf</span><br><span class="line"> </span><br><span class="line">ETCD_NAME=etcd1   <span class="comment">#etcd实例名称</span></span><br><span class="line">ETCD_DATA_DIR=<span class="string">&quot;/var/lib/etcd&quot;</span>  <span class="comment">#etcd数据保存目录</span></span><br><span class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">&quot;http://ip:2379,http://127.0.0.1:2379&quot;</span></span><br><span class="line"><span class="comment">#供外部客户端使用的url</span></span><br><span class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">&quot;http://ip:2379,http://127.0.0.1:2379&quot;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 4.systemd 配置文件</span></span><br><span class="line">vim /etc/systemd/system/etcd.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Etcd Server</span><br><span class="line">After=network.target</span><br><span class="line"> </span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">WorkingDirectory=/var/lib/etcd/  </span><br><span class="line">EnvironmentFile=-/etc/etcd/etcd.conf</span><br><span class="line">ExecStart=/usr/bin/etcd</span><br><span class="line">Type=notify</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 5.服务开机自启动</span></span><br><span class="line">systemd daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> etcd &amp;&amp; systemd start etcd</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-安装openresty（依赖）"><a href="#2-安装openresty（依赖）" class="headerlink" title="2.安装openresty（依赖）"></a>2.安装openresty（依赖）</h4><p><strong>openresty+luaRock</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加 OpenResty 源</span></span><br><span class="line">sudo yum install yum-utils</span><br><span class="line">sudo yum-config-manager --add-repo https://openresty.org/package/centos/openresty.repo</span><br><span class="line"><span class="comment"># 安装 OpenResty 和 编译工具</span></span><br><span class="line">sudo yum install -y openresty curl git gcc openresty-openssl111-devel unzip pcre pcre-devel</span><br><span class="line"><span class="comment"># 安装 LuaRocks</span></span><br><span class="line">curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-apisix安装"><a href="#3-apisix安装" class="headerlink" title="3.apisix安装"></a>3.apisix安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载</span></span><br><span class="line">mkdir /usr/<span class="built_in">local</span>/src/apisix-2.9 &amp;&amp; <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/src/</span><br><span class="line">wget https://downloads.apache.org/apisix/2.9/apache-apisix-2.9-src.tgz</span><br><span class="line">tar zxvf apache-apisix-2.9-src.tgz -C apisix-2.9</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 安装运行时依赖的 Lua 库</span></span><br><span class="line">mv /usr/<span class="built_in">local</span>/src/apisix-2.9  /usr/<span class="built_in">local</span>/</span><br><span class="line">make deps</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 检查 APISIX 的版本号</span></span><br><span class="line">./bin/apisix version</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 初始化 APISIX</span></span><br><span class="line">make init</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 软链接</span></span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/apisix-2.9 /usr/<span class="built_in">local</span>/apisix</span><br><span class="line"> </span><br><span class="line"><span class="comment"># systemd配置文件</span></span><br><span class="line">vim /usr/lib/systemd/system/apisix.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=apisix</span><br><span class="line">Conflicts=apisix.service</span><br><span class="line">After=network-online.target</span><br><span class="line"> </span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">WorkingDirectory=/usr/<span class="built_in">local</span>/apisix</span><br><span class="line">ExecStart=/usr/<span class="built_in">local</span>/apisix/bin/apisix start</span><br><span class="line">ExecStop=/usr/<span class="built_in">local</span>/apisix/bin/apisix stop</span><br><span class="line">ExecReload=/usr/<span class="built_in">local</span>/apisix/bin/apisix reload</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 开机自启动 &amp;&amp; 服务启动</span></span><br><span class="line">systemd daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> apisix &amp;&amp; systemd start apisix</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-安装apisix-dashboard"><a href="#4-安装apisix-dashboard" class="headerlink" title="4.安装apisix-dashboard"></a>4.安装<code>apisix-dashboard</code></h4><p><strong>dashboard安装</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">1. 安装go</span><br><span class="line"><span class="comment"># 检查是否已经安装</span></span><br><span class="line">whereis go</span><br><span class="line">whereis golang</span><br><span class="line">whereis gocode</span><br><span class="line">rm -rf xxx//找到后删除</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 下载</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/src</span><br><span class="line">wget https://dl.google.com/go/go1.15.6.linux-amd64.tar.gz</span><br><span class="line"><span class="comment"># 解压</span></span><br><span class="line">tar -C /usr/<span class="built_in">local</span> -xzf go1.15.6.linux-amd64.tar.gz</span><br><span class="line"><span class="comment"># 设置环境变量</span></span><br><span class="line">vim /etc/profile</span><br><span class="line"><span class="comment"># 加入内容</span></span><br><span class="line"><span class="built_in">export</span> GO_HOME=/usr/<span class="built_in">local</span>/go</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GO_HOME</span>/bin</span><br><span class="line"><span class="comment"># 退出保存，并执行生效</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"><span class="comment"># 验证是否成功</span></span><br><span class="line">go version</span><br><span class="line"> </span><br><span class="line">2. 安装lua</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">sudo yum install -y libtermcap-devel ncurses-devel libevent-devel readline-devel</span><br><span class="line"><span class="comment"># 下载源文件</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/src</span><br><span class="line">curl -R -O http://www.lua.org/ftp/lua-5.3.1.tar.gz</span><br><span class="line"><span class="comment"># 编译安装</span></span><br><span class="line">tar zxf lua-5.3.1.tar.gz &amp;&amp; <span class="built_in">cd</span> lua-5.3.1</span><br><span class="line">make linux <span class="built_in">test</span></span><br><span class="line"><span class="comment"># 验证是否成功</span></span><br><span class="line">lua</span><br><span class="line"> </span><br><span class="line">3. 安装node</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 版本</span></span><br><span class="line">curl -sL https://rpm.nodesource.com/setup_10.x | bash -</span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">yum install -y nodejs</span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line">node -v</span><br><span class="line">npm -v</span><br><span class="line"> </span><br><span class="line">4. 安装yarn</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 下载</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/src</span><br><span class="line">sudo wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo</span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">sudo yum install -y yarn</span><br><span class="line"> </span><br><span class="line">5. 安装dashboard</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 为提高下载速度，此处设置代理</span></span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br><span class="line"><span class="comment"># 克隆项目</span></span><br><span class="line">git <span class="built_in">clone</span> -b v2.8 https://github.com/apache/apisix-dashboard.git</span><br><span class="line"><span class="comment"># 构建(注时间可能有点久，且会报错，但根据控制台说明，此错误可以忽略)</span></span><br><span class="line"><span class="built_in">cd</span> ./apisix-dashboard</span><br><span class="line">make build</span><br><span class="line"><span class="comment"># 启动（注意依赖etcd，所以需要确认etcd是否启动）</span></span><br><span class="line"><span class="built_in">cd</span> ./output</span><br><span class="line">nohup ./manager-api &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止</span></span><br><span class="line"><span class="built_in">kill</span> $(ps aux | grep <span class="string">&#x27;manager-api&#x27;</span> | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="集群安装"><a href="#集群安装" class="headerlink" title="集群安装"></a>集群安装</h3><h4 id="1-etcd集群部署"><a href="#1-etcd集群部署" class="headerlink" title="1.etcd集群部署"></a>1.etcd集群部署</h4><table>
+<thead>
+<tr>
+<th align="left">HostName</th>
+<th align="left">Address</th>
+<th align="left">EtcdName</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">prod-app-gw-00001.su.baidu.internal</td>
+<td align="left">10.10.30.6</td>
+<td align="left">etcd1</td>
+</tr>
+<tr>
+<td align="left">prod-app-gw-00002.su.baidu.internal</td>
+<td align="left">10.10.30.5</td>
+<td align="left">etcd2</td>
+</tr>
+<tr>
+<td align="left">prod-app-gw-00003.su.baidu.internal</td>
+<td align="left">10.10.30.4</td>
+<td align="left">etcd3</td>
+</tr>
+</tbody></table>
+<p><strong>etcd static集群安装</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载</span></span><br><span class="line">wget https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz /usr/<span class="built_in">local</span>/src/</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 解压</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/src/ &amp;&amp; tar xf etcd-v3.4.15-linux-amd64.tar.gz</span><br><span class="line">mv /usr/<span class="built_in">local</span>/src/etcd-v3.4.15-linux-amd64 /usr/<span class="built_in">local</span>/</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 软链接</span></span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/etcd-v3.4.15-linux-amd64 /usr/<span class="built_in">local</span>/etcd</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/etcd/etcd /usr/bin/etcd</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/etcd/etcdctl /usr/bin/etcdctl</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 创建数据目录</span></span><br><span class="line">mkdir -p /etc/etcd /var/lib/etcd</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 普通用户</span></span><br><span class="line">useradd -s /sbin/nologin etcd</span><br><span class="line">chown etcd:etcd /var/lib/etcd</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 配置文件</span></span><br><span class="line"><span class="comment">## /etc/etcd/etcd.conf</span></span><br><span class="line">etcd-01</span><br><span class="line">ETCD_DATA_DIR=<span class="string">&quot;/var/lib/etcd/default.etcd&quot;</span></span><br><span class="line">ETCD_LISTEN_PEER_URLS=<span class="string">&quot;http://10.10.30.6:2380&quot;</span></span><br><span class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">&quot;http://10.10.30.6:2379,http://127.0.0.1:2379&quot;</span></span><br><span class="line">ETCD_NAME=<span class="string">&quot;apisix-etcd-01&quot;</span></span><br><span class="line">ALLOW_NONE_AUTHENTICATION=yes</span><br><span class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">&quot;http://10.10.30.6:2380&quot;</span></span><br><span class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">&quot;http://10.10.30.6:2379,http://127.0.0.1:2379&quot;</span></span><br><span class="line">ETCD_INITIAL_CLUSTER=<span class="string">&quot;apisix-etcd-01=http://10.10.30.6:2380,apisix-etcd-02=http://10.10.30.5:2380,apisix-etcd-03=http://10.10.30.4:2380&quot;</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">&quot;apisix-etcd-cluster-token&quot;</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">&quot;new&quot;</span></span><br><span class="line">ETCD_ENABLE_V2=<span class="string">&quot;true&quot;</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">etcd-02</span><br><span class="line"> </span><br><span class="line">ETCD_DATA_DIR=<span class="string">&quot;/var/lib/etcd/default.etcd&quot;</span></span><br><span class="line">ETCD_LISTEN_PEER_URLS=<span class="string">&quot;http://10.10.30.5:2380&quot;</span></span><br><span class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">&quot;http://10.10.30.5:2379,http://127.0.0.1:2379&quot;</span></span><br><span class="line">ETCD_NAME=<span class="string">&quot;apisix-etcd-02&quot;</span></span><br><span class="line">ALLOW_NONE_AUTHENTICATION=yes</span><br><span class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">&quot;http://10.10.30.5:2380&quot;</span></span><br><span class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">&quot;http://10.10.30.5:2379,http://127.0.0.1:2379&quot;</span></span><br><span class="line">ETCD_INITIAL_CLUSTER=<span class="string">&quot;apisix-etcd-01=http://10.10.30.6:2380,apisix-etcd-02=http://10.10.30.5:2380,apisix-etcd-03=http://10.10.30.4:2380&quot;</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">&quot;apisix-etcd-cluster-token&quot;</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">&quot;new&quot;</span></span><br><span class="line">ETCD_ENABLE_V2=<span class="string">&quot;true&quot;</span></span><br><span class="line"> </span><br><span class="line">etcd-03</span><br><span class="line"> </span><br><span class="line">ETCD_DATA_DIR=<span class="string">&quot;/var/lib/etcd/default.etcd&quot;</span></span><br><span class="line">ETCD_LISTEN_PEER_URLS=<span class="string">&quot;http://10.10.30.4:2380&quot;</span></span><br><span class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">&quot;http://10.10.30.4:2379,http://127.0.0.1:2379&quot;</span></span><br><span class="line">ETCD_NAME=<span class="string">&quot;apisix-etcd-03&quot;</span></span><br><span class="line">ALLOW_NONE_AUTHENTICATION=yes</span><br><span class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">&quot;http://10.10.30.4:2380&quot;</span></span><br><span class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">&quot;http://10.10.30.4:2379,http://127.0.0.1:2379&quot;</span></span><br><span class="line">ETCD_INITIAL_CLUSTER=<span class="string">&quot;apisix-etcd-01=http://10.10.30.6:2380,apisix-etcd-02=http://10.10.30.5:2380,apisix-etcd-03=http://10.10.30.4:2380&quot;</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">&quot;apisix-etcd-cluster-token&quot;</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">&quot;new&quot;</span></span><br><span class="line">ETCD_ENABLE_V2=<span class="string">&quot;true&quot;</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">## /usr/lib/systemd/system/etcd.service</span></span><br><span class="line">Description=Etcd Server</span><br><span class="line">After=network.target</span><br><span class="line">After=network-online.target</span><br><span class="line">Wants=network-online.target</span><br><span class="line"> </span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">WorkingDirectory=/var/lib/etcd/</span><br><span class="line">EnvironmentFile=/etc/etcd/etcd.conf</span><br><span class="line">User=etcd</span><br><span class="line">ExecStart=/usr/bin/etcd</span><br><span class="line">Restart=on-failure</span><br><span class="line">LimitNOFILE=65536</span><br><span class="line"> </span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 服务启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> etcd &amp;&amp; systemctl start etcd</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看集群成员"><a href="#查看集群成员" class="headerlink" title="查看集群成员"></a>查看集群成员</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">etcdctl member list</span><br><span class="line">查看健康状态</span><br><span class="line">etcdctl --endpoints&#x3D;&quot;http:&#x2F;&#x2F;10.10.30.6:2379,http:&#x2F;&#x2F;10.10.30.5:2379,http:&#x2F;&#x2F;10.10.30.4:2379&quot; endpoint health</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看集群leader"><a href="#查看集群leader" class="headerlink" title="查看集群leader"></a>查看集群leader</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ETCDCTL_API=3 etcdctl endpoint status --cluster -w table</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-apisix集群部署"><a href="#2-apisix集群部署" class="headerlink" title="2.apisix集群部署"></a>2.apisix集群部署</h4><p><strong>安装部署</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line"><span class="comment">##  添加 OpenResty 源</span></span><br><span class="line">sudo yum install yum-utils</span><br><span class="line">sudo yum-config-manager --add-repo https://openresty.org/package/centos/openresty.repo</span><br><span class="line"> </span><br><span class="line"><span class="comment">## 安装 OpenResty 和 编译工具 （此次openresty版本1.19.9.1-1.el7）</span></span><br><span class="line">sudo yum install -y openresty curl git gcc openresty-openssl111-devel unzip pcre pcre-devel</span><br><span class="line"> </span><br><span class="line"><span class="comment">## 安装 LuaRocks</span></span><br><span class="line">curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash -</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># apisix安装</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">## 下载</span></span><br><span class="line">mkdir /usr/<span class="built_in">local</span>/src/apisix-2.9 &amp;&amp; <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/src/</span><br><span class="line">wget https://downloads.apache.org/apisix/2.9/apache-apisix-2.9-src.tgz</span><br><span class="line">tar zxvf apache-apisix-2.9-src.tgz -C apisix-2.9</span><br><span class="line"> </span><br><span class="line"><span class="comment">## 安装运行时依赖的 Lua 库</span></span><br><span class="line">mv /usr/<span class="built_in">local</span>/src/apisix-2.9  /usr/<span class="built_in">local</span>/</span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/apisix-2.9</span><br><span class="line">make deps</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 软链接</span></span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/apisix-2.9 /usr/<span class="built_in">local</span>/apisix</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 检查 APISIX 的版本号</span></span><br><span class="line">./bin/apisix version</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 修改配置文件，配置etcd集群地址</span></span><br><span class="line">/usr/<span class="built_in">local</span>/apisix/conf/conf.yaml</span><br><span class="line">etcd:</span><br><span class="line">    host:</span><br><span class="line">      - http://10.10.30.6:2379</span><br><span class="line">      - http://10.10.30.5:2379</span><br><span class="line">      - http://10.10.30.4:2379</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 初始化 APISIX</span></span><br><span class="line">make init</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># systemd配置文件</span></span><br><span class="line">vim /usr/lib/systemd/system/apisix.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=apisix</span><br><span class="line">Conflicts=apisix.service</span><br><span class="line">After=network-online.target</span><br><span class="line">  </span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">WorkingDirectory=/usr/<span class="built_in">local</span>/apisix</span><br><span class="line">ExecStart=/usr/<span class="built_in">local</span>/apisix/bin/apisix start</span><br><span class="line">ExecStop=/usr/<span class="built_in">local</span>/apisix/bin/apisix stop</span><br><span class="line">ExecReload=/usr/<span class="built_in">local</span>/apisix/bin/apisix reload</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 开机自启动 &amp;&amp; 服务启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> apisix &amp;&amp; systemctl start apisix</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-dashboard部署"><a href="#3-dashboard部署" class="headerlink" title="3.dashboard部署"></a>3.dashboard部署</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###############依赖安装###########1、安装go# 检查是否已经安装whereis gowhereis golangwhereis gocoderm -rf xxx//找到后删除# 下载cd /usr/local/srcwget https://dl.google.com/go/go1.15.6.linux-amd64.tar.gz# 解压tar -C /usr/local -xzf go1.15.6.linux-amd64.tar.gz# 设置环境变量vim /etc/profile# 加入内容export GO_HOME=/usr/local/goexport PATH=$PATH:$GO_HOME/bin# 退出保存，并执行生效source /etc/profile# 验证是否成功go version 2、安装`lua` # 安装依赖sudo yum install -y libtermcap-devel ncurses-devel libevent-devel readline-devel gcc# 下载源文件cd /usr/local/srccurl -R -O http://www.lua.org/ftp/lua-5.3.1.tar.gz# 编译安装tar zxf lua-5.3.1.tar.gz &amp;&amp; cd lua-5.3.1make linux test# 验证是否成功lua 3、安装node# 版本curl -sL https://rpm.nodesource.com/setup_10.x | bash -# 安装yum install -y nodejs# 验证node -vnpm -v 4、安装`yarn` # 下载cd /usr/local/srcsudo wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo# 安装sudo yum install -y yarn 5、安装`dashboard` # 为提高下载速度，此处设置代理go env -w GOPROXY=https://goproxy.cn,direct# 克隆项目git clone -b v2.8 https://github.com/apache/apisix-dashboard.git# 构建(注时间可能有点久，且会报错，但根据控制台说明，此错误可以忽略)cd ./apisix-dashboardmake build# 启动（注意依赖etcd，所以需要确认etcd是否启动）cd ./outputnohup ./manager-api &amp; # 停止kill $(ps aux | grep &#x27;manager-api&#x27; | awk &#x27;&#123;print $2&#125;&#x27;)```  # systemd 配置文件cat /usr/lib/systemd/system/apisix-dashboard.service[Unit]Description=apisix-dashboardConflicts=apisix-dashboard.serviceAfter=network-online.target [Service]Type=forkingWorkingDirectory=/data/apisix-dashboardExecStart=/usr/local/src/apisix-dashboard/output/manager-api startExecStop=/usr/local/src/apisix-dashboard/output/manager-api stopExecReload=/usr/local/src/apisix-dashboard/output/manager-api reload</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h3><h4 id="route开启prometheus插件暴露metrics"><a href="#route开启prometheus插件暴露metrics" class="headerlink" title="route开启prometheus插件暴露metrics"></a>route开启prometheus插件暴露metrics</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;plugins&quot;: &#123;        &quot;prometheus&quot;:&#123;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Prometheus-target-配置"><a href="#Prometheus-target-配置" class="headerlink" title="Prometheus target 配置"></a>Prometheus target 配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- job_name: &#39;apisix&#39;  metrics_path: &#39;&#x2F;apisix&#x2F;prometheus&#x2F;metrics&#39;  static_configs:  - targets: [&#39;ip:9091&#39;]</span><br></pre></td></tr></table></figure>
+
+<h4 id="Grafana监控模板"><a href="#Grafana监控模板" class="headerlink" title="Grafana监控模板"></a>Grafana监控模板</h4><p>ID：<code>11719</code></p>
+<p>更改指标：apisix_http_status matched_uri</p>
+<p>更改后的模板：附件<a target="_blank" rel="noopener" href="https://wiki.jiduauto.com/download/attachments/17344444/APISIX-v2.json?version=1&modificationDate=1632707555000&api=v2">APISIX-v2.json</a></p>
+<h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><h4 id="本地日志配置logrotate"><a href="#本地日志配置logrotate" class="headerlink" title="本地日志配置logrotate"></a>本地日志配置logrotate</h4><h5 id="开启插件"><a href="#开启插件" class="headerlink" title="开启插件"></a>开启插件</h5><p>在 <code>conf/config-default.yaml</code> 中启用插件 <code>log-rotate</code> 即可，不需要在任何 route 或 service 中绑定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins:    # the plugins you enabled    - log-rotateplugin_attr:    log-rotate:        interval: 3600    # rotate interval (unit: second)        max_kept: 168     # max number of log files will be kept        enable_compression: false    # enable log file compression(gzip) or not, default false</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="禁用插件"><a href="#禁用插件" class="headerlink" title="禁用插件"></a>禁用插件</h5><p>在 <code>conf/config-default.yaml</code> 中删除插件 <code>log-rotate</code> 即可。</p>
+<h4 id="日志进kafka"><a href="#日志进kafka" class="headerlink" title="日志进kafka"></a>日志进kafka</h4><p>日志修改为json</p>
+<p>conf/config-default.yaml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">access_log_format: |-       &#123;&quot;@timestamp&quot;:&quot;$time_iso8601&quot;,&quot;host&quot;:&quot;$server_addr&quot;,&quot;clientip&quot;:&quot;$remote_addr&quot;,&quot;size&quot;:&quot;$body_bytes_sent&quot;,&quot;requesttime&quot;:$request_time,&quot;request&quot;:&quot;$request&quot;,&quot;upstreamtime&quot;:&quot;$upstream_response_time&quot;,&quot;upstreamhost&quot;:&quot;$upstream_addr&quot;,&quot;http_host&quot;:&quot;$host&quot;,&quot;xff&quot;:&quot;$http_x_forwarded_for&quot;,&quot;referer&quot;:&quot;$http_referer&quot;,&quot;agent&quot;:&quot;$http_user_agent&quot;,&quot;status&quot;:&quot;$status&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>filebeat收集日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filebeat.inputs:- type: log  enabled: true  paths:      - &#x2F;usr&#x2F;local&#x2F;apisix&#x2F;logs&#x2F;access*.log  json.keys_under_root: true  json.overwrite_keys: true output.kafka:  # 写入到kafka  hosts: [&quot;10.15.0.21:9092&quot;] # 写入kafka的IP地址  topic: &quot;topic-apisix&quot;  partition.round_robin:    reachable_only: true  required_acks: 1  # 本地写入完成  compression: gzip  # 开启压缩  max_message_bytes: 1000000  # 消息最大值</span><br></pre></td></tr></table></figure>
+
+<h3 id="Ansible扩容（待补充）"><a href="#Ansible扩容（待补充）" class="headerlink" title="Ansible扩容（待补充）"></a>Ansible扩容（待补充）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">playbook</span><br></pre></td></tr></table></figure>
+
+<h3 id="忽略：-备注信息"><a href="#忽略：-备注信息" class="headerlink" title="忽略： 备注信息"></a>忽略： 备注信息</h3><h4 id="路由开启插件"><a href="#路由开启插件" class="headerlink" title="路由开启插件"></a>路由开启插件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;plugins&quot;: &#123;  &quot;ip-restriction&quot;: &#123;    &quot;disable&quot;: false,    &quot;whitelist&quot;: [      &quot;127.0.0.1&quot;,      &quot;180.171.131.32&#x2F;32&quot;    ]  &#125;,  &quot;proxy-rewrite&quot;: &#123;    &quot;uri&quot;: &quot;&#x2F;&quot;  &#125;,  &quot;redirect&quot;: &#123;    &quot;http_to_https&quot;: true  &#125;&#125;,</span><br></pre></td></tr></table></figure>
+
+<h4 id="路由开启优先级"><a href="#路由开启优先级" class="headerlink" title="路由开启优先级"></a>路由开启优先级</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">同一个uri有多个route的情况，会以数组的方式扩展，并且使用sort排序，排序顺序依据route中priority参数，越大优先级越高，越优先匹配。&quot;priority&quot;: 1 如果不同路由包含相同 uri，根据属性 priority 确定哪个 route 被优先匹配，值越大优先级越高，默认值为 0。  </span><br></pre></td></tr></table></figure>
+
+<h4 id="python插件问题"><a href="#python插件问题" class="headerlink" title="python插件问题"></a>python插件问题</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;opt&#x2F;code_yan&#x2F;py3venv&#x2F;lib&#x2F;python3.6&#x2F;site-packages&#x2F;click-8.0.1-py3.6.egg&#x2F;click&#x2F;_unicodefun.py  def _verify_python_env() -&gt; None:  &quot;&quot;&quot;Ensures that the environment is good for Unicode.&quot;&quot;&quot;  try:      from locale import getpreferredencoding      fs_enc &#x3D; codecs.lookup(getpreferredencoding()).name      fs_enc &#x3D; &quot;utf-8&quot;  except Exception:      fs_enc &#x3D; &quot;ascii&quot;  fs_enc &#x3D; &quot;utf-8&quot;  if fs_enc !&#x3D; &quot;ascii&quot;:      return</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Load-Balance/" rel="tag"><i class="fas fa-cookie-bite"></i> Load Balance</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/20/24-Django-%E6%97%A5%E5%BF%97/" rel="prev" title="24-Django-日志">
+      <i class="fa fa-chevron-left"></i> 24-Django-日志
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ApiSix%E5%AE%89%E8%A3%85%E6%96%87%E6%A1%A3"><span class="nav-number">1.</span> <span class="nav-text">ApiSix安装文档</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E6%9C%BA%E5%AE%89%E8%A3%85"><span class="nav-number">1.0.1.</span> <span class="nav-text">单机安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-etcd-%E5%8D%95%E6%9C%BA%E5%AE%89%E8%A3%85%EF%BC%88%E4%BE%9D%E8%B5%96%EF%BC%89"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">1. etcd 单机安装（依赖）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85openresty%EF%BC%88%E4%BE%9D%E8%B5%96%EF%BC%89"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">2.安装openresty（依赖）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-apisix%E5%AE%89%E8%A3%85"><span class="nav-number">1.0.1.3.</span> <span class="nav-text">3.apisix安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%AE%89%E8%A3%85apisix-dashboard"><span class="nav-number">1.0.1.4.</span> <span class="nav-text">4.安装apisix-dashboard</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85"><span class="nav-number">1.0.2.</span> <span class="nav-text">集群安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-etcd%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">1.etcd集群部署</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%9B%86%E7%BE%A4%E6%88%90%E5%91%98"><span class="nav-number">1.0.2.1.1.</span> <span class="nav-text">查看集群成员</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%9B%86%E7%BE%A4leader"><span class="nav-number">1.0.2.1.2.</span> <span class="nav-text">查看集群leader</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-apisix%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">2.apisix集群部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-dashboard%E9%83%A8%E7%BD%B2"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">3.dashboard部署</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7"><span class="nav-number">1.0.3.</span> <span class="nav-text">监控</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#route%E5%BC%80%E5%90%AFprometheus%E6%8F%92%E4%BB%B6%E6%9A%B4%E9%9C%B2metrics"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">route开启prometheus插件暴露metrics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Prometheus-target-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">Prometheus target 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Grafana%E7%9B%91%E6%8E%A7%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">Grafana监控模板</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97"><span class="nav-number">1.0.4.</span> <span class="nav-text">日志</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AElogrotate"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">本地日志配置logrotate</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E6%8F%92%E4%BB%B6"><span class="nav-number">1.0.4.1.1.</span> <span class="nav-text">开启插件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A6%81%E7%94%A8%E6%8F%92%E4%BB%B6"><span class="nav-number">1.0.4.1.2.</span> <span class="nav-text">禁用插件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E8%BF%9Bkafka"><span class="nav-number">1.0.4.2.</span> <span class="nav-text">日志进kafka</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ansible%E6%89%A9%E5%AE%B9%EF%BC%88%E5%BE%85%E8%A1%A5%E5%85%85%EF%BC%89"><span class="nav-number">1.0.5.</span> <span class="nav-text">Ansible扩容（待补充）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%BD%E7%95%A5%EF%BC%9A-%E5%A4%87%E6%B3%A8%E4%BF%A1%E6%81%AF"><span class="nav-number">1.0.6.</span> <span class="nav-text">忽略： 备注信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%BC%80%E5%90%AF%E6%8F%92%E4%BB%B6"><span class="nav-number">1.0.6.1.</span> <span class="nav-text">路由开启插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%BC%80%E5%90%AF%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.0.6.2.</span> <span class="nav-text">路由开启优先级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E6%8F%92%E4%BB%B6%E9%97%AE%E9%A2%98"><span class="nav-number">1.0.6.3.</span> <span class="nav-text">python插件问题</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">166</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.9m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">53:25</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
