@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-31-%E5%87%BD%E6%95%B0%E4%B8%80%E7%AD%89%E5%85%AC%E6%B0%91/">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-07-VUE%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%20v-on/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/timg.jpeg">
@@ -201,7 +201,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/23/Go-31-%E5%87%BD%E6%95%B0%E4%B8%80%E7%AD%89%E5%85%AC%E6%B0%91/" class="post-title-link" itemprop="url">Go-31-函数一等公民</a>
+            <a href="/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-07-VUE%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%20v-on/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -210,19 +210,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-08-23 09:52:24 / 修改时间：09:54:02" itemprop="dateCreated datePublished" datetime="2021-08-23T09:52:24+08:00">2021-08-23</time>
+              <time title="创建时间：2021-10-14 14:50:50" itemprop="dateCreated datePublished" datetime="2021-10-14T14:50:50+08:00">2021-10-14</time>
             </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
                 </span>
-            </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-17 17:58:58" itemprop="dateModified" datetime="2021-10-17T17:58:58+08:00">2021-10-17</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -230,14 +227,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.6k</span>
+              <span>1.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -249,15 +246,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Go 函数一等公民</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/23/Go-31-%E5%87%BD%E6%95%B0%E4%B8%80%E7%AD%89%E5%85%AC%E6%B0%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="VUE事件处理-v-on"><a href="#VUE事件处理-v-on" class="headerlink" title="VUE事件处理 v-on"></a>VUE事件处理 v-on</h1><h2 id="事件处理方法"><a href="#事件处理方法" class="headerlink" title="事件处理方法"></a>事件处理方法</h2><p><strong>完整格式</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v-on:事件名=<span class="string">&quot;函数名&quot;</span>  或者  v-on:事件名=<span class="string">&quot;函数名(参数...)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>缩写格式</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@事件 = <span class="string">&quot;函数名&quot;</span>   或者   @事件名 = <span class="string">&quot;函数名(参数...)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：@ 后面没有冒号。</p>
+<p><strong>event</strong> ：函数中的默认形参，代表原生的DOM事件，当调用的函数，有多个参数传入的时候，需要使用原生DOM事件，则通过 $event 作为实参传入。</p>
+<p><strong>作用</strong>：用于监听 DOM 事件。</p>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>事件处理<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>事件处理函数 v-on 或者 @<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">&quot;say&quot;</span>&gt;</span>Say &#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- $event 代表的是原生的DOM事件 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;warn(&#x27;王佳伟&#x27;,$event)&quot;</span>&gt;</span>Warn<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line">            data: &#123;</span><br><span class="line"><span class="javascript">                msg: <span class="string">&#x27;你好，王佳伟&#x27;</span></span></span><br><span class="line">            &#125;,</span><br><span class="line"><span class="javascript">            <span class="comment">// 定义事件处理函数</span></span></span><br><span class="line">            methods: &#123;</span><br><span class="line"><span class="javascript">                say: <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="comment">// event 代表的是DOM的原生事件，vue会自动的而将它传入进来。</span></span></span><br><span class="line"><span class="javascript">                    alert(<span class="built_in">this</span>.msg)</span></span><br><span class="line">                    alert(event.target.innerHTML)</span><br><span class="line">                &#125;,</span><br><span class="line"><span class="javascript">                warn: <span class="function"><span class="keyword">function</span> (<span class="params">name, event</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="comment">// 如果说函数有多个参数，而又需要使用原生事件，则需要使用$event作为参数传入</span></span></span><br><span class="line"><span class="javascript">                    alert(name + <span class="string">&#x27;  &#x27;</span> + event.target.tagName)</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200727133647886.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200727133721703.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200727133744214.png" alt="在这里插入图片描述"></p>
+
       
     </div>
 
@@ -276,7 +277,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-29-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%99%E8%AF%AF/">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-06-VUE%20%E6%9D%A1%E4%BB%B6%E6%B8%B2%E6%9F%93%20v-if%E3%80%81v-show/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/timg.jpeg">
@@ -290,7 +291,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/23/Go-29-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%99%E8%AF%AF/" class="post-title-link" itemprop="url">Go-29-自定义错误</a>
+            <a href="/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-06-VUE%20%E6%9D%A1%E4%BB%B6%E6%B8%B2%E6%9F%93%20v-if%E3%80%81v-show/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -299,19 +300,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-08-23 09:49:33 / 修改时间：09:51:10" itemprop="dateCreated datePublished" datetime="2021-08-23T09:49:33+08:00">2021-08-23</time>
+              <time title="创建时间：2021-10-14 14:50:05" itemprop="dateCreated datePublished" datetime="2021-10-14T14:50:05+08:00">2021-10-14</time>
             </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
                 </span>
-            </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-17 17:58:47" itemprop="dateModified" datetime="2021-10-17T17:58:47+08:00">2021-10-17</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -319,14 +317,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.4k</span>
+              <span>1.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>12 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -338,15 +336,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Go 自定义错误</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/23/Go-29-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%99%E8%AF%AF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="VUE-条件渲染-v-if、v-show"><a href="#VUE-条件渲染-v-if、v-show" class="headerlink" title="VUE 条件渲染 v-if、v-show"></a>VUE 条件渲染 v-if、v-show</h1><h2 id="条件指令"><a href="#条件指令" class="headerlink" title="条件指令"></a>条件指令</h2><ul>
+<li><strong>v-if</strong> 是否渲染当前元素</li>
+<li><strong>v-else</strong></li>
+<li><strong>v-else-if</strong></li>
+<li><strong>v-show</strong>：与 v-if 类似，只是元素始终被渲染并保留在DOM中，只是简单的切换CSS属性display来显示或者隐藏。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>05-条件渲染<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.box</span>&#123;</span></span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 200px;</span><br><span class="line">            background-color: red;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>v-if 条件渲染<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">&quot;seen&quot;</span>  <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> &gt;</span>勾选后显示红色小块</span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">&quot;seen&quot;</span> <span class="attr">class</span>=<span class="string">&quot;box&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-else</span>=<span class="string">&quot;seen&quot;</span>&gt;</span>红色小块隐藏了...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>v-show 条件渲染<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-show</span>=<span class="string">&quot;seen&quot;</span> <span class="attr">class</span>=<span class="string">&quot;box&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el:<span class="string">&#x27;#app&#x27;</span>,  </span></span><br><span class="line">            data:&#123;  </span><br><span class="line"><span class="javascript">                seen:<span class="literal">false</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200727114033380.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="v-if-和-v-show的比较"><a href="#v-if-和-v-show的比较" class="headerlink" title="v-if 和 v-show的比较"></a>v-if 和 v-show的比较</h3><ol>
+<li><strong>什么时候元素被渲染：</strong><br>- v-if 如果在初始条件为假，则什么也不做，每当条件为真时，都会重新渲染条件元素。<br>- v-show 不管初始条件是什么，元素总是被渲染，并且只是简单的基于CSS样式进行切换。</li>
+<li><strong>使用场景选择：</strong><br>- v-if 有更高的切换开销<br>- v-show 有更高的渲染开销<br>因此，如果需要非常频繁的切换，则使用 v-show 比较好，如果在运行后，条件很少改变，则使用 v-if 比较好。</li>
+</ol>
+
       
     </div>
 
@@ -365,7 +368,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-30-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86panic-recover/">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-05-VUE%20Class%E5%88%97%E8%A1%A8%E6%A0%B7%E5%BC%8F%E6%95%B0%E7%BB%91%E5%AE%9A%E6%A1%88%E4%BE%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/timg.jpeg">
@@ -379,7 +382,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/23/Go-30-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86panic-recover/" class="post-title-link" itemprop="url">Go-30-异常处理panic_recover</a>
+            <a href="/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-05-VUE%20Class%E5%88%97%E8%A1%A8%E6%A0%B7%E5%BC%8F%E6%95%B0%E7%BB%91%E5%AE%9A%E6%A1%88%E4%BE%8B/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -388,19 +391,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-08-23 09:46:07 / 修改时间：09:51:47" itemprop="dateCreated datePublished" datetime="2021-08-23T09:46:07+08:00">2021-08-23</time>
+              <time title="创建时间：2021-10-14 14:48:48" itemprop="dateCreated datePublished" datetime="2021-10-14T14:48:48+08:00">2021-10-14</time>
             </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
                 </span>
-            </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-17 17:58:39" itemprop="dateModified" datetime="2021-10-17T17:58:39+08:00">2021-10-17</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -408,14 +408,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.9k</span>
+              <span>3.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>15 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -427,15 +427,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Go异常处理 panic 和 recover</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/23/Go-30-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86panic-recover/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="VUE-Class列表样式数绑定案例"><a href="#VUE-Class列表样式数绑定案例" class="headerlink" title="VUE Class列表样式数绑定案例"></a>VUE Class列表样式数绑定案例</h1><h2 id="Class-与-Style-绑定-v-bind"><a href="#Class-与-Style-绑定-v-bind" class="headerlink" title="Class 与 Style 绑定 v-bind"></a>Class 与 Style 绑定 v-bind</h2><p>通过<strong>class</strong>列表和<strong>style</strong>指定样式是数据绑定的一个常见需求，他都是元素属性，都用 <strong>v-bind</strong> 处理，其中表达式结果的类型可以是：<strong>字符串</strong>、<strong>对象</strong> 或 <strong>数组</strong>。</p>
+<h3 id="语法格式"><a href="#语法格式" class="headerlink" title="语法格式"></a>语法格式</h3><h4 id="class-的表达式可以为："><a href="#class-的表达式可以为：" class="headerlink" title="class 的表达式可以为："></a>class 的表达式可以为：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v-bind:class = <span class="string">&#x27;表达式&#x27;</span>   或者  :class = <span class="string">&#x27;表达式&#x27;</span></span><br><span class="line">字符串 :class = <span class="string">&quot;activeClass&quot;</span></span><br><span class="line">对象   :class = <span class="string">&quot;&#123; active : isActive , error : hasError &#125;&quot;</span></span><br><span class="line">数组   :class = <span class="string">&quot;[ &#x27;active&#x27; , &#x27;error&#x27; ]&quot;</span>  注意加上单引号，不然获取不到data中的值</span><br></pre></td></tr></table></figure>
+
+<h4 id="style-的表达式一般为对象"><a href="#style-的表达式一般为对象" class="headerlink" title="style 的表达式一般为对象"></a>style 的表达式一般为对象</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:style = <span class="string">&quot;&#123; color : activeColor , fontSize : fontSize + &#x27;px&#x27;  &#125;&quot;</span></span><br><span class="line">注意，对象中的value值 activeColor 和 fontSize 是data的属性。</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><h3 id="class"><a href="#class" class="headerlink" title="class"></a>class</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>04-Class与Style绑定<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.active</span> &#123;</span></span><br><span class="line">            color: green;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.delete</span> &#123;</span></span><br><span class="line">            background: red;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.error</span> &#123;</span></span><br><span class="line">            font-size: 35px;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>Class绑定 v-bind:class 或者 :class<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;active&quot;</span>&gt;</span>原始的绑定方式：class=&quot;active&quot;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-bind:class</span>=<span class="string">&quot;activeClass&quot;</span>&gt;</span>v-bind:class=&quot;activeClass&quot; 字符串表达式<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- key值是样式名称，value是data中绑定的属性，比如下面，当isDelete为true的时候，delete样式就会被渲染 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">:class</span>=<span class="string">&quot;&#123;delete:isDelete, error:isError&#125;&quot;</span>&gt;</span>对象表达式<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 数组中填写的直接是样式名称，单引号必须写 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">:class</span>=<span class="string">&quot;[&#x27;active&#x27;,&#x27;error&#x27;]&quot;</span>&gt;</span>数组表达式<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line">            data: &#123;</span><br><span class="line"><span class="javascript">                activeClass: <span class="string">&#x27;active&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                isDelete: <span class="literal">true</span>,</span></span><br><span class="line"><span class="javascript">                isError:<span class="literal">true</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200727112130932.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="style"><a href="#style" class="headerlink" title="style"></a>style</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>04-Class与Style绑定<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.active</span> &#123;</span></span><br><span class="line">            color: green;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.delete</span> &#123;</span></span><br><span class="line">            background: red;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.error</span> &#123;</span></span><br><span class="line">            font-size: 35px;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>Class绑定 v-bind:class 或者 :class<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;active&quot;</span>&gt;</span>原始的绑定方式：class=&quot;active&quot;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-bind:class</span>=<span class="string">&quot;activeClass&quot;</span>&gt;</span>v-bind:class=&quot;activeClass&quot; 字符串表达式<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- key值是样式名称，value是data中绑定的属性，比如下面，当isDelete为true的时候，delete样式就会被渲染 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">:class</span>=<span class="string">&quot;&#123;delete:isDelete, error:isError&#125;&quot;</span>&gt;</span>对象表达式<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 数组中填写的直接是样式名称，单引号必须写 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">:class</span>=<span class="string">&quot;[&#x27;active&#x27;,&#x27;error&#x27;]&quot;</span>&gt;</span>数组表达式<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>Style绑定 v-bind:style 或者 :style<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 注意，在style绑定的时候，值是css属性值，全部改为驼峰命名，不然报错 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">:style</span>=<span class="string">&quot;&#123;color:activeColor,fontSize:fontSize + &#x27;px&#x27;&#125;&quot;</span>&gt;</span>Style样式绑定<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line">            data: &#123;</span><br><span class="line"><span class="javascript">                activeClass: <span class="string">&#x27;active&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                isDelete: <span class="literal">true</span>,</span></span><br><span class="line"><span class="javascript">                isError: <span class="literal">true</span>,</span></span><br><span class="line"><span class="javascript">                activeColor: <span class="string">&quot;blue&quot;</span>,</span></span><br><span class="line">                fontSize: 20</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200727112111184.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
       
     </div>
 
@@ -454,7 +457,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/recover/">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-04-%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20computed/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/timg.jpeg">
@@ -468,7 +471,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/23/recover/" class="post-title-link" itemprop="url">recover</a>
+            <a href="/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-04-%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20computed/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -477,9 +480,120 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-08-23 09:44:01 / 修改时间：09:45:37" itemprop="dateCreated datePublished" datetime="2021-08-23T09:44:01+08:00">2021-08-23</time>
+              <time title="创建时间：2021-10-14 14:47:36" itemprop="dateCreated datePublished" datetime="2021-10-14T14:47:36+08:00">2021-10-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-17 17:58:30" itemprop="dateModified" datetime="2021-10-17T17:58:30+08:00">2021-10-17</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="计算属性-computed"><a href="#计算属性-computed" class="headerlink" title="计算属性 computed"></a>计算属性 computed</h1><p>computed 选项定义计算属性。<br>计算属性类似于 methods 选项中的函数。</p>
+<p>比较：</p>
+<ul>
+<li>计算属性：会进行<strong>缓存</strong>，只在相关响应式依赖发生改变的时候才会重新求值。</li>
+<li>函数：每次都会执行函数体进行计算。</li>
+</ul>
+<p>需求：输入数学与英语的分数，采用 methods 与 computed 分别计算出总得分。</p>
+<h3 id="使用函数"><a href="#使用函数" class="headerlink" title="使用函数"></a>使用函数</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>计算属性和监听器<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        数学：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;mathScore&quot;</span>&gt;</span></span><br><span class="line">        英语：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;englishScore&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- v-model调用函数时不要少了小括号（） --&gt;</span></span><br><span class="line">        总得分：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;sumScore()&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line">            data: &#123;</span><br><span class="line">                mathScore: 80,</span><br><span class="line">                englishScore: 90,</span><br><span class="line">            &#125;,</span><br><span class="line">            methods: &#123;</span><br><span class="line"><span class="javascript">                sumScore: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">console</span>.log(<span class="string">&quot;sumScore函数被调用了。。。&quot;</span>)</span></span><br><span class="line"><span class="javascript">                    <span class="comment">// this 指向的是vm实例</span></span></span><br><span class="line"><span class="javascript">                    <span class="comment">// 减0是为了字符串转为数字运算</span></span></span><br><span class="line"><span class="javascript">                    <span class="keyword">return</span> (<span class="built_in">this</span>.mathScore - <span class="number">0</span>) + (<span class="built_in">this</span>.englishScore - <span class="number">0</span>)</span></span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200722093356748.png" alt="在这里插入图片描述"></p>
+<h3 id="使用计算属性"><a href="#使用计算属性" class="headerlink" title="使用计算属性"></a>使用计算属性</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>计算属性和监听器<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        数学：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;mathScore&quot;</span>&gt;</span></span><br><span class="line">        英语：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;englishScore&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- v-model调用函数时不要少了小括号（） --&gt;</span></span><br><span class="line">        总得分(函数)：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;sumScore()&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 计算属性后面不需要加小括号 --&gt;</span></span><br><span class="line">        总得分(计算属性)：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;sumScore1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">        /**</span><br><span class="line">         * 1. 函数没有缓存，每次都会调用。</span><br><span class="line">         * 2. 计算属性有缓存，只有当计算属性体内的属性值发生改变之后才会被调用。</span><br><span class="line">         * 3. 函数只支持单项的。</span><br><span class="line">         * 4. 计算属性默认只有getter函数，而没有setter函数，所以只支持单项。</span><br><span class="line">         *      如果想要进行双向，则需要自定义setter函数。</span><br><span class="line">         */</span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line">            data: &#123;</span><br><span class="line">                mathScore: 80,</span><br><span class="line">                englishScore: 90,</span><br><span class="line">            &#125;,</span><br><span class="line"><span class="javascript">            <span class="comment">// 函数</span></span></span><br><span class="line">            methods: &#123;</span><br><span class="line"><span class="javascript">                sumScore: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">console</span>.log(<span class="string">&quot;sumScore函数被调用了。。。&quot;</span>)</span></span><br><span class="line"><span class="javascript">                    <span class="comment">// this 指向的是vm实例</span></span></span><br><span class="line"><span class="javascript">                    <span class="comment">// 减0是为了字符串转为数字运算</span></span></span><br><span class="line"><span class="javascript">                    <span class="keyword">return</span> (<span class="built_in">this</span>.mathScore - <span class="number">0</span>) + (<span class="built_in">this</span>.englishScore - <span class="number">0</span>)</span></span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line"><span class="javascript">            <span class="comment">// 计算属性</span></span></span><br><span class="line">            computed: &#123;</span><br><span class="line"><span class="javascript">                sumScore1:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="comment">// 计算属性有缓存，如果计算属性体内的属性值没有发生改变，则不会发生改变，只要属性值发生改变的时候才会重新计算。</span></span></span><br><span class="line"><span class="javascript">                    <span class="built_in">console</span>.log(<span class="string">&quot;计算属性被调用&quot;</span>)</span></span><br><span class="line"><span class="javascript">                    <span class="keyword">return</span> (<span class="built_in">this</span>.mathScore - <span class="number">0</span>) + (<span class="built_in">this</span>.englishScore - <span class="number">0</span>)</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200722094246323.png" alt="在这里插入图片描述"></p>
+<ol>
+<li>函数没有缓存，每次都会调用。</li>
+<li>计算属性有缓存，只有当计算属性体内的属性值发生改变之后才会被调用。</li>
+<li>函数只支持单项的。</li>
+<li>计算属性默认只有getter函数，而没有setter函数，所以只支持单项。如果想要进行双向，则需要自定义setter函数。</li>
+</ol>
+<h3 id="计算属性（双向绑定）"><a href="#计算属性（双向绑定）" class="headerlink" title="计算属性（双向绑定）"></a>计算属性（双向绑定）</h3><p>计算属性默认只有getter，不过在需要的时候你也可以提供一个setter。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>计算属性和监听器<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        数学：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;mathScore&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        英语：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;englishScore&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- v-model调用函数时不要少了小括号（） --&gt;</span></span><br><span class="line">        总得分(函数-单项绑定)：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;sumScore()&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 计算属性后面不需要加小括号 --&gt;</span></span><br><span class="line">        总得分(计算属性-单项绑定)：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;sumScore1&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        总得分(计算属性-双向绑定)：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;sumScore2&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">        /**</span><br><span class="line">         * 1. 函数没有缓存，每次都会调用。</span><br><span class="line">         * 2. 计算属性有缓存，只有当计算属性体内的属性值发生改变之后才会被调用。</span><br><span class="line">         * 3. 函数只支持单项的。</span><br><span class="line">         * 4. 计算属性默认只有getter函数，而没有setter函数，所以只支持单项。</span><br><span class="line">         *      如果想要进行双向，则需要自定义setter函数。</span><br><span class="line">         */</span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line">            data: &#123;</span><br><span class="line">                mathScore: 80,</span><br><span class="line">                englishScore: 90,</span><br><span class="line">            &#125;,</span><br><span class="line"><span class="javascript">            <span class="comment">// 函数</span></span></span><br><span class="line">            methods: &#123;</span><br><span class="line"><span class="javascript">                sumScore: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">console</span>.log(<span class="string">&quot;sumScore函数被调用了。。。&quot;</span>)</span></span><br><span class="line"><span class="javascript">                    <span class="comment">// this 指向的是vm实例</span></span></span><br><span class="line"><span class="javascript">                    <span class="comment">// 减0是为了字符串转为数字运算</span></span></span><br><span class="line"><span class="javascript">                    <span class="keyword">return</span> (<span class="built_in">this</span>.mathScore - <span class="number">0</span>) + (<span class="built_in">this</span>.englishScore - <span class="number">0</span>)</span></span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line"><span class="javascript">            <span class="comment">// 计算属性</span></span></span><br><span class="line">            computed: &#123;</span><br><span class="line"><span class="javascript">                <span class="comment">// 这个是单项绑定，默认只有getter方法。</span></span></span><br><span class="line"><span class="javascript">                sumScore1:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="comment">// 计算属性有缓存，如果计算属性体内的属性值没有发生改变，则不会发生改变，只要属性值发生改变的时候才会重新计算。</span></span></span><br><span class="line"><span class="javascript">                    <span class="built_in">console</span>.log(<span class="string">&quot;计算属性被调用&quot;</span>)</span></span><br><span class="line"><span class="javascript">                    <span class="keyword">return</span> (<span class="built_in">this</span>.mathScore - <span class="number">0</span>) + (<span class="built_in">this</span>.englishScore - <span class="number">0</span>)</span></span><br><span class="line">                &#125;,</span><br><span class="line"></span><br><span class="line"><span class="javascript">                sumScore2:&#123; <span class="comment">// 有了set和get之后就可以进行双向数据绑定</span></span></span><br><span class="line"><span class="javascript">                    <span class="comment">// 获取数据</span></span></span><br><span class="line"><span class="javascript">                    get:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                        <span class="built_in">console</span>.log(<span class="string">&quot;sumScore2.get 计算属性被调用&quot;</span>)</span></span><br><span class="line"><span class="javascript">                        <span class="keyword">return</span> (<span class="built_in">this</span>.mathScore - <span class="number">0</span>) + (<span class="built_in">this</span>.englishScore - <span class="number">0</span>)</span></span><br><span class="line">                    &#125;,</span><br><span class="line"><span class="javascript">                    <span class="comment">// 设置数据</span></span></span><br><span class="line"><span class="javascript">                    set:<span class="function"><span class="keyword">function</span>(<span class="params">newValue</span>)</span>&#123; <span class="comment">// newValue 是 sumScore2 更新之后的新值。</span></span></span><br><span class="line"><span class="javascript">                        <span class="comment">// 当 sumScore2 这个计算属性值发生改变之后，则会调用这个方法。</span></span></span><br><span class="line"><span class="javascript">                        <span class="built_in">console</span>.log(<span class="string">&quot;sumScore2.set 计算属性被调用&quot;</span>)</span></span><br><span class="line"><span class="javascript">                        <span class="keyword">var</span> avgValue = newValue / <span class="number">2</span></span></span><br><span class="line"><span class="javascript">                        <span class="built_in">this</span>.mathScore = avgValue</span></span><br><span class="line"><span class="javascript">                        <span class="built_in">this</span>.englishScore = avgValue</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200722095225655.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h1 id="监听器-watch"><a href="#监听器-watch" class="headerlink" title="监听器 watch"></a>监听器 watch</h1><p>当属性数据发生变化的时候，对应属性的回调函数会自动调用，在函数内部进行计算。</p>
+<p>通过 watch 选项或者是 vm 实例的 $watch 来监听指定的属性。</p>
+<p>需求：</p>
+<ol>
+<li>通过 watch() 选项来监听数学分数，当数学分数更新后回调函数中重新计算总分。</li>
+<li>通过 $watch() 来监听英语分数，当英语更新后重新计算总分数。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>计算属性和监听器<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        数学：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;mathScore&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        英语：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;englishScore&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- v-model调用函数时不要少了小括号（） --&gt;</span></span><br><span class="line">        总得分(函数-单项绑定)：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;sumScore()&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 计算属性后面不需要加小括号 --&gt;</span></span><br><span class="line">        总得分(计算属性-单项绑定)：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;sumScore1&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        总得分(计算属性-双向绑定)：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;sumScore2&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 通过 watch() 选项来监听数学分数，当数学分数更新后回调函数中重新计算总分。 --&gt;</span></span><br><span class="line">        总得分(监听器)：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;sumScore3&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">        /**</span><br><span class="line">         * 1. 函数没有缓存，每次都会调用。</span><br><span class="line">         * 2. 计算属性有缓存，只有当计算属性体内的属性值发生改变之后才会被调用。</span><br><span class="line">         * 3. 函数只支持单项的。</span><br><span class="line">         * 4. 计算属性默认只有getter函数，而没有setter函数，所以只支持单项。</span><br><span class="line">         *      如果想要进行双向，则需要自定义setter函数。</span><br><span class="line">         */</span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line">            data: &#123;</span><br><span class="line">                mathScore: 80,</span><br><span class="line">                englishScore: 90,</span><br><span class="line"><span class="javascript">                <span class="comment">// 利用监听器计算出来的总得分</span></span></span><br><span class="line">                sumScore3: 0,</span><br><span class="line">            &#125;,</span><br><span class="line"><span class="javascript">            <span class="comment">// 函数</span></span></span><br><span class="line">            methods: &#123;</span><br><span class="line"><span class="javascript">                sumScore: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">console</span>.log(<span class="string">&quot;sumScore函数被调用了。。。&quot;</span>)</span></span><br><span class="line"><span class="javascript">                    <span class="comment">// this 指向的是vm实例</span></span></span><br><span class="line"><span class="javascript">                    <span class="comment">// 减0是为了字符串转为数字运算</span></span></span><br><span class="line"><span class="javascript">                    <span class="keyword">return</span> (<span class="built_in">this</span>.mathScore - <span class="number">0</span>) + (<span class="built_in">this</span>.englishScore - <span class="number">0</span>)</span></span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line"><span class="javascript">            <span class="comment">// 计算属性</span></span></span><br><span class="line">            computed: &#123;</span><br><span class="line"><span class="javascript">                <span class="comment">// 这个是单项绑定，默认只有getter方法。</span></span></span><br><span class="line"><span class="javascript">                sumScore1: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="comment">// 计算属性有缓存，如果计算属性体内的属性值没有发生改变，则不会发生改变，只要属性值发生改变的时候才会重新计算。</span></span></span><br><span class="line"><span class="javascript">                    <span class="built_in">console</span>.log(<span class="string">&quot;计算属性被调用&quot;</span>)</span></span><br><span class="line"><span class="javascript">                    <span class="keyword">return</span> (<span class="built_in">this</span>.mathScore - <span class="number">0</span>) + (<span class="built_in">this</span>.englishScore - <span class="number">0</span>)</span></span><br><span class="line">                &#125;,</span><br><span class="line"></span><br><span class="line"><span class="javascript">                sumScore2: &#123; <span class="comment">// 有了set和get之后就可以进行双向数据绑定</span></span></span><br><span class="line"><span class="javascript">                    <span class="comment">// 获取数据</span></span></span><br><span class="line"><span class="javascript">                    get: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                        <span class="built_in">console</span>.log(<span class="string">&quot;sumScore2.get 计算属性被调用&quot;</span>)</span></span><br><span class="line"><span class="javascript">                        <span class="keyword">return</span> (<span class="built_in">this</span>.mathScore - <span class="number">0</span>) + (<span class="built_in">this</span>.englishScore - <span class="number">0</span>)</span></span><br><span class="line">                    &#125;,</span><br><span class="line"><span class="javascript">                    <span class="comment">// 设置数据</span></span></span><br><span class="line"><span class="javascript">                    set: <span class="function"><span class="keyword">function</span> (<span class="params">newValue</span>) </span>&#123; <span class="comment">// newValue 是 sumScore2 更新之后的新值。</span></span></span><br><span class="line"><span class="javascript">                        <span class="comment">// 当 sumScore2 这个计算属性值发生改变之后，则会调用这个方法。</span></span></span><br><span class="line"><span class="javascript">                        <span class="built_in">console</span>.log(<span class="string">&quot;sumScore2.set 计算属性被调用&quot;</span>)</span></span><br><span class="line"><span class="javascript">                        <span class="keyword">var</span> avgValue = newValue / <span class="number">2</span></span></span><br><span class="line"><span class="javascript">                        <span class="built_in">this</span>.mathScore = avgValue</span></span><br><span class="line"><span class="javascript">                        <span class="built_in">this</span>.englishScore = avgValue</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line"><span class="javascript">            <span class="comment">// 监听器</span></span></span><br><span class="line">            watch: &#123;</span><br><span class="line"><span class="javascript">                <span class="comment">// 通过 watch() 选项来监听数学分数，当数学分数更新后回调函数中重新计算总分。</span></span></span><br><span class="line"><span class="javascript">                mathScore: <span class="function"><span class="keyword">function</span> (<span class="params">newValue, oldValue</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="comment">// newValue 更新后的值</span></span></span><br><span class="line"><span class="javascript">                    <span class="comment">// oldValue 更新前的值</span></span></span><br><span class="line"><span class="javascript">                    <span class="built_in">this</span>.sumScore3 = (newValue - <span class="number">0</span>) + (<span class="built_in">this</span>.englishScore - <span class="number">0</span>)</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="监听器注意"><a href="#监听器注意" class="headerlink" title="监听器注意"></a>监听器注意</h4><p>当对象的某个属性发生改变后，默认情况下不会被监听到！！</p>
+<p>如果你希望修改对象的属性之后仍被监听器监听到，那么久像下面一样。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">watch:&#123;</span><br><span class="line">    <span class="comment">// 深度监听，当对象中的属性发生改变后，使用 deep:true选择则可以实现监听</span></span><br><span class="line">    item: &#123;</span><br><span class="line">        deep: <span class="literal">true</span> <span class="comment">// 深度监听对象中属性的变化</span></span><br><span class="line">        handler: <span class="function"><span class="keyword">function</span>(<span class="params">newItems, oldItems</span>)</span>&#123;</span><br><span class="line">            <span class="comment">// 数据处理逻辑 ...</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-02-vue.js%E6%B8%90%E8%BF%9B%E5%BC%8F%E6%A1%86%E6%9E%B6%E5%92%8C%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-02-vue.js%E6%B8%90%E8%BF%9B%E5%BC%8F%E6%A1%86%E6%9E%B6%E5%92%8C%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-14 14:47:19" itemprop="dateCreated datePublished" datetime="2021-10-14T14:47:19+08:00">2021-10-14</time>
             </span>
 
           <br>
@@ -488,7 +602,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>280</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -507,7 +621,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1 id="vue-js渐进式框架和应用场景"><a href="#vue-js渐进式框架和应用场景" class="headerlink" title="vue.js渐进式框架和应用场景"></a>vue.js渐进式框架和应用场景</h1><h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><p><a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/#Vue-js-%E6%98%AF%E4%BB%80%E4%B9%88">https://cn.vuejs.org/v2/guide/#Vue-js-%E6%98%AF%E4%BB%80%E4%B9%88</a></p>
+<h2 id="什么是渐进式"><a href="#什么是渐进式" class="headerlink" title="什么是渐进式"></a>什么是渐进式</h2><p>渐进式简单的讲就是：用什么技术就引用什么技术到项目中使用，而不是把所有的东西全部引入到项目里面。</p>
+<h2 id="使用的原因"><a href="#使用的原因" class="headerlink" title="使用的原因"></a>使用的原因</h2><ul>
+<li>易用：入门简单，不需要太高深的技术</li>
+<li>灵活：可以在一个库和另一个库之间自如伸缩</li>
+<li>高效：超快虚拟DOM，省心优化，基本上不需要DOM操作</li>
+</ul>
+<h2 id="在什么场景下使用"><a href="#在什么场景下使用" class="headerlink" title="在什么场景下使用"></a>在什么场景下使用</h2><ul>
+<li>一般是单页面应用程序（SPA）用</li>
+<li>单页面应用程序，如网易云音乐，局部刷新</li>
+<li>因为vue是渐进式的，Vue其实可以融入到不同项目中，即插即用</li>
+</ul>
+
       
     </div>
 
@@ -526,7 +652,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-29-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-01-NPM%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/timg.jpeg">
@@ -540,7 +666,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/23/Go-29-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">Go-29-错误处理</a>
+            <a href="/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-01-NPM%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -549,18 +675,8 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-08-23 09:41:56 / 修改时间：09:43:27" itemprop="dateCreated datePublished" datetime="2021-08-23T09:41:56+08:00">2021-08-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
-                </span>
+              <time title="创建时间：2021-10-14 14:47:11" itemprop="dateCreated datePublished" datetime="2021-10-14T14:47:11+08:00">2021-10-14</time>
             </span>
 
           <br>
@@ -569,14 +685,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.7k</span>
+              <span>2.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -588,10 +704,333 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Go 错误处理</p>
+          <h1 id="NPM包管理工具"><a href="#NPM包管理工具" class="headerlink" title="NPM包管理工具"></a>NPM包管理工具</h1><p>NPM全程是Node Package Manager，他是JavaScript的包管理工具，是Node.js平台默认的包管理工具，通过NPM可以安装、共享、分发代码、管理项目依赖关系。</p>
+<ul>
+<li>可以从NPM服务器下载别人编写的第三方包到本地。</li>
+<li>可以从NPM服务器下载并安装别人编写的命令行程序到本地使用。</li>
+<li>可以自己编写的包或者命令行上传到NPM服务器供别人使用。</li>
+</ul>
+<p>可以吧NPM理解为前端的Maven，通过NPM很方便的下载使用js库，管理前端工程。</p>
+<p>最新版的Node.js已经继承了npm，所以首先安装Node环境就可以了。</p>
+<p>NPM英文网：<a target="_blank" rel="noopener" href="https://nodejs.org/en/">https://nodejs.org/en/</a><br>NPM中文网：<a target="_blank" rel="noopener" href="http://nodejs.cn/">http://nodejs.cn/</a><br><img src="https://img-blog.csdnimg.cn/20200721125811234.png" alt="在这里插入图片描述"><br>安装完成后检验是否安装成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721130104242.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h1 id="NPM-初始化"><a href="#NPM-初始化" class="headerlink" title="NPM 初始化"></a>NPM 初始化</h1><p>初始化项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721130904410.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>输入名称：名称不能包含大写字母，如：studyDemo是不允许的，如果有大写，可以设置为study-demo，<br>如果不输入直接回车，则以括号中的名称做为默认名字。<br><img src="https://img-blog.csdnimg.cn/20200721131027979.png" alt="在这里插入图片描述"><br>版本号：版本号，如果不输入也是以小括号中的版本号为默认。<br><img src="https://img-blog.csdnimg.cn/20200721131208808.png" alt="在这里插入图片描述"><br>描述：输入一个描述，随便来了。<br><img src="https://img-blog.csdnimg.cn/20200721131235321.png" alt="在这里插入图片描述"><br>入口文件：运行一个程序都有一个入口，设置之后，我们的js项目就是从这个文件里面运行，有人可以设置一个新的，但是我们用默认的就可以了。<br><img src="https://img-blog.csdnimg.cn/20200721131406355.png" alt="在这里插入图片描述"><br>测试命令：不用输入，直接回车就可以了。<br><img src="https://img-blog.csdnimg.cn/20200721131447978.png" alt="在这里插入图片描述"><br>git 仓库地址，也不需要，直接回车就行了。<br><img src="https://img-blog.csdnimg.cn/20200721131531775.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>关键字、作者、秘钥认证都不需要，直接忽略就可以了。<br><img src="https://img-blog.csdnimg.cn/20200721131647122.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>接下来他会根据我们设置的在studyDemo文件夹下创建一个package.json文件，内容如上图，点击回车标识确认，即OK，不确认的话我们就得设置一个no然后回车。<br><img src="https://img-blog.csdnimg.cn/20200721131810374.png" alt="在这里插入图片描述"><br>然后文件夹下就有了刚刚创建好的package.json文件。打开看一下：<br><img src="https://img-blog.csdnimg.cn/20200721131855649.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>如果嫌麻烦，可以采用以下命令初始化npm，这样的话他不会提示你填写各种信息，而是全部采用磨人的方式创建。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721132152909.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>这样子的话就简化了一系列的操作。</p>
+<h1 id="NPM模块的安装"><a href="#NPM模块的安装" class="headerlink" title="NPM模块的安装"></a>NPM模块的安装</h1><h2 id="安装方式"><a href="#安装方式" class="headerlink" title="安装方式"></a>安装方式</h2><p>npm install 命令用于安装某个模块，安装方式分为本地安装和全局安装两部分。</p>
+<ul>
+<li>本地安装<br>将JS库安装在当前实行命令时所在的目录下</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install &lt;module name&gt;[@版本号]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>全局安装<br>将JS库安装到你的全局目录下</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install &lt;module name&gt;[@版本号] -g</span><br></pre></td></tr></table></figure>
+
+<p>如果安装出现一下错误：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm err! Error:connect ECONNREFUSED 127.0.0.1:8087</span><br></pre></td></tr></table></figure>
+
+<p>解决办法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> proxy null</span><br></pre></td></tr></table></figure>
+
+<h4 id="本地安装"><a href="#本地安装" class="headerlink" title="本地安装"></a>本地安装</h4><p>本地安装会将js库存放在当前目录下<br>安装最新版 express 模块，他是基于node.js平台的web开发框架，执行命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express</span><br></pre></td></tr></table></figure>
+
+<p>出现黄色的不用担心是警告。<br><img src="https://img-blog.csdnimg.cn/20200721133050231.png" alt="在这里插入图片描述"><br>在该目录下出现一个 node_modules 文件夹和一个 package-lock.json 文件。<br>node_modules 文件夹用于存放下载的js库（相当于maven的本地仓库）。<br>package-lock.json 是在 npm install 的时候生成的一份文件，记录的是当前状态下实际安装的各个包的具体来源和版本号。<br>重新打开 package.json 文件，发现刚才下载的文件已经添加到依赖列表中了。<br><img src="https://img-blog.csdnimg.cn/20200721133600713.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h5 id="模块版本号显示方式："><a href="#模块版本号显示方式：" class="headerlink" title="模块版本号显示方式："></a>模块版本号显示方式：</h5><ul>
+<li><strong>指定版本号</strong>：比如“3.5.2”，只安装指定版本，遵循“大版本，次要版本、小版本”的格式规定。</li>
+<li><strong>~ 波浪号+指定版本</strong>：比如“~3.5.2”，安装3.5.x的最新版本，不低于3.5.2，但是不安装3.6.x，也就是说，安装时不改变大版本号和次要版本号。</li>
+<li><strong>^ 插入号+指定版本号</strong>：比如 ^3.5.2：安装3.x.x，安装3.x.x的最新版本号，但不安装4.x.x，也就是说安装的时候不改变大版本号。需要注意的四，如果大版本号为0，则插入号的行为与波浪号相同，这是因为此时处于开发阶段，即使是次要版本的变动，也可能带来不兼容。</li>
+<li><strong>latest</strong>：安装最新版本。</li>
+</ul>
+<h4 id="指定版本安装"><a href="#指定版本安装" class="headerlink" title="指定版本安装"></a>指定版本安装</h4><p>安装jquery2.2.0版本，注意，2.2.0版本必须存在，不然会安装失败。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install jquery@2.2.0</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721134525701.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200721134556734.png" alt="在这里插入图片描述"><br>安装成功！</p>
+<h4 id="全局安装"><a href="#全局安装" class="headerlink" title="全局安装"></a>全局安装</h4><p>使用全局安装会安装到全局目录下。<br>查看全局安装目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm root -g</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721134831197.png" alt="在这里插入图片描述"><br>比如在全局安装一个 vue。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue -g</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721135022541.png" alt="在这里插入图片描述"><br><strong>修改全局目录</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> prefix <span class="string">&quot;d:\npm&quot;</span></span><br><span class="line"></span><br><span class="line">npm root -g</span><br></pre></td></tr></table></figure>
+
+<p>很多项目都用到或者是经常用的时候，就是用全局安装。如果是某个项目特定的使用，其他项目一般用不到的时候就使用本地安装。</p>
+<p><strong>查看全局安装的模块</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm list -g</span><br></pre></td></tr></table></figure>
+
+<h2 id="生产环境模板安装"><a href="#生产环境模板安装" class="headerlink" title="生产环境模板安装"></a>生产环境模板安装</h2><p>格式：–save 或者 -S ，参数的意思是把模块的版本信息保存在package.json文件的 dependencies 字段中（生产环境依赖）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install &lt;Model Name&gt; [--save|-S]</span><br></pre></td></tr></table></figure>
+
+<p>如果不写 –save 或 -S 默认也是安装到生产环境当中。</p>
+<p>例如在生产环境安装vue。<br><img src="https://img-blog.csdnimg.cn/20200721135938412.png" alt="在这里插入图片描述"><br>安装成功：<br><img src="https://img-blog.csdnimg.cn/20200721135958139.png" alt="在这里插入图片描述"></p>
+<h2 id="开发环境模板安装"><a href="#开发环境模板安装" class="headerlink" title="开发环境模板安装"></a>开发环境模板安装</h2><p>格式：–save-dev 或 -D 参数是把模块的版本信息保存到 package.json 文件的 devDependencies 字段中（开发环境依赖），所以开发阶段一般使用它：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install &lt;Module Name&gt; [--save-dev | -D]</span><br></pre></td></tr></table></figure>
+
+<p>例如 开发环境安装 eslint</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install eslint -D</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721140611731.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2020072114063434.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="批量下载模块"><a href="#批量下载模块" class="headerlink" title="批量下载模块"></a>批量下载模块</h2><p>从网上下载的项目大多只有 package.json ，没有 node_modules 文件夹时，就要使用命令下载这些没有的js库。</p>
+<p>进入命令提示符，package.json所在的目录，执行以下命令，完成批量下载：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>此时，npm 就会自动下载 package.json 中所依赖的库。</p>
+<h2 id="查看模块命令"><a href="#查看模块命令" class="headerlink" title="查看模块命令"></a>查看模块命令</h2><ol>
+<li>可以进入安装目录 node_modules 下查看是都有包。</li>
+<li>使用命令查看。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看本地安装的所有模块</span></span><br><span class="line">npm list</span><br><span class="line"></span><br><span class="line">npm ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定模块</span></span><br><span class="line">npm list &lt;Model Name&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看模块远程最新版本"><a href="#查看模块远程最新版本" class="headerlink" title="查看模块远程最新版本"></a>查看模块远程最新版本</h2><p>格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm view &lt;Module Name&gt; version</span><br></pre></td></tr></table></figure>
+
+<p>例如：查看jquery模块的最新版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm view jquery version</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721175859217.png" alt="在这里插入图片描述"><br>查看jquery远程所有版本信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm view jquery versions</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721180007943.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="卸载模块"><a href="#卸载模块" class="headerlink" title="卸载模块"></a>卸载模块</h2><p>卸载局部模块</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall &lt;Module Name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>卸载全局模块</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall -g &lt;Module Name&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置淘宝镜像加速"><a href="#配置淘宝镜像加速" class="headerlink" title="配置淘宝镜像加速"></a>配置淘宝镜像加速</h2><p>查看当前使用的镜像地址：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm get registry</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721180423817.png" alt="在这里插入图片描述"><br>配置淘宝镜像地址：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>还原默认的镜像地址：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npmjs.org/</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-03-vue.js%E5%85%A5%E9%97%A8%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/14/%E5%89%8D%E7%AB%AF-VUE-03-vue.js%E5%85%A5%E9%97%A8%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-14 14:45:53" itemprop="dateCreated datePublished" datetime="2021-10-14T14:45:53+08:00">2021-10-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-17 18:25:02" itemprop="dateModified" datetime="2021-10-17T18:25:02+08:00">2021-10-17</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="vue-js入门开发"><a href="#vue-js入门开发" class="headerlink" title="vue-js入门开发"></a>vue-js入门开发</h1><h2 id="vue双向数据绑定"><a href="#vue双向数据绑定" class="headerlink" title="vue双向数据绑定"></a>vue双向数据绑定</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- &#123;&#123;&#125;&#125; 用于标签内显示数据 --&gt;</span></span><br><span class="line">        Hello , &#123;&#123;msg&#125;&#125;  <span class="tag">&lt;<span class="name">br</span>&gt;</span>  </span><br><span class="line">        <span class="comment">&lt;!-- v-model 进行数据双向绑定 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>  <span class="attr">v-model</span>=<span class="string">&quot;msg&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el:<span class="string">&#x27;#app&#x27;</span>,  <span class="comment">// 指定被vue管理的入口,值为选择器，不可以指定body或者html</span></span></span><br><span class="line"><span class="javascript">            data:&#123;  <span class="comment">// 初始化数据，在vue实例管理的Dom节点下，可以通过模板请求来引用</span></span></span><br><span class="line"><span class="javascript">                msg: <span class="string">&#x27;你好啊，王佳伟同学，你最棒！&#x27;</span> </span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721192704476.png" alt="在这里插入图片描述"></p>
+<h2 id="MVVC-模型"><a href="#MVVC-模型" class="headerlink" title="MVVC 模型"></a>MVVC 模型</h2><p>MVVC模型是 Model-View-ViewModel 的缩写，是一种软件架构风格。</p>
+<p>他的哲学思想上：</p>
+<ul>
+<li>通过数据驱动视图：把需要改变的视图数据初始化到Vue中，然后再通过修改Vue中的数据，从而实现对视图的修改更新。</li>
+<li>声明式编程：按照vue的特定语法声明开发就可以实现相应功能，不需要直接操作Dom元素。</li>
+<li>命令式编程：需要获取Dom元素。jquery就是需要手动操作才能实现功能。</li>
+</ul>
+<p>Model - 代表模型，就是数据对象，data<br>View - 代表视图，就是模板页面<br>ViewModel - 视图模型，本质上就是Vue实例<br><img src="https://img-blog.csdnimg.cn/20200721193103285.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>原理哈！ view 的值被更改了之后，DOM Listeners 监听到输入框的值发生改变之后，会将 Model 中的数据进行更新。更新了之后，在通过 Data Bindings 数据绑定，将更新的Model中的数据渲染到 View 页面。</p>
+<p>上面的过程不需要我们开发者手动去进行操作，Vue已经帮我们完成了。我们只需要在页面上遵守Vue 的语法规则就可以自动帮我们实现以上功能。</p>
+<h2 id="Vue-Devtools-插件"><a href="#Vue-Devtools-插件" class="headerlink" title="Vue Devtools 插件"></a>Vue Devtools 插件</h2><p>Vue Devtools 插件可以让我们在一个更友好的界面中审查和调试Vue项目。</p>
+<p>推荐在浏览器上安装 Vue Devtools。</p>
+<h2 id="模板数据绑定渲染"><a href="#模板数据绑定渲染" class="headerlink" title="模板数据绑定渲染"></a>模板数据绑定渲染</h2><p>可生成动态的 HTML 页面，页面中使用嵌入 Vue.js 语法动态生成。</p>
+<ul>
+<li>双大括号<strong>文本绑定</strong></li>
+<li>v-xxx 以 v- 开头的用于<strong>标签属性</strong>绑定，成为指令</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">        &#123;&#123;JS表达式&#125;&#125;  </span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>1. &#123;&#123;&#125;&#125;双大括号输出文本内容<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 直接获取文本内容 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; msg &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 直接执行JS表达式 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; sorce + 1 &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el:<span class="string">&#x27;#app&#x27;</span>,  </span></span><br><span class="line">            data:&#123;  </span><br><span class="line"><span class="javascript">                msg: <span class="string">&#x27;王佳伟，你最棒！&#x27;</span> ,</span></span><br><span class="line">                sorce: 100,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="v-once一次性插值"><a href="#v-once一次性插值" class="headerlink" title="v-once一次性插值"></a>v-once一次性插值</h2><p>通过 v-once 指令，只执行一次性的插值，当数据改变的时候，插值处的数据不会被更新。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h3</span>&gt;</span>一次性插值 v-once<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">v-once</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 v-once 修饰之后，当 msg 数据发生变化时，Dom元素上的数据也不会在更新。如果以后有相应的需求可以使用这个标签，但是使用的比较少，基本上不会使用，但是以防万一，遇到类似的需求知道有这个东西。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200721201644631.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="输出HTML指令-v-html"><a href="#输出HTML指令-v-html" class="headerlink" title="输出HTML指令 v-html"></a>输出HTML指令 v-html</h2><p>允许直接渲染标签，而不是以文本的方式渲染。</p>
+<ol>
+<li>如果想要输出HTML数据，双大括号将数据以普通文本的方式输出，为了输出真正的HTML效果，需要使用 v-html 指定。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;v-html的形式：&lt;span v-html=<span class="string">&quot;contentHtml&quot;</span>&gt;&lt;<span class="regexp">/span&gt;&lt;/</span>p&gt;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>为了防止 XSS 攻击。在此指令上做了安全处理，如果发现输出内容上有script标签的时候，则不渲染。XSS攻击主要是利用了JS脚本注入到网页，读取cookie，读取到了之后发送到黑客的服务器，从而让黑客可以使用你的账号信息做非法操作，还可以进入你的支付，跳转到钓鱼网站。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">        &#123;&#123;JS表达式&#125;&#125;  </span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>1. &#123;&#123;&#125;&#125;双大括号输出文本内容<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 直接获取文本内容 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; msg &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 直接执行JS表达式 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; sorce + 1 &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>一次性插值 v-once<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-once</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>指令输出真正的HTML内容 v-html<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>双大括号的形式：&#123;&#123;contentHtml&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>v-html的形式：<span class="tag">&lt;<span class="name">span</span> <span class="attr">v-html</span>=<span class="string">&quot;contentHtml&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el:<span class="string">&#x27;#app&#x27;</span>,  </span></span><br><span class="line">            data:&#123;  </span><br><span class="line"><span class="javascript">                msg: <span class="string">&#x27;王佳伟，你最棒！&#x27;</span> ,</span></span><br><span class="line">                sorce: 100,</span><br><span class="line"><span class="handlebars"><span class="xml">                contentHtml:`<span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:red&quot;</span>&gt;</span>王佳伟，你最棒！</span></span></span><br><span class="line"><span class="handlebars"><span class="xml">                    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript">alert(<span class="string">&quot;我是大傻逼！&quot;</span>)&lt;\/script&gt;</span></span></span></span><br><span class="line"><span class="handlebars"><span class="xml">                    <span class="tag">&lt;/<span class="name">span</span>&gt;</span>`</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721203114868.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="元素绑定指令-v-bind"><a href="#元素绑定指令-v-bind" class="headerlink" title="元素绑定指令 v-bind"></a>元素绑定指令 v-bind</h2><p>完整格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v-bind:元素的属性名=<span class="string">&#x27;xxxx&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>缩写格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:元素属性名 = <span class="string">&#x27;xxx&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>作用：将数据动态绑定到指定元素属性上面。</p>
+<h2 id="事件绑定指令-v-on"><a href="#事件绑定指令-v-on" class="headerlink" title="事件绑定指令 v-on"></a>事件绑定指令 v-on</h2><p>完整格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v-on:事件名称=<span class="string">&quot;事件处理函数名&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>缩写格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@事件名称 = <span class="string">&quot;事件处理函数名&quot;</span>   注意：@后面没有冒号</span><br></pre></td></tr></table></figure>
+
+<p>作用：用于监听DOM事件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">        &#123;&#123;JS表达式&#125;&#125;  </span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>1. &#123;&#123;&#125;&#125;双大括号输出文本内容<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 直接获取文本内容 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; msg &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 直接执行JS表达式 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; sorce + 1 &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>一次性插值 v-once<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-once</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>指令输出真正的HTML内容 v-html<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>双大括号的形式：&#123;&#123;contentHtml&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>v-html的形式：<span class="tag">&lt;<span class="name">span</span> <span class="attr">v-html</span>=<span class="string">&quot;contentHtml&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>元素绑定指令 v-bind<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 完整 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">v-bind:src</span>=<span class="string">&quot;imgUrl&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="comment">&lt;!-- 简化 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;imgUrl&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>事件绑定指令 v-on<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;num&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 完整 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">&quot;add&quot;</span>&gt;</span>完整点击 +1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 简化 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;add&quot;</span>&gt;</span>简化点击 +1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">            el:<span class="string">&#x27;#app&#x27;</span>,  </span></span><br><span class="line">            data:&#123;  </span><br><span class="line"><span class="javascript">                msg: <span class="string">&#x27;王佳伟，你最棒！&#x27;</span> ,</span></span><br><span class="line">                sorce: 100,</span><br><span class="line"><span class="handlebars"><span class="xml">                contentHtml:`<span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:red&quot;</span>&gt;</span>王佳伟，你最棒！</span></span></span><br><span class="line"><span class="handlebars"><span class="xml">                    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript">alert(<span class="string">&quot;我是大傻逼！&quot;</span>)&lt;\/script&gt;</span></span></span></span><br><span class="line"><span class="handlebars"><span class="xml">                    <span class="tag">&lt;/<span class="name">span</span>&gt;</span>`,</span></span></span><br><span class="line"><span class="javascript">                imgUrl:<span class="string">&#x27;https://profile.csdnimg.cn/B/9/A/3_weixin_42776111&#x27;</span>,</span></span><br><span class="line">                num : 1</span><br><span class="line">            &#125;,</span><br><span class="line">            methods:&#123;</span><br><span class="line"><span class="javascript">                add:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">this</span>.num ++</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200721204441805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mjc3NjExMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/10/08/ApiSix%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/08/ApiSix%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">ApiSix简单使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-08 22:15:48 / 修改时间：22:18:27" itemprop="dateCreated datePublished" datetime="2021-10-08T22:15:48+08:00">2021-10-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>22 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>负载均衡相关</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/08/23/Go-29-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/#more" rel="contents">
+              <a class="btn" href="/2021/10/08/ApiSix%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -615,7 +1054,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-28-Defer/">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/09/20/24-Django-%E6%97%A5%E5%BF%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/timg.jpeg">
@@ -629,7 +1068,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/23/Go-28-Defer/" class="post-title-link" itemprop="url">Go-28-Defer</a>
+            <a href="/2021/09/20/24-Django-%E6%97%A5%E5%BF%97/" class="post-title-link" itemprop="url">24-Django-日志</a>
         </h2>
 
         <div class="post-meta">
@@ -640,7 +1079,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-08-23 09:39:53 / 修改时间：09:41:01" itemprop="dateCreated datePublished" datetime="2021-08-23T09:39:53+08:00">2021-08-23</time>
+              <time title="创建时间：2021-09-20 16:42:22 / 修改时间：19:46:28" itemprop="dateCreated datePublished" datetime="2021-09-20T16:42:22+08:00">2021-09-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -648,7 +1087,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
                 </span>
             </span>
 
@@ -658,14 +1097,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.1k</span>
+              <span>8.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
+              <span>14 分钟</span>
             </span>
 
         </div>
@@ -677,10 +1116,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Go Defer</p>
+          <p>Django日志</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/08/23/Go-28-Defer/#more" rel="contents">
+              <a class="btn" href="/2021/09/20/24-Django-%E6%97%A5%E5%BF%97/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -704,7 +1143,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-27-%E5%A4%9A%E6%80%81/">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/24/k8s-prometheus-02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/timg.jpeg">
@@ -718,7 +1157,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/23/Go-27-%E5%A4%9A%E6%80%81/" class="post-title-link" itemprop="url">Go-27-多态</a>
+            <a href="/2021/08/24/k8s-prometheus-02/" class="post-title-link" itemprop="url">k8s-prometheus-02</a>
         </h2>
 
         <div class="post-meta">
@@ -727,17 +1166,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-08-23 09:37:37 / 修改时间：09:39:18" itemprop="dateCreated datePublished" datetime="2021-08-23T09:37:37+08:00">2021-08-23</time>
+              <time title="创建时间：2021-08-24 19:24:57" itemprop="dateCreated datePublished" datetime="2021-08-24T19:24:57+08:00">2021-08-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-25 21:33:09" itemprop="dateModified" datetime="2021-08-25T21:33:09+08:00">2021-08-25</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+                  <a href="/categories/prometheus/" itemprop="url" rel="index"><span itemprop="name">prometheus</span></a>
                 </span>
             </span>
 
@@ -747,185 +1192,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>12 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Go 多态</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/23/Go-27-%E5%A4%9A%E6%80%81/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-26-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/23/Go-26-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/" class="post-title-link" itemprop="url">Go-26-组合取代继承</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-08-23 09:33:16 / 修改时间：09:36:51" itemprop="dateCreated datePublished" datetime="2021-08-23T09:33:16+08:00">2021-08-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Go 组合取代继承</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/23/Go-26-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-25-%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%96%E4%BB%A3%E7%B1%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/23/Go-25-%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%96%E4%BB%A3%E7%B1%BB/" class="post-title-link" itemprop="url">Go-25-结构体取代类</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-08-23 09:25:27 / 修改时间：09:35:26" itemprop="dateCreated datePublished" datetime="2021-08-23T09:25:27+08:00">2021-08-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
+              <span>4.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -944,99 +1211,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Go 结构体取代类</p>
+          <p>服务发现</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/08/23/Go-25-%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%96%E4%BB%A3%E7%B1%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/08/23/Go-24-Mutex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/23/Go-24-Mutex/" class="post-title-link" itemprop="url">Go-24-Mutex</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-08-23 09:23:14 / 修改时间：09:24:43" itemprop="dateCreated datePublished" datetime="2021-08-23T09:23:14+08:00">2021-08-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Go Mutex</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/23/Go-24-Mutex/#more" rel="contents">
+              <a class="btn" href="/2021/08/24/k8s-prometheus-02/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1059,7 +1237,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1127,7 +1305,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">166</span>
+          <span class="site-state-item-count">183</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1184,12 +1362,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">1.9m</span>
+    <span title="站点总字数">2m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">53:25</span>
+    <span title="站点阅读时长">54:37</span>
 </div>
 
 <!--
