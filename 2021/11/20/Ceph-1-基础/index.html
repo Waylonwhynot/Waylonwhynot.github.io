@@ -29,6 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1629213438574-db7b48e2-6e6b-4302-8a3a-464a3d407c3f.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1629180773849-8ce6a784-2ed8-4fef-a48f-7222bc02e726.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20211120172834267.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1629216778683-1e4d596f-87c1-4939-a85e-5b8c29ec4c11.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1629297285794-db8f49bd-22d8-4044-8881-3a73109db304.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1629299234738-1ca26b4a-3e63-48c1-97eb-af1604dfdbba.png">
@@ -36,7 +37,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1629477107487-bcad551f-5ddb-49e9-bf35-e35801221743.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1629477239528-ccacbdf2-6d54-416b-aa15-98b06db0c5d6.png">
 <meta property="article:published_time" content="2021-11-20T08:41:54.000Z">
-<meta property="article:modified_time" content="2021-11-20T08:49:12.369Z">
+<meta property="article:modified_time" content="2021-11-20T09:29:07.607Z">
 <meta property="article:author" content="Waylon Yan">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1629213438574-db7b48e2-6e6b-4302-8a3a-464a3d407c3f.png">
@@ -223,7 +224,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-20 16:41:54 / 修改时间：16:49:12" itemprop="dateCreated datePublished" datetime="2021-11-20T16:41:54+08:00">2021-11-20</time>
+              <time title="创建时间：2021-11-20 16:41:54 / 修改时间：17:29:07" itemprop="dateCreated datePublished" datetime="2021-11-20T16:41:54+08:00">2021-11-20</time>
             </span>
 
           <br>
@@ -239,7 +240,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>30 分钟</span>
+              <span>31 分钟</span>
             </span>
 
         </div>
@@ -259,7 +260,7 @@
 <h1 id="Ceph基础"><a href="#Ceph基础" class="headerlink" title="Ceph基础"></a>Ceph基础</h1><h2 id="版本介绍"><a href="#版本介绍" class="headerlink" title="版本介绍"></a>版本介绍</h2><p>稳定版本</p>
 <p>J 版本 filestore 对文件系统的存储，格式化出系统能够识别的格式，量大了会出现很多问题，需要二次开发</p>
 <p>L 版本 bluestore 直接操作裸盘，raid 0 ,ceph-volume 命令格式化，add ceph 到集群，所以比J 版本快很多</p>
-<h2 id="Ceph版本来源介绍"><a href="#Ceph版本来源介绍" class="headerlink" title="Ceph版本来源介绍"></a>Ceph版本来源介绍</h2><p>Ceph 社区最新版本是 14，而 Ceph 12 是市面用的最广的稳定版本。<br>第一个 Ceph 版本是 0.1 ，要回溯到 2008 年 1 月。多年来，版本号方案一直没变，直到 2015 年 4 月 0.94.1 （ Hammer 的第一个修正版）发布后，为了避免 0.99 （以及 0.100 或 1.00 ？），制定了新策略。</p>
+<h3 id="Ceph版本来源介绍"><a href="#Ceph版本来源介绍" class="headerlink" title="Ceph版本来源介绍"></a>Ceph版本来源介绍</h3><p>Ceph 社区最新版本是 14，而 Ceph 12 是市面用的最广的稳定版本。<br>第一个 Ceph 版本是 0.1 ，要回溯到 2008 年 1 月。多年来，版本号方案一直没变，直到 2015 年 4 月 0.94.1 （ Hammer 的第一个修正版）发布后，为了避免 0.99 （以及 0.100 或 1.00 ？），制定了新策略。</p>
 <p>x.0.z - 开发版（给早期测试者和勇士们）</p>
 <p>x.1.z - 候选版（用于测试集群、高手们）</p>
 <p>x.2.z - 稳定、修正版（给用户们）</p>
@@ -343,7 +344,7 @@
 <td>2019年2月</td>
 </tr>
 </tbody></table>
-<h2 id="mimic新版本特性"><a href="#mimic新版本特性" class="headerlink" title="mimic新版本特性"></a>mimic新版本特性</h2><ul>
+<h3 id="mimic新版本特性"><a href="#mimic新版本特性" class="headerlink" title="mimic新版本特性"></a>mimic新版本特性</h3><ul>
 <li>Bluestore<ul>
 <li>ceph-osd的新后端存储BlueStore已经稳定，是新创建的OSD的默认设置。<br>BlueStore通过直接管理物理HDD或SSD而不使用诸如XFS的中间文件系统，来管理每个OSD存储的数据，这提供了更大的性能和功能。</li>
 <li>BlueStore支持Ceph存储的所有的完整的数据和元数据校验。</li>
@@ -374,16 +375,11 @@
 <p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1629213438574-db7b48e2-6e6b-4302-8a3a-464a3d407c3f.png" alt="img"></p>
 <h3 id="ceph的设计思想"><a href="#ceph的设计思想" class="headerlink" title="ceph的设计思想"></a>ceph的设计思想</h3><p>Ceph 的设计旨在实现以下目标：</p>
 <ol>
-<li><p>每一组件皆可扩展</p>
-</li>
-<li><p>无单点故障</p>
-</li>
-<li><p>基于软件(而非专用设备)并且开源(无供应商锁定)</p>
-</li>
-<li><p>在现有的廉价硬件上运行</p>
-</li>
-<li><p>尽可能自动管理，减少用户干预</p>
-</li>
+<li>每一组件皆可扩展</li>
+<li>无单点故障</li>
+<li>基于软件(而非专用设备)并且开源(无供应商锁定)</li>
+<li>在现有的廉价硬件上运行</li>
+<li>尽可能自动管理，减少用户干预</li>
 </ol>
 <h3 id="ceph的组成"><a href="#ceph的组成" class="headerlink" title="ceph的组成"></a>ceph的组成</h3><ul>
 <li>官方文档: <a target="_blank" rel="noopener" href="https://docs.ceph.com/en/latest/start/intro/">https://docs.ceph.com/en/latest/start/intro/</a></li>
@@ -401,16 +397,15 @@
 <li>推荐使用部署专用的管理节点对 ceph 进行配置管理、升级与后期维护，方便后期权限管理，管理节点的权限只对管理人员开放，可以避免一些不必要的误操作的发生。</li>
 </ol>
 <h2 id="Ceph特点"><a href="#Ceph特点" class="headerlink" title="Ceph特点"></a>Ceph特点</h2><ol>
-<li><p>支持三种 对象存储，块存储，文件存储 接口，称之为统一存储</p>
-</li>
-<li><p>采用CRUSH算法，数据分布均衡，并行度高，不需要维护固定的元数据结构</p>
-</li>
-<li><p>数据具有强一致性，确保所有副本写入完成后才返回确认，适合读多写少的场景</p>
-</li>
-<li><p>去中心化，没有固定的中心节点，集群扩展灵活</p>
-</li>
+<li>支持三种 对象存储，块存储，文件存储 接口，称之为统一存储</li>
+<li>采用CRUSH算法，数据分布均衡，并行度高，不需要维护固定的元数据结构</li>
+<li>数据具有强一致性，确保所有副本写入完成后才返回确认，适合读多写少的场景</li>
+<li>去中心化，没有固定的中心节点，集群扩展灵活</li>
 </ol>
-<h2 id="ceph存取原理介绍"><a href="#ceph存取原理介绍" class="headerlink" title="ceph存取原理介绍"></a>ceph存取原理介绍</h2><h3 id="数据高可用"><a href="#数据高可用" class="headerlink" title="数据高可用"></a>数据高可用</h3><ul>
+<h3 id="Ceph内部数据存储视图"><a href="#Ceph内部数据存储视图" class="headerlink" title="Ceph内部数据存储视图"></a>Ceph内部数据存储视图</h3><p>​      在Ceph存储系统中，Cehp的基础服务架构主要包括了Object Storage Device(OSD)，Monitor和MDS。一个Cluster可逻辑上划分为多个Pool，一个 Pool由若干个逻辑 PG( Placement Group)组成，Pool内的副本数量也是可以设置的。</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20211120172834267.png" alt="image-20211120172834267"></p>
+<p>​     Ceph底层是对象系统，所以一个文件会被切分为多个Object，每个Object会被映射到一个PG，每个PG 会映射到一组 OSD(Object Storage Device)，其中第一个OSD 是主，其余的是备，OSD间通过心跳来相互监控存活状态。引入PG概念后，OSD只和PG相关，不但简化了OSD的数据存储，而且实现了Object到OSD的动态映射，OSD的添加和故障不影响Object的映射。</p>
+<h3 id="ceph存取原理介绍"><a href="#ceph存取原理介绍" class="headerlink" title="ceph存取原理介绍"></a>ceph存取原理介绍</h3><h3 id="数据高可用"><a href="#数据高可用" class="headerlink" title="数据高可用"></a>数据高可用</h3><ul>
 <li>ceph存储数据的时候是一主两备份实现数据的高可用，3副本</li>
 <li>ceph中的pg是把一组比较大的数据进行拆分，几个pg就拆成几份，每个pg中都是三副本；可以提高ceph的读写性能</li>
 </ul>
@@ -420,15 +415,15 @@
 </ol>
 <p>计算文件到对象的映射,假如 file 为客户端要读写的文件,得到 oid(object id) = ino + onoino:inode number (INO)，File 的元数据序列号，File 的唯一 id。 </p>
 <p>ono:object number (ONO)，File 切分产生的某个 object 的序号，默认以 4M 切分一个块大小。</p>
-<ol>
+<ol start="2">
 <li>通过hash 算法计算出文件对应的 pool 中的PG(在客户端计算)</li>
 </ol>
 <p>通过一致性 HASH 计算 Object 到 PG， Object -&gt; PG 映射 hash(oid) &amp; mask-&gt; pgid</p>
-<ol>
+<ol start="3">
 <li>通过 CRUSH 把对象映射到 PG 中的 OSD（mon操作）</li>
 </ol>
 <p>通过 CRUSH 算法计算 PG 到 OSD</p>
-<ol>
+<ol start="4">
 <li><p>PG 中的主 OSD 将对象写入到硬盘 </p>
 </li>
 <li><p>主 OSD 将数据同步给备份 OSD,并等待备份 OSD 返回确认 </p>
@@ -832,7 +827,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ceph%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">Ceph基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">版本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ceph%E7%89%88%E6%9C%AC%E6%9D%A5%E6%BA%90%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.</span> <span class="nav-text">Ceph版本来源介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mimic%E6%96%B0%E7%89%88%E6%9C%AC%E7%89%B9%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">mimic新版本特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ceph%E7%AE%80%E4%BB%8B"><span class="nav-number">1.4.</span> <span class="nav-text">ceph简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">1.4.1.</span> <span class="nav-text">ceph的设计思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">1.4.2.</span> <span class="nav-text">ceph的组成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Monitor-ceph-mon-ceph-%E7%9B%91%E8%A7%86%E5%99%A8"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">Monitor(ceph-mon) ceph 监视器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Managers-ceph-mgr"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">Managers(ceph-mgr)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ceph-OSDs-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%88%E6%8A%A4%E7%A8%8B%E5%BA%8F-ceph-osd-j"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">Ceph OSDs(对象存储守护程序 ceph-osd)j</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MDS-ceph-%E5%85%83%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%99%A8-ceph-mds"><span class="nav-number">1.4.2.4.</span> <span class="nav-text">MDS(ceph 元数据服务器 ceph-mds)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ceph-%E7%9A%84%E7%AE%A1%E7%90%86%E8%8A%82%E7%82%B9"><span class="nav-number">1.4.2.5.</span> <span class="nav-text">Ceph 的管理节点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ceph%E7%89%B9%E7%82%B9"><span class="nav-number">1.5.</span> <span class="nav-text">Ceph特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ceph%E5%AD%98%E5%8F%96%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.6.</span> <span class="nav-text">ceph存取原理介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">数据高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.6.2.</span> <span class="nav-text">ceph数据存储过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ceph%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">1.7.</span> <span class="nav-text">ceph安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E7%A1%AC%E4%BB%B6%E9%80%89%E5%9E%8B"><span class="nav-number">1.7.1.</span> <span class="nav-text">生产环境硬件选型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph-%E9%83%A8%E7%BD%B2%E5%B7%A5%E5%85%B7"><span class="nav-number">1.7.2.</span> <span class="nav-text">ceph 部署工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E8%A7%84%E5%88%92"><span class="nav-number">1.7.3.</span> <span class="nav-text">机器规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E7%94%A8%E6%88%B7"><span class="nav-number">1.7.4.</span> <span class="nav-text">部署用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%88%9D%E5%A7%8B%E5%8C%96%E5%87%86%E5%A4%87"><span class="nav-number">1.7.5.</span> <span class="nav-text">环境初始化准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph-deploy%E8%8A%82%E7%82%B9%E7%9A%84%E9%83%A8%E7%BD%B2%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.7.6.</span> <span class="nav-text">ceph-deploy节点的部署与初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96mon1"><span class="nav-number">1.7.6.1.</span> <span class="nav-text">初始化mon1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ceph-common%E5%B9%B6%E6%8E%A8%E9%80%81%E8%AE%A4%E8%AF%81"><span class="nav-number">1.7.6.2.</span> <span class="nav-text">安装ceph-common并推送认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96mgr%E8%8A%82%E7%82%B9"><span class="nav-number">1.7.6.3.</span> <span class="nav-text">初始化mgr节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96data%E8%8A%82%E7%82%B9"><span class="nav-number">1.7.6.4.</span> <span class="nav-text">初始化data节点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ceph%E5%9F%BA%E7%A1%80%E8%BF%90%E7%BB%B4"><span class="nav-number">1.8.</span> <span class="nav-text">ceph基础运维</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSD%E7%AE%A1%E7%90%86"><span class="nav-number">1.8.1.</span> <span class="nav-text">OSD管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8ERADOS%E5%88%A0%E9%99%A4OSD"><span class="nav-number">1.8.1.1.</span> <span class="nav-text">从RADOS删除OSD</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%B8%8A%E4%BC%A0%E4%B8%8E%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE"><span class="nav-number">1.8.2.</span> <span class="nav-text">测试上传与下载数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mon%E8%8A%82%E7%82%B9%E6%89%A9%E7%BC%A9%E5%AE%B9"><span class="nav-number">1.8.3.</span> <span class="nav-text">mon节点扩缩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mgr%E6%89%A9%E7%BC%A9%E5%AE%B9"><span class="nav-number">1.8.4.</span> <span class="nav-text">mgr扩缩容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ceph%E9%9B%86%E7%BE%A4%E5%BA%94%E7%94%A8%E5%9F%BA%E7%A1%80"><span class="nav-number">1.9.</span> <span class="nav-text">ceph集群应用基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%97%E8%AE%BE%E5%A4%87RBD"><span class="nav-number">1.9.1.</span> <span class="nav-text">块设备RBD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BARDB"><span class="nav-number">1.9.1.1.</span> <span class="nav-text">创建RDB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%B9%B6%E9%AA%8C%E8%AF%81-img"><span class="nav-number">1.9.1.2.</span> <span class="nav-text">创建并验证 img</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8C%82%E8%BD%BDRBD%E5%9D%97%E5%AD%98%E5%82%A8"><span class="nav-number">1.9.1.3.</span> <span class="nav-text">客户端挂载RBD块存储</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph-radosgw-RGW-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8"><span class="nav-number">1.9.2.</span> <span class="nav-text">ceph radosgw(RGW)对象存储</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-radosgw-%E6%9C%8D%E5%8A%A1%EF%BC%9A"><span class="nav-number">1.9.2.1.</span> <span class="nav-text">部署 radosgw 服务：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ceph%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">Ceph基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">版本介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ceph%E7%89%88%E6%9C%AC%E6%9D%A5%E6%BA%90%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">Ceph版本来源介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mimic%E6%96%B0%E7%89%88%E6%9C%AC%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.2.</span> <span class="nav-text">mimic新版本特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ceph%E7%AE%80%E4%BB%8B"><span class="nav-number">1.2.</span> <span class="nav-text">ceph简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">1.2.1.</span> <span class="nav-text">ceph的设计思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">1.2.2.</span> <span class="nav-text">ceph的组成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Monitor-ceph-mon-ceph-%E7%9B%91%E8%A7%86%E5%99%A8"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Monitor(ceph-mon) ceph 监视器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Managers-ceph-mgr"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Managers(ceph-mgr)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ceph-OSDs-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%88%E6%8A%A4%E7%A8%8B%E5%BA%8F-ceph-osd-j"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">Ceph OSDs(对象存储守护程序 ceph-osd)j</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MDS-ceph-%E5%85%83%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%99%A8-ceph-mds"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">MDS(ceph 元数据服务器 ceph-mds)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ceph-%E7%9A%84%E7%AE%A1%E7%90%86%E8%8A%82%E7%82%B9"><span class="nav-number">1.2.2.5.</span> <span class="nav-text">Ceph 的管理节点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ceph%E7%89%B9%E7%82%B9"><span class="nav-number">1.3.</span> <span class="nav-text">Ceph特点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ceph%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E8%A7%86%E5%9B%BE"><span class="nav-number">1.3.1.</span> <span class="nav-text">Ceph内部数据存储视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph%E5%AD%98%E5%8F%96%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.3.2.</span> <span class="nav-text">ceph存取原理介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="nav-number">1.3.3.</span> <span class="nav-text">数据高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.4.</span> <span class="nav-text">ceph数据存储过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ceph%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.</span> <span class="nav-text">ceph安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E7%A1%AC%E4%BB%B6%E9%80%89%E5%9E%8B"><span class="nav-number">1.4.1.</span> <span class="nav-text">生产环境硬件选型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph-%E9%83%A8%E7%BD%B2%E5%B7%A5%E5%85%B7"><span class="nav-number">1.4.2.</span> <span class="nav-text">ceph 部署工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E8%A7%84%E5%88%92"><span class="nav-number">1.4.3.</span> <span class="nav-text">机器规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E7%94%A8%E6%88%B7"><span class="nav-number">1.4.4.</span> <span class="nav-text">部署用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%88%9D%E5%A7%8B%E5%8C%96%E5%87%86%E5%A4%87"><span class="nav-number">1.4.5.</span> <span class="nav-text">环境初始化准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph-deploy%E8%8A%82%E7%82%B9%E7%9A%84%E9%83%A8%E7%BD%B2%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.4.6.</span> <span class="nav-text">ceph-deploy节点的部署与初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96mon1"><span class="nav-number">1.4.6.1.</span> <span class="nav-text">初始化mon1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ceph-common%E5%B9%B6%E6%8E%A8%E9%80%81%E8%AE%A4%E8%AF%81"><span class="nav-number">1.4.6.2.</span> <span class="nav-text">安装ceph-common并推送认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96mgr%E8%8A%82%E7%82%B9"><span class="nav-number">1.4.6.3.</span> <span class="nav-text">初始化mgr节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96data%E8%8A%82%E7%82%B9"><span class="nav-number">1.4.6.4.</span> <span class="nav-text">初始化data节点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ceph%E5%9F%BA%E7%A1%80%E8%BF%90%E7%BB%B4"><span class="nav-number">1.5.</span> <span class="nav-text">ceph基础运维</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSD%E7%AE%A1%E7%90%86"><span class="nav-number">1.5.1.</span> <span class="nav-text">OSD管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8ERADOS%E5%88%A0%E9%99%A4OSD"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">从RADOS删除OSD</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%B8%8A%E4%BC%A0%E4%B8%8E%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE"><span class="nav-number">1.5.2.</span> <span class="nav-text">测试上传与下载数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mon%E8%8A%82%E7%82%B9%E6%89%A9%E7%BC%A9%E5%AE%B9"><span class="nav-number">1.5.3.</span> <span class="nav-text">mon节点扩缩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mgr%E6%89%A9%E7%BC%A9%E5%AE%B9"><span class="nav-number">1.5.4.</span> <span class="nav-text">mgr扩缩容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ceph%E9%9B%86%E7%BE%A4%E5%BA%94%E7%94%A8%E5%9F%BA%E7%A1%80"><span class="nav-number">1.6.</span> <span class="nav-text">ceph集群应用基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%97%E8%AE%BE%E5%A4%87RBD"><span class="nav-number">1.6.1.</span> <span class="nav-text">块设备RBD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BARDB"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">创建RDB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%B9%B6%E9%AA%8C%E8%AF%81-img"><span class="nav-number">1.6.1.2.</span> <span class="nav-text">创建并验证 img</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8C%82%E8%BD%BDRBD%E5%9D%97%E5%AD%98%E5%82%A8"><span class="nav-number">1.6.1.3.</span> <span class="nav-text">客户端挂载RBD块存储</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceph-radosgw-RGW-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8"><span class="nav-number">1.6.2.</span> <span class="nav-text">ceph radosgw(RGW)对象存储</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-radosgw-%E6%9C%8D%E5%8A%A1%EF%BC%9A"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">部署 radosgw 服务：</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -910,7 +905,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">56:08</span>
+    <span title="站点阅读时长">56:09</span>
 </div>
 
 <!--
