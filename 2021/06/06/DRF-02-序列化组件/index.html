@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gghkhucudgj315w0rmqv5.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gghkj4qalrj31yg0qo1kz.jpg">
 <meta property="article:published_time" content="2021-06-05T19:21:19.000Z">
-<meta property="article:modified_time" content="2021-12-11T03:33:57.537Z">
+<meta property="article:modified_time" content="2021-12-26T10:38:15.881Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-11 11:33:57" itemprop="dateModified" datetime="2021-12-11T11:33:57+08:00">2021-12-11</time>
+                <time title="修改时间：2021-12-26 18:38:15" itemprop="dateModified" datetime="2021-12-26T18:38:15+08:00">2021-12-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -651,7 +651,10 @@
 
 
 <hr>
-<h2 id="1-to-internal-value-反序列化-和to-representation-序列化"><a href="#1-to-internal-value-反序列化-和to-representation-序列化" class="headerlink" title="1. to_internal_value(反序列化)和to_representation(序列化)"></a>1. to_internal_value(反序列化)和to_representation(序列化)</h2><p>ser.py</p>
+<h2 id="1-to-internal-value-反序列化-和to-representation-序列化"><a href="#1-to-internal-value-反序列化-和to-representation-序列化" class="headerlink" title="1. to_internal_value(反序列化)和to_representation(序列化)"></a>1. to_internal_value(反序列化)和to_representation(序列化)</h2><blockquote>
+<p>一般当前模型里面没有这个属性的时候，用to_representation处理一下序列化返回</p>
+</blockquote>
+<p>ser.py</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</span><br><span class="line"><span class="keyword">from</span> idcs.serializers <span class="keyword">import</span> IdcSerializer</span><br><span class="line"><span class="keyword">from</span> idcs.models <span class="keyword">import</span> IDC</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Cabinet</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CabinetSerializer</span>(<span class="params">serializers.Serializer</span>):</span></span><br><span class="line">    idc = serializers.PrimaryKeyRelatedField(many=<span class="literal">False</span>, queryset=IDC.objects.all())</span><br><span class="line">    name = serializers.CharField(required=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to_representation</span>(<span class="params">self, instance</span>):</span></span><br><span class="line">        idc_obj = instance.idc</span><br><span class="line">        ret = super(CabinetSerializer, self).to_representation(instance)</span><br><span class="line">        ret[<span class="string">&quot;idc&quot;</span>] = &#123;</span><br><span class="line">            <span class="string">&quot;id&quot;</span>: idc_obj.id,</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: idc_obj.name</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to_internal_value</span>(<span class="params">self, data</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        反序列化第一步: 拿到提交过来的原始数据：QueryDict ==&gt; request.GET request.POST</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        print(data)</span><br><span class="line">        <span class="keyword">return</span> super(CabinetSerializer, self).to_internal_value(data)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span>(<span class="params">self, validated_data</span>):</span></span><br><span class="line">        <span class="keyword">raise</span> serializers.ValidationError(<span class="string">&quot;create error&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> Cabinet.objects.create(**validated_data)</span><br></pre></td></tr></table></figure>
 
 <p>Views.py</p>
@@ -824,7 +827,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">56:25</span>
+    <span title="站点阅读时长">56:26</span>
 </div>
 
 <!--
