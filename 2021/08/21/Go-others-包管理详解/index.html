@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006y8mN6gy1g94te0hhiwj30qg0fs77y.jpg">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006y8mN6gy1g94wsfd7ybj31io08yq4i.jpg">
 <meta property="article:published_time" content="2021-08-21T10:48:31.000Z">
-<meta property="article:modified_time" content="2021-08-21T10:50:22.368Z">
+<meta property="article:modified_time" content="2022-01-01T11:36:49.797Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
@@ -217,10 +217,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-08-21 18:48:31 / 修改时间：18:50:22" itemprop="dateCreated datePublished" datetime="2021-08-21T18:48:31+08:00">2021-08-21</time>
+              <time title="创建时间：2021-08-21 18:48:31" itemprop="dateCreated datePublished" datetime="2021-08-21T18:48:31+08:00">2021-08-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-01 19:36:49" itemprop="dateModified" datetime="2022-01-01T19:36:49+08:00">2022-01-01</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -237,7 +243,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6k</span>
+              <span>5.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -278,16 +284,16 @@
 <li>GO111MODULE=on: 使用 modules 功能，不会去 GOPATH 下面查找依赖包。</li>
 <li>GO111MODULE=auto: Golang 自己检测是不是使用 modules 功能，如果当前目录不在$GOPATH <strong>并且</strong> 当前目录（或者父目录）下有go.mod文件，则使用 GO111MODULE， 否则仍旧使用 GOPATH mode</li>
 </ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copyset GO111MODULE=on    <span class="comment">//windows</span></span><br><span class="line">export GO111MODULE=on <span class="comment">//linux</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set GO111MODULE=on    <span class="comment">//windows</span></span><br><span class="line">export GO111MODULE=on <span class="comment">//linux</span></span><br></pre></td></tr></table></figure>
 
 <p>在 GOPATH 之外创建一个项目 mod-demo，包含一个 main.go 文件，内容如下:</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Copypackage main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;github.com/astaxie/beego&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;hello&quot;</span>)</span><br><span class="line">    beego.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;github.com/astaxie/beego&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;hello&quot;</span>)</span><br><span class="line">    beego.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-初始化go-modules"><a href="#2-2-初始化go-modules" class="headerlink" title="2.2 初始化go modules"></a>2.2 初始化go modules</h3><p>在项目根目录执行命令 <code>go mod init test-demo</code> ，然后会生成一个 go.mod</p>
 <p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006y8mN6gy1g94t8ve4vqj30pu05gmy8.jpg" alt="image-20191120210941001"></p>
 <p>这里比较关键的就是这个 go.mod 文件，这个文件中标识了我们的项目的依赖的 package 的版本。执行 init 暂时还没有将所有的依赖管理起来。我们需要将程序 run 起来（比如执行 go run/test），或者 build（执行命令 go build）的时候，才会触发依赖的解析。</p>
 <p>比如使用 go run 即可触发 modules 工作。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copygo run test.<span class="keyword">go</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> run test.<span class="keyword">go</span></span><br></pre></td></tr></table></figure>
 
 <p>这个时候我们再查看 go.mod 文件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Copymodule test-demo</span><br><span class="line"></span><br><span class="line">go 1.13</span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com&#x2F;astaxie&#x2F;beego v1.12.0 &#x2F;&#x2F; indirect</span><br><span class="line">    github.com&#x2F;shiena&#x2F;ansicolor v0.0.0-20151119151921-a422bbe96644 &#x2F;&#x2F; indirect</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
@@ -298,7 +304,7 @@
 <p>这些 package 并不是直接存储到 GOPATH/src，而是存储到 GOPATH/pkg/mod 下面，不同版本并存的方式。</p>
 <p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006y8mN6gy1g94te0hhiwj30qg0fs77y.jpg" alt="image-20191120211440359"></p>
 <h3 id="2-3-依赖的升级和降级"><a href="#2-3-依赖的升级和降级" class="headerlink" title="2.3 依赖的升级和降级"></a>2.3 依赖的升级和降级</h3><p>可以使用如下命令来查看当前项目依赖的所有的包</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Copygo list -m -u all</span><br><span class="line"><span class="comment">//如果我想要升级（降级）某个 package 则只需要 go get 即可，比如：</span></span><br><span class="line"><span class="keyword">go</span> get <span class="keyword">package</span>@version</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> list -m -u all</span><br><span class="line"><span class="comment">//如果我想要升级（降级）某个 package 则只需要 go get 即可，比如：</span></span><br><span class="line"><span class="keyword">go</span> get <span class="keyword">package</span>@version</span><br></pre></td></tr></table></figure>
 
 <p>需要注意的是，在 modules 模式开启和关闭的情况下，<code>go get</code> 的使用方式不是完全相同的。在 modules 模式开启的情况下，可以通过在 package 后面添加 <em>@version</em> 来表明要升级（降级）到某个版本。如果没有指明 version 的情况下，则默认先下载打了 tag 的 release 版本，比如 v0.4.5 或者 v1.2.3；如果没有 release 版本，则下载最新的 pre release 版本，比如 v0.0.1-pre1。如果还没有则下载最新的 commit。这个地方给我们的一个启示是如果我们不按规范的方式来命名我们的 package 的 tag，则 modules 是无法管理的。version 的格式为 <code>v(major).(minor).(patch)</code> ，更多信息可以参考：<a target="_blank" rel="noopener" href="https://semver.org/">https://semver.org/</a> 。</p>
 <p>比如我们现在想将我们依赖中的 beego 项目的版本改为 v1.11.1，则可以像如下操作。我们发现执行完 <code>go get</code> 之后， go.mod 中的项目的版本也相应改变了。</p>
@@ -311,7 +317,7 @@
 <li>go get -u=patch 使用最新的 patch 版本</li>
 </ul>
 <h3 id="2-4-vender"><a href="#2-4-vender" class="headerlink" title="2.4 vender"></a>2.4 vender</h3><p>我们知道 Go 1.5 推出了 vendor 机制，go mod 也可以支持 vendor 机制，将依赖包拷贝到 vendor 目录。但是像一些 test case 里面的依赖包并不会拷贝的 vendor 目录中。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copygo mod vendor</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> mod vendor</span><br></pre></td></tr></table></figure>
 
 <h2 id="三-modules-高级特性"><a href="#三-modules-高级特性" class="headerlink" title="三 modules 高级特性"></a>三 modules 高级特性</h2><h3 id="3-1-代理服务器GoProxy"><a href="#3-1-代理服务器GoProxy" class="headerlink" title="3.1 代理服务器GoProxy"></a>3.1 代理服务器GoProxy</h3><p>proxy 顾名思义，代理服务器。众所周知，有些 Golang 的 package 在国内是无法直接 go get 的。在之前，我们解决这个问题，一般都是通过设置 http_proxy/https_proxy 来解决。GoProxy 相当于官方提供了一种 proxy 的方式让用户来进行包下载。要使用 GoProxy 只需要设置环境变量 <code>GOPROXY</code> 即可。目前公开的 GOPROXY 有：</p>
 <ul>
@@ -324,7 +330,7 @@
 <h3 id="3-2-replace"><a href="#3-2-replace" class="headerlink" title="3.2 replace"></a>3.2 replace</h3><p>replace 主要为了解决某些包发生改名的问题。</p>
 <p>对于另外一种场景有的时候也是有用的，比如对于有些 golang.org/x/ 下面的包由于某些原因在国内是下载不了的，但是对应的包在 github 上面是有一份拷贝的，这个时候我们就可以将 go.mod 中的包进行 replace 操作。</p>
 <p>下面是一个 Beego 项目的 go.mod 的 replace 的示例。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copyreplace golang.org/x/crypto v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20181127143415</span>-eb0de9b17e85 =&gt; github.com/golang/crypto v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20181127143415</span>-eb0de9b17e85</span><br><span class="line">replace gopkg.in/yaml.v2 v2<span class="number">.2</span><span class="number">.1</span> =&gt; github.com/<span class="keyword">go</span>-yaml/yaml v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180328195020</span><span class="number">-5420</span>a8b6744d</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">replace golang.org/x/crypto v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20181127143415</span>-eb0de9b17e85 =&gt; github.com/golang/crypto v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20181127143415</span>-eb0de9b17e85</span><br><span class="line">replace gopkg.in/yaml.v2 v2<span class="number">.2</span><span class="number">.1</span> =&gt; github.com/<span class="keyword">go</span>-yaml/yaml v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20180328195020</span><span class="number">-5420</span>a8b6744d</span><br></pre></td></tr></table></figure>
 
 <h3 id="3-3-SubCommand"><a href="#3-3-SubCommand" class="headerlink" title="3.3 SubCommand"></a>3.3 SubCommand</h3><p>modules 支持的 subcommand 如下</p>
 <p>即输入<code>go mod</code>后面可以跟以下命令</p>
@@ -346,16 +352,16 @@
 <p>上面的 GOPRIVATE 表示以 *.corp.example.com 或者 rsc.io/private 开头的 package 都是私有的。</p>
 <h3 id="4-3-GOSUMDB"><a href="#4-3-GOSUMDB" class="headerlink" title="4.3 GOSUMDB"></a>4.3 GOSUMDB</h3><p>GOSUMDB 的全称为 Go CheckSum Database，用来下载的包的安全性校验问题。包的安全性在使用 GoProxy 之后更容易出现，比如我们引用了一个不安全的 GoProxy 之后然后下载了一个不安全的包，这个时候就出现了安全性问题。对于这种情况，可以通过 GOSUMDB 来对包的哈希值进行校验。当然如果想要关闭哈希校验，可以将 GOSUMDB 设置为 off；如果要对部分包关闭哈希校验，则可以将包的前缀设置到环境变量中 GONOSUMDB 中，设置规则类似 GOPRIVATE。</p>
 <p>关于 GOSUMDB 的配置格式为：<db_name>++。</db_name></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CopyGOSUMDB&#x3D;&quot;sum.golang.org&quot;GOSUMDB&#x3D;&quot;sum.golang.org+&lt;publickey&gt;&quot;GOSUMDB&#x3D;&quot;sum.golang.org+&lt;publickey&gt; https:&#x2F;&#x2F;sum.golang.org&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOSUMDB&#x3D;&quot;sum.golang.org&quot;GOSUMDB&#x3D;&quot;sum.golang.org+&lt;publickey&gt;&quot;GOSUMDB&#x3D;&quot;sum.golang.org+&lt;publickey&gt; https:&#x2F;&#x2F;sum.golang.org&quot;</span><br></pre></td></tr></table></figure>
 
 <p>上面三种配置都是合理的，因为对于 sum.golang.org，Go 自己知道其对应的 publickey 和 url，所以我们只要配置一个名字即可，对于另外一个 sum.golang.google.cn 也是一样。除此之外的，都需要指明 publickey，url 默认是 https://<db_name>。</db_name></p>
 <p>关于 GOSUMDB 更多的详细信息可以参考：<a target="_blank" rel="noopener" href="https://golang.org/cmd/go/#hdr-Module_authentication_failures">https://golang.org/cmd/go/#hdr-Module_authentication_failures</a></p>
 <h2 id="五-自己写的包如何导入使用"><a href="#五-自己写的包如何导入使用" class="headerlink" title="五 自己写的包如何导入使用"></a>五 自己写的包如何导入使用</h2><p>直接在go.mod中写包名即可</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Copymodule test-demo</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> <span class="number">1.13</span></span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com/astaxie/beego v1<span class="number">.12</span><span class="number">.0</span></span><br><span class="line">    github.com/gin-gonic/gin v1<span class="number">.4</span><span class="number">.0</span> <span class="comment">// indirect</span></span><br><span class="line">    github.com/<span class="keyword">go</span>-redis/redis v6<span class="number">.15</span><span class="number">.6</span>+incompatible</span><br><span class="line">    github.com/shiena/ansicolor v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20151119151921</span>-a422bbe96644 <span class="comment">// indirect</span></span><br><span class="line">    redisPackage v0<span class="number">.0</span><span class="number">.1</span>  <span class="comment">//自己加的v0.1.1 必须为三个数(也可以 不加)</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">module test-demo</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> <span class="number">1.13</span></span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com/astaxie/beego v1<span class="number">.12</span><span class="number">.0</span></span><br><span class="line">    github.com/gin-gonic/gin v1<span class="number">.4</span><span class="number">.0</span> <span class="comment">// indirect</span></span><br><span class="line">    github.com/<span class="keyword">go</span>-redis/redis v6<span class="number">.15</span><span class="number">.6</span>+incompatible</span><br><span class="line">    github.com/shiena/ansicolor v0<span class="number">.0</span><span class="number">.0</span><span class="number">-20151119151921</span>-a422bbe96644 <span class="comment">// indirect</span></span><br><span class="line">    redisPackage v0<span class="number">.0</span><span class="number">.1</span>  <span class="comment">//自己加的v0.1.1 必须为三个数(也可以 不加)</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
 <h2 id="五-总结"><a href="#五-总结" class="headerlink" title="五 总结"></a>五 总结</h2><p>Golang 包管理历经多个版本，目前来看并没有一个完全让开发者满意的方案，比如类似 Java 的 maven 的包管理方式。很多开发者也表示 modules 的管理方式也不是很直观。其实 Golang 的 package 使用 git 的管理方式来管理其实是一个很好的管理方式，我们最需要的其实如何能让普通开发者获取到任何 package 的心智负担降到最低。值得欣慰的是我们确实有看到大家在这个方向上的努力，比如 modules 的 GoProxy。</p>
 <p>放眼未来，希望会有一种令大部分普通开发者满意的包管理方式吧。</p>
-<h2 id="最后常用命令"><a href="#最后常用命令" class="headerlink" title="最后常用命令"></a>最后常用命令</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Copygo mod init:初始化modules</span><br><span class="line"><span class="keyword">go</span> mod download:下载modules到本地cache</span><br><span class="line"><span class="keyword">go</span> mod edit:编辑<span class="keyword">go</span>.mod文件，选项有-json、-require和-exclude，可以使用帮助<span class="keyword">go</span> help mod edit</span><br><span class="line"><span class="keyword">go</span> mod graph:以文本模式打印模块需求图</span><br><span class="line"><span class="keyword">go</span> mod tidy:检查，删除错误或者不使用的modules，下载没download的<span class="keyword">package</span></span><br><span class="line"><span class="keyword">go</span> mod vendor:生成vendor目录</span><br><span class="line"><span class="keyword">go</span> mod verify:验证依赖是否正确</span><br><span class="line"><span class="keyword">go</span> mod why：查找依赖</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> test    执行一下，自动导包</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> list -m  主模块的打印路径</span><br><span class="line"><span class="keyword">go</span> list -m -f=&#123;&#123;.Dir&#125;&#125;  <span class="built_in">print</span>主模块的根目录</span><br><span class="line"><span class="keyword">go</span> list -m all  查看当前的依赖和版本信息</span><br></pre></td></tr></table></figure>
+<h2 id="最后常用命令"><a href="#最后常用命令" class="headerlink" title="最后常用命令"></a>最后常用命令</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> mod init:初始化modules</span><br><span class="line"><span class="keyword">go</span> mod download:下载modules到本地cache</span><br><span class="line"><span class="keyword">go</span> mod edit:编辑<span class="keyword">go</span>.mod文件，选项有-json、-require和-exclude，可以使用帮助<span class="keyword">go</span> help mod edit</span><br><span class="line"><span class="keyword">go</span> mod graph:以文本模式打印模块需求图</span><br><span class="line"><span class="keyword">go</span> mod tidy:检查，删除错误或者不使用的modules，下载没download的<span class="keyword">package</span></span><br><span class="line"><span class="keyword">go</span> mod vendor:生成vendor目录</span><br><span class="line"><span class="keyword">go</span> mod verify:验证依赖是否正确</span><br><span class="line"><span class="keyword">go</span> mod why：查找依赖</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> test    执行一下，自动导包</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> list -m  主模块的打印路径</span><br><span class="line"><span class="keyword">go</span> list -m -f=&#123;&#123;.Dir&#125;&#125;  <span class="built_in">print</span>主模块的根目录</span><br><span class="line"><span class="keyword">go</span> list -m all  查看当前的依赖和版本信息</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -454,7 +460,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">195</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -502,7 +508,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -516,7 +522,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">56:27</span>
+    <span title="站点阅读时长">56:29</span>
 </div>
 
 <!--
