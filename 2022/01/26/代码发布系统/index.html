@@ -27,14 +27,21 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="代码发布">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000918543.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220126235345535.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220126235528088.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000125560.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000508242.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000541322.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000709222.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000747476.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127192353951.png">
 <meta property="article:published_time" content="2022-01-26T15:30:14.000Z">
-<meta property="article:modified_time" content="2022-01-26T15:55:35.579Z">
+<meta property="article:modified_time" content="2022-01-27T11:28:46.235Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="发布系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220126235345535.png">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000918543.png">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2022/01/26/%E4%BB%A3%E7%A0%81%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F/">
 
@@ -216,10 +223,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-26 23:30:14 / 修改时间：23:55:35" itemprop="dateCreated datePublished" datetime="2022-01-26T23:30:14+08:00">2022-01-26</time>
+              <time title="创建时间：2022-01-26 23:30:14" itemprop="dateCreated datePublished" datetime="2022-01-26T23:30:14+08:00">2022-01-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-27 19:28:46" itemprop="dateModified" datetime="2022-01-27T19:28:46+08:00">2022-01-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -236,7 +249,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>472</span>
+              <span>776</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -258,7 +271,7 @@
         <p>代码发布</p>
 <a id="more"></a>
 
-<h2 id="发布系统简介"><a href="#发布系统简介" class="headerlink" title="发布系统简介"></a>发布系统简介</h2><h3 id="1-什么是发布系统"><a href="#1-什么是发布系统" class="headerlink" title="1.什么是发布系统"></a>1.什么是发布系统</h3><p>   按照指定的规范流程，将开发环境下的代码，配置文件，数据等推送到线上服务器的系统</p>
+<h2 id="1-发布系统简介"><a href="#1-发布系统简介" class="headerlink" title="1.发布系统简介"></a>1.发布系统简介</h2><h3 id="1-什么是发布系统"><a href="#1-什么是发布系统" class="headerlink" title="1.什么是发布系统"></a>1.什么是发布系统</h3><p>   按照指定的规范流程，将开发环境下的代码，配置文件，数据等推送到线上服务器的系统</p>
 <h3 id="2-发布系统三要素"><a href="#2-发布系统三要素" class="headerlink" title="2.发布系统三要素"></a>2.发布系统三要素</h3><p>​    2.1. 配置文件（nginx，Ingress）</p>
 <p>​    2.2. 数据（db）</p>
 <p>​    2.3. 代码（代码推送）</p>
@@ -267,7 +280,7 @@
 <h3 id="4-发布系统的三个环境"><a href="#4-发布系统的三个环境" class="headerlink" title="4.发布系统的三个环境"></a>4.发布系统的三个环境</h3><p>​    4.1. 测试环境 – 开发自己的测试环境</p>
 <p>​    4.2. UAT仿真环境 – 定板代码，线上真实环境</p>
 <p>​    4.3. PRO线上环境 – 对外提供服务的环境</p>
-<h2 id="发布系统解决哪些问题"><a href="#发布系统解决哪些问题" class="headerlink" title="发布系统解决哪些问题"></a>发布系统解决哪些问题</h2><ul>
+<h2 id="2-发布系统解决哪些问题"><a href="#2-发布系统解决哪些问题" class="headerlink" title="2.发布系统解决哪些问题"></a>2.发布系统解决哪些问题</h2><ul>
 <li>日常运维遇到的问题<ul>
 <li>碎片化发布需求非常频繁</li>
 <li>项目少的时候手动或者shell，项目多不行</li>
@@ -281,9 +294,44 @@
 </ul>
 </li>
 </ul>
-<h2 id="代码发布系统基本流程"><a href="#代码发布系统基本流程" class="headerlink" title="代码发布系统基本流程"></a>代码发布系统基本流程</h2><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220126235345535.png" alt="image-20220126235345535"></p>
-<h2 id="不同规模公司发布系统简介"><a href="#不同规模公司发布系统简介" class="headerlink" title="不同规模公司发布系统简介"></a>不同规模公司发布系统简介</h2><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220126235528088.png" alt="image-20220126235528088"></p>
-<h2 id="发布系统功能介绍"><a href="#发布系统功能介绍" class="headerlink" title="发布系统功能介绍"></a>发布系统功能介绍</h2>
+<h2 id="3-代码发布系统基本流程"><a href="#3-代码发布系统基本流程" class="headerlink" title="3.代码发布系统基本流程"></a>3.代码发布系统基本流程</h2><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000918543.png" alt="image-20220127000918543"></p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220126235345535.png" alt="image-20220126235345535"></p>
+<h2 id="4-不同规模公司发布系统简介"><a href="#4-不同规模公司发布系统简介" class="headerlink" title="4.不同规模公司发布系统简介"></a>4.不同规模公司发布系统简介</h2><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220126235528088.png" alt="image-20220126235528088"></p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000125560.png" alt="image-20220127000125560"></p>
+<h2 id="5-发布系统功能介绍"><a href="#5-发布系统功能介绍" class="headerlink" title="5.发布系统功能介绍"></a>5.发布系统功能介绍</h2><ol>
+<li>测试发布–原有功能基础上加入发布日志列表，用户认证及根据觉角色展示有权限的项目列表</li>
+</ol>
+<p>​        <img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000508242.png" alt="image-20220127000508242"></p>
+<ol start="2">
+<li>申请上线–项目负责人合并代码后发起，原有基础上用户认证及权限</li>
+</ol>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000541322.png" alt="image-20220127000541322"></p>
+<ol start="3">
+<li>申请发布列表 – 测试查看发布申请，有灰度，正式，取消三个事件</li>
+</ol>
+<p>​        <img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000709222.png" alt="image-20220127000709222"></p>
+<ol start="4">
+<li><p>发布列表 – 所有项目的发布记录，包括灰度，正式以及失败的记录</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127000747476.png" alt="image-20220127000747476"></p>
+</li>
+</ol>
+<h2 id="6-git工作流"><a href="#6-git工作流" class="headerlink" title="6.git工作流"></a>6.git工作流</h2><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20220127192353951.png" alt="image-20220127192353951"></p>
+<p>测试环境自动化集成CI</p>
+<ol>
+<li><p>开发人员git clone -b dev</p>
+</li>
+<li><p>开发人员checkout自己的分支进行功能开发</p>
+</li>
+<li><p>功能开发完毕，可以merge自己的分支dev </p>
+</li>
+<li><p>开发人员可以git push origin dev从而通过gitlab的webhook触发jenkins事件</p>
+</li>
+<li><p>Jenkins自动将dev的代码同步测试服务器</p>
+</li>
+<li><p>测试人员开始测试</p>
+</li>
+</ol>
+
     </div>
 
     
@@ -363,7 +411,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">发布系统简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.1.</span> <span class="nav-text">1.什么是发布系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="nav-number">1.2.</span> <span class="nav-text">2.发布系统三要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3.发布系统前提条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%89%E4%B8%AA%E7%8E%AF%E5%A2%83"><span class="nav-number">1.4.</span> <span class="nav-text">4.发布系统的三个环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E8%A7%A3%E5%86%B3%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">发布系统解决哪些问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">代码发布系统基本流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E8%A7%84%E6%A8%A1%E5%85%AC%E5%8F%B8%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B"><span class="nav-number">4.</span> <span class="nav-text">不同规模公司发布系统简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D"><span class="nav-number">5.</span> <span class="nav-text">发布系统功能介绍</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">1.发布系统简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.1.</span> <span class="nav-text">1.什么是发布系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="nav-number">1.2.</span> <span class="nav-text">2.发布系统三要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3.发布系统前提条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%89%E4%B8%AA%E7%8E%AF%E5%A2%83"><span class="nav-number">1.4.</span> <span class="nav-text">4.发布系统的三个环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E8%A7%A3%E5%86%B3%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">2.发布系统解决哪些问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BB%A3%E7%A0%81%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">3.代码发布系统基本流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%B8%8D%E5%90%8C%E8%A7%84%E6%A8%A1%E5%85%AC%E5%8F%B8%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B"><span class="nav-number">4.</span> <span class="nav-text">4.不同规模公司发布系统简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D"><span class="nav-number">5.</span> <span class="nav-text">5.发布系统功能介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-git%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">6.</span> <span class="nav-text">6.git工作流</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -441,7 +489,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">56:40</span>
+    <span title="站点阅读时长">56:47</span>
 </div>
 
 <!--
