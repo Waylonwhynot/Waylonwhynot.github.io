@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/p3-20210619110956002.png">
 <meta property="article:published_time" content="2021-06-18T11:23:47.000Z">
-<meta property="article:modified_time" content="2021-08-15T09:08:51.021Z">
+<meta property="article:modified_time" content="2022-01-31T10:14:05.033Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-15 17:08:51" itemprop="dateModified" datetime="2021-08-15T17:08:51+08:00">2021-08-15</time>
+                <time title="修改时间：2022-01-31 18:14:05" itemprop="dateModified" datetime="2022-01-31T18:14:05+08:00">2022-01-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -277,7 +277,7 @@
 <p>变量使用过程</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">代码读取</span><br><span class="line">变量加载到内存  name 指向 内存地址的值</span><br><span class="line"><span class="number">1</span>）变量含有名字，变量类型</span><br></pre></td></tr></table></figure>
 
-<h3 id="变量定义方式"><a href="#变量定义方式" class="headerlink" title="变量定义方式"></a>变量定义方式</h3><p>1）定义变量与类型，不赋值，含有默认值</p>
+<h1 id="变量定义方式"><a href="#变量定义方式" class="headerlink" title="变量定义方式"></a>变量定义方式</h1><p>1）定义变量与类型，不赋值，含有默认值</p>
 <p>语法：<code>var 语句定义变量的列表，类型在后面</code>，可以定义局部变量也可以，也可全局变量</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var name string</span><br><span class="line">var age int</span><br></pre></td></tr></table></figure>
 
@@ -353,35 +353,35 @@
 </thead>
 <tbody><tr>
 <td align="center">uint8</td>
-<td align="center">无符号 8位整型 (0 到 255)</td>
+<td align="center">1字节 无符号 8位整型 (0 到 255)</td>
 </tr>
 <tr>
 <td align="center">uint16</td>
-<td align="center">无符号 16位整型 (0 到 65535)</td>
+<td align="center">2字节 无符号 16位整型 (0 到 65535)</td>
 </tr>
 <tr>
 <td align="center">uint32</td>
-<td align="center">无符号 32位整型 (0 到 4294967295)</td>
+<td align="center">4字节 无符号 32位整型 (0 到 4294967295)</td>
 </tr>
 <tr>
 <td align="center">uint64</td>
-<td align="center">无符号 64位整型 (0 到 18446744073709551615)</td>
+<td align="center">8字节 无符号 64位整型 (0 到 18446744073709551615)</td>
 </tr>
 <tr>
 <td align="center">int8</td>
-<td align="center">有符号 8位整型 (-128 到 127)</td>
+<td align="center">1字节 有符号 8位整型 (-128 到 127)</td>
 </tr>
 <tr>
 <td align="center">int16</td>
-<td align="center">有符号 16位整型 (-32768 到 32767)</td>
+<td align="center">2字节 有符号 16位整型 (-32768 到 32767)</td>
 </tr>
 <tr>
 <td align="center">int32</td>
-<td align="center">有符号 32位整型 (-2147483648 到 2147483647)</td>
+<td align="center">4字节 有符号 32位整型 (-2147483648 到 2147483647)</td>
 </tr>
 <tr>
 <td align="center">int64</td>
-<td align="center">有符号 64位整型 (-9223372036854775808 到 9223372036854775807)</td>
+<td align="center">8字节 有符号 64位整型 (-9223372036854775808 到 9223372036854775807)</td>
 </tr>
 </tbody></table>
 <h3 id="特殊整型"><a href="#特殊整型" class="headerlink" title="特殊整型"></a>特殊整型</h3><table>
@@ -508,7 +508,9 @@
 <td align="center">join操作</td>
 </tr>
 </tbody></table>
-<h3 id="byte和rune类型-字符类型（字节和码点）"><a href="#byte和rune类型-字符类型（字节和码点）" class="headerlink" title="byte和rune类型 字符类型（字节和码点）"></a>byte和rune类型 字符类型（字节和码点）</h3><p>%%% 单引号引起来的就是字符</p>
+<h3 id="byte和rune类型-字符类型（字节和码点）"><a href="#byte和rune类型-字符类型（字节和码点）" class="headerlink" title="byte和rune类型 字符类型（字节和码点）"></a>byte和rune类型 字符类型（字节和码点）</h3><blockquote>
+<p>单引号引起来的就是字符</p>
+</blockquote>
 <p>组成每个字符串的元素叫做“字符”，可以通过遍历或者单个获取字符串元素获得字符。 字符用单引号（’）包裹起来，如：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">&#x27;中&#x27;</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="string">&#x27;x&#x27;</span></span><br></pre></td></tr></table></figure>
 
@@ -618,7 +620,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">变量定义方式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E5%B8%B8%E9%87%8F"><span class="nav-number"></span> <span class="nav-text">Go常量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E5%B8%B8%E9%87%8F%E4%B9%8Biota%E5%B8%B8%E9%87%8F%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number"></span> <span class="nav-text">Go常量之iota常量生成器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">整型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E6%95%B4%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">特殊整型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F%E8%AF%AD%E6%B3%95%EF%BC%88Number-literals-syntax%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">数字字面量语法（Number literals syntax）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">浮点型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E6%95%B0"><span class="nav-number"></span> <span class="nav-text">复数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E5%80%BC"><span class="nav-number"></span> <span class="nav-text">布尔值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number"></span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E4%B9%89%E7%AC%A6"><span class="nav-number">1.</span> <span class="nav-text">字符串转义符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">2.</span> <span class="nav-text">多行字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">字符串的常用操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#byte%E5%92%8Crune%E7%B1%BB%E5%9E%8B-%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B%EF%BC%88%E5%AD%97%E8%8A%82%E5%92%8C%E7%A0%81%E7%82%B9%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">byte和rune类型 字符类型（字节和码点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">5.</span> <span class="nav-text">修改字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number"></span> <span class="nav-text">类型转换</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">变量定义方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E5%B8%B8%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">Go常量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E5%B8%B8%E9%87%8F%E4%B9%8Biota%E5%B8%B8%E9%87%8F%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">Go常量之iota常量生成器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E5%9E%8B"><span class="nav-number">4.1.</span> <span class="nav-text">整型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E6%95%B4%E5%9E%8B"><span class="nav-number">4.1.1.</span> <span class="nav-text">特殊整型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F%E8%AF%AD%E6%B3%95%EF%BC%88Number-literals-syntax%EF%BC%89"><span class="nav-number">4.1.2.</span> <span class="nav-text">数字字面量语法（Number literals syntax）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="nav-number">4.2.</span> <span class="nav-text">浮点型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E6%95%B0"><span class="nav-number">4.3.</span> <span class="nav-text">复数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E5%80%BC"><span class="nav-number">4.4.</span> <span class="nav-text">布尔值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.5.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E4%B9%89%E7%AC%A6"><span class="nav-number">4.5.1.</span> <span class="nav-text">字符串转义符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.5.2.</span> <span class="nav-text">多行字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">4.5.3.</span> <span class="nav-text">字符串的常用操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#byte%E5%92%8Crune%E7%B1%BB%E5%9E%8B-%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B%EF%BC%88%E5%AD%97%E8%8A%82%E5%92%8C%E7%A0%81%E7%82%B9%EF%BC%89"><span class="nav-number">4.5.4.</span> <span class="nav-text">byte和rune类型 字符类型（字节和码点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.5.5.</span> <span class="nav-text">修改字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">4.6.</span> <span class="nav-text">类型转换</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -696,7 +698,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">56:48</span>
+    <span title="站点阅读时长">56:56</span>
 </div>
 
 <!--
