@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Django Channel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="26-Django-Channel">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2022/02/10/26-Django-Channel/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Django Channel">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/4/17/16a28e3061f80bd8~tplv-t2oaga2asx-watermark.awebp">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/16a28e306251dfa5~tplv-t2oaga2asx-watermark.awebp">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/20190419.channels.2.gif">
+<meta property="article:published_time" content="2022-02-10T09:44:54.000Z">
+<meta property="article:modified_time" content="2022-02-10T10:43:41.142Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/4/17/16a28e3061f80bd8~tplv-t2oaga2asx-watermark.awebp">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2022/02/10/26-Django-Channel/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>26-Django-Channel | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2022/02/10/26-Django-Channel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          26-Django-Channel
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-10 17:44:54 / 修改时间：18:43:41" itemprop="dateCreated datePublished" datetime="2022-02-10T17:44:54+08:00">2022-02-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>32 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Django Channel</p>
+<a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">channel layer是一种通信系统，允许多个consumer实例之间互相通信，以及与外部Django程序实现互通。</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>WebSocket是什么？</strong></p>
+<p>WebSocket是一种在单个TCP连接上进行全双工通讯的协议。WebSocket允许服务端主动向客户端推送数据。在WebSocket协议中，客户端浏览器和服务器只需要完成一次握手就可以创建持久性的连接，并在浏览器和服务器之间进行双向的数据传输。</p>
+<p><strong>WebSocket有什么用？</strong></p>
+<p>WebSocket区别于HTTP协议的一个最为显著的特点是，WebSocket协议可以由服务端主动发起消息，对于浏览器需要及时接收数据变化的场景非常适合，例如在Django中遇到一些耗时较长的任务我们通常会使用Celery来异步执行，那么浏览器如果想要获取这个任务的执行状态，在HTTP协议中只能通过轮训的方式由浏览器不断的发送请求给服务器来获取最新状态，这样发送很多无用的请求不仅浪费资源，还不够优雅，如果使用WebSokcet来实现就很完美了</p>
+<p>WebSocket的另外一个应用场景就是下文要说的聊天室，一个用户（浏览器）发送的消息需要实时的让其他用户（浏览器）接收，这在HTTP协议下是很难实现的，但WebSocket基于长连接加上可以主动给浏览器发消息的特性处理起来就游刃有余了</p>
+<p>初步了解WebSocket之后，我们看看如何在Django中实现WebSocket</p>
+<h1 id="Channels"><a href="#Channels" class="headerlink" title="Channels"></a>Channels</h1><p>Django本身不支持WebSocket，但可以通过集成Channels框架来实现WebSocket</p>
+<p>Channels是针对Django项目的一个增强框架，可以使Django不仅支持HTTP协议，还能支持WebSocket，MQTT等多种协议，同时Channels还整合了Django的auth以及session系统方便进行用户管理及认证。</p>
+<p>我下文所有的代码实现使用以下python和Django版本</p>
+<ul>
+<li>python==3.6.3</li>
+<li>django==2.2</li>
+</ul>
+<h2 id="集成Channels"><a href="#集成Channels" class="headerlink" title="集成Channels"></a>集成Channels</h2><p>我假设你已经新建了一个django项目，项目名字就叫<code>webapp</code>，目录结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">project</span><br><span class="line">    - webapp</span><br><span class="line">        - __init__.py</span><br><span class="line">        - settings.py</span><br><span class="line">        - urls.py</span><br><span class="line">        - wsgi.py</span><br><span class="line">    - manage.py</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>安装channels</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install channels&#x3D;&#x3D;2.1.7</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改settings.py文件，</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># APPS中添加channels</span><br><span class="line">INSTALLED_APPS &#x3D; [</span><br><span class="line">    &#39;django.contrib.staticfiles&#39;,</span><br><span class="line">    &#39;channels&#39;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"># 指定ASGI的路由地址</span><br><span class="line">ASGI_APPLICATION &#x3D; &#39;webapp.routing.application&#39;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>channels运行于ASGI协议上，ASGI的全名是Asynchronous Server Gateway Interface。它是区别于Django使用的WSGI协议 的一种异步服务网关接口协议，正是因为它才实现了websocket</p>
+<p><strong>ASGI_APPLICATION</strong> 指定主路由的位置为webapp下的routing.py文件中的application</p>
+<ol start="3">
+<li>setting.py的同级目录下创建routing.py路由文件，routing.py类似于Django中的url.py指明websocket协议的路由</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from channels.routing import ProtocolTypeRouter</span><br><span class="line"></span><br><span class="line">application &#x3D; ProtocolTypeRouter(&#123;</span><br><span class="line">    # 暂时为空，下文填充</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>运行Django项目</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\python36\python.exe D:&#x2F;demo&#x2F;tailf&#x2F;manage.py runserver 0.0.0.0:80</span><br><span class="line">Performing system checks...</span><br><span class="line">Watching for file changes with StatReloader</span><br><span class="line"></span><br><span class="line">System check identified no issues (0 silenced).</span><br><span class="line">April 12, 2019 - 17:44:52</span><br><span class="line">Django version 2.2, using settings &#39;webapp.settings&#39;</span><br><span class="line">Starting ASGI&#x2F;Channels version 2.1.7 development server at http:&#x2F;&#x2F;0.0.0.0:80&#x2F;</span><br><span class="line">Quit the server with CTRL-BREAK.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>仔细观察上边的输出会发现Django启动中的<code>Starting development server</code>已经变成了<code>Starting ASGI/Channels version 2.1.7 development server</code>，这表明项目已经由django使用的WSGI协议转换为了Channels使用的ASGI协议</p>
+<p>至此Django已经基本集成了Channels框架</p>
+<h2 id="构建聊天室"><a href="#构建聊天室" class="headerlink" title="构建聊天室"></a>构建聊天室</h2><p>上边虽然在项目中集成了Channels，但并没有任何的应用使用它，接下来我们以聊天室的例子来讲解Channels的使用</p>
+<p>假设你已经创建好了一个叫chat的app，并添加到了settings.py的INSTALLED_APPS中，app的目录结构大概如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">chat</span><br><span class="line">    - migrations</span><br><span class="line">        - __init__.py</span><br><span class="line">    - __init__.py</span><br><span class="line">    - admin.py</span><br><span class="line">    - apps.py</span><br><span class="line">    - models.py</span><br><span class="line">    - tests.py</span><br><span class="line">    - views.py</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>我们构建一个标准的Django聊天页面，相关代码如下</p>
+<p>url:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line">from chat.views import chat</span><br><span class="line"></span><br><span class="line">urlpatterns &#x3D; [</span><br><span class="line">    path(&#39;chat&#39;, chat, name&#x3D;&#39;chat-url&#39;)</span><br><span class="line">]</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>view:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from django.shortcuts import render</span><br><span class="line"></span><br><span class="line">def chat(request):</span><br><span class="line">    return render(request, &#39;chat&#x2F;index.html&#39;)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>template:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% extends &quot;base.html&quot; %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line">  &lt;textarea class&#x3D;&quot;form-control&quot; id&#x3D;&quot;chat-log&quot; disabled rows&#x3D;&quot;20&quot;&gt;&lt;&#x2F;textarea&gt;&lt;br&#x2F;&gt;</span><br><span class="line">  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;chat-message-input&quot; type&#x3D;&quot;text&quot;&#x2F;&gt;&lt;br&#x2F;&gt;</span><br><span class="line">  &lt;input class&#x3D;&quot;btn btn-success btn-block&quot; id&#x3D;&quot;chat-message-submit&quot; type&#x3D;&quot;button&quot; value&#x3D;&quot;Send&quot;&#x2F;&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>通过上边的代码一个简单的web聊天页面构建完成了，访问页面大概样子如下：</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/4/17/16a28e3061f80bd8~tplv-t2oaga2asx-watermark.awebp" alt="img"></p>
+<p>接下来我们利用Channels的WebSocket协议实现消息的发送接收功能</p>
+<ol>
+<li>先从路由入手，上边我们已经创建了routing.py路由文件，现在来填充里边的内容</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from channels.auth import AuthMiddlewareStack</span><br><span class="line">from channels.routing import ProtocolTypeRouter, URLRouter</span><br><span class="line">import chat.routing</span><br><span class="line"></span><br><span class="line">application &#x3D; ProtocolTypeRouter(&#123;</span><br><span class="line">    &#39;websocket&#39;: AuthMiddlewareStack(</span><br><span class="line">        URLRouter(</span><br><span class="line">            chat.routing.websocket_urlpatterns</span><br><span class="line">        )</span><br><span class="line">    ),</span><br><span class="line">&#125;)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p><strong>ProtocolTypeRouter：</strong> ASIG支持多种不同的协议，在这里可以指定特定协议的路由信息，我们只使用了websocket协议，这里只配置websocket即可</p>
+<p><strong>AuthMiddlewareStack：</strong> django的channels封装了django的auth模块，使用这个配置我们就可以在consumer中通过下边的代码获取到用户的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def connect(self):</span><br><span class="line">    self.user &#x3D; self.scope[&quot;user&quot;]</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p><code>self.scope</code>类似于django中的request，包含了请求的type、path、header、cookie、session、user等等有用的信息</p>
+<p><strong>URLRouter：</strong> 指定路由文件的路径，也可以直接将路由信息写在这里，代码中配置了路由文件的路径，会去chat下的routeing.py文件中查找websocket_urlpatterns，<code>chat/routing.py</code>内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line">from chat.consumers import ChatConsumer</span><br><span class="line"></span><br><span class="line">websocket_urlpatterns &#x3D; [</span><br><span class="line">    path(&#39;ws&#x2F;chat&#x2F;&#39;, ChatConsumer),</span><br><span class="line">]</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>routing.py路由文件跟django的url.py功能类似，语法也一样，意思就是访问<code>ws/chat/</code>都交给<code>ChatConsumer</code>处理</p>
+<ol>
+<li>接着编写consumer，consumer类似django中的view，内容如下</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from channels.generic.websocket import WebsocketConsumer</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">class ChatConsumer(WebsocketConsumer):</span><br><span class="line">    def connect(self):</span><br><span class="line">        self.accept()</span><br><span class="line"></span><br><span class="line">    def disconnect(self, close_code):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    def receive(self, text_data):</span><br><span class="line">        text_data_json &#x3D; json.loads(text_data)</span><br><span class="line">        message &#x3D; &#39;运维咖啡吧：&#39; + text_data_json[&#39;message&#39;]</span><br><span class="line"></span><br><span class="line">        self.send(text_data&#x3D;json.dumps(&#123;</span><br><span class="line">            &#39;message&#39;: message</span><br><span class="line">        &#125;))</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>这里是个最简单的同步websocket consumer类，connect方法在连接建立时触发，disconnect在连接关闭时触发，receive方法会在收到消息后触发。整个ChatConsumer类会将所有收到的消息加上“运维咖啡吧：”的前缀发送给客户端</p>
+<ol>
+<li>最后我们在html模板页面添加websocket支持</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&#123;% extends &quot;base.html&quot; %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line">  &lt;textarea class&#x3D;&quot;form-control&quot; id&#x3D;&quot;chat-log&quot; disabled rows&#x3D;&quot;20&quot;&gt;&lt;&#x2F;textarea&gt;&lt;br&#x2F;&gt;</span><br><span class="line">  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;chat-message-input&quot; type&#x3D;&quot;text&quot;&#x2F;&gt;&lt;br&#x2F;&gt;</span><br><span class="line">  &lt;input class&#x3D;&quot;btn btn-success btn-block&quot; id&#x3D;&quot;chat-message-submit&quot; type&#x3D;&quot;button&quot; value&#x3D;&quot;Send&quot;&#x2F;&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block js %&#125;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  var chatSocket &#x3D; new WebSocket(</span><br><span class="line">    &#39;ws:&#x2F;&#x2F;&#39; + window.location.host + &#39;&#x2F;ws&#x2F;chat&#x2F;&#39;);</span><br><span class="line"></span><br><span class="line">  chatSocket.onmessage &#x3D; function(e) &#123;</span><br><span class="line">    var data &#x3D; JSON.parse(e.data);</span><br><span class="line">    var message &#x3D; data[&#39;message&#39;];</span><br><span class="line">    document.querySelector(&#39;#chat-log&#39;).value +&#x3D; (message + &#39;\n&#39;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  chatSocket.onclose &#x3D; function(e) &#123;</span><br><span class="line">    console.error(&#39;Chat socket closed unexpectedly&#39;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  document.querySelector(&#39;#chat-message-input&#39;).focus();</span><br><span class="line">  document.querySelector(&#39;#chat-message-input&#39;).onkeyup &#x3D; function(e) &#123;</span><br><span class="line">    if (e.keyCode &#x3D;&#x3D;&#x3D; 13) &#123;  &#x2F;&#x2F; enter, return</span><br><span class="line">        document.querySelector(&#39;#chat-message-submit&#39;).click();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  document.querySelector(&#39;#chat-message-submit&#39;).onclick &#x3D; function(e) &#123;</span><br><span class="line">    var messageInputDom &#x3D; document.querySelector(&#39;#chat-message-input&#39;);</span><br><span class="line">    var message &#x3D; messageInputDom.value;</span><br><span class="line">    chatSocket.send(JSON.stringify(&#123;</span><br><span class="line">        &#39;message&#39;: message</span><br><span class="line">    &#125;));</span><br><span class="line"></span><br><span class="line">    messageInputDom.value &#x3D; &#39;&#39;;</span><br><span class="line">  &#125;;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>WebSocket对象一个支持四个消息：onopen，onmessage，oncluse和onerror，我们这里用了两个onmessage和onclose</p>
+<p><strong>onopen：</strong> 当浏览器和websocket服务端连接成功后会触发onopen消息</p>
+<p><strong>onerror：</strong> 如果连接失败，或者发送、接收数据失败，或者数据处理出错都会触发onerror消息</p>
+<p><strong>onmessage：</strong> 当浏览器接收到websocket服务器发送过来的数据时，就会触发onmessage消息，参数<code>e</code>包含了服务端发送过来的数据</p>
+<p><strong>onclose：</strong> 当浏览器接收到websocket服务器发送过来的关闭连接请求时，会触发onclose消息</p>
+<ol>
+<li>完成前边的代码，一个可以聊天的websocket页面就完成了，运行项目，在浏览器中输入消息就会通过websocket–&gt;rouging.py–&gt;consumer.py处理后返回给前端</li>
+</ol>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/16a28e306251dfa5~tplv-t2oaga2asx-watermark.awebp" alt="img"></p>
+<h2 id="启用Channel-Layer"><a href="#启用Channel-Layer" class="headerlink" title="启用Channel Layer"></a>启用Channel Layer</h2><p>上边的例子我们已经实现了消息的发送和接收，但既然是聊天室，肯定要支持多人同时聊天的，当我们打开多个浏览器分别输入消息后发现只有自己收到消息，其他浏览器端收不到，如何解决这个问题，让所有客户端都能一起聊天呢？</p>
+<p>Channels引入了一个layer的概念，channel layer是一种通信系统，允许多个consumer实例之间互相通信，以及与外部Djanbo程序实现互通。</p>
+<p>channel layer主要实现了两种概念抽象：</p>
+<p><strong>channel name：</strong> channel实际上就是一个发送消息的通道，每个Channel都有一个名称，每一个拥有这个名称的人都可以往Channel里边发送消息</p>
+<p><strong>group：</strong> 多个channel可以组成一个Group，每个Group都有一个名称，每一个拥有这个名称的人都可以往Group里添加/删除Channel，也可以往Group里发送消息，Group内的所有channel都可以收到，但是无法发送给Group内的具体某个Channel</p>
+<p>了解了上边的概念，接下来我们利用channel layer实现真正的聊天室，能够让多个客户端发送的消息被彼此看到</p>
+<ol>
+<li>官方推荐使用redis作为channel layer，所以先安装channels_redis</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install channels_redis&#x3D;&#x3D;2.3.3</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>然后修改settings.py添加对layer的支持</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CHANNEL_LAYERS &#x3D; &#123;</span><br><span class="line">    &#39;default&#39;: &#123;</span><br><span class="line">        &#39;BACKEND&#39;: &#39;channels_redis.core.RedisChannelLayer&#39;,</span><br><span class="line">        &#39;CONFIG&#39;: &#123;</span><br><span class="line">            &quot;hosts&quot;: [(&#39;ops-coffee.cn&#39;, 6379)],</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>添加channel之后我们可以通过以下命令检查通道层是否能够正常工作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;python manage.py shell</span><br><span class="line">Python 3.6.3 (v3.6.3:2c5fed8, Oct  3 2017, 18:11:49) [MSC v.1900 64 bit (AMD64)] on win32</span><br><span class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span><br><span class="line">(InteractiveConsole)</span><br><span class="line">&gt;&gt;&gt; import channels.layers</span><br><span class="line">&gt;&gt;&gt; channel_layer &#x3D; channels.layers.get_channel_layer()</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">&gt;&gt;&gt; from asgiref.sync import async_to_sync</span><br><span class="line">&gt;&gt;&gt; async_to_sync(channel_layer.send)(&#39;test_channel&#39;,&#123;&#39;site&#39;:&#39;https:&#x2F;&#x2F;ops-coffee.cn&#39;&#125;)</span><br><span class="line">&gt;&gt;&gt; async_to_sync(channel_layer.receive)(&#39;test_channel&#39;)</span><br><span class="line">&#123;&#39;site&#39;: &#39;https:&#x2F;&#x2F;ops-coffee.cn&#39;&#125;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>consumer做如下修改引入channel layer</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">from asgiref.sync import async_to_sync</span><br><span class="line">from channels.generic.websocket import WebsocketConsumer</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">class ChatConsumer(WebsocketConsumer):</span><br><span class="line">    def connect(self):</span><br><span class="line">        self.room_group_name &#x3D; &#39;ops_coffee&#39;</span><br><span class="line"></span><br><span class="line">        # Join room group</span><br><span class="line">        async_to_sync(self.channel_layer.group_add)(</span><br><span class="line">            self.room_group_name,</span><br><span class="line">            self.channel_name</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        self.accept()</span><br><span class="line"></span><br><span class="line">    def disconnect(self, close_code):</span><br><span class="line">        # Leave room group</span><br><span class="line">        async_to_sync(self.channel_layer.group_discard)(</span><br><span class="line">            self.room_group_name,</span><br><span class="line">            self.channel_name</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    # Receive message from WebSocket</span><br><span class="line">    def receive(self, text_data):</span><br><span class="line">        text_data_json &#x3D; json.loads(text_data)</span><br><span class="line">        message &#x3D; text_data_json[&#39;message&#39;]</span><br><span class="line"></span><br><span class="line">        # Send message to room group</span><br><span class="line">        async_to_sync(self.channel_layer.group_send)(</span><br><span class="line">            self.room_group_name,</span><br><span class="line">            &#123;</span><br><span class="line">                &#39;type&#39;: &#39;chat_message&#39;,</span><br><span class="line">                &#39;message&#39;: message</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    # Receive message from room group</span><br><span class="line">    def chat_message(self, event):</span><br><span class="line">        message &#x3D; &#39;运维咖啡吧：&#39; + event[&#39;message&#39;]</span><br><span class="line"></span><br><span class="line">        # Send message to WebSocket</span><br><span class="line">        self.send(text_data&#x3D;json.dumps(&#123;</span><br><span class="line">            &#39;message&#39;: message</span><br><span class="line">        &#125;))</span><br></pre></td></tr></table></figure>
+
+<p>这里我们设置了一个固定的房间名作为Group name，所有的消息都会发送到这个Group里边，当然你也可以通过参数的方式将房间名传进来作为Group name，从而建立多个Group，这样可以实现仅同房间内的消息互通</p>
+<p>当我们启用了channel layer之后，所有与consumer之间的通信将会变成异步的，所以必须使用<code>async_to_sync</code></p>
+<p>一个链接（channel）创建时，通过<code>group_add</code>将channel添加到Group中，链接关闭通过<code>group_discard</code>将channel从Group中剔除，收到消息时可以调用<code>group_send</code>方法将消息发送到Group，这个Group内所有的channel都可以收的到</p>
+<p><code>group_send</code>中的type指定了消息处理的函数，这里会将消息转给<code>chat_message</code>函数去处理</p>
+<ol>
+<li>经过以上的修改，我们再次在多个浏览器上打开聊天页面输入消息，发现彼此已经能够看到了，至此一个完整的聊天室已经基本完成</li>
+</ol>
+<h2 id="修改为异步"><a href="#修改为异步" class="headerlink" title="修改为异步"></a>修改为异步</h2><p>我们前边实现的consumer是同步的，为了能有更好的性能，官方支持异步的写法，只需要修改consumer.py即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">from channels.generic.websocket import AsyncWebsocketConsumer</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">class ChatConsumer(AsyncWebsocketConsumer):</span><br><span class="line">    async def connect(self):</span><br><span class="line">        self.room_group_name &#x3D; &#39;ops_coffee&#39;</span><br><span class="line"></span><br><span class="line">        # Join room group</span><br><span class="line">        await self.channel_layer.group_add(</span><br><span class="line">            self.room_group_name,</span><br><span class="line">            self.channel_name</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        await self.accept()</span><br><span class="line"></span><br><span class="line">    async def disconnect(self, close_code):</span><br><span class="line">        # Leave room group</span><br><span class="line">        await self.channel_layer.group_discard(</span><br><span class="line">            self.room_group_name,</span><br><span class="line">            self.channel_name</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    # Receive message from WebSocket</span><br><span class="line">    async def receive(self, text_data):</span><br><span class="line">        text_data_json &#x3D; json.loads(text_data)</span><br><span class="line">        message &#x3D; text_data_json[&#39;message&#39;]</span><br><span class="line"></span><br><span class="line">        # Send message to room group</span><br><span class="line">        await self.channel_layer.group_send(</span><br><span class="line">            self.room_group_name,</span><br><span class="line">            &#123;</span><br><span class="line">                &#39;type&#39;: &#39;chat_message&#39;,</span><br><span class="line">                &#39;message&#39;: message</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    # Receive message from room group</span><br><span class="line">    async def chat_message(self, event):</span><br><span class="line">        message &#x3D; &#39;运维咖啡吧：&#39; + event[&#39;message&#39;]</span><br><span class="line"></span><br><span class="line">        # Send message to WebSocket</span><br><span class="line">        await self.send(text_data&#x3D;json.dumps(&#123;</span><br><span class="line">            &#39;message&#39;: message</span><br><span class="line">        &#125;))</span><br></pre></td></tr></table></figure>
+
+<p>其实异步的代码跟之前的差别不大，只有几个小区别：</p>
+<p>ChatConsumer由<code>WebsocketConsumer</code>修改为了<code>AsyncWebsocketConsumer</code></p>
+<p>所有的方法都修改为了异步def<code>async def</code></p>
+<p>用<code>await</code>来实现异步I/O的调用</p>
+<p>channel layer也不再需要使用<code>async_to_sync</code>了</p>
+<p>好了，现在一个完全异步且功能完整的聊天室已经构建完成了</p>
+<p>先说下我们要实现的目标：所有登录的用户可以查看tailf日志页面，在页面上能够选择日志文件进行监听，多个页面终端同时监听任何日志都互不影响，页面同时提供终止监听的按钮能够终止前端的输出以及后台对日志文件的读取</p>
+<p>最终实现的结果见下图</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/20190419.channels.2.gif" alt="img"></p>
+<p>接着我们来看下具体的实现过程</p>
+<h1 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h1><p>所有代码均基于以下软件版本： - python==3.6.3 - django==2.2 - channels==2.1.7 - celery==4.3.0</p>
+<p>celery4在windows下支持不完善，所以请<strong>在linux下运行</strong>测试</p>
+<h2 id="日志数据定义"><a href="#日志数据定义" class="headerlink" title="日志数据定义"></a>日志数据定义</h2><p>我们只希望用户能够查询固定的几个日志文件，就不是用数据库仅借助settings.py文件里写全局变量来实现数据存储</p>
+<p>在settings.py里添加一个叫<code>TAILF</code>的变量，类型为字典，key标识文件的编号，value标识文件的路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TAILF &#x3D; &#123;</span><br><span class="line">    1: &#39;&#x2F;ops&#x2F;coffee&#x2F;error.log&#39;,</span><br><span class="line">    2: &#39;&#x2F;ops&#x2F;coffee&#x2F;access.log&#39;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="基础Web页面搭建"><a href="#基础Web页面搭建" class="headerlink" title="基础Web页面搭建"></a>基础Web页面搭建</h2><p>假设你已经创建好了一个叫tailf的app，并添加到了settings.py的INSTALLED_APPS中，app的目录结构大概如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tailf</span><br><span class="line">    - migrations</span><br><span class="line">        - __init__.py</span><br><span class="line">    - __init__.py</span><br><span class="line">    - admin.py</span><br><span class="line">    - apps.py</span><br><span class="line">    - models.py</span><br><span class="line">    - tests.py</span><br><span class="line">    - views.py</span><br></pre></td></tr></table></figure>
+
+<p>依然先构建一个标准的Django页面，相关代码如下</p>
+<p>url:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line">from django.contrib.auth.views import LoginView,LogoutView</span><br><span class="line"></span><br><span class="line">from tailf.views import tailf</span><br><span class="line"></span><br><span class="line">urlpatterns &#x3D; [</span><br><span class="line">    path(&#39;tailf&#39;, tailf, name&#x3D;&#39;tailf-url&#39;),</span><br><span class="line"></span><br><span class="line">    path(&#39;login&#39;, LoginView.as_view(template_name&#x3D;&#39;login.html&#39;), name&#x3D;&#39;login-url&#39;),</span><br><span class="line">    path(&#39;logout&#39;, LogoutView.as_view(template_name&#x3D;&#39;login.html&#39;), name&#x3D;&#39;logout-url&#39;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>因为我们规定只有通过登录的用户才能查看日志，所以引入Django自带的LoginView，logoutView帮助我们快速构建Login，Logout功能</p>
+<p>指定了登录模板使用<code>login.html</code>，它就是一个标准的登录页面，post传入username和password两个参数即可，不贴代码了</p>
+<p>view:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from django.conf import settings</span><br><span class="line">from django.shortcuts import render</span><br><span class="line">from django.contrib.auth.decorators import login_required</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Create your views here.</span><br><span class="line">@login_required(login_url&#x3D;&#39;&#x2F;login&#39;)</span><br><span class="line">def tailf(request):</span><br><span class="line">    logDict &#x3D; settings.TAILF</span><br><span class="line">    return render(request, &#39;tailf&#x2F;index.html&#39;, &#123;&quot;logDict&quot;: logDict&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>引入了<code>login_required</code>装饰器，来判断用户是否登录，未登录就给跳到<code>/login</code>登录页面</p>
+<p><strong>logDict</strong> 去setting里取我们定义好的<code>TAILF</code>字典赋值，并传递给前端</p>
+<p>template:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% extends &quot;base.html&quot; %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line">&lt;div class&#x3D;&quot;col-sm-8&quot;&gt;</span><br><span class="line">  &lt;select class&#x3D;&quot;form-control&quot; id&#x3D;&quot;file&quot;&gt;</span><br><span class="line">    &lt;option value&#x3D;&quot;&quot;&gt;选择要监听的日志&lt;&#x2F;option&gt;</span><br><span class="line">    &#123;% for k,v in logDict.items %&#125;</span><br><span class="line">    &lt;option value&#x3D;&quot;&#123;&#123; k &#125;&#125;&quot;&gt;&#123;&#123; v &#125;&#125;&lt;&#x2F;option&gt;</span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line">  &lt;&#x2F;select&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;col-sm-2&quot;&gt;</span><br><span class="line">  &lt;input class&#x3D;&quot;btn btn-success btn-block&quot; type&#x3D;&quot;button&quot; onclick&#x3D;&quot;connect()&quot; value&#x3D;&quot;开始监听&quot;&#x2F;&gt;&lt;br&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;col-sm-2&quot;&gt;</span><br><span class="line">  &lt;input class&#x3D;&quot;btn btn-warning btn-block&quot; type&#x3D;&quot;button&quot; onclick&#x3D;&quot;goclose()&quot; value&#x3D;&quot;终止监听&quot;&#x2F;&gt;&lt;br&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;col-sm-12&quot;&gt;</span><br><span class="line">  &lt;textarea class&#x3D;&quot;form-control&quot; id&#x3D;&quot;chat-log&quot; disabled rows&#x3D;&quot;20&quot;&gt;&lt;&#x2F;textarea&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>前端拿到<code>TAILF</code>后通过循环的方式填充到select选择框下，因为数据是字典格式，使用<code>logDict.items</code>的方式可以循环出字典的key和value</p>
+<p>这样一个日志监听页面就完成了，但还无法实现日志的监听，继续往下</p>
+<h2 id="集成Channels实现WebSocket"><a href="#集成Channels实现WebSocket" class="headerlink" title="集成Channels实现WebSocket"></a>集成Channels实现WebSocket</h2><p>日志监听功能主要的设计思路就是页面跟后端服务器建立websocket长连接，后端通过celery异步执行while循环不断的读取日志文件然后发送到websocket的channel里，实现页面上的实时显示</p>
+<p>接着我们来集成channels</p>
+<ol>
+<li>先添加routing路由，直接修改<code>webapp/routing.py</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from channels.auth import AuthMiddlewareStack</span><br><span class="line">from channels.routing import ProtocolTypeRouter, URLRouter</span><br><span class="line"></span><br><span class="line">from django.urls import path, re_path</span><br><span class="line">from chat.consumers import ChatConsumer</span><br><span class="line">from tailf.consumers import TailfConsumer</span><br><span class="line"></span><br><span class="line">application &#x3D; ProtocolTypeRouter(&#123;</span><br><span class="line">    &#39;websocket&#39;: AuthMiddlewareStack(</span><br><span class="line">        URLRouter([</span><br><span class="line">            path(&#39;ws&#x2F;chat&#x2F;&#39;, ChatConsumer),</span><br><span class="line">            re_path(r&#39;^ws&#x2F;tailf&#x2F;(?P&lt;id&gt;\d+)&#x2F;$&#39;, TailfConsumer),</span><br><span class="line">        ])</span><br><span class="line">    )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>直接将路由信息写入到了<code>URLRouter</code>里，注意路由信息的外层多了一个list，区别于上一篇中介绍的写路由文件路径的方式</p>
+<p>页面需要将监听的日志文件传递给后端，我们使用routing正则<code>P&lt;id&gt;\d+</code>传文件ID给后端程序，后端程序拿到ID之后根据settings中指定的<code>TAILF</code>解析出日志路径</p>
+<p>routing的写法跟Django中的url写法完全一致，使用<code>re_path</code>匹配正则routing路由</p>
+<ol>
+<li>添加consumer在<code>tailf/consumers.py</code>文件中</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line">from channels.generic.websocket import WebsocketConsumer</span><br><span class="line">from tailf.tasks import tailf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class TailfConsumer(WebsocketConsumer):</span><br><span class="line">    def connect(self):</span><br><span class="line">        self.file_id &#x3D; self.scope[&quot;url_route&quot;][&quot;kwargs&quot;][&quot;id&quot;]</span><br><span class="line"></span><br><span class="line">        self.result &#x3D; tailf.delay(self.file_id, self.channel_name)</span><br><span class="line"></span><br><span class="line">        print(&#39;connect:&#39;, self.channel_name, self.result.id)</span><br><span class="line">        self.accept()</span><br><span class="line"></span><br><span class="line">    def disconnect(self, close_code):</span><br><span class="line">        # 中止执行中的Task</span><br><span class="line">        self.result.revoke(terminate&#x3D;True)</span><br><span class="line">        print(&#39;disconnect:&#39;, self.file_id, self.channel_name)</span><br><span class="line"></span><br><span class="line">    def send_message(self, event):</span><br><span class="line">        self.send(text_data&#x3D;json.dumps(&#123;</span><br><span class="line">            &quot;message&quot;: event[&quot;message&quot;]</span><br><span class="line">        &#125;))</span><br></pre></td></tr></table></figure>
+
+<p>这里使用Channels的单通道模式，每一个新连接都会启用一个新的channel，彼此互不影响，可以随意终止任何一个监听日志的请求</p>
+<p><strong>connect</strong></p>
+<p>我们知道<code>self.scope</code>类似于Django中的request，记录了丰富的请求信息，通过<code>self.scope[&quot;url_route&quot;][&quot;kwargs&quot;][&quot;id&quot;]</code>取出routing中正则匹配的日志ID</p>
+<p>然后将<code>id</code>和<code>channel_name</code>传递给celery的任务函数tailf，tailf根据<code>id</code>取到日志文件的路径，然后循环文件，将新内容根据<code>channel_name</code>写入对应channel</p>
+<p><strong>disconnect</strong></p>
+<p>当websocket连接断开的时候我们需要终止Celery的Task执行，以清除celery的资源占用</p>
+<p>终止Celery任务使用到<code>revoke</code>指令，采用如下代码来实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.result.revoke(terminate&#x3D;True)</span><br></pre></td></tr></table></figure>
+
+<p>注意<code>self.result</code>是一个result对象，而非id</p>
+<p>参数<code>terminate=True</code>的意思是是否立即终止Task，为True时无论Task是否正在执行都立即终止，为False（默认）时需要等待Task运行结束之后才会终止，我们使用了While循环不设置为True就永远不会终止了</p>
+<p>终止Celery任务的另外一种方法是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from webapp.celery import app</span><br><span class="line">app.control.revoke(result.id, terminate&#x3D;True)</span><br></pre></td></tr></table></figure>
+
+<p><strong>send_message</strong></p>
+<p>方便我们通过Django的view或者Celery的task调用给channel发送消息，官方也比较推荐这种方式</p>
+<h2 id="使用Celery异步循环读取日志"><a href="#使用Celery异步循环读取日志" class="headerlink" title="使用Celery异步循环读取日志"></a>使用Celery异步循环读取日志</h2><p>上边已经集成了Channels实现了WebSocket，但connect函数中的celery任务<code>tailf</code>还没有实现，下边来实现它</p>
+<p>关于Celery的详细内容可以看这篇文章：<a target="_blank" rel="noopener" href="https://ops-coffee.cn/s/lXrp3igYo9W2UuE5Gauysg">《Django配置Celery执行异步任务和定时任务》</a>，本文就不介绍集成使用以及细节原理，只讲一下任务task</p>
+<p>task实现代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">from __future__ import absolute_import</span><br><span class="line">from celery import shared_task</span><br><span class="line"></span><br><span class="line">import time</span><br><span class="line">from channels.layers import get_channel_layer</span><br><span class="line">from asgiref.sync import async_to_sync</span><br><span class="line">from django.conf import settings</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@shared_task</span><br><span class="line">def tailf(id, channel_name):</span><br><span class="line">    channel_layer &#x3D; get_channel_layer()</span><br><span class="line">    filename &#x3D; settings.TAILF[int(id)]</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        with open(filename) as f:</span><br><span class="line">            f.seek(0, 2)</span><br><span class="line"></span><br><span class="line">            while True:</span><br><span class="line">                line &#x3D; f.readline()</span><br><span class="line"></span><br><span class="line">                if line:</span><br><span class="line">                    print(channel_name, line)</span><br><span class="line">                    async_to_sync(channel_layer.send)(</span><br><span class="line">                        channel_name,</span><br><span class="line">                        &#123;</span><br><span class="line">                            &quot;type&quot;: &quot;send.message&quot;,</span><br><span class="line">                            &quot;message&quot;: &quot;微信公众号【运维咖啡吧】原创 版权所有 &quot; + str(line)</span><br><span class="line">                        &#125;</span><br><span class="line">                    )</span><br><span class="line">                else:</span><br><span class="line">                    time.sleep(0.5)</span><br><span class="line">    except Exception as e:</span><br><span class="line">        print(e)</span><br></pre></td></tr></table></figure>
+
+<p>这里边主要涉及到Channels中另一个非常重要的点：<strong>从Channels的外部发送消息给Channel</strong></p>
+<p>其实<a target="_blank" rel="noopener" href="https://ops-coffee.cn/s/hqaPrPS7w3D-9SeegQAB2Q">上篇文章</a>中检查通道层是否能够正常工作的时候使用的方法就是从外部给Channel通道发消息的示例，本文的具体代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">async_to_sync(channel_layer.send)(</span><br><span class="line">    channel_name,</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;type&quot;: &quot;send.message&quot;,</span><br><span class="line">        &quot;message&quot;: &quot;微信公众号【运维咖啡吧】原创 版权所有 &quot; + str(line)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>channel_name</strong> 对应于传递给这个任务的channel_name，发送消息给这个名字的channel</p>
+<p><strong>type</strong> 对应于我们Channels的TailfConsumer类中的<code>send_message</code>方法，将方法中的<code>_</code>换成<code>.</code>即可</p>
+<p><strong>message</strong> 就是要发送给这个channel的具体信息</p>
+<p>上边是发送给单Channel的情况，如果是需要发送到Group的话需要使用如下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">async_to_sync(channel_layer.group_send)(</span><br><span class="line">    group_name,</span><br><span class="line">    &#123;</span><br><span class="line">        &#39;type&#39;: &#39;chat.message&#39;,</span><br><span class="line">        &#39;message&#39;: &#39;欢迎关注公众号【运维咖啡吧】&#39;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>只需要将发送单channel的<code>send</code>改为<code>group_send</code>，<code>channel_name</code>改为<code>group_name</code>即可</p>
+<p>需要特别注意的是：<strong>使用了channel layer之后一定要通过async_to_sync来异步执行</strong></p>
+<h2 id="页面添加WebSocket支持"><a href="#页面添加WebSocket支持" class="headerlink" title="页面添加WebSocket支持"></a>页面添加WebSocket支持</h2><p>后端功能都已经完成，我们最后需要添加前端页面支持WebSocket</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">function connect() &#123;</span><br><span class="line">  if ( $(&#39;#file&#39;).val() ) &#123;</span><br><span class="line">    window.chatSocket &#x3D; new WebSocket(</span><br><span class="line">      &#39;ws:&#x2F;&#x2F;&#39; + window.location.host + &#39;&#x2F;ws&#x2F;tailf&#x2F;&#39; + $(&#39;#file&#39;).val() + &#39;&#x2F;&#39;);</span><br><span class="line"></span><br><span class="line">    chatSocket.onmessage &#x3D; function(e) &#123;</span><br><span class="line">      var data &#x3D; JSON.parse(e.data);</span><br><span class="line">      var message &#x3D; data[&#39;message&#39;];</span><br><span class="line">      document.querySelector(&#39;#chat-log&#39;).value +&#x3D; (message);</span><br><span class="line">      &#x2F;&#x2F; 跳转到页面底部</span><br><span class="line">      $(&#39;#chat-log&#39;).scrollTop($(&#39;#chat-log&#39;)[0].scrollHeight);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    chatSocket.onerror &#x3D; function(e) &#123;</span><br><span class="line">      toastr.error(&#39;服务端连接异常！&#39;)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    chatSocket.onclose &#x3D; function(e) &#123;</span><br><span class="line">      toastr.error(&#39;websocket已关闭！&#39;)</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    toastr.warning(&#39;请选择要监听的日志文件&#39;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://ops-coffee.cn/s/hqaPrPS7w3D-9SeegQAB2Q">上一篇文章</a>中有详细介绍过websocket的消息类型，这里不多介绍了</p>
+<p>至此我们一个日志监听页面完成了，包含了完整的监听功能，但还无法终止，接着看下面的内容</p>
+<h2 id="Web页面主动断开WebSocket"><a href="#Web页面主动断开WebSocket" class="headerlink" title="Web页面主动断开WebSocket"></a>Web页面主动断开WebSocket</h2><p>web页面上“终止监听”按钮的主要逻辑就是触发WebSocket的onclose方法，从而可以触发Channels后端consumer的<code>disconnect</code>方法，进而终止Celery的循环读取日志任务</p>
+<p>前端页面通过<code>.close()</code>可以直接触发WebSocket关闭，当然你如果直接关掉页面的话也会触发WebSocket的onclose消息，所以不用担心Celery任务无法结束的问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function goclose() &#123;</span><br><span class="line">  console.log(window.chatSocket);</span><br><span class="line"></span><br><span class="line">  window.chatSocket.close();</span><br><span class="line">  window.chatSocket.onclose &#x3D; function(e) &#123;</span><br><span class="line">    toastr.success(&#39;已终止日志监听！&#39;)</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此我们包含完善功能的Tailf日志监听、终止页面就全部完成了</p>
+<p>作者：运维咖啡吧<br>链接：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903824700735502">https://juejin.cn/post/6844903824700735502</a><br>来源：稀土掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"><i class="fas fa-cookie-bite"></i> Django</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/03/Linux-%E4%B8%80%E6%96%87%E6%90%9E%E6%87%82-Prometheus-%E5%A4%9A%E9%9B%86%E7%BE%A4%E7%9B%91%E6%8E%A7%E7%A5%9E%E5%99%A8-Thanos/" rel="prev" title="Linux-一文搞懂 Prometheus 多集群监控神器 Thanos">
+      <i class="fa fa-chevron-left"></i> Linux-一文搞懂 Prometheus 多集群监控神器 Thanos
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Channels"><span class="nav-number">1.</span> <span class="nav-text">Channels</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E6%88%90Channels"><span class="nav-number">1.1.</span> <span class="nav-text">集成Channels</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E8%81%8A%E5%A4%A9%E5%AE%A4"><span class="nav-number">1.2.</span> <span class="nav-text">构建聊天室</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E7%94%A8Channel-Layer"><span class="nav-number">1.3.</span> <span class="nav-text">启用Channel Layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BA%E5%BC%82%E6%AD%A5"><span class="nav-number">1.4.</span> <span class="nav-text">修改为异步</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">技术实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89"><span class="nav-number">2.1.</span> <span class="nav-text">日志数据定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80Web%E9%A1%B5%E9%9D%A2%E6%90%AD%E5%BB%BA"><span class="nav-number">2.2.</span> <span class="nav-text">基础Web页面搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E6%88%90Channels%E5%AE%9E%E7%8E%B0WebSocket"><span class="nav-number">2.3.</span> <span class="nav-text">集成Channels实现WebSocket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Celery%E5%BC%82%E6%AD%A5%E5%BE%AA%E7%8E%AF%E8%AF%BB%E5%8F%96%E6%97%A5%E5%BF%97"><span class="nav-number">2.4.</span> <span class="nav-text">使用Celery异步循环读取日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E6%B7%BB%E5%8A%A0WebSocket%E6%94%AF%E6%8C%81"><span class="nav-number">2.5.</span> <span class="nav-text">页面添加WebSocket支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web%E9%A1%B5%E9%9D%A2%E4%B8%BB%E5%8A%A8%E6%96%AD%E5%BC%80WebSocket"><span class="nav-number">2.6.</span> <span class="nav-text">Web页面主动断开WebSocket</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">202</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">57:56</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
