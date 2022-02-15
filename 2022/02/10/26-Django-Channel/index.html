@@ -30,8 +30,12 @@
 <meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/4/17/16a28e3061f80bd8~tplv-t2oaga2asx-watermark.awebp">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/16a28e306251dfa5~tplv-t2oaga2asx-watermark.awebp">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/20190419.channels.2.gif">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-1b33d0229cb4ef59394edafe4c62114c_b.webp">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-33d27008d74f1ea99ae9dff43d54c1e6_1440w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-bbcdb5ef16a22fcf2a5456bb3c9d046c_1440w.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-d60c89380077cd5e6b9f6658b32d0728_1440w.jpg">
 <meta property="article:published_time" content="2022-02-10T09:44:54.000Z">
-<meta property="article:modified_time" content="2022-02-10T10:43:41.142Z">
+<meta property="article:modified_time" content="2022-02-10T12:50:34.413Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Django">
 <meta name="twitter:card" content="summary">
@@ -219,7 +223,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-10 17:44:54 / 修改时间：18:43:41" itemprop="dateCreated datePublished" datetime="2022-02-10T17:44:54+08:00">2022-02-10</time>
+              <time title="创建时间：2022-02-10 17:44:54 / 修改时间：20:50:34" itemprop="dateCreated datePublished" datetime="2022-02-10T17:44:54+08:00">2022-02-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,14 +241,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>19k</span>
+              <span>30k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>32 分钟</span>
+              <span>50 分钟</span>
             </span>
 
         </div>
@@ -259,7 +263,7 @@
         <p>Django Channel</p>
 <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">channel layer是一种通信系统，允许多个consumer实例之间互相通信，以及与外部Django程序实现互通。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">WebSocket的应用场景：</span><br><span class="line">  webshell</span><br><span class="line">  即时聊天通信，网站消息通知</span><br><span class="line">  在线协同编辑，如腾讯文档</span><br><span class="line">  多玩家在线游戏，视频弹幕，股票基金实施报价</span><br><span class="line"></span><br><span class="line">channel layer是一种通信系统，允许多个consumer实例之间互相通信，以及与外部Django程序实现互通。</span><br></pre></td></tr></table></figure>
 
 
 
@@ -269,8 +273,20 @@
 <p>WebSocket区别于HTTP协议的一个最为显著的特点是，WebSocket协议可以由服务端主动发起消息，对于浏览器需要及时接收数据变化的场景非常适合，例如在Django中遇到一些耗时较长的任务我们通常会使用Celery来异步执行，那么浏览器如果想要获取这个任务的执行状态，在HTTP协议中只能通过轮训的方式由浏览器不断的发送请求给服务器来获取最新状态，这样发送很多无用的请求不仅浪费资源，还不够优雅，如果使用WebSokcet来实现就很完美了</p>
 <p>WebSocket的另外一个应用场景就是下文要说的聊天室，一个用户（浏览器）发送的消息需要实时的让其他用户（浏览器）接收，这在HTTP协议下是很难实现的，但WebSocket基于长连接加上可以主动给浏览器发消息的特性处理起来就游刃有余了</p>
 <p>初步了解WebSocket之后，我们看看如何在Django中实现WebSocket</p>
-<h1 id="Channels"><a href="#Channels" class="headerlink" title="Channels"></a>Channels</h1><p>Django本身不支持WebSocket，但可以通过集成Channels框架来实现WebSocket</p>
-<p>Channels是针对Django项目的一个增强框架，可以使Django不仅支持HTTP协议，还能支持WebSocket，MQTT等多种协议，同时Channels还整合了Django的auth以及session系统方便进行用户管理及认证。</p>
+<h1 id="Channels"><a href="#Channels" class="headerlink" title="Channels"></a>Channels</h1><p>Django本身不支持WebSocket，但可以通过集成Channels框架来实现WebSocket<br>Channels是针对Django项目的一个增强框架，可以使Django不仅支持HTTP协议，还能支持WebSocket，MQTT等多种协议，同时Channels还整合了Django的auth以及session系统方便进行用户管理及认证。</p>
+<ol>
+<li>channels文件和配置的含义</li>
+</ol>
+<p><strong>asgi.py</strong>：异步网关接口，能够处理多种通用协议类型，包括HTTP、HTTP2和WebSocket<br><strong>channel_layers</strong>：在settings.py中配置。类似于一个通道，发送者(producer)在一段发送消息，消费者(consumer)在另一端进行监听<br><strong>routings.py</strong>：相当于Django中的urls.py<br><strong>consumers.py</strong>：相当于Django中的views.py</p>
+<ol start="2">
+<li>channels文档链接</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://channels.readthedocs.io/en/latest/introduction.html">https://channels.readthedocs.io/en/latest/introduction.html</a></p>
+<ol start="3">
+<li>WSGI和ASGI不同</li>
+</ol>
+<p>WSGI(Python Web Server Gateway Interface)：为Python语言定义的Web服务器和Web应用程序或者框架之间的一种简单而通用的接口。</p>
+<p>ASGI(Asynchronous Web Server Gateway Interface)：异步网关协议接口，一个介于网络协议服务和Python应用之间的标准接口，能够处理多种通用的协议类型，包括HTTP，HTTP2和WebSocket。</p>
 <p>我下文所有的代码实现使用以下python和Django版本</p>
 <ul>
 <li>python==3.6.3</li>
@@ -481,7 +497,85 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function goclose() &#123;</span><br><span class="line">  console.log(window.chatSocket);</span><br><span class="line"></span><br><span class="line">  window.chatSocket.close();</span><br><span class="line">  window.chatSocket.onclose &#x3D; function(e) &#123;</span><br><span class="line">    toastr.success(&#39;已终止日志监听！&#39;)</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>至此我们包含完善功能的Tailf日志监听、终止页面就全部完成了</p>
-<p>作者：运维咖啡吧<br>链接：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903824700735502">https://juejin.cn/post/6844903824700735502</a><br>来源：稀土掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<hr>
+<p>演示效果如下所示：</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-1b33d0229cb4ef59394edafe4c62114c_b.webp" alt="img"></p>
+<p><strong>什么是websocket?</strong></p>
+<p>WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。WebSocket 使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在 WebSocket API 中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输。</p>
+<p>很多网站为了实现推送技术，所用的技术都是 Ajax 轮询。轮询是在特定的的时间间隔（如每1秒），由浏览器对服务器发出HTTP请求，然后由服务器返回最新的数据给客户端的浏览器。这种传统的模式带来很明显的缺点，即浏览器需要不断的向服务器发出请求，然而HTTP请求可能包含较长的头部，其中真正有效的数据可能只是很小的一部分，显然这样会浪费很多的带宽等资源。Websocket能更好的节省服务器资源和带宽，并且能够更实时地进行通讯，早已成为一种非常流行必须掌握的技术。</p>
+<p>以上关于websocket介绍来自菜鸟教程，更多内容见菜鸟教程(<a href="https://link.zhihu.com/?target=https://www.runoob.com/">菜鸟教程 - 学的不仅是技术，更是梦想！</a>)。现在就让我们步入正题吧，利用Django + channels实现websocket编写个在线聊天室，一共只有四步。跟着学，你也可以实现。</p>
+<p><strong>第一步 准备工作</strong></p>
+<p>首先在虚拟环境中安装django和channels(本项目使用了最新版本，均为3.X版本), 新建一个名为myproject的项目，新建一个app名为chat。如果windows下安装报错，如何解决自己网上去找吧。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install django==3.2.3</span><br><span class="line">pip install channels==3.0.3</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://link.zhihu.com/?target=http://xn--settings-0n3mm27o.py/">修改settings.py</a>, 将channels和chat加入到INSTALLED_APPS里，并添加相应配置，如下所示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">      &#x27;django.contrib.admin&#x27;,</span><br><span class="line">      &#x27;django.contrib.auth&#x27;,</span><br><span class="line">      &#x27;django.contrib.contenttypes&#x27;,</span><br><span class="line">      &#x27;django.contrib.sessions&#x27;,</span><br><span class="line">      &#x27;django.contrib.messages&#x27;,</span><br><span class="line">      &#x27;django.contrib.staticfiles&#x27;,</span><br><span class="line">      &#x27;channels&#x27;, # channels应用</span><br><span class="line">      &#x27;chat&#x27;,   </span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"># 设置ASGI应用</span><br><span class="line">ASGI_APPLICATION = &#x27;myproject.asgi.application&#x27;</span><br><span class="line"></span><br><span class="line"># 设置通道层的通信后台 - 本地测试用</span><br><span class="line">CHANNEL_LAYERS = &#123;</span><br><span class="line">    &quot;default&quot;: &#123;</span><br><span class="line">        &quot;BACKEND&quot;: &quot;channels.layers.InMemoryChannelLayer&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意 ：本例为了简化代码，使用了InMemoryChannelLayer做通道层(channel_layer)的通信后台，实际生产环境中应该需要使用redis作为后台。这时你还需要安装redis和channels_redis，然后添加如下配置：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 生产环境中使用redis做后台，安装channels_redis</span><br><span class="line">CHANNEL_LAYERS = &#123;</span><br><span class="line">    &quot;default&quot;: &#123;</span><br><span class="line">        &quot;BACKEND&quot;: &quot;channels_redis.core.RedisChannelLayer&quot;,</span><br><span class="line">        &quot;CONFIG&quot;: &#123;</span><br><span class="line">            &quot;hosts&quot;: [(&quot;127.0.0.1&quot;, 6379)],</span><br><span class="line">             #或&quot;hosts&quot;: [os.environ.get(&#x27;REDIS_URL&#x27;, &#x27;redis://127.0.0.1:6379/1&#x27;)],</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后将chat应用的urls.py加入到项目urls.py中去，这和常规Django项目无异。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># myproject/urls.py</span><br><span class="line"></span><br><span class="line">from django.conf.urls import include</span><br><span class="line">from django.urls import path</span><br><span class="line">from django.contrib import admin</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;chat/&#x27;, include(&#x27;chat.urls&#x27;)),</span><br><span class="line">    path(&#x27;admin/&#x27;, admin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><strong>第二步 编写聊天室页面</strong></p>
+<p>我们需要利用django普通视图函数编写两个页面，一个用于展示首页(index), 通过表单让用户输入聊天室的名称(room_name)，然后跳转到相应聊天室页面；一个页面用于实时展示聊天信息记录，并允许用户发送信息。</p>
+<p>这两个页面对应的路由及视图函数如下所示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># chat/urls.py</span><br><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;&#x27;, views.index, name=&#x27;index&#x27;),</span><br><span class="line">    path(&#x27;&lt;str:room_name&gt;/&#x27;, views.room, name=&#x27;room&#x27;),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"># chat/views.py</span><br><span class="line">from django.shortcuts import render</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    return render(request, &#x27;chat/index.html&#x27;, &#123;&#125;)</span><br><span class="line"></span><br><span class="line">def room(request, room_name):</span><br><span class="line">    return render(request, &#x27;chat/room.html&#x27;, &#123;</span><br><span class="line">        &#x27;room_name&#x27;: room_name</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们编写两个模板文件index.html和room.html。它们的路径位置如下所示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">chat/</span><br><span class="line">    __init__.py</span><br><span class="line">    templates/</span><br><span class="line">        chat/</span><br><span class="line">            index.html</span><br><span class="line">            room.html</span><br><span class="line">    urls.py</span><br><span class="line">    views.py</span><br></pre></td></tr></table></figure>
+
+<p>index.html内容如下所示。它也基本不涉及websocket，就是让用户输入聊天室后进行跳转。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- chat/templates/chat/index.html --&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;utf-8&quot;/&gt;</span><br><span class="line">    &lt;title&gt;Chat Rooms&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    请输入聊天室名称：</span><br><span class="line">    &lt;input id=&quot;room-name-input&quot; type=&quot;text&quot; size=&quot;100&quot;&gt;</span><br><span class="line">    &lt;input id=&quot;room-name-submit&quot; type=&quot;button&quot; value=&quot;Enter&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        document.querySelector(&#x27;#room-name-input&#x27;).focus();</span><br><span class="line">        document.querySelector(&#x27;#room-name-input&#x27;).onkeyup = function(e) &#123;</span><br><span class="line">            if (e.keyCode === 13) &#123;  // enter, return</span><br><span class="line">                document.querySelector(&#x27;#room-name-submit&#x27;).click();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        document.querySelector(&#x27;#room-name-submit&#x27;).onclick = function(e) &#123;</span><br><span class="line">            var roomName = document.querySelector(&#x27;#room-name-input&#x27;).value;</span><br><span class="line">            window.location.pathname = &#x27;/chat/&#x27; + roomName + &#x27;/&#x27;;</span><br><span class="line">        &#125;;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>room.html内容如下所示。为了帮助你理解前后端是怎么实现websocket实时通信的，我给每行js代码添加了注释，这对于你理解前端如何发送websocket的请求，如果处理后端发过来的websocket消息至关重要。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"> &lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;utf-8&quot;/&gt;</span><br><span class="line">    &lt;title&gt;Chat Room&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;textarea id=&quot;chat-log&quot; cols=&quot;100&quot; rows=&quot;20&quot;&gt;&lt;/textarea&gt;&lt;br&gt;</span><br><span class="line">    &lt;input id=&quot;chat-message-input&quot; type=&quot;text&quot; size=&quot;100&quot;&gt;&lt;br&gt;</span><br><span class="line">    &lt;input id=&quot;chat-message-submit&quot; type=&quot;button&quot; value=&quot;Send&quot;&gt;</span><br><span class="line">    &#123;&#123; room_name|json_script:&quot;room-name&quot; &#125;&#125;</span><br><span class="line"> </span><br><span class="line">&lt;script&gt;</span><br><span class="line">        // 获取房间名</span><br><span class="line">        const roomName = JSON.parse(document.getElementById(&#x27;room-name&#x27;).textContent);</span><br><span class="line"> </span><br><span class="line">        // 根据roomName拼接websocket请求地址，建立长连接</span><br><span class="line">        //  请求url地址为/ws/chat/&lt;room_name&gt;/</span><br><span class="line">        const wss_protocol = (window.location.protocol == &#x27;https:&#x27;) ? &#x27;wss://&#x27;: &#x27;ws://&#x27;;</span><br><span class="line">        const chatSocket = new WebSocket(</span><br><span class="line">             wss_protocol + window.location.host + &#x27;/ws/chat/&#x27;  + roomName + &#x27;/&#x27;</span><br><span class="line">             );</span><br><span class="line"> </span><br><span class="line">        // 建立websocket连接时触发此方法，展示欢迎提示</span><br><span class="line">        chatSocket.onopen = function(e) &#123;</span><br><span class="line">             document.querySelector(&#x27;#chat-log&#x27;).value += (&#x27;[公告]欢迎来到&#x27; + roomName + &#x27;讨论群。请文明发言!\n&#x27;)</span><br><span class="line">         &#125;</span><br><span class="line"> </span><br><span class="line">        // 从后台接收到数据时触发此方法</span><br><span class="line">        // 接收到后台数据后对其解析，并加入到聊天记录chat-log</span><br><span class="line">         chatSocket.onmessage = function(e) &#123;</span><br><span class="line">             const data = JSON.parse(e.data);</span><br><span class="line">             document.querySelector(&#x27;#chat-log&#x27;).value += (data.message + &#x27;\n&#x27;);</span><br><span class="line">         &#125;;</span><br><span class="line"> </span><br><span class="line">         // websocket连接断开时触发此方法</span><br><span class="line">         chatSocket.onclose = function(e) &#123;</span><br><span class="line">             console.error(&#x27;Chat socket closed unexpectedly&#x27;);</span><br><span class="line">         &#125;;</span><br><span class="line">         </span><br><span class="line">         document.querySelector(&#x27;#chat-message-input&#x27;).focus();</span><br><span class="line">         document.querySelector(&#x27;#chat-message-input&#x27;).onkeyup = function(e) &#123;</span><br><span class="line">             if (e.keyCode === 13) &#123;  // enter, return</span><br><span class="line">                 document.querySelector(&#x27;#chat-message-submit&#x27;).click();</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;;</span><br><span class="line">         </span><br><span class="line">         // 每当点击发送消息按钮，通过websocket的send方法向后台发送信息。</span><br><span class="line">         document.querySelector(&#x27;#chat-message-submit&#x27;).onclick = function(e) &#123;</span><br><span class="line">             const messageInputDom = document.querySelector(&#x27;#chat-message-input&#x27;);</span><br><span class="line">             const message = messageInputDom.value;</span><br><span class="line">             </span><br><span class="line">             //注意这里:先把文本数据转成json格式,然后调用send方法发送。</span><br><span class="line">             chatSocket.send(JSON.stringify(&#123;</span><br><span class="line">                 &#x27;message&#x27;: message</span><br><span class="line">             &#125;));</span><br><span class="line">             messageInputDom.value = &#x27;&#x27;;</span><br><span class="line">         &#125;;</span><br><span class="line">     &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>此时如果你使用python <a href="https://link.zhihu.com/?target=http://manage.py/">manage.py</a> runserver命令启动测试服务器，当你访问一个名为/hello/的房间时，你将看到如下页面：</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-33d27008d74f1ea99ae9dff43d54c1e6_1440w.jpg" alt="img"></p>
+<p>到这里你看不到任何聊天记录，也不能发送任何消息，因为我们还没有在后端编写任何代码用于处理前端发来的消息，并返回数据。在终端你还会看到如下报错, 说Django只能处理http连接，不能处理websocket。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-bbcdb5ef16a22fcf2a5456bb3c9d046c_1440w.png" alt="img"></p>
+<p>到目前为止，我们所写的就是一个普通的django应用，还没有用到channels库处理websocket请求。接下来我们就要正式开始使用channels了。</p>
+<p><strong>第三步 编写后台websocket路由及处理方法</strong></p>
+<p>当 Django 接受 HTTP 请求时, 它会根据根 URLconf 以查找视图函数, 然后调用视图函数来处理请求。同样, 当 channels 接受 WebSocket 连接时, 它也会根据根路由配置去查找相应的处理方法。只不过channels的路由不在urls.py中配置，<a href="https://link.zhihu.com/?target=http://xn--views-ni1h7sr0s61n5pen77b92r0lv.py/">处理方法也不写在views.py</a>。在channels中，<a href="https://link.zhihu.com/?target=http://xn--routing-d23kxb93dg9a22u0nax7q985dmulfm9o.xn--pyconsumers-804s.py/">这两个文件分别变成了routing.py和consumers.py</a>。这样的好处是不用和django的常规应用混在一起。</p>
+<ul>
+<li><a href="https://link.zhihu.com/?target=http://routing.py/">routing.py</a>：websocket路由文件，<a href="https://link.zhihu.com/?target=http://xn--djangourls-cp3p132nn9xdflb.py/">相当于django的urls.py</a>。它根据websocket请求的url地址触发consumers.py里定义的方法。</li>
+<li><a href="https://link.zhihu.com/?target=http://consumers.py/">consumers.py</a>：<a href="https://link.zhihu.com/?target=http://xn--djangoviews-8z9qw19f81zwy6e1rbr28m.py/">相当于django的视图views.py</a>，负责处理通过websocket路由转发过来的请求和数据。</li>
+</ul>
+<p><a href="https://link.zhihu.com/?target=http://xn--chatrouting-gq8qu16gezv0lbm52dn93d.py/">在chat应用下新建routing.py</a>, 添加如下代码。它的作用是将发送至ws/chat/<room_name>/的websocket请求转由ChatConsumer处理。</room_name></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># chat/routing.py</span><br><span class="line">from django.urls import re_path</span><br><span class="line"></span><br><span class="line">from . import consumers</span><br><span class="line"></span><br><span class="line">websocket_urlpatterns = [</span><br><span class="line">    re_path(r&#x27;ws/chat/(?P&lt;room_name&gt;\w+)/$&#x27;, consumers.ChatConsumer.as_asgi()),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：定义websocket路由时，推荐使用常见的路径前缀 (如/ws) 来区分 WebSocket 连接与普通 HTTP 连接， 因为它将使生产环境中部署 Channels 更容易，比如nginx把所有/ws的请求转给channels处理。</p>
+<p>与Django类似，我们还需要把这个app的websocket路由加入到项目的根路由中去。编辑myproject/asgi.py, 添加如下代码：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># myproject/asgi.py</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">from channels.auth import AuthMiddlewareStack</span><br><span class="line">from channels.routing import ProtocolTypeRouter, URLRouter</span><br><span class="line">from django.core.asgi import get_asgi_application</span><br><span class="line">import chat.routing</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;myproject.settings&quot;)</span><br><span class="line"></span><br><span class="line">application = ProtocolTypeRouter(&#123;</span><br><span class="line">   # http请求使用这个</span><br><span class="line">  &quot;http&quot;: get_asgi_application(),</span><br><span class="line">  </span><br><span class="line">  # websocket请求使用这个</span><br><span class="line">  &quot;websocket&quot;: AuthMiddlewareStack(</span><br><span class="line">        URLRouter(</span><br><span class="line">            chat.routing.websocket_urlpatterns</span><br><span class="line">        )</span><br><span class="line">    ),</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在这里，channels的ProtocolTypeRouter会根据请求协议的类型来转发请求。AuthMiddlewareStack将使用对当前经过身份验证的用户的引用来填充连接的scope, 类似于 Django 的request对象，我们后面还会讲到。</p>
+<p><a href="https://link.zhihu.com/?target=http://xn--chatconsumers-o40uea7348a8m0arrbq68bdlj8jjw42f.py/">接下来在chat应用下新建consumers.py</a>, 添加如下代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line">from asgiref.sync import async_to_sync</span><br><span class="line">from channels.generic.websocket import WebsocketConsumer</span><br><span class="line">import datetime</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ChatConsumer(WebsocketConsumer):</span><br><span class="line">    # websocket建立连接时执行方法</span><br><span class="line">    def connect(self):</span><br><span class="line">        # 从url里获取聊天室名字，为每个房间建立一个频道组</span><br><span class="line">        self.room_name &#x3D; self.scope[&#39;url_route&#39;][&#39;kwargs&#39;][&#39;room_name&#39;]</span><br><span class="line">        self.room_group_name &#x3D; &#39;chat_%s&#39; % self.room_name</span><br><span class="line"></span><br><span class="line">        # 将当前频道加入频道组</span><br><span class="line">        async_to_sync(self.channel_layer.group_add)(</span><br><span class="line">            self.room_group_name,</span><br><span class="line">            self.channel_name</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        # 接受所有websocket请求</span><br><span class="line">        self.accept()</span><br><span class="line"></span><br><span class="line">    # websocket断开时执行方法</span><br><span class="line">    def disconnect(self, close_code):</span><br><span class="line">        async_to_sync(self.channel_layer.group_discard)(</span><br><span class="line">            self.room_group_name,</span><br><span class="line">            self.channel_name</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    # 从websocket接收到消息时执行函数</span><br><span class="line">    def receive(self, text_data):</span><br><span class="line">        text_data_json &#x3D; json.loads(text_data)</span><br><span class="line">        message &#x3D; text_data_json[&#39;message&#39;]</span><br><span class="line"></span><br><span class="line">        # 发送消息到频道组，频道组调用chat_message方法</span><br><span class="line">        async_to_sync(self.channel_layer.group_send)(</span><br><span class="line">            self.room_group_name,</span><br><span class="line">            &#123;</span><br><span class="line">                &#39;type&#39;: &#39;chat_message&#39;,</span><br><span class="line">                &#39;message&#39;: message</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    # 从频道组接收到消息后执行方法</span><br><span class="line">    def chat_message(self, event):</span><br><span class="line">        message &#x3D; event[&#39;message&#39;]</span><br><span class="line">        datetime_str &#x3D; datetime.datetime.now().strftime(&#39;%Y-%m-%d %H:%M:%S&#39;)</span><br><span class="line"></span><br><span class="line">        # 通过websocket发送消息到客户端</span><br><span class="line">        self.send(text_data&#x3D;json.dumps(&#123;</span><br><span class="line">            &#39;message&#39;: f&#39;&#123;datetime_str&#125;:&#123;message&#125;&#39;</span><br><span class="line">        &#125;))</span><br></pre></td></tr></table></figure>
+
+<p>每个自定义的Consumer类一般继承同步的WebsocketConsumer类或异步的AysncWebSocketConsumer类，它自带 self.channel_name 和self.channel_layer 属性。前者是独一无二的长连接频道名，后者提供了 send(), group_send()和group_add() 3种方法, 可以给单个频道或一个频道组发信息，还可以将一个频道加入到组。</p>
+<ul>
+<li>每个频道(channel)都有一个名字。拥有频道名称的任何人都可以向频道发送消息。</li>
+<li>一个组(group)有一个名字。具有组名称的任何人都可以按名称向组添加/删除频道，并向组中的所有频道发送消息。</li>
+</ul>
+<p><strong>注意</strong>：虽然异步Consumer类性能更优，channels推荐使用同步consumer类 , 尤其是调用Django ORM或其他同步程序时，以保持整个consumer在单个线程中并避免ORM查询阻塞整个event。调用channel_layer提供的方法时需要用async_to_sync转换一下。</p>
+<p>除此以外，我们还使用了self.scope[‘url_route’][‘kwargs’][‘room_name’]从路由中获取了聊天室的房间名，<em>在channels程序中，scope是个很重要的对象，类似于django的request对象，它代表了当前websocket连接的所有信息</em>。你可以通过scope[‘user’]获取当前用户对象，还可以通过scope[‘path’]获取当前当前请求路径。</p>
+<p><strong>第四步 运行看效果</strong></p>
+<p>如果不出意外，你现在的项目布局应该如下所示：</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-d60c89380077cd5e6b9f6658b32d0728_1440w.jpg" alt="img"></p>
+<p>连续运行如下命令，就可以看到我们文初的效果啦。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span><br><span class="line">python manage.py migrate</span><br><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure>
+
+<p><strong>小结</strong></p>
+<p>我们已经使用django + channels 写了个在线聊天小应用了，现在来总结下我们所学的知识吧。</p>
+<ul>
+<li>websocket属于全双工通讯的协议，可以在服务器和客户端之间保持长连接，实现双向数据传输。</li>
+<li>前端创建websocket对象后可以通过onmessage监听并处理后端返回的数据，可以通过send方法向后端发送数据。</li>
+<li>channels对应websocket的路由和处理方法分别写在routing.py和consumers.py文件里，<a href="https://link.zhihu.com/?target=http://xn--djangourls-cp3p132nn9xdflb.xn--pyviews-9r4l.py/">相当于django的urls.py和views.py</a>。</li>
+<li>每个频道(channel)都有一个名字，拥有频道名称的任何人都可以向频道发送消息。一个组(group)有一个名字，可以包含多个频道。</li>
+<li>每个自定义的Consumer类自带 self.channel_name 和self.channel_layer 属性。前者是独一无二的频道名，后者提供了 send(), group_send()和group_add() 3种方法。</li>
+<li>在channels程序中，scope是个很重要的对象，类似于django的request对象，它代表了当前websocket连接的所有信息，比如scope[‘user’], scope[‘path’]。</li>
+</ul>
 
     </div>
 
@@ -503,7 +597,10 @@
     <a href="/2022/02/03/Linux-%E4%B8%80%E6%96%87%E6%90%9E%E6%87%82-Prometheus-%E5%A4%9A%E9%9B%86%E7%BE%A4%E7%9B%91%E6%8E%A7%E7%A5%9E%E5%99%A8-Thanos/" rel="prev" title="Linux-一文搞懂 Prometheus 多集群监控神器 Thanos">
       <i class="fa fa-chevron-left"></i> Linux-一文搞懂 Prometheus 多集群监控神器 Thanos
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/16/%E5%89%8D%E7%AB%AF-Vue%E4%B8%AD%E7%9A%84await-async/" rel="next" title="前端-Vue中的await/async">
+      前端-Vue中的await/async <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -578,7 +675,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">202</span>
+          <span class="site-state-item-count">204</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -640,7 +737,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">57:56</span>
+    <span title="站点阅读时长">58:27</span>
 </div>
 
 <!--

@@ -187,6 +187,194 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2022/02/16/%E5%89%8D%E7%AB%AF-Vue%E4%B8%ADPromise%E7%9A%84%E7%94%A8%E6%B3%95%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/16/%E5%89%8D%E7%AB%AF-Vue%E4%B8%ADPromise%E7%9A%84%E7%94%A8%E6%B3%95%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">前端-Vue中Promise的用法介绍</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-16 00:58:47 / 修改时间：01:02:14" itemprop="dateCreated datePublished" datetime="2022-02-16T00:58:47+08:00">2022-02-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Vue中Promise的用法介绍"><a href="#Vue中Promise的用法介绍" class="headerlink" title="Vue中Promise的用法介绍"></a>Vue中Promise的用法介绍</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">转载</span><br></pre></td></tr></table></figure>
+
+
+
+<p>promise是什么？ 1.promise是什么，它可以说是异步编程的一种解决方法，就拿传统的ajax发请求来说，单个还好，如果是一个请求回来的数据还要被其他请求调用，不断地嵌套，可想而知，代码看起来是很乱的，promise主要是为了解决这种情景而出现的。</p>
+<p>2、主要用于异步计算</p>
+<p>3、可以将异步操作队列化，按照期望的顺序执行，返回符合预期的结果</p>
+<p>4、可以在对象之间传递和操作promise，帮助我们处理队列</p>
+<p>5、then和.catch都会返回一个Promise对象，我们可以使用Promise的方法，来传出一些数据，只要是调用了 resolve都是走then里面的代码块，只要是调用了reject，都会去找到catch的代码块，链式调用例子</p>
+<p>6、链式调用简写，如果是Promise.resolve(data),可以直接返回数据，其默认会将数据封装到Promise对象并返回</p>
+<p><strong>为什么会有promise？</strong></p>
+<p><strong>为了避免循环请求同一个接口，返回数据不按顺序返回问题；</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;***</span><br><span class="line"> * 同步请求接口</span><br><span class="line"> *&#x2F;</span><br><span class="line"> const PromiseForEach&#x3D;(arr,cb)&#x3D;&gt;&#123;</span><br><span class="line">    let realResult &#x3D; []</span><br><span class="line">    let result &#x3D; Promise.resolve()</span><br><span class="line">    arr.forEach((a, index) &#x3D;&gt; &#123;</span><br><span class="line">      result &#x3D; result.then(() &#x3D;&gt; &#123;</span><br><span class="line">        return cb(a).then((res) &#x3D;&gt; &#123;</span><br><span class="line">          realResult.push(res)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    return result.then(() &#x3D;&gt; &#123;</span><br><span class="line">      return realResult</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">export default function(Vue) &#123;</span><br><span class="line">    Vue.prototype.$GlobalFun &#x3D; &#123;        </span><br><span class="line">        PromiseForEach</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main.js加入代码：</span><br><span class="line">Vue.prototype.global &#x3D; Global;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>页面调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">getSheet(id,time)&#123;</span><br><span class="line">        this.tableData&#x3D;[];</span><br><span class="line">        let _self&#x3D;this;</span><br><span class="line">        let params&#x3D;&#123;            </span><br><span class="line">            id:parkid,</span><br><span class="line">            time:time</span><br><span class="line">          &#125;;          </span><br><span class="line">          API.List(params).then(res &#x3D;&gt; &#123; </span><br><span class="line">            if (res.code &#x3D;&#x3D; &#39;200&#39;) &#123;  </span><br><span class="line">              this.waterData&#x3D;res.data;   </span><br><span class="line">              this.$GlobalFun.PromiseForEach(_self.waterData, (i) &#x3D;&gt; &#123;</span><br><span class="line">                return new Promise((resolve, reject) &#x3D;&gt; &#123;                 </span><br><span class="line">                  setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">                    let attribute &#x3D; &#123;  </span><br><span class="line">                      id:i.siteId,  </span><br><span class="line">                      time: time</span><br><span class="line">                    &#125;;  </span><br><span class="line">                    API.Detail(attribute).then(result &#x3D;&gt; &#123; </span><br><span class="line">                    if(result.code &#x3D;&#x3D; &#39;200&#39;)&#123;  </span><br><span class="line">                        this.tableData.push(&#123;</span><br><span class="line">                          siteName:i.siteName,</span><br><span class="line">                          tabdata:result.data</span><br><span class="line">                        &#125;);                                       </span><br><span class="line">                    &#125;else&#123;</span><br><span class="line">                      return false;</span><br><span class="line">                    &#125;            </span><br><span class="line">                  &#125;)  </span><br><span class="line">                   this.sum+&#x3D;parseInt(i.polTracesouCount);   </span><br><span class="line">                    return resolve(i);</span><br><span class="line">                  &#125;, 100);                 </span><br><span class="line">                &#125;)</span><br><span class="line">              &#125;).then((data) &#x3D;&gt; &#123;</span><br><span class="line">                console.log(&quot;成功&quot;);</span><br><span class="line">              &#125;).catch((err) &#x3D;&gt; &#123;</span><br><span class="line">                console.log(&quot;失败&quot;);</span><br><span class="line">              &#125;);              </span><br><span class="line">            &#125;else&#123;</span><br><span class="line">              console.log(res.code);</span><br><span class="line">              return;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;);          </span><br><span class="line">      &#125;,</span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2022/02/16/%E5%89%8D%E7%AB%AF-Vue%E4%B8%AD%E7%9A%84await-async/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/16/%E5%89%8D%E7%AB%AF-Vue%E4%B8%AD%E7%9A%84await-async/" class="post-title-link" itemprop="url">前端-Vue中的await/async</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-16 00:41:22 / 修改时间：00:53:34" itemprop="dateCreated datePublished" datetime="2022-02-16T00:41:22+08:00">2022-02-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Vue中的await-async"><a href="#Vue中的await-async" class="headerlink" title="Vue中的await/async"></a>Vue中的await/async</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">await&#x2F;async配合使用解决异步</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/16/%E5%89%8D%E7%AB%AF-Vue%E4%B8%AD%E7%9A%84await-async/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2022/02/10/26-Django-Channel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -212,7 +400,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-10 17:44:54 / 修改时间：18:43:41" itemprop="dateCreated datePublished" datetime="2022-02-10T17:44:54+08:00">2022-02-10</time>
+              <time title="创建时间：2022-02-10 17:44:54 / 修改时间：20:50:34" itemprop="dateCreated datePublished" datetime="2022-02-10T17:44:54+08:00">2022-02-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,14 +418,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>19k</span>
+              <span>30k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>32 分钟</span>
+              <span>50 分钟</span>
             </span>
 
         </div>
@@ -907,184 +1095,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/12/09/25-Django-%E4%BF%A1%E5%8F%B7%E9%87%8Fsignal/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/09/25-Django-%E4%BF%A1%E5%8F%B7%E9%87%8Fsignal/" class="post-title-link" itemprop="url">25-Django-信号量signal</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-09 01:42:08 / 修改时间：01:51:53" itemprop="dateCreated datePublished" datetime="2021-12-09T01:42:08+08:00">2021-12-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Django信号量</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/12/09/25-Django-%E4%BF%A1%E5%8F%B7%E9%87%8Fsignal/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/12/09/%E5%89%8D%E7%AB%AF-ElementUI-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/09/%E5%89%8D%E7%AB%AF-ElementUI-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">前端-ElementUI-权限管理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-09 01:23:09 / 修改时间：01:40:34" itemprop="dateCreated datePublished" datetime="2021-12-09T01:23:09+08:00">2021-12-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>399</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>简单记录</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/12/09/%E5%89%8D%E7%AB%AF-ElementUI-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1156,7 +1166,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">202</span>
+          <span class="site-state-item-count">204</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1218,7 +1228,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">57:56</span>
+    <span title="站点阅读时长">58:27</span>
 </div>
 
 <!--
