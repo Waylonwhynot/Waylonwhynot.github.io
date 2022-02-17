@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="分布式ID方案">
+  <meta name="description" content="分布式ID方案&#x2F;高并发等问题">
 <meta property="og:type" content="article">
-<meta property="og:title" content="其他-分布式ID">
+<meta property="og:title" content="其他-分布式ID、高并发等问题">
 <meta property="og:url" content="https://waylon.whatyouneed.site/2020/08/02/%E5%85%B6%E4%BB%96-%E5%88%86%E5%B8%83%E5%BC%8FID/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="分布式ID方案">
+<meta property="og:description" content="分布式ID方案&#x2F;高并发等问题">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1350514-20190623220501289-1738885742.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1350514-20190623220536727-283238663.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1350514-20190623220707487-418813896.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1350514-20190623220924488-1264328589.png">
 <meta property="article:published_time" content="2020-08-02T11:59:36.000Z">
-<meta property="article:modified_time" content="2021-08-27T09:37:15.985Z">
+<meta property="article:modified_time" content="2022-02-17T03:08:49.928Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="review">
 <meta name="twitter:card" content="summary">
@@ -51,7 +51,7 @@
   };
 </script>
 
-  <title>其他-分布式ID | YouNeed</title>
+  <title>其他-分布式ID、高并发等问题 | YouNeed</title>
   
 
 
@@ -209,7 +209,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          其他-分布式ID
+          其他-分布式ID、高并发等问题
         </h1>
 
         <div class="post-meta">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 17:37:15" itemprop="dateModified" datetime="2021-08-27T17:37:15+08:00">2021-08-27</time>
+                <time title="修改时间：2022-02-17 11:08:49" itemprop="dateModified" datetime="2022-02-17T11:08:49+08:00">2022-02-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,14 +244,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.7k</span>
+              <span>3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -263,7 +263,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>分布式ID方案</p>
+        <p>分布式ID方案/高并发等问题</p>
 <a id="more"></a>
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python可能执行速度慢，可以用go写雪花算法，编译成动态链接库, 然后用python调用；</span><br><span class="line">可以用Go或者C写核心功能，好处是安全(因为编译好代码不可见)</span><br><span class="line">安卓反编译  类似Java 调用C的代码</span><br></pre></td></tr></table></figure>
@@ -338,6 +338,10 @@
 <ul>
 <li>强依赖机器时钟，如果机器上时钟回拨，会导致发号重复或者服务会处于不可用状态。</li>
 </ul>
+<h2 id="四、并发情况下，redis和本地缓存的关系与问题"><a href="#四、并发情况下，redis和本地缓存的关系与问题" class="headerlink" title="四、并发情况下，redis和本地缓存的关系与问题"></a>四、并发情况下，redis和本地缓存的关系与问题</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">请求 -&gt; 本地缓存 -&gt; redis -&gt; db</span><br><span class="line"></span><br><span class="line"> redis 是内存型，file是本地存储；内存是比本地存储 速度快多个量级的，理论上就可以支持更多请求数。</span><br><span class="line"></span><br><span class="line">本地缓存问题: 追求实时性高的话，多节点的情况下，本地缓存可能更新不及时;会导致脏数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">解决方案：本地缓存冷数据；热点数据redis；本地脏数据问题：例如Java通过jetcache组件，支持定时拉取时间可以尽量缩短。</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="五、访问请求慢优化"><a href="#五、访问请求慢优化" class="headerlink" title="五、访问请求慢优化"></a>五、访问请求慢优化</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1、优化sql慢查询</span><br><span class="line">2、接口内可以并行调用的接口做多线程同时调用</span><br><span class="line">3、服务内的调用可以使用okhttp</span><br><span class="line">4、加缓存</span><br><span class="line">5、不关心结果的，MQ异步调用</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -421,7 +425,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E5%94%AF%E4%B8%80ID"><span class="nav-number">1.</span> <span class="nav-text">一 什么是分布式系统唯一ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E5%94%AF%E4%B8%80ID%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">二、分布式系统唯一ID的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9AQPS%E5%92%8CTPS"><span class="nav-number">2.0.1.</span> <span class="nav-text">补充：QPS和TPS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E5%94%AF%E4%B8%80ID%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">三、分布式系统唯一ID的实现方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-UUID%EF%BC%88%E5%8F%AF%E8%83%BD%E4%BC%9A%E9%87%8D%E5%A4%8D%EF%BC%89"><span class="nav-number">3.0.1.</span> <span class="nav-text">1.UUID（可能会重复）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%BB%E9%94%AE%E8%87%AA%E5%A2%9E%EF%BC%8C%E6%80%A7%E8%83%BD%E4%B8%8D%E9%AB%98%EF%BC%89"><span class="nav-number">3.0.2.</span> <span class="nav-text">2.数据库生成（主键自增，性能不高）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Redis%E7%94%9F%E6%88%90ID%EF%BC%88%E6%80%A7%E8%83%BD%E9%AB%98%EF%BC%8C%E4%B8%BA%E4%BA%86%E5%8C%BA%E5%88%AB%E5%8D%95%E7%BA%AF%E6%95%B0%E5%AD%97%E8%87%AA%E5%A2%9E%EF%BC%8C-%E6%97%B6%E9%97%B4%E6%88%B3%EF%BC%89"><span class="nav-number">3.0.3.</span> <span class="nav-text">3.Redis生成ID（性能高，为了区别单纯数字自增，+时间戳）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%88%A9%E7%94%A8zookeeper%EF%BC%88%E5%88%86%E5%B8%83%E5%BC%8F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%8D%8F%E8%B0%83%E6%9C%8D%E5%8A%A1%EF%BC%89%E7%94%9F%E6%88%90%E5%94%AF%E4%B8%80ID"><span class="nav-number">3.0.4.</span> <span class="nav-text">4.利用zookeeper（分布式应用程序协调服务）生成唯一ID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-snowflake%EF%BC%88%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%EF%BC%89%E6%96%B9%E6%A1%88"><span class="nav-number">3.0.5.</span> <span class="nav-text">5.snowflake（雪花算法）方案</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E5%94%AF%E4%B8%80ID"><span class="nav-number">1.</span> <span class="nav-text">一 什么是分布式系统唯一ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E5%94%AF%E4%B8%80ID%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">二、分布式系统唯一ID的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9AQPS%E5%92%8CTPS"><span class="nav-number">2.0.1.</span> <span class="nav-text">补充：QPS和TPS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E5%94%AF%E4%B8%80ID%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">三、分布式系统唯一ID的实现方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-UUID%EF%BC%88%E5%8F%AF%E8%83%BD%E4%BC%9A%E9%87%8D%E5%A4%8D%EF%BC%89"><span class="nav-number">3.0.1.</span> <span class="nav-text">1.UUID（可能会重复）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%BB%E9%94%AE%E8%87%AA%E5%A2%9E%EF%BC%8C%E6%80%A7%E8%83%BD%E4%B8%8D%E9%AB%98%EF%BC%89"><span class="nav-number">3.0.2.</span> <span class="nav-text">2.数据库生成（主键自增，性能不高）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Redis%E7%94%9F%E6%88%90ID%EF%BC%88%E6%80%A7%E8%83%BD%E9%AB%98%EF%BC%8C%E4%B8%BA%E4%BA%86%E5%8C%BA%E5%88%AB%E5%8D%95%E7%BA%AF%E6%95%B0%E5%AD%97%E8%87%AA%E5%A2%9E%EF%BC%8C-%E6%97%B6%E9%97%B4%E6%88%B3%EF%BC%89"><span class="nav-number">3.0.3.</span> <span class="nav-text">3.Redis生成ID（性能高，为了区别单纯数字自增，+时间戳）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%88%A9%E7%94%A8zookeeper%EF%BC%88%E5%88%86%E5%B8%83%E5%BC%8F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%8D%8F%E8%B0%83%E6%9C%8D%E5%8A%A1%EF%BC%89%E7%94%9F%E6%88%90%E5%94%AF%E4%B8%80ID"><span class="nav-number">3.0.4.</span> <span class="nav-text">4.利用zookeeper（分布式应用程序协调服务）生成唯一ID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-snowflake%EF%BC%88%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%EF%BC%89%E6%96%B9%E6%A1%88"><span class="nav-number">3.0.5.</span> <span class="nav-text">5.snowflake（雪花算法）方案</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%B9%B6%E5%8F%91%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8Credis%E5%92%8C%E6%9C%AC%E5%9C%B0%E7%BC%93%E5%AD%98%E7%9A%84%E5%85%B3%E7%B3%BB%E4%B8%8E%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">四、并发情况下，redis和本地缓存的关系与问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%AE%BF%E9%97%AE%E8%AF%B7%E6%B1%82%E6%85%A2%E4%BC%98%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">五、访问请求慢优化</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -499,7 +503,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">58:27</span>
+    <span title="站点阅读时长">58:28</span>
 </div>
 
 <!--
