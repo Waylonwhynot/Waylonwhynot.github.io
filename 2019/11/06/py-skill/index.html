@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210516154039451.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20211209010455166.png">
 <meta property="article:published_time" content="2019-11-05T22:45:35.000Z">
-<meta property="article:modified_time" content="2021-12-08T17:15:32.594Z">
+<meta property="article:modified_time" content="2022-03-02T03:34:55.310Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-09 01:15:32" itemprop="dateModified" datetime="2021-12-09T01:15:32+08:00">2021-12-09</time>
+                <time title="修改时间：2022-03-02 11:34:55" itemprop="dateModified" datetime="2022-03-02T11:34:55+08:00">2022-03-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -285,19 +285,19 @@
 
 
 <ol start="3">
-<li>class 中什么时候用classmethod</li>
-</ol>
+<li><p>class 中什么时候用classmethod</p>
 <ul>
 <li>想通过类的方法得到对象，会用到classmethod</li>
 </ul>
-<ol start="4">
-<li>Django 模板语法 如何处理xss攻击的</li>
-</ol>
+</li>
+<li><p>Django 模板语法 如何处理xss攻击的</p>
 <ul>
 <li>safe<br>Django的模板中会对HTML标签和JS等语法标签进行自动转义，原因显而易见，这样是为了安全。但是有的时候我们可能不希望这些HTML元素被转义，比如我们做一个内容管理系统，后台添加的文章中是经过修饰的，这些修饰可能是通过一个类似于FCKeditor编辑加注了HTML修饰符的文本，如果自动转义的话显示的就是保护HTML标签的源文件。为了在Django中关闭HTML的自动转义有两种方式，如果是一个单独的变量我们可以通过过滤器“|safe”的方式告诉Django这段代码是安全的不必转义。比如：<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">value=<span class="string">&quot;&lt;a href=&quot;</span><span class="string">&quot;&gt;点击&lt;/a&gt;&quot;</span></span><br><span class="line">&#123;&#123; value|safe&#125;&#125;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;&#123;&#123; label &#125;&#125;&lt;/p&gt;  &lt;!--为了安全系统会把标签变成字符串--&gt;</span><br><span class="line">&lt;p&gt;&#123;&#123; label|safe &#125;&#125;&lt;/p&gt;    &lt;!--加上safe，确定你的数据是安全的才能被当成是标签--&gt;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
+</li>
+</ol>
 <p>底层实现原理：mark_safe 通过html特殊字符的替换</p>
 <ol start="5">
 <li>csrf跨站请求伪造<br>什么是csrf：<br>其原理是攻击者构造网站后台某个功能接口的请求地址，诱导用户去点击或者用特殊方法让该请求地址自动加载。用户在登录状态下这个请求被服务端接收后会被误以为是用户合法的操作。对于 GET 形式的接口地址可轻易被攻击，对于 POST 形式的接口地址也不是百分百安全，攻击者可诱导用户进入带 Form 表单可用POST方式提交参数的页面</li>
@@ -555,14 +555,28 @@
 </li>
 </ul>
 <ol start="27">
-<li>可变不可变，有序无序<br>不可变数据类型： 是指变量的值发生改变时，其对应的内存地址<strong>发生改变</strong>。<br>数字、字符串、元祖、布尔</li>
+<li><p>可变不可变，有序无序</p>
+<ul>
+<li><p>不可变数据类型（值传递）： 是指变量的值发生改变时，其对应的内存地址<strong>发生改变</strong>。<br>数字、字符串、元祖、布尔</p>
+</li>
+<li><p>可变数据类型：是指变量的值发生改变时，其对应的内存地址<strong>不发生改变</strong>。<br>字典、集合、列表</p>
+</li>
+<li><p>有序无序：是否可以通过索引取值</p>
+</li>
+<li><p>整型（不可变）<br>列表（有序可变）<br>字符串（有序不可变）<br>元组（有序不可变）<br>字典（无序可变）<br>集合（无序可变）</p>
+</li>
+</ul>
+</li>
 </ol>
-<p>可变数据类型：是指变量的值发生改变时，其对应的内存地址<strong>不发生改变</strong>。<br>字典、集合、列表</p>
-<p>整型（不可变）<br>列表（有序可变）<br>字符串（有序不可变）<br>元组（有序不可变）<br>字典（无序可变）<br>集合（无序可变）</p>
 <ol start="28">
-<li>需要掌握的<strong>内置方法</strong></li>
-<li>isinstance（做类型判断，不推荐用type）<br>判断一个对象是不是累的实例</li>
-<li>issubclass<br>判断类是否属于xx子类</li>
+<li><p>需要掌握的<strong>内置方法</strong></p>
+<ul>
+<li><p>isinstance（做类型判断，不推荐用type）<br>判断一个对象是不是累的实例</p>
+</li>
+<li><p>issubclass<br>判断类是否属于xx子类</p>
+</li>
+</ul>
+</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">obj=Foo()</span><br><span class="line"><span class="comment">#判断Foo 是不是 obj 的实例</span></span><br><span class="line"><span class="comment"># print(isinstance(obj,Foo))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(isinstance([],list))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(type(obj) is Foo)</span></span><br><span class="line"><span class="comment"># print(type([1,2]) is list) </span></span><br><span class="line"></span><br><span class="line">print(issubclass(Foo,object))</span><br></pre></td></tr></table></figure>
 
@@ -849,13 +863,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -904,7 +918,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">58:40</span>
+    <span title="站点阅读时长">59:03</span>
 </div>
 
 <!--
