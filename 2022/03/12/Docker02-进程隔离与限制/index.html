@@ -22,18 +22,18 @@
 
   <meta name="description" content="容器基础，概念入门">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker02-概念入门">
-<meta property="og:url" content="https://waylon.whatyouneed.site/2022/03/12/Docker02-%E6%A6%82%E5%BF%B5%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:title" content="Docker02-进程隔离与限制">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2022/03/12/Docker02-%E8%BF%9B%E7%A8%8B%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%99%90%E5%88%B6/index.html">
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="容器基础，概念入门">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-12T04:03:01.000Z">
-<meta property="article:modified_time" content="2022-03-12T04:50:58.557Z">
+<meta property="article:modified_time" content="2022-03-12T08:05:46.081Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://waylon.whatyouneed.site/2022/03/12/Docker02-%E6%A6%82%E5%BF%B5%E5%85%A5%E9%97%A8/">
+<link rel="canonical" href="https://waylon.whatyouneed.site/2022/03/12/Docker02-%E8%BF%9B%E7%A8%8B%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%99%90%E5%88%B6/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>Docker02-概念入门 | YouNeed</title>
+  <title>Docker02-进程隔离与限制 | YouNeed</title>
   
 
 
@@ -191,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2022/03/12/Docker02-%E6%A6%82%E5%BF%B5%E5%85%A5%E9%97%A8/">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2022/03/12/Docker02-%E8%BF%9B%E7%A8%8B%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%99%90%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/timg.jpeg">
@@ -204,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Docker02-概念入门
+          Docker02-进程隔离与限制
         </h1>
 
         <div class="post-meta">
@@ -215,7 +215,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-03-12 12:03:01 / 修改时间：12:50:58" itemprop="dateCreated datePublished" datetime="2022-03-12T12:03:01+08:00">2022-03-12</time>
+              <time title="创建时间：2022-03-12 12:03:01 / 修改时间：16:05:46" itemprop="dateCreated datePublished" datetime="2022-03-12T12:03:01+08:00">2022-03-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -233,14 +233,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.5k</span>
+              <span>7.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -255,6 +255,7 @@
         <p>容器基础，概念入门</p>
 <a id="more"></a>
 
+<p>容器：容器是一个 创建时指定了namespace的进程,并且启动参数里设置了cpu,内存的限制,使用的文件系统目录也被提前设置了,挂载到了其他的目录(这个就是镜像) 2.所以容器没有像虚拟机一样虚拟出内核等,容器使用的是宿主机的内核</p>
 <h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>容器只是运行在宿主机上的一个特殊进程。</p>
 <p>​        除了我们刚刚用到的 PID Namespace，Linux 操作系统还提供了 Mount、UTS、IPC、Network 和 User 这些 Namespace，用来对各种不同的进程上下文进行“障眼法”操作。比如，Mount Namespace，用于让被隔离进程只看到当前 Namespace 里的挂载点信息；Network Namespace，用于让被隔离进程看到当前 Namespace 里的网络设备和配置。</p>
 <ul>
@@ -279,14 +280,60 @@
 
 
 <ol>
-<li><strong>Namespace 技术实际上修改了应用进程看待整个计算机“视图”，即它的“视线”被操作系统做了限制，只能“看到”某些指定的内容。</strong>但对于宿主机来说，这些被“隔离”了的进程跟其他进程并没有太大区别。<ul>
-<li>Namespace是一种资源逻辑隔离机制，在架构设计时经常用到。</li>
+<li><p><strong>Namespace 技术实际上修改了应用进程看待整个计算机“视图”，即它的“视线”被操作系统做了限制，只能“看到”某些指定的内容。</strong>但对于宿主机来说，这些被“隔离”了的进程跟其他进程并没有太大区别。</p>
+<ul>
+<li>Namespace是一种资源逻辑隔离机制，在架构设计时经常用到。<ul>
 <li>Docker本身并没有对应用进程进行隔离，也没有创建所谓的“容器”，而是通过宿主机的操作系统通过namespace对应用进程进行隔离，通过cgroups对被隔离的应用进程限制相关资源属性</li>
 <li>容器，其实就是操作系统在启动进程时通过<strong>设置一些参数</strong>实现了隔离不相关资源后的一个特殊进程。而 Namespace 的使用方式也非常有意思：它其实只是 Linux 创建新进程的一个可选参数</li>
 </ul>
 </li>
-<li></li>
+<li>不足：隔离得不彻底。(共享内核导致隔离不彻底)<ul>
+<li>首先，既然容器只是运行在宿主机上的一种特殊的进程，那么多个容器之间使用的就还是同一个宿主机的操作系统内核。<ul>
+<li>尽管你可以在容器里通过 Mount Namespace 单独挂载其他不同版本的操作系统文件，比如 CentOS 或者 Ubuntu，但这并不能改变共享宿主机内核的事实。这意味着，如果你要在 Windows 宿主机上运行 Linux 容器，或者在低版本的 Linux 宿主机上运行高版本的 Linux 容器，都是行不通的。</li>
+</ul>
+</li>
+<li>其次，在 Linux 内核中，有很多资源和对象是不能被 Namespace 化的，最典型的例子就是：时间。<ul>
+<li>挂载 localtime 时要设置 ReadOnly</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Linux Cgroups 就是 Linux 内核中用来为进程设置资源限制的一个重要功能</strong></p>
+<blockquote>
+<p>Linux Cgroups 的全称是 Linux Control Group。它最主要的作用，就是限制一个进程组能够使用的资源上限，包括 CPU、内存、磁盘、网络带宽等等。</p>
+</blockquote>
+<ul>
+<li><p>Cgrounp通过配置文件限制进程可占用资源，通过查看 /sys/fs/cgroup目录，可以查看所支持的配置(``mount -t cgroup`)</p>
+</li>
+<li><pre><code class="bash">$ docker run -it --cpu-period=100000 --cpu-quota=20000 ubuntu /bin/bash
+
+# 查看
+$ cat /sys/fs/cgroup/cpu/docker/5d5c9f67d/cpu.cfs_period_us 
+100000
+$ cat /sys/fs/cgroup/cpu/docker/5d5c9f67d/cpu.cfs_quota_us 
+20000
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   - 不足：Cgroups 对资源的限制能力也有很多不完善的地方，被提及最多的自然是 **&amp;#x2F;proc** 文件系统的问题。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     - Linux 下的 &amp;#x2F;proc 目录存储的是记录当前内核运行状态的一系列特殊文件，用户可以通过访问这些文件，查看系统以及当前正在运行的进程的信息，比如 CPU 使用情况、内存占用率等，这些文件也是 top 指令查看系统信息的主要数据来源。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     - **问题**：但是，你如果在容器里执行 top 指令，就会发现，它显示的信息居然是宿主机的 CPU 和内存数据，而不是当前容器的数据。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     - **原因**：&amp;#x2F;proc 文件系统并不知道用户通过 Cgroups 给这个容器做了什么样的资源限制，即：&amp;#x2F;proc 文件系统不了解 Cgroups 限制的存在。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     - **解决**：**lxcfs 可解决此问题**(top 是从 &amp;#x2F;prof&amp;#x2F;stats 目录下获取数据，所以道理上来讲，容器不挂载宿主机的该目录就可以了。lxcfs就是来实现这个功能的，做法是把宿主机的 &amp;#x2F;var&amp;#x2F;lib&amp;#x2F;lxcfs&amp;#x2F;proc&amp;#x2F;memoinfo 文件挂载到Docker容器的&amp;#x2F;proc&amp;#x2F;meminfo位置后。容器中进程读取相应文件内容时，LXCFS的FUSE实现会从容器对应的Cgroup中读取正确的内存限制。从而使得应用获得正确的资源约束设定。kubernetes环境下，也能用，以ds 方式运行 lxcfs ，自动给容器注入争取的 proc 信息。)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;## 总结&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;### 一个正在运行的 Docker 容器，其实就是一个启用了多个 Linux Namespace 的应用进程，而这个进程能够使用的资源量，则受 Cgroups 配置的限制。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;容器是一个“单进程”模型。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+由于一个容器的本质就是一个进程，用户的应用进程实际上就是容器里 PID=1 的进程，也是其他后续创建的所有进程的父进程。这就意味着，在一个容器中，你没办法同时运行两个不同的应用，除非你能事先找到一个公共的 PID=1 的程序来充当两个不同应用的父进程，这也是为什么很多人都会用 systemd 或者 supervisord 这样的软件来代替应用本身作为容器的启动进程。
+但是，在后面分享容器设计模式时，我还会推荐其他更好的解决办法。这是因为容器本身的设计，就是希望容器和应用能够同生命周期，这个概念对后续的容器编排非常重要。否则，一旦出现类似于“容器是正常运行的，但是里面的应用早已经挂了”的情况，编排系统处理起来就非常麻烦了。
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;问题1：一个容器本质上只是一个进程，那么不能同时启动两个应用？这个能解释一下吗？ 如果我打包一个docker镜像 里面安装了redis和tomcat 那就不能跑在容器里了？&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+能。但至少一个进程会无法管理。
+由于一个容器的本质就是一个进程，用户的应用进程实际上就是容器里 PID=1 的进程，也是其他后续创建的所有进程的父进程。这就意味着，在一个容器中，你没办法同时运行两个不同的应用，除非你能事先找到一个公共的 PID=1 的程序来充当两个不同应用的父进程，这也是为什么很多人都会用 systemd 或者 supervisord ,比如用systemd当公共父进程;这样的软件来代替应用本身作为容器的启动进程。
+</code></pre>
+</li>
+</ul>
+</li>
 </ol>
+<p>这里的应用指的是容器里的apache redis mysql这类的应用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">问题2：docker的实现原理也仅仅是调用了底层的namespace和cgroup吗？</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>准确的说，是调用containerd + runc。runc干你说的这些事儿</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">问题3：这意味着，如果你要在 Windows 宿主机上运行 Linux 容器，或者在低版本的 Linux 宿主机上运行高版本的 Linux 容器，都是行不通的。”这段话有些不解，我的macbook pro可以运行最新版本的linux的docker，感觉是不是跟您这句话有冲突？</span><br><span class="line"></span><br><span class="line">![image-20220312160351099](https:&#x2F;&#x2F;gitee.com&#x2F;waylon1006&#x2F;blog_pic&#x2F;raw&#x2F;master&#x2F;pic&#x2F;image-20220312160351099.png)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="http://www.floydhilton.com/docker/2017/03/31/Docker-ContainerHost-vs-ContainerOS-Linux-Windows.html">http://www.floydhilton.com/docker/2017/03/31/Docker-ContainerHost-vs-ContainerOS-Linux-Windows.html</a></p>
+<p>mac docker其实是个虚拟机<br>windows：Docker Machine 也会在 Windows 上创建一个 Linux 虚拟机，用于运行 Docker 引擎。也就是说，这个环境也只支持 Linux 的应用程序格式的，并不支持 Windows 应用程序的运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">问题4：对于&#x2F;etc&#x2F;hosts这个文件而言，同一个pod中不同container修改权限时是修改的宿主机的文件权限，而修改hosts文件内容时，修改的是各自的文件么？</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>不是……hosts跟volume是一样的，所有容器共同mount了同一份。但是这个文件的内容，是kubelet维护的，在每个容器创建的时候，kubelet会重写它里面的内容。这就是为啥我说不让你手动改hosts……</p>
+<pre><code></code></pre>
 
     </div>
 
@@ -308,7 +355,10 @@
     <a href="/2022/03/11/Docker01-%E8%83%8C%E6%99%AF/" rel="prev" title="Docker01-背景">
       <i class="fa fa-chevron-left"></i> Docker01-背景
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/12/Docker03-%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/" rel="next" title="Docker03-理解容器镜像">
+      Docker03-理解容器镜像 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -383,7 +433,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-count">210</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -445,7 +495,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">59:17</span>
+    <span title="站点阅读时长">59:33</span>
 </div>
 
 <!--
