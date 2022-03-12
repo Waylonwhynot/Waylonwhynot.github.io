@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/cdd3787f1145fbbdeda8cb8ae3d5e789.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/e40589eb3fd60ad6cfc35efedd228f10.png">
 <meta property="article:published_time" content="2021-06-21T12:59:10.000Z">
-<meta property="article:modified_time" content="2022-02-03T19:46:11.005Z">
+<meta property="article:modified_time" content="2022-03-06T14:25:02.461Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-04 03:46:11" itemprop="dateModified" datetime="2022-02-04T03:46:11+08:00">2022-02-04</time>
+                <time title="修改时间：2022-03-06 22:25:02" itemprop="dateModified" datetime="2022-03-06T22:25:02+08:00">2022-03-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,14 +242,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.2k</span>
+              <span>3.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -264,11 +264,14 @@
         <p>杂记</p>
 <a id="more"></a>
 
-<h2 id="1-Go语言make和new关键字的区别及实现原理"><a href="#1-Go语言make和new关键字的区别及实现原理" class="headerlink" title="1.Go语言make和new关键字的区别及实现原理"></a>1.Go语言make和new关键字的区别及实现原理</h2><p>make 关键字的主要作用是创建 slice、map 和 Channel 等内置的数据结构，而 new 的主要作用是为类型申请一片内存空间，并返回指向这片内存的指针。</p>
+<h2 id="1-Go语言make和new关键字的区别及实现原理"><a href="#1-Go语言make和new关键字的区别及实现原理" class="headerlink" title="1.Go语言make和new关键字的区别及实现原理"></a>1.Go语言make和new关键字的区别及实现原理</h2><p>make 关键字的主要作用是创建 <strong>slice</strong>、<strong>map</strong> 和 <strong>Channel</strong> 等内置的数据结构，而 new 的主要作用是为类型申请一片内存空间，并返回指向这片内存的指针。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> a *<span class="keyword">int</span></span><br><span class="line">    *a = <span class="number">100</span></span><br><span class="line">    fmt.Println(*a)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> b <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span></span><br><span class="line">    b[&amp;quot;沙河娜扎&amp;quot;] = <span class="number">100</span></span><br><span class="line">    fmt.Println(b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>执行上面的代码会引发panic，为什么呢？ 在Go语言中对于引用类型的变量，我们在使用的时候不仅要声明它，还要为它分配内存空间，否则我们的值就没办法存储。而对于值类型的声明不需要分配内存空间，是因为它们在声明的时候已经默认分配好了内存空间。要分配内存，就引出来今天的new和make。 Go语言中new和make是内建的两个函数，主要用来分配内存。</p>
-<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><p>在Go语言中，new 函数描述如下：</p>
+<h3 id="new"><a href="#new" class="headerlink" title="new"></a>new</h3><blockquote>
+<p>new只能把内存初始化为零值并返回其指针</p>
+</blockquote>
+<p>在Go语言中，new 函数描述如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; The new built-in function allocates memory. The first argument is a type,</span><br><span class="line">&#x2F;&#x2F; not a value, and the value returned is a pointer to a newly</span><br><span class="line">&#x2F;&#x2F; allocated zero value of that type.</span><br><span class="line">func new(Type) *Type</span><br></pre></td></tr></table></figure>
 
 <p>其中，</p>
@@ -284,7 +287,7 @@
 <p>当然，new 函数不仅仅能够为系统默认的数据类型，分配空间，自定义类型也可以使用 new 函数来分配空间，如下所示：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Student <span class="keyword">struct</span> &#123;</span><br><span class="line">   name <span class="keyword">string</span></span><br><span class="line">   age <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> s *Student</span><br><span class="line">s = <span class="built_in">new</span>(Student) <span class="comment">//分配空间</span></span><br><span class="line">s.name =<span class="string">&quot;dequan&quot;</span></span><br><span class="line">fmt.Println(s)</span><br></pre></td></tr></table></figure>
 
-<h2 id="make"><a href="#make" class="headerlink" title="make"></a>make</h2><p>make 也是用于内存分配的，但是和 new 不同，<strong>它只用于 chan、map 以及 slice 的内存创建</strong>，而且它返回的类型就是这三个类型本身，而不是他们的指针类型，因为这三种类型就是引用类型，所以就没有必要返回他们的指针了。</p>
+<h3 id="make"><a href="#make" class="headerlink" title="make"></a>make</h3><p>make 也是用于内存分配的，但是和 new 不同，<strong>它只用于 chan、map 以及 slice 的内存创建</strong>，而且它返回的类型就是这三个类型本身，而不是他们的指针类型，因为这三种类型就是引用类型，所以就没有必要返回他们的指针了。</p>
 <p>在Go语言中，make 函数的描述如下：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">make</span><span class="params">(t Type, size ...IntegerType)</span> <span class="title">Type</span></span></span><br></pre></td></tr></table></figure>
 
@@ -297,6 +300,32 @@
 <li>make只用于slice、map以及channel的初始化，返回的还是这三个引用类型本身；</li>
 <li>而new用于类型的内存分配，并且内存对应的值为类型零值，返回的是指向类型的指针。</li>
 </ul>
+<h3 id="new和make对比"><a href="#new和make对比" class="headerlink" title="new和make对比"></a>new和make对比</h3><ul>
+<li>简单说new只分配内存，new一般用于基础类型的初始化，make用于slice，map和channel的初始化</li>
+<li>对比表格</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>适用范围</th>
+<th>返回值</th>
+<th>填充值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>new</td>
+<td>new可以对所有类型进行内存分配</td>
+<td>new返回指针</td>
+<td>new填充零值</td>
+</tr>
+<tr>
+<td>make</td>
+<td>make只能创建类型（slice map channel）</td>
+<td>make返回引用</td>
+<td>make填充非零值</td>
+</tr>
+</tbody></table>
 <h2 id="2-nil切片和空切片区别"><a href="#2-nil切片和空切片区别" class="headerlink" title="2.nil切片和空切片区别"></a>2.nil切片和空切片区别</h2><ul>
 <li><strong>nil切片和空切片指向的地址不一样。nil切片引用数组指针地址为0（无指向任何实际地址）</strong></li>
 <li><strong>空切片的引用数组指针地址是有的，且固定为一个值</strong></li>
@@ -330,16 +359,6 @@
 <li>引用类型：变量存储的是一个地址，这个地址存储最终的值，内存通常在堆中分配，通过GC回收（属于引用类型的的数据类型有：<strong>指针、slice、map、chan</strong>等）。</li>
 </ul>
 <h2 id="4-单引号-双引号-反引号-区别"><a href="#4-单引号-双引号-反引号-区别" class="headerlink" title="4.单引号 双引号 反引号 区别"></a>4.单引号 双引号 反引号 区别</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">单引号，表示byte类型或rune类型，对应 uint8和int32类型，默认是 rune 类型。byte用来强调数据是raw data，而不是数字；而rune用来表示Unicode的code point。</span><br><span class="line"></span><br><span class="line">双引号，才是字符串，实际上是字符数组。可以用索引号访问某字节，也可以用len()函数来获取字符串所占的字节长度。</span><br><span class="line"></span><br><span class="line">反引号，表示字符串字面量，但不支持任何转义序列。字面量 raw literal string 的意思是，你定义时写的啥样，它就啥样，你有换行，它就换行。你写转义字符，它也就展示转义字符。</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-传递"><a href="#5-传递" class="headerlink" title="5.传递"></a>5.传递</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. go 默认是值3传递</span><br><span class="line">   </span><br><span class="line">2. Python参数传递统一使用的是引用传递方式</span><br><span class="line">  Python参数传递统一使用的是引用传递方式。因为Python对象分为可变对象(list,dict,set等)和不可变对象(number,string,tuple等)，当传递的参数是可变对象的引用时，因为可变对象的值可以修改，因此可以通过修改参数值而修改原对象，这类似于C语言中的引用传递；当传递的参数是不可变对象的引用时，虽然传递的是引用，参数变量和原变量都指向同一内存地址，但是不可变对象无法修改，所以参数的重新赋值不会影响原对象，这类似于C语言中的值传递。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="6-Go和python的区别"><a href="#6-Go和python的区别" class="headerlink" title="6.Go和python的区别"></a>6.Go和python的区别</h2><p>go:  b := a  赋值拷贝；</p>
-<p>python：b = a , 叫赋值引用，都指向同一个对象</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">a = [1, 2, 3, 4]</span><br><span class="line">b = a</span><br><span class="line">b[0] = 20</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(a, b)</span><br><span class="line">[20, 2, 3, 4] [20, 2, 3, 4]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a := [4]int&#123;1, 2, 3, 4&#125;</span><br><span class="line">b := a</span><br><span class="line">b[0] = 20</span><br><span class="line">fmt.Println(a, b)</span><br><span class="line">[1 2 3 4] [20 2 3 4]</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-数据类型"><a href="#7-数据类型" class="headerlink" title="7.数据类型"></a>7.数据类型</h2><p>python：可变类型，不可变类型</p>
-<p>go：值类型，引用类型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">值类型：数组</span><br><span class="line">引用类型：</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -424,7 +443,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Go%E8%AF%AD%E8%A8%80make%E5%92%8Cnew%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%8C%BA%E5%88%AB%E5%8F%8A%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">1.Go语言make和new关键字的区别及实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new"><span class="nav-number">2.</span> <span class="nav-text">new</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#make"><span class="nav-number">3.</span> <span class="nav-text">make</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-nil%E5%88%87%E7%89%87%E5%92%8C%E7%A9%BA%E5%88%87%E7%89%87%E5%8C%BA%E5%88%AB"><span class="nav-number">4.</span> <span class="nav-text">2.nil切片和空切片区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%89%B9%E6%AE%8A%E7%82%B9%EF%BC%9A%E6%93%8D%E4%BD%9C%E4%B8%8A%E6%B2%A1%E5%8C%BA%E5%88%AB%EF%BC%8C%E9%83%BD%E5%8F%AF%E4%BB%A5%E6%93%8D%E4%BD%9C%E3%80%82"><span class="nav-number">5.</span> <span class="nav-text">3.特殊点：操作上没区别，都可以操作。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A"><span class="nav-number">5.1.</span> <span class="nav-text">解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text">3.值类型和引用类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%8D%95%E5%BC%95%E5%8F%B7-%E5%8F%8C%E5%BC%95%E5%8F%B7-%E5%8F%8D%E5%BC%95%E5%8F%B7-%E5%8C%BA%E5%88%AB"><span class="nav-number">7.</span> <span class="nav-text">4.单引号 双引号 反引号 区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%BC%A0%E9%80%92"><span class="nav-number">8.</span> <span class="nav-text">5.传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Go%E5%92%8Cpython%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">9.</span> <span class="nav-text">6.Go和python的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">10.</span> <span class="nav-text">7.数据类型</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Go%E8%AF%AD%E8%A8%80make%E5%92%8Cnew%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%8C%BA%E5%88%AB%E5%8F%8A%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">1.Go语言make和new关键字的区别及实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#new"><span class="nav-number">1.1.</span> <span class="nav-text">new</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#make"><span class="nav-number">1.2.</span> <span class="nav-text">make</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new%E5%92%8Cmake%E5%AF%B9%E6%AF%94"><span class="nav-number">1.3.</span> <span class="nav-text">new和make对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-nil%E5%88%87%E7%89%87%E5%92%8C%E7%A9%BA%E5%88%87%E7%89%87%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">2.nil切片和空切片区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%89%B9%E6%AE%8A%E7%82%B9%EF%BC%9A%E6%93%8D%E4%BD%9C%E4%B8%8A%E6%B2%A1%E5%8C%BA%E5%88%AB%EF%BC%8C%E9%83%BD%E5%8F%AF%E4%BB%A5%E6%93%8D%E4%BD%9C%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">3.特殊点：操作上没区别，都可以操作。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A"><span class="nav-number">3.1.</span> <span class="nav-text">解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">3.值类型和引用类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%8D%95%E5%BC%95%E5%8F%B7-%E5%8F%8C%E5%BC%95%E5%8F%B7-%E5%8F%8D%E5%BC%95%E5%8F%B7-%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">4.单引号 双引号 反引号 区别</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -440,7 +459,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">207</span>
+          <span class="site-state-item-count">208</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -502,7 +521,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">59:03</span>
+    <span title="站点阅读时长">59:14</span>
 </div>
 
 <!--
