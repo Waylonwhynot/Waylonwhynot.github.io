@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/8ee9f2fa987eccb490cfaa91c6484f67.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/16c095d6efb8d8c226ad9b098689f306.png">
 <meta property="article:published_time" content="2022-03-13T10:04:07.000Z">
-<meta property="article:modified_time" content="2022-03-13T13:23:19.796Z">
+<meta property="article:modified_time" content="2022-03-13T17:27:51.015Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
@@ -216,10 +216,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-13 18:04:07 / 修改时间：21:23:19" itemprop="dateCreated datePublished" datetime="2022-03-13T18:04:07+08:00">2022-03-13</time>
+              <time title="创建时间：2022-03-13 18:04:07" itemprop="dateCreated datePublished" datetime="2022-03-13T18:04:07+08:00">2022-03-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-14 01:27:51" itemprop="dateModified" datetime="2022-03-14T01:27:51+08:00">2022-03-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -236,7 +242,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -269,24 +275,33 @@
 </blockquote>
 <p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/8ee9f2fa987eccb490cfaa91c6484f67.png" alt="img"></p>
 <ul>
-<li><strong>Master</strong><ul>
+<li><p><strong>Master</strong></p>
+<ul>
 <li><strong>kube-apiserver</strong>：负责 API 服务</li>
 <li>kube-scheduler：负责调度</li>
 <li><strong>kube-controller-manager</strong>：负责容器编排</li>
 </ul>
 </li>
-<li><strong>Etcd</strong>：整个集群的持久化数据，则由 kube-apiserver 处理后保存在 Etcd 中。</li>
-<li><strong>Node</strong><ul>
+<li><p><strong>Etcd</strong>：整个集群的持久化数据，则由 kube-apiserver 处理后保存在 Etcd 中。</p>
+</li>
+<li><p><strong>Node</strong></p>
+<ul>
 <li><strong>kubelet</strong>：主要负责同容器运行时（比如 Docker 项目）打交道。而这个交互所依赖的，是一个称作 CRI（Container Runtime Interface）的远程调用接口，这个接口定义了容器运行时的各项核心操作，比如：启动一个容器需要的所有参数。<strong>这也是为何，Kubernetes 项目并不关心你部署的是什么容器运行时、使用的什么技术实现，只要你的这个容器运行时能够运行标准的容器镜像，它就可以通过实现 CRI 接入到 Kubernetes 项目当中。</strong><ul>
 <li>而具体的容器运行时，比如 Docker 项目，则一般通过 OCI 这个容器运行时规范同底层的 Linux 操作系统进行交互，即：把 CRI 请求翻译成对 Linux 操作系统的调用（操作 Linux Namespace 和 Cgroups 等）。</li>
 <li><strong>此外，kubelet 还通过 gRPC 协议同一个叫作 Device Plugin 的插件进行交互</strong>。这个插件，是 Kubernetes 项目用来管理 GPU 等宿主机物理设备的主要组件，也是基于 Kubernetes 项目进行机器学习训练、高性能作业支持等工作必须关注的功能</li>
 <li><strong>kubelet 的另一个重要功能，则是调用网络插件和存储插件为容器配置网络和持久化存储。</strong>这两个插件与 kubelet 进行交互的接口，分别是 CNI（Container Networking Interface）和 CSI（Container Storage Interface）</li>
 </ul>
 </li>
-<li><strong>kube-proxy</strong>：</li>
+<li><strong>kube-proxy</strong>：提供整个集群外的服务发现，如 svc 的 nodeport 暴露策略是提供 K8S 集群意外的其他服务的发现访问，但是需要提供七层代理的话这时候就需要采用 ingress 的插件来实现 </li>
 </ul>
 </li>
-<li>Add-ons</li>
+<li><p>CoreDNS</p>
+<ul>
+<li>提供给 K8S 整个集群内部的 pod 直接的访问。</li>
+</ul>
+</li>
+<li><p>Add-ons</p>
+</li>
 </ul>
 <h2 id="Kubernetes-项目核心功能的“全景图”"><a href="#Kubernetes-项目核心功能的“全景图”" class="headerlink" title="Kubernetes 项目核心功能的“全景图”"></a>Kubernetes 项目核心功能的“全景图”</h2><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/16c095d6efb8d8c226ad9b098689f306.png" alt="img"></p>
 <h2 id="声明式-API"><a href="#声明式-API" class="headerlink" title="声明式 API"></a>声明式 API</h2><ul>
@@ -319,7 +334,10 @@
     <a href="/2022/03/13/Docker04-%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86Docker%E5%AE%B9%E5%99%A8/" rel="prev" title="Docker04-重新认识Docker容器">
       <i class="fa fa-chevron-left"></i> Docker04-重新认识Docker容器
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/14/Kubernetes02-%E5%AE%98%E6%96%B9%E9%83%A8%E7%BD%B2%E5%B7%A5%E5%85%B7kubeadm/" rel="next" title="Kubernetes02-官方部署工具kubeadm">
+      Kubernetes02-官方部署工具kubeadm <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -394,7 +412,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">212</span>
+          <span class="site-state-item-count">213</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -456,7 +474,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">59:48</span>
+    <span title="站点阅读时长">60:47</span>
 </div>
 
 <!--
