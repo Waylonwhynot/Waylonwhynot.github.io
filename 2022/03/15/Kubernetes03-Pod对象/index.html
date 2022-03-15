@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Pod对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes03-Pod对象">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2022/03/15/Kubernetes03-Pod%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Pod对象">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/8c016391b4b17923f38547c498e434cf.png">
+<meta property="article:published_time" content="2022-03-14T16:44:56.000Z">
+<meta property="article:modified_time" content="2022-03-14T21:06:24.809Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="容器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/8c016391b4b17923f38547c498e434cf.png">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2022/03/15/Kubernetes03-Pod%E5%AF%B9%E8%B1%A1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Kubernetes03-Pod对象 | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2022/03/15/Kubernetes03-Pod%E5%AF%B9%E8%B1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kubernetes03-Pod对象
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-15 00:44:56 / 修改时间：05:06:24" itemprop="dateCreated datePublished" datetime="2022-03-15T00:44:56+08:00">2022-03-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Pod对象</p>
+<a id="more"></a>
+
+<h2 id="容器的“单进程模型”"><a href="#容器的“单进程模型”" class="headerlink" title="容器的“单进程模型”"></a>容器的“单进程模型”</h2><p>指容器里只能运行“一个”进程，而是指容器没有管理多个进程的能力。</p>
+<h2 id="Pod的设计思想"><a href="#Pod的设计思想" class="headerlink" title="Pod的设计思想"></a>Pod的设计思想</h2><p>“Pod 是Kubernetes中的 “一等公民””</p>
+<blockquote>
+<p>k8s在调度时是以pod为最小调度单位，在调度时，会将pod调度在资源充足可承载该pod运行的node上</p>
+</blockquote>
+<p>pod = 容器组 = 进程组</p>
+<h3 id="Pod的意义1：-处理亲密关系（解决调度问题）"><a href="#Pod的意义1：-处理亲密关系（解决调度问题）" class="headerlink" title="Pod的意义1： 处理亲密关系（解决调度问题）"></a>Pod的意义1： 处理亲密关系（解决调度问题）</h3><p><strong>特征</strong>：互相之间会发生直接的文件交换、使用 localhost 或者 Socket 文件进行本地通信、会发生非常频繁的远程调用、需要共享某些 Linux Namespace（比如，一个容器要加入另一个容器的 Network Namespace）等等。</p>
+<ul>
+<li>并不是所有有“关系”的容器都属于同一个 Pod。比如，PHP 应用容器和 MySQL 虽然会发生访问关系，但并没有必要、也不应该部署在同一台机器上，它们更适合做成两个 Pod。</li>
+</ul>
+<h3 id="Pod的意义2：容器设计模式"><a href="#Pod的意义2：容器设计模式" class="headerlink" title="Pod的意义2：容器设计模式"></a>Pod的意义2：容器设计模式</h3><blockquote>
+<p>没有pod时用户要花心思考虑一个容器中多个进程间的关系；现在只要考虑放到一个pod中，其它的就交给pod了。相当于抽象出了一种设计模式</p>
+</blockquote>
+<h4 id="Pod实现原理"><a href="#Pod实现原理" class="headerlink" title="Pod实现原理"></a><strong>Pod实现原理</strong></h4><p><strong>Pod 最重要的一个事实是：它只是一个逻辑概念。</strong></p>
+<ul>
+<li><p>Pod，其实是一组共享了某些资源的容器。</p>
+</li>
+<li><p>pod是k8s的调度模型抽象，里面包含一组容器，他们就像操作系统里的同一个进程下可以有多个线程共享资源一样，共享系统资源</p>
+</li>
+<li><p>Pod 里的所有容器，共享的是同一个 Network Namespace，并且可以声明共享同一个 Volume。</p>
+</li>
+<li><p>容器间是对等关系：无前后依赖</p>
+</li>
+</ul>
+<h5 id="如何共享network-namespace-和-volume-namespace？"><a href="#如何共享network-namespace-和-volume-namespace？" class="headerlink" title="如何共享network namespace 和 volume namespace？"></a>如何共享network namespace 和 volume namespace？</h5><h6 id="共享network？"><a href="#共享network？" class="headerlink" title="共享network？"></a>共享network？</h6><ul>
+<li>Network namespace: <strong>通过 Join Network Namespace 的方式，与 Infra 容器关联在一起。</strong></li>
+</ul>
+<p>​        在 Kubernetes 项目里，Pod 的实现需要使用一个中间容器，这个容器叫作 Infra 容器。在这个 Pod 中，Infra 容器永远都是第一个被创建的容器，而其他用户定义的容器，则通过 <strong>Join Network Namespace</strong> 的方式，与 Infra 容器关联在一起。</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/8c016391b4b17923f38547c498e434cf.png" alt="img"></p>
+<blockquote>
+<p>infra 容器（<strong>k8s.gcr.io/pause</strong>）特点</p>
+</blockquote>
+<ul>
+<li>一定要占用极少的资源，所以它使用的是一个非常特殊的镜像，叫作：k8s.gcr.io/pause</li>
+<li>这个镜像是一个用汇编语言编写的、永远处于“暂停”状态的容器，解压后的大小也只有 100~200 KB 左右</li>
+</ul>
+<p>​        而在 Infra 容器“Hold 住”Network Namespace 后，用户容器就可以加入到 Infra 容器的 Network Namespace 当中了。所以，如果你查看这些容器在宿主机上的 Namespace 文件（这个 Namespace 文件的路径，我已经在前面的内容中介绍过），它们指向的值一定是完全一样的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/proc/pid/ns/net</span><br></pre></td></tr></table></figure>
+
+<p>对于 Pod 里的容器 A 和容器 B 来说：</p>
+<ul>
+<li>它们可以直接使用 localhost 进行通信；</li>
+<li>它们看到的网络设备跟 Infra 容器看到的完全一样；</li>
+<li>一个 Pod 只有一个 IP 地址，也就是这个 Pod 的 Network Namespace 对应的 IP 地址；</li>
+<li>当然，其他的所有网络资源，都是一个 Pod 一份，并且被该 Pod 中的所有容器共享；Pod 的生命周期只跟 Infra 容器一致，而与容器 A 和 B 无关。</li>
+</ul>
+<p>而对于同一个 Pod 里面的所有用户容器来说，它们的进出流量，也可以认为都是通过 Infra 容器完成的。这一点很重要，因为<strong>将来如果你要为 Kubernetes 开发一个网络插件时，应该重点考虑的是如何配置这个 Pod 的 Network Namespace，而不是每一个用户容器如何使用你的网络配置，这是没有意义的。</strong></p>
+<p>这就意味着，如果你的网络插件需要在容器里安装某些包或者配置才能完成的话，是不可取的：Infra 容器镜像的 rootfs 里几乎什么都没有，没有你随意发挥的空间。当然，这同时也意味着你的网络插件完全不必关心用户容器的启动与否，而只需要关注如何配置 Pod，也就是 Infra 容器的 Network Namespace 即可。</p>
+<h6 id="共享volume1"><a href="#共享volume1" class="headerlink" title="共享volume1?"></a>共享volume1?</h6><p>Kubernetes 项目只要把所有 Volume 的定义都设计在 Pod 层级即可。</p>
+<p>一个 Volume 对应的宿主机目录对于 Pod 来说就只有一个，Pod 里的容器只要声明挂载这个 Volume，就一定可以共享这个 Volume 对应的宿主机目录。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">two-containers</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">restartPolicy:</span> <span class="string">Never</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shared-data</span></span><br><span class="line">    <span class="attr">hostPath:</span>      </span><br><span class="line">      <span class="attr">path:</span> <span class="string">/data</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx-container</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shared-data</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/usr/share/nginx/html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">debian-container</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">debian</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shared-data</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/pod-data</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;/bin/sh&quot;</span>]</span><br><span class="line">    <span class="attr">args:</span> [<span class="string">&quot;-c&quot;</span>, <span class="string">&quot;echo Hello from the debian container &gt; /pod-data/index.html&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>debian-container 和 nginx-container 都声明挂载了 shared-data 这个 Volume。而 shared-data 是 hostPath 类型。所以，它对应在宿主机上的目录就是：/data。而这个目录，其实就被同时绑定挂载进了上述两个容器当中。</p>
+<p>“如果宿主机本来没有这个目录，会自动创建data目录”</p>
+<h4 id="容器设计模式最常用的一种模式-Sidecar"><a href="#容器设计模式最常用的一种模式-Sidecar" class="headerlink" title="容器设计模式最常用的一种模式(Sidecar)"></a>容器设计模式最常用的一种模式(Sidecar)</h4><blockquote>
+<p>sidecar 指的就是我们可以在一个 Pod 中，启动一个辅助容器，来完成一些独立于主进程（主容器）之外的工作。</p>
+</blockquote>
+<h5 id="第一个最典型的例子是：WAR-包与-Web-服务器"><a href="#第一个最典型的例子是：WAR-包与-Web-服务器" class="headerlink" title="第一个最典型的例子是：WAR 包与 Web 服务器"></a>第一个最典型的例子是：WAR 包与 Web 服务器</h5><ul>
+<li><p>一种方法是，把 WAR 包直接放在 Tomcat 镜像的 webapps 目录下，做成一个新的镜像运行起来。可是，这时候，如果你要更新 WAR 包的内容，或者要升级 Tomcat 镜像，就要重新制作一个新的发布镜像，非常麻烦。</p>
+</li>
+<li><p>另一种方法是，你压根儿不管 WAR 包，永远只发布一个 Tomcat 容器。不过，这个容器的 webapps 目录，就必须声明一个 hostPath 类型的 Volume，从而把宿主机上的 WAR 包挂载进 Tomcat 容器当中运行起来。不过，这样你就必须要解决一个问题，即：如何让每一台宿主机，都预先准备好这个存储有 WAR 包的目录呢？这样来看，你只能独立维护一套分布式存储系统了。</p>
+</li>
+</ul>
+<p>​        有了 Pod 之后，这样的问题就很容易解决了。我们可以把 WAR 包和 Tomcat 分别做成镜像，然后把它们作为一个 Pod 里的两个容器“组合”在一起。这个 Pod 的配置文件如下所示：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">javaweb-2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">initContainers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">geektime/sample:v2</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">war</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;cp&quot;</span>, <span class="string">&quot;/sample.war&quot;</span>, <span class="string">&quot;/app&quot;</span>]</span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/app</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">app-volume</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">geektime/tomcat:7.0</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">tomcat</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;sh&quot;</span>,<span class="string">&quot;-c&quot;</span>,<span class="string">&quot;/root/apache-tomcat-7.0.42-v2/bin/start.sh&quot;</span>]</span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/root/apache-tomcat-7.0.42-v2/webapps</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">app-volume</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br><span class="line">      <span class="attr">hostPort:</span> <span class="number">8001</span> </span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">app-volume</span></span><br><span class="line">    <span class="attr">emptyDir:</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​         在 Pod 中，<strong>所有 Init Container 定义的容器，都会比 spec.containers 定义的用户容器先启动</strong>。并且，Init Container 容器会按顺序逐一启动，而直<strong>到它们都启动并且退出了，用户容器才会启动</strong>。</p>
+<ul>
+<li>“组合”操作，正是容器设计模式里最常用的一种模式，它的名字叫：<strong>sidecar</strong>。</li>
+</ul>
+<h5 id="第二个例子，则是容器的日志收集"><a href="#第二个例子，则是容器的日志收集" class="headerlink" title="第二个例子，则是容器的日志收集"></a>第二个例子，则是容器的日志收集</h5><p>比如，我现在有一个应用，需要不断地把日志文件输出到容器的 /var/log 目录中。这时，我就可以把一个 Pod 里的 Volume 挂载到应用容器的 /var/log 目录上。</p>
+<p>然后，我在这个 Pod 里同时运行一个 sidecar 容器，它也声明挂载同一个 Volume 到自己的 /var/log 目录上。</p>
+<p>这样，接下来 sidecar 容器就只需要做一件事儿，那就是不断地从自己的 /var/log 目录里读取日志文件，转发到 MongoDB 或者 Elasticsearch 中存储起来。这样，一个最基本的日志收集工作就完成了。</p>
+<h5 id="第三个例子：istio"><a href="#第三个例子：istio" class="headerlink" title="第三个例子：istio"></a>第三个例子：istio</h5><p>​      Pod 的另一个重要特性是，它的所有容器都共享同一个 Network Namespace。这就使得很多与 Pod 网络相关的配置和管理，也都可以交给 sidecar 完成，而完全无须干涉用户容器。这里最典型的例子莫过于 Istio 这个微服务治理项目了</p>
+<h2 id="Pod对象"><a href="#Pod对象" class="headerlink" title="Pod对象"></a>Pod对象</h2><h3 id="到底哪些属性属于-Pod-对象，而又有哪些属性属于-Container-呢？"><a href="#到底哪些属性属于-Pod-对象，而又有哪些属性属于-Container-呢？" class="headerlink" title="到底哪些属性属于 Pod 对象，而又有哪些属性属于 Container 呢？"></a>到底哪些属性属于 Pod 对象，而又有哪些属性属于 Container 呢？</h3><ul>
+<li><p><strong>凡是调度、网络、存储，以及安全相关的属性，基本上是 Pod 级别的。</strong></p>
+</li>
+<li><p><strong>凡是跟容器的 Linux Namespace 相关的属性，也一定是 Pod 级别的</strong></p>
+</li>
+<li><p><strong>凡是 Pod 中的容器要共享宿主机的 Namespace，也一定是 Pod 级别的定义</strong></p>
+</li>
+</ul>
+<p>​      这些属性的共同特征是，它们描述的是“机器”这个整体，而不是里面运行的“程序”。比如，配置这个“机器”的网卡（即：Pod 的网络定义），配置这个“机器”的磁盘（即：Pod 的存储定义），配置这个“机器”的防火墙（即：Pod 的安全定义）。更不用说，这台“机器”运行在哪个服务器之上（即：Pod 的调度）。</p>
+<h4 id="Pod重要字段"><a href="#Pod重要字段" class="headerlink" title="Pod重要字段"></a>Pod重要字段</h4><ol>
+<li><p><strong>NodeSelector</strong>：是一个供用户将 Pod 与 Node 进行绑定的字段</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"> <span class="attr">nodeSelector:</span></span><br><span class="line">   <span class="attr">disktype:</span> <span class="string">ssd</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>NodeName</strong>:一旦 Pod 的这个字段被赋值，Kubernetes 项目就会被认为这个 Pod 已经经过了调度，调度的结果就是赋值的节点名字。所以，这个字段一般由调度器负责设置，但用户也可以设置它来“骗过”调度器，当然这个做法一般是在测试或者调试的时候才会用到。</p>
+</li>
+<li><p><strong>HostAliases</strong>：定义了 Pod 的 hosts 文件（比如 /etc/hosts）里的内容</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostAliases:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">ip:</span> <span class="string">&quot;10.1.2.3&quot;</span></span><br><span class="line">    <span class="attr">hostnames:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&quot;foo.remote&quot;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&quot;bar.remote&quot;</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/hosts</span><br><span class="line"><span class="comment"># Kubernetes-managed hosts file.</span></span><br><span class="line">127.0.0.1 localhost</span><br><span class="line">...</span><br><span class="line">10.244.135.10 hostaliases-pod</span><br><span class="line">10.1.2.3 foo.remote</span><br><span class="line">10.1.2.3 bar.remote</span><br></pre></td></tr></table></figure>
+
+<p><strong>需要指出的是，在 Kubernetes 项目中，如果要设置 hosts 文件里的内容，一定要通过这种方法。否则，如果直接修改了 hosts 文件的话，在 Pod 被删除重建之后，kubelet 会自动覆盖掉被修改的内容。</strong></p>
+</li>
+<li><p><strong>shareProcessNamespace=true</strong>:Pod 里的容器要共享 PID Namespace</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">shareProcessNamespace:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shell</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>共享宿主机的Namespace，也一定是Pod级别的；如hostNetwork hostIPC：会直接使用宿主机的网络、直接与宿主机进行 IPC 通信、看到宿主机里正在运行的所有进程。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostNetwork:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">hostIPC:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">hostPID:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shell</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="Containers重要字段"><a href="#Containers重要字段" class="headerlink" title="Containers重要字段"></a><strong>Containers重要字段</strong></h4><ol>
+<li><p>Image（镜像）</p>
+</li>
+<li><p>Command（启动命令）</p>
+</li>
+<li><p>workingDir（容器的工作目录）</p>
+</li>
+<li><p>Ports（容器要开发的端口）</p>
+</li>
+<li><p>以及 volumeMounts（容器要挂载的 Volume）</p>
+</li>
+<li><p>ImagePullPolicy（镜像拉取的策略）</p>
+<p>ImagePullPolicy 的值默认是 <strong>Always</strong>，即每次创建 Pod 都重新拉取一次镜像。另外，当容器的镜像是类似于 <strong>nginx 或者 nginx:latest</strong> 这样的名字时，ImagePullPolicy 也会被认为 <strong>Always</strong>。</p>
+<p>如果它的值被定义为 <strong>Never</strong> 或者 <strong>IfNotPresent</strong>，则意味着 Pod 永远不会主动拉取这个镜像，或者只在宿主机上不存在这个镜像时才拉取。</p>
+</li>
+<li><p><strong>Lifecycle</strong>：生命周期钩子（postStart、preStop）</p>
+<ol>
+<li><strong>postStart</strong>: <strong>postStart 和ENTRYPOINT异步并发执行</strong>；在容器启动后，立刻执行一个指定的操作。需要明确的是，postStart 定义的操作，虽然是在 Docker 容器 ENTRYPOINT 执行之后，但它并不严格保证顺序。也就是说，在 postStart 启动时，ENTRYPOINT 有可能还没有结束。</li>
+<li><strong>preStop</strong>: preStop 发生的时机，则是容器被杀死之前（比如，收到了 SIGKILL 信号）。而需要明确的是，preStop 操作的执行，是<strong>同步</strong>的。所以，它会阻塞当前的容器杀死流程，直到这个 Hook 定义操作完成之后，才允许容器被杀死，这跟 postStart 不一样。</li>
+</ol>
+</li>
+</ol>
+<h3 id="Pod常见状态"><a href="#Pod常见状态" class="headerlink" title="Pod常见状态"></a>Pod常见状态</h3><ol>
+<li>Pending。这个状态意味着，Pod 的 YAML 文件已经提交给了 Kubernetes，API 对象已经被创建并保存在 Etcd 当中。但是，这个 Pod 里有些容器因为某种原因而不能被顺利创建。比如，调度不成功。</li>
+<li>Running。这个状态下，Pod 已经调度成功，跟一个具体的节点绑定。它包含的容器都已经创建成功，并且至少有一个正在运行中。</li>
+<li>Succeeded。这个状态意味着，Pod 里的所有容器都正常运行完毕，并且已经退出了。这种情况在运行一次性任务时最为常见。</li>
+<li>Failed。这个状态下，Pod 里至少有一个容器以不正常的状态（非 0 的返回码）退出。这个状态的出现，意味着你得想办法 Debug 这个容器的应用，比如查看 Pod 的 Events 和日志。</li>
+<li>Unknown。这是一个异常状态，意味着 Pod 的状态不能持续地被 kubelet 汇报给 kube-apiserver，这很有可能是主从节点（Master 和 Kubelet）间的通信出现了问题。</li>
+</ol>
+<h3 id="源码阅读"><a href="#源码阅读" class="headerlink" title="源码阅读"></a>源码阅读</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;kubernetes&#x2F;api&#x2F;blob&#x2F;master&#x2F;core&#x2F;v1&#x2F;types.go</span><br><span class="line">type Pod struct ，尤其是 PodSpec 部分的内容</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fas fa-cookie-bite"></i> 容器</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/14/Kubernetes02-%E5%AE%98%E6%96%B9%E9%83%A8%E7%BD%B2%E5%B7%A5%E5%85%B7kubeadm/" rel="prev" title="Kubernetes02-官方部署工具kubeadm">
+      <i class="fa fa-chevron-left"></i> Kubernetes02-官方部署工具kubeadm
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84%E2%80%9C%E5%8D%95%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9E%8B%E2%80%9D"><span class="nav-number">1.</span> <span class="nav-text">容器的“单进程模型”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">2.</span> <span class="nav-text">Pod的设计思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pod%E7%9A%84%E6%84%8F%E4%B9%891%EF%BC%9A-%E5%A4%84%E7%90%86%E4%BA%B2%E5%AF%86%E5%85%B3%E7%B3%BB%EF%BC%88%E8%A7%A3%E5%86%B3%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">Pod的意义1： 处理亲密关系（解决调度问题）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pod%E7%9A%84%E6%84%8F%E4%B9%892%EF%BC%9A%E5%AE%B9%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">Pod的意义2：容器设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pod%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">2.2.1.</span> <span class="nav-text">Pod实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%85%B1%E4%BA%ABnetwork-namespace-%E5%92%8C-volume-namespace%EF%BC%9F"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">如何共享network namespace 和 volume namespace？</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%B1%E4%BA%ABnetwork%EF%BC%9F"><span class="nav-number">2.2.1.1.1.</span> <span class="nav-text">共享network？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%B1%E4%BA%ABvolume1"><span class="nav-number">2.2.1.1.2.</span> <span class="nav-text">共享volume1?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%80%E7%A7%8D%E6%A8%A1%E5%BC%8F-Sidecar"><span class="nav-number">2.2.2.</span> <span class="nav-text">容器设计模式最常用的一种模式(Sidecar)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%9C%80%E5%85%B8%E5%9E%8B%E7%9A%84%E4%BE%8B%E5%AD%90%E6%98%AF%EF%BC%9AWAR-%E5%8C%85%E4%B8%8E-Web-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">第一个最典型的例子是：WAR 包与 Web 服务器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%8C%E5%88%99%E6%98%AF%E5%AE%B9%E5%99%A8%E7%9A%84%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">第二个例子，则是容器的日志收集</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%9Aistio"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">第三个例子：istio</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.</span> <span class="nav-text">Pod对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%B0%E5%BA%95%E5%93%AA%E4%BA%9B%E5%B1%9E%E6%80%A7%E5%B1%9E%E4%BA%8E-Pod-%E5%AF%B9%E8%B1%A1%EF%BC%8C%E8%80%8C%E5%8F%88%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B1%9E%E6%80%A7%E5%B1%9E%E4%BA%8E-Container-%E5%91%A2%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">到底哪些属性属于 Pod 对象，而又有哪些属性属于 Container 呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pod%E9%87%8D%E8%A6%81%E5%AD%97%E6%AE%B5"><span class="nav-number">3.1.1.</span> <span class="nav-text">Pod重要字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Containers%E9%87%8D%E8%A6%81%E5%AD%97%E6%AE%B5"><span class="nav-number">3.1.2.</span> <span class="nav-text">Containers重要字段</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pod%E5%B8%B8%E8%A7%81%E7%8A%B6%E6%80%81"><span class="nav-number">3.2.</span> <span class="nav-text">Pod常见状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB"><span class="nav-number">3.3.</span> <span class="nav-text">源码阅读</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">214</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.2m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">60:58</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
