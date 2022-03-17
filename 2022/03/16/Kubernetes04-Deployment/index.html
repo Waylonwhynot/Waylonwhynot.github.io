@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/711c07208358208e91fa7803ebc73058.jpg">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/bbc4560a053dee904e45ad66aac7145d.jpg">
 <meta property="article:published_time" content="2022-03-15T19:49:18.000Z">
-<meta property="article:modified_time" content="2022-03-16T10:13:36.904Z">
+<meta property="article:modified_time" content="2022-03-17T17:08:32.244Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
@@ -217,10 +217,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-16 03:49:18 / 修改时间：18:13:36" itemprop="dateCreated datePublished" datetime="2022-03-16T03:49:18+08:00">2022-03-16</time>
+              <time title="创建时间：2022-03-16 03:49:18" itemprop="dateCreated datePublished" datetime="2022-03-16T03:49:18+08:00">2022-03-16</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-18 01:08:32" itemprop="dateModified" datetime="2022-03-18T01:08:32+08:00">2022-03-18</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -237,7 +243,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.3k</span>
+              <span>5.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -259,7 +265,11 @@
         <p>Deployment</p>
 <a id="more"></a>
 
-<h2 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h2><p>例子：确保携带了 app=nginx 标签的 Pod 的个数，永远等于 spec.replicas 指定的个数，即 2 个。</p>
+<h2 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Deployment 控制器实际操纵是 ReplicaSet 对象，而不是 Pod 对象。一个版本对应一个 ReplicaSet 对象</span><br></pre></td></tr></table></figure>
+
+
+
+<p>例子：确保携带了 app=nginx 标签的 Pod 的个数，永远等于 spec.replicas 指定的个数，即 2 个。</p>
 <p>​            这就意味着，如果在这个集群中，携带 app=nginx 标签的 Pod 的个数大于 2 的时候，就会有旧的 Pod 被删除；反之，就会有新的 Pod 被创建。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx-deployment</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">nginx:1.7.9</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
 
@@ -369,7 +379,10 @@
     <a href="/2022/03/15/Kubernetes03-Pod%E5%AF%B9%E8%B1%A1/" rel="prev" title="Kubernetes03-Pod对象">
       <i class="fa fa-chevron-left"></i> Kubernetes03-Pod对象
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/16/Kubernetes05-StatefulSet/" rel="next" title="Kubernetes05-StatefulSet">
+      Kubernetes05-StatefulSet <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -444,7 +457,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">214</span>
+          <span class="site-state-item-count">217</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -506,7 +519,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">61:25</span>
+    <span title="站点阅读时长">62:10</span>
 </div>
 
 <!--
