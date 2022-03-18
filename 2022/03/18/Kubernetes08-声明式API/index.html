@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="详解声明式API">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes08-声明式API">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2022/03/18/Kubernetes08-%E5%A3%B0%E6%98%8E%E5%BC%8FAPI/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="详解声明式API">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/d38daed2fedc90e20e9d2f27afbaec1b.jpg">
+<meta property="article:published_time" content="2022-03-17T19:10:24.000Z">
+<meta property="article:modified_time" content="2022-03-18T15:25:00.268Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="容器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/d38daed2fedc90e20e9d2f27afbaec1b.jpg">
+
+<link rel="canonical" href="https://waylon.whatyouneed.site/2022/03/18/Kubernetes08-%E5%A3%B0%E6%98%8E%E5%BC%8FAPI/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Kubernetes08-声明式API | YouNeed</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YouNeed</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">what</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2022/03/18/Kubernetes08-%E5%A3%B0%E6%98%8E%E5%BC%8FAPI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpeg">
+      <meta itemprop="name" content="Waylon Yan">
+      <meta itemprop="description" content="tech life sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YouNeed">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kubernetes08-声明式API
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-18 03:10:24 / 修改时间：23:25:00" itemprop="dateCreated datePublished" datetime="2022-03-18T03:10:24+08:00">2022-03-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>详解声明式API</p>
+<a id="more"></a>
+
+<h2 id="到底什么才是“声明式-API”？"><a href="#到底什么才是“声明式-API”？" class="headerlink" title="到底什么才是“声明式 API”？"></a>到底什么才是“声明式 API”？</h2><blockquote>
+<p>kubectl apply 命令</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">kubectl</span> <span class="string">apply</span> <span class="string">-f</span> <span class="string">nginx.yaml</span></span><br><span class="line"><span class="comment">#我再修改一下 nginx.yaml 里定义的镜像：</span></span><br><span class="line"></span><br><span class="line"><span class="string">...</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">nginx:1.7.9</span></span><br><span class="line"><span class="comment"># 更新</span></span><br><span class="line"><span class="string">$</span> <span class="string">kubectl</span> <span class="string">apply</span> <span class="string">-f</span> <span class="string">nginx.yaml</span></span><br></pre></td></tr></table></figure>
+
+<p>你可以简单地理解为，kubectl replace 的执行过程，是使用新的 YAML 文件中的 API 对象，替换原有的 API 对象；而 kubectl apply，则是执行了一个对原有 API 对象的 <strong>PATCH</strong> 操作。</p>
+<p>这意味着 kube-apiserver 在响应命令式请求（比如，kubectl replace）的时候，一次只能处理一个写请求，否则会有产生冲突的可能。而对于声明式请求（比如，kubectl apply），<strong>一次能处理多个写操作，并且具备 Merge 能力。</strong></p>
+<ul>
+<li>首先，所谓“声明式”，指的就是我只需要提交一个定义好的 API 对象来“声明”，我所期望的状态是什么样子。</li>
+<li>其次，“声明式 API”允许有多个 API 写端，以 PATCH 的方式对 API 对象进行修改，而无需关心本地原始 YAML 文件的内容。</li>
+<li>最后，也是最重要的，有了上述两个能力，Kubernetes 项目才可以基于对 API 对象的增、删、改、查，在完全无需外界干预的情况下，完成对“实际状态”和“期望状态”的调谐（Reconcile）过程。</li>
+</ul>
+<h2 id="声明式-API-在实际使用时的重要意义"><a href="#声明式-API-在实际使用时的重要意义" class="headerlink" title="声明式 API 在实际使用时的重要意义"></a>声明式 API 在实际使用时的重要意义</h2><h3 id="Istio"><a href="#Istio" class="headerlink" title="Istio"></a>Istio</h3><blockquote>
+<p>Istio 项目，实际上就是一个基于 Kubernetes 项目的微服务治理框架</p>
+</blockquote>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/d38daed2fedc90e20e9d2f27afbaec1b.jpg" alt="img"></p>
+<p><strong>Istio 最根本的组件，是运行在每一个应用 Pod 里的 Envoy 容器。</strong></p>
+<p>则把这个代理服务以 <strong>sidecar</strong> 容器的方式，运行在了每一个被治理的应用 Pod 中。我们知道，Pod 里的所有容器都<strong>共享同一个 Network Namespace</strong>。所以，Envoy 容器就能够通过配置 Pod 里的 <strong>iptables</strong> 规则，把整个 Pod 的进出流量接管下来。</p>
+<p><strong>Istio 的控制层（Control Plane）里的 Pilot 组件，就能够通过调用每个 Envoy 容器的 API，对这个 Envoy 代理进行配置，从而实现微服务治理。</strong></p>
+<p>假设这个 Istio 架构图左边的 Pod 是已经在运行的应用，而右边的 Pod 则是我们刚刚上线的应用的新版本。这时候，Pilot 通过调节这两 Pod 里的 Envoy 容器的配置，从而将 90% 的流量分配给旧版本的应用，将 10% 的流量分配给新版本应用，并且，还可以在后续的过程中随时调整。这样，一个典型的“灰度发布”的场景就完成了。比如，Istio 可以调节这个流量从 90%-10%，改到 80%-20%，再到 50%-50%，最后到 0%-100%，就完成了这个灰度发布的过程。</p>
+<p><strong>更重要的是，在整个微服务治理的过程中，无论是对 Envoy 容器的部署，还是像上面这样对 Envoy 代理的配置，用户和应用都是完全“无感”的。</strong></p>
+<h3 id="Dynamic-Admission-Control（准入控制）-Initializer"><a href="#Dynamic-Admission-Control（准入控制）-Initializer" class="headerlink" title="Dynamic Admission Control（准入控制）- Initializer"></a>Dynamic Admission Control（准入控制）- Initializer</h3><p><strong>Istio 项目使用的，是 Kubernetes 中的一个非常重要的功能，叫作 Dynamic Admission Control。</strong></p>
+<p>​          在 Kubernetes 项目中，当一个 Pod 或者任何一个 API 对象被提交给 APIServer 之后，总有一些“初始化”性质的工作需要在它们被 Kubernetes 项目正式处理之前进行。比如，自动为所有 Pod 加上某些标签（Labels）。</p>
+<p>​         而这个“初始化”操作的实现，借助的是一个叫作 <strong>Admission</strong> 的功能。它其实是 Kubernetes 项目里一组被称为 <strong>Admission Controller</strong> 的代码，可以选择性地被编译进 APIServer 中，在 API 对象创建之后会被立刻调用到。</p>
+<p>​         但这就意味着，如果你现在想要添加一些自己的规则到 Admission Controller，就会比较困难。因为，这要求重新编译并重启 APIServer。显然，这种使用方法对 Istio 来说，影响太大了。</p>
+<p>​        所以，Kubernetes 项目为我们额外提供了一种“<strong>热插拔”</strong>式的 Admission 机制，它就是 <strong>Dynamic Admission Control</strong>，也叫作：<strong>Initializer</strong>。</p>
+<p>现在，我给你举个例子。比如，我有如下所示的一个应用 Pod：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">myapp-pod</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">myapp</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">myapp-container</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&#x27;sh&#x27;</span>, <span class="string">&#x27;-c&#x27;</span>, <span class="string">&#x27;echo Hello Kubernetes! &amp;&amp; sleep 3600&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这个 Pod 里面只有一个用户容器，叫作：myapp-container。接下来，Istio 项目要做的，就是在这个 Pod YAML 被提交给 Kubernetes 之后，在它对应的 API 对象里自动加上 Envoy 容器的配置，使这个对象变成如下所示的样子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">myapp-pod</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">myapp</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">myapp-container</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&#x27;sh&#x27;</span>, <span class="string">&#x27;-c&#x27;</span>, <span class="string">&#x27;echo Hello Kubernetes! &amp;&amp; sleep 3600&#x27;</span>]</span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">lyft/envoy:845747b88f102c0fd262ab234308e9e22f693a1</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;/usr/local/bin/envoy&quot;</span>]</span><br><span class="line">    <span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，被 Istio 处理后的这个 Pod 里，除了用户自己定义的 myapp-container 容器之外，多出了一个叫作 envoy 的容器，它就是 Istio 要使用的 Envoy 代理。那么，Istio 又是如何在用户完全不知情的前提下完成这个操作的呢？Istio 要做的，就是编写一个用来为 Pod“自动注入”Envoy 容器的 Initializer。</p>
+<p><strong>首先，Istio 会将这个 Envoy 容器本身的定义，以 ConfigMap 的方式保存在 Kubernetes 当中。这个 ConfigMap</strong>（名叫：envoy-initializer）的定义如下所示：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">envoy-initializer</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">config:</span> <span class="string">|</span></span><br><span class="line">    <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">lyft/envoy:845747db88f102c0fd262ab234308e9e22f693a1</span></span><br><span class="line">        <span class="attr">command:</span> [<span class="string">&quot;/usr/local/bin/envoy&quot;</span>]</span><br><span class="line">        <span class="attr">args:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;--concurrency 4&quot;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;--config-path /etc/envoy/envoy.json&quot;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;--mode serve&quot;</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">            <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">        <span class="attr">resources:</span></span><br><span class="line">          <span class="attr">limits:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">&quot;1000m&quot;</span></span><br><span class="line">            <span class="attr">memory:</span> <span class="string">&quot;512Mi&quot;</span></span><br><span class="line">          <span class="attr">requests:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">&quot;100m&quot;</span></span><br><span class="line">            <span class="attr">memory:</span> <span class="string">&quot;64Mi&quot;</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy-conf</span></span><br><span class="line">            <span class="attr">mountPath:</span> <span class="string">/etc/envoy</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy-conf</span></span><br><span class="line">        <span class="attr">configMap:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">envoy</span></span><br></pre></td></tr></table></figure>
+
+<p>这个 ConfigMap 的 data 部分，正是一个 Pod 对象的一部分定义。其中，我们可以看到 Envoy 容器对应的 containers 字段，以及一个用来声明 Envoy 配置文件的 volumes 字段。</p>
+<p>​       Initializer 要做的工作，就是把这部分 Envoy 相关的字段，自动添加到用户提交的 Pod 的 API 对象里。可是，用户提交的 Pod 里本来就有 containers 字段和 volumes 字段，所以 Kubernetes 在处理这样的更新请求时，就必须使用类似于 git merge 这样的操作，才能将这两部分内容合并在一起。</p>
+<p>​       在 Initializer 更新用户的 Pod 对象的时候，必须使用 PATCH API 来完成。而这种 PATCH API，正是声明式 API 最主要的能力。</p>
+<p>​      <strong>接下来，Istio 将一个编写好的 Initializer，作为一个 Pod 部署在 Kubernetes 中。</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">envoy-initializer</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">envoy-initializer</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy-initializer</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">envoy-initializer:0.0.1</span></span><br><span class="line">      <span class="attr">imagePullPolicy:</span> <span class="string">Always</span></span><br></pre></td></tr></table></figure>
+
+<p>这个 envoy-initializer 使用的 envoy-initializer:0.0.1 镜像，就是一个事先编写好的“自定义控制器”（Custom Controller）。Kubernetes 的控制器，实际上就是一个“死循环”：它不断地获取“实际状态”，然后与“期望状态”作对比，并以此为依据决定下一步的操作。</p>
+<p>而 Initializer 的控制器，不断获取到的“实际状态”，就是用户新创建的 Pod。而它的“期望状态”，则是：这个 Pod 里被添加了 Envoy 容器的定义。</p>
+<p>伪代码，来为你描述这个控制逻辑</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">for</span> &#123;</span><br><span class="line">  <span class="string">//</span> <span class="string">获取新创建的Pod</span></span><br><span class="line">  <span class="string">pod</span> <span class="string">:=</span> <span class="string">client.GetLatestPod()</span></span><br><span class="line">  <span class="string">//</span> <span class="string">Diff一下，检查是否已经初始化过</span></span><br><span class="line">  <span class="string">if</span> <span class="type">!isInitialized(pod)</span> &#123;</span><br><span class="line">    <span class="string">//</span> <span class="string">没有？那就来初始化一下</span></span><br><span class="line">    <span class="string">doSomething(pod)</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果这个 Pod 里面已经添加过 Envoy 容器，那么就“放过”这个 Pod，进入下一个检查周期。</li>
+<li>而如果还没有添加过 Envoy 容器的话，它就要进行 Initialize 操作了，即：修改该 Pod 的 API 对象（doSomething 函数）。</li>
+</ul>
+<p>在 Initializer 控制器的工作逻辑里，它首先会从 APIServer 中拿到这个 ConfigMap：然后，把这个 ConfigMap 里存储的 containers 和 volumes 字段，直接添加进一个空的 Pod 对象里：Kubernetes 的 API 库，为我们提供了一个方法，使得我们可以直接使用新旧两个 Pod 对象，生成一个 TwoWayMergePatch：<strong>有了这个 TwoWayMergePatch 之后，Initializer 的代码就可以使用这个 patch 的数据，调用 Kubernetes 的 Client，发起一个 PATCH 请求。</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">func</span> <span class="string">doSomething(pod)</span> &#123;</span><br><span class="line">  <span class="string">cm</span> <span class="string">:=</span> <span class="string">client.Get(ConfigMap</span>, <span class="string">&quot;envoy-initializer&quot;</span><span class="string">)</span></span><br><span class="line"></span><br><span class="line">  <span class="string">newPod</span> <span class="string">:=</span> <span class="string">Pod</span>&#123;&#125;</span><br><span class="line">  <span class="string">newPod.Spec.Containers</span> <span class="string">=</span> <span class="string">cm.Containers</span></span><br><span class="line">  <span class="string">newPod.Spec.Volumes</span> <span class="string">=</span> <span class="string">cm.Volumes</span></span><br><span class="line"></span><br><span class="line">  <span class="string">//</span> <span class="string">生成patch数据</span></span><br><span class="line">  <span class="string">patchBytes</span> <span class="string">:=</span> <span class="string">strategicpatch.CreateTwoWayMergePatch(pod</span>, <span class="string">newPod)</span></span><br><span class="line"></span><br><span class="line">  <span class="string">//</span> <span class="string">发起PATCH请求，修改这个pod对象</span></span><br><span class="line">  <span class="string">client.Patch(pod.Name</span>, <span class="string">patchBytes)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Kubernetes 还允许你通过配置，来指定要对什么样的资源进行这个 Initialize 操作，比如下面这个例子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">admissionregistration.k8s.io/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">InitializerConfiguration</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">envoy-config</span></span><br><span class="line"><span class="attr">initializers:</span></span><br><span class="line">  <span class="string">//</span> <span class="string">这个名字必须至少包括两个</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy.initializer.kubernetes.io</span></span><br><span class="line">    <span class="attr">rules:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;&quot;</span> <span class="string">//</span> <span class="string">前面说过，</span> <span class="string">&quot;&quot;</span><span class="string">就是core</span> <span class="string">API</span> <span class="string">Group的意思</span></span><br><span class="line">        <span class="attr">apiVersions:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">v1</span></span><br><span class="line">        <span class="attr">resources:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">pods</span></span><br></pre></td></tr></table></figure>
+
+<p>这个配置，就意味着 Kubernetes 要对所有的 Pod 进行这个 Initialize 操作，并且，我们指定了负责这个操作的 Initializer，名叫：envoy-initializer。而一旦这个 InitializerConfiguration 被创建，Kubernetes 就会把这个 Initializer 的名字，加在所有新创建的 Pod 的 Metadata 上，格式如下所示</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">initializers:</span></span><br><span class="line">    <span class="attr">pending:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy.initializer.kubernetes.io</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">myapp-pod</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">myapp</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，每一个新创建的 Pod，都会自动携带了 metadata.initializers.pending 的 Metadata 信息。</p>
+<p>这个 Metadata，正是接下来 Initializer 的控制器判断这个 Pod 有没有执行过自己所负责的初始化操作的重要依据（也就是前面伪代码中 isInitialized() 方法的含义）。</p>
+<p><strong>这也就意味着，当你在 Initializer 里完成了要做的操作后，一定要记得将这个 metadata.initializers.pending 标志清除掉。这一点，你在编写 Initializer 代码的时候一定要非常注意。</strong></p>
+<p>除了上面的配置方法，你还可以在具体的 Pod 的 Annotation 里添加一个如下所示的字段，从而声明要使用某个 Initializer：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="string">metadata</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">&quot;initializer.kubernetes.io/envoy&quot;:</span> <span class="string">&quot;true&quot;</span></span><br><span class="line">    <span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个 Pod 里，我们添加了一个 Annotation，写明： initializer.kubernetes.io/envoy=true。这样，就会使用到我们前面所定义的 envoy-initializer 了。</p>
+<h2 id="Envoy-项目做过了解？你觉得为什么它能够击败-Nginx-以及-HAProxy-等竞品，成为-Service-Mesh-体系的核心？"><a href="#Envoy-项目做过了解？你觉得为什么它能够击败-Nginx-以及-HAProxy-等竞品，成为-Service-Mesh-体系的核心？" class="headerlink" title="Envoy 项目做过了解？你觉得为什么它能够击败 Nginx 以及 HAProxy 等竞品，成为 Service Mesh 体系的核心？"></a>Envoy 项目做过了解？你觉得为什么它能够击败 Nginx 以及 HAProxy 等竞品，成为 Service Mesh 体系的核心？</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是因为envoy提供了api形式的配置入口，更方便做流量治理</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fas fa-cookie-bite"></i> 容器</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/18/Kubernetes07-Job%E5%92%8CCronJob/" rel="prev" title="Kubernetes07-Job和CronJob">
+      <i class="fa fa-chevron-left"></i> Kubernetes07-Job和CronJob
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B0%E5%BA%95%E4%BB%80%E4%B9%88%E6%89%8D%E6%98%AF%E2%80%9C%E5%A3%B0%E6%98%8E%E5%BC%8F-API%E2%80%9D%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">到底什么才是“声明式 API”？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F-API-%E5%9C%A8%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E9%87%8D%E8%A6%81%E6%84%8F%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">声明式 API 在实际使用时的重要意义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Istio"><span class="nav-number">2.1.</span> <span class="nav-text">Istio</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dynamic-Admission-Control%EF%BC%88%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%EF%BC%89-Initializer"><span class="nav-number">2.2.</span> <span class="nav-text">Dynamic Admission Control（准入控制）- Initializer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Envoy-%E9%A1%B9%E7%9B%AE%E5%81%9A%E8%BF%87%E4%BA%86%E8%A7%A3%EF%BC%9F%E4%BD%A0%E8%A7%89%E5%BE%97%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E8%83%BD%E5%A4%9F%E5%87%BB%E8%B4%A5-Nginx-%E4%BB%A5%E5%8F%8A-HAProxy-%E7%AD%89%E7%AB%9E%E5%93%81%EF%BC%8C%E6%88%90%E4%B8%BA-Service-Mesh-%E4%BD%93%E7%B3%BB%E7%9A%84%E6%A0%B8%E5%BF%83%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">Envoy 项目做过了解？你觉得为什么它能够击败 Nginx 以及 HAProxy 等竞品，成为 Service Mesh 体系的核心？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
+      src="/images/timg.jpeg">
+  <p class="site-author-name" itemprop="name">Waylon Yan</p>
+  <div class="site-description" itemprop="description">tech life sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">218</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.2m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">62:20</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
