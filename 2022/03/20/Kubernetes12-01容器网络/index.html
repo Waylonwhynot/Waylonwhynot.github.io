@@ -20,17 +20,23 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="tech life sharing">
+  <meta name="description" content="浅谈容器网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kubernetes12-01容器网络">
 <meta property="og:url" content="https://waylon.whatyouneed.site/2022/03/20/Kubernetes12-01%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="tech life sharing">
+<meta property="og:description" content="浅谈容器网络">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/e0d28e0371f93af619e91a86eda99a66.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/9fb381d1e49318bb6a67bda3f9db6901.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/90bd630c0723ea8a1fb7ccd738ad1f95.png">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/b4387a992352109398a66d1dbe6e413d.png">
 <meta property="article:published_time" content="2022-03-19T18:30:05.000Z">
-<meta property="article:modified_time" content="2022-03-19T18:30:05.457Z">
+<meta property="article:modified_time" content="2022-03-20T16:55:17.053Z">
 <meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/e0d28e0371f93af619e91a86eda99a66.png">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2022/03/20/Kubernetes12-01%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/">
 
@@ -215,6 +221,22 @@
 
               <time title="创建时间：2022-03-20 02:30:05" itemprop="dateCreated datePublished" datetime="2022-03-20T02:30:05+08:00">2022-03-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-21 00:55:17" itemprop="dateModified" datetime="2022-03-21T00:55:17+08:00">2022-03-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -222,14 +244,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>5.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>9 分钟</span>
             </span>
 
         </div>
@@ -241,7 +263,80 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>浅谈容器网络</p>
+<a id="more"></a>
+
+<h2 id="容器网络栈"><a href="#容器网络栈" class="headerlink" title="容器网络栈"></a>容器网络栈</h2><blockquote>
+<p>一个 Linux 容器能看见的“网络栈”，实际上是被隔离在它自己的 Network Namespace 当中的。</p>
+</blockquote>
+<p><strong>网络栈</strong>：网卡（Network Interface）、回环设备（Loopback Device）、路由表（Routing Table）和 iptables 规则。对于一个进程来说，这些要素，其实就构成了它发起和响应网络请求的基本环境。</p>
+<ul>
+<li><p>容器也可共享宿主机网络</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run –d –net=host --name nginx-host nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>缺点：虽然可以为容器提供良好的网络性能，但也会不可避免地引入共享网络资源的问题，比如端口冲突。</p>
+</li>
+</ul>
+<h2 id="容器间通信"><a href="#容器间通信" class="headerlink" title="容器间通信"></a>容器间通信</h2><h3 id="docker0网桥"><a href="#docker0网桥" class="headerlink" title="docker0网桥"></a>docker0网桥</h3><blockquote>
+<p>Docker 项目会默认在宿主机上创建一个名叫 docker0 的网桥，凡是连接在 docker0 网桥上的容器，就可以通过它来进行通信。凡是连接在 docker0 网桥上的容器，就可以通过它来进行通信</p>
+</blockquote>
+<h3 id="同一台宿主机上不同容器间通信原理"><a href="#同一台宿主机上不同容器间通信原理" class="headerlink" title="同一台宿主机上不同容器间通信原理"></a>同一台宿主机上不同容器间通信原理</h3><h4 id="该如何把这些容器“连接”到-docker0-网桥上呢？"><a href="#该如何把这些容器“连接”到-docker0-网桥上呢？" class="headerlink" title="该如何把这些容器“连接”到 docker0 网桥上呢？"></a>该如何把这些容器“连接”到 docker0 网桥上呢？</h4><ul>
+<li>需要使用一种名叫 Veth Pair 的虚拟设备</li>
+<li>Veth Pair 设备的特点是：它被创建出来后，总是以两张虚拟网卡（Veth Peer）的形式成对出现的。并且，从其中一个“网卡”发出的数据包，可以直接出现在与它对应的另一张“网卡”上，哪怕这两个“网卡”在不同的 Network Namespace 里。<strong>Veth Pair 常常被用作连接不同 Network Namespace 的“网线”。</strong></li>
+</ul>
+<p>比如，现在我们启动了一个叫作 nginx-1 的容器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run –d --name nginx-1 nginx</span><br></pre></td></tr></table></figure>
+
+<p>然后进入到这个容器中查看一下它的网络设备：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在宿主机上</span></span><br><span class="line">$ docker <span class="built_in">exec</span> -it nginx-1 /bin/bash</span><br><span class="line"><span class="comment"># 在容器里</span></span><br><span class="line">root@2b3c181aecf1:/<span class="comment"># ifconfig</span></span><br><span class="line">eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 172.17.0.2  netmask 255.255.0.0  broadcast 0.0.0.0</span><br><span class="line">        inet6 fe80::42:acff:fe11:2  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)</span><br><span class="line">        RX packets 364  bytes 8137175 (7.7 MiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 281  bytes 21161 (20.6 KiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line">        </span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line">        </span><br><span class="line">$ route</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">default         172.17.0.1      0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 eth0</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这个容器里有一张叫作 eth0 的网卡，它正是一个 Veth Pair 设备在容器里的这一端。</p>
+<p>通过 route 命令查看 nginx-1 容器的路由表，我们可以看到，这个 eth0 网卡是这个容器里的默认路由设备；所有对 172.17.0.0/16 网段的请求，也会被交给 eth0 来处理（第二条 172.17.0.0 路由规则）。</p>
+<p>而这个 <strong>Veth Pair 设备的另一端</strong>，则在宿主机上。你可以通过查看宿主机的网络设备看到它，如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在宿主机上</span></span><br><span class="line">$ ifconfig</span><br><span class="line">...</span><br><span class="line">docker0   Link encap:Ethernet  HWaddr 02:42:d8:e4:df:c1  </span><br><span class="line">          inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0</span><br><span class="line">          inet6 addr: fe80::42:d8ff:fee4:dfc1/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:309 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:372 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line"> collisions:0 txqueuelen:0 </span><br><span class="line">          RX bytes:18944 (18.9 KB)  TX bytes:8137789 (8.1 MB)</span><br><span class="line">veth9c02e56 Link encap:Ethernet  HWaddr 52:81:0b:24:3d:da  </span><br><span class="line">          inet6 addr: fe80::5081:bff:fe24:3dda/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:288 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:371 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line"> collisions:0 txqueuelen:0 </span><br><span class="line">          RX bytes:21608 (21.6 KB)  TX bytes:8137719 (8.1 MB)</span><br><span class="line">          </span><br><span class="line">$ brctl show</span><br><span class="line">bridge name bridge id  STP enabled interfaces</span><br><span class="line">docker0  8000.0242d8e4dfc1 no  veth9c02e56</span><br></pre></td></tr></table></figure>
+
+<p><strong>通过 ifconfig 命令的输出，你可以看到，nginx-1 容器对应的 Veth Pair 设备，在宿主机上是一张虚拟网卡。</strong>它的名字叫作 veth9c02e56。并且，通过 brctl show 的输出，你可以看到这张网卡被“插”在了 docker0 上。</p>
+<p>这时候，如果我们再在这台宿主机上启动另一个 Docker 容器，比如 nginx-2：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker run –d --name nginx-2 nginx</span><br><span class="line">$ brctl show</span><br><span class="line">bridge name bridge id  STP enabled interfaces</span><br><span class="line">docker0  8000.0242d8e4dfc1 no  veth9c02e56</span><br><span class="line">       vethb4963f3</span><br></pre></td></tr></table></figure>
+
+<p>你就会发现一个新的、名叫 vethb4963f3 的虚拟网卡，也被“插”在了 docker0 网桥上。</p>
+<p>这时候，如果你在 nginx-1 容器里 ping 一下 nginx-2 容器的 IP 地址（172.17.0.3），就会发现同一宿主机上的两个容器默认就是相互连通的。</p>
+<h4 id="通信原理"><a href="#通信原理" class="headerlink" title="通信原理"></a>通信原理</h4><ol>
+<li>当你在 nginx-1 容器里访问 nginx-2 容器的 IP 地址（比如 ping 172.17.0.3）的时候，这个目的 IP 地址会匹配到 nginx-1 容器里的第二条路由规则。可以看到，这条路由规则的网关（Gateway）是 0.0.0.0，这就意味着这是一条直连规则，即：凡是匹配到这条规则的 IP 包，应该经过本机的 eth0 网卡，通过二层网络直接发往目的主机。</li>
+<li>而要通过二层网络到达 nginx-2 容器，就需要有 172.17.0.3 这个 IP 地址对应的 MAC 地址。所以 nginx-1 容器的网络协议栈，就需要通过 eth0 网卡发送一个 ARP 广播，来通过 IP 地址查找对应的 MAC 地址。</li>
+</ol>
+<blockquote>
+<p>备注：ARP（Address Resolution Protocol），是通过三层的 IP 地址找到对应的二层 MAC 地址的协议。</p>
+</blockquote>
+<ol start="3">
+<li>我们前面提到过，这个 eth0 网卡，是一个 Veth Pair，它的一端在这个 nginx-1 容器的 Network Namespace 里，而另一端则位于宿主机上（Host Namespace），并且被“插”在了宿主机的 docker0 网桥上。</li>
+<li>一旦一张虚拟网卡被“插”在网桥上，它就会变成该网桥的“从设备”。从设备会被“剥夺”调用网络协议栈处理数据包的资格，从而“降级”成为网桥上的一个端口。而这个端口唯一的作用，就是接收流入的数据包，然后把这些数据包的“生杀大权”（比如转发或者丢弃），全部交给对应的网桥。</li>
+<li>所以，在收到这些 ARP 请求之后，docker0 网桥就会扮演二层交换机的角色，把 ARP 广播转发到其他被“插”在 docker0 上的虚拟网卡上。这样，同样连接在 docker0 上的 nginx-2 容器的网络协议栈就会收到这个 ARP 请求，从而将 172.17.0.3 所对应的 MAC 地址回复给 nginx-1 容器。</li>
+<li>有了这个目的 MAC 地址，nginx-1 容器的 eth0 网卡就可以将数据包发出去。</li>
+<li>而根据 Veth Pair 设备的原理，这个数据包会立刻出现在宿主机上的 veth9c02e56 虚拟网卡上。不过，此时这个 veth9c02e56 网卡的网络协议栈的资格已经被“剥夺”，所以这个数据包就直接流入到了 docker0 网桥里。</li>
+<li>docker0 处理转发的过程，则继续扮演二层交换机的角色。此时，docker0 网桥根据数据包的目的 MAC 地址（也就是 nginx-2 容器的 MAC 地址），在它的 CAM 表（即交换机通过 MAC 地址学习维护的端口和 MAC 地址的对应表）里查到对应的端口（Port）为：vethb4963f3，然后把数据包发往这个端口。</li>
+<li>而这个端口，正是 nginx-2 容器“插”在 docker0 网桥上的另一块虚拟网卡，当然，它也是一个 Veth Pair 设备。这样，数据包就进入到了 nginx-2 容器的 Network Namespace 里。</li>
+</ol>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/e0d28e0371f93af619e91a86eda99a66.png" alt="img"></p>
+<p>需要注意的是，在实际的数据传递时，上述数据的传递过程在网络协议栈的不同层次，都有 Linux 内核 Netfilter 参与其中。所以，如果感兴趣的话，你可以通过打开 iptables 的 TRACE 功能查看到数据包的传输过程，具体方法如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在宿主机上执行</span></span><br><span class="line">$ iptables -t raw -A OUTPUT -p icmp -j TRACE</span><br><span class="line">$ iptables -t raw -A PREROUTING -p icmp -j TRACE</span><br></pre></td></tr></table></figure>
+
+<p>通过上述设置，你就可以在 /var/log/syslog 里看到数据包传输的日志了。这一部分内容，你可以在课后结合iptables 的相关知识进行实践，从而验证我和你分享的数据包传递流程。</p>
+<p>熟悉了 docker0 网桥的工作方式，你就可以理解，在默认情况下，被限制在 Network Namespace 里的容器进程，<strong>实际上是通过 Veth Pair 设备 + 宿主机网桥的方式，实现了跟同其他容器的数据交换。</strong></p>
+<h4 id="宿主机和容器通信"><a href="#宿主机和容器通信" class="headerlink" title="宿主机和容器通信"></a>宿主机和容器通信</h4><p>当你在一台宿主机上，访问该宿主机上的容器的 IP 地址时，这个请求的数据包，也是先根据路由规则到达 docker0 网桥，然后被转发到对应的 Veth Pair 设备，最后出现在容器里。这个过程的示意图，如下所示：</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/9fb381d1e49318bb6a67bda3f9db6901.png" alt="img"></p>
+<h4 id="容器和宿主机通信"><a href="#容器和宿主机通信" class="headerlink" title="容器和宿主机通信"></a>容器和宿主机通信</h4><p>当一个容器试图连接到另外一个宿主机时，比如：ping 10.168.0.3，它发出的请求数据包，首先经过 docker0 网桥出现在宿主机上。然后根据宿主机的路由表里的直连路由规则（10.168.0.0/24 via eth0)），对 10.168.0.3 的访问请求就会交给宿主机的 eth0 处理。所以接下来，这个数据包就会经宿主机的 eth0 网卡转发到宿主机网络上，最终到达 10.168.0.3 对应的宿主机上。</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/90bd630c0723ea8a1fb7ccd738ad1f95.png" alt="img"></p>
+<p><strong>当你遇到容器连不通“外网”的时候，你都应该先试试 docker0 网桥能不能 ping 通，然后查看一下跟 docker0 和 Veth Pair 设备相关的 iptables 规则是不是有异常，往往就能够找到问题的答案了。</strong></p>
+<h2 id="容器如何跨宿主机通信"><a href="#容器如何跨宿主机通信" class="headerlink" title="容器如何跨宿主机通信"></a>容器如何跨宿主机通信</h2><blockquote>
+<p>在 Docker 的默认配置下，一台宿主机上的 docker0 网桥，和其他宿主机上的 docker0 网桥，没有任何关联，它们互相之间也没办法连通。所以，连接在这些网桥上的容器，自然也没办法进行通信了。</p>
+</blockquote>
+<p>如果我们通过软件的方式，创建一个整个集群“公用”的网桥，然后把集群里的所有容器都连接到这个网桥上，不就可以相互通信了吗？</p>
+<h3 id="Overlay-Network（覆盖网络"><a href="#Overlay-Network（覆盖网络" class="headerlink" title="Overlay Network（覆盖网络)"></a>Overlay Network（覆盖网络)</h3><p>构建这种容器网络的核心在于：我们需要在已有的宿主机网络上，再通过软件构建一个覆盖在已有宿主机网络之上的、可以把所有容器连通在一起的虚拟网络</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/b4387a992352109398a66d1dbe6e413d.png" alt="img"></p>
+<p>而这个 Overlay Network 本身，可以由每台宿主机上的一个“特殊网桥”共同组成。比如，当 Node 1 上的 Container 1 要访问 Node 2 上的 Container 3 的时候，Node 1 上的“特殊网桥”在收到数据包之后，能够通过某种方式，把数据包发送到正确的宿主机，比如 Node 2 上。而 Node 2 上的“特殊网桥”在收到数据包后，也能够通过某种方式，把数据包转发给正确的容器，比如 Container 3。</p>
+<p>甚至，每台宿主机上，都不需要有一个这种特殊的网桥，而仅仅通过某种方式配置宿主机的路由表，就能够把数据包转发到正确的宿主机上</p>
+
     </div>
 
     
@@ -249,6 +344,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fas fa-cookie-bite"></i> 容器</a>
+          </div>
 
         
 
@@ -321,6 +419,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E6%A0%88"><span class="nav-number">1.</span> <span class="nav-text">容器网络栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%97%B4%E9%80%9A%E4%BF%A1"><span class="nav-number">2.</span> <span class="nav-text">容器间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker0%E7%BD%91%E6%A1%A5"><span class="nav-number">2.1.</span> <span class="nav-text">docker0网桥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E4%B8%80%E5%8F%B0%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B8%8A%E4%B8%8D%E5%90%8C%E5%AE%B9%E5%99%A8%E9%97%B4%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">同一台宿主机上不同容器间通信原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%A5%E5%A6%82%E4%BD%95%E6%8A%8A%E8%BF%99%E4%BA%9B%E5%AE%B9%E5%99%A8%E2%80%9C%E8%BF%9E%E6%8E%A5%E2%80%9D%E5%88%B0-docker0-%E7%BD%91%E6%A1%A5%E4%B8%8A%E5%91%A2%EF%BC%9F"><span class="nav-number">2.2.1.</span> <span class="nav-text">该如何把这些容器“连接”到 docker0 网桥上呢？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86"><span class="nav-number">2.2.2.</span> <span class="nav-text">通信原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%92%8C%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1"><span class="nav-number">2.2.3.</span> <span class="nav-text">宿主机和容器通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%92%8C%E5%AE%BF%E4%B8%BB%E6%9C%BA%E9%80%9A%E4%BF%A1"><span class="nav-number">2.2.4.</span> <span class="nav-text">容器和宿主机通信</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%A6%82%E4%BD%95%E8%B7%A8%E5%AE%BF%E4%B8%BB%E6%9C%BA%E9%80%9A%E4%BF%A1"><span class="nav-number">3.</span> <span class="nav-text">容器如何跨宿主机通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Overlay-Network%EF%BC%88%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-number">3.1.</span> <span class="nav-text">Overlay Network（覆盖网络)</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -336,7 +435,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">228</span>
+          <span class="site-state-item-count">230</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -398,7 +497,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">63:01</span>
+    <span title="站点阅读时长">63:17</span>
 </div>
 
 <!--
