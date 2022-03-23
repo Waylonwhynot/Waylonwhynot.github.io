@@ -20,17 +20,21 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="tech life sharing">
+  <meta name="description" content="调度器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kubernetes14-作业调度">
 <meta property="og:url" content="https://waylon.whatyouneed.site/2022/03/20/Kubernetes14-%E4%BD%9C%E4%B8%9A%E8%B0%83%E5%BA%A6/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="tech life sharing">
+<meta property="og:description" content="调度器">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/bb95a7d4962c95d703f7c69caf53ca53.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/fd17097799fe17fcbc625bf178496acd.jpg">
 <meta property="article:published_time" content="2022-03-19T18:31:04.000Z">
-<meta property="article:modified_time" content="2022-03-19T18:31:04.688Z">
+<meta property="article:modified_time" content="2022-03-23T18:22:05.995Z">
 <meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/bb95a7d4962c95d703f7c69caf53ca53.jpg">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2022/03/20/Kubernetes14-%E4%BD%9C%E4%B8%9A%E8%B0%83%E5%BA%A6/">
 
@@ -215,6 +219,22 @@
 
               <time title="创建时间：2022-03-20 02:31:04" itemprop="dateCreated datePublished" datetime="2022-03-20T02:31:04+08:00">2022-03-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-24 02:22:05" itemprop="dateModified" datetime="2022-03-24T02:22:05+08:00">2022-03-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -222,14 +242,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>8.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>14 分钟</span>
             </span>
 
         </div>
@@ -241,7 +261,138 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>调度器</p>
+<a id="more"></a>
+
+<h2 id="默认调度器（default-scheduler）"><a href="#默认调度器（default-scheduler）" class="headerlink" title="默认调度器（default scheduler）"></a>默认调度器（default scheduler）</h2><h3 id="默认调度器的主要职责"><a href="#默认调度器的主要职责" class="headerlink" title="默认调度器的主要职责"></a>默认调度器的主要职责</h3><p>就是为一个新创建出来的 Pod，寻找一个最合适的节点（Node）</p>
+<ul>
+<li>从集群所有的节点中，根据调度算法挑选出所有可以运行该 Pod 的节点</li>
+<li>从第一步的结果中，再根据调度算法挑选一个最符合条件的节点作为最终结果</li>
+</ul>
+<p>具体的调度流程中，默认调度器会首先调用一组叫作 <strong>Predicate</strong> 的调度算法，来检查每个 Node。然后，再调用一组叫作 <strong>Priority</strong> 的调度算法，来给上一步得到的结果里的每个 Node 打分。最终的调度结果，就是得分最高的那个 Node。</p>
+<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/bb95a7d4962c95d703f7c69caf53ca53.jpg" alt="img"></p>
+<p><strong>Kubernetes 的调度器的核心，实际上就是两个相互独立的控制循环</strong></p>
+<ul>
+<li><p><strong>第一个控制循环，我们可以称之为 Informer Path</strong>。它的主要目的，是启动一系列 Informer，用来监听（Watch）Etcd 中 Pod、Node、Service 等与调度相关的 API 对象的变化。比如，当一个待调度 Pod（即：它的 nodeName 字段是空的）被创建出来之后，调度器就会通过 Pod Informer 的 Handler，将这个待调度 Pod 添加进调度队列。</p>
+<ul>
+<li>在默认情况下，Kubernetes 的调度队列是一个 PriorityQueue（优先级队列），并且当某些集群信息发生变化的时候，调度器还会对调度队列里的内容进行一些特殊操作。这里的设计，主要是出于调度优先级和抢占的考虑</li>
+<li>Kubernetes 的默认调度器还要负责对调度器缓存（即：scheduler cache）进行更新。事实上，Kubernetes 调度部分进行性能优化的一个最根本原则，就是尽最大可能将集群信息 Cache 化，以便从根本上提高 Predicate 和 Priority 调度算法的执行效率</li>
+</ul>
+</li>
+<li><p><strong>第二个控制循环，是调度器负责 Pod 调度的主循环，我们可以称之为 Scheduling Path。</strong></p>
+<ul>
+<li>Scheduling Path 的主要逻辑，就是不断地从调度队列里出队一个 Pod。然后，调用 Predicates 算法进行“过滤”。这一步“过滤”得到的一组 Node，就是所有可以运行这个 Pod 的宿主机列表。当然，Predicates 算法需要的 Node 信息，都是从 Scheduler Cache 里直接拿到的，这是调度器保证算法执行效率的主要手段之一。</li>
+<li>接下来，调度器就会再调用 Priorities 算法为上述列表里的 Node 打分，分数从 0 到 10。得分最高的 Node，就会作为这次调度的结果。</li>
+<li>调度算法执行完成后，调度器就需要将 Pod 对象的 nodeName 字段的值，修改为上述 Node 的名字。这个步骤在 Kubernetes 里面被称作 <strong>Bind</strong>。</li>
+</ul>
+</li>
+<li><p>但是，为了不在关键调度路径里远程访问 APIServer，Kubernetes 的默认调度器在 Bind 阶段，只会更新 Scheduler Cache 里的 Pod 和 Node 的信息。<strong>这种基于“乐观”假设的 API 对象更新方式，在 Kubernetes 里被称作 Assume。</strong></p>
+<ul>
+<li>Assume 之后，调度器才会创建一个 Goroutine 来异步地向 APIServer 发起更新 Pod 的请求，来真正完成 Bind 操作。如果这次异步的 Bind 过程失败了，其实也没有太大关系，等 Scheduler Cache 同步之后一切就会恢复正常。</li>
+<li>当然，正是由于上述 Kubernetes 调度器的“乐观”绑定的设计，当一个新的 Pod 完成调度需要在某个节点上运行起来之前，该节点上的 kubelet 还会通过一个叫作 Admit 的操作来再次验证该 Pod 是否确实能够运行在该节点上。这一步 Admit 操作，实际上就是把一组叫作 GeneralPredicates 的、最基本的调度算法，比如：“资源是否可用”“端口是否冲突”等再执行一遍，作为 kubelet 端的二次确认。</li>
+</ul>
+</li>
+<li><p><strong>除了上述的“Cache 化”和“乐观绑定”，Kubernetes 默认调度器还有一个重要的设计，那就是“无锁化”。</strong></p>
+<ul>
+<li>在 Scheduling Path 上，调度器会启动多个 Goroutine 以节点为粒度并发执行 Predicates 算法，从而提高这一阶段的执行效率。而与之类似的，Priorities 算法也会以 MapReduce 的方式并行计算然后再进行汇总。而在这些所有需要并发的路径上，调度器会避免设置任何全局的竞争资源，从而免去了使用锁进行同步带来的巨大的性能损耗。</li>
+<li>所以，在这种思想的指导下，如果你再去查看一下前面的调度器原理图，你就会发现，Kubernetes 调度器只有对调度队列和 Scheduler Cache 进行操作时，才需要加锁。而这两部分操作，都不在 Scheduling Path 的算法执行路径上。</li>
+<li>当然，Kubernetes 调度器的上述设计思想，也是在集群规模不断增长的演进过程中逐步实现的。<strong>尤其是 “Cache 化”，这个变化其实是最近几年 Kubernetes 调度器性能得以提升的一个关键演化。</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="Kubernetes-默认调度器的可扩展性设计"><a href="#Kubernetes-默认调度器的可扩展性设计" class="headerlink" title="Kubernetes 默认调度器的可扩展性设计"></a>Kubernetes 默认调度器的可扩展性设计</h3><h3 id><a href="#" class="headerlink" title></a><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/fd17097799fe17fcbc625bf178496acd.jpg" alt="img"></h3><p>可以看到，默认调度器的可扩展机制，在 Kubernetes 里面叫作 Scheduler Framework。顾名思义，这个设计的主要目的，就是在调度器生命周期的各个关键点上，为用户暴露出可以进行扩展和实现的接口，从而实现由用户自定义调度器的能力。</p>
+<p>上图中，每一个绿色的箭头都是一个可以插入自定义逻辑的接口。比如，上面的 Queue 部分，就意味着你可以在这一部分提供一个自己的调度队列的实现，从而控制每个 Pod 开始被调度（出队）的时机。</p>
+<p>而 Predicates 部分，则意味着你可以提供自己的过滤算法实现，根据自己的需求，来决定选择哪些机器。</p>
+<p><strong>需要注意的是，上述这些可插拔式逻辑，都是标准的 Go 语言插件机制（Go plugin 机制）</strong>，也就是说，你需要在编译的时候选择把哪些插件编译进去。</p>
+<h2 id="默认调度器策略解析"><a href="#默认调度器策略解析" class="headerlink" title="默认调度器策略解析"></a>默认调度器策略解析</h2><h3 id="Predicates（预选策略）"><a href="#Predicates（预选策略）" class="headerlink" title="Predicates（预选策略）"></a>Predicates（预选策略）</h3><blockquote>
+<p>它按照调度策略，从当前集群的所有节点中，“过滤”出一系列符合条件的节点。这些节点，都是可以运行待调度 Pod 的宿主机。</p>
+</blockquote>
+<h4 id="第一种类型，叫作-GeneralPredicates"><a href="#第一种类型，叫作-GeneralPredicates" class="headerlink" title="第一种类型，叫作 GeneralPredicates"></a><strong>第一种类型，叫作 GeneralPredicates</strong></h4><p>这一组过滤规则，负责的是最基础的调度策略。</p>
+<ul>
+<li><strong>PodFitsResources</strong> 计算的就是宿主机的 CPU 和内存资源等是否够用。</li>
+<li><strong>PodFitsHost</strong> 宿主机的名字是否跟 Pod 的 spec.nodeName 一致</li>
+<li><strong>PodFitsHostPorts</strong> Pod 申请的宿主机端口（spec.nodePort）是不是跟已经被使用的端口有冲突</li>
+<li><strong>PodMatchNodeSelector</strong> Pod 的 nodeSelector 或者 nodeAffinity 指定的节点，是否与待考察节点匹配</li>
+</ul>
+<p><strong>kubelet 在启动 Pod 前，会执行一个 Admit 操作来进行二次确认。这里二次确认的规则，就是执行一遍 GeneralPredicates。</strong></p>
+<h4 id="第二种类型，是与-Volume-相关的过滤规则"><a href="#第二种类型，是与-Volume-相关的过滤规则" class="headerlink" title="第二种类型，是与 Volume 相关的过滤规则"></a>第二种类型，是与 Volume 相关的过滤规则</h4><ul>
+<li><p><strong>NoDiskConflict</strong> 多个 Pod 声明挂载的持久化 Volume 是否有冲突</p>
+<ul>
+<li>比如，AWS EBS 类型的 Volume，是不允许被两个 Pod 同时使用的。所以，当一个名叫 A 的 EBS Volume 已经被挂载在了某个节点上时，另一个同样声明使用这个 A Volume 的 Pod，就不能被调度到这个节点上了。</li>
+</ul>
+</li>
+<li><p><strong>MaxPDVolumeCountPredicate</strong> 则是一个节点上某种类型的持久化 Volume 是不是已经超过了一定数目，如果是的话，那么声明使用该类型持久化 Volume 的 Pod 就不能再调度到这个节点了。</p>
+</li>
+<li><p><strong>VolumeZonePredicate</strong> 检查持久化 Volume 的 Zone（高可用域）标签，是否与待考察节点的 Zone 标签相匹配。</p>
+</li>
+<li><p><strong>VolumeBindingPredicate</strong> 它负责检查的，是该 Pod 对应的 PV 的 nodeAffinity 字段，是否跟某个节点的标签相匹配。</p>
+<ul>
+<li><p>曾经为你讲解过，Local Persistent Volume（本地持久化卷），必须使用 nodeAffinity 来跟某个具体的节点绑定。这其实也就意味着，在 Predicates 阶段，Kubernetes 就必须能够根据 Pod 的 Volume 属性来进行调度。</p>
+</li>
+<li><p>此外，如果该 Pod 的 PVC 还没有跟具体的 PV 绑定的话，调度器还要负责检查所有待绑定 PV，当有可用的 PV 存在并且该 PV 的 nodeAffinity 与待考察节点一致时，这条规则才会返回“成功”。比如下面这个例子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">PersistentVolume</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">example-local-pv</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">capacity:</span></span><br><span class="line">    <span class="attr">storage:</span> <span class="string">500Gi</span></span><br><span class="line">  <span class="attr">accessModes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ReadWriteOnce</span></span><br><span class="line">  <span class="attr">persistentVolumeReclaimPolicy:</span> <span class="string">Retain</span></span><br><span class="line">  <span class="attr">storageClassName:</span> <span class="string">local-storage</span></span><br><span class="line">  <span class="attr">local:</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">/mnt/disks/vol1</span></span><br><span class="line">  <span class="attr">nodeAffinity:</span></span><br><span class="line">    <span class="attr">required:</span></span><br><span class="line">      <span class="attr">nodeSelectorTerms:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">matchExpressions:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">key:</span> <span class="string">kubernetes.io/hostname</span></span><br><span class="line">          <span class="attr">operator:</span> <span class="string">In</span></span><br><span class="line">          <span class="attr">values:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">my-node</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这个 PV 对应的持久化目录，只会出现在名叫 my-node 的宿主机上。所以，任何一个通过 PVC 使用这个 PV 的 Pod，都必须被调度到 my-node 上才可以正常工作。VolumeBindingPredicate，正是调度器里完成这个决策的位置</p>
+</li>
+<li><p>可以看到，这个 PV 对应的持久化目录，只会出现在名叫 my-node 的宿主机上。所以，任何一个通过 PVC 使用这个 PV 的 Pod，都必须被调度到 my-node 上才可以正常工作。<strong>VolumeBindingPredicate</strong>，正是调度器里完成这个决策的位置。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="第三种类型，是宿主机相关的过滤规则"><a href="#第三种类型，是宿主机相关的过滤规则" class="headerlink" title="第三种类型，是宿主机相关的过滤规则"></a>第三种类型，是宿主机相关的过滤规则</h4><p>这一组规则，主要考察待调度 Pod 是否满足 Node 本身的某些条件。</p>
+<ul>
+<li><strong>PodToleratesNodeTaints</strong> 负责检查的就是我们前面经常用到的 Node 的“污点”机制。只有当 Pod 的 Toleration 字段与 Node 的 Taint 字段能够匹配的时候，这个 Pod 才能被调度到该节点上。</li>
+<li><strong>NodeMemoryPressurePredicate</strong> 检查的是当前节点的内存是不是已经不够充足，如果是的话，那么待调度 Pod 就不能被调度到该节点上。</li>
+</ul>
+<h4 id="第四种类型，是-Pod-相关的过滤规则"><a href="#第四种类型，是-Pod-相关的过滤规则" class="headerlink" title="第四种类型，是 Pod 相关的过滤规则"></a>第四种类型，是 Pod 相关的过滤规则</h4><p>这一组规则，跟 GeneralPredicates 大多数是重合的。比较特殊的：</p>
+<ul>
+<li><p><strong>PodAffinityPredicate</strong> 这个规则的作用，是检查待调度 Pod 与 Node 上的已有 Pod 之间的亲密（affinity）和反亲密（anti-affinity）关系。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">with-pod-antiaffinity</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">affinity:</span></span><br><span class="line">    <span class="attr">podAntiAffinity:</span> </span><br><span class="line">      <span class="attr">requiredDuringSchedulingIgnoredDuringExecution:</span> </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">weight:</span> <span class="number">100</span>  </span><br><span class="line">        <span class="attr">podAffinityTerm:</span></span><br><span class="line">          <span class="attr">labelSelector:</span></span><br><span class="line">            <span class="attr">matchExpressions:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">key:</span> <span class="string">security</span> </span><br><span class="line">              <span class="attr">operator:</span> <span class="string">In</span> </span><br><span class="line">              <span class="attr">values:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="string">S2</span></span><br><span class="line">          <span class="attr">topologyKey:</span> <span class="string">kubernetes.io/hostname</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">with-pod-affinity</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">docker.io/ocpqe/hello-pod</span></span><br></pre></td></tr></table></figure>
+
+<p>这个例子里的 podAntiAffinity 规则，就指定了这个 Pod 不希望跟任何携带了 security=S2 标签的 Pod 存在于同一个 Node 上。需要注意的是，PodAffinityPredicate 是有作用域的，比如上面这条规则，就仅对携带了 Key 是kubernetes.io/hostname标签的 Node 有效。这正是 topologyKey 这个关键词的作用。</p>
+<ul>
+<li>而与 podAntiAffinity 相反的，就是 podAffinity，比如下面这个例子：</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">with-pod-affinity</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">affinity:</span></span><br><span class="line">    <span class="attr">podAffinity:</span> </span><br><span class="line">      <span class="attr">requiredDuringSchedulingIgnoredDuringExecution:</span> </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">labelSelector:</span></span><br><span class="line">          <span class="attr">matchExpressions:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">key:</span> <span class="string">security</span> </span><br><span class="line">            <span class="attr">operator:</span> <span class="string">In</span> </span><br><span class="line">            <span class="attr">values:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">S1</span> </span><br><span class="line">        <span class="attr">topologyKey:</span> <span class="string">failure-domain.beta.kubernetes.io/zone</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">with-pod-affinity</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">docker.io/ocpqe/hello-pod</span></span><br></pre></td></tr></table></figure>
+
+<p>这个例子里的 Pod，就只会被调度到已经有携带了 security=S1 标签的 Pod 运行的 Node 上。而这条规则的作用域，则是所有携带 Key 是failure-domain.beta.kubernetes.io/zone标签的 Node。</p>
+<p>此外，上面这两个例子里的 requiredDuringSchedulingIgnoredDuringExecution 字段的含义是：这条规则必须在 Pod 调度时进行检查（requiredDuringScheduling）；但是如果是已经在运行的 Pod 发生变化，比如 Label 被修改，造成了该 Pod 不再适合运行在这个 Node 上的时候，Kubernetes 不会进行主动修正（IgnoredDuringExecution）。</p>
+</li>
+</ul>
+<p>​       <strong>在具体执行的时候， 当开始调度一个 Pod 时，Kubernetes 调度器会同时启动 16 个 Goroutine，来并发地为集群里的所有 Node 计算 Predicates，最后返回可以运行这个 Pod 的宿主机列表。</strong></p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>​           需要注意的是，在为每个 Node 执行 Predicates 时，调度器会按照固定的顺序来进行检查。这个顺序，是按照 Predicates 本身的含义来确定的。比如，宿主机相关的 Predicates 会被放在相对靠前的位置进行检查。要不然的话，在一台资源已经严重不足的宿主机上，上来就开始计算 PodAffinityPredicate，是没有实际意义的。</p>
+<h3 id="Priorities（优选策略）"><a href="#Priorities（优选策略）" class="headerlink" title="Priorities（优选策略）"></a>Priorities（优选策略）</h3><blockquote>
+<p>在 Predicates 阶段完成了节点的“过滤”之后，Priorities 阶段的工作就是为这些节点打分。这里打分的范围是 0-10 分，得分最高的节点就是最后被 Pod 绑定的最佳节点。</p>
+</blockquote>
+<h4 id="常用打分规则LeastRequestedPriority"><a href="#常用打分规则LeastRequestedPriority" class="headerlink" title="常用打分规则LeastRequestedPriority"></a>常用打分规则LeastRequestedPriority</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">score = (cpu((capacity-sum(requested))10/capacity) + memory((capacity-sum(requested))10/capacity))/2</span><br></pre></td></tr></table></figure>
+
+<p><strong>这个算法实际上就是在选择空闲资源（CPU 和 Memory）最多的宿主机。</strong></p>
+<h4 id="而与-LeastRequestedPriority-一起发挥作用的，还有-BalancedResourceAllocation"><a href="#而与-LeastRequestedPriority-一起发挥作用的，还有-BalancedResourceAllocation" class="headerlink" title="而与 LeastRequestedPriority 一起发挥作用的，还有 BalancedResourceAllocation"></a>而与 <strong>LeastRequestedPriority</strong> 一起发挥作用的，还有 <strong>BalancedResourceAllocation</strong></h4><p>它的计算公式如下所示:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">score = 10 - variance(cpuFraction,memoryFraction,volumeFraction)*10</span><br></pre></td></tr></table></figure>
+
+<p>其中，每种资源的 Fraction 的定义是 ：Pod 请求的资源 / 节点上的可用资源。而 variance 算法的作用，则是计算每两种资源 Fraction 之间的“距离”。而最后选择的，则是资源 Fraction 差距最小的节点。</p>
+<p>所以说，BalancedResourceAllocation 选择的，其实是调度完成后，所有节点里各种资源分配最均衡的那个节点，从而避免一个节点上 CPU 被大量分配、而 Memory 大量剩余的情况。</p>
+<h4 id="NodeAffinityPriority-TaintTolerationPriority-InterPodAffinityPriority"><a href="#NodeAffinityPriority-TaintTolerationPriority-InterPodAffinityPriority" class="headerlink" title="NodeAffinityPriority    TaintTolerationPriority  InterPodAffinityPriority"></a>NodeAffinityPriority    TaintTolerationPriority  InterPodAffinityPriority</h4><p>它们与前面的 PodMatchNodeSelector、PodToleratesNodeTaints 和 PodAffinityPredicate 这三个 Predicate 的含义和计算方法是类似的。但是作为 Priority，一个 Node 满足上述规则的字段数目越多，它的得分就会越高。</p>
+<h4 id="ImageLocalityPriority"><a href="#ImageLocalityPriority" class="headerlink" title="ImageLocalityPriority"></a>ImageLocalityPriority</h4><p>​         默认 Priorities 里，还有一个叫作 ImageLocalityPriority 的策略。它是在 Kubernetes v1.12 里新开启的调度规则，即：如果待调度 Pod 需要使用的镜像很大，并且已经存在于某些 Node 上，那么这些 Node 的得分就会比较高。 </p>
+<p>​         当然，为了避免这个算法引发调度堆叠，调度器在计算得分的时候还会根据镜像的分布进行优化，即：如果大镜像分布的节点数目很少，那么这些节点的权重就会被调低，从而“对冲”掉引起调度堆叠的风险</p>
+<p><strong>在实际的执行过程中，调度器里关于集群和 Pod 的信息都已经缓存化，所以这些算法的执行过程还是比较快的。</strong></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>​        可以通过为 <strong>kube-scheduler</strong> 指定一个配置文件或者创建一个 <strong>ConfigMap</strong> ，来配置哪些规则需要开启、哪些规则需要关闭。并且，你可以通过为 <strong>Priorities</strong> 设置权重，来控制调度器的调度行为。</p>
+<h2 id="默认调度器的优先级-Priority-与抢占机制-Preemption"><a href="#默认调度器的优先级-Priority-与抢占机制-Preemption" class="headerlink" title="默认调度器的优先级(Priority)与抢占机制(Preemption)"></a>默认调度器的优先级(Priority)与抢占机制(Preemption)</h2><blockquote>
+<p>优先级和抢占机制，解决的是 Pod 调度失败时该怎么办的问题</p>
+<p>正常情况下，当一个 Pod 调度失败后，它就会被暂时“搁置”起来，直到 Pod 被更新，或者集群状态发生变化，调度器才会对这个 Pod 进行重新调度.</p>
+</blockquote>
+<p>但在有时候，我们希望的是这样一个场景。当一个高优先级的 Pod 调度失败后，该 Pod 并不会被“搁置”，而是会“挤走”某个 Node 上的一些低优先级的 Pod 。这样就可以保证这个高优先级 Pod 的调度成功。</p>
+<p>需要在 Kubernetes 里提交一个 PriorityClass 的定义，如下所示：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">scheduling.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">PriorityClass</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">high-priority</span></span><br><span class="line"><span class="attr">value:</span> <span class="number">1000000</span></span><br><span class="line"><span class="attr">globalDefault:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&quot;This priority class should be used for high priority service pods only.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面这个 YAML 文件，定义的是一个名叫 high-priority 的 PriorityClass，其中 value 的值是 1000000 （一百万）。</p>
+<p><strong>Kubernetes 规定，优先级是一个 32 bit 的整数，最大值不超过 1000000000（10 亿，1 billion），并且值越大代表优先级越高。</strong>超出 10 亿的值，其实是被 Kubernetes 保留下来分配给系统 Pod 使用的。</p>
+<p>而一旦上述 YAML 文件里的 globalDefault 被设置为 true 的话，那就意味着这个 PriorityClass 的值会成为系统的默认值。而如果这个值是 false，就表示我们只希望声明使用该 PriorityClass 的 Pod 拥有值为 1000000 的优先级，而对于没有声明 PriorityClass 的 Pod 来说，它们的优先级就是 0。</p>
+<p>Pod 就可以声明使用它：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">env:</span> <span class="string">test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">  <span class="attr">priorityClassName:</span> <span class="string">high-priority</span></span><br></pre></td></tr></table></figure>
+
+<p>而当一个高优先级的 Pod 调度失败的时候，调度器的抢占能力就会被触发。这时，调<strong>度器就会试图从当前集群里寻找一个节点，使得当这个节点上的一个或者多个低优先级 Pod 被删除后，待调度的高优先级 Pod 就可以被调度到这个节点上。这个过程，就是“抢占”这个概念在 Kubernetes 里的主要体现。</strong></p>
+
     </div>
 
     
@@ -249,6 +400,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fas fa-cookie-bite"></i> 容器</a>
+          </div>
 
         
 
@@ -321,6 +475,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%EF%BC%88default-scheduler%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">默认调度器（default scheduler）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E4%B8%BB%E8%A6%81%E8%81%8C%E8%B4%A3"><span class="nav-number">1.1.</span> <span class="nav-text">默认调度器的主要职责</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes-%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.2.</span> <span class="nav-text">Kubernetes 默认调度器的可扩展性设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%E7%AD%96%E7%95%A5%E8%A7%A3%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">默认调度器策略解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Predicates%EF%BC%88%E9%A2%84%E9%80%89%E7%AD%96%E7%95%A5%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">Predicates（预选策略）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E7%B1%BB%E5%9E%8B%EF%BC%8C%E5%8F%AB%E4%BD%9C-GeneralPredicates"><span class="nav-number">2.1.1.</span> <span class="nav-text">第一种类型，叫作 GeneralPredicates</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E7%B1%BB%E5%9E%8B%EF%BC%8C%E6%98%AF%E4%B8%8E-Volume-%E7%9B%B8%E5%85%B3%E7%9A%84%E8%BF%87%E6%BB%A4%E8%A7%84%E5%88%99"><span class="nav-number">2.1.2.</span> <span class="nav-text">第二种类型，是与 Volume 相关的过滤规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%E7%B1%BB%E5%9E%8B%EF%BC%8C%E6%98%AF%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9A%84%E8%BF%87%E6%BB%A4%E8%A7%84%E5%88%99"><span class="nav-number">2.1.3.</span> <span class="nav-text">第三种类型，是宿主机相关的过滤规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%A7%8D%E7%B1%BB%E5%9E%8B%EF%BC%8C%E6%98%AF-Pod-%E7%9B%B8%E5%85%B3%E7%9A%84%E8%BF%87%E6%BB%A4%E8%A7%84%E5%88%99"><span class="nav-number">2.1.4.</span> <span class="nav-text">第四种类型，是 Pod 相关的过滤规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">2.1.5.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Priorities%EF%BC%88%E4%BC%98%E9%80%89%E7%AD%96%E7%95%A5%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">Priorities（优选策略）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%89%93%E5%88%86%E8%A7%84%E5%88%99LeastRequestedPriority"><span class="nav-number">2.2.1.</span> <span class="nav-text">常用打分规则LeastRequestedPriority</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%80%8C%E4%B8%8E-LeastRequestedPriority-%E4%B8%80%E8%B5%B7%E5%8F%91%E6%8C%A5%E4%BD%9C%E7%94%A8%E7%9A%84%EF%BC%8C%E8%BF%98%E6%9C%89-BalancedResourceAllocation"><span class="nav-number">2.2.2.</span> <span class="nav-text">而与 LeastRequestedPriority 一起发挥作用的，还有 BalancedResourceAllocation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NodeAffinityPriority-TaintTolerationPriority-InterPodAffinityPriority"><span class="nav-number">2.2.3.</span> <span class="nav-text">NodeAffinityPriority    TaintTolerationPriority  InterPodAffinityPriority</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ImageLocalityPriority"><span class="nav-number">2.2.4.</span> <span class="nav-text">ImageLocalityPriority</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7-Priority-%E4%B8%8E%E6%8A%A2%E5%8D%A0%E6%9C%BA%E5%88%B6-Preemption"><span class="nav-number">3.</span> <span class="nav-text">默认调度器的优先级(Priority)与抢占机制(Preemption)</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -398,7 +553,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">63:49</span>
+    <span title="站点阅读时长">64:02</span>
 </div>
 
 <!--
