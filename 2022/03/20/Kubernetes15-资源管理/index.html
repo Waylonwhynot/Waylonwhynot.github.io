@@ -20,16 +20,17 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="tech life sharing">
+  <meta name="description" content="QOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kubernetes15-资源管理">
 <meta property="og:url" content="https://waylon.whatyouneed.site/2022/03/20/Kubernetes15-%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="tech life sharing">
+<meta property="og:description" content="QOS">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-19T18:31:12.000Z">
-<meta property="article:modified_time" content="2022-03-19T18:31:12.120Z">
+<meta property="article:modified_time" content="2022-03-23T09:56:26.146Z">
 <meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2022/03/20/Kubernetes15-%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/">
@@ -215,6 +216,22 @@
 
               <time title="创建时间：2022-03-20 02:31:12" itemprop="dateCreated datePublished" datetime="2022-03-20T02:31:12+08:00">2022-03-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-23 17:56:26" itemprop="dateModified" datetime="2022-03-23T17:56:26+08:00">2022-03-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -222,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>4.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>8 分钟</span>
             </span>
 
         </div>
@@ -241,7 +258,83 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>QOS</p>
+<a id="more"></a>
+
+<h2 id="资源限制limits和requests"><a href="#资源限制limits和requests" class="headerlink" title="资源限制limits和requests"></a>资源限制limits和requests</h2><p>在 Kubernetes 中，像 CPU 这样的资源被称作“<strong>可压缩资源</strong>”（compressible resources）。它的典型特点是，当可压缩资源不足时，Pod 只会“饥饿”，但不会退出。</p>
+<p>而像内存这样的资源，则被称作“<strong>不可压缩资源</strong>（incompressible resources）。当不可压缩资源不足时，Pod 就会因为 OOM（Out-Of-Memory）被内核杀掉。</p>
+<p>而由于 Pod 可以由多个 Container 组成，所以 CPU 和内存资源的限额，是要配置在每个 Container 的定义上的。这样，Pod 整体的资源配置，就由这些 Container 的配置值累加得到。</p>
+<blockquote>
+<p>其中，Kubernetes 里为 CPU 设置的单位是“CPU 的个数”。比如，cpu=1 指的就是，这个 Pod 的 CPU 限额是 1 个 CPU。当然，具体“1 个 CPU”在宿主机上如何解释，是 1 个 CPU 核心，还是 1 个 vCPU，还是 1 个 CPU 的超线程（Hyperthread），<strong>完全取决于宿主机的 CPU 实现方式。</strong>Kubernetes 只负责保证 Pod 能够使用到“1 个 CPU”的计算能力。</p>
+</blockquote>
+<p>当然，你也可以直接把这个配置写成 cpu=0.5。但在实际使用时，我还是<strong>推荐你使用 500m</strong> 的写法，毕竟这才是 Kubernetes 内部通用的 CPU 表示方式。</p>
+<p>而对于内存资源来说，它的单位自然就是 <strong>bytes</strong>。Kubernetes 支持你使用 Ei、Pi、Ti、Gi、Mi、Ki（或者 E、P、T、G、M、K）的方式来作为 bytes 的值。比如，在我们的例子里，Memory requests 的值就是 64MiB (2 的 26 次方 bytes) 。这里要注意区分 MiB（mebibyte）和 MB（megabyte）的区别。</p>
+<blockquote>
+<p>备注：1Mi=1024<em>1024；1M=1000</em>1000</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: frontend</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: db</span><br><span class="line">    image: mysql</span><br><span class="line">    env:</span><br><span class="line">    - name: MYSQL_ROOT_PASSWORD</span><br><span class="line">      value: <span class="string">&quot;password&quot;</span></span><br><span class="line">    resources:</span><br><span class="line">      requests:</span><br><span class="line">        memory: <span class="string">&quot;64Mi&quot;</span></span><br><span class="line">        cpu: <span class="string">&quot;250m&quot;</span></span><br><span class="line">      limits:</span><br><span class="line">        memory: <span class="string">&quot;128Mi&quot;</span></span><br><span class="line">        cpu: <span class="string">&quot;500m&quot;</span></span><br><span class="line">  - name: wp</span><br><span class="line">    image: wordpress</span><br><span class="line">    resources:</span><br><span class="line">      requests:</span><br><span class="line">        memory: <span class="string">&quot;64Mi&quot;</span></span><br><span class="line">        cpu: <span class="string">&quot;250m&quot;</span></span><br><span class="line">      limits:</span><br><span class="line">        memory: <span class="string">&quot;128Mi&quot;</span></span><br><span class="line">        cpu: <span class="string">&quot;500m&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="limits和requests"><a href="#limits和requests" class="headerlink" title="limits和requests"></a>limits和requests</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spec.containers[].resources.limits.cpu</span><br><span class="line">spec.containers[].resources.limits.memory</span><br><span class="line">spec.containers[].resources.requests.cpu</span><br><span class="line">spec.containers[].resources.requests.memory</span><br></pre></td></tr></table></figure>
+
+<h4 id="区别和”动态资源边界”的定义"><a href="#区别和”动态资源边界”的定义" class="headerlink" title="区别和”动态资源边界”的定义"></a>区别和”动态资源边界”的定义</h4><ul>
+<li>在调度的时候，kube-scheduler 只会按照 requests 的值进行计算。而在真正设置 Cgroups 限制的时候，kubelet 则会按照 limits 的值来进行设置。<ul>
+<li>当你指定了 requests.cpu=250m 之后，相当于将 Cgroups 的 cpu.shares 的值设置为 (250/1000)*1024。而当你没有设置 requests.cpu 的时候，cpu.shares 默认则是 1024。这样，Kubernetes 就通过 cpu.shares 完成了对 CPU 时间的按比例分配。</li>
+<li>指定了 limits.cpu=500m 之后，则相当于将 Cgroups 的 cpu.cfs_quota_us 的值设置为 (500/1000)*100ms，而 cpu.cfs_period_us 的值始终是 100ms。这样，Kubernetes 就为你设置了这个容器只能用到 CPU 的 50%。</li>
+</ul>
+</li>
+<li>而对于内存来说，当你指定了 limits.memory=128Mi 之后，相当于将 Cgroups 的 memory.limit_in_bytes 设置为 128 * 1024 * 1024。而需要注意的是，<strong>在调度的时候，调度器只会使用 requests.memory=64Mi</strong> 来进行判断。</li>
+</ul>
+<h4 id="动态资源边界"><a href="#动态资源边界" class="headerlink" title="动态资源边界"></a>动态资源边界</h4><blockquote>
+<p>容器化作业在提交时所设置的资源边界，并不一定是调度系统所必须严格遵守的，这是因为在实际场景中，大多数作业使用到的资源其实远小于它所请求的资源限额。</p>
+</blockquote>
+<p>Kubernetes 的 requests+limits 的做法，其实就是上述思路的一个简化版：用户在提交 Pod 时，可以声明一个相对较小的 requests 值供调度器使用，而 Kubernetes 真正设置给容器 Cgroups 的，则是相对较大的 limits 值。</p>
+<h2 id="QOS"><a href="#QOS" class="headerlink" title="QOS"></a>QOS</h2><blockquote>
+<p>在 Kubernetes 中，不同的 requests 和 limits 的设置方式，其实会将这个 Pod 划分到不同的 QoS 级别当中。</p>
+</blockquote>
+<h3 id="Guaranteed级别（具有最高级别服务质量）"><a href="#Guaranteed级别（具有最高级别服务质量）" class="headerlink" title="Guaranteed级别（具有最高级别服务质量）"></a>Guaranteed级别（具有最高级别服务质量）</h3><p><strong>当 Pod 里的每一个 Container 的CPU和内存都同时设置了 requests 和 limits，并且 requests 和 limits 值相等的时候，这个 Pod 就属于 Guaranteed 类别</strong>，如下所示：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">qos-demo</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">qos-example</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">qos-demo-ctr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="attr">limits:</span></span><br><span class="line">        <span class="attr">memory:</span> <span class="string">&quot;200Mi&quot;</span></span><br><span class="line">        <span class="attr">cpu:</span> <span class="string">&quot;700m&quot;</span></span><br><span class="line">      <span class="attr">requests:</span></span><br><span class="line">        <span class="attr">memory:</span> <span class="string">&quot;200Mi&quot;</span></span><br><span class="line">        <span class="attr">cpu:</span> <span class="string">&quot;700m&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>当这个 Pod 创建之后，它的 qosClass 字段就会被 Kubernetes 自动设置为 Guaranteed。需要注意的是，当 Pod 仅设置了 limits 没有设置 requests 的时候，Kubernetes 会自动为它设置与 limits 相同的 requests 值，所以，这也属于 Guaranteed 情况。</p>
+<h3 id="Burstable级别（具有中等级别服务质量）"><a href="#Burstable级别（具有中等级别服务质量）" class="headerlink" title="Burstable级别（具有中等级别服务质量）"></a>Burstable级别（具有中等级别服务质量）</h3><p><strong>但至少有一个 Container 设置了 cpu或者内存的requests。那么这个 Pod 就会被划分到 Burstable 类别。</strong>比如下面这个例子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">qos-demo-2</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">qos-example</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">qos-demo-2-ctr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="string">limits</span></span><br><span class="line">        <span class="attr">memory:</span> <span class="string">&quot;200Mi&quot;</span></span><br><span class="line">      <span class="attr">requests:</span></span><br><span class="line">        <span class="attr">memory:</span> <span class="string">&quot;100Mi&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="BestEffort级别"><a href="#BestEffort级别" class="headerlink" title="BestEffort级别"></a>BestEffort级别</h3><p><strong>而如果一个 Pod 既没有设置 requests，也没有设置 limits，那么它的 QoS 类别就是 BestEffort。比如下面这个例子：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">qos-demo-3</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">qos-example</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">qos-demo-3-ctr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="QOS级别的作用"><a href="#QOS级别的作用" class="headerlink" title="QOS级别的作用"></a>QOS级别的作用</h3><p><strong>QoS 划分的主要应用场景，是当宿主机资源紧张的时候，kubelet 对 Pod 进行 Eviction（即资源回收）时需要用到的。</strong></p>
+<p>具体地说，当 Kubernetes 所管理的宿主机上不可压缩资源短缺时，就有可能触发 Eviction。比如，可用内存（memory.available）、可用的宿主机磁盘空间（nodefs.available），以及容器运行时镜像存储空间（imagefs.available）等等。</p>
+<p>目前，Kubernetes 为你设置的 Eviction 的默认阈值如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">memory.available&lt;100Mi</span><br><span class="line">nodefs.available&lt;10%</span><br><span class="line">nodefs.inodesFree&lt;5%</span><br><span class="line">imagefs.available&lt;15%</span><br></pre></td></tr></table></figure>
+
+<p>当然，上述各个触发条件在 kubelet 里都是可配置的。比如下面这个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubelet --eviction-hard=imagefs.available&lt;10%,memory.available&lt;500Mi,nodefs.available&lt;5%,nodefs.inodesFree&lt;5% --eviction-soft=imagefs.available&lt;30%,nodefs.available&lt;10% --eviction-soft-grace-period=imagefs.available=2m,nodefs.available=2m --eviction-max-pod-grace-period=600</span><br></pre></td></tr></table></figure>
+
+<h4 id="Eviction-在-Kubernetes-里其实分为-Soft-和-Hard-两种模式"><a href="#Eviction-在-Kubernetes-里其实分为-Soft-和-Hard-两种模式" class="headerlink" title="Eviction 在 Kubernetes 里其实分为 Soft 和 Hard 两种模式"></a>Eviction 在 Kubernetes 里其实分为 Soft 和 Hard 两种模式</h4><ul>
+<li>其中，Soft Eviction 允许你为 Eviction 过程设置一段“优雅时间”，比如上面例子里的 imagefs.available=2m，就意味着当 imagefs 不足的阈值达到 2 分钟之后，kubelet 才会开始 Eviction 的过程。</li>
+<li>而 Hard Eviction 模式下，Eviction 过程就会在阈值达到之后立刻开始。</li>
+</ul>
+<blockquote>
+<p>Kubernetes 计算 Eviction 阈值的数据来源，主要依赖于从 Cgroups 读取到的值，以及使用 cAdvisor 监控到的数据。</p>
+</blockquote>
+<p>当宿主机的 Eviction 阈值达到后，就会进入 MemoryPressure 或者 DiskPressure 状态，从而避免新的 Pod 被调度到这台宿主机上。</p>
+<p>而当 Eviction 发生的时候，kubelet 具体会挑选哪些 Pod 进行删除操作，就需要参考这些 Pod 的 QoS 类别了。</p>
+<ul>
+<li>首当其冲的，自然是 BestEffort 类别的 Pod。</li>
+<li>其次，是属于 Burstable 类别、并且发生“饥饿”的资源使用量已经超出了 requests 的 Pod。</li>
+<li>最后，才是 Guaranteed 类别。并且，Kubernetes 会保证只有当 Guaranteed 类别的 Pod 的资源使用量超过了其 limits 的限制，或者宿主机本身正处于 Memory Pressure 状态时，Guaranteed 的 Pod 才可能被选中进行 Eviction 操作</li>
+</ul>
+<h4 id="Kubernetes-里一个非常有用的特性：cpuset-的设置"><a href="#Kubernetes-里一个非常有用的特性：cpuset-的设置" class="headerlink" title="Kubernetes 里一个非常有用的特性：cpuset 的设置"></a>Kubernetes 里一个非常有用的特性：cpuset 的设置</h4><blockquote>
+<p>我们知道，在使用容器的时候，你可以通过设置 cpuset 把容器绑定到某个 CPU 的核上，而不是像 cpushare 那样共享 CPU 的计算能力。</p>
+<p>这种情况下，由于操作系统在 CPU 之间进行上下文切换的次数大大减少，容器里应用的性能会得到大幅提升。事实上，cpuset 方式，是生产环境里部署在线应用类型的 Pod 时，非常常用的一种方式。</p>
+</blockquote>
+<h5 id="如何实现"><a href="#如何实现" class="headerlink" title="如何实现"></a>如何实现</h5><ul>
+<li>首先，你的 Pod 必须是 Guaranteed 的 QoS 类型；</li>
+<li>然后，你只需要将 Pod 的 CPU 资源的 requests 和 limits 设置为同一个相等的整数值即可。</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="attr">limits:</span></span><br><span class="line">        <span class="attr">memory:</span> <span class="string">&quot;200Mi&quot;</span></span><br><span class="line">        <span class="attr">cpu:</span> <span class="string">&quot;2&quot;</span></span><br><span class="line">      <span class="attr">requests:</span></span><br><span class="line">        <span class="attr">memory:</span> <span class="string">&quot;200Mi&quot;</span></span><br><span class="line">        <span class="attr">cpu:</span> <span class="string">&quot;2&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>这时候，该 Pod 就会被绑定在 2 个独占的 CPU 核上。当然，具体是哪两个 CPU 核，是由 kubelet 为你分配的。</strong></p>
+
     </div>
 
     
@@ -249,6 +342,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fas fa-cookie-bite"></i> 容器</a>
+          </div>
 
         
 
@@ -321,6 +417,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6limits%E5%92%8Crequests"><span class="nav-number">1.</span> <span class="nav-text">资源限制limits和requests</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#limits%E5%92%8Crequests"><span class="nav-number">1.1.</span> <span class="nav-text">limits和requests</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB%E5%92%8C%E2%80%9D%E5%8A%A8%E6%80%81%E8%B5%84%E6%BA%90%E8%BE%B9%E7%95%8C%E2%80%9D%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">区别和”动态资源边界”的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B5%84%E6%BA%90%E8%BE%B9%E7%95%8C"><span class="nav-number">1.1.2.</span> <span class="nav-text">动态资源边界</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QOS"><span class="nav-number">2.</span> <span class="nav-text">QOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Guaranteed%E7%BA%A7%E5%88%AB%EF%BC%88%E5%85%B7%E6%9C%89%E6%9C%80%E9%AB%98%E7%BA%A7%E5%88%AB%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">Guaranteed级别（具有最高级别服务质量）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Burstable%E7%BA%A7%E5%88%AB%EF%BC%88%E5%85%B7%E6%9C%89%E4%B8%AD%E7%AD%89%E7%BA%A7%E5%88%AB%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">Burstable级别（具有中等级别服务质量）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BestEffort%E7%BA%A7%E5%88%AB"><span class="nav-number">2.3.</span> <span class="nav-text">BestEffort级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QOS%E7%BA%A7%E5%88%AB%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.4.</span> <span class="nav-text">QOS级别的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Eviction-%E5%9C%A8-Kubernetes-%E9%87%8C%E5%85%B6%E5%AE%9E%E5%88%86%E4%B8%BA-Soft-%E5%92%8C-Hard-%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.4.1.</span> <span class="nav-text">Eviction 在 Kubernetes 里其实分为 Soft 和 Hard 两种模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kubernetes-%E9%87%8C%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E6%9C%89%E7%94%A8%E7%9A%84%E7%89%B9%E6%80%A7%EF%BC%9Acpuset-%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.4.2.</span> <span class="nav-text">Kubernetes 里一个非常有用的特性：cpuset 的设置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.4.2.1.</span> <span class="nav-text">如何实现</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -336,7 +433,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">230</span>
+          <span class="site-state-item-count">231</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -398,7 +495,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">63:17</span>
+    <span title="站点阅读时长">63:49</span>
 </div>
 
 <!--

@@ -28,10 +28,11 @@
 <meta property="og:description" content="深入了解容器跨主机通信&#x2F;Flannel">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/03185fab251a833fef7ed6665d5049f5.jpg">
+<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/3d8b08411eeb49be2658eb4352206d25.png">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/8332564c0547bf46d1fbba2a1e0e166c.jpg">
 <meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/84caa6dc3f9dcdf8b88b56bd2e22138d.png">
 <meta property="article:published_time" content="2022-03-20T12:28:20.000Z">
-<meta property="article:modified_time" content="2022-03-20T17:22:11.715Z">
+<meta property="article:modified_time" content="2022-03-21T12:05:47.357Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
@@ -225,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-21 01:22:11" itemprop="dateModified" datetime="2022-03-21T01:22:11+08:00">2022-03-21</time>
+                <time title="修改时间：2022-03-21 20:05:47" itemprop="dateModified" datetime="2022-03-21T20:05:47+08:00">2022-03-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,7 +244,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
+              <span>3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -274,7 +275,9 @@
 </blockquote>
 <h4 id="Vxlan-设计思想"><a href="#Vxlan-设计思想" class="headerlink" title="Vxlan 设计思想"></a>Vxlan 设计思想</h4><p>​         在现有的三层网络之上，“覆盖”一层虚拟的、由内核 VXLAN 模块负责维护的二层网络，使得连接在这个 VXLAN 二层网络上的“主机”（虚拟机或者容器都可以）之间，可以像在同一个局域网（LAN）里那样自由通信。当然，实际上，这些“主机”可能分布在不同的宿主机上，甚至是分布在不同的物理机房里。</p>
 <p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/03185fab251a833fef7ed6665d5049f5.jpg" alt="img"></p>
-<h3 id="后端实现2：host-gw"><a href="#后端实现2：host-gw" class="headerlink" title="后端实现2：host-gw"></a>后端实现2：host-gw</h3><h3 id="后端实现3：udp（已经弃用，因为性能问题）"><a href="#后端实现3：udp（已经弃用，因为性能问题）" class="headerlink" title="后端实现3：udp（已经弃用，因为性能问题）"></a>后端实现3：udp（已经弃用，因为性能问题）</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/8332564c0547bf46d1fbba2a1e0e166c.jpg" alt="img"></p>
+<h3 id="后端实现2：host-gw"><a href="#后端实现2：host-gw" class="headerlink" title="后端实现2：host-gw"></a>后端实现2：host-gw</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/3d8b08411eeb49be2658eb4352206d25.png" alt="img"></p>
+<h4 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h4><p>host-gw 模式的工作原理，其实就是将每个 Flannel 子网（Flannel Subnet，比如：10.244.1.0/24）的“下一跳”，设置成了该子网对应的宿主机的 IP 地址。</p>
+<h3 id="后端实现3：udp（已经弃用，因为性能问题）"><a href="#后端实现3：udp（已经弃用，因为性能问题）" class="headerlink" title="后端实现3：udp（已经弃用，因为性能问题）"></a>后端实现3：udp（已经弃用，因为性能问题）</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/8332564c0547bf46d1fbba2a1e0e166c.jpg" alt="img"></p>
 <blockquote>
 <p>可以看到，Flannel UDP 模式提供的其实是一个三层的 Overlay 网络，即：它首先对发出端的 IP 包进行 UDP 封装，然后在接收端进行解封装拿到原始的 IP 包，进而把这个 IP 包转发给目标容器。这就好比，Flannel 在不同宿主机上的两个容器之间打通了一条“隧道”，使得这两个容器可以直接使用 IP 地址进行通信，而无需关心容器和宿主机的分布情况。</p>
 </blockquote>
@@ -342,7 +345,10 @@
     <a href="/2022/03/20/Kubernetes-%E6%96%B9%E6%A1%88%E6%96%B9%E6%B3%95%E5%85%B6%E4%BB%96/" rel="prev" title="Kubernetes-方案方法其他">
       <i class="fa fa-chevron-left"></i> Kubernetes-方案方法其他
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/21/Kubernetes12-03Calico/" rel="next" title="Kubernetes12-03Calico">
+      Kubernetes12-03Calico <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -401,7 +407,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Flannel"><span class="nav-number">1.</span> <span class="nav-text">Flannel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E5%AE%9E%E7%8E%B01%EF%BC%9AVXLAN"><span class="nav-number">1.1.</span> <span class="nav-text">后端实现1：VXLAN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Vxlan-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">1.1.1.</span> <span class="nav-text">Vxlan 设计思想</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E5%AE%9E%E7%8E%B02%EF%BC%9Ahost-gw"><span class="nav-number">1.2.</span> <span class="nav-text">后端实现2：host-gw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E5%AE%9E%E7%8E%B03%EF%BC%9Audp%EF%BC%88%E5%B7%B2%E7%BB%8F%E5%BC%83%E7%94%A8%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">后端实现3：udp（已经弃用，因为性能问题）</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Flannel"><span class="nav-number">1.</span> <span class="nav-text">Flannel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E5%AE%9E%E7%8E%B01%EF%BC%9AVXLAN"><span class="nav-number">1.1.</span> <span class="nav-text">后端实现1：VXLAN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Vxlan-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">1.1.1.</span> <span class="nav-text">Vxlan 设计思想</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E5%AE%9E%E7%8E%B02%EF%BC%9Ahost-gw"><span class="nav-number">1.2.</span> <span class="nav-text">后端实现2：host-gw</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">工作原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E5%AE%9E%E7%8E%B03%EF%BC%9Audp%EF%BC%88%E5%B7%B2%E7%BB%8F%E5%BC%83%E7%94%A8%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">后端实现3：udp（已经弃用，因为性能问题）</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -417,7 +423,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">230</span>
+          <span class="site-state-item-count">231</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -479,7 +485,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">63:17</span>
+    <span title="站点阅读时长">63:49</span>
 </div>
 
 <!--
