@@ -27,15 +27,15 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="Go 包管理详解">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006y8mN6gy1g94t8ve4vqj30pu05gmy8.jpg">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006y8mN6gy1g94te0hhiwj30qg0fs77y.jpg">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006y8mN6gy1g94wsfd7ybj31io08yq4i.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006y8mN6gy1g94t8ve4vqj30pu05gmy8.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006y8mN6gy1g94te0hhiwj30qg0fs77y.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006y8mN6gy1g94wsfd7ybj31io08yq4i.jpg">
 <meta property="article:published_time" content="2021-08-21T10:48:31.000Z">
-<meta property="article:modified_time" content="2022-01-01T11:36:49.797Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.415Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006y8mN6gy1g94t8ve4vqj30pu05gmy8.jpg">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006y8mN6gy1g94t8ve4vqj30pu05gmy8.jpg">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/21/Go-others-%E5%8C%85%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/">
 
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-01 19:36:49" itemprop="dateModified" datetime="2022-01-01T19:36:49+08:00">2022-01-01</time>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -290,7 +290,7 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;github.com/astaxie/beego&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;hello&quot;</span>)</span><br><span class="line">    beego.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-初始化go-modules"><a href="#2-2-初始化go-modules" class="headerlink" title="2.2 初始化go modules"></a>2.2 初始化go modules</h3><p>在项目根目录执行命令 <code>go mod init test-demo</code> ，然后会生成一个 go.mod</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006y8mN6gy1g94t8ve4vqj30pu05gmy8.jpg" alt="image-20191120210941001"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006y8mN6gy1g94t8ve4vqj30pu05gmy8.jpg" alt="image-20191120210941001"></p>
 <p>这里比较关键的就是这个 go.mod 文件，这个文件中标识了我们的项目的依赖的 package 的版本。执行 init 暂时还没有将所有的依赖管理起来。我们需要将程序 run 起来（比如执行 go run/test），或者 build（执行命令 go build）的时候，才会触发依赖的解析。</p>
 <p>比如使用 go run 即可触发 modules 工作。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> run test.<span class="keyword">go</span></span><br></pre></td></tr></table></figure>
@@ -302,7 +302,7 @@
 <p><strong>注意：在goland中可以用alt+enter/option+enter来下载依赖包</strong></p>
 <p>同时我们发现项目目录下多了一个 go.sum 用来记录每个 package 的版本和哈希值。go.mod 文件正常情况会包含 module 和 require 模块，除此之外还可以包含 replace 和 exclude 模块。</p>
 <p>这些 package 并不是直接存储到 GOPATH/src，而是存储到 GOPATH/pkg/mod 下面，不同版本并存的方式。</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006y8mN6gy1g94te0hhiwj30qg0fs77y.jpg" alt="image-20191120211440359"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006y8mN6gy1g94te0hhiwj30qg0fs77y.jpg" alt="image-20191120211440359"></p>
 <h3 id="2-3-依赖的升级和降级"><a href="#2-3-依赖的升级和降级" class="headerlink" title="2.3 依赖的升级和降级"></a>2.3 依赖的升级和降级</h3><p>可以使用如下命令来查看当前项目依赖的所有的包</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> list -m -u all</span><br><span class="line"><span class="comment">//如果我想要升级（降级）某个 package 则只需要 go get 即可，比如：</span></span><br><span class="line"><span class="keyword">go</span> get <span class="keyword">package</span>@version</span><br></pre></td></tr></table></figure>
 
@@ -324,7 +324,7 @@
 <li>goproxy.io <strong>在goland–&gt;Go–&gt;Go Modules(ego)中配置这个地址</strong></li>
 <li>goproxy.cn: 由七牛云提供，参考 github repo</li>
 </ul>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006y8mN6gy1g94wsfd7ybj31io08yq4i.jpg" alt="image-20191120231215167"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006y8mN6gy1g94wsfd7ybj31io08yq4i.jpg" alt="image-20191120231215167"></p>
 <p>当然你也可以实现自己的 GoProxy 服务，比如项目中的依赖包含外部依赖和内部依赖的时候，那么只需要实现 module proxy protocal 协议即可。</p>
 <p>值得注意的是，在最新 release 的 Go 1.13 版本中默认将 GOPROXY 设置为 <a target="_blank" rel="noopener" href="https://proxy.golang.org/">https://proxy.golang.org</a>，这个对于国内的开发者是无法直接使用的。所以如果升级了 Go 1.13 版本一定要把 GOPROXY 手动改掉。</p>
 <h3 id="3-2-replace"><a href="#3-2-replace" class="headerlink" title="3.2 replace"></a>3.2 replace</h3><p>replace 主要为了解决某些包发生改名的问题。</p>
@@ -522,7 +522,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--

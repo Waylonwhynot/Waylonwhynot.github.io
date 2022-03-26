@@ -28,7 +28,7 @@
 <meta property="og:description" content="容器基础，概念入门">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-12T04:03:01.000Z">
-<meta property="article:modified_time" content="2022-03-23T09:45:48.029Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.337Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-23 17:45:48" itemprop="dateModified" datetime="2022-03-23T17:45:48+08:00">2022-03-23</time>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.1k</span>
+              <span>8.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>13 分钟</span>
+              <span>14 分钟</span>
             </span>
 
         </div>
@@ -334,12 +334,12 @@ $ cat /sys/fs/cgroup/cpu/docker/5d5c9f67d/cpu.cfs_quota_us
 <p>这里的应用指的是容器里的apache redis mysql这类的应用</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 问题2：docker的实现原理也仅仅是调用了底层的namespace和cgroup吗？</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>准确的说，是调用containerd + runc。runc干你说的这些事儿</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 问题3：这意味着，如果你要在 Windows 宿主机上运行 Linux 容器，或者在低版本的 Linux 宿主机上运行高版本的 Linux 容器，都是行不通的。”这段话有些不解，我的macbook pro可以运行最新版本的linux的docker，感觉是不是跟您这句话有冲突？</span><br><span class="line"></span><br><span class="line">![image-20220312160351099](https:&#x2F;&#x2F;gitee.com&#x2F;waylon1006&#x2F;blog_pic&#x2F;raw&#x2F;master&#x2F;pic&#x2F;image-20220312160351099.png)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 问题3：这意味着，如果你要在 Windows 宿主机上运行 Linux 容器，或者在低版本的 Linux 宿主机上运行高版本的 Linux 容器，都是行不通的。”这段话有些不解，我的macbook pro可以运行最新版本的linux的docker，感觉是不是跟您这句话有冲突？</span><br><span class="line"></span><br><span class="line">![image-20220312160351099](https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;Waylonwhynot&#x2F;whatyouneed_blog_pic@main&#x2F;pic&#x2F;image-20220312160351099.png)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="http://www.floydhilton.com/docker/2017/03/31/Docker-ContainerHost-vs-ContainerOS-Linux-Windows.html">http://www.floydhilton.com/docker/2017/03/31/Docker-ContainerHost-vs-ContainerOS-Linux-Windows.html</a></p>
 <p>mac docker其实是个虚拟机<br>windows：Docker Machine 也会在 Windows 上创建一个 Linux 虚拟机，用于运行 Docker 引擎。也就是说，这个环境也只支持 Linux 的应用程序格式的，并不支持 Windows 应用程序的运行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 问题4：对于&#x2F;etc&#x2F;hosts这个文件而言，同一个pod中不同container修改权限时是修改的宿主机的文件权限，而修改hosts文件内容时，修改的是各自的文件么？</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>不是……hosts跟volume是一样的，所有容器共同mount了同一份。但是这个文件的内容，是kubelet维护的，在每个容器创建的时候，kubelet会重写它里面的内容。这就是为啥我说不让你手动改hosts……</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 问题5：为什么我原先一直在用的某个 JVM 参数，在容器里就不好使了？</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;bash</span><br><span class="line">**解决**：**lxcfs 可解决此问题**(top 是从 &#x2F;prof&#x2F;stats 目录下获取数据，所以道理上来讲，容器不挂载宿主机的该目录就可以了。lxcfs就是来实现这个功能的，做法是把宿主机的 &#x2F;var&#x2F;lib&#x2F;lxcfs&#x2F;proc&#x2F;memoinfo 文件挂载到Docker容器的&#x2F;proc&#x2F;meminfo位置后。容器中进程读取相应文件内容时，LXCFS的FUSE实现会从容器对应的Cgroup中读取正确的内存限制。从而使得应用获得正确的资源约束设定。kubernetes环境下，也能用，以ds 方式运行 lxcfs ，自动给容器注入争取的 proc 信息。)</span><br><span class="line"></span><br><span class="line">   案例：（1）较为典型的Java的应用程序，若未使用-Xmx选项指定JVM的堆内存可用总量，则会默认设置为主机内存可用总量的一个空间比例（例如30%），这会导致容器中的应用程序申请内存资源时很快达到上限，而转为OOM状态。另外，即便使用了-Xmx选项设置其堆内存上限，但该设置对非堆内存的可用空间不产生任何限制作用，仍然存在达到容器内存资源上限的可能性。</span><br><span class="line">   （2）另外一个典型是Pod中运行Nginx容器时，其配置参数worker_process的值设置为auto，则会创建于与可见CPU核心数量相同的worker进程数，若容器的CPU可用资源量远小于节点所需资源量时，这种设置较大的访问负荷下会产生严重的资源竞争，并且会带来更多的内存资源消耗。</span><br><span class="line">   解决办法：使用Downward API 将limits定义的资源量暴露给容器</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 问题5：为什么我原先一直在用的某个 JVM 参数，在容器里就不好使了？</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;bash</span><br><span class="line">**解决**：**lxcfs 可解决此问题**(top 是从 &#x2F;prof&#x2F;stats 目录下获取数据，所以道理上来讲，容器不挂载宿主机的该目录就可以了。lxcfs就是来实现这个功能的，做法是把宿主机的 &#x2F;var&#x2F;lib&#x2F;lxcfs&#x2F;proc&#x2F;memoinfo 文件挂载到Docker容器的&#x2F;proc&#x2F;meminfo位置后。容器中进程读取相应文件内容时，LXCFS的FUSE实现会从容器对应的Cgroup中读取正确的内存限制。从而使得应用获得正确的资源约束设定。kubernetes环境下，也能用，以ds 方式运行 lxcfs ，自动给容器注入争取的 proc 信息。)</span><br><span class="line">即 lxcfs 方案。通过 lxcfs，你可以把宿主机的 &#x2F;var&#x2F;lib&#x2F;lxcfs&#x2F;proc 文件系统挂载到 Docker 容器的 &#x2F;proc 目录下。使得容器中进程读取相应文件内容时，实际上会从容器对应的 Cgroups 中读取正确的资源限制。 从而得到正确的 top 命令的返回值。</span><br><span class="line"></span><br><span class="line">   案例：（1）较为典型的Java的应用程序，若未使用-Xmx选项指定JVM的堆内存可用总量，则会默认设置为主机内存可用总量的一个空间比例（例如30%），这会导致容器中的应用程序申请内存资源时很快达到上限，而转为OOM状态。另外，即便使用了-Xmx选项设置其堆内存上限，但该设置对非堆内存的可用空间不产生任何限制作用，仍然存在达到容器内存资源上限的可能性。</span><br><span class="line">   （2）另外一个典型是Pod中运行Nginx容器时，其配置参数worker_process的值设置为auto，则会创建于与可见CPU核心数量相同的worker进程数，若容器的CPU可用资源量远小于节点所需资源量时，这种设置较大的访问负荷下会产生严重的资源竞争，并且会带来更多的内存资源消耗。</span><br><span class="line">   解决办法：使用Downward API 将limits定义的资源量暴露给容器</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -502,7 +502,7 @@ $ cat /sys/fs/cgroup/cpu/docker/5d5c9f67d/cpu.cfs_quota_us
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--

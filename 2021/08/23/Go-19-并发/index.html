@@ -27,13 +27,13 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="Go 并发">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/concurrency-parallelism-copy.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/concurrency-parallelism-copy.png">
 <meta property="article:published_time" content="2021-08-23T01:08:16.000Z">
-<meta property="article:modified_time" content="2021-08-23T01:14:45.379Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.492Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/concurrency-parallelism-copy.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/concurrency-parallelism-copy.png">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/23/Go-19-%E5%B9%B6%E5%8F%91/">
 
@@ -215,10 +215,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-08-23 09:08:16 / 修改时间：09:14:45" itemprop="dateCreated datePublished" datetime="2021-08-23T09:08:16+08:00">2021-08-23</time>
+              <time title="创建时间：2021-08-23 09:08:16" itemprop="dateCreated datePublished" datetime="2021-08-23T09:08:16+08:00">2021-08-23</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -267,7 +273,7 @@
 <h2 id="从技术上看并发和并行"><a href="#从技术上看并发和并行" class="headerlink" title="从技术上看并发和并行"></a>从技术上看并发和并行</h2><p>通过现实中的例子，我们已经明白了什么是并发，以及并发与并行的区别。作为一名极客，我们接下来从技术的角度来考察并发和并行。😃</p>
 <p>假如我们正在编写一个 web 浏览器。这个 web 浏览器有各种组件。其中两个分别是 web 页面的渲染区和从网上下载文件的下载器。假设我们已经构建好了浏览器代码，各个组件也都可以相互独立地运行（通过像 Java 里的线程，或者通过即将介绍的 Go 语言中的 Go 协程来实现）。当浏览器在单核处理器中运行时，处理器会在浏览器的两个组件间进行上下文切换。它可能在一段时间内下载文件，转而又对用户请求的 web 页面进行渲染。这就是并发。并发的进程从不同的时间点开始，分别交替运行。在这里，就是在不同的时间点开始进行下载和渲染，并相互交替运行的。</p>
 <p>如果该浏览器在一个多核处理器上运行，此时下载文件的组件和渲染 HTML 的组件可能会在不同的核上同时运行。这称之为并行。</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/concurrency-parallelism-copy.png" alt="image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/concurrency-parallelism-copy.png" alt="image"></p>
 <p>并行不一定会加快运行速度，因为并行运行的组件之间可能需要相互通信。在我们浏览器的例子里，当文件下载完成后，应当对用户进行提醒，比如弹出一个窗口。于是，在负责下载的组件和负责渲染用户界面的组件之间，就产生了通信。在并发系统上，这种通信开销很小。但在多核的并行系统上，组件间的通信开销就很高了。所以，并行不一定会加快运行速度！</p>
 <h2 id="Go-对并发的支持"><a href="#Go-对并发的支持" class="headerlink" title="Go 对并发的支持"></a>Go 对并发的支持</h2><p>Go 编程语言原生支持并发。Go 使用 Go 协程（Goroutine） 和信道（Channel）来处理并发。在接下来的教程里，我们还会详细介绍它们。</p>
 
@@ -431,7 +437,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--

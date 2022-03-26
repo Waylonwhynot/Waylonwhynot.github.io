@@ -27,15 +27,15 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="Django 视图">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222544245-79299495..png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222545525-832902557.gif">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222545750-1325469848..png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1825659-20191011222544245-79299495..png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1825659-20191011222545525-832902557.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1825659-20191011222545750-1325469848..png">
 <meta property="article:published_time" content="2021-05-09T06:59:31.000Z">
-<meta property="article:modified_time" content="2021-06-01T04:44:36.666Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.340Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Django">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222544245-79299495..png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1825659-20191011222544245-79299495..png">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2021/05/09/06-Django%E8%BF%9B%E9%98%B6-%E8%A7%86%E5%9B%BE/">
 
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-01 12:44:36" itemprop="dateModified" datetime="2021-06-01T12:44:36+08:00">2021-06-01</time>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -272,7 +272,7 @@
 
 
 <h2 id="一-视图函数"><a href="#一-视图函数" class="headerlink" title="一 视图函数"></a>一 视图函数</h2><p>视图函数，简称视图，属于Django的视图层，默认定义在views.py文件中，是用来处理web请求信息以及返回响应信息的函数，所以研究视图函数只需熟练掌握两个对象即可：请求对象(HttpRequest)和响应对象(HttpResponse)</p>
-<p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222544245-79299495..png" alt="1554198422515"></p>
+<p>[<img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1825659-20191011222544245-79299495..png" alt="1554198422515"></p>
 <h3 id="二-请求对象-HttpRequest"><a href="#二-请求对象-HttpRequest" class="headerlink" title="二 请求对象(HttpRequest)"></a>二 请求对象(HttpRequest)</h3><p>django将http协议请求报文中的请求行、首部信息、内容主体封装到了HttpRequest对象中（类似于我们自定义框架的environ参数）。 django会将HttpRequest对象当做参数传给视图函数的第一个参数request，在视图函数中，通过访问该对象的属性便可以提取http协议的请求数据</p>
 <h4 id="2-1、HttpRequest对象常用属性part1"><a href="#2-1、HttpRequest对象常用属性part1" class="headerlink" title="2.1、HttpRequest对象常用属性part1"></a>2.1、HttpRequest对象常用属性part1</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">一.HttpRequest.method</span><br><span class="line">　　获取请求使用的方法（值为纯大写的字符串格式）。例如：<span class="string">&quot;GET&quot;</span>、<span class="string">&quot;POST&quot;</span></span><br><span class="line">   应该通过该属性的值来判断请求方法</span><br><span class="line"></span><br><span class="line">二.HttpRequest.GET</span><br><span class="line">　　值为一个类似于字典的QueryDict对象，封装了GET请求的所有参数，可通过HttpRequest.GET.get(<span class="string">&#x27;键&#x27;</span>)获取相对应的值</span><br><span class="line">   </span><br><span class="line">  </span><br><span class="line">三.HttpRequest.POST</span><br><span class="line">   值为一个类似于字典的QueryDict对象，封装了POST请求所包含的表单数据，可通过HttpRequest.POST.get(<span class="string">&#x27;键&#x27;</span>)获取相对应的值</span><br><span class="line">   注意：get只会获取列表最后一个元素</span><br><span class="line">   针对表单中checkbox类型的input标签、select标签提交的数据，键对应的值为多个，需要用：HttpRequest.POST.getlist(<span class="string">&quot;hobbies&quot;</span>)获取存有多个值的列表,同理也有HttpRequest.GET.getlist(<span class="string">&quot;键&quot;</span>)</span><br><span class="line">  </span><br><span class="line">  </span><br></pre></td></tr></table></figure>
 
@@ -335,11 +335,11 @@
 
 <h4 id="3-3、redirect"><a href="#3-3、redirect" class="headerlink" title="3.3、redirect()"></a>3.3、redirect()</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 返回重定向信息</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span>(<span class="params">request</span>):</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> redirect(<span class="string">&#x27;/some/url/&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重定向的地址也可以是一个完整的URL：</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span>(<span class="params">request</span>):</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> redirect(<span class="string">&#x27;http://www.baidu.com/&#x27;</span>)　</span><br></pre></td></tr></table></figure>
 
-<p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222545525-832902557.gif" alt="img"></p>
+<p>[<img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1825659-20191011222545525-832902557.gif" alt="img"></p>
 <p>重定向转态码301与302的区别（了解）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">一、<span class="number">301</span>和<span class="number">302</span>的异同。</span><br><span class="line">   <span class="number">1</span>、相同之处：</span><br><span class="line">   <span class="number">301</span>和<span class="number">302</span>状态码都表示重定向，具体点说就是浏览器在拿到服务器返回的这个状态码后会自动跳转到一个新的URL地址（浏览器会从响应头Location中获取新地址），用户看到的效果都是输入地址A后瞬间跳转到了另一个地址B</span><br><span class="line">   </span><br><span class="line">   <span class="number">2</span>、不同之处：</span><br><span class="line">　　<span class="number">301</span>表示旧地址A的资源已经被永久地移除了，即这个资源不可访问了。搜索引擎在抓取新内容的同时也将旧的网址转换为重定向之后的地址；</span><br><span class="line">　　<span class="number">302</span>表示旧地址A的资源还在，即这个资源仍然可以访问，这个重定向只是临时地从旧地址A跳转到地址B，搜索引擎会抓取新的内容、并且会保存旧的网址。 从SEO层面考虑，<span class="number">302</span>要好于<span class="number">301</span></span><br><span class="line"></span><br><span class="line">二、重定向原因：</span><br><span class="line">   <span class="number">1</span>、网站调整（如改变网页目录结构）；</span><br><span class="line">   <span class="number">2</span>、网页被移到一个新地址；</span><br><span class="line">   <span class="number">3</span>、网页扩展名改变(如应用需要把.php改成.Html或.shtml)。</span><br><span class="line">      这种情况下，如果不做重定向，则用户收藏夹或搜索引擎数据库中旧地址只能让访问客户得到一个<span class="number">404</span>页面错误信息，访问流量白白丧失；再者某些注册了多个域名的网站，也需要通过重定向让访问这些域名的用户自动跳转到主站点等。</span><br></pre></td></tr></table></figure>
 
-<p>[<img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/1825659-20191011222545750-1325469848..png" alt="1554198744154"></p>
+<p>[<img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1825659-20191011222545750-1325469848..png" alt="1554198744154"></p>
 <h3 id="四-JsonResponse"><a href="#四-JsonResponse" class="headerlink" title="四 JsonResponse"></a>四 JsonResponse</h3><p>向前端返回一个json格式字符串的两种方式</p>
 <p>方式一：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span>(<span class="params">request</span>):</span></span><br><span class="line">    data=[<span class="string">&#x27;egon&#x27;</span>,<span class="string">&#x27;kevin&#x27;</span>]</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(json.dumps(data) )</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
@@ -527,7 +527,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--

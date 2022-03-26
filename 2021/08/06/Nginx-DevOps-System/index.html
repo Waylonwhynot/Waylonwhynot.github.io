@@ -28,11 +28,11 @@
 <meta property="og:description" content="Nginx+Consul+Upsync">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/gtdong/images/raw/master/blog/nginx.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210817084326625.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210813222734989.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210813224107262.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20210817084326625.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20210813222734989.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20210813224107262.png">
 <meta property="article:published_time" content="2021-08-06T00:56:10.000Z">
-<meta property="article:modified_time" content="2021-08-21T08:50:31.457Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.374Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="consul">
 <meta property="article:tag" content="Nginx">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-21 16:50:31" itemprop="dateModified" datetime="2021-08-21T16:50:31+08:00">2021-08-21</time>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -277,7 +277,7 @@
 
 
 
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210817084326625.png" alt="image-20210817084326625"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20210817084326625.png" alt="image-20210817084326625"></p>
 <h2 id="一-依赖环境搭建"><a href="#一-依赖环境搭建" class="headerlink" title="一. 依赖环境搭建"></a>一. 依赖环境搭建</h2><h3 id="1-Nginx-Consul-Upsync"><a href="#1-Nginx-Consul-Upsync" class="headerlink" title="1.Nginx + Consul + Upsync"></a>1.Nginx + Consul + Upsync</h3><p>1.安装依赖</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yum -y install libpcre3 libpcre3-dev ruby zlib1g-dev patch gcc gcc-c++ zlib zlib-devel openssl openssl-devel  pcre-devel zlib-devel openssl-devel GeoIP GeoIP-devel GeoIP-data</span><br><span class="line"></span><br><span class="line"><span class="comment">## 监控</span></span><br><span class="line">yum -y install libxml2 libxml2-dev</span><br><span class="line">yum -y install libxslt-devel</span><br><span class="line">yum install gd gd-devel</span><br><span class="line">yum -y install perl-devel perl-ExtUtils-Embed</span><br><span class="line">yum install gperftools</span><br></pre></td></tr></table></figure>
 
@@ -306,8 +306,8 @@
 
 <h3 id="LDAP配置"><a href="#LDAP配置" class="headerlink" title="LDAP配置"></a>LDAP配置</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">AUTH_LDAP_SERVER_URI = <span class="string">&#x27;ldap://192.168.11.251:389&#x27;</span></span><br><span class="line"></span><br><span class="line">AUTH_LDAP_BIND_DN = <span class="string">&#x27;cn=admin,dc=sholdboy,dc=com&#x27;</span></span><br><span class="line">AUTH_LDAP_BIND_PASSWORD = <span class="string">&#x27;123456&#x27;</span></span><br><span class="line"></span><br><span class="line">AUTH_LDAP_USER_SEARCH = LDAPSearch(<span class="comment">#这个dn要根据现实场景填写</span></span><br><span class="line"><span class="comment">#设置用户的搜索</span></span><br><span class="line">    <span class="string">&#x27;cn=Users,ou=Tech,dc=sholdboy,dc=com&#x27;</span>,</span><br><span class="line">    ldap.SCOPE_SUBTREE,</span><br><span class="line">    <span class="string">&#x27;(uid=%(user)s)&#x27;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">AUTH_LDAP_USER_ATTR_MAP = &#123; <span class="comment"># key为数据库字段名，value为ldap中字段名，此字典解决django model与ldap字段名可能出现的不一致问题</span></span><br><span class="line">    <span class="string">&quot;first_name&quot;</span>: <span class="string">&quot;cn&quot;</span>,</span><br><span class="line">    <span class="string">&quot;username&quot;</span>: <span class="string">&quot;sn&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">AUTHENTICATION_BACKENDS = ( </span><br><span class="line">    <span class="string">&#x27;django_auth_ldap.backend.LDAPBackend&#x27;</span>,  <span class="comment"># 配置为先使用LDAP认证，如通过认证则不再使用后面的认证方式</span></span><br><span class="line">    <span class="string">&#x27;django.contrib.auth.backends.ModelBackend&#x27;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">JSONWebTokenAuthentication   认证token ，有token  返回request.user + 其他</span><br><span class="line"></span><br><span class="line">登录认证  用户名+密码过了 签发token</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210813222734989.png" alt="image-20210813222734989"></p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/image-20210813224107262.png" alt="image-20210813224107262"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20210813222734989.png" alt="image-20210813222734989"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20210813224107262.png" alt="image-20210813224107262"></p>
 <h3 id="地址信息"><a href="#地址信息" class="headerlink" title="地址信息"></a>地址信息</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nginx:</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.11</span><span class="number">.251</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.11</span><span class="number">.252</span></span><br><span class="line"></span><br><span class="line">consul 管理节点:</span><br><span class="line">http://<span class="number">192.168</span><span class="number">.11</span><span class="number">.252</span>:<span class="number">8530</span>/</span><br><span class="line"></span><br><span class="line">LDAP phpadmin管理：</span><br><span class="line">http://<span class="number">192.168</span><span class="number">.11</span><span class="number">.251</span>:<span class="number">8080</span>/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 管理员</span></span><br><span class="line">cn=admin,dc=sholdboy,dc=com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 监控</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># docker-compose</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
@@ -494,7 +494,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--

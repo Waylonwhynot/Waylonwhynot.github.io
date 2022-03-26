@@ -20,17 +20,22 @@
     var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="tech life sharing">
+  <meta name="description" content="容器运行时">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kubernetes16-容器运行时">
 <meta property="og:url" content="https://waylon.whatyouneed.site/2022/03/20/Kubernetes16-%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E6%97%B6/index.html">
 <meta property="og:site_name" content="YouNeed">
-<meta property="og:description" content="tech life sharing">
+<meta property="og:description" content="容器运行时">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/914e097aed10b9ff39b509759f8b1d03.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/5161bd6201942f7a1ed6d70d7d55acfe.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/62c591c4d832d44fed6f76f60be88e3d.png">
 <meta property="article:published_time" content="2022-03-19T18:44:29.000Z">
-<meta property="article:modified_time" content="2022-03-19T18:44:29.811Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.498Z">
 <meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/914e097aed10b9ff39b509759f8b1d03.png">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2022/03/20/Kubernetes16-%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E6%97%B6/">
 
@@ -215,6 +220,22 @@
 
               <time title="创建时间：2022-03-20 02:44:29" itemprop="dateCreated datePublished" datetime="2022-03-20T02:44:29+08:00">2022-03-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -222,14 +243,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>1.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -241,7 +262,35 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>容器运行时</p>
+<a id="more"></a>
+
+<h1 id="SIG-Node与CRI"><a href="#SIG-Node与CRI" class="headerlink" title="SIG-Node与CRI"></a>SIG-Node与CRI</h1><p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/914e097aed10b9ff39b509759f8b1d03.png" alt="img"></p>
+<p>kubelet 的工作核心，就是一个控制循环，即：SyncLoop（图中的大圆圈）。而驱动这个控制循环运行的事件，包括四种：</p>
+<ol>
+<li>Pod 更新事件；</li>
+<li>Pod 生命周期变化；</li>
+<li>kubelet 本身设置的执行周期；</li>
+<li>定时的清理事件。</li>
+</ol>
+<p>​         跟其他控制器类似，kubelet 启动的时候，要做的第一件事情，就是设置 Listers，也就是注册它所关心的各种事件的 Informer。这些 Informer，就是 SyncLoop 需要处理的数据的来源。</p>
+<p>​         此外，kubelet 还负责维护着很多很多其他的子控制循环（也就是图中的小圆圈）。这些控制循环的名字，一般被称作某某 Manager，比如 Volume Manager、Image Manager、Node Status Manager 等等。</p>
+<h3 id="SyncLoop，又是如何根据-Pod-对象的变化，来进行容器操作的呢？"><a href="#SyncLoop，又是如何根据-Pod-对象的变化，来进行容器操作的呢？" class="headerlink" title="SyncLoop，又是如何根据 Pod 对象的变化，来进行容器操作的呢？"></a>SyncLoop，又是如何根据 Pod 对象的变化，来进行容器操作的呢？</h3><p>​          实际上，kubelet 也是通过 Watch 机制，监听了与自己相关的 Pod 对象的变化。当然，这个 Watch 的过滤条件是该 Pod 的 nodeName 字段与自己相同。kubelet 会把这些 Pod 的信息缓存在自己的内存里。</p>
+<p>​           在具体的处理过程当中，kubelet 会启动一个名叫 Pod Update Worker 的、单独的 Goroutine 来完成对 Pod 的处理工作。</p>
+<p><strong>kubelet 调用下层容器运行时的执行过程，并不会直接调用 Docker 的 API，而是通过一组叫作 CRI（Container Runtime Interface，容器运行时接口）的 gRPC 接口来间接执行的。</strong></p>
+<blockquote>
+<p>为了对 Kubernetes 屏蔽下层容器运行时的差异。比如 Docker、 rkt、runV，它们就只需要自己提供一个该接口的实现，然后对 kubelet 暴露出 gRPC 服务即可。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/5161bd6201942f7a1ed6d70d7d55acfe.png" alt="img"></p>
+<h3 id="这个-CRI-请求，又该由谁来响应呢？"><a href="#这个-CRI-请求，又该由谁来响应呢？" class="headerlink" title="这个 CRI 请求，又该由谁来响应呢？"></a>这个 CRI 请求，又该由谁来响应呢？</h3><p>如果你使用的容器项目是 Docker 的话，那么负责响应这个请求的就是一个叫作 dockershim 的组件。它会把 CRI 请求里的内容拿出来，然后组装成 Docker API 请求发给 Docker Daemon。</p>
+<p>更普遍的场景，就是你需要在每台宿主机上单独安装一个负责响应 CRI 的组件，这个组件，一般被称作 CRI shim。顾名思义，CRI shim 的工作，就是扮演 kubelet 与容器项目之间的“垫片”（shim）。所以它的作用非常单一，那就是实现 CRI 规定的每个接口，然后把具体的 CRI 请求“翻译”成对后端容器项目的请求或者操作。</p>
+<p>CRI 机制能够发挥作用的核心，就在于每一种容器项目现在都可以自己实现一个 CRI shim，自行对 CRI 请求进行处理。这样，Kubernetes 就有了一个统一的容器抽象层，使得下层容器运行时可以自由地对接进入 Kubernetes 当中。</p>
+<h2 id="CRI-与-容器运行时"><a href="#CRI-与-容器运行时" class="headerlink" title="CRI 与 容器运行时"></a>CRI 与 容器运行时</h2><p>CNCF 里的 containerd 项目，就可以提供一个典型的 CRI shim 的能力，即：将 Kubernetes 发出的 CRI 请求，转换成对 containerd 的调用，然后创建出 runC 容器。而 runC 项目，才是负责执行我们前面讲解过的设置容器 Namespace、Cgroups 和 chroot 等基础操作的组件。所以，这几层的组合关系，可以用如下所示的示意图来描述。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/62c591c4d832d44fed6f76f60be88e3d.png" alt="img"></p>
+<h1 id="Kata-Containers-与-gVisor"><a href="#Kata-Containers-与-gVisor" class="headerlink" title="Kata Containers 与 gVisor"></a>Kata Containers 与 gVisor</h1><p>Kata Containers 的本质就是一个精简后的轻量级虚拟机，所以它的特点，就是“像虚拟机一样安全，像容器一样敏捷”。</p>
+<p>gVisor 项目给容器进程配置一个用 Go 语言实现的、运行在用户态的、极小的“独立内核”。这个内核对容器进程暴露 Linux 内核 ABI，扮演着“Guest Kernel”的角色，从而达到了将容器和宿主机隔离开的目的。</p>
+<p><strong>red hat 的kubevirt</strong>  可以让Kubernetes管理kvm虚拟机</p>
+
     </div>
 
     
@@ -249,6 +298,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fas fa-cookie-bite"></i> 容器</a>
+          </div>
 
         
 
@@ -321,6 +373,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SIG-Node%E4%B8%8ECRI"><span class="nav-number">1.</span> <span class="nav-text">SIG-Node与CRI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SyncLoop%EF%BC%8C%E5%8F%88%E6%98%AF%E5%A6%82%E4%BD%95%E6%A0%B9%E6%8D%AE-Pod-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%8F%98%E5%8C%96%EF%BC%8C%E6%9D%A5%E8%BF%9B%E8%A1%8C%E5%AE%B9%E5%99%A8%E6%93%8D%E4%BD%9C%E7%9A%84%E5%91%A2%EF%BC%9F"><span class="nav-number">1.0.1.</span> <span class="nav-text">SyncLoop，又是如何根据 Pod 对象的变化，来进行容器操作的呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%99%E4%B8%AA-CRI-%E8%AF%B7%E6%B1%82%EF%BC%8C%E5%8F%88%E8%AF%A5%E7%94%B1%E8%B0%81%E6%9D%A5%E5%93%8D%E5%BA%94%E5%91%A2%EF%BC%9F"><span class="nav-number">1.0.2.</span> <span class="nav-text">这个 CRI 请求，又该由谁来响应呢？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRI-%E4%B8%8E-%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E6%97%B6"><span class="nav-number">1.1.</span> <span class="nav-text">CRI 与 容器运行时</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kata-Containers-%E4%B8%8E-gVisor"><span class="nav-number">2.</span> <span class="nav-text">Kata Containers 与 gVisor</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -398,7 +451,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--

@@ -27,13 +27,13 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="pv pvc storageclass">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/e8b2586e4e14eb54adf8ff95c5c18cd9.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/e8b2586e4e14eb54adf8ff95c5c18cd9.png">
 <meta property="article:published_time" content="2022-03-19T11:27:36.000Z">
-<meta property="article:modified_time" content="2022-03-19T18:25:09.718Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.439Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/e8b2586e4e14eb54adf8ff95c5c18cd9.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/e8b2586e4e14eb54adf8ff95c5c18cd9.png">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2022/03/19/Kubernetes11-%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8/">
 
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-20 02:25:09" itemprop="dateModified" datetime="2022-03-20T02:25:09+08:00">2022-03-20</time>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -335,7 +335,7 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
 <p>需要注意的是，这套容器持久化存储体系，完全是 Kubernetes 项目自己负责管理的，并不依赖于 docker volume 命令和 Docker 的存储插件。当然，这套体系本身就比 docker volume 命令的诞生时间还要早得多。</p>
 </blockquote>
-<h3 id="核心流程"><a href="#核心流程" class="headerlink" title="核心流程"></a>核心流程</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/e8b2586e4e14eb54adf8ff95c5c18cd9.png" alt="img"></p>
+<h3 id="核心流程"><a href="#核心流程" class="headerlink" title="核心流程"></a>核心流程</h3><p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/e8b2586e4e14eb54adf8ff95c5c18cd9.png" alt="img"></p>
 <p>​         用户提交请求创建pod，Kubernetes发现这个pod声明使用了PVC，那就靠PersistentVolumeController帮它找一个PV配对。 没有现成的PV，就去找对应的StorageClass，帮它新创建一个PV，然后和PVC完成绑定。 新创建的PV，还只是一个API 对象，需要经过“两阶段处理”变成宿主机上的“持久化 Volume”才真正有用： 第一阶段由运行在master上的AttachDetachController负责，为这个PV完成 Attach 操作，为宿主机挂载远程磁盘； 第二阶段是运行在每个节点上kubelet组件的内部，把第一步attach的远程磁盘 mount 到宿主机目录。这个控制循环叫VolumeManagerReconciler，运行在独立的Goroutine，不会阻塞kubelet主循环。 完成这两步，PV对应的“持久化 Volume”就准备好了，POD可以正常启动，将“持久化 Volume”挂载在容器内指定的路径。</p>
 <hr>
 <h2 id="编写自己的存储插件：FlexVolume与CSI"><a href="#编写自己的存储插件：FlexVolume与CSI" class="headerlink" title="编写自己的存储插件：FlexVolume与CSI"></a>编写自己的存储插件：FlexVolume与CSI</h2><hr>
@@ -500,7 +500,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--

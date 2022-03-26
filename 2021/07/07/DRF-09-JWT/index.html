@@ -27,18 +27,18 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="JWT">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprivsr69j31i50u0tao.jpg">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggpriyyay5j31i80u03zl.jpg">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprj27cflj31fq0u0abx.jpg">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprj5moolj31ob0u0q4w.jpg">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggjrfa03aaj312z0u0afg.jpg">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggjrg9ots0j31d60rcjv6.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggprivsr69j31i50u0tao.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggpriyyay5j31i80u03zl.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggprj27cflj31fq0u0abx.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggprj5moolj31ob0u0q4w.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggjrfa03aaj312z0u0afg.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggjrg9ots0j31d60rcjv6.jpg">
 <meta property="article:published_time" content="2021-07-06T17:51:41.000Z">
-<meta property="article:modified_time" content="2022-03-04T01:11:06.278Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.307Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprivsr69j31i50u0tao.jpg">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggprivsr69j31i50u0tao.jpg">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2021/07/07/DRF-09-JWT/">
 
@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-04 09:11:06" itemprop="dateModified" datetime="2022-03-04T09:11:06+08:00">2022-03-04</time>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,10 +282,10 @@
 <h1 id="一-JWT认证"><a href="#一-JWT认证" class="headerlink" title="一 JWT认证"></a>一 JWT认证</h1><p>在用户注册或登录后，我们想记录用户的登录状态，或者为用户创建身份认证的凭证。我们不再使用Session认证机制，而使用Json Web Token（本质就是token）认证机制。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprivsr69j31i50u0tao.jpg" alt="img"></p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggpriyyay5j31i80u03zl.jpg" alt="img"></p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprj27cflj31fq0u0abx.jpg" alt="img"></p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggprj5moolj31ob0u0q4w.jpg" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggprivsr69j31i50u0tao.jpg" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggpriyyay5j31i80u03zl.jpg" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggprj27cflj31fq0u0abx.jpg" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggprj5moolj31ob0u0q4w.jpg" alt="img"></p>
 <h2 id="1-1-构成和工作原理"><a href="#1-1-构成和工作原理" class="headerlink" title="1.1 构成和工作原理"></a>1.1 构成和工作原理</h2><h3 id="JWT的构成"><a href="#JWT的构成" class="headerlink" title="JWT的构成"></a>JWT的构成</h3><p>JWT就是一段字符串，由三段信息构成的，将这三段信息文本用<code>.</code>链接一起就构成了Jwt字符串。就像这样:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</span><br></pre></td></tr></table></figure>
 
@@ -394,10 +394,10 @@
 
 <h3 id="4-3-编写认证组件"><a href="#4-3-编写认证组件" class="headerlink" title="4.3 编写认证组件"></a>4.3 编写认证组件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># app_auth.py</span><br><span class="line">from users.models import User</span><br><span class="line">class MyJSONWebTokenAuthentication(BaseAuthentication):</span><br><span class="line">    def authenticate(self, request):</span><br><span class="line">        jwt_value &#x3D; get_authorization_header(request)</span><br><span class="line"></span><br><span class="line">        if not jwt_value:</span><br><span class="line">            raise AuthenticationFailed(&#39;Authorization 字段是必须的&#39;)</span><br><span class="line">        try:</span><br><span class="line">            payload &#x3D; jwt_decode_handler(jwt_value)</span><br><span class="line">        except jwt.ExpiredSignature:</span><br><span class="line">            raise AuthenticationFailed(&#39;签名过期&#39;)</span><br><span class="line">        except jwt.InvalidTokenError:</span><br><span class="line">            raise AuthenticationFailed(&#39;非法用户&#39;)</span><br><span class="line">        username &#x3D; jwt_get_username_from_payload(payload)</span><br><span class="line">        print(username)</span><br><span class="line">        user &#x3D; User.objects.filter(username&#x3D;username).first()</span><br><span class="line">        print(user)</span><br><span class="line"></span><br><span class="line">        return user, jwt_value</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-4-登陆获取token"><a href="#4-4-登陆获取token" class="headerlink" title="4.4 登陆获取token"></a>4.4 登陆获取token</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggjrfa03aaj312z0u0afg.jpg" alt="image-20200708185227693"></p>
+<h3 id="4-4-登陆获取token"><a href="#4-4-登陆获取token" class="headerlink" title="4.4 登陆获取token"></a>4.4 登陆获取token</h3><p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggjrfa03aaj312z0u0afg.jpg" alt="image-20200708185227693"></p>
 <h3 id="4-5-编写测试接口"><a href="#4-5-编写测试接口" class="headerlink" title="4.5 编写测试接口"></a>4.5 编写测试接口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from users.app_auth import JSONWebTokenAuthentication,MyJSONWebTokenAuthentication</span><br><span class="line">class OrderView(APIView):</span><br><span class="line">    # authentication_classes &#x3D; [JSONWebTokenAuthentication]</span><br><span class="line">    authentication_classes &#x3D; [MyJSONWebTokenAuthentication]</span><br><span class="line">    def get(self,request):</span><br><span class="line">        print(request.user)</span><br><span class="line">        return CommonResponse(&#39;100&#39;, &#39;成功&#39;,&#123;&#39;数据&#39;:&#39;测试&#39;&#125;)</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-6-测试"><a href="#4-6-测试" class="headerlink" title="4.6 测试"></a>4.6 测试</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggjrg9ots0j31d60rcjv6.jpg" alt="image-20200708185327976"></p>
+<h3 id="4-6-测试"><a href="#4-6-测试" class="headerlink" title="4.6 测试"></a>4.6 测试</h3><p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggjrg9ots0j31d60rcjv6.jpg" alt="image-20200708185327976"></p>
 <h2 id="0-1-两种方式自定制基于jwt的认证类"><a href="#0-1-两种方式自定制基于jwt的认证类" class="headerlink" title="0.1 : 两种方式自定制基于jwt的认证类"></a>0.1 : 两种方式自定制基于jwt的认证类</h2><p>三种方案得到user对象</p>
 <p>1.继承BaseJSONWebTokenAuthentication; self.authenticate_credentials</p>
 <p>2.直接把BaseJSONWebTokenAuthentication，authenticate_credentials方法拿出来，放到自己类中</p>
@@ -595,7 +595,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--

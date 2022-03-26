@@ -27,13 +27,13 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="自动生成接口文档">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggghbdeu1pj31is0u013r.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggghbdeu1pj31is0u013r.jpg">
 <meta property="article:published_time" content="2021-07-04T16:27:46.000Z">
-<meta property="article:modified_time" content="2021-07-04T16:28:44.000Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.591Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggghbdeu1pj31is0u013r.jpg">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggghbdeu1pj31is0u013r.jpg">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2021/07/05/DRF-08-%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/">
 
@@ -215,10 +215,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-07-05 00:27:46 / 修改时间：00:28:44" itemprop="dateCreated datePublished" datetime="2021-07-05T00:27:46+08:00">2021-07-05</time>
+              <time title="创建时间：2021-07-05 00:27:46" itemprop="dateCreated datePublished" datetime="2021-07-05T00:27:46+08:00">2021-07-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -278,7 +284,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class BookInfoViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    list:</span><br><span class="line">    返回图书列表数据</span><br><span class="line"></span><br><span class="line">    retrieve:</span><br><span class="line">    返回图书详情数据</span><br><span class="line"></span><br><span class="line">    latest:</span><br><span class="line">    返回最新的图书数据</span><br><span class="line"></span><br><span class="line">    read:</span><br><span class="line">    修改图书的阅读量</span><br><span class="line">    &quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
 
 <h2 id="1-4-访问接口文档网页"><a href="#1-4-访问接口文档网页" class="headerlink" title="1.4. 访问接口文档网页"></a>1.4. 访问接口文档网页</h2><p>浏览器访问 127.0.0.1:8000/docs/，即可看到自动生成的接口文档。</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/007S8ZIlgy1ggghbdeu1pj31is0u013r.jpg" alt="æ¥å£ææ¡£ç½é¡µ"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggghbdeu1pj31is0u013r.jpg" alt="æ¥å£ææ¡£ç½é¡µ"></p>
 <p>如果遇到报错</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#AttributeError: &#39;AutoSchema&#39; object has no attribute &#39;get_link&#39;</span><br><span class="line">REST_FRAMEWORK &#x3D; &#123;</span><br><span class="line"> &#39;DEFAULT_SCHEMA_CLASS&#39;: &#39;rest_framework.schemas.coreapi.AutoSchema&#39;,</span><br><span class="line">    # 新版drf schema_class默认用的是rest_framework.schemas.openapi.AutoSchema</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -448,7 +454,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--

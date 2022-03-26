@@ -27,16 +27,16 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="Redis 高级用法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1ga8r6p7tpej30z80k2afq.jpg">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1ga923qyr2uj31xp0u0jwt.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006tNbRwgy1ga8r6p7tpej30z80k2afq.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006tNbRwgy1ga923qyr2uj31xp0u0jwt.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006tNbRwgy1ga93bk259dj313y0isajp.jpg">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1ga93gnif6ej310q0iuwpy.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006tNbRwgy1ga93gnif6ej310q0iuwpy.jpg">
 <meta property="article:published_time" content="2021-08-01T14:48:38.000Z">
-<meta property="article:modified_time" content="2021-08-31T10:56:03.828Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.221Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="DB">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1ga8r6p7tpej30z80k2afq.jpg">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006tNbRwgy1ga8r6p7tpej30z80k2afq.jpg">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2021/08/01/DB-%E8%BD%AC%E8%BD%BD-redis-%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/">
 
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-31 18:56:03" itemprop="dateModified" datetime="2021-08-31T18:56:03+08:00">2021-08-31</time>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -273,7 +273,7 @@
 <h2 id="一-慢查询"><a href="#一-慢查询" class="headerlink" title="一 慢查询"></a>一 慢查询</h2><h3 id="1-1-生命周期"><a href="#1-1-生命周期" class="headerlink" title="1.1 生命周期"></a>1.1 生命周期</h3><p>我们配置一个时间，如果查询时间超过了我们设置的时间，我们就认为这是一个慢查询.</p>
 <p>慢查询发生在第三阶段</p>
 <p>客户端超时不一定慢查询，但慢查询是客户端超时的一个可能因素</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1ga8r6p7tpej30z80k2afq.jpg" alt="image-20191225102102218"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006tNbRwgy1ga8r6p7tpej30z80k2afq.jpg" alt="image-20191225102102218"></p>
 <h3 id="1-2-两个配置"><a href="#1-2-两个配置" class="headerlink" title="1.2 两个配置"></a>1.2 两个配置</h3><h4 id="1-2-1-slowlog-max-len"><a href="#1-2-1-slowlog-max-len" class="headerlink" title="1.2.1 slowlog-max-len"></a>1.2.1 slowlog-max-len</h4><p>慢查询是一个先进先出的队列</p>
 <p>固定长度</p>
 <p>保存在内存中</p>
@@ -307,7 +307,7 @@
 
 <h2 id="三-发布订阅"><a href="#三-发布订阅" class="headerlink" title="三 发布订阅"></a>三 发布订阅</h2><h3 id="3-1-角色"><a href="#3-1-角色" class="headerlink" title="3.1 角色"></a>3.1 角色</h3><p><strong>发布者/订阅者/频道</strong></p>
 <p>发布者发布了消息，所有的订阅者都可以收到，就是生产者消费者模型（后订阅了，无法获取历史消息）</p>
-<h3 id="3-2-模型"><a href="#3-2-模型" class="headerlink" title="3.2 模型"></a>3.2 模型</h3><p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1ga923qyr2uj31xp0u0jwt.jpg" alt="image-20191225163659941"></p>
+<h3 id="3-2-模型"><a href="#3-2-模型" class="headerlink" title="3.2 模型"></a>3.2 模型</h3><p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006tNbRwgy1ga923qyr2uj31xp0u0jwt.jpg" alt="image-20191225163659941"></p>
 <h3 id="3-3-API"><a href="#3-3-API" class="headerlink" title="3.3 API"></a>3.3 API</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">publish channel message #发布命令</span><br><span class="line">publish souhu:tv &quot;hello world&quot; #在souhu:tv频道发布一条hello world  返回订阅者个数</span><br><span class="line"></span><br><span class="line">subscribe [channel] #订阅命令，可以订阅一个或多个</span><br><span class="line">subscribe souhu:tv  #订阅sohu:tv频道</span><br><span class="line"></span><br><span class="line">unsubscribe [channel] #取消订阅一个或多个频道</span><br><span class="line">unsubscribe sohu:tv  #取消订阅sohu:tv频道</span><br><span class="line">    </span><br><span class="line">psubscribe [pattern...] #订阅模式匹配</span><br><span class="line">psubscribe c*  #订阅以c开头的频道</span><br><span class="line"></span><br><span class="line">unpsubscribe [pattern...] #按模式退订指定频道</span><br><span class="line"></span><br><span class="line">pubsub channels #列出至少有一个订阅者的频道,列出活跃的频道</span><br><span class="line"></span><br><span class="line">pubsub numsub [channel...] #列出给定频道的订阅者数量</span><br><span class="line"></span><br><span class="line">pubsub numpat #列出被订阅模式的数量</span><br></pre></td></tr></table></figure>
 
 <h3 id="3-4-发布订阅和消息队列"><a href="#3-4-发布订阅和消息队列" class="headerlink" title="3.4 发布订阅和消息队列"></a>3.4 发布订阅和消息队列</h3><p>发布订阅数全收到，消息队列有个抢的过程，只有一个抢到</p>
@@ -315,7 +315,7 @@
 <p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1ga93bk259dj313y0isajp.jpg" alt="image-20191225172053447"></p>
 <h3 id="4-2-相关命令"><a href="#4-2-相关命令" class="headerlink" title="4.2 相关命令"></a>4.2 相关命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">set hello big #放入key位hello 值为big的字符串</span><br><span class="line">getbit hello 0 #取位图的第0个位置，返回0</span><br><span class="line">getbit hello 1 #取位图的第1个位置，返回1 如上图</span><br><span class="line"></span><br><span class="line">##我们可以直接操纵位</span><br><span class="line">setbit key offset value #给位图指定索引设置值</span><br><span class="line">setbit hello 7 1 #把hello的第7个位置设为1 这样，big就变成了cig</span><br><span class="line"></span><br><span class="line">setbit test 50 1 #test不存在，在key为test的value的第50位设为1，那其他位都以0补</span><br><span class="line"></span><br><span class="line">bitcount key [start end] #获取位图指定范围(start到end,单位为字节,注意按字节一个字节8个bit为，如果不指定就是获取全部)位值为1的个数</span><br><span class="line"></span><br><span class="line">bitop op destkey key [key...] #做多个Bitmap的and(交集)&#x2F;or(并集)&#x2F;not(非)&#x2F;xor(异或)，操作并将结果保存在destkey中 </span><br><span class="line">bitop and after_lqz lqz lqz2 #把lqz和lqz2按位与操作，放到after_lqz中</span><br><span class="line"></span><br><span class="line">bitpos key targetBit start end #计算位图指定范围(start到end，单位为字节，如果不指定是获取全部)第一个偏移量对应的值等于targetBit的位置</span><br><span class="line">bitpos lqz 1 #big 对应位图中第一个1的位置，在第二个位置上，由于从0开始返回1</span><br><span class="line">bitpos lqz 0 #big 对应位图中第一个0的位置，在第一个位置上，由于从0开始返回0</span><br><span class="line">bitpos lqz 1 1 2 #返回9：返回从第一个字节到第二个字节之间 第一个1的位置，看上图，为9</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/006tNbRwgy1ga93gnif6ej310q0iuwpy.jpg" alt="image-20191225172547661"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/006tNbRwgy1ga93gnif6ej310q0iuwpy.jpg" alt="image-20191225172547661"></p>
 <h3 id="4-3-独立用户统计"><a href="#4-3-独立用户统计" class="headerlink" title="4.3 独立用户统计"></a>4.3 独立用户统计</h3><p>1 使用set和Bitmap对比</p>
 <p>2 1亿用户，5千万独立（1亿用户量，约5千万人访问，统计活跃用户数量）</p>
 <table>
@@ -561,7 +561,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--

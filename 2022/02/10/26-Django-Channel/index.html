@@ -28,14 +28,14 @@
 <meta property="og:description" content="Django Channel">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/4/17/16a28e3061f80bd8~tplv-t2oaga2asx-watermark.awebp">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/16a28e306251dfa5~tplv-t2oaga2asx-watermark.awebp">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/20190419.channels.2.gif">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-1b33d0229cb4ef59394edafe4c62114c_b.webp">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-33d27008d74f1ea99ae9dff43d54c1e6_1440w.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/16a28e306251dfa5~tplv-t2oaga2asx-watermark.awebp">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/20190419.channels.2.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/v2-1b33d0229cb4ef59394edafe4c62114c_b.webp">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/v2-33d27008d74f1ea99ae9dff43d54c1e6_1440w.jpg">
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-bbcdb5ef16a22fcf2a5456bb3c9d046c_1440w.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-d60c89380077cd5e6b9f6658b32d0728_1440w.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/v2-d60c89380077cd5e6b9f6658b32d0728_1440w.jpg">
 <meta property="article:published_time" content="2022-02-10T09:44:54.000Z">
-<meta property="article:modified_time" content="2022-02-10T12:50:34.413Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.661Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="Django">
 <meta name="twitter:card" content="summary">
@@ -221,10 +221,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-02-10 17:44:54 / 修改时间：20:50:34" itemprop="dateCreated datePublished" datetime="2022-02-10T17:44:54+08:00">2022-02-10</time>
+              <time title="创建时间：2022-02-10 17:44:54" itemprop="dateCreated datePublished" datetime="2022-02-10T17:44:54+08:00">2022-02-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -369,7 +375,7 @@
 <ol>
 <li>完成前边的代码，一个可以聊天的websocket页面就完成了，运行项目，在浏览器中输入消息就会通过websocket–&gt;rouging.py–&gt;consumer.py处理后返回给前端</li>
 </ol>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/16a28e306251dfa5~tplv-t2oaga2asx-watermark.awebp" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/16a28e306251dfa5~tplv-t2oaga2asx-watermark.awebp" alt="img"></p>
 <h2 id="启用Channel-Layer"><a href="#启用Channel-Layer" class="headerlink" title="启用Channel Layer"></a>启用Channel Layer</h2><p>上边的例子我们已经实现了消息的发送和接收，但既然是聊天室，肯定要支持多人同时聊天的，当我们打开多个浏览器分别输入消息后发现只有自己收到消息，其他浏览器端收不到，如何解决这个问题，让所有客户端都能一起聊天呢？</p>
 <p>Channels引入了一个layer的概念，channel layer是一种通信系统，允许多个consumer实例之间互相通信，以及与外部Djanbo程序实现互通。</p>
 <p>channel layer主要实现了两种概念抽象：</p>
@@ -412,7 +418,7 @@
 <p>好了，现在一个完全异步且功能完整的聊天室已经构建完成了</p>
 <p>先说下我们要实现的目标：所有登录的用户可以查看tailf日志页面，在页面上能够选择日志文件进行监听，多个页面终端同时监听任何日志都互不影响，页面同时提供终止监听的按钮能够终止前端的输出以及后台对日志文件的读取</p>
 <p>最终实现的结果见下图</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/20190419.channels.2.gif" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/20190419.channels.2.gif" alt="img"></p>
 <p>接着我们来看下具体的实现过程</p>
 <h1 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h1><p>所有代码均基于以下软件版本： - python==3.6.3 - django==2.2 - channels==2.1.7 - celery==4.3.0</p>
 <p>celery4在windows下支持不完善，所以请<strong>在linux下运行</strong>测试</p>
@@ -499,7 +505,7 @@
 <p>至此我们包含完善功能的Tailf日志监听、终止页面就全部完成了</p>
 <hr>
 <p>演示效果如下所示：</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-1b33d0229cb4ef59394edafe4c62114c_b.webp" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/v2-1b33d0229cb4ef59394edafe4c62114c_b.webp" alt="img"></p>
 <p><strong>什么是websocket?</strong></p>
 <p>WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。WebSocket 使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在 WebSocket API 中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输。</p>
 <p>很多网站为了实现推送技术，所用的技术都是 Ajax 轮询。轮询是在特定的的时间间隔（如每1秒），由浏览器对服务器发出HTTP请求，然后由服务器返回最新的数据给客户端的浏览器。这种传统的模式带来很明显的缺点，即浏览器需要不断的向服务器发出请求，然而HTTP请求可能包含较长的头部，其中真正有效的数据可能只是很小的一部分，显然这样会浪费很多的带宽等资源。Websocket能更好的节省服务器资源和带宽，并且能够更实时地进行通讯，早已成为一种非常流行必须掌握的技术。</p>
@@ -532,7 +538,7 @@
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"> &lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;utf-8&quot;/&gt;</span><br><span class="line">    &lt;title&gt;Chat Room&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;textarea id=&quot;chat-log&quot; cols=&quot;100&quot; rows=&quot;20&quot;&gt;&lt;/textarea&gt;&lt;br&gt;</span><br><span class="line">    &lt;input id=&quot;chat-message-input&quot; type=&quot;text&quot; size=&quot;100&quot;&gt;&lt;br&gt;</span><br><span class="line">    &lt;input id=&quot;chat-message-submit&quot; type=&quot;button&quot; value=&quot;Send&quot;&gt;</span><br><span class="line">    &#123;&#123; room_name|json_script:&quot;room-name&quot; &#125;&#125;</span><br><span class="line"> </span><br><span class="line">&lt;script&gt;</span><br><span class="line">        // 获取房间名</span><br><span class="line">        const roomName = JSON.parse(document.getElementById(&#x27;room-name&#x27;).textContent);</span><br><span class="line"> </span><br><span class="line">        // 根据roomName拼接websocket请求地址，建立长连接</span><br><span class="line">        //  请求url地址为/ws/chat/&lt;room_name&gt;/</span><br><span class="line">        const wss_protocol = (window.location.protocol == &#x27;https:&#x27;) ? &#x27;wss://&#x27;: &#x27;ws://&#x27;;</span><br><span class="line">        const chatSocket = new WebSocket(</span><br><span class="line">             wss_protocol + window.location.host + &#x27;/ws/chat/&#x27;  + roomName + &#x27;/&#x27;</span><br><span class="line">             );</span><br><span class="line"> </span><br><span class="line">        // 建立websocket连接时触发此方法，展示欢迎提示</span><br><span class="line">        chatSocket.onopen = function(e) &#123;</span><br><span class="line">             document.querySelector(&#x27;#chat-log&#x27;).value += (&#x27;[公告]欢迎来到&#x27; + roomName + &#x27;讨论群。请文明发言!\n&#x27;)</span><br><span class="line">         &#125;</span><br><span class="line"> </span><br><span class="line">        // 从后台接收到数据时触发此方法</span><br><span class="line">        // 接收到后台数据后对其解析，并加入到聊天记录chat-log</span><br><span class="line">         chatSocket.onmessage = function(e) &#123;</span><br><span class="line">             const data = JSON.parse(e.data);</span><br><span class="line">             document.querySelector(&#x27;#chat-log&#x27;).value += (data.message + &#x27;\n&#x27;);</span><br><span class="line">         &#125;;</span><br><span class="line"> </span><br><span class="line">         // websocket连接断开时触发此方法</span><br><span class="line">         chatSocket.onclose = function(e) &#123;</span><br><span class="line">             console.error(&#x27;Chat socket closed unexpectedly&#x27;);</span><br><span class="line">         &#125;;</span><br><span class="line">         </span><br><span class="line">         document.querySelector(&#x27;#chat-message-input&#x27;).focus();</span><br><span class="line">         document.querySelector(&#x27;#chat-message-input&#x27;).onkeyup = function(e) &#123;</span><br><span class="line">             if (e.keyCode === 13) &#123;  // enter, return</span><br><span class="line">                 document.querySelector(&#x27;#chat-message-submit&#x27;).click();</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;;</span><br><span class="line">         </span><br><span class="line">         // 每当点击发送消息按钮，通过websocket的send方法向后台发送信息。</span><br><span class="line">         document.querySelector(&#x27;#chat-message-submit&#x27;).onclick = function(e) &#123;</span><br><span class="line">             const messageInputDom = document.querySelector(&#x27;#chat-message-input&#x27;);</span><br><span class="line">             const message = messageInputDom.value;</span><br><span class="line">             </span><br><span class="line">             //注意这里:先把文本数据转成json格式,然后调用send方法发送。</span><br><span class="line">             chatSocket.send(JSON.stringify(&#123;</span><br><span class="line">                 &#x27;message&#x27;: message</span><br><span class="line">             &#125;));</span><br><span class="line">             messageInputDom.value = &#x27;&#x27;;</span><br><span class="line">         &#125;;</span><br><span class="line">     &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
 <p>此时如果你使用python <a href="https://link.zhihu.com/?target=http://manage.py/">manage.py</a> runserver命令启动测试服务器，当你访问一个名为/hello/的房间时，你将看到如下页面：</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-33d27008d74f1ea99ae9dff43d54c1e6_1440w.jpg" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/v2-33d27008d74f1ea99ae9dff43d54c1e6_1440w.jpg" alt="img"></p>
 <p>到这里你看不到任何聊天记录，也不能发送任何消息，因为我们还没有在后端编写任何代码用于处理前端发来的消息，并返回数据。在终端你还会看到如下报错, 说Django只能处理http连接，不能处理websocket。</p>
 <p><img src="https://pic1.zhimg.com/80/v2-bbcdb5ef16a22fcf2a5456bb3c9d046c_1440w.png" alt="img"></p>
 <p>到目前为止，我们所写的就是一个普通的django应用，还没有用到channels库处理websocket请求。接下来我们就要正式开始使用channels了。</p>
@@ -562,7 +568,7 @@
 <p>除此以外，我们还使用了self.scope[‘url_route’][‘kwargs’][‘room_name’]从路由中获取了聊天室的房间名，<em>在channels程序中，scope是个很重要的对象，类似于django的request对象，它代表了当前websocket连接的所有信息</em>。你可以通过scope[‘user’]获取当前用户对象，还可以通过scope[‘path’]获取当前当前请求路径。</p>
 <p><strong>第四步 运行看效果</strong></p>
 <p>如果不出意外，你现在的项目布局应该如下所示：</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/v2-d60c89380077cd5e6b9f6658b32d0728_1440w.jpg" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/v2-d60c89380077cd5e6b9f6658b32d0728_1440w.jpg" alt="img"></p>
 <p>连续运行如下命令，就可以看到我们文初的效果啦。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span><br><span class="line">python manage.py migrate</span><br><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure>
 
@@ -737,7 +743,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--

@@ -27,20 +27,20 @@
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="DevOps实践">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629085408200.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090058104.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090111207.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090449073.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090530805.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090618972.png">
-<meta property="og:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090636284.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629085408200.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090058104.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090111207.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090449073.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090530805.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090618972.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090636284.png">
 <meta property="article:published_time" content="2021-06-29T00:51:55.000Z">
-<meta property="article:modified_time" content="2021-06-29T01:08:46.203Z">
+<meta property="article:modified_time" content="2022-03-26T11:23:41.763Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="DevOps">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640.png">
 
 <link rel="canonical" href="https://waylon.whatyouneed.site/2021/06/29/DevOps%E5%AE%9E%E8%B7%B5/">
 
@@ -222,10 +222,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-29 08:51:55 / 修改时间：09:08:46" itemprop="dateCreated datePublished" datetime="2021-06-29T08:51:55+08:00">2021-06-29</time>
+              <time title="创建时间：2021-06-29 08:51:55" itemprop="dateCreated datePublished" datetime="2021-06-29T08:51:55+08:00">2021-06-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -265,20 +271,20 @@
 <a id="more"></a>
 
 <h2 id="1-版本控制之将所有内容纳入版本控制系统"><a href="#1-版本控制之将所有内容纳入版本控制系统" class="headerlink" title="1.版本控制之将所有内容纳入版本控制系统"></a>1.版本控制之将所有内容纳入版本控制系统</h2><p>制品管理可能是管道最重要的特征。在最基本的层面上，管道从源代码创建二进制/包制品，并将它们部署到适当的基础设施，为正在部署的应用程序提供动力。<br>关于资产和源代码要遵循的最重要的规则如下：</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640.png" alt="图片"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640.png" alt="图片"></p>
 <p>构成应用程序的所有文件都应使用源代码控制进行管理。<br>不幸的是，尽管这条规则看起来很基本，但仍有很多组织未能遵守它。传统上，开发人员仅将版本控制系统用于应用程序的源代码，而忽略了其他支持文件，例如安装脚本、配置文件或测试数据。</p>
 <p>参与应用程序生命周期的所有内容都应检查到源代码控制中。这包括但不限于：<br>源代码<br>构建脚本<br>管道定义文件<br>配置文件<br>测试和测试数据<br>数据库模式<br>数据库更新脚本<br>基础设施定义脚本<br>清理/安装/清除脚本<br>其他相关文件</p>
 <p>最终目标是任何人都可以检查与应用程序相关的所有内容，并可以在本地或任何其他替代环境中重新创建它。<br>我们看到的一个常见反模式是使用特殊脚本进行部署，该脚本仅在特定机器或特定团队成员的工作站上可用，甚至是 wiki 页面中的附件，等等。</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629085408200.png" alt="图片"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629085408200.png" alt="图片"></p>
 <p>版本控制还意味着所有这些资源都经过审核并拥有所有更改的详细历史记录。如果您想查看应用程序在 6 个月前的样子，您可以轻松地使用版本控制系统的工具来获取该信息。</p>
 <p>请注意，即使所有这些资源都应该进行版本控制，但它们不必位于同一个存储库中。无论您使用多个存储库还是单个存储库，这是一个需要仔细考虑的决定，并且没有明确的答案。然而，重要的部分是确保一切确实是版本控制的。</p>
 <p>尽管 GitOps 是使用 Git 操作进行推广和部署的新兴实践，但您不应该仅因为使用GitOps 而来遵循此最佳实践。无论您遵循何种实际软件范例，拥有项目资产的历史和审计信息始终是一件好事。</p>
 <h2 id="2-制品管理之为所有环境使用同一个制品"><a href="#2-制品管理之为所有环境使用同一个制品" class="headerlink" title="2.制品管理之为所有环境使用同一个制品"></a>2.制品管理之为所有环境使用同一个制品</h2><p>制品可能是一个包、一个二进制文件或者一个docker镜像。</p>
 <p>CI/CD 管道的主要功能之一是<strong>验证新功能是否能够部署到生产中</strong>。这是逐渐发生的，因为管道中的每一步本质上都是对该功能执行额外检查。</p>
 <p>但是，要使此范例起作用，您需要确保在管道中测试的内容（制品）要与部署的内容（制品）相同。在实践中，这意味着<strong>一个特性/版本应该打包一次，并以相同的方式持续部署到所有的环境中</strong>。</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090058104.png" alt="图片"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090058104.png" alt="图片"></p>
 <p><strong>不幸的是，许多组织陷入了开发/测试/生产环境使用不同制品的常见陷阱，因为他们还没有掌握用于配置的通用基础架构。这意味着他们部署的版本与管道期间测试的版本略有不同。当涉及到部署失败时，配置差异和最后一刻的更改是最大的罪魁祸首，每个环境使用不同的包会加剧这个问题。</strong></p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090111207.png" alt="图片"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090111207.png" alt="图片"></p>
 <p>与为每个环境创建多个版本不同，公认的做法是<strong>拥有一个仅更改不同环境之间配置的制品</strong>。随着容器的出现以及以 Docker 镜像的形式创建应用程序的自给自足的能力，没有理由不遵循这种做法。</p>
 <p>关于配置，有两种方法：</p>
 <ol>
@@ -290,7 +296,7 @@
 <p>结果是保证在生产中部署的确切二进制文件/包也是在管道中测试过的二进制文件/包。</p>
 <h2 id="3-每个功能使用短期分支"><a href="#3-每个功能使用短期分支" class="headerlink" title="3.每个功能使用短期分支"></a>3.每个功能使用短期分支</h2><p>健全的管道有几个质量阈配置（例如单元测试或安全扫描），用于测试功能的质量及其对生产部署的适用性。在高速开发环境（和庞大的开发团队）中，并非所有功能都可以立即投入生产。某些功能甚至可能在其初始部署版本中相互冲突。</p>
 <p>为了允许在功能之间进行细粒度的质量控制，管道应该有权否决单个功能，并且只能选择其中的一个子集进行生产部署。获得这种保证的最简单方法是遵循每个分支的特征方法，其中短期特征（即可以适合单个开发冲刺的）对应于各个源代码控制分支。</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090449073.png" alt="图片"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090449073.png" alt="图片"></p>
 <p>这使得管道设计非常简单，因为一切都围绕着单个功能。针对代码分支运行测试套件仅测试新功能。分支机构的安全扫描揭示了新功能的问题。</p>
 <p>然后，项目利益相关者能够部署和回滚单个功能，或者阻止完整的分支甚至被合并到主干代码中。</p>
 <p>不幸的是，仍有一些公司拥有长期存在的功能分支，它们在一个批次中收集多个不相关的功能。这不仅使合并变得痛苦，而且在发现单个功能有问题时也会成为问题（因为很难单独恢复它）。</p>
@@ -298,17 +304,17 @@
 <h2 id="4-应该在管道内传递Artifact而不是Git提交"><a href="#4-应该在管道内传递Artifact而不是Git提交" class="headerlink" title="4.应该在管道内传递Artifact而不是Git提交"></a>4.应该在管道内传递Artifact而不是Git提交</h2><p>上一个实践的一个推论（应该在所有环境中部署相同的制品/包）是一个部署制品<strong>应该只构建一次</strong>的实际案例。</p>
 <p>围绕容器（以及过去的 VM 镜像）的整个概念是具有<strong>不可变的</strong>制品。应用程序只构建一次，并带有即将发布的最新功能。</p>
 <p>一旦构建了该制品，它应该作为一个不变的实体从每个管道步骤移动到下一个步骤。容器是实现这种不变性的完美工具，因为它们允许您只创建一次镜像（在管道开始时），并在每个连续的管道步骤中将其推向生产。</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090530805.png" alt="图片"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090530805.png" alt="图片"></p>
 <p>不幸的是，这里看到的常见反模式是<strong>公司推广提交而不是容器镜像</strong>。源代码提交在管道阶段进行，并且通过一次又一次地检查源代码来重建每个步骤。</p>
 <p>这是一个不好的做法，主要有两个原因。首先，它使管道变得非常缓慢，因为打包和编译软件是一个非常漫长的过程，并且在每一步都重复它是浪费时间和资源。</p>
 <p>其次，它打破了之前的规则。在每个管道步骤重新编译代码提交会打开窗口，导致产生与以前不同的制品。您无法保证在生产中部署的内容与在管道中测试的内容相同。</p>
 <h2 id="5-采用命令或脚本实现构建过程自动化"><a href="#5-采用命令或脚本实现构建过程自动化" class="headerlink" title="5.采用命令或脚本实现构建过程自动化"></a>5.采用命令或脚本实现构建过程自动化</h2><p>CI/CD 管道都是关于自动化的。自动化一些本来就很容易运行的东西是很容易的。</p>
 <p><strong>理想情况下，一个项目的构建应该是由一个简单的命令或者脚本自动化完成</strong>。该构建命令通常包含获取源代码、运行一些基本测试和打包最终二进制制品/容器的构建系统或脚本（例如：bash、PowerShell）。</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090618972.png" alt="图片"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090618972.png" alt="图片"></p>
 <p>如果需要更高级的检查（例如负载测试）那属于额外的步骤，可以不做强制要求。然而，基本构建（产生可部署的制品）应该只涉及一个命令或脚本来完成。新开发人员一般都应该能够查看最新的源代码，通过执行此单个命令或脚本可以立即获得可部署的制品。</p>
 <p>这个方法也同样适用于部署步骤（部署应该也使用单个命令或脚本自动化进行），然后如果需要在持续集成系统中创建任何管道时，可以简单地在管道部分插入这个步骤。</p>
 <p>不幸的是，仍然有一些公司需要通过许多手动步骤来运行和完成基本构建。<strong>下载一些与构建相关的文件、配置属性以及其他构建所需依赖的步骤，都应该在同一个脚本中自动化的完成</strong>。</p>
-<p><img src="https://gitee.com/waylon1006/blog_pic/raw/master/pic/640-20210629090636284.png" alt="图片"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/640-20210629090636284.png" alt="图片"></p>
 <p>如果您的开发团队中的新员工，需要超过 15分钟才能完成基本构建（在他们的工作站中检查代码之后），那么很有可能是由于遇到这个问题导致的。</p>
 <p>一个构建良好的 CI/CD 管道其实只是在本地工作站上重复执行已经可以实现的功能。在迁移到 CI/CD 平台之前，应该保证基本的构建和部署过程已经进行了有效的调整。</p>
 <h2 id="6-基本构建应在5到10分钟内完成"><a href="#6-基本构建应在5到10分钟内完成" class="headerlink" title="6.基本构建应在5到10分钟内完成"></a>6.基本构建应在5到10分钟内完成</h2><p>快速构建对于开发人员和运维/系统管理员来说都是一个很大的优势。</p>
@@ -488,7 +494,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">64:02</span>
+    <span title="站点阅读时长">65:05</span>
 </div>
 
 <!--
