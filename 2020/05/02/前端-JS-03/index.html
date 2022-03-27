@@ -28,7 +28,7 @@
 <meta property="og:description" content="JavaScript 函数">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-05-02T06:20:30.000Z">
-<meta property="article:modified_time" content="2022-03-26T20:34:08.572Z">
+<meta property="article:modified_time" content="2022-03-27T20:04:23.722Z">
 <meta property="article:author" content="Waylon Yan">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-27 04:34:08" itemprop="dateModified" datetime="2022-03-27T04:34:08+08:00">2022-03-27</time>
+                <time title="修改时间：2022-03-28 04:04:23" itemprop="dateModified" datetime="2022-03-28T04:04:23+08:00">2022-03-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -461,9 +461,8 @@
 
 <h3 id="原型链（继承）"><a href="#原型链（继承）" class="headerlink" title="原型链（继承）"></a>原型链（继承）</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Dog.prototype = <span class="keyword">new</span> Animal()</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line">Animal.prototype.sayName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`你好，我是<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>`</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Animal.prototype.sayHello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dog</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Dog.prototype = <span class="keyword">new</span> Animal();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> dog = <span class="keyword">new</span> Dog(<span class="string">&quot;旺柴&quot;</span>);</span><br><span class="line">dog.sayName();</span><br><span class="line">dog.sayHello();</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>以上内容编写于 2021 年 8 月 31 日 0 点 30 分。</p>
-</blockquote>
+
+
 <h2 id="ES2015-面向对象语法"><a href="#ES2015-面向对象语法" class="headerlink" title="ES2015 面向对象语法"></a>ES2015 面向对象语法</h2><p>ES2015 支持类的概念。</p>
 <h3 id="Class-关键字"><a href="#Class-关键字" class="headerlink" title="Class 关键字"></a>Class 关键字</h3><p><code>constructor</code>(ES2015 的构造函数)</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> </span>&#123;</span><br><span class="line">  <span class="comment">//ES2015的构造函数</span></span><br><span class="line">  <span class="keyword">constructor</span>(name, age) &#123;</span><br><span class="line">    <span class="built_in">this</span>.name = name;</span><br><span class="line">    <span class="built_in">this</span>.age = age;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sayName() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`我是<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> dog = <span class="keyword">new</span> Dog(<span class="string">&quot;旺柴&quot;</span>, <span class="number">2</span>);</span><br><span class="line">dog.sayName();</span><br></pre></td></tr></table></figure>
@@ -639,12 +638,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">2.3m</span>
+    <span title="站点总字数">2.4m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">65:05</span>
+    <span title="站点阅读时长">65:25</span>
 </div>
 
 <!--
