@@ -1,1332 +1,252 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"waylon.whatyouneed.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
-  </script>
-
-  <meta name="description" content="tech life sharing">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>YouNeed - what</title><meta name="author" content="Waylon Yan"><meta name="copyright" content="Waylon Yan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="tech life sharing">
 <meta property="og:type" content="website">
 <meta property="og:title" content="YouNeed">
 <meta property="og:url" content="https://waylon.whatyouneed.site/page/15/index.html">
 <meta property="og:site_name" content="YouNeed">
 <meta property="og:description" content="tech life sharing">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
 <meta property="article:author" content="Waylon Yan">
 <meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="https://waylon.whatyouneed.site/page/15/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'zh-CN'
-  };
-</script>
-
-  <title>YouNeed</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://waylon.whatyouneed.site/page/15/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'YouNeed',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2022-04-02 11:48:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-    <a target="_blank" rel="noopener" href="https://github.com/Waylonwhynot" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">YouNeed</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-      <p class="site-subtitle" itemprop="description">what</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-</nav>
-
-
-
-  <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off"
-           placeholder="搜索..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content index posts-expand">
-            
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/06/02/09-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E5%A4%9A%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/02/09-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E5%A4%9A%E8%A1%A8/" class="post-title-link" itemprop="url">09-Django进阶-模型-多表</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-02 23:04:53" itemprop="dateCreated datePublished" datetime="2021-06-02T23:04:53+08:00">2021-06-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>22k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>36 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Django Models 多表/子查询/联表查询/FQ</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/06/02/09-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E5%A4%9A%E8%A1%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/25/19-Django%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E6%96%B9%E5%BC%8F-%E6%B1%87%E6%80%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/25/19-Django%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E6%96%B9%E5%BC%8F-%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">19-Django上传文件方式-汇总</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-25 21:06:36" itemprop="dateCreated datePublished" datetime="2021-05-25T21:06:36+08:00">2021-05-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>18 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Django 上传文件方式</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/25/19-Django%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E6%96%B9%E5%BC%8F-%E6%B1%87%E6%80%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/18/18-Django-auth%E6%A8%A1%E5%9D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/18/18-Django-auth%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">18-Django-auth模块</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-18 02:29:21" itemprop="dateCreated datePublished" datetime="2021-05-18T02:29:21+08:00">2021-05-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Django-auth模块</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/18/18-Django-auth%E6%A8%A1%E5%9D%97/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/18/17-Django%E4%B8%AD%E9%97%B4%E4%BB%B6csrf&&importlib%E6%A8%A1%E5%BF%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/18/17-Django%E4%B8%AD%E9%97%B4%E4%BB%B6csrf&&importlib%E6%A8%A1%E5%BF%AB/" class="post-title-link" itemprop="url">17-Django中间件csrf&&importlib模快</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-18 02:24:54" itemprop="dateCreated datePublished" datetime="2021-05-18T02:24:54+08:00">2021-05-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>10k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>17 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Django中间件/csrf  - importlib模块补充</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/18/17-Django%E4%B8%AD%E9%97%B4%E4%BB%B6csrf&&importlib%E6%A8%A1%E5%BF%AB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/18/16-Django-Cookie-session-CBV/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/18/16-Django-Cookie-session-CBV/" class="post-title-link" itemprop="url">16-Django-Cookie-session-CBV</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-18 02:23:02" itemprop="dateCreated datePublished" datetime="2021-05-18T02:23:02+08:00">2021-05-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>18 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Django Cookie\session\CBV添加装饰器</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/18/16-Django-Cookie-session-CBV/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/18/15-Django-forms%E7%BB%84%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/18/15-Django-forms%E7%BB%84%E4%BB%B6/" class="post-title-link" itemprop="url">15-Django-forms组件</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-18 02:20:40" itemprop="dateCreated datePublished" datetime="2021-05-18T02:20:40+08:00">2021-05-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>17k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>28 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Django forms组件</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/18/15-Django-forms%E7%BB%84%E4%BB%B6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/18/14-Ajax-%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE-%E5%88%86%E9%A1%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/18/14-Ajax-%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE-%E5%88%86%E9%A1%B5/" class="post-title-link" itemprop="url">14-Ajax-批量插入数据-分页</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-18 02:17:28" itemprop="dateCreated datePublished" datetime="2021-05-18T02:17:28+08:00">2021-05-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>25k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>42 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Ajax/Django自带的序列化组件JsonResponse</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/18/14-Ajax-%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE-%E5%88%86%E9%A1%B5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/18/13-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-choices%E5%8F%82%E6%95%B0%E5%92%8C%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%88%9B%E5%BB%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/18/13-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-choices%E5%8F%82%E6%95%B0%E5%92%8C%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%88%9B%E5%BB%BA/" class="post-title-link" itemprop="url">13-Django进阶-模型-choices参数和多对多创建</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-18 00:50:56" itemprop="dateCreated datePublished" datetime="2021-05-18T00:50:56+08:00">2021-05-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>choices\多对多关系创建\MTV\MVC</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/18/13-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-choices%E5%8F%82%E6%95%B0%E5%92%8C%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%88%9B%E5%BB%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/09/12-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/09/12-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">12-Django进阶-模型-进阶操作</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-09 23:27:14" itemprop="dateCreated datePublished" datetime="2021-05-09T23:27:14+08:00">2021-05-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>24k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>41 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>查询优化/ 中介模型</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/09/12-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://waylon.whatyouneed.site/2021/05/09/10-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E6%9B%B4%E5%A4%9A%E5%AD%97%E6%AE%B5%E4%B8%8E%E5%8F%82%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/timg.jpeg">
-      <meta itemprop="name" content="Waylon Yan">
-      <meta itemprop="description" content="tech life sharing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YouNeed">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/09/10-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E6%9B%B4%E5%A4%9A%E5%AD%97%E6%AE%B5%E4%B8%8E%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">10-Django进阶-模型-更多字段与参数</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-09 23:26:53" itemprop="dateCreated datePublished" datetime="2021-05-09T23:26:53+08:00">2021-05-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-26 19:23:41" itemprop="dateModified" datetime="2022-03-26T19:23:41+08:00">2022-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>14k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>23 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Django Models 更多字段与参数</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/09/10-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E6%9B%B4%E5%A4%9A%E5%AD%97%E6%AE%B5%E4%B8%8E%E5%8F%82%E6%95%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
     }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
   
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Waylon Yan"
-      src="/images/timg.jpeg">
-  <p class="site-author-name" itemprop="name">Waylon Yan</p>
-  <div class="site-description" itemprop="description">tech life sharing</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
         
-          <span class="site-state-item-count">232</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">35</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Waylonwhynot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Waylonwhynot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:ywl1006@outlook.com" title="E-Mail → mailto:ywl1006@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-  </div>
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">232</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">35</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div></div><hr/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YouNeed</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">YouNeed</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/2021/06/02/09-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E5%A4%9A%E8%A1%A8/" title="09-Django进阶-模型-多表"><img class="post_bg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="09-Django进阶-模型-多表"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/06/02/09-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E5%A4%9A%E8%A1%A8/" title="09-Django进阶-模型-多表">09-Django进阶-模型-多表</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-06-02T15:04:53.000Z" title="发表于 2021-06-02 23:04:53">2021-06-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Django/">Django</a></span></div><div class="content">Django Models 多表/子查询/联表查询/FQ
 
 
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Waylon Yan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-    <span title="站点总字数">2.4m</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">65:52</span>
-</div>
-
-<!--
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
-  </div> -->
-
-        
+一 创建模型实例：我们来假定下面这些概念，字段和关系
+作者模型：一个作者有姓名和年龄。
+作者详细模型：把作者的详情放到详情表，包含生日，手机号，家庭住址等信息。作者详情模型和作者模型之间是一对一的关系（one-to-one）
+出版商模型：出版商有名称，所在城市以及email。
+书籍模型： 书籍有书名和出版日期，一本书可能会有多个作者，一个作者也可以写多本书，所以作者和书籍的关系就是多对多的关联关系(many-to-many);一本书只应该由一个出版商出版，所以出版商和书籍是一对多关联关系(one-to-many)。
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001011021031041051 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/05/25/19-Django%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E6%96%B9%E5%BC%8F-%E6%B1%87%E6%80%BB/" title="19-Django上传文件方式-汇总"><img class="post_bg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="19-Django上传文件方式-汇总"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/25/19-Django%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E6%96%B9%E5%BC%8F-%E6%B1%87%E6%80%BB/" title="19-Django上传文件方式-汇总">19-Django上传文件方式-汇总</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-25T13:06:36.000Z" title="发表于 2021-05-25 21:06:36">2021-05-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Django/">Django</a></span></div><div class="content">Django 上传文件方式
 
 
 
 
+本章将介绍Django上传处理文件中需要考虑的重要事项，并提供通过自定义表单和ModelForm上传文件的示范代码（附GitHub地址)。如果你的项目中需要用到文件上传，你可以从本文中获得灵感，简化你的开发。
+Django文件上传需要考虑的重要事项文件或图片一般通过表单进行。用户在前端点击文件上传，然后以POST方式将数据和文件提交到服务器。服务器在接收到POST请求后需要将其存储在服务器上的某个地方。Django默认的存储地址是相对于根目录的/media/文件夹，存储的默认文件名就是文件本来的名字。上传的文件如果不大于2.5MB，会先存入服务器内存中，然后再写入磁盘。如果上传的文件很大，Django会把文件先存入临时文件，再写入磁盘。
+Django默认处理方式会出现一个问题，所有文件都存储在一个文件夹里。不同用户上传的有相同名字的文件可能会相互覆盖。另外用户还可能上传一些不安全的文件如js和exe文件，我们必需对允许上传文件的类型进行限制。因此我们在利用Django处理文件上传时必需考虑如下3个因素:
+
+设置存储上传文件的文件夹地址
+对上传文件进行 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/05/18/18-Django-auth%E6%A8%A1%E5%9D%97/" title="18-Django-auth模块"><img class="post_bg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="18-Django-auth模块"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/18/18-Django-auth%E6%A8%A1%E5%9D%97/" title="18-Django-auth模块">18-Django-auth模块</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-17T18:29:21.000Z" title="发表于 2021-05-18 02:29:21">2021-05-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Django/">Django</a></span></div><div class="content">Django-auth模块
+
+
+auth模块Django在启动之后就可以直接访问admin路由，需要输入用户名和密码，这个用户名密码就是从auth_user表来的，并且还必须是管理员用户才能进入。默认有6张跟认证相关的表：
+
+
+创建超级用户(管理员)
+
+
+auth_user表中就能看到记录，这里密码用的sha256加密方式
+
+然后就可以用刚创建的超级用户登录http://127.0.0.1:8000/admin/，这是Django后台的管理界面。
+
+依赖auth_user表完成用户相关的所有功能
+
+1、验证用户名密码是否正确：userobj = auth.authenticate(request,username=username,password=password)2、保存用户状态：auth.login(request,userobj)3、判断当前用户是否登录：request.user.is_authenticated()4、获取当前登录用户：request.user5、校验用户是否登录的装饰器(局部配置和全局配置)from django.contrib.auth.decorator ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/05/18/17-Django%E4%B8%AD%E9%97%B4%E4%BB%B6csrf&amp;&amp;importlib%E6%A8%A1%E5%BF%AB/" title="17-Django中间件csrf&amp;&amp;importlib模快"><img class="post_bg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="17-Django中间件csrf&amp;&amp;importlib模快"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/18/17-Django%E4%B8%AD%E9%97%B4%E4%BB%B6csrf&amp;&amp;importlib%E6%A8%A1%E5%BF%AB/" title="17-Django中间件csrf&amp;&amp;importlib模快">17-Django中间件csrf&amp;&amp;importlib模快</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-17T18:24:54.000Z" title="发表于 2021-05-18 02:24:54">2021-05-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Django/">Django</a></span></div><div class="content">Django中间件/csrf  - importlib模块补充
+
+
+1、Django中间件Django自带7个中间件，每个中间件都有各自对应的功能，并且Django还支持自定义中间件。例如在用Django开发项目时，只要是涉及到全局相关的功能都可以使用中间件方便地完成。eg：全局用户身份校验、全局用户权限校验、全局用户访问频率校验。
+Django中间件是Django门户：请求来的时候，需要先经过中间件才能到达urls.py继续匹配请求走的时候，也需要经过中间件才能真正离开Django后端
+Django请求生命周期图：
+
+
+12345678910# from django.middleware.security import SecurityMiddlewareMIDDLEWARE &#x3D; [    &#39;django.middleware.security.SecurityMiddleware&#39;, # 相当于from django.middleware.security import SecurityMiddleware,用字符串也可以导模块。    &#39;dja ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/05/18/16-Django-Cookie-session-CBV/" title="16-Django-Cookie-session-CBV"><img class="post_bg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="16-Django-Cookie-session-CBV"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/18/16-Django-Cookie-session-CBV/" title="16-Django-Cookie-session-CBV">16-Django-Cookie-session-CBV</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-17T18:23:02.000Z" title="发表于 2021-05-18 02:23:02">2021-05-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Django/">Django</a></span></div><div class="content">Django Cookie\session\CBV添加装饰器
+
+
+1、cookie与session网站没有保存用户功能的需求，所有用户访问返回结果都是一样的：新闻、博客、文章。需要保存用户信息的网站：淘宝、支付宝
+cookie：保存在客户端浏览器上的信息都可以称之为cookie,一般以k:v键值对存储。(**当用户第一次登陆成功之后，将用户的用户名密码返回给用户浏览器，让用户浏览器保存在本地；之后访问服务端的时候浏览器自动将保存在浏览器上的用户名和密码发送给服务器，服务器端获取之后会自动验证。)**
+session：数据是保存在服务端的，一般也是以k:v键值对存储。(当用户登录之后，服务器产生一个随机字符串 Session ID 给客户端浏览器保存着，之后访问服务端的时候都带着该随机字符串Session ID，服务端去数据库中对比是否有相应的随机字符串从而获取到对应的用户信息。)
+123随机字符串1： 用户信息1随机字符串2： 用户信息2随机字符串3： 用户信息3
+
+总结:
+
+
+Cookie 就是保存在客户端浏览器上的信息
 
 
 
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
+session就是保存在服务端上的信息
 
 
 
-
-  
-
+sessi ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/05/18/15-Django-forms%E7%BB%84%E4%BB%B6/" title="15-Django-forms组件"><img class="post_bg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="15-Django-forms组件"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/18/15-Django-forms%E7%BB%84%E4%BB%B6/" title="15-Django-forms组件">15-Django-forms组件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-17T18:20:40.000Z" title="发表于 2021-05-18 02:20:40">2021-05-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Django/">Django</a></span></div><div class="content">Django forms组件
 
 
+1、forms组件Django Form 组件用于对页面进行初始化，生成HTML 标签，此外还可以对用户提交对数据进行校验（显示错误信息）。 报错信息显示顺序： 先显示字段属性中的错误信息，然后再显示局部钩子的错误信息。 若显示了字段属性的错误信息，就不会显示局部钩子的错误信息。
+小示例：写一个注册功能：利用form表单提交数据，获取用户名密码，在后端判断用户名密码是否符合条件：用户名不能包含abc字符串，密码不能少于6位数。
+views.py文件：
+1234567891011121314from django.shortcuts import render# Create your views here.def ab_form(request):    back_dic = &#123;&#x27;username&#x27;:&#x27;&#x27;,&#x27;password&#x27;:&#x27;&#x27;&#125;    if request.method == &#x27;POST&#x27;:        username =  ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/05/18/14-Ajax-%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE-%E5%88%86%E9%A1%B5/" title="14-Ajax-批量插入数据-分页"><img class="post_bg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="14-Ajax-批量插入数据-分页"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/18/14-Ajax-%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE-%E5%88%86%E9%A1%B5/" title="14-Ajax-批量插入数据-分页">14-Ajax-批量插入数据-分页</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-17T18:17:28.000Z" title="发表于 2021-05-18 02:17:28">2021-05-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Django/">Django</a></span></div><div class="content">Ajax/Django自带的序列化组件JsonResponse
 
-  
-<script src="/js/local-search.js"></script>
 
-
-
-
+0. 同步异步补充12345同步就是整个处理过程顺序执行，当各个过程都执行完毕，并返回结果。是一种线性执行的方式，执行的流程不能跨越。一般用于流程性比较强的程序，比如用户登录，需要对用户验证完成后才能登录系统。异步则是只是发送了调用的指令，调用者无需等待被调用的方法完全执行完毕；而是继续执行下面的流程。是一种并行处理的方式，不必等待一个程序执行完，可以执行其它的任务，比如页面数据加载过程，不需要等所有数据获取后再显示页面。他们的区别就在于一个需要等待，一个不需要等待，在部分情况下，我们的项目开发中都会优先选择不需要等待的异步交互方式，比如日志记录就可以使用异步方式进行保存。
 
 
 
+1、Ajax简介异步提交，局部刷新。示例：github注册页面，可以动态获取用户名实时跟后端确认并实时展示到前端(局部刷新)
+朝后端发送请求的方式有如下几种：1、浏览器地址栏直接输入url回车(GET请求)2、a标签href属性(GET请求)3、form表单(GET请求/POST请求) - 所有数据拿到再一起提交给后端4、Ajax(GET请求 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/05/18/13-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-choices%E5%8F%82%E6%95%B0%E5%92%8C%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%88%9B%E5%BB%BA/" title="13-Django进阶-模型-choices参数和多对多创建"><img class="post_bg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="13-Django进阶-模型-choices参数和多对多创建"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/18/13-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-choices%E5%8F%82%E6%95%B0%E5%92%8C%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%88%9B%E5%BB%BA/" title="13-Django进阶-模型-choices参数和多对多创建">13-Django进阶-模型-choices参数和多对多创建</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-17T16:50:56.000Z" title="发表于 2021-05-18 00:50:56">2021-05-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Django/">Django</a></span></div><div class="content">choices\多对多关系创建\MTV\MVC
 
 
+1、choices参数(数据库字段设计常见)针对可以列举完全的可能性字段，要如何存储？例如性别、学历、工作经验、招聘来源。一般会采用choices参数。
+我们先在models.py文件中创建表：
+1234567891011121314151617181920212223from django.db import models# Create your models here.class User(models.Model):    username = models.CharField(max_length=32)    age = models.IntegerField()    # 性别字段    # 字段类型为数字类型：    gender_choices = (        (1,&#x27;male&#x27;),        (2,&#x27;female&#x27;),        (3,&#x27;other&#x27;),    )    # 该gender字段存的还是数字，但是如果存的数字在上面元组列举的范围 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/05/09/12-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C/" title="12-Django进阶-模型-进阶操作"><img class="post_bg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="12-Django进阶-模型-进阶操作"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/09/12-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C/" title="12-Django进阶-模型-进阶操作">12-Django进阶-模型-进阶操作</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-09T15:27:14.000Z" title="发表于 2021-05-09 23:27:14">2021-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Django/">Django</a></span></div><div class="content">查询优化/ 中介模型
 
 
+一 QuerySet对象1.1可切片使用Python 的切片语法来限制查询集记录的数目 。它等同于SQL 的LIMIT 和OFFSET 子句。
+12Entry.objects.all()[:5]      # (LIMIT 5)Entry.objects.all()[5:10]    # (OFFSET 5 LIMIT 5)
+
+不支持负的索引（例如Entry.objects.all()[-1]）。通常，查询集 的切片返回一个新的查询集 —— 它不会执行查询。
+1.2可迭代1234articleList&#x3D;models.Article.objects.all()for article in articleList:    print(article.title)
+
+1.3惰性查询查询集 是惰性执行的 —— 创建查询集不会带来任何数据库的访问。你可以将过滤器保持一整天，直到查询集 需要求值时，Django 才会真正运行这个查询。
+123456queryResult&#x3D;models.Article.objects.all() # not hits d ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/05/09/10-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E6%9B%B4%E5%A4%9A%E5%AD%97%E6%AE%B5%E4%B8%8E%E5%8F%82%E6%95%B0/" title="10-Django进阶-模型-更多字段与参数"><img class="post_bg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="10-Django进阶-模型-更多字段与参数"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/09/10-Django%E8%BF%9B%E9%98%B6-%E6%A8%A1%E5%9E%8B-%E6%9B%B4%E5%A4%9A%E5%AD%97%E6%AE%B5%E4%B8%8E%E5%8F%82%E6%95%B0/" title="10-Django进阶-模型-更多字段与参数">10-Django进阶-模型-更多字段与参数</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-09T15:26:53.000Z" title="发表于 2021-05-09 23:26:53">2021-05-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Django/">Django</a></span></div><div class="content">Django Models 更多字段与参数
 
 
-  
-
-  
-
-</body>
-</html>
+表格+案例
+参考：
+表格+案例
+1 ORM字段AutoFieldint自增列，必须填入参数 primary_key=True。当model中如果没有自增列，则自动会创建一个列名为id的列。
+IntegerField一个整数类型,范围在 -2147483648 to 2147483647。
+CharField字符类型，必须提供max_length参数， max_length表示字符长度。
+DateField (年月日)日期字段，日期格式 YYYY-MM-DD，相当于Python中的datetime.date()实例。
+print(datetime.date(year=2020,month=5,day=4))2020-05-04
+DateTimeField (年月日时分秒)日期时间字段，格式 YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]，相当于Python中的datetime.datetime()实例
+print(datetime.datetime(year=2020,month=5,day=4))2020-05-04 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/14/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#content-inner">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/#content-inner">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/#content-inner">24</a><a class="extend next" rel="next" href="/page/16/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Waylon Yan</div><div class="author-info__description">tech life sharing</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">232</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">35</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/04/02/Terraform%E7%AE%80%E4%BB%8B/" title="Terraform简介"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Terraform简介"/></a><div class="content"><a class="title" href="/2022/04/02/Terraform%E7%AE%80%E4%BB%8B/" title="Terraform简介">Terraform简介</a><time datetime="2022-04-02T03:13:13.000Z" title="发表于 2022-04-02 11:13:13">2022-04-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/21/Kubernetes12-03Calico/" title="Kubernetes12-03Calico"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kubernetes12-03Calico"/></a><div class="content"><a class="title" href="/2022/03/21/Kubernetes12-03Calico/" title="Kubernetes12-03Calico">Kubernetes12-03Calico</a><time datetime="2022-03-21T12:05:23.000Z" title="发表于 2022-03-21 20:05:23">2022-03-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/20/Kubernetes12-02Flannel/" title="Kubernetes12-02-Flannel"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kubernetes12-02-Flannel"/></a><div class="content"><a class="title" href="/2022/03/20/Kubernetes12-02Flannel/" title="Kubernetes12-02-Flannel">Kubernetes12-02-Flannel</a><time datetime="2022-03-20T12:28:20.000Z" title="发表于 2022-03-20 20:28:20">2022-03-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/20/Kubernetes-%E6%96%B9%E6%A1%88%E6%96%B9%E6%B3%95%E5%85%B6%E4%BB%96/" title="Kubernetes-方案方法其他"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kubernetes-方案方法其他"/></a><div class="content"><a class="title" href="/2022/03/20/Kubernetes-%E6%96%B9%E6%A1%88%E6%96%B9%E6%B3%95%E5%85%B6%E4%BB%96/" title="Kubernetes-方案方法其他">Kubernetes-方案方法其他</a><time datetime="2022-03-20T12:19:19.000Z" title="发表于 2022-03-20 20:19:19">2022-03-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/20/Kubernetes18-%E6%97%A5%E5%BF%97%E6%96%B9%E6%A1%88/" title="Kubernetes18-日志方案"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kubernetes18-日志方案"/></a><div class="content"><a class="title" href="/2022/03/20/Kubernetes18-%E6%97%A5%E5%BF%97%E6%96%B9%E6%A1%88/" title="Kubernetes18-日志方案">Kubernetes18-日志方案</a><time datetime="2022-03-19T18:44:55.000Z" title="发表于 2022-03-20 02:44:55">2022-03-20</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/DRF/"><span class="card-category-list-name">DRF</span><span class="card-category-list-count">14</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/DevOps/"><span class="card-category-list-name">DevOps</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Django/"><span class="card-category-list-name">Django</span><span class="card-category-list-count">27</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Flask/"><span class="card-category-list-name">Flask</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Go/"><span class="card-category-list-name">Go</span><span class="card-category-list-count">47</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux/"><span class="card-category-list-name">Linux</span><span class="card-category-list-count">37</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Redis/"><span class="card-category-list-name">Redis</span><span class="card-category-list-count">6</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Ceph/" style="font-size: 1.14em; color: #999a9c">Ceph</a> <a href="/tags/DB/" style="font-size: 1.25em; color: #999fa7">DB</a> <a href="/tags/DRF/" style="font-size: 1.1em; color: #999">DRF</a> <a href="/tags/DevOps/" style="font-size: 1.1em; color: #999">DevOps</a> <a href="/tags/Django/" style="font-size: 1.39em; color: #99a5b5">Django</a> <a href="/tags/Go/" style="font-size: 1.46em; color: #99a8bc">Go</a> <a href="/tags/LDAP/" style="font-size: 1.1em; color: #999">LDAP</a> <a href="/tags/Load-Balance/" style="font-size: 1.1em; color: #999">Load Balance</a> <a href="/tags/Nginx/" style="font-size: 1.14em; color: #999a9c">Nginx</a> <a href="/tags/ORM/" style="font-size: 1.28em; color: #99a0aa">ORM</a> <a href="/tags/Tools/" style="font-size: 1.1em; color: #999">Tools</a> <a href="/tags/Ubuntu/" style="font-size: 1.14em; color: #999a9c">Ubuntu</a> <a href="/tags/Vue/" style="font-size: 1.1em; color: #999">Vue</a> <a href="/tags/ansible/" style="font-size: 1.1em; color: #999">ansible</a> <a href="/tags/book/" style="font-size: 1.1em; color: #999">book</a> <a href="/tags/ceph/" style="font-size: 1.1em; color: #999">ceph</a> <a href="/tags/cmdb/" style="font-size: 1.1em; color: #999">cmdb</a> <a href="/tags/consul/" style="font-size: 1.21em; color: #999da3">consul</a> <a href="/tags/deploy/" style="font-size: 1.1em; color: #999">deploy</a> <a href="/tags/kubernetes/" style="font-size: 1.1em; color: #999">kubernetes</a> <a href="/tags/note/" style="font-size: 1.5em; color: #99a9bf">note</a> <a href="/tags/other/" style="font-size: 1.1em; color: #999">other</a> <a href="/tags/prometheus/" style="font-size: 1.17em; color: #999ca0">prometheus</a> <a href="/tags/python/" style="font-size: 1.32em; color: #99a2ae">python</a> <a href="/tags/python-exercise/" style="font-size: 1.14em; color: #999a9c">python_exercise</a> <a href="/tags/review/" style="font-size: 1.1em; color: #999">review</a> <a href="/tags/shell/" style="font-size: 1.1em; color: #999">shell</a> <a href="/tags/software/" style="font-size: 1.1em; color: #999">software</a> <a href="/tags/vue/" style="font-size: 1.35em; color: #99a3b1">vue</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.1em; color: #999">前端</a> <a href="/tags/%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F/" style="font-size: 1.1em; color: #999">发布系统</a> <a href="/tags/%E5%AE%B9%E5%99%A8/" style="font-size: 1.43em; color: #99a6b8">容器</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.1em; color: #999">数据结构</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 1.1em; color: #999">设计模式</a> <a href="/tags/%E8%BF%90%E7%BB%B4%E7%B3%BB%E7%BB%9F/" style="font-size: 1.1em; color: #999">运维系统</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/04/"><span class="card-archive-list-date">四月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/03/"><span class="card-archive-list-date">三月 2022</span><span class="card-archive-list-count">28</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/02/"><span class="card-archive-list-date">二月 2022</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">一月 2022</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/12/"><span class="card-archive-list-date">十二月 2021</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/11/"><span class="card-archive-list-date">十一月 2021</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">十月 2021</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/09/"><span class="card-archive-list-date">九月 2021</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">232</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-04-02T03:48:48.274Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Waylon Yan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
