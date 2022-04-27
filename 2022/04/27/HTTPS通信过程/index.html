@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>HTTPS通信过程 | YouNeed</title><meta name="keywords" content="网络"><meta name="author" content="Waylon Yan"><meta name="copyright" content="Waylon Yan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HTTPS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTPS通信过程">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2022/04/27/HTTPS%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="HTTPS">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2022-04-27T11:35:29.000Z">
+<meta property="article:modified_time" content="2022-04-27T11:47:02.544Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://waylon.whatyouneed.site/2022/04/27/HTTPS%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HTTPS通信过程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-27 19:47:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">238</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">36</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YouNeed</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HTTPS通信过程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-04-27T11:35:29.000Z" title="Created 2022-04-27 19:35:29">2022-04-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-04-27T11:47:02.544Z" title="Updated 2022-04-27 19:47:02">2022-04-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HTTPS通信过程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>HTTPS</p>
+<a id="more"></a>
+
+<h1 id="HTTPS通信过程"><a href="#HTTPS通信过程" class="headerlink" title="HTTPS通信过程"></a>HTTPS通信过程</h1><p>HTTPS其实是有两部分组成：HTTP + SSL / TLS，也就是在HTTP上又加了一层处理加密信息的模块。服务端和客户端的信息传输都会通过TLS进行加密，所以传输的数据都是加密后的数据。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/728328-20190818203102447-188416934.png" alt="img"></p>
+<blockquote>
+<p>一个HTTPS请求实际上包含了两次HTTP传输，可以细分为8步。</p>
+</blockquote>
+<h2 id="1-客户端发起HTTPS请求"><a href="#1-客户端发起HTTPS请求" class="headerlink" title="1. 客户端发起HTTPS请求"></a>1. 客户端发起HTTPS请求</h2><p><strong>客户端向服务器发起HTTPS请求，连接到服务器的443端口,，请求携带了浏览器支持的加密算法和哈希算法。</strong></p>
+<h2 id="2-服务端的配置"><a href="#2-服务端的配置" class="headerlink" title="2. 服务端的配置"></a>2. 服务端的配置</h2><p><strong>服务器端有一个密钥对，即公钥和私钥，是用来进行非对称加密使用的，服务器端保存着私钥，不能将其泄露，公钥可以发送给任何人。</strong></p>
+<p><strong>服务器收到请求，选择浏览器支持的加密算法和哈希算法。</strong></p>
+<p>采用HTTPS协议的服务器必须要有一套数字证书，可以自己制作，也可以向组织申请。区别就是自己颁发的证书需要客户端验证通过，才可以继续访问，而使用受信任的公司申请的证书则不会弹出提示页面(startssl就是个不错的选择，有1年的免费服务)。这套证书其实就是一对公钥和私钥。公钥给别人加密使用，私钥给自己解密使用。如果对公钥和私钥不太理解，可以想象成一把钥匙和一个锁头，只是全世界只有你一个人有这把钥匙，你可以把锁头给别人，别人可以用这个锁把重要的东西锁起来，然后发给你，因为只有你一个人有这把钥匙，所以只有你才能看到被这把锁锁起来的东西。</p>
+<h2 id="3-传送证书"><a href="#3-传送证书" class="headerlink" title="3. 传送证书"></a>3. 传送证书</h2><p><strong>服务器将自己的<code>CA</code> 证书(公钥)发送给客户端。</strong></p>
+<p>这个证书其实就是公钥，只是包含了很多信息，如证书的颁发机构，过期时间等等。</p>
+<h2 id="4-客户端解析证书"><a href="#4-客户端解析证书" class="headerlink" title="4. 客户端解析证书"></a>4. 客户端解析证书</h2><p><strong>客户端收到服务器端的公钥之后，会对公钥进行检查，验证其合法性，如果发现发现公钥有问题，那么HTTPS传输就无法继续。如果公钥合格，那么客户端会生成一个随机值，这个随机值就是用于进行对称加密的密钥，我们将该密钥称之为client key，即客户端密钥，这样在概念上和服务器端的密钥容易进行区分。然后用服务器的公钥对客户端密钥进行非对称加密，这样客户端密钥就变成密文了，至此，HTTPS中的第一次HTTP请求结束。</strong></p>
+<p>这部分工作是有客户端的TLS来完成的，首先会验证公钥是否有效，比如颁发机构，过期时间等等，如果发现异常，则会弹出一个警告框，提示证书存在问题。如果证书没有问题，那么就生成一个随即值。然后用证书对该随机值进行加密。就好像上面说的，把随机值用锁头锁起来，这样除非有钥匙，不然看不到被锁住的内容。</p>
+<p>证书真伪进行校验</p>
+<p>（1）首先浏览器读取证书中的证书所有者、有效期等信息进行一一校验</p>
+<p>（2）浏览器开始查找操作系统中已内置的受信任的证书发布机构CA，与服务器发来的证书中的颁发者CA比对，用于校验证书是否为合法机构颁发</p>
+<p>（3）如果找不到，浏览器就会报错，说明服务器发来的证书是不可信任的。</p>
+<p>（4）如果找到，那么浏览器就会从操作系统中取出 颁发者CA 的公钥，然后对服务器发来的证书里面的签名进行解密得到服务端的公钥和证书的数字签名，数字签名经过CA公钥解密得到证书信息摘要。</p>
+<p>（5）浏览器使用相同的hash算法计算出服务器发来的证书的hash值，将这个计算的hash值与证书中签名做对比</p>
+<p>（6）对比结果一致，则证明服务器发来的证书合法，没有被冒充</p>
+<p>（7）此时浏览器就可以读取证书中的公钥，用于后续加密了</p>
+<h2 id="5-传送加密信息"><a href="#5-传送加密信息" class="headerlink" title="5. 传送加密信息"></a>5. 传送加密信息</h2><p><strong>客户端会发起HTTPS中的第二个HTTP请求，将加密之后的客户端密钥发送给服务器。</strong></p>
+<p>这部分传送的是用证书加密后的随机值R(私钥)，目的就是让服务端得到这个随机值R，以后客户端和服务端的通信就可以通过这个随机值R来进行加密解密了。</p>
+<h2 id="6-服务端解密信息"><a href="#6-服务端解密信息" class="headerlink" title="6. 服务端解密信息"></a>6. 服务端解密信息</h2><p><strong>服务器接收到客户端发来的密文之后，会用自己的私钥对其进行非对称解密，解密之后的明文就是客户端密钥(\</strong>随机数 <code>R</code>*<em>)，然后把内容用客户端密钥*</em>随机数 <code>R</code>**进行对称加密，这样数据就变成了密文。**</p>
+<p>服务端用私钥解密后，得到了客户端传过来的随机值(私钥)，然后把内容通过该值进行对称加密。所谓对称加密就是，将信息和私钥通过某种算法混合在一起，这样除非知道私钥，不然无法获取内容，而正好客户端和服务端都知道这个私钥，所以只要加密算法够彪悍，私钥够复杂，数据就够安全。</p>
+<h2 id="7-传输加密后的信息"><a href="#7-传输加密后的信息" class="headerlink" title="7. 传输加密后的信息"></a>7. 传输加密后的信息</h2><p>**然后服务器将加密后的密文发送给客户端。(服务器以随机数 <code>R</code> 为密钥把传输内容使用对称加密算法加密并传输给浏览器)**。</p>
+<p>这部分信息是服务端用私钥加密后的信息，可以在客户端被还原</p>
+<h2 id="8-客户端解密信息"><a href="#8-客户端解密信息" class="headerlink" title="8. 客户端解密信息"></a>8. 客户端解密信息</h2><p><strong>客户端收到服务器发送来的密文，用客户端密钥\</strong>(**随机数 <code>R</code>**)**对其进行对称解密，得到服务器发送的数据。这样HTTPS中的第二个HTTP请求结束，整个HTTPS传输完成。**</p>
+<p>客户端用之前生成的私钥解密服务段传过来的信息，于是获取了解密后的内容。整个过程第三方即使监听到了数据，也束手无策。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Waylon Yan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://waylon.whatyouneed.site/2022/04/27/HTTPS%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B/">https://waylon.whatyouneed.site/2022/04/27/HTTPS%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C/">网络</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/04/24/Kubernetes22-CICD%E7%9B%B8%E5%85%B3/"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Kubernetes22-CICD相关</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Waylon Yan</div><div class="author-info__description">tech life sharing</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">238</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">36</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Waylonwhynot" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:ywl1006@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">无止境</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTPS%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">HTTPS通信过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%91%E8%B5%B7HTTPS%E8%AF%B7%E6%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">1. 客户端发起HTTPS请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">2. 服务端的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BC%A0%E9%80%81%E8%AF%81%E4%B9%A6"><span class="toc-number">1.3.</span> <span class="toc-text">3. 传送证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%A7%A3%E6%9E%90%E8%AF%81%E4%B9%A6"><span class="toc-number">1.4.</span> <span class="toc-text">4. 客户端解析证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BC%A0%E9%80%81%E5%8A%A0%E5%AF%86%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.</span> <span class="toc-text">5. 传送加密信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%A7%A3%E5%AF%86%E4%BF%A1%E6%81%AF"><span class="toc-number">1.6.</span> <span class="toc-text">6. 服务端解密信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E4%BC%A0%E8%BE%93%E5%8A%A0%E5%AF%86%E5%90%8E%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="toc-number">1.7.</span> <span class="toc-text">7. 传输加密后的信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%A7%A3%E5%AF%86%E4%BF%A1%E6%81%AF"><span class="toc-number">1.8.</span> <span class="toc-text">8. 客户端解密信息</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/04/27/HTTPS%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B/" title="HTTPS通信过程"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTTPS通信过程"/></a><div class="content"><a class="title" href="/2022/04/27/HTTPS%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B/" title="HTTPS通信过程">HTTPS通信过程</a><time datetime="2022-04-27T11:35:29.000Z" title="Created 2022-04-27 19:35:29">2022-04-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/24/Kubernetes22-CICD%E7%9B%B8%E5%85%B3/" title="Kubernetes22-CICD相关"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kubernetes22-CICD相关"/></a><div class="content"><a class="title" href="/2022/04/24/Kubernetes22-CICD%E7%9B%B8%E5%85%B3/" title="Kubernetes22-CICD相关">Kubernetes22-CICD相关</a><time datetime="2022-04-23T17:21:38.000Z" title="Created 2022-04-24 01:21:38">2022-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/21/Kubernetes21-HPA%E6%8E%A7%E5%88%B6%E5%99%A8/" title="Kubernetes21-HPA控制器"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kubernetes21-HPA控制器"/></a><div class="content"><a class="title" href="/2022/04/21/Kubernetes21-HPA%E6%8E%A7%E5%88%B6%E5%99%A8/" title="Kubernetes21-HPA控制器">Kubernetes21-HPA控制器</a><time datetime="2022-04-20T18:00:53.000Z" title="Created 2022-04-21 02:00:53">2022-04-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/08/Kubernetes20-yaml%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/" title="Kubernetes20-yaml文件详解"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kubernetes20-yaml文件详解"/></a><div class="content"><a class="title" href="/2022/04/08/Kubernetes20-yaml%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/" title="Kubernetes20-yaml文件详解">Kubernetes20-yaml文件详解</a><time datetime="2022-04-07T19:12:27.000Z" title="Created 2022-04-08 03:12:27">2022-04-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/07/Kubernetes19-etcd%E7%9B%B8%E5%85%B3/" title="Kubernetes19-etcd相关"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kubernetes19-etcd相关"/></a><div class="content"><a class="title" href="/2022/04/07/Kubernetes19-etcd%E7%9B%B8%E5%85%B3/" title="Kubernetes19-etcd相关">Kubernetes19-etcd相关</a><time datetime="2022-04-06T19:46:51.000Z" title="Created 2022-04-07 03:46:51">2022-04-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Waylon Yan</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
