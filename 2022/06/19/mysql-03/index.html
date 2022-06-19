@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>mysql-03 | YouNeed</title><meta name="keywords" content="note"><meta name="author" content="Waylon Yan"><meta name="copyright" content="Waylon Yan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="锁的问题简单笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql-03">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2022/06/19/mysql-03/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="锁的问题简单笔记">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2022-06-19T14:43:39.000Z">
+<meta property="article:modified_time" content="2022-06-19T14:45:19.468Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="note">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://waylon.whatyouneed.site/2022/06/19/mysql-03/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'mysql-03',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-19 22:45:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">242</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">36</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YouNeed</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">mysql-03</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-06-19T14:43:39.000Z" title="Created 2022-06-19 22:43:39">2022-06-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-06-19T14:45:19.468Z" title="Updated 2022-06-19 22:45:19">2022-06-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/mysql/">mysql</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="mysql-03"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>锁的问题简单笔记</p>
+<a id="more"></a>
+
+<h1 id="使用乐观锁并发下单"><a href="#使用乐观锁并发下单" class="headerlink" title="使用乐观锁并发下单"></a>使用乐观锁并发下单</h1><blockquote>
+<p><strong>重要提示：</strong></p>
+</blockquote>
+<ul>
+<li>在多个用户同时发起对同一个商品的下单请求时，先查询商品库存，再修改商品库存，会出现资源竞争问题，导致库存的最终结果出现异常。</li>
+</ul>
+<h3 id="1-并发下单问题演示和解决方案"><a href="#1-并发下单问题演示和解决方案" class="headerlink" title="1. 并发下单问题演示和解决方案"></a>1. 并发下单问题演示和解决方案</h3><p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20220619224509922.png" alt="image-20220619224509922"></p>
+<blockquote>
+<p><strong>解决办法：</strong></p>
+</blockquote>
+<ul>
+<li><p>悲观锁</p>
+<ul>
+<li><p>当查询某条记录时，即让数据库为该记录加锁，锁住记录后别人无法操作，使用类似如下语法</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select stock <span class="keyword">from</span> tb_sku where id=<span class="number">1</span> <span class="keyword">for</span> update;</span><br><span class="line"></span><br><span class="line">SKU.objects.select_for_update().get(id=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>悲观锁类似于我们在多线程资源竞争时添加的互斥锁，容易出现死锁现象，采用不多。</p>
+</li>
+</ul>
+</li>
+<li><p>乐观锁</p>
+<ul>
+<li><p>乐观锁并不是真实存在的锁，而是在更新的时候判断此时的库存是否是之前查询出的库存，如果相同，表示没人修改，可以更新库存，否则表示别人抢过资源，不再执行库存更新。类似如下操作</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update tb_sku set stock=<span class="number">2</span> where id=<span class="number">1</span> <span class="keyword">and</span> stock=<span class="number">7</span>;</span><br><span class="line"></span><br><span class="line">SKU.objects.filter(id=<span class="number">1</span>, stock=<span class="number">7</span>).update(stock=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>任务队列</p>
+<ul>
+<li>将下单的逻辑放到任务队列中（如celery），将并行转为串行，所有人排队下单。比如开启只有一个进程的Celery，一个订单一个订单的处理。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-使用乐观锁并发下单"><a href="#2-使用乐观锁并发下单" class="headerlink" title="2. 使用乐观锁并发下单"></a>2. 使用乐观锁并发下单</h3><blockquote>
+<p>思考：</p>
+<ul>
+<li>下单成功的条件是什么？<ul>
+<li>首先库存大于购买量，然后更新库存和销量时原始库存没变。</li>
+</ul>
+</li>
+</ul>
+<p>结论：</p>
+<ul>
+<li>所以在用户库存满足的情况下，如果更新库存和销量时原始库存有变，那么继续给用户下单的机会。</li>
+</ul>
+</blockquote>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OrderCommitView</span>(<span class="params">LoginRequiredJSONMixin, View</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;订单提交&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;保存订单信息和订单商品信息&quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 获取当前保存订单时需要的信息</span></span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 显式的开启一个事务</span></span><br><span class="line">        <span class="keyword">with</span> transaction.atomic():</span><br><span class="line">            <span class="comment"># 创建事务保存点</span></span><br><span class="line">            save_id = transaction.savepoint()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 暴力回滚</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># 保存订单基本信息 OrderInfo（一）</span></span><br><span class="line">                order = OrderInfo.objects.create(</span><br><span class="line">                    order_id=order_id,</span><br><span class="line">                    user=user,</span><br><span class="line">                    address=address,</span><br><span class="line">                    total_count=<span class="number">0</span>,</span><br><span class="line">                    total_amount=Decimal(<span class="string">&#x27;0&#x27;</span>),</span><br><span class="line">                    freight=Decimal(<span class="string">&#x27;10.00&#x27;</span>),</span><br><span class="line">                    pay_method=pay_method,</span><br><span class="line">                    status=OrderInfo.ORDER_STATUS_ENUM[<span class="string">&#x27;UNPAID&#x27;</span>] <span class="keyword">if</span> pay_method == OrderInfo.PAY_METHODS_ENUM[<span class="string">&#x27;ALIPAY&#x27;</span>] <span class="keyword">else</span></span><br><span class="line">                    OrderInfo.ORDER_STATUS_ENUM[<span class="string">&#x27;UNSEND&#x27;</span>]</span><br><span class="line">                )</span><br><span class="line"></span><br><span class="line">                <span class="comment"># 从redis读取购物车中被勾选的商品信息</span></span><br><span class="line">                redis_conn = get_redis_connection(<span class="string">&#x27;carts&#x27;</span>)</span><br><span class="line">                redis_cart = redis_conn.hgetall(<span class="string">&#x27;carts_%s&#x27;</span> % user.id)</span><br><span class="line">                selected = redis_conn.smembers(<span class="string">&#x27;selected_%s&#x27;</span> % user.id)</span><br><span class="line">                carts = &#123;&#125;</span><br><span class="line">                <span class="keyword">for</span> sku_id <span class="keyword">in</span> selected:</span><br><span class="line">                    carts[int(sku_id)] = int(redis_cart[sku_id])</span><br><span class="line">                sku_ids = carts.keys()</span><br><span class="line"></span><br><span class="line">                <span class="comment"># 遍历购物车中被勾选的商品信息</span></span><br><span class="line">                <span class="keyword">for</span> sku_id <span class="keyword">in</span> sku_ids:</span><br><span class="line">                    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                        <span class="comment"># 查询SKU信息</span></span><br><span class="line">                        sku = SKU.objects.get(id=sku_id)</span><br><span class="line"></span><br><span class="line">                        <span class="comment"># 读取原始库存</span></span><br><span class="line">                        origin_stock = sku.stock</span><br><span class="line">                        origin_sales = sku.sales</span><br><span class="line"></span><br><span class="line">                        <span class="comment"># 判断SKU库存</span></span><br><span class="line">                        sku_count = carts[sku.id]</span><br><span class="line">                        <span class="keyword">if</span> sku_count &gt; origin_stock:</span><br><span class="line">                            <span class="comment"># 事务回滚</span></span><br><span class="line">                            transaction.savepoint_rollback(save_id)</span><br><span class="line">                            <span class="keyword">return</span> http.JsonResponse(&#123;<span class="string">&#x27;code&#x27;</span>: <span class="number">400</span>, <span class="string">&#x27;errmsg&#x27;</span>: <span class="string">&#x27;库存不足&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line">                        <span class="comment"># 模拟延迟</span></span><br><span class="line">                        <span class="comment"># import time</span></span><br><span class="line">                        <span class="comment"># time.sleep(5)</span></span><br><span class="line"></span><br><span class="line">                        <span class="comment"># SKU减少库存，增加销量</span></span><br><span class="line">                        <span class="comment"># sku.stock -= sku_count</span></span><br><span class="line">                        <span class="comment"># sku.sales += sku_count</span></span><br><span class="line">                        <span class="comment"># sku.save()</span></span><br><span class="line"></span><br><span class="line">                        <span class="comment"># 乐观锁更新库存和销量</span></span><br><span class="line">                        new_stock = origin_stock - sku_count</span><br><span class="line">                        new_sales = origin_sales + sku_count</span><br><span class="line">                        result = SKU.objects.filter(id=sku_id, stock=origin_stock).update(stock=new_stock, sales=new_sales)</span><br><span class="line">                        <span class="comment"># 如果下单失败，但是库存足够时，继续下单，直到下单成功或者库存不足为止</span></span><br><span class="line">                        <span class="keyword">if</span> result == <span class="number">0</span>:</span><br><span class="line">                            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">                        <span class="comment"># 保存订单商品信息 OrderGoods（多）</span></span><br><span class="line">                        OrderGoods.objects.create(</span><br><span class="line">                            order=order,</span><br><span class="line">                            sku=sku,</span><br><span class="line">                            count=sku_count,</span><br><span class="line">                            price=sku.price,</span><br><span class="line">                        )</span><br><span class="line"></span><br><span class="line">                        <span class="comment"># 保存商品订单中总价和总数量</span></span><br><span class="line">                        order.total_count += sku_count</span><br><span class="line">                        order.total_amount += (sku_count * sku.price)</span><br><span class="line"></span><br><span class="line">                        <span class="comment"># 下单成功或者失败就跳出循环</span></span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">                <span class="comment"># 添加邮费和保存订单信息</span></span><br><span class="line">                order.total_amount += order.freight</span><br><span class="line">                order.save()</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                logger.error(e)</span><br><span class="line">                <span class="comment"># 事务回滚</span></span><br><span class="line">                transaction.savepoint_rollback(save_id)</span><br><span class="line">                <span class="keyword">return</span> http.JsonResponse(&#123;<span class="string">&#x27;code&#x27;</span>: <span class="number">400</span>, <span class="string">&#x27;errmsg&#x27;</span>: <span class="string">&#x27;下单失败&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 保存订单数据成功，显式的提交一次事务</span></span><br><span class="line">        transaction.savepoint_commit(save_id)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 清除购物车中已结算的商品</span></span><br><span class="line">        pl = redis_conn.pipeline()</span><br><span class="line">        pl.hdel(<span class="string">&#x27;carts_%s&#x27;</span> % user.id, *selected)</span><br><span class="line">        pl.srem(<span class="string">&#x27;selected_%s&#x27;</span> % user.id, *selected)</span><br><span class="line">        pl.execute()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 响应提交订单结果</span></span><br><span class="line">        <span class="keyword">return</span> http.JsonResponse(&#123;<span class="string">&#x27;code&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;errmsg&#x27;</span>: <span class="string">&#x27;下单成功&#x27;</span>, <span class="string">&#x27;order_id&#x27;</span>: order.order_id&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-MySQL事务隔离级别"><a href="#3-MySQL事务隔离级别" class="headerlink" title="3. MySQL事务隔离级别"></a>3. MySQL事务隔离级别</h3><ul>
+<li>事务隔离级别指的是在处理同一个数据的多个事务中，一个事务修改数据后，其他事务何时能看到修改后的结果。</li>
+<li>MySQL数据库事务隔离级别主要有四种：<ul>
+<li><code>Serializable</code>：串行化，一个事务一个事务的执行。</li>
+<li><code>Repeatable read</code>：可重复读，无论其他事务是否修改并提交了数据，在这个事务中看到的数据值始终不受其他事务影响。</li>
+<li><code>Read committed</code>：读取已提交，其他事务提交了对数据的修改后，本事务就能读取到修改后的数据值。</li>
+<li><code>Read uncommitted</code>：读取未提交，其他事务只要修改了数据，即使未提交，本事务也能看到修改后的数据值。</li>
+<li>MySQL数据库默认使用可重复读（ Repeatable read）。</li>
+</ul>
+</li>
+<li>使用乐观锁的时候，如果一个事务修改了库存并提交了事务，那其他的事务应该可以读取到修改后的数据值，所以不能使用可重复读的隔离级别，应该修改为读取已提交（Read committed）。</li>
+<li>修改方式：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo vim &#x2F;etc&#x2F;mysql&#x2F;mysql.conf.d&#x2F;mysqld.cnf</span><br><span class="line"></span><br><span class="line">修改完成之后重启</span><br><span class="line">sudo service mysql restart</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20220619224438606.png" alt="image-20220619224438606"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20220619224438606.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Waylon Yan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://waylon.whatyouneed.site/2022/06/19/mysql-03/">https://waylon.whatyouneed.site/2022/06/19/mysql-03/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/note/">note</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/05/01/Promethues03/"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Promethues03</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2020/04/21/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-04/" title="并发编程-04"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-21</div><div class="title">并发编程-04</div></div></a></div><div><a href="/2022/01/01/MySQL-SQL%E5%AE%A1%E6%A0%B8%E5%B7%A5%E5%85%B7inception/" title="MySQL-SQL审核工具inception"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-01</div><div class="title">MySQL-SQL审核工具inception</div></div></a></div><div><a href="/2021/04/18/prometheus%E7%9B%B8%E5%85%B3/" title="prometheus相关"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-18</div><div class="title">prometheus相关</div></div></a></div><div><a href="/2020/11/20/py-xadmin/" title="py-xadmin"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-20</div><div class="title">py-xadmin</div></div></a></div><div><a href="/2019/08/09/py-%E5%9F%BA%E7%A1%8001/" title="py_基础01"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-08-09</div><div class="title">py_基础01</div></div></a></div><div><a href="/2019/10/31/py-%E5%9F%BA%E7%A1%8010/" title="py-基础10"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-10-31</div><div class="title">py-基础10</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Waylon Yan</div><div class="author-info__description">tech life sharing</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">242</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">36</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Waylonwhynot" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:ywl1006@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">无止境</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%B9%90%E8%A7%82%E9%94%81%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%8D%95"><span class="toc-number">1.</span> <span class="toc-text">使用乐观锁并发下单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%8D%95%E9%97%AE%E9%A2%98%E6%BC%94%E7%A4%BA%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.0.1.</span> <span class="toc-text">1. 并发下单问题演示和解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E4%B9%90%E8%A7%82%E9%94%81%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%8D%95"><span class="toc-number">1.0.2.</span> <span class="toc-text">2. 使用乐观锁并发下单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-MySQL%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. MySQL事务隔离级别</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/06/19/mysql-03/" title="mysql-03"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mysql-03"/></a><div class="content"><a class="title" href="/2022/06/19/mysql-03/" title="mysql-03">mysql-03</a><time datetime="2022-06-19T14:43:39.000Z" title="Created 2022-06-19 22:43:39">2022-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/01/Promethues03/" title="Promethues03"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Promethues03"/></a><div class="content"><a class="title" href="/2022/05/01/Promethues03/" title="Promethues03">Promethues03</a><time datetime="2022-05-01T12:09:29.000Z" title="Created 2022-05-01 20:09:29">2022-05-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/30/Promethues02/" title="Promethues02"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Promethues02"/></a><div class="content"><a class="title" href="/2022/04/30/Promethues02/" title="Promethues02">Promethues02</a><time datetime="2022-04-30T12:38:09.000Z" title="Created 2022-04-30 20:38:09">2022-04-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/29/Promethues01/" title="Promethues01"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Promethues01"/></a><div class="content"><a class="title" href="/2022/04/29/Promethues01/" title="Promethues01">Promethues01</a><time datetime="2022-04-29T06:46:19.000Z" title="Created 2022-04-29 14:46:19">2022-04-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/27/HTTPS%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B/" title="HTTPS通信过程"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTTPS通信过程"/></a><div class="content"><a class="title" href="/2022/04/27/HTTPS%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B/" title="HTTPS通信过程">HTTPS通信过程</a><time datetime="2022-04-27T11:35:29.000Z" title="Created 2022-04-27 19:35:29">2022-04-27</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Waylon Yan</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
