@@ -1,0 +1,432 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Kubernetes23-helm基础 | YouNeed</title><meta name="keywords" content="容器"><meta name="author" content="Waylon Yan"><meta name="copyright" content="Waylon Yan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Helm基础、安装、使用、常用命令、charts、自定义charts">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes23-helm基础">
+<meta property="og:url" content="https://waylon.whatyouneed.site/2022/11/28/Kubernetes23-helm%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Helm基础、安装、使用、常用命令、charts、自定义charts">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2022-11-27T17:14:15.000Z">
+<meta property="article:modified_time" content="2022-11-27T18:27:45.747Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="容器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://waylon.whatyouneed.site/2022/11/28/Kubernetes23-helm%E5%9F%BA%E7%A1%80/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Kubernetes23-helm基础',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-28 02:27:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">249</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">37</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">23</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YouNeed</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Kubernetes23-helm基础</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-11-27T17:14:15.000Z" title="Created 2022-11-28 01:14:15">2022-11-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-11-27T18:27:45.747Z" title="Updated 2022-11-28 02:27:45">2022-11-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Kubernetes23-helm基础"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Helm基础、安装、使用、常用命令、charts、自定义charts</p>
+<a id="more"></a>
+
+<h1 id="helm基础"><a href="#helm基础" class="headerlink" title="helm基础"></a><strong>helm基础</strong></h1><h2 id="一、helm功能"><a href="#一、helm功能" class="headerlink" title="一、helm功能"></a>一、helm功能</h2><ol>
+<li><p>Helm就是Kubernetes的应用程序包管理器，类似于Linux系统之上的yum或apt-get等，可用于实现帮助用户查找、分享及使用Kubernetes应用程序。它的核心打包功能组件称为chart，可以帮助用户创建、安装及升级复杂应用。Helm将Kubernetes的资源（如Deployments、Services或ConfigMap等）打包到一个Charts中，制作并测试完成的各个Charts将保存到Charts仓库进行存储和分发。另外，Helm实现了可配置的发布，它支持应用配置的版本管理，简化了Kubernetes部署应用的版本控制、打包、发布、删除和更新等操作。</p>
+</li>
+<li><p>Helm是一个基于Kubernetes的程序包（资源包）管理器，它将一个应用的相关资源组织成为Charts，并通过Charts管理程序包，其使用优势可简单总结为如下几个方面：</p>
+<ul>
+<li><p>管理复杂应用：Charts能够描述哪怕是最复杂的程序结构，其提供了可重复使用的应用安装的定义。</p>
+</li>
+<li><p>易于升级：使用就地升级和自定义钩子来解决更新的难题。</p>
+</li>
+<li><p>简单分享：Charts易于通过公共或私有服务完成版本化、分享及主机构建。</p>
+</li>
+<li><p>回滚：可使用“helm rollback”命令轻松实现快速回滚。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="二、helm核心术语"><a href="#二、helm核心术语" class="headerlink" title="二、helm核心术语"></a>二、helm核心术语</h2><ol>
+<li><p>Helm将Kubernetes应用的相关配置组织为Charts，并通过它完成应用的常规管理操作。使用Charts管理应用的流程包括：</p>
+<ul>
+<li><p>从0开始创建Charts</p>
+</li>
+<li><p>将Charts及其相关的文件打包为归档格式</p>
+</li>
+<li><p>将Charts存储于仓库（repository）中并与之交互</p>
+</li>
+<li><p>在Kubernetes集群中安装或卸载Charts以及管理经Helm安装的应用的版本发行周期</p>
+</li>
+</ul>
+</li>
+<li><p>对Helm来说，它具有以下几个关键概念。</p>
+<ul>
+<li><p>Charts：即一个Helm程序包，它包含了运行一个Kubernetes应用所需要的镜像、依赖关系和资源定义等，必要时还会包含Service的定义；它类似于yum的rpm文件。</p>
+</li>
+<li><p>Repository：Charts仓库，用于集中存储和分发Charts，类似于Python的PyPI。</p>
+</li>
+<li><p>Config：应用程序实例化安装运行时使用的配置信息。</p>
+</li>
+<li><p>Release：应用程序实例化配置后运行于Kubernetes集群中的一个Charts实例；从V3开始，Release<br>不再是全局资源，而是存储在各自命名空间内。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="三、helm架构"><a href="#三、helm架构" class="headerlink" title="三、helm架构"></a>三、helm架构</h2><p>Helm主要由Helm客户端、Tiller服务器和Charts仓库（repository）组成</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2308212/1604213320583-2a0039a5-e9c5-480f-a9c7-b9cdfb451318.png" alt="img"></p>
+<ol>
+<li><p>Helm客户端是命令行客户端工具，采用Go语言编写，基于gRPC协议与Tiller<br>server交互。它主要完成如下任务。</p>
+<ul>
+<li><p>本地Charts开发。</p>
+</li>
+<li><p>管理Charts仓库。</p>
+</li>
+<li><p>与Tiller服务器交互：发送Charts以安装、查询Release的相关信息以及升级或卸载已有的Release。</p>
+</li>
+</ul>
+</li>
+<li><p>Tiller server</p>
+<p>（V3已将Tiller的删除，通过ApiServer与k8s交互）是托管运行于Kubernetes集群之中的容器化服务应用，它接收来自Helm客户端的请求，并在必要时与Kubernetes API Server进行交互。它主要完成以下任务。</p>
+<ul>
+<li><p>监听来自于Helm客户端的请求。</p>
+</li>
+<li><p>合并Charts和配置以构建一个Release。</p>
+</li>
+<li><p>向Kubernetes集群安装Charts并对相应的Release进行跟踪。</p>
+</li>
+<li><p>升级和卸载Charts。</p>
+</li>
+</ul>
+</li>
+<li><p>通常，用户于Helm客户端本地遵循其格式编写Charts文件，而后即可部署于Kuber-netes集群之上运行为一个特定的Release。仅在有分发需求时，才应该将同一应用的Charts文件打包成归档压缩格式提交到特定的Charts仓库。</p>
+</li>
+</ol>
+<h2 id="四、Helm工作原理"><a href="#四、Helm工作原理" class="headerlink" title="四、Helm工作原理"></a>四、Helm工作原理</h2><p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604213358275-42b64ad0-71cd-40c7-bac2-210d95ac7773.jpeg" alt="img"></p>
+<ol>
+<li><p>Chart Install 过程：</p>
+<ul>
+<li><p>Helm从指定的目录或者tgz文件中解析出Chart结构信息</p>
+</li>
+<li><p>Helm将指定的Chart结构和Values信息通过gRPC传递给Tiller</p>
+</li>
+<li><p>Tiller根据Chart和Values生成一个Release</p>
+</li>
+<li><p>Tiller将Release发送给Kubernetes用于生成Release</p>
+</li>
+</ul>
+</li>
+<li><p>Chart Update过程：</p>
+<ul>
+<li><p>Helm从指定的目录或者tgz文件中解析出Chart结构信息</p>
+</li>
+<li><p>Helm将要更新的Release的名称和Chart结构，Values信息传递给Tiller</p>
+</li>
+<li><p>Tiller生成Release并更新指定名称的Release的History</p>
+</li>
+<li><p>Tiller将Release发送给Kubernetes用于更新Release</p>
+</li>
+</ul>
+</li>
+<li><p>Chart Rollback过程：</p>
+<ul>
+<li><p>Helm将要回滚的Release的名称传递给Tiller</p>
+</li>
+<li><p>Tiller根据Release的名称查找History</p>
+</li>
+<li><p>Tiller从History中获取上一个Release</p>
+</li>
+<li><p>Tiller将上一个Release发送给Kubernetes用于替换当前Release</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="helm安装"><a href="#helm安装" class="headerlink" title="helm安装"></a><strong>helm安装</strong></h1><h2 id="一、安装Helm"><a href="#一、安装Helm" class="headerlink" title="一、安装Helm"></a>一、安装Helm</h2><ul>
+<li>官方参考文档：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://helm.sh/docs/intro/quickstart/">https://helm.sh/docs/intro/quickstart/</a></li>
+<li>Helm的安装方式有两种：预编译的二进制程序和源码编译安装。</li>
+<li>Helm项目托管在GitHub之上，项目地址为<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/helm/helm/releases%E3%80%82">https://github.com/helm/helm/releases。</a></li>
+<li>Helm的运行依赖于本地安装并配置完成的kubectl方能与运行于Kubernetes集群之上的Tiller服务器进行通信，因此，运行Helm的节点也应该是可以正常使用kubectl命令的主机，或者至少是有着可用kubeconfig配置文件的主机。</li>
+</ul>
+<ol>
+<li>下载合用版本的压缩包并将其展开。<br><code>wget https://get.helm.sh/helm-v3.0.2-linux-amd64.tar.gz</code><br><code>tar -xvf helm-v3.0.2-linux-amd64.tar.gz</code> </li>
+<li>将其二进制程序文件复制或移动到系统PATH环境变量指向的目录中<br><code>cp linux-amd64/helm /usr/local/bin/</code> </li>
+<li>以添加自动完成的代码：<br><code>source &lt;(helm completion bash)</code> </li>
+<li>Helm客户端安装完成后，进行验证。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604213646506-586de468-4a93-4848-9db8-d1117bc3a1c6.png" alt="img"></p>
+<h2 id="二、添加Helm的官方仓库"><a href="#二、添加Helm的官方仓库" class="headerlink" title="二、添加Helm的官方仓库"></a>二、添加Helm的官方仓库</h2><ol>
+<li>添加官方Charts仓库<br><code>helm repo add stable https://kubernetes-charts.storage.googleapis.com/</code> </li>
+<li>更新仓库信息<br><code>helm repo update</code> </li>
+<li>查看官方Charts仓库<br><code>helm search repo stable</code> </li>
+</ol>
+<h1 id="helm常用命令"><a href="#helm常用命令" class="headerlink" title="helm常用命令"></a><strong>helm常用命令</strong></h1><h2 id="一、helm管理命令"><a href="#一、helm管理命令" class="headerlink" title="一、helm管理命令"></a>一、helm管理命令</h2><ol>
+<li><p>查看版本 #helm version </p>
+</li>
+<li><p>增加repo #helm repo add stable <a target="_blank" rel="noopener external nofollow noreferrer" href="https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts">https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts</a> #helm repo add –username admin –password password myharbor <a target="_blank" rel="noopener external nofollow noreferrer" href="https://harbor.qing.cn/chartrepo/charts">https://harbor.qing.cn/chartrepo/charts</a> </p>
+</li>
+<li><p>更新repo仓库资源 #helm repo update </p>
+</li>
+</ol>
+<h2 id="二、charts管理"><a href="#二、charts管理" class="headerlink" title="二、charts管理"></a>二、charts管理</h2><ol>
+<li><p>查看当前安装的charts #helm list </p>
+</li>
+<li><p>将helm search hub显示所有可用图表。 #helm search hub redis </p>
+</li>
+<li><p>使用helm search repo，您可以在已添加的存储库中找到charts的名称： #helm search repo redis </p>
+</li>
+<li><p>打印出指定的Charts的详细信息 #helm show chart stable/redis </p>
+</li>
+<li><p>下载charts到本地 #helm fetch redis </p>
+</li>
+<li><p>安装charts #helm install redis stable/redis </p>
+</li>
+<li><p>查看charts状态 #helm status redis </p>
+</li>
+<li><p>删除charts #helm uninstall redis </p>
+</li>
+</ol>
+<h2 id="三、自定义charts"><a href="#三、自定义charts" class="headerlink" title="三、自定义charts"></a>三、自定义charts</h2><ol>
+<li>创建charts <code>helm create helm_charts </code></li>
+<li>检查chart语法正确性 <code># helm lint myapp</code></li>
+<li>打包自定义的chart <code># helm package myapp</code></li>
+<li>查看生成的yaml文件 <code>#helm template myapp-1.tgz</code> </li>
+<li>使用默认chart部署到<code>k8s helm install myapp myapp-1.tgz</code></li>
+<li>使用包去做release部署<br><code>helm install --name example2 helm-chart-0.1.0.tgz --set  service.type=NodePort </code></li>
+</ol>
+<h2 id="四、更新与回滚"><a href="#四、更新与回滚" class="headerlink" title="四、更新与回滚"></a>四、更新与回滚</h2><ol>
+<li><p>查看当前chart信息 #helm list </p>
+</li>
+<li><p>更新images #helm upgrade myapp myapp-2.tgz </p>
+</li>
+<li><p>查看版本信息 #helm history myapp </p>
+</li>
+<li><p>回滚指定版本 #helm rollback myapp 1 </p>
+</li>
+</ol>
+<h1 id="Helm-Charts"><a href="#Helm-Charts" class="headerlink" title="Helm Charts"></a><strong>Helm Charts</strong></h1><h1 id="一、Charts文件组织结构"><a href="#一、Charts文件组织结构" class="headerlink" title="一、Charts文件组织结构"></a>一、Charts文件组织结构</h1><blockquote>
+<p>一个Charts就是按特定格式组织的目录结构，目录名即为Charts名，目录名称本身不包含版本信息。目录结构中除了charts/和templates/是目录之外，其他的都是文件。它们的基本功用如下。</p>
+</blockquote>
+<ol>
+<li>Chart.yaml：当前Charts的描述信息，yaml格式的文件。</li>
+<li>LICENSE：当前Charts的许可证信息，纯文本文件；此为可选文件。</li>
+<li>README.md：易读格式的README文件；可选。</li>
+<li>requirements.yaml：当前Charts的依赖关系描述文件；可选。</li>
+<li>values.yaml：当前Charts用到的默认配置值。</li>
+<li>charts/：目录，存放当前Charts依赖到的所有Charts文件。</li>
+<li>templates/：目录，存放当前Charts用到的模板文件，可应用于Charts生成有效的Kubernetes清单文件。</li>
+<li>templates/NOTES.txt：纯文本文件，Templates简单使用注解</li>
+</ol>
+<ul>
+<li>尽管Charts和Templates目录均为可选，但至少应该存在一个Charts依赖文件或一个模板文件。另外，Helm保留使用charts/和templates/目录以及上面列出的文件名称，其他文件都将被忽略。</li>
+</ul>
+<h1 id="二、Chart-yaml文件组织格式"><a href="#二、Chart-yaml文件组织格式" class="headerlink" title="二、Chart.yaml文件组织格式"></a>二、Chart.yaml文件组织格式</h1><blockquote>
+<p>Chart.yaml用于提供Charts相关的各种元数据，如名称、版本、关键词、维护者信息、使用的模板引擎等，它是一个Charts必备的核心文件，主要包含以下字段。</p>
+</blockquote>
+<ol>
+<li>name：当前Charts的名称，必选字段。</li>
+<li>version：遵循语义化版本规范第2版的版本号，必选字段。</li>
+<li>description：当前项目的单语句描述信息，可选字段。</li>
+<li>keywords：当前项目的关键词列表，可选字段。</li>
+<li>home：当前项目的主页URL，可选字段。</li>
+<li>sources：当前项目用到的源码的来源URL列表，可选字段。</li>
+<li>maintainers：项目维护者信息，主要嵌套name、email和URL几个属性组成；可选字段。</li>
+<li>engine：模板引擎的名称，默认为gotpl，即go模板。</li>
+<li>icon:URL，指向当前项目的图标，SVG或PNG格式的图片；可选字段。</li>
+<li>appVersion：本项目用到的应用程序的版本号，可选字段，且不必为语义化版本。</li>
+<li>tillerVersion：当前Charts依赖的Tiller版本号，可以是语义化版本号的范围，如“&gt;2.4.0”；可选字段</li>
+</ol>
+<h1 id="三、Charts中的依赖关系"><a href="#三、Charts中的依赖关系" class="headerlink" title="三、Charts中的依赖关系"></a>三、Charts中的依赖关系</h1><blockquote>
+<p>Helm中的一个Charts可能会依赖不止一个其他的Charts，这种依赖关系可经requirements.yaml进行动态链接，也可直接存储于charts/目录中进行手动管理。</p>
+</blockquote>
+<ol>
+<li>requirements.yaml文件<br>requirements.yaml文件本质上只是一个简单的依赖关系列表，可用字段具体如下。</li>
+<li>name：被依赖的Charts的名称。</li>
+<li>version：被依赖的Charts的版本。</li>
+<li>repository：被依赖的Charts所属的仓库及其URL；如果是非官方的仓库，则需要先用helm<br>repo add命令将其添加进本地可用仓库。</li>
+<li>alias：为被依赖的Charts创建一个别名，从而让当前Charts可以将所依赖的Charts对应到新名称，即别名；可选字段。</li>
+<li>tags：默认情况下所有的Charts都会被装载，若给定了tags，则仅装载那些匹配到的Charts。</li>
+<li>condition：类似于tags字段，但需要通过自定义的条件来指明要装载的charts。</li>
+<li>import-values：导入子Charts中的的值；被导入的值需要在子charts中导出。</li>
+<li>Charts目录</li>
+</ol>
+<ul>
+<li>若需要对依赖关系进行更多的控制，则所有被依赖到的Charts都能以手工方式直接复制到Charts目录中。一个被依赖到的Charts既可以是归档格式，也可以是展开的目录格式，不过，其名称不能以下划线（_）或点号（.）开头，此类文件会被Charts装载器自动忽略。<br>例如，Wordpress Charts依赖关系在其Charts目录中的反映类似如下所示：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604213846878-bc9f0d02-84f6-42e6-8f71-7ddb2cd2c7a7.png" alt="未命名图片.png"></p>
+<ul>
+<li>Helm<br>Charts模板（template）遵循Go模板语言格式，并支持50种以上的来自Spring库的模板函数附件，以及为数不少的其他专用函数。所有的模板文件都存储于Templates目录中，在当前Charts被Helm引用时，此目录中的所有模板文件都会传递给模板引擎进行处理。模板文件中用到的值（value）有如下两种提供方式。□通过Charts的values.yaml文件提供，通常用于提供默认值。□在运行“helm install”命令时传递包含所需要的自定义值的YAML文件；此处传递的值会覆盖默认值。</li>
+</ul>
+<h1 id="自定义Charts"><a href="#自定义Charts" class="headerlink" title="自定义Charts"></a><strong>自定义Charts</strong></h1><h1 id="一、创建Chart"><a href="#一、创建Chart" class="headerlink" title="一、创建Chart"></a>一、创建Chart</h1><ol>
+<li>执行命令<code>helm create myapp</code>，会创建一个myapp目录</li>
+<li>查看myapp目录结构</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604213908507-37c1f24c-d722-4b8d-89e9-726b4048e21e.png" alt="未命名图片.png"></p>
+<h1 id="二、修改配置文件"><a href="#二、修改配置文件" class="headerlink" title="二、修改配置文件"></a>二、修改配置文件</h1><ol>
+<li>编辑自描述文件 Chart.yaml , 修改version和appVersion信息</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604213925534-5c591ba4-21ec-4f43-be6c-076a2a0fceba.png" alt="未命名图片.png"></p>
+<ol start="2">
+<li>编辑values.yaml配置文件</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604213941106-5641c73c-ca21-4764-8220-cdd31be40e09.png" alt="未命名图片.png"></p>
+<h1 id="三、打包安装chart"><a href="#三、打包安装chart" class="headerlink" title="三、打包安装chart"></a>三、打包安装chart</h1><ol>
+<li><p>检查chart语法正确性<br><code># helm lint myapp</code> </p>
+</li>
+<li><p>打包自定义的chart<br><code># helm package myapp</code></p>
+</li>
+<li><p>安装chart<br><code># helm install myapp myapp-1.tgz</code> </p>
+</li>
+<li><p>验证</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604213964472-76d4300b-58fb-4d79-bf0d-b314b58366c5.png" alt="未命名图片.png"></p>
+</li>
+</ol>
+<h1 id="四、更新"><a href="#四、更新" class="headerlink" title="四、更新"></a>四、更新</h1><ol>
+<li>编辑自描述文件 Chart.yaml , 修改version和appVersion信息</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604213997516-bc867f00-45fc-451d-a556-c59a0ac0b832.png" alt="未命名图片.png"></p>
+<ol start="2">
+<li><p>重新打包charts</p>
+<ul>
+<li><p>检查chart语法正确性<br><code># helm lint myapp</code> </p>
+</li>
+<li><p>打包自定义的chart<br><code># helm package myapp</code> </p>
+</li>
+</ul>
+</li>
+<li><p>更新chart<br><code># helm upgrade myapp myapp-2.tgz</code> </p>
+</li>
+<li><p>验证</p>
+</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604214043045-708c97cc-38c9-4a0e-9fac-fb39ac394e30.png" alt="未命名图片.png"></p>
+<h1 id="五、回滚"><a href="#五、回滚" class="headerlink" title="五、回滚"></a>五、回滚</h1><ol>
+<li>查看当前版本信息</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604214065831-f67387cf-66a6-45e5-a53b-d256e15874b2.png" alt="img"></p>
+<ol start="2">
+<li>查看历史版本信息</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604214087205-b7454028-6ff3-4849-81a4-3c889d4e81d6.png" alt="img"></p>
+<ol start="3">
+<li>回滚到指定版本</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604214103535-470fd467-4396-4558-ac4a-89553272da98.png" alt="img"></p>
+<ol start="4">
+<li>验证</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/1604214120007-8cdd1acb-02dc-4d99-8426-4af3db6596d7.png" alt="img"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Waylon Yan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://waylon.whatyouneed.site/2022/11/28/Kubernetes23-helm%E5%9F%BA%E7%A1%80/">https://waylon.whatyouneed.site/2022/11/28/Kubernetes23-helm%E5%9F%BA%E7%A1%80/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AE%B9%E5%99%A8/">容器</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/11/23/Service-Mesh02/"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Service-Mesh02</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/03/20/Kubernetes18-%E6%97%A5%E5%BF%97%E6%96%B9%E6%A1%88/" title="Kubernetes18-日志方案"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">Kubernetes18-日志方案</div></div></a></div><div><a href="/2022/03/11/Docker01-%E8%83%8C%E6%99%AF/" title="Docker01-背景"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-11</div><div class="title">Docker01-背景</div></div></a></div><div><a href="/2022/03/13/Docker04-%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86Docker%E5%AE%B9%E5%99%A8/" title="Docker04-重新认识Docker容器"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-13</div><div class="title">Docker04-重新认识Docker容器</div></div></a></div><div><a href="/2022/03/20/Kubernetes-%E6%96%B9%E6%A1%88%E6%96%B9%E6%B3%95%E5%85%B6%E4%BB%96/" title="Kubernetes-方案方法其他"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">Kubernetes-方案方法其他</div></div></a></div><div><a href="/2022/03/13/Kubernetes01-Kubernetes%E6%9C%AC%E8%B4%A8/" title="Kubernetes01-Kubernetes本质"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-13</div><div class="title">Kubernetes01-Kubernetes本质</div></div></a></div><div><a href="/2022/03/16/Kubernetes05-StatefulSet/" title="Kubernetes05-StatefulSet"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-16</div><div class="title">Kubernetes05-StatefulSet</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Waylon Yan</div><div class="author-info__description">tech life sharing</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">249</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">37</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">23</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Waylonwhynot" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:ywl1006@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">无止境</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#helm%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">helm基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81helm%E5%8A%9F%E8%83%BD"><span class="toc-number">1.1.</span> <span class="toc-text">一、helm功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81helm%E6%A0%B8%E5%BF%83%E6%9C%AF%E8%AF%AD"><span class="toc-number">1.2.</span> <span class="toc-text">二、helm核心术语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81helm%E6%9E%B6%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text">三、helm架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Helm%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">四、Helm工作原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#helm%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">helm安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85Helm"><span class="toc-number">2.1.</span> <span class="toc-text">一、安装Helm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B7%BB%E5%8A%A0Helm%E7%9A%84%E5%AE%98%E6%96%B9%E4%BB%93%E5%BA%93"><span class="toc-number">2.2.</span> <span class="toc-text">二、添加Helm的官方仓库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#helm%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">helm常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81helm%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="toc-number">3.1.</span> <span class="toc-text">一、helm管理命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81charts%E7%AE%A1%E7%90%86"><span class="toc-number">3.2.</span> <span class="toc-text">二、charts管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89charts"><span class="toc-number">3.3.</span> <span class="toc-text">三、自定义charts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9B%B4%E6%96%B0%E4%B8%8E%E5%9B%9E%E6%BB%9A"><span class="toc-number">3.4.</span> <span class="toc-text">四、更新与回滚</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Helm-Charts"><span class="toc-number">4.</span> <span class="toc-text">Helm Charts</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81Charts%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84"><span class="toc-number">5.</span> <span class="toc-text">一、Charts文件组织结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Chart-yaml%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%E6%A0%BC%E5%BC%8F"><span class="toc-number">6.</span> <span class="toc-text">二、Chart.yaml文件组织格式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81Charts%E4%B8%AD%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB"><span class="toc-number">7.</span> <span class="toc-text">三、Charts中的依赖关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Charts"><span class="toc-number">8.</span> <span class="toc-text">自定义Charts</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%88%9B%E5%BB%BAChart"><span class="toc-number">9.</span> <span class="toc-text">一、创建Chart</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">10.</span> <span class="toc-text">二、修改配置文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%89%93%E5%8C%85%E5%AE%89%E8%A3%85chart"><span class="toc-number">11.</span> <span class="toc-text">三、打包安装chart</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9B%B4%E6%96%B0"><span class="toc-number">12.</span> <span class="toc-text">四、更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%9B%9E%E6%BB%9A"><span class="toc-number">13.</span> <span class="toc-text">五、回滚</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/11/28/Kubernetes23-helm%E5%9F%BA%E7%A1%80/" title="Kubernetes23-helm基础"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kubernetes23-helm基础"/></a><div class="content"><a class="title" href="/2022/11/28/Kubernetes23-helm%E5%9F%BA%E7%A1%80/" title="Kubernetes23-helm基础">Kubernetes23-helm基础</a><time datetime="2022-11-27T17:14:15.000Z" title="Created 2022-11-28 01:14:15">2022-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/23/Service-Mesh02/" title="Service-Mesh02"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Service-Mesh02"/></a><div class="content"><a class="title" href="/2022/11/23/Service-Mesh02/" title="Service-Mesh02">Service-Mesh02</a><time datetime="2022-11-23T15:55:24.000Z" title="Created 2022-11-23 23:55:24">2022-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/06/Service-Mesh01/" title="Service-Mesh01"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Service-Mesh01"/></a><div class="content"><a class="title" href="/2022/11/06/Service-Mesh01/" title="Service-Mesh01">Service-Mesh01</a><time datetime="2022-11-06T15:03:07.000Z" title="Created 2022-11-06 23:03:07">2022-11-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/27/Linux-Puppet-03/" title="Linux-Puppet-03"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux-Puppet-03"/></a><div class="content"><a class="title" href="/2022/08/27/Linux-Puppet-03/" title="Linux-Puppet-03">Linux-Puppet-03</a><time datetime="2022-08-27T15:39:57.000Z" title="Created 2022-08-27 23:39:57">2022-08-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/26/Linux-Puppet-02/" title="Linux-Puppet-02"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux-Puppet-02"/></a><div class="content"><a class="title" href="/2022/08/26/Linux-Puppet-02/" title="Linux-Puppet-02">Linux-Puppet-02</a><time datetime="2022-08-25T16:00:37.000Z" title="Created 2022-08-26 00:00:37">2022-08-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Waylon Yan</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
