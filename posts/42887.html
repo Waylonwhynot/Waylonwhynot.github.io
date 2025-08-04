@@ -1,0 +1,318 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Linux-cephadm部署ceph集群 | YouNeed</title><meta name="keywords" content="ceph"><meta name="author" content="Waylon Yan"><meta name="copyright" content="Waylon Yan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="cephadm部署ceph集群">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux-cephadm部署ceph集群">
+<meta property="og:url" content="http://yoursite.com/posts/42887.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="cephadm部署ceph集群">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2022-03-06T06:04:04.000Z">
+<meta property="article:modified_time" content="2025-08-04T15:41:26.903Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="ceph">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/posts/42887"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux-cephadm部署ceph集群',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-08-04 23:41:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YouNeed</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux-cephadm部署ceph集群</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-03-06T06:04:04.000Z" title="Created 2022-03-06 14:04:04">2022-03-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-08-04T15:41:26.903Z" title="Updated 2025-08-04 23:41:26">2025-08-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Linux-cephadm部署ceph集群"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>cephadm部署ceph集群</p>
+<a id="more"></a>
+
+<p><strong>基本介绍</strong></p>
+<p>Ceph是一款开源的分布式存储，能够提供三种通用存储功能：</p>
+<ul>
+<li>块存储</li>
+<li>对象存储</li>
+<li>文件存储</li>
+</ul>
+<p><strong>基本环境准备</strong></p>
+<p>3台Rockylinux 8.5 虚拟机，配置如下：</p>
+<ul>
+<li>2c4g </li>
+<li>20g *3 硬盘（系统盘+2数据盘）</li>
+<li>1G NIC * 2 </li>
+</ul>
+<p>在这三台机器上都配置了2块千兆网卡，分别用来作为<strong>对外通信网络</strong>和<strong>集群内部通信网络</strong>。对外通信网络网卡ip和集群内部通信网络网卡ip分别是：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">192.168.21.170 ceph01.myhuihui.com ceph01</span><br><span class="line">192.168.100.170 ceph01.myhuihui.com ceph01</span><br><span class="line">192.168.21.171 ceph02.myhuihui.com ceph02</span><br><span class="line">192.168.100.171 ceph02.myhuihui.com ceph02</span><br><span class="line">192.168.21.172 ceph03.myhuihui.com ceph03</span><br><span class="line">192.168.100.172 ceph03.myhuihui.com ceph03</span><br></pre></td></tr></table></figure>
+
+<p>将上面信息写入三台机器的/etc/hosts文件里。</p>
+<p><strong>防火墙和免密配置</strong></p>
+<p>依次关闭三台机器的防火墙和selinux配置，配置第一台机器192.168.21.170到另外三台机器的免密配置。</p>
+<p><strong>yum源配置</strong></p>
+<p>三台机器都安装好Rockylinux 8.5，然后将默认的yum源都改为国内阿里云的yum源，替换好的各个源地址是：</p>
+<p>Rocky-AppStream.repo</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[appstream]</span><br><span class="line">name=Rocky Linux $releasever - AppStream</span><br><span class="line"><span class="meta">#</span><span class="bash">mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=<span class="variable">$basearch</span>&amp;repo=AppStream-<span class="variable">$releasever</span></span></span><br><span class="line">baseurl=https://mirrors.aliyun.com/rockylinux/$releasever/AppStream/$basearch/os/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial</span><br></pre></td></tr></table></figure>
+
+<p>Rocky-BaseOS.repo</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[baseos]</span><br><span class="line">name=Rocky Linux $releasever - BaseOS</span><br><span class="line"><span class="meta">#</span><span class="bash">mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=<span class="variable">$basearch</span>&amp;repo=BaseOS-<span class="variable">$releasever</span></span></span><br><span class="line">baseurl=https://mirrors.aliyun.com/rockylinux/$releasever/BaseOS/$basearch/os/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial</span><br></pre></td></tr></table></figure>
+
+<p>Rocky-Extra.repo</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[extras]</span><br><span class="line">name=Rocky Linux $releasever - Extras</span><br><span class="line"><span class="meta">#</span><span class="bash">mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=<span class="variable">$basearch</span>&amp;repo=extras-<span class="variable">$releasever</span></span></span><br><span class="line">baseurl=https://mirrors.aliyun.com/rockylinux/$releasever/extras/$basearch/os/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial</span><br></pre></td></tr></table></figure>
+
+<p><strong>校时配置</strong></p>
+<p>在本次测试环境，三台机器都安装好chrony这个校时软件。然后将第一台服务器的上游配置为阿里云的NTP服务器，后面两台服务的上游配置为第一台服务器，保证集群的时间准确性。第一台机器的配置文件/etc/chrony.conf里面需要修改的内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pool ntp.aliyun.com iburst</span><br><span class="line">allow 192.168.0.0/16</span><br></pre></td></tr></table></figure>
+
+<p>另外两台机器的/etc/chrony.conf文件需要修改的内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pool 192.168.100.170 iburst</span><br></pre></td></tr></table></figure>
+
+<p>然后在三台机器上都在执行下面的命令启动chronyd服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start chronyd</span><br><span class="line">systemctl <span class="built_in">enable</span> chronyd</span><br></pre></td></tr></table></figure>
+
+<p><strong>ceph依赖安装</strong></p>
+<p>使用cephadm部署ceph集群时，它需要下面的依赖：</p>
+<ul>
+<li>CentOS 8.x发行版（7.x上不支持）</li>
+<li>python3</li>
+<li>podman或docker</li>
+<li>systemd（Rocklinux自带）</li>
+<li>LVM2（系统自带lvm2包）</li>
+</ul>
+<p>因此在集群安装之前，需要先安装好这些依赖：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf install python3 podman -y</span><br></pre></td></tr></table></figure>
+
+<p><strong>ceph集群安装</strong></p>
+<p>先安装cephadm对应yum源</p>
+<p>添加yum源的命令是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf install --assumeyes centos-release-ceph-pacific.noarch</span><br></pre></td></tr></table></figure>
+
+<p>因为RockyLinux目前还没有它这个版本对应的ceph通用软件包，而它和CentOS在二进制上都是兼容的，因此它目前使用的还是CentOS对应的包，直接使用CentOS对应的源没有问题。上面这个命令实际上也是在系统上安装了一个ceph的repo源，repo文件路径是：/etc/yum.repos.d/CentOS-Ceph-Pacific.repo，打开这个文件，将里面的yum源地址替换为国内的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[centos-ceph-pacific]</span><br><span class="line">name=CentOS-$releasever - Ceph Pacific</span><br><span class="line"><span class="meta">#</span><span class="bash">mirrorlist=http://mirrorlist.centos.org/?release=<span class="variable">$releasever</span>&amp;arch=<span class="variable">$basearch</span>&amp;repo=storage-ceph-pacific</span></span><br><span class="line">baseurl=https://mirrors.aliyun.com/centos/$releasever/storage/$basearch/ceph-pacific/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装cephadm</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf install cephadm -y</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后执行下面命令验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cephadm version </span><br><span class="line">ceph version 16.2.7 (dd0603118f56ab514f133c8d2e3adfc983942503) pacific (stable)</span><br></pre></td></tr></table></figure>
+
+<p>第一次执行会比较慢，因为它会首先下载一个ceph初始化镜像<strong>quay.io/ceph/ceph</strong>，然后从这个镜像里读取对应的版本号，后面每次执行命令就比较快。</p>
+<p><strong>初始化集群</strong></p>
+<p>当cephadm命令配置好以后，我们就可以使用它来创建ceph集群了。cephadm创建集群的流程是：</p>
+<ul>
+<li><p>创建一个初始化mon节点</p>
+</li>
+<li><p>配置ceph命令行工具</p>
+</li>
+<li><p>扩展集群</p>
+</li>
+<li><ul>
+<li>添加主机</li>
+<li>添加osd</li>
+</ul>
+</li>
+</ul>
+<p><strong>创建初始化节点</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cephadm bootstrap --mon-ip 192.168.21.170 --allow-fqdn-hostname \</span><br><span class="line">    --cluster-network 192.168.100.0/24</span><br></pre></td></tr></table></figure>
+
+<p>这个命令会做很多事情，因此会看到屏幕在一直刷新，一直到整个集群创建完毕，屏幕上显示出集群的登录地址、帐号和密码，如下所示：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">nabling firewalld port 8443/tcp in current zone...</span><br><span class="line">Ceph Dashboard is now available at:</span><br><span class="line"></span><br><span class="line">         URL: https://ceph01.magedu.com:8443/</span><br><span class="line">        User: admin</span><br><span class="line">    Password: whw22trywl</span><br><span class="line"></span><br><span class="line">Enabling client.admin keyring and conf on hosts with &quot;admin&quot; label</span><br><span class="line">You can access the Ceph CLI with:</span><br><span class="line"></span><br><span class="line">    sudo /usr/sbin/cephadm shell --fsid dda1b070-9770-11ec-9b70-000c29c09c06 -c /etc/ceph/ceph.conf -k /etc/ceph/ceph.client.admin.keyring</span><br><span class="line"></span><br><span class="line">Please consider enabling telemetry to help improve Ceph:</span><br><span class="line"></span><br><span class="line">    ceph telemetry on</span><br><span class="line"></span><br><span class="line">For more information see:</span><br><span class="line"></span><br><span class="line">    https://docs.ceph.com/docs/pacific/mgr/telemetry/</span><br><span class="line"></span><br><span class="line">Bootstrap complete.</span><br></pre></td></tr></table></figure>
+
+<p>到看到bootstrap complete字样，说明初始化完毕。这个时候就可以通过它提供的集群访问地址来访问集群。但是因为我们这里是在虚拟机上部署的，而这个域名是虚拟机上本地解析的，如果想我们的物理机上可以访问，需要修改我们机器的hosts文件，添加下面的解析信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.21.170  ceph01.myhuihui.com</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以在浏览器里通过这个地址访问集群：</p>
+<p><strong>cephadm shell命令</strong></p>
+<p>实际上启动一个新容器挂载ceph集群管理文件来进行集群管理</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cephadm shell </span><br><span class="line">Inferring fsid dda1b070-9770-11ec-9b70-000c29c09c06</span><br><span class="line">Using recent ceph image quay.io/ceph/ceph@sha256:da66bfcc6259123f9f5d4a55f43d46c55d93a9b8ddd636250de82cd50ee22243</span><br><span class="line">[ceph: root@ceph01 /]<span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+<p>观察这个命令执行前后机器上容器的变化来发现。</p>
+<p><strong>启用命令行工具</strong></p>
+<p>添加ceph的repo文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cephadm add-repo --release pacific</span><br></pre></td></tr></table></figure>
+
+<p>这个命令也是直接在系统上添加两个repo源，分别是ceph.repo和epel.repo，地址位于/etc/yum.repos.d/目录下，将这两个源修改为国内的源：</p>
+<p>ceph.repo</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[Ceph]</span><br><span class="line">name=Ceph $basearch</span><br><span class="line">baseurl=https://mirrors.aliyun.com/ceph/rpm-pacific/el8/$basearch</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=https://mirrors.aliyun.com/ceph/keys/release.gpg</span><br><span class="line"></span><br><span class="line">[Ceph-noarch]</span><br><span class="line">name=Ceph noarch</span><br><span class="line">baseurl=https://mirrors.aliyun.com/ceph/rpm-pacific/el8/noarch</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=https://mirrors.aliyun.com/ceph/keys/release.gpg</span><br><span class="line"></span><br><span class="line">[Ceph-source]</span><br><span class="line">name=Ceph SRPMS</span><br><span class="line">baseurl=https://mirrors.aliyun.com/ceph/rpm-pacific/el8/SRPMS</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=https://mirrors.aliyun.com/ceph/keys/release.gpg</span><br></pre></td></tr></table></figure>
+
+<p>epel.repo</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[epel]</span><br><span class="line">name=Extra Packages for Enterprise Linux $releasever - $basearch</span><br><span class="line"><span class="meta">#</span><span class="bash"> It is much more secure to use the metalink, but <span class="keyword">if</span> you wish to use a <span class="built_in">local</span> mirror</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> place its address here.</span></span><br><span class="line">baseurl=https://mirrors.aliyun.com/epel/$releasever/Everything/$basearch</span><br><span class="line"><span class="meta">#</span><span class="bash">metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-<span class="variable">$releasever</span>&amp;arch=<span class="variable">$basearch</span>&amp;infra=<span class="variable">$infra</span>&amp;content=<span class="variable">$contentdir</span></span></span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">countme=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-8</span><br></pre></td></tr></table></figure>
+
+<p>最后在执行安装命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf install ceph-common</span><br></pre></td></tr></table></figure>
+
+<p>就可以查看集群版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ceph -v </span><br><span class="line">ceph version 16.2.7 (dd0603118f56ab514f133c8d2e3adfc983942503) pacific (stable)</span><br></pre></td></tr></table></figure>
+
+<p>查看集群信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ceph -s </span><br><span class="line">  cluster:</span><br><span class="line">    id:     dda1b070-9770-11ec-9b70-000c29c09c06</span><br><span class="line">    health: HEALTH_WARN</span><br><span class="line">            OSD count 0 &lt; osd_pool_default_size 3</span><br><span class="line"> </span><br><span class="line">  services:</span><br><span class="line">    mon: 1 daemons, quorum ceph01.myhuihui.com (age 2h)</span><br><span class="line">    mgr: ceph01.myhuihui.com.qyecpg(active, since 2h)</span><br><span class="line">    osd: 0 osds: 0 up, 0 <span class="keyword">in</span></span><br><span class="line"> </span><br><span class="line">  data:</span><br><span class="line">    pools:   0 pools, 0 pgs</span><br><span class="line">    objects: 0 objects, 0 B</span><br><span class="line">    usage:   0 B used, 0 B / 0 B avail</span><br><span class="line">    pgs:</span><br></pre></td></tr></table></figure>
+
+<p>此时就可以和之前的版本一样，直接使用ceph命令来管理集群。</p>
+<p><strong>加入其它集群节点</strong></p>
+<p>复制mon容器的公钥到其他节点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id -f -i /etc/ceph/ceph.pub ceph02</span><br><span class="line">ssh-copy-id -f -i /etc/ceph/ceph.pub ceph03</span><br></pre></td></tr></table></figure>
+
+<p>参数解释：</p>
+<ul>
+<li>hostname，指的是要添加到ceph集群的这个主机对应的主机名，必须是hostname命令的执行结果。比如我们的hosts文件里有ceph02.myhuihui.com和ceph01，而hostname命令的结果是ceph02.myhuihui.com，那么使用ceph02就会报错。</li>
+<li>host-ip，主机的ip地址，如果有两套网络，那这里指的是对外通信网络的ip</li>
+<li>host-label，主机标签，cephadm在部署节点时，会复制ceph.conf和相应的keyring文件到带_admin标签的主机。即这个主机拥有对集群的管理权限。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ceph orch host add ceph02.myhuihui.com 192.168.21.171 _admin</span><br><span class="line">ceph orch host add ceph03.myhuihui.com 192.168.21.172</span><br></pre></td></tr></table></figure>
+
+<p>上面是添加另外两台主机的命令，ceph02带管理权限，ceph03不带。</p>
+<p><strong>添加OSD</strong></p>
+<p>在主机都添加到集群中以后，就可以开始添加osd了。因为cephadm部署的ceph集群都是容器化部署的，因此在添加OSD的时候，如果你不在意OSD的顺序，那么可以一次性批量添加所有OSD，此时OSD的序号就和对应OSD容器启动的顺序有关。如果你在意OSD的顺序，那么就需要依次一个个添加，此时效率较低。但是后期查找OSD对应硬盘的时候就比较方便。</p>
+<p>这里的演示内容为了快速搭建集群，就采用批量添加的方式。我这个集群有3个节点，每个节点有1块数据盘，盘符都是/dev/sdb和/dev/sdc。在添加节点之前，首先使用命令查看每个机器上可以的存储设备：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ceph orch device ls </span><br><span class="line">HOST                 PATH      TYPE  DEVICE ID   SIZE  AVAILABLE  REJECT REASONS  </span><br><span class="line">ceph01.myhuihui.com  /dev/sdb  hdd              21.4G  Yes                        </span><br><span class="line">ceph02.myhuihui.com  /dev/sdb  hdd              21.4G  Yes                        </span><br><span class="line">ceph03.myhuihui.com  /dev/sdb  hdd              21.4G  Yes </span><br></pre></td></tr></table></figure>
+
+<p>ceph集群是通过ceph-volume容器在机器上周期性的扫描所有硬盘设备，来发现可以添加的磁盘，上面的命令列出的就是ceph-volume收集到的所有可用硬盘信息。这里可以添加的硬盘需要符合下面的条件：</p>
+<ul>
+<li>硬盘上没有分区</li>
+<li>硬盘上没有任何LVM相关配置</li>
+<li>硬盘没有挂载</li>
+<li>硬盘不能包含文件系统</li>
+<li>硬盘不能包含OSD配置</li>
+<li>硬盘必须大于5G</li>
+</ul>
+<p>一次添加所有可用osd的命令是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph orch apply osd --all-available-devices</span><br></pre></td></tr></table></figure>
+
+<p>添加完成后，我们等待OSD启动即可。上面这个命令一旦设置以后，只要你往机器上插入一个磁盘，它就会自动被用来创建一个新的OSD。同时，如果就的OSD出问题了，你把旧的OSD从集群里移除，同时清理掉硬盘上的LVM，它也会在旧硬盘上再次自动创建一个OSD。创建完成后的集群如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ceph -s </span><br><span class="line">  cluster:</span><br><span class="line">    id:     dda1b070-9770-11ec-9b70-000c29c09c06</span><br><span class="line">    health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line">  services:</span><br><span class="line">    mon: 3 daemons, quorum ceph01.myhuihui.com,ceph02,ceph03 (age 32m)</span><br><span class="line">    mgr: ceph01.myhuihui.com.qyecpg(active, since 6h), standbys: ceph02.jhiyei</span><br><span class="line">    osd: 3 osds: 3 up (since 4h), 3 <span class="keyword">in</span> (since 4h)</span><br><span class="line"> </span><br><span class="line">  data:</span><br><span class="line">    pools:   1 pools, 1 pgs</span><br><span class="line">    objects: 0 objects, 0 B</span><br><span class="line">    usage:   15 MiB used, 60 GiB / 60 GiB avail</span><br><span class="line">    pgs:     1 active+clean</span><br></pre></td></tr></table></figure>
+
+<p><strong>关掉自动创建</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph orch apply osd --all-available-devices --unmanaged=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>参数解释：</p>
+<ul>
+<li>–unmanaged=true，会禁用掉OSD的自动创建。</li>
+</ul>
+<p><strong>添加单个设备</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph orch daemon add osd &lt;hostname&gt;:&lt;device-path&gt;</span><br></pre></td></tr></table></figure>
+
+<p>命令示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph orch daemon add osd ceph01.myhuihui.com:/dev/sdc</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用yaml文件添加</strong></p>
+<p>当你觉得上面两种使用方式都不符合你的要求的时候，例如自动添加和手动添加都没法指定日志分区，此时可以考虑使用yaml文件的方式，它支持更多更复杂的配置。下面是一个yaml文件配置示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Waylon Yan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/posts/42887.html">http://yoursite.com/posts/42887.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ceph/">ceph</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/11870.html"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Docker01-背景</div></div></a></div><div class="next-post pull-right"><a href="/posts/43581.html"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Linux-shell转载</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Waylon Yan</div><div class="author-info__description">tech life sharing</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Waylonwhynot" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:ywl1006@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">无止境</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/5677.html" title="AI-08-A2A"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-08-A2A"/></a><div class="content"><a class="title" href="/posts/5677.html" title="AI-08-A2A">AI-08-A2A</a><time datetime="2025-06-21T07:22:33.000Z" title="Created 2025-06-21 15:22:33">2025-06-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/18525.html" title="AI-07-MCP"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-07-MCP"/></a><div class="content"><a class="title" href="/posts/18525.html" title="AI-07-MCP">AI-07-MCP</a><time datetime="2025-06-08T06:19:30.000Z" title="Created 2025-06-08 14:19:30">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/65143.html" title="AI-06-dify"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-06-dify"/></a><div class="content"><a class="title" href="/posts/65143.html" title="AI-06-dify">AI-06-dify</a><time datetime="2025-06-08T06:19:08.000Z" title="Created 2025-06-08 14:19:08">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/45471.html" title="AI-05-coze"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-05-coze"/></a><div class="content"><a class="title" href="/posts/45471.html" title="AI-05-coze">AI-05-coze</a><time datetime="2025-05-17T15:16:48.000Z" title="Created 2025-05-17 23:16:48">2025-05-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/34613.html" title="AI-04-提示词工程"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-04-提示词工程"/></a><div class="content"><a class="title" href="/posts/34613.html" title="AI-04-提示词工程">AI-04-提示词工程</a><time datetime="2025-05-17T15:15:51.000Z" title="Created 2025-05-17 23:15:51">2025-05-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Waylon Yan</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

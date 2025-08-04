@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>mongoengine-01 | YouNeed</title><meta name="keywords" content="note"><meta name="author" content="Waylon Yan"><meta name="copyright" content="Waylon Yan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Python MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongoengine-01">
+<meta property="og:url" content="http://yoursite.com/posts/32762.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Python MongoDB">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2023-01-27T18:16:07.000Z">
+<meta property="article:modified_time" content="2025-08-04T15:41:26.908Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="note">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/posts/32762"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'mongoengine-01',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-08-04 23:41:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YouNeed</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">mongoengine-01</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-01-27T18:16:07.000Z" title="Created 2023-01-28 02:16:07">2023-01-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-08-04T15:41:26.908Z" title="Updated 2025-08-04 23:41:26">2025-08-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/mongodb/">mongodb</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="mongoengine-01"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Python MongoDB</p>
+<a id="more"></a>
+
+<h2 id="（一）-安装"><a href="#（一）-安装" class="headerlink" title="（一）. 安装"></a>（一）. 安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install mongoengine</span><br></pre></td></tr></table></figure>
+
+<h2 id="（二）-连接数据库"><a href="#（二）-连接数据库" class="headerlink" title="（二）. 连接数据库"></a>（二）. 连接数据库</h2><blockquote>
+<p>mongoengine</p>
+</blockquote>
+<ol>
+<li>第一种方式</li>
+</ol>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from mongoengine import connect</span><br><span class="line">connect(&#x27;project1&#x27;)  #project1为你要连接的数据库的名称</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>第二种方式</li>
+</ol>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#如果mongo服务是在其他地方运行，可以使用这种方法</span><br><span class="line">from mongoengine import connect</span><br><span class="line">connect （&#x27;project1&#x27; ， host = &#x27;192.168.1.35&#x27; ， port = 12345 ）</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>第三种方式</li>
+</ol>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#如果数据库需要身份验证，username并password 应提供的参数</span><br><span class="line">from mongoengine import connect</span><br><span class="line">connect （&#x27;project1&#x27; ， username = &#x27;webapp&#x27; ， password = &#x27;pwd123&#x27; ）</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>第四种方式（推荐）</li>
+</ol>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#URI样式连接也被支持 - 只需提供URI作为host：</span><br><span class="line">from mongoengine import connect</span><br><span class="line">connect （&#x27;project1&#x27; ， host = &#x27;mongodb：// localhost / database_name&#x27; ）</span><br></pre></td></tr></table></figure>
+
+<h2 id="（三-定义文件"><a href="#（三-定义文件" class="headerlink" title="（三). 定义文件"></a>（三). 定义文件</h2><p>MongoEngine允许您为文档定义模式，因为这有助于减少编码错误，并允许在可能存在的字段上定义实用方法</p>
+<p>下面来一个给一个例子,要为文档定义模式，请创建一个继承自其的类 <code>Document</code>。通过将字段对象作为类属性添加到文档类来指定字段</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from mongoengine import *</span><br><span class="line">import datetime</span><br><span class="line"></span><br><span class="line">class Page(Document):</span><br><span class="line">    title = StringField(max_length=200, required=True)</span><br><span class="line">    date_modified = DateTimeField(default=datetime.datetime.utcnow)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-1-字段"><a href="#3-1-字段" class="headerlink" title="3.1. 字段"></a>3.1. 字段</h2><p><strong>默认情况下，字段不是必需的。要使字段成为必填字段，请将字段的<code>required</code>关键字参数设置 为<code>True</code>。字段也可能有可用的验证约束（<code>max_length</code>例如上面的示例中）。字段也可以采用默认值，如果没有提供值，将使用默认值。默认值可以可选地是可调用的，将被调用来检索该值（例如在上面的示例中）。可用的字段类型如下所示</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">BinaryField&#96; **二进制数据字段**</span><br><span class="line">&#96;BooleanField&#96;</span><br><span class="line">&#96;ComplexDateTimeField&#96;</span><br><span class="line">&#96;DateTimeField&#96;</span><br><span class="line">&#96;DecimalField&#96;</span><br><span class="line">&#96;DictField&#96;</span><br><span class="line">&#96;DynamicField&#96;</span><br><span class="line">&#96;EmailField&#96;</span><br><span class="line">&#96;EmbeddedDocumentField&#96;</span><br><span class="line">&#96;EmbeddedDocumentListField&#96;</span><br><span class="line">&#96;FileField&#96; **GridFS存储字段**</span><br><span class="line">&#96;FloatField&#96;</span><br><span class="line">&#96;GenericEmbeddedDocumentField&#96;</span><br><span class="line">&#96;GenericReferenceField&#96;</span><br><span class="line">&#96;GenericLazyReferenceField&#96;</span><br><span class="line">&#96;GeoPointField&#96;</span><br><span class="line">&#96;ImageField&#96; **图像文件存储区域**</span><br><span class="line">&#96;IntField&#96;</span><br><span class="line">&#96;ListField&#96;</span><br><span class="line">&#96;MapField&#96;</span><br><span class="line">&#96;ObjectIdField&#96;</span><br><span class="line">&#96;ReferenceField&#96;</span><br><span class="line">&#96;LazyReferenceField&#96;</span><br><span class="line">&#96;SequenceField&#96;</span><br><span class="line">&#96;SortedListField&#96;</span><br><span class="line">&#96;StringField&#96;</span><br><span class="line">&#96;URLField&#96;</span><br><span class="line">&#96;UUIDField&#96;</span><br><span class="line">&#96;PointField&#96;</span><br><span class="line">&#96;LineStringField&#96;</span><br><span class="line">&#96;PolygonField&#96;</span><br><span class="line">&#96;MultiPointField&#96;</span><br><span class="line">&#96;MultiLineStringField&#96;</span><br><span class="line">&#96;MultiPolygonField</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2-字段参数"><a href="#3-2-字段参数" class="headerlink" title="3.2. 字段参数"></a>3.2. 字段参数</h2><p>每个字段类型可以通过关键字参数进行定制。以下关键字参数可以在所有字段上设置：</p>
+<ul>
+<li><p><code>db_field</code> （默认：无）<br>MongoDB字段名称。</p>
+</li>
+<li><p><code>required</code> （默认：False）<br>如果设置为True，并且该字段未在文档实例上设置，ValidationError则在验证文档时将引发a 。</p>
+</li>
+<li><p><code>default</code> （默认：无）<br>未为此字段设置值时使用的值。</p>
+</li>
+</ul>
+<p>默认参数的定义遵循Python的一般规则，这意味着在处理默认的可变对象时应该小心一些（如in <code>ListField</code>或<code>DictField</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class ExampleFirst(Document):</span><br><span class="line">    # 默认是一个空列表</span><br><span class="line">    values = ListField(IntField(), default=list)</span><br><span class="line"></span><br><span class="line">class ExampleSecond(Document):</span><br><span class="line">    values = ListField(IntField(), default=lambda: [1,2,3])</span><br><span class="line"></span><br><span class="line">class ExampleDangerous(Document):</span><br><span class="line">    values = ListField(IntField(), default=[1,2,3])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>unique</code> （默认：False）<br>如果为True，则该集合中的任何文档都不会具有该字段的相同值。</p>
+</li>
+<li><p><code>unique_with</code> （默认：无）<br>与此字段一起使用的字段名称（或字段名称列表）将不会具有相同值的集合中的两个文档。</p>
+</li>
+<li><p><code>primary_key</code> （默认：False）<br>如果为True，则使用此字段作为集合的主键。 <code>DictField</code> 和<code>EmbeddedDocuments</code>都支持作为文档的主键。<br><em>如果设置，该字段也可通过<code>PK</code>字段访问</em></p>
+</li>
+<li><p><code>choices</code> （默认：无）<br>一个可迭代的（例如列表，元组或集合）选项，这个字段的值应该被限制到这个选项。</p>
+</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#可以是值的嵌套元组（存储在mongo中）和人类可读的密钥</span><br><span class="line">SIZE  =  （（&#x27;S&#x27; ， &#x27;Small&#x27; ），</span><br><span class="line">        （&#x27;M&#x27; ， &#x27;Medium&#x27; ），</span><br><span class="line">        （&#x27;L&#x27; ， &#x27;Large&#x27; ），</span><br><span class="line">        （&#x27;XL&#x27; ， &#x27;Extra Large&#x27; ），</span><br><span class="line">        （&#x27;XXL&#x27; ， &#x27;特大号&#x27; ））</span><br><span class="line">class Shirt （Document ）：</span><br><span class="line">    size  =  StringField （max_length = 3 ， choices = SIZE </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#或者是一个只包含值的平坦迭代器</span><br><span class="line">SIZE  =  （&#x27;S&#x27; ， &#x27;M&#x27; ， &#x27;L&#x27; ， &#x27;XL&#x27; ， &#x27;XXL&#x27; ）</span><br><span class="line">class  Shirt （Document ）：</span><br><span class="line">    size  =  StringField （max_length = 3 ， choices = SIZE ）</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>**kwargs</code> （可选的）<br>您可以提供额外的元数据作为任意附加关键字参数 但是，您无法覆盖现有的属性。常用选项包括<code>help_tex</code>t和<code>verbose_name</code>，通常由窗体和小部件库使用</li>
+</ul>
+<h2 id="3-2-列表字段"><a href="#3-2-列表字段" class="headerlink" title="3.2. 列表字段"></a>3.2. 列表字段</h2><p>MongoDB允许存储项目列表。要想添加列表类型到 Document，请使用<code>ListField</code>字段类型。<code>ListField</code>将另一个字段对象作为其第一个参数，该参数指定列表中可以存储哪些类型元素</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class Page(Document):</span><br><span class="line">    tags = ListField(StringField(max_length=50))</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2-嵌入式文档"><a href="#3-2-嵌入式文档" class="headerlink" title="3.2. 嵌入式文档"></a>3.2. 嵌入式文档</h2><p>MongoDB能够在其他文档中嵌入文档。可以为这些嵌入式文档定义概要，就像它们可能用于常规文档一样。要创建嵌入式文档，只需像往常一样定义一个文档，但继承<code>EmbeddedDocument</code>而不是 <code>Document</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class Comment(EmbeddedDocument):</span><br><span class="line">    content = StringField()</span><br></pre></td></tr></table></figure>
+
+<p>要将文档嵌入到另一个文档中，请使用 <code>EmbeddedDocumentField</code>字段类型，将嵌入的文档类作为第一个参数提供：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class  Page （Document ）：</span><br><span class="line">    comments  =  ListField （EmbeddedDocumentField （Comment ））</span><br><span class="line"></span><br><span class="line">comment1  =  Comment （content = &#x27;Good work！&#x27; ）</span><br><span class="line">comment2  =  Comment （content = &#x27;Nice article！&#x27; ）</span><br><span class="line">page  =  Page （comments = [ comment1 ， comment2 ]）</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-3-字典字段"><a href="#3-3-字典字段" class="headerlink" title="3.3. 字典字段"></a>3.3. 字典字段</h2><p>通常，可以使用嵌入式文档而不是字典 - 通常建议使用<code>嵌入式文档</code>，因为<code>字典</code>不支持验证或自定义字段类型。但是，有时你不会知道你想要存储的结构; 在这种情况下<code>DictField</code>是合适的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SurveyResponse</span>(<span class="params">Document</span>):</span></span><br><span class="line">    date = DateTimeField()</span><br><span class="line">    user = ReferenceField(User)</span><br><span class="line">    answers = DictField()</span><br><span class="line"></span><br><span class="line">survey_response = SurveyResponse(date=datetime.utcnow(), user=request.user)</span><br><span class="line">response_form = ResponseForm(request.POST)</span><br><span class="line">survey_response.answers = response_form.cleaned_data()</span><br><span class="line">survey_response.save()</span><br></pre></td></tr></table></figure>
+
+<p><em>字典可以存储复杂的数据，其他字典，列表，对其他对象的引用，所以是最灵活的可用字段类型</em></p>
+<h2 id="3-4-引用字段"><a href="#3-4-引用字段" class="headerlink" title="3.4. 引用字段"></a>3.4. 引用字段</h2><p>要使引用字段可以存储到数据库中的其他文档，可以使用 <code>ReferenceField</code>。传入另一个文档类作为<em>构造函数</em>的<em>第一个参数</em>，然后将文档对象分配给该字段</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class User(Document):</span><br><span class="line">    name = StringField()</span><br><span class="line"></span><br><span class="line">class Page(Document):</span><br><span class="line">    content = StringField()</span><br><span class="line">    author = ReferenceField(User)</span><br><span class="line"></span><br><span class="line">john = User(name=&quot;John Smith&quot;)</span><br><span class="line">john.save()</span><br><span class="line"></span><br><span class="line">post = Page(content=&quot;Test Page&quot;)</span><br><span class="line">post.author = john</span><br><span class="line">post.save()</span><br></pre></td></tr></table></figure>
+
+<p><em>该User对象在幕后自动变为引用，并在Page检索对象时解除引用。</em></p>
+<p>要添加一个<code>ReferenceField</code>引用正在定义的文档的引用，请使用该字符串’self’代替文档类作为ReferenceField构造函数的参数。要引用尚未定义的文档，请使用未定义文档的名称作为构造函数的参数</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Employee(Document):</span><br><span class="line">    name = StringField()</span><br><span class="line">    boss = ReferenceField(&#x27;self&#x27;)</span><br><span class="line">    profile_page = ReferenceField(&#x27;ProfilePage&#x27;)</span><br><span class="line"></span><br><span class="line">class ProfilePage(Document):</span><br><span class="line">    content = StringField()</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-4-1-一对多与ListField"><a href="#3-4-1-一对多与ListField" class="headerlink" title="3.4.1 一对多与ListField"></a>3.4.1 一对多与ListField</h2><p>如果通过引用列表实现<em>一对多关系</em>，则引用将存储为<code>DBRefs</code>，并且需要将对象的实例传递给查询</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class User(Document):</span><br><span class="line">    name = StringField()</span><br><span class="line"></span><br><span class="line">class Page(Document):</span><br><span class="line">    content = StringField()</span><br><span class="line">    authors = ListField(ReferenceField(User))</span><br><span class="line"></span><br><span class="line">bob = User(name=&quot;Bob Jones&quot;).save()</span><br><span class="line">john = User(name=&quot;John Smith&quot;).save()</span><br><span class="line"></span><br><span class="line">Page(content=&quot;Test Page&quot;, authors=[bob, john]).save()</span><br><span class="line">Page(content=&quot;Another Page&quot;, authors=[john]).save()</span><br><span class="line"></span><br><span class="line"># 查找所有由bob编写的网页，此处用到了高级查询，后面会介绍</span><br><span class="line">Page.objects(authors__in=[bob])</span><br><span class="line"></span><br><span class="line"># 查找所有由bob和john编写的网页</span><br><span class="line">Page.objects(authors__all=[bob, john])</span><br><span class="line"></span><br><span class="line"># 删除由bob编写的某篇文章（根据某个id查找到的）.</span><br><span class="line">Page.objects(id=&#x27;...&#x27;).update_one(pull__authors=bob)</span><br><span class="line"></span><br><span class="line"># 把john添加到某篇文章（根据某个id查找到的）.</span><br><span class="line">Page.objects(id=&#x27;...&#x27;).update_one(push__authors=john)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-4-2-处理引用文档的删除"><a href="#3-4-2-处理引用文档的删除" class="headerlink" title="3.4.2 处理引用文档的删除"></a>3.4.2 处理引用文档的删除</h2><p>默认情况下，MongoDB不检查数据的<em>完整性</em>，因此删除其他文档仍然存在引用的文档将<em>导致一致性问题</em>。<code>Mongoengine</code> 的<code>ReferenceField</code>增加了一些功能来防范这些类型的数据库完整性问题，为每个引用提供<em>删除规则规范</em>。通过<code>reverse_delete_rule</code>在<code>ReferenceField</code>定义上提供属性 来指定删除规则，如下所示</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class ProfilePage(Document):</span><br><span class="line">    ...</span><br><span class="line">    employee = ReferenceField(&#x27;Employee&#x27;, reverse_delete_rule=mongoengine.CASCADE)</span><br><span class="line">    #这个例子中的声明意味着当一个Employee对象被移除时，ProfilePage引用该雇员的那个也被移除。如果删除了整批员工，则所有链接的配置文件页面也会被删除</span><br></pre></td></tr></table></figure>
+
+<p>它的值可以采用以下任何常量：</p>
+<ul>
+<li><p><code>mongoengine.DO_NOTHING</code><br>这是默认设置，不会执行任何操作。删除速度很快，但可能会导致数据库不一致或悬空引用。</p>
+</li>
+<li><p><code>mongoengine.DENY</code><br>如果仍存在对被删除对象的引用，则拒绝删除。</p>
+</li>
+<li><p><code>mongoengine.NULLIFY</code><br>删除任何仍然指向被删除对象的对象字段（使用MongoDB的“未设置”操作），从而有效地消除关系。<br><em>即删除了被引用的字段，对引用它的字段无影响，举个例子，假如，文章的作者字段采用的是引用字段，那么作者一旦被删除，那么，由他写的文章仅仅是没有了作者，他的文章都还在。</em></p>
+</li>
+<li><p><code>mongoengine.CASCADE</code><br>引用字段被删除，则引用此字段的文档也会被删除，<br><em>举个例子，假如，文章的作者字段采用的是引用字段，那么作者一旦被删除，那么，由他写的文章也都被删除。</em></p>
+</li>
+<li><p><code>mongoengine.PULL</code><br>从ListField（ReferenceField）的任何对象的字段中删除对该对象的引用（使用MongoDB的“拉”操作 ）。</p>
+</li>
+</ul>
+<h2 id="3-4-3-通用参考字段"><a href="#3-4-3-通用参考字段" class="headerlink" title="3.4.3 通用参考字段"></a>3.4.3 通用参考字段</h2><p>第二种场景也存在， <code>GenericReferenceField</code>。这允许您引用任何类型的Document，因此不会将 Document子类作为构造函数参数：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Link(Document):</span><br><span class="line">    url = StringField()</span><br><span class="line"></span><br><span class="line">class Post(Document):</span><br><span class="line">    title = StringField()</span><br><span class="line"></span><br><span class="line">class Bookmark(Document):</span><br><span class="line">    bookmark_object = GenericReferenceField()</span><br><span class="line"></span><br><span class="line">link = Link(url=&#x27;http://hmarr.com/mongoengine/&#x27;)</span><br><span class="line">link.save()</span><br><span class="line"></span><br><span class="line">post = Post(title=&#x27;Using MongoEngine&#x27;)</span><br><span class="line">post.save()</span><br><span class="line"></span><br><span class="line">Bookmark(bookmark_object=link).save()</span><br><span class="line">Bookmark(bookmark_object=post).save()</span><br></pre></td></tr></table></figure>
+
+<p><em>使用<code>GenericReferenceFields</code>的效率稍低于标准<code>ReferenceFields</code>，所以如果只引用一种文档类型，则更喜欢标准 <code>ReferenceField</code></em></p>
+<h2 id="3-4-唯一性约束"><a href="#3-4-唯一性约束" class="headerlink" title="3.4. 唯一性约束"></a>3.4. 唯一性约束</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MongoEngine&#96;允许你通过提供&#96;unique&#x3D;True&#96;给Field构造函数来指定一个字段在集合中是唯一的。如果您尝试将与唯一字段具有相同值的文档保存为数据库的文档， &#96;NotUniqueError&#96;则会引发。您也可以使用下列方法指定多字段唯一性约束：&#96;unique_with&#96;可以是单个字段名称，也可以是字段名称的&#96;列表&#96;或&#96;元组</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class User(Document):</span><br><span class="line">    username = StringField(unique=True)</span><br><span class="line">    first_name = StringField()</span><br><span class="line">    last_name = StringField(unique_with=&#x27;first_name&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-5-跳过文档验证保存"><a href="#3-5-跳过文档验证保存" class="headerlink" title="3.5 跳过文档验证保存"></a>3.5 跳过文档验证保存</h2><p>您也可以通过设置<code>validate=False</code>调用save() 方法时跳过整个文档验证过程</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Recipient(Document):</span><br><span class="line">    name = StringField()</span><br><span class="line">    email = EmailField()</span><br><span class="line"></span><br><span class="line">recipient = Recipient(name=&#x27;admin&#x27;, email=&#x27;root@localhost&#x27;)</span><br><span class="line">recipient.save()               # 会产生一个 ValidationError 错误</span><br><span class="line">recipient.save(validate=False) # 不会</span><br></pre></td></tr></table></figure>
+
+<h2 id="（四-文档集合"><a href="#（四-文档集合" class="headerlink" title="（四). 文档集合"></a>（四). 文档集合</h2><p>通过在文档中添加meta类字典属性，我们可以更改数据集合的名称，例如下方的例子，我们把<em>page</em>改为了<em>cmspage</em></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Page(Document):</span><br><span class="line">    title = StringField(max_length=200, required=True)</span><br><span class="line">    meta = &#123;&#x27;collection&#x27;: &#x27;cmsPage&#x27;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="（五-索引"><a href="#（五-索引" class="headerlink" title="（五). 索引"></a>（五). 索引</h2><p>您可以在集合上指定<code>索引</code>以加快查询速度。这是通过创建<code>indexes</code>在 <code>meta</code>字典中调用的索引规范列表完成的，其中索引规范可以是单个字段名称，包含多个字段名称的元组或包含完整索引定义的字典。</p>
+<p>顺序可以通过在字段名前加上 +（用于升序）或-号（用于降序）来指定。请注意，方向只对多字段索引很重要。文本索引可以通过在字段名前添加一个$来指定。散列索引可以通过在字段名前添加＃来指定：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Page(Document):</span><br><span class="line">    category = IntField()</span><br><span class="line">    title = StringField()</span><br><span class="line">    rating = StringField()</span><br><span class="line">    created = DateTimeField()</span><br><span class="line">    meta = &#123;</span><br><span class="line">        &#x27;indexes&#x27;: [</span><br><span class="line">            &#x27;title&#x27;,</span><br><span class="line">            &#x27;$title&#x27;,  # 文本索引</span><br><span class="line">            &#x27;#title&#x27;,  # 散列索引</span><br><span class="line">            (&#x27;title&#x27;, &#x27;-rating&#x27;),</span><br><span class="line">            (&#x27;category&#x27;, &#x27;_cls&#x27;),</span><br><span class="line">            &#123;</span><br><span class="line">                &#x27;fields&#x27;: [&#x27;created&#x27;],</span><br><span class="line">                &#x27;expireAfterSeconds&#x27;: 3600</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果采用字典，那么以下选项可用：</p>
+<ul>
+<li><p><code>fields</code> （默认：无）<br>要索引的字段。与上述相同的格式指定。</p>
+</li>
+<li><p><code>cls</code> （默认值：True）<br>如果您有多态模型可以继承并 <code>allow_inheritance</code>打开，则可以配置索引是否应该将该_cls字段自动添加到索引的开头。<br>sparse （默认：False）<br>索引是否应该是稀疏的。</p>
+</li>
+<li><p><code>unique</code> （默认：False）<br>索引是否应该是唯一的。</p>
+</li>
+<li><p><code>expireAfterSeconds</code> （可选的）<br>允许您通过设置以秒为单位的时间过期来自动将某个字段中的数据过期。<br>注意</p>
+</li>
+</ul>
+<h2 id="（六-排序"><a href="#（六-排序" class="headerlink" title="（六). 排序"></a>（六). 排序</h2><p>可以为您QuerySet使用的ordering属性 指定默认排序。排序将在QuerySet创建时应用 ，并且可以通过随后的order_by()覆盖：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime</span><br><span class="line"></span><br><span class="line">class BlogPost(Document):</span><br><span class="line">    title = StringField()</span><br><span class="line">    published_date = DateTimeField()</span><br><span class="line"></span><br><span class="line">    meta = &#123;</span><br><span class="line">        &#x27;ordering&#x27;: [&#x27;-published_date&#x27;]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">blog_post_1 = BlogPost(title=&quot;Blog Post #1&quot;)</span><br><span class="line">blog_post_1.published_date = datetime(2010, 1, 5, 0, 0 ,0)</span><br><span class="line"></span><br><span class="line">blog_post_2 = BlogPost(title=&quot;Blog Post #2&quot;)</span><br><span class="line">blog_post_2.published_date = datetime(2010, 1, 6, 0, 0 ,0)</span><br><span class="line"></span><br><span class="line">blog_post_3 = BlogPost(title=&quot;Blog Post #3&quot;)</span><br><span class="line">blog_post_3.published_date = datetime(2010, 1, 7, 0, 0 ,0)</span><br><span class="line"></span><br><span class="line">blog_post_1.save()</span><br><span class="line">blog_post_2.save()</span><br><span class="line">blog_post_3.save()</span><br><span class="line"></span><br><span class="line"># 通过默认的排序（降序），获取第一篇文章</span><br><span class="line"># from BlogPost.meta.ordering</span><br><span class="line">latest_post = BlogPost.objects.first()</span><br><span class="line">assert latest_post.title == &quot;Blog Post #3&quot;</span><br><span class="line"></span><br><span class="line"># 覆盖原来的默认排序规则，采用升序</span><br><span class="line">first_post = BlogPost.objects.order_by(&quot;+published_date&quot;).first()</span><br><span class="line">assert first_post.title == &quot;Blog Post #1&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="（七-文档继承"><a href="#（七-文档继承" class="headerlink" title="（七). 文档继承"></a>（七). 文档继承</h2><p>要创建您定义的文档的专用类型，您可以对其进行子类化并添加任何可能需要的额外字段或方法。 由于这是新类，它不是Document的直接子类，因此它不会存储在它自己的集合中; 它将使用与超类使用相同的集合。 这样可以更方便，更高效地检索相关文档 - 您只需在元数据中将allow_inheritance设置为True即可。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># Stored in a collection named &#x27;page&#x27;</span><br><span class="line">class Page(Document):</span><br><span class="line">    title = StringField(max_length=200, required=True)</span><br><span class="line"></span><br><span class="line">    meta = &#123;&#x27;allow_inheritance&#x27;: True&#125;  #这里要设置为True，默认是False</span><br><span class="line"></span><br><span class="line"># Also stored in the collection named &#x27;page&#x27;</span><br><span class="line">class DatedPage(Page):</span><br><span class="line">    date = DateTimeField()</span><br></pre></td></tr></table></figure>
+
+<h2 id="（八-抽象类"><a href="#（八-抽象类" class="headerlink" title="（八). 抽象类"></a>（八). 抽象类</h2><p>如果您想为一组Document类添加一些额外的功能，但您不需要或不需要继承的开销，则可以使用该 <code>abstract</code>属性<code>meta</code>。这不会打开文档继承，但可以让您保持代码干燥：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class BaseDocument(Document):</span><br><span class="line">    meta = &#123;</span><br><span class="line">        &#x27;abstract&#x27;: True,</span><br><span class="line">    &#125;</span><br><span class="line">    def check_permissions(self):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">class User(BaseDocument):</span><br><span class="line">   ...</span><br></pre></td></tr></table></figure>
+
+<p><em>现在，User类将有权访问继承的check_permissions方法，并且不会存储任何额外的_cls信息</em><br><em>这个特性在实际的web开发中作用很大</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Waylon Yan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/posts/32762.html">http://yoursite.com/posts/32762.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/note/">note</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/63048.html"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Ansible-Runner-01</div></div></a></div><div class="next-post pull-right"><a href="/posts/63666.html"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">前端-cookie-session-其他存储方式</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/posts/5306.html" title="MySQL-SQL审核工具inception"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-01</div><div class="title">MySQL-SQL审核工具inception</div></div></a></div><div><a href="/posts/21999.html" title="Promethues01"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-29</div><div class="title">Promethues01</div></div></a></div><div><a href="/posts/37998.html" title="Promethues03"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-01</div><div class="title">Promethues03</div></div></a></div><div><a href="/posts/21679.html" title="Promethues02"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-30</div><div class="title">Promethues02</div></div></a></div><div><a href="/posts/10379.html" title="Service-Mesh01"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-06</div><div class="title">Service-Mesh01</div></div></a></div><div><a href="/posts/1969.html" title="PyProjects-配置"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-10</div><div class="title">PyProjects-配置</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Waylon Yan</div><div class="author-info__description">tech life sharing</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Waylonwhynot" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:ywl1006@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">无止境</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89-%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">（一）. 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89-%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">2.</span> <span class="toc-text">（二）. 连接数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%88%E4%B8%89-%E5%AE%9A%E4%B9%89%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">（三). 定义文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E5%AD%97%E6%AE%B5"><span class="toc-number">4.</span> <span class="toc-text">3.1. 字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%AD%97%E6%AE%B5%E5%8F%82%E6%95%B0"><span class="toc-number">5.</span> <span class="toc-text">3.2. 字段参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%88%97%E8%A1%A8%E5%AD%97%E6%AE%B5"><span class="toc-number">6.</span> <span class="toc-text">3.2. 列表字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%96%87%E6%A1%A3"><span class="toc-number">7.</span> <span class="toc-text">3.2. 嵌入式文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E5%AD%97%E5%85%B8%E5%AD%97%E6%AE%B5"><span class="toc-number">8.</span> <span class="toc-text">3.3. 字典字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E5%BC%95%E7%94%A8%E5%AD%97%E6%AE%B5"><span class="toc-number">9.</span> <span class="toc-text">3.4. 引用字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-1-%E4%B8%80%E5%AF%B9%E5%A4%9A%E4%B8%8EListField"><span class="toc-number">10.</span> <span class="toc-text">3.4.1 一对多与ListField</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-2-%E5%A4%84%E7%90%86%E5%BC%95%E7%94%A8%E6%96%87%E6%A1%A3%E7%9A%84%E5%88%A0%E9%99%A4"><span class="toc-number">11.</span> <span class="toc-text">3.4.2 处理引用文档的删除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-3-%E9%80%9A%E7%94%A8%E5%8F%82%E8%80%83%E5%AD%97%E6%AE%B5"><span class="toc-number">12.</span> <span class="toc-text">3.4.3 通用参考字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E5%94%AF%E4%B8%80%E6%80%A7%E7%BA%A6%E6%9D%9F"><span class="toc-number">13.</span> <span class="toc-text">3.4. 唯一性约束</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-%E8%B7%B3%E8%BF%87%E6%96%87%E6%A1%A3%E9%AA%8C%E8%AF%81%E4%BF%9D%E5%AD%98"><span class="toc-number">14.</span> <span class="toc-text">3.5 跳过文档验证保存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%88%E5%9B%9B-%E6%96%87%E6%A1%A3%E9%9B%86%E5%90%88"><span class="toc-number">15.</span> <span class="toc-text">（四). 文档集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%88%E4%BA%94-%E7%B4%A2%E5%BC%95"><span class="toc-number">16.</span> <span class="toc-text">（五). 索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%88%E5%85%AD-%E6%8E%92%E5%BA%8F"><span class="toc-number">17.</span> <span class="toc-text">（六). 排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%88%E4%B8%83-%E6%96%87%E6%A1%A3%E7%BB%A7%E6%89%BF"><span class="toc-number">18.</span> <span class="toc-text">（七). 文档继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%88%E5%85%AB-%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="toc-number">19.</span> <span class="toc-text">（八). 抽象类</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/5677.html" title="AI-08-A2A"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-08-A2A"/></a><div class="content"><a class="title" href="/posts/5677.html" title="AI-08-A2A">AI-08-A2A</a><time datetime="2025-06-21T07:22:33.000Z" title="Created 2025-06-21 15:22:33">2025-06-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/18525.html" title="AI-07-MCP"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-07-MCP"/></a><div class="content"><a class="title" href="/posts/18525.html" title="AI-07-MCP">AI-07-MCP</a><time datetime="2025-06-08T06:19:30.000Z" title="Created 2025-06-08 14:19:30">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/65143.html" title="AI-06-dify"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-06-dify"/></a><div class="content"><a class="title" href="/posts/65143.html" title="AI-06-dify">AI-06-dify</a><time datetime="2025-06-08T06:19:08.000Z" title="Created 2025-06-08 14:19:08">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/45471.html" title="AI-05-coze"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-05-coze"/></a><div class="content"><a class="title" href="/posts/45471.html" title="AI-05-coze">AI-05-coze</a><time datetime="2025-05-17T15:16:48.000Z" title="Created 2025-05-17 23:16:48">2025-05-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/34613.html" title="AI-04-提示词工程"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-04-提示词工程"/></a><div class="content"><a class="title" href="/posts/34613.html" title="AI-04-提示词工程">AI-04-提示词工程</a><time datetime="2025-05-17T15:15:51.000Z" title="Created 2025-05-17 23:15:51">2025-05-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Waylon Yan</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

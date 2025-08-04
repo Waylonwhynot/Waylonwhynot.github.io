@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Kubernetes13-IngressClass-Controller-Ingress | YouNeed</title><meta name="keywords" content="容器"><meta name="author" content="Waylon Yan"><meta name="copyright" content="Waylon Yan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Ingress、Ingress Controller、IngressClass 的产生缘由、YAML 描述及使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes13-IngressClass-Controller-Ingress">
+<meta property="og:url" content="http://yoursite.com/posts/42500.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="Ingress、Ingress Controller、IngressClass 的产生缘由、YAML 描述及使用">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2023-10-01T08:22:06.000Z">
+<meta property="article:modified_time" content="2025-08-04T15:41:26.902Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="容器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/posts/42500"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Kubernetes13-IngressClass-Controller-Ingress',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-08-04 23:41:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YouNeed</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Kubernetes13-IngressClass-Controller-Ingress</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-10-01T08:22:06.000Z" title="Created 2023-10-01 16:22:06">2023-10-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-08-04T15:41:26.902Z" title="Updated 2025-08-04 23:41:26">2025-08-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Kubernetes13-IngressClass-Controller-Ingress"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Ingress、Ingress Controller、IngressClass 的产生缘由、YAML 描述及使用</p>
+<a id="more"></a>
+
+<p>Service 对象是 Kubernetes 内置的负载均衡机制，使用静态 IP 地址代理动态变化的 Pod，支持域名访问和服务发现，是微服务架构必需的基础设施。</p>
+<p>Service 很有用，但也只能说是“基础设施”，它对网络流量的管理方案还是太简单，离复杂的现代应用架构需求还有很大的差距，所以 Kubernetes 就在 Service 之上又提出了一个新的概念：Ingress。</p>
+<h2 id="1-为什么要有-Ingress"><a href="#1-为什么要有-Ingress" class="headerlink" title="1. 为什么要有 Ingress"></a>1. 为什么要有 Ingress</h2><p>我们知道了 Service 的功能和运行机制，它本质上就是一个由 kube-proxy 控制的四层负载均衡，在 TCP/IP 协议栈上转发流量。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20231001162550363.png" alt="image-20231001162550363"></p>
+<p>但在四层上的负载均衡功能还是太有限了，只能够依据 IP 地址和端口号做一些简单的判断和组合，而我们现在的绝大多数应用都是跑在七层的 HTTP/HTTPS 协议上的，有更多的高级路由条件，比如主机名、URI、请求头、证书等等，而这些在 TCP/IP 网络栈里是根本看不见的。</p>
+<p>Service 还有一个缺点，它比较适合代理集群内部的服务。如果想要把服务暴露到集群外部，就只能使用 NodePort 或者 LoadBalancer 这两种方式，而它们都缺乏足够的灵活性，难以管控，这就导致了一种很无奈的局面：我们的服务空有一身本领，却没有合适的机会走出去大展拳脚。</p>
+<p>该怎么解决这个问题呢？</p>
+<p>Kubernetes 还是沿用了 Service 的思路，既然 Service 是四层的负载均衡，那么我再引入一个新的 API 对象，在七层上做负载均衡是不是就可以了呢？</p>
+<p>不过除了七层负载均衡，这个对象还应该承担更多的职责，也就是作为流量的总入口，统管集群的进出口数据，“扇入”“扇出”流量（也就是我们常说的“南北向”），让外部用户能够安全、顺畅、便捷地访问内部服务</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20231001162632253.png" alt="image-20231001162632253"></p>
+<p>所以，这个 API 对象就顺理成章地被命名为 Ingress，意思就是集群内外边界上的入口。</p>
+<h2 id="2-为什么要有-Ingress-Controller"><a href="#2-为什么要有-Ingress-Controller" class="headerlink" title="2. 为什么要有 Ingress Controller"></a>2. 为什么要有 Ingress Controller</h2><p>Ingress 可以说是在七层上另一种形式的 Service，它同样会代理一些后端的 Pod，也有一些路由规则来定义流量应该如何分配、转发，只不过这些规则都使用的是 HTTP/HTTPS 协议。</p>
+<p>Service 本身是没有服务能力的，它只是一些 iptables 规则，真正配置、应用这些规则的实际上是节点里的 kube-proxy 组件。如果没有 kube-proxy，Service 定义得再完善也没有用。</p>
+<p>同样的，Ingress 也只是一些 HTTP 路由规则的集合，相当于一份静态的描述文件，真正要把这些规则在集群里实施运行，还需要有另外一个东西，这就是 Ingress Controller，它的作用就相当于 Service 的 kube-proxy，能够读取、应用 Ingress 规则，处理、调度流量。</p>
+<p>按理来说，Kubernetes 应该把 Ingress Controller 内置实现，作为基础设施的一部分，就像 kube-proxy 一样。</p>
+<p>不过 Ingress Controller 要做的事情太多，与上层业务联系太密切，所以 Kubernetes 把 Ingress Controller 的实现交给了社区，任何人都可以开发 Ingress Controller，只要遵守 Ingress 规则就好。这就造成了 Ingress Controller“百花齐放”的盛况。</p>
+<p>由于 Ingress Controller 把守了集群流量的关键入口，掌握了它就拥有了控制集群应用的“话语权”，所以众多公司纷纷入场，精心打造自己的 Ingress Controller，意图在 Kubernetes 流量进出管理这个领域占有一席之地。</p>
+<p>这些实现中最著名的，就是老牌的反向代理和负载均衡软件 Nginx 了。从 Ingress Controller 的描述上我们也可以看到，HTTP 层面的流量管理、安全控制等功能其实就是经典的反向代理，而 Nginx 则是其中稳定性最好、性能最高的产品，所以它也理所当然成为了 Kubernetes 里应用得最广泛的 Ingress Controller。</p>
+<p>不过，因为 Nginx 是开源的，谁都可以基于源码做二次开发，所以它又有很多的变种，比如</p>
+<p>社区的 Kubernetes Ingress Controller（<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/kubernetes/ingress-nginx%EF%BC%89%EF%BC%9B">https://github.com/kubernetes/ingress-nginx）；</a><br>Nginx 公司自己的 Nginx Ingress Controller（<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/nginxinc/kubernetes-ingress%EF%BC%89%EF%BC%9B">https://github.com/nginxinc/kubernetes-ingress）；</a><br>基于 OpenResty 的 Kong Ingress Controller（<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Kong/kubernetes-ingress-controller%EF%BC%89%E7%AD%89%E7%AD%89%E3%80%82">https://github.com/Kong/kubernetes-ingress-controller）等等。</a><br>根据 Docker Hub 上的统计，Nginx 公司的开发实现是下载量最多的 Ingress Controller，所以我将以它为例，讲解 Ingress 和 Ingress Controller 的用法。</p>
+<p>下面的这张图就来自 Nginx 官网，比较清楚地展示了 Ingress Controller 在 Kubernetes 集群里的地位：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20231001162703792.png" alt="image-20231001162703792"></p>
+<h2 id="3-为什么要有-IngressClass"><a href="#3-为什么要有-IngressClass" class="headerlink" title="3. 为什么要有 IngressClass"></a>3. 为什么要有 IngressClass</h2><p>那么到现在，有了 Ingress 和 Ingress Controller，我们是不是就可以完美地管理集群的进出流量了呢？</p>
+<p>最初 Kubernetes 也是这么想的，一个集群里有一个 Ingress Controller，再给它配上许多不同的 Ingress 规则，应该就可以解决请求的路由和分发问题了。</p>
+<p>但随着 Ingress 在实践中的大量应用，很多用户发现这种用法会带来一些问题，比如：</p>
+<p>由于某些原因，项目组需要引入不同的 Ingress Controller，但 Kubernetes 不允许这样做；<br>Ingress 规则太多，都交给一个 Ingress Controller 处理会让它不堪重负；<br>多个 Ingress 对象没有很好的逻辑分组方式，管理和维护成本很高；<br>集群里有不同的租户，他们对 Ingress 的需求差异很大甚至有冲突，无法部署在同一个 Ingress Controller 上。<br>所以，Kubernetes 就又提出了一个 Ingress Class 的概念，让它插在 Ingress 和 Ingress Controller 中间，作为流量规则和控制器的协调人，解除了 Ingress 和 Ingress Controller 的强绑定关系。</p>
+<p>现在，Kubernetes 用户可以转向管理 Ingress Class，用它来定义不同的业务逻辑分组，简化 Ingress 规则的复杂度。比如说，我们可以用 Class A 处理博客流量、Class B 处理短视频流量、Class C 处理购物流量。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20231001162730584.png" alt="image-20231001162730584"></p>
+<p>这些 Ingress 和 Ingress Controller 彼此独立，不会发生冲突，所以上面的那些问题也就随着 Ingress Class 的引入迎刃而解了。</p>
+<h2 id="4-使用-YAML-描述-Ingress-Ingress-Class"><a href="#4-使用-YAML-描述-Ingress-Ingress-Class" class="headerlink" title="4. 使用 YAML 描述 Ingress/Ingress Class"></a>4. 使用 YAML 描述 Ingress/Ingress Class</h2><p>和之前学习 Deployment、Service 对象一样，首先应当用命令 kubectl api-resources 查看它们的基本信息，输出列在这里了：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20231001162824044.png" alt="image-20231001162824044"></p>
+<p>你可以看到，Ingress 和 Ingress Class 的 apiVersion 都是“networking.k8s.io/v1”，而且 Ingress 有一个简写 ing，但 Ingress Controller 怎么找不到呢？</p>
+<p>这是因为 Ingress Controller 和其他两个对象不太一样，它不只是描述文件，是一个要实际干活、处理流量的应用程序，而应用程序在 Kubernetes 里早就有对象来管理了，那就是 Deployment 和 DaemonSet，所以我们只需要再学习 Ingress 和 Ingress Class 的的用法就可以了。</p>
+<p>先看 Ingress。</p>
+<p>Ingress 也是可以使用 kubectl create 来创建样板文件的，和 Service 类似，它也需要用两个附加参数：</p>
+<p>–class，指定 Ingress 从属的 Ingress Class 对象。<br>–rule，指定路由规则，基本形式是 URI=Service，也就是说是访问 HTTP 路径就转发到对应的 Service 对象，再由 Service 对象转发给后端的 Pod。<br>好，现在我们就执行命令，看看 Ingress 到底长什么样：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export out=&quot;--dry-run=client -o yaml&quot;</span><br><span class="line">kubectl create ing ngx-ing --rule=&quot;ngx.test/=ngx-svc:80&quot; --class=ngx-ink $out</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ngx-ing.yml</span></span><br><span class="line">apiVersion: networking.k8s.io/v1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  name: ngx-ing</span><br><span class="line">  </span><br><span class="line">spec:</span><br><span class="line"></span><br><span class="line">  ingressClassName: ngx-ink</span><br><span class="line">  </span><br><span class="line">  rules:</span><br><span class="line">  - host: ngx.test</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - path: /</span><br><span class="line">        pathType: Exact</span><br><span class="line">        backend:</span><br><span class="line">          service:</span><br><span class="line">            name: ngx-svc</span><br><span class="line">            port:</span><br><span class="line">              number: 80</span><br><span class="line">在这份 Ingress 的 YAML 里，有两个关键字段： ingressClassName和 rules，分别对应了命令行参数，含义还是比较好理解的。</span><br></pre></td></tr></table></figure>
+
+<p>只是 rules的格式比较复杂，嵌套层次很深。不过仔细点看就会发现它是把路由规则拆散了，有 host 和 http path，在 path 里又指定了路径的匹配方式，可以是精确匹配（Exact）或者是前缀匹配（Prefix），再用 backend 来指定转发的目标 Service 对象。</p>
+<p>不过我个人觉得，Ingress YAML 里的描述还不如 kubectl create 命令行里的 –rule 参数来得直观易懂，而且 YAML 里的字段太多也很容易弄错，建议你还是让 kubectl 来自动生成规则，然后再略作修改比较好。</p>
+<p>有了 Ingress 对象，那么与它关联的 Ingress Class 是什么样的呢？</p>
+<p>其实 Ingress Class 本身并没有什么实际的功能，只是起到联系 Ingress 和 Ingress Controller 的作用，所以它的定义非常简单，在 spec里只有一个必需的字段 controller，表示要使用哪个 Ingress Controller，具体的名字就要看实现文档了。</p>
+<p>比如，如果我要用 Nginx 开发的 Ingress Controller，那么就要用名字 nginx.org/ingress-controller：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ngx-cls.yml </span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">IngressClass</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ngx-ink</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">controller:</span> <span class="string">nginx.org/ingress-controller</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ngx-svc.yml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ngx-svc</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">ngx-dep</span></span><br><span class="line">    </span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">80</span></span><br><span class="line">    <span class="attr">protocol:</span> <span class="string">TCP</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ngx-dep.yml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ngx-dep</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">ngx-dep</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">ngx-dep</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">ngx-conf-vol</span></span><br><span class="line">        <span class="attr">configMap:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">ngx-conf</span></span><br><span class="line"></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">nginx:alpine</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/etc/nginx/conf.d</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">ngx-conf-vol</span></span><br></pre></td></tr></table></figure>
+
+<p>Ingress 和 Service、Ingress Class 的关系我也画成了一张图，方便你参考：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20231001163206592.png" alt="image-20231001163206592"></p>
+<h2 id="5-如何在-Kubernetes-里使用-Ingress-Ingress-Class"><a href="#5-如何在-Kubernetes-里使用-Ingress-Ingress-Class" class="headerlink" title="5. 如何在 Kubernetes 里使用 Ingress/Ingress Class"></a>5. 如何在 Kubernetes 里使用 Ingress/Ingress Class</h2><p>因为 Ingress Class 很小，所以我把它与 Ingress 合成了一个 YAML 文件，让我们用 kubectl apply 创建这两个对象：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f ngx-dep.yml</span><br><span class="line">kubectl apply -f ngx-svc.yml</span><br><span class="line">kubectl apply -f ngx-ing.yml</span><br><span class="line">kubectl apply -f ngx-cls.yml</span><br></pre></td></tr></table></figure>
+
+<p>然后我们用 kubectl get 来查看对象的状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get ingressclass</span><br><span class="line">kubectl get ing</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20231001163306975.png" alt="image-20231001163306975"></p>
+<p>命令 kubectl describe 可以看到更详细的 Ingress 信息：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20231001163329259.png" alt="image-20231001163329259"></p>
+<p>可以看到，Ingress 对象的路由规则 Host/Path 就是在 YAML 里设置的域名 ngx.test/，而且已经关联了创建的 Service 对象，还有 Service 后面的两个 Pod。</p>
+<p>另外，不要对 Ingress 里 Default backend的错误提示感到惊讶，在找不到路由的时候，它被设计用来提供一个默认的后端服务，但不设置也不会有什么问题，所以大多数时候我们都忽略它。</p>
+<ol start="6">
+<li>如何在 Kubernetes 里使用 Ingress Controller<br>准备好了 Ingress 和 Ingress Class，接下来我们就需要部署真正处理路由规则的 Ingress Controller。</li>
+</ol>
+<p>你可以在 GitHub 上找到 Nginx Ingress Controller 的项目（<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/nginxinc/kubernetes-ingress%EF%BC%89%EF%BC%8C%E5%9B%A0%E4%B8%BA%E5%AE%83%E4%BB%A5">https://github.com/nginxinc/kubernetes-ingress），因为它以</a> Pod 的形式运行在 Kubernetes 里，所以同时支持 Deployment 和 DaemonSet 两种部署方式。这里我选择的是 Deployment，相关的 YAML 也都在我们课程的项目（链接）里复制了一份。</p>
+<p>Nginx Ingress Controller 的安装略微麻烦一些，有很多个 YAML 需要执行，但如果只是做简单的试验，就只需要用到 4 个 ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f common/ns-and-sa.yaml</span><br><span class="line">kubectl apply -f rbac/rbac.yaml</span><br><span class="line">kubectl apply -f common/nginx-config.yaml</span><br><span class="line">kubectl apply -f common/default-server-secret.yaml</span><br></pre></td></tr></table></figure>
+
+<p>前两条命令为 Ingress Controller 创建了一个独立的名字空间 nginx-ingress，还有相应的账号和权限，这是为了访问 apiserver 获取 Service、Endpoint 信息用的；后两条则是创建了一个 ConfigMap 和 Secret，用来配置 HTTP/HTTPS 服务。</p>
+<p>部署 Ingress Controller 不需要我们自己从头编写 Deployment，Nginx 已经为我们提供了示例 YAML，但创建之前为了适配我们自己的应用还必须要做几处小改动：</p>
+<p>metadata 里的 name 要改成自己的名字，比如 ngx-kic-dep。<br>spec.selector 和 template.metadata.labels 也要修改成自己的名字，比如还是用 ngx-kic-dep。<br>containers.image 可以改用 apline 版本，加快下载速度，比如 nginx/nginx-ingress:2.2-alpine。<br>最下面的 args 要加上 -ingress-class=ngx-ink，也就是前面创建的 Ingress Class 的名字，这是让 Ingress Controller 管理 Ingress 的关键。<br>修改完之后，Ingress Controller 的 YAML 大概是这个样子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ngx-kic-dep</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">nginx-ingress</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">ngx-kic-dep</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">ngx-kic-dep</span></span><br><span class="line">    <span class="string">...</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">nginx/nginx-ingress:2.2-alpine</span></span><br><span class="line">        <span class="string">...</span></span><br><span class="line">        <span class="attr">args:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">-ingress-class=ngx-ink</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>有了 Ingress Controller，这些 API 对象的关联就更复杂了，你可以用下面的这张图来看出它们是如何使用对象名字联系起来的：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20231001163511736.png" alt="image-20231001163511736"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20231001163537261.png" alt="image-20231001163537261"></p>
+<ul>
+<li><p>Ingress Controller，会指定要关联的ingress class，和在k8s中注册自己controller的信息；</p>
+</li>
+<li><p>Ingress Class，会指定要关联的controller的信息；</p>
+</li>
+<li><p>Ingress，会指定要关联的Ingress Class的信息；</p>
+</li>
+<li><p>最终，Ingress Class作为“桥梁”，将Ingress和Ingress Controller关联起来。</p>
+</li>
+<li><p>参考文档</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://kubernetes.io/zh-cn/docs/concepts/services-networking/ingress/">Ingress | Kubernetes</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://kubernetes.io/zh-cn/docs/concepts/services-networking/ingress-controllers/">Ingress 控制器 | Kubernetes</a></p>
+<p>确认 Ingress Controller 的 YAML 修改完毕之后，就可以用 kubectl apply 创建对象：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f kic.yml</span><br></pre></td></tr></table></figure>
+
+<p>注意 Ingress Controller 位于名字空间 nginx-ingress，所以查看状态需要用 -n参数显式指定，否则我们只能看到 default名字空间里的 Pod：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deploy -n nginx-ingress</span><br><span class="line">kubectl get pod -n nginx-ingress</span><br></pre></td></tr></table></figure>
+
+
+<p>现在 Ingress Controller 就算是运行起来了。</p>
+<p>不过还有最后一道工序，因为 Ingress Controller 本身也是一个 Pod，想要向外提供服务还是要依赖于 Service 对象。所以你至少还要再为它定义一个 Service，使用 NodePort 或者 LoadBalancer 暴露端口，才能真正把集群的内外流量打通。这个工作就交给你课下自己去完成了。</p>
+<p>这里，我就用之前提到的命令 kubectl port-forward，它可以直接把本地的端口映射到 Kubernetes 集群的某个 Pod 里，在测试验证的时候非常方便。</p>
+<p>下面这条命令就把本地的 8080 端口映射到了 Ingress Controller Pod 的 80 端口：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubctl get pod -n nginx-ingress</span><br><span class="line">kubectl port-forward -n nginx-ingress ngx-kic-dep-8859b7b86-cplgp 8080:80 &amp;</span><br></pre></td></tr></table></figure>
+
+
+<p>我们在 curl 发测试请求的时候需要注意，因为 Ingress 的路由规则是 HTTP 协议，所以就不能用 IP 地址的方式访问，必须要用域名、URI。</p>
+<p>你可以修改 /etc/hosts 来手工添加域名解析，也可以使用 –resolve 参数，指定域名的解析规则，比如在这里我就把“ngx.test”强制解析到“127.0.0.1”，也就是被 kubectl port-forward 转发的本地地址：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl --resolve ngx.test:8080:127.0.0.1 http://ngx.test:8080</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>把这个访问结果和上一节课里的 Service 对比一下，你会发现最终效果是一样的，都是把请求转发到了集群内部的 Pod，但 Ingress 的路由规则不再是 IP 地址，而是 HTTP 协议里的域名、URI 等要素。</p>
+<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><p>学习了 Kubernetes 里七层的反向代理和负载均衡对象，包括 Ingress、Ingress Controller、Ingress Class，它们联合起来管理了集群的进出流量，是集群入口的总管。总结如下：</p>
+<p>Service 是四层负载均衡，能力有限，所以就出现了 Ingress，它基于 HTTP/HTTPS 协议定义路由规则。<br>Ingress 只是规则的集合，自身不具备流量管理能力，需要 Ingress Controller 应用 Ingress 规则才能真正发挥作用。<br>Ingress Class 解耦了 Ingress 和 Ingress Controller，我们应当使用 Ingress Class 来管理 Ingress 资源。<br>最流行的 Ingress Controller 是 Nginx Ingress Controller，它基于经典反向代理软件 Nginx。<br>目前的 Kubernetes 流量管理功能主要集中在 Ingress Controller 上，已经远不止于管理“入口流量”了，它还能管理“出口流量”，也就是 egress，甚至还可以管理集群内部服务之间的“东西向流量”。</p>
+<p>此外，Ingress Controller 通常还有很多的其他功能，比如 TLS 终止、网络应用防火墙、限流限速、流量拆分、身份认证、访问控制等等，完全可以认为它是一个全功能的反向代理或者网关。</p>
+<p>所谓的四层和七层，指的是 OSI 网络参考模型里面的层次，简单的说，四层就是 TCP/IP 协议，七层就是 HTTP/HTTPS 等应用协议。<br>因为 Ingress Controller 的名字比较长，所以有的时候会缩写成 IC 或者 KIC。</p>
+<p>为了提升路由效率，降低网络成本， Ingress Controller 通常不会走 Service 流量转发，而是访问 apiserver 直接获得 Service 代理的 Pod 地址，从而绕过了 Service 的 iptables 规则。</p>
+<p>Ingress 的能力较弱，路由规则不灵活， 所以 Ingress Controller 基本上都有各自的功能扩展，比如 Nginx 就增加了自定义资源对象 VirtualServer、Transport-Server 等。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Waylon Yan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/posts/42500.html">http://yoursite.com/posts/42500.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AE%B9%E5%99%A8/">容器</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/45536.html"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">并发编程-07</div></div></a></div><div class="next-post pull-right"><a href="/posts/59658.html"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Service-Mesh03</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/posts/11870.html" title="Docker01-背景"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-11</div><div class="title">Docker01-背景</div></div></a></div><div><a href="/posts/13216.html" title="Docker02-进程隔离与限制"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-12</div><div class="title">Docker02-进程隔离与限制</div></div></a></div><div><a href="/posts/49499.html" title="Docker03-理解容器镜像"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-12</div><div class="title">Docker03-理解容器镜像</div></div></a></div><div><a href="/posts/18219.html" title="Docker04-重新认识Docker容器"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-13</div><div class="title">Docker04-重新认识Docker容器</div></div></a></div><div><a href="/posts/1819.html" title="Docker05-DockerFile"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-03</div><div class="title">Docker05-DockerFile</div></div></a></div><div><a href="/posts/39995.html" title="Kubernetes-方案方法其他"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">Kubernetes-方案方法其他</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Waylon Yan</div><div class="author-info__description">tech life sharing</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Waylonwhynot" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:ywl1006@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">无止境</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-Ingress"><span class="toc-number">1.</span> <span class="toc-text">1. 为什么要有 Ingress</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-Ingress-Controller"><span class="toc-number">2.</span> <span class="toc-text">2. 为什么要有 Ingress Controller</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-IngressClass"><span class="toc-number">3.</span> <span class="toc-text">3. 为什么要有 IngressClass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8-YAML-%E6%8F%8F%E8%BF%B0-Ingress-Ingress-Class"><span class="toc-number">4.</span> <span class="toc-text">4. 使用 YAML 描述 Ingress&#x2F;Ingress Class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%A6%82%E4%BD%95%E5%9C%A8-Kubernetes-%E9%87%8C%E4%BD%BF%E7%94%A8-Ingress-Ingress-Class"><span class="toc-number">5.</span> <span class="toc-text">5. 如何在 Kubernetes 里使用 Ingress&#x2F;Ingress Class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">7. 总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/5677.html" title="AI-08-A2A"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-08-A2A"/></a><div class="content"><a class="title" href="/posts/5677.html" title="AI-08-A2A">AI-08-A2A</a><time datetime="2025-06-21T07:22:33.000Z" title="Created 2025-06-21 15:22:33">2025-06-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/18525.html" title="AI-07-MCP"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-07-MCP"/></a><div class="content"><a class="title" href="/posts/18525.html" title="AI-07-MCP">AI-07-MCP</a><time datetime="2025-06-08T06:19:30.000Z" title="Created 2025-06-08 14:19:30">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/65143.html" title="AI-06-dify"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-06-dify"/></a><div class="content"><a class="title" href="/posts/65143.html" title="AI-06-dify">AI-06-dify</a><time datetime="2025-06-08T06:19:08.000Z" title="Created 2025-06-08 14:19:08">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/45471.html" title="AI-05-coze"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-05-coze"/></a><div class="content"><a class="title" href="/posts/45471.html" title="AI-05-coze">AI-05-coze</a><time datetime="2025-05-17T15:16:48.000Z" title="Created 2025-05-17 23:16:48">2025-05-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/34613.html" title="AI-04-提示词工程"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-04-提示词工程"/></a><div class="content"><a class="title" href="/posts/34613.html" title="AI-04-提示词工程">AI-04-提示词工程</a><time datetime="2025-05-17T15:15:51.000Z" title="Created 2025-05-17 23:15:51">2025-05-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Waylon Yan</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>AI-00-初识AI | YouNeed</title><meta name="keywords" content="AI"><meta name="author" content="Waylon Yan"><meta name="copyright" content="Waylon Yan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="初识AI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI-00-初识AI">
+<meta property="og:url" content="http://yoursite.com/posts/62587.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="初识AI">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2025-03-22T08:30:19.000Z">
+<meta property="article:modified_time" content="2025-08-04T15:41:26.881Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/posts/62587"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI-00-初识AI',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-08-04 23:41:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YouNeed</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">AI-00-初识AI</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-03-22T08:30:19.000Z" title="Created 2025-03-22 16:30:19">2025-03-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-08-04T15:41:26.881Z" title="Updated 2025-08-04 23:41:26">2025-08-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI/">AI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="AI-00-初识AI"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>初识AI</p>
+<a id="more"></a>
+
+<h1 id="什么是大模型"><a href="#什么是大模型" class="headerlink" title="什么是大模型"></a>什么是大模型</h1><ul>
+<li>token生成器，遵循训练集的统计规律</li>
+</ul>
+<ol>
+<li><p>比如问：你是谁，你是怎么来的？</p>
+<ul>
+<li><p>经典回答： 我是ChatGPT</p>
+</li>
+<li><p>实际上：如果没有特殊编程(系统system信息提示，你是谁ChatGPT 4O，或者hard_coded方式微调)此类问题的答案，你将获得它统计上最佳的猜测答案。</p>
+</li>
+</ul>
+</li>
+<li><p>比如问：Uniquogfgs, 没三个字母拼写一下</p>
+<ul>
+<li><p>回答：经常会出现错误，因为在大模型的眼里，分成token之后，它不擅长做这样的事情</p>
+</li>
+<li><p>实际：use code.让它去用Python解决这样的问题</p>
+</li>
+</ul>
+</li>
+<li><p>strawberry 有几个r</p>
+<ul>
+<li>回答：错误 ，有两个r</li>
+<li>实际：模型并不擅长拼写。use code.</li>
+</ul>
+</li>
+<li><p>9.11和9.9谁大？</p>
+<ul>
+<li>回答：错误   9.11&gt;9.9</li>
+<li>原因：可能神经网络在工作的时候，有一些神经元被激活，看到的圣经章节 9.11 出现在9.9之后，被分散了注意力</li>
+</ul>
+</li>
+</ol>
+<h1 id="什么是参数"><a href="#什么是参数" class="headerlink" title="什么是参数"></a>什么是参数</h1><h3 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a><strong>一句话总结</strong></h3><p><strong>参数就是大模型的「脑细胞」</strong>，数量越多，模型越聪明，但需要更强大的「营养」（算力）和「学习资料」（数据）。</p>
+<hr>
+<h3 id="用现实生活彻底理解参数"><a href="#用现实生活彻底理解参数" class="headerlink" title="用现实生活彻底理解参数"></a><strong>用现实生活彻底理解参数</strong></h3><h4 id="1️⃣-例子1：做菜食谱"><a href="#1️⃣-例子1：做菜食谱" class="headerlink" title="1️⃣ 例子1：做菜食谱"></a>1️⃣ <strong>例子1：做菜食谱</strong></h4><ul>
+<li>你学做西红柿炒鸡蛋，食谱上写着：<ul>
+<li><strong>参数</strong>：盐3克、油10毫升、鸡蛋2个、糖5克…</li>
+<li><strong>为什么需要参数？</strong>：这些数字决定了菜的味道，盐多了会咸，糖多了会甜。</li>
+</ul>
+</li>
+<li><strong>大模型同理</strong>：它的「参数」就是一堆数字（比如1750亿个数字），每个数字控制着模型如何处理信息，比如判断一个词该不该出现在句子里。</li>
+</ul>
+<h4 id="2️⃣-例子2：考试猜答案"><a href="#2️⃣-例子2：考试猜答案" class="headerlink" title="2️⃣ 例子2：考试猜答案"></a>2️⃣ <strong>例子2：考试猜答案</strong></h4><ul>
+<li>假设你是个学生，考试遇到不会的选择题：<ul>
+<li><strong>参数=你的知识储备</strong>：你背过1000个单词（参数少） → 只能蒙对简单的题。</li>
+<li><strong>参数翻倍</strong>：你背了100000个单词+学过语法（参数多） → 能推理出复杂答案。</li>
+</ul>
+</li>
+<li><strong>大模型同理</strong>：参数越多，记住的规律和知识越多，解题能力越强。</li>
+</ul>
+<h4 id="3️⃣-例子3：乐高积木"><a href="#3️⃣-例子3：乐高积木" class="headerlink" title="3️⃣ 例子3：乐高积木"></a>3️⃣ <strong>例子3：乐高积木</strong></h4><ul>
+<li>你想拼一只恐龙：<ul>
+<li><strong>参数少（100块积木）</strong>：只能拼出简单形状，像儿童简笔画。</li>
+<li><strong>参数多（1万块积木）</strong>：能拼出逼真的恐龙，连鳞片细节都有。</li>
+</ul>
+</li>
+<li><strong>大模型同理</strong>：参数就是它的「积木块」，数量越多，能组合出的细节越丰富（比如写诗、编程、画图）。</li>
+</ul>
+<hr>
+<h3 id="为什么参数要那么多？"><a href="#为什么参数要那么多？" class="headerlink" title="为什么参数要那么多？"></a><strong>为什么参数要那么多？</strong></h3><ul>
+<li><strong>人类语言太复杂</strong>：比如“苹果”这个词，可能是水果、手机品牌、电影名字…模型需要海量参数记住这些可能性。</li>
+<li><strong>世界知识太庞大</strong>：比如GPT-3的1750亿参数，相当于把维基百科、书籍、网页中的知识压缩成数字密码。</li>
+<li><strong>举个极端例子</strong>：<ul>
+<li><strong>参数太少</strong>：模型看到“猫在___上”，只能填“桌子”。</li>
+<li><strong>参数够多</strong>：模型知道可以填“屋顶、键盘、热搜榜”（甚至玩梗）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="参数是怎么工作的？"><a href="#参数是怎么工作的？" class="headerlink" title="参数是怎么工作的？"></a><strong>参数是怎么工作的？</strong></h3><p>想象你在玩「猜画小歌」游戏：</p>
+<ol>
+<li><strong>你画一只猫（输入）</strong> → 模型开始分析（参数启动）：<ul>
+<li>参数1：判断有没有耳朵 → 是，+20分</li>
+<li>参数2：判断有没有胡须 → 是，+30分</li>
+<li>参数3：判断是不是抽象派 → 否，-10分<br>…（1750亿个参数一起投票）</li>
+</ul>
+</li>
+<li><strong>最终结论</strong>：你画的是猫（输出概率95%）。</li>
+</ol>
+<hr>
+<p>大模型的“参数”（Parameters）是指模型在训练过程中学习并调整的内部变量，这些变量决定了模型如何处理输入数据并生成输出。参数是机器学习模型的核心组成部分，它们存储了模型从数据中学到的“知识”。以下是对大模型参数的详细解释：</p>
+<hr>
+<h3 id="1-参数的本质"><a href="#1-参数的本质" class="headerlink" title="1. 参数的本质"></a><strong>1. 参数的本质</strong></h3><ul>
+<li><strong>数学定义</strong>：参数是模型中的权重（Weights）和偏置（Biases），通常表示为矩阵或向量。例如：<ul>
+<li>在神经网络中，每层的神经元之间的连接都有一个权重（决定信号传递的强度）。</li>
+<li>偏置（Bias）是一个常数项，用于调整神经元的激活阈值。</li>
+</ul>
+</li>
+<li><strong>训练目标</strong>：通过训练数据，模型不断调整参数，使得预测结果尽可能接近真实值（最小化预测误差）。</li>
+</ul>
+<hr>
+<h3 id="2-参数的作用"><a href="#2-参数的作用" class="headerlink" title="2. 参数的作用"></a><strong>2. 参数的作用</strong></h3><ul>
+<li><strong>模式捕捉</strong>：参数编码了数据中的统计规律。例如，在自然语言处理中，参数可能捕捉到“猫”和“狗”都是动物，但“猫”更可能与“喵喵叫”相关联。</li>
+<li><strong>知识存储</strong>：大模型通过海量参数存储复杂的知识。例如，GPT-3的1750亿参数中可能隐含了语法规则、事实性知识甚至推理能力。</li>
+<li><strong>模型复杂度</strong>：参数越多，模型能拟合的映射关系越复杂。例如，一个只有10个参数的模型可能只能处理线性关系，而拥有千亿参数的模型可以建模高度非线性的模式。</li>
+</ul>
+<hr>
+<h3 id="3-参数数量的意义"><a href="#3-参数数量的意义" class="headerlink" title="3. 参数数量的意义"></a><strong>3. 参数数量的意义</strong></h3><ul>
+<li><strong>参数规模与大模型</strong>：<ul>
+<li><strong>小模型</strong>：如线性回归（几十到几百个参数）。</li>
+<li><strong>大模型</strong>：如GPT-3（1750亿参数）、PaLM（5400亿参数）。</li>
+</ul>
+</li>
+<li><strong>参数多的优势</strong>：<ul>
+<li>更强的表达能力：能处理更复杂的任务（如生成连贯的长文本、多模态理解）。</li>
+<li>更好的泛化能力：通过海量数据训练，参数可以覆盖更多边缘情况。</li>
+</ul>
+</li>
+<li><strong>参数多的代价</strong>：<ul>
+<li><strong>计算资源</strong>：训练需要大量GPU/TPU和电力。</li>
+<li><strong>过拟合风险</strong>：如果数据不足，大模型可能记住训练数据而非学到规律（但大模型通常通过海量数据缓解这一问题）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4-参数如何工作？以神经网络为例"><a href="#4-参数如何工作？以神经网络为例" class="headerlink" title="4. 参数如何工作？以神经网络为例"></a><strong>4. 参数如何工作？以神经网络为例</strong></h3><ol>
+<li><strong>前向传播</strong>：输入数据（如文本）经过多层神经网络的加权计算（参数参与矩阵乘法），最终得到输出。</li>
+<li><strong>反向传播</strong>：通过损失函数计算预测误差，利用梯度下降算法调整参数，使误差减小。</li>
+<li><strong>参数固化</strong>：训练完成后，参数固定，模型利用这些参数对新数据做推理。</li>
+</ol>
+<hr>
+<h3 id="5-参数-vs-超参数"><a href="#5-参数-vs-超参数" class="headerlink" title="5. 参数 vs. 超参数"></a><strong>5. 参数 vs. 超参数</strong></h3><ul>
+<li><strong>参数（Parameters）</strong>：模型内部学到的变量（如权重、偏置）。</li>
+<li><strong>超参数（Hyperparameters）</strong>：人为设定的配置（如学习率、网络层数、批次大小）。超参数控制参数的调整过程。</li>
+</ul>
+<hr>
+<h3 id="6-为什么大模型需要如此多的参数？"><a href="#6-为什么大模型需要如此多的参数？" class="headerlink" title="6. 为什么大模型需要如此多的参数？"></a><strong>6. 为什么大模型需要如此多的参数？</strong></h3><ul>
+<li><strong>语言和世界的复杂性</strong>：人类语言包含大量隐含知识、逻辑关系和上下文依赖，需要足够多的参数来建模。</li>
+<li><strong>涌现能力</strong>：当参数规模超过某个阈值时，模型可能突然具备小模型没有的能力（如推理、代码生成）。</li>
+</ul>
+<hr>
+<h3 id="7-参数的实际例子"><a href="#7-参数的实际例子" class="headerlink" title="7. 参数的实际例子"></a><strong>7. 参数的实际例子</strong></h3><ul>
+<li><strong>线性模型</strong>：<code>y = wx + b</code>，其中 <code>w</code>（权重）和 <code>b</code>（偏置）是参数。</li>
+<li><strong>Transformer模型</strong>：<ul>
+<li>注意力机制中的查询（Q）、键（K）、值（V）矩阵。</li>
+<li>每层的权重矩阵和偏置向量。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><p>参数是大模型的核心“记忆”和“决策规则”，其数量和质量直接决定了模型的能力。参数越多，模型理论上能存储更多知识、捕捉更复杂的模式，但也带来了计算成本和能源消耗的挑战。理解参数的本质是理解深度学习模型工作原理的关键。</p>
+<h1 id="什么是训练大模型"><a href="#什么是训练大模型" class="headerlink" title="什么是训练大模型"></a>什么是训练大模型</h1><p>无非就是我们给了一些数据，它分词，嵌入，位置编码，然后捕捉语义特征；然后看哪个词和哪个词之间的距离是最近的；不断地学习语义之间的关联，不断地调整整个神经网络权重，调整完以后，生成的模型；随后，根据这个模型，你输入任何的前导词，它能够预测后面应该输出什么；</p>
+<ul>
+<li><p>pre-training：预训练-得到base model - 像是一个互联网文档模拟器，按词元级别工作</p>
+</li>
+<li><p>post-training: 监督微调 SFT + 奖励模型训练 (RM: Reward Model) + 强化学习 (RLHF: Reinforcement Learning from Human Feedback)</p>
+</li>
+</ul>
+<p>以下是关于大模型训练流程的补充说明，特别针对<strong>post-training（后训练）阶段</strong>的通俗解释：</p>
+<hr>
+<h3 id="Post-training-后训练阶段（人类介入的关键步骤）"><a href="#Post-training-后训练阶段（人类介入的关键步骤）" class="headerlink" title="Post-training 后训练阶段（人类介入的关键步骤）"></a><strong>Post-training 后训练阶段</strong>（人类介入的关键步骤）</h3><p>当base model完成预训练后，就像刚毕业的大学生：</p>
+<ul>
+<li>✅ 拥有海量知识</li>
+<li>❌ 但不会按要求回答问题</li>
+<li>❌ 可能说出危险/错误内容</li>
+<li>❌ 无法理解人类指令</li>
+</ul>
+<p>后训练就是通过<strong>三阶段改造</strong>让模型变得安全有用：</p>
+<hr>
+<h4 id="1-监督微调-SFT-Supervised-Fine-Tuning"><a href="#1-监督微调-SFT-Supervised-Fine-Tuning" class="headerlink" title="1. 监督微调 (SFT: Supervised Fine-Tuning)"></a><strong>1. 监督微调 (SFT: Supervised Fine-Tuning)</strong></h4><p><strong>目标</strong>：教会模型”对话规则”</p>
+<ul>
+<li><strong>方法</strong>：用人工编写的优质问答数据（示例：人类演示如何正确回答问题）</li>
+<li><strong>效果</strong>：<ul>
+<li>学会理解”用户→助手”的对话结构</li>
+<li>掌握”请解释…” “写一首诗”等指令的回应方式</li>
+<li>示例对比：<br><em>预训练模型输出</em>：”巴黎是法国首都。相关城市：马赛、里昂…”（自动续写文档）<br><em>SFT后输出</em>：”法国的首都是巴黎。需要了解更多信息吗？”（对话式回应）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="2-奖励模型训练-RM-Reward-Model"><a href="#2-奖励模型训练-RM-Reward-Model" class="headerlink" title="2. 奖励模型训练 (RM: Reward Model)"></a><strong>2. 奖励模型训练 (RM: Reward Model)</strong></h4><p><strong>目标</strong>：建立”答案质量评分系统”</p>
+<ul>
+<li><strong>方法</strong>：让人类对多个答案排序（如标注答案A比B更好）</li>
+<li><strong>关键机制</strong>：<ul>
+<li>学习区分”正确回答 vs 错误回答”</li>
+<li>识别”有帮助 vs 无意义回复”</li>
+<li>规避政治偏见/暴力内容（如给危险答案打低分）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="3-强化学习-RLHF-Reinforcement-Learning-from-Human-Feedback"><a href="#3-强化学习-RLHF-Reinforcement-Learning-from-Human-Feedback" class="headerlink" title="3. 强化学习 (RLHF: Reinforcement Learning from Human Feedback)"></a><strong>3. 强化学习 (RLHF: Reinforcement Learning from Human Feedback)</strong></h4><p><strong>目标</strong>：让模型自主优化回答质量</p>
+<ul>
+<li><strong>工作原理</strong>：<ol>
+<li>用户提问 → 模型生成多个候选答案</li>
+<li>奖励模型给每个答案打分（基于步骤2训练的评分系统）</li>
+<li>自动调整参数，让高分答案出现概率提升</li>
+</ol>
+</li>
+<li><strong>实际效果</strong>：<ul>
+<li>减少”我不知道”式的回避回答</li>
+<li>抑制种族歧视等有害内容生成</li>
+<li>提升逻辑推理能力（如数学题分步骤解答）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="对比预训练-vs-后训练"><a href="#对比预训练-vs-后训练" class="headerlink" title="对比预训练 vs 后训练"></a><strong>对比预训练 vs 后训练</strong></h3><table>
+<thead>
+<tr>
+<th align="left">维度</th>
+<th align="left">预训练 (Pre-training)</th>
+<th align="left">后训练 (Post-training)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>数据来源</strong></td>
+<td align="left">未标注的原始互联网文本</td>
+<td align="left">人工标注的高质量问答数据</td>
+</tr>
+<tr>
+<td align="left"><strong>目标</strong></td>
+<td align="left">学习语言统计规律</td>
+<td align="left">学习人类价值观和任务规范</td>
+</tr>
+<tr>
+<td align="left"><strong>计算成本</strong></td>
+<td align="left">消耗98%以上的算力（数千GPU月）</td>
+<td align="left">仅需1-2%算力</td>
+</tr>
+<tr>
+<td align="left"><strong>输出特点</strong></td>
+<td align="left">可能生成危险/无意义内容</td>
+<td align="left">安全、可控、符合指令</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="典型案例演变"><a href="#典型案例演变" class="headerlink" title="典型案例演变"></a><strong>典型案例演变</strong></h3><p><strong>用户提问</strong>：”如何制作炸弹？”</p>
+<ul>
+<li><strong>预训练模型</strong>：详细列出化学公式和步骤（从维基百科/论坛学习到的原始信息）</li>
+<li><strong>后训练模型</strong>：”抱歉，我无法提供危险物品的制作指导。您是否需要其他帮助？”（通过RLHF学习的道德约束）</li>
+</ul>
+<hr>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a><strong>注意事项</strong></h3><ol>
+<li>并非所有模型都完整经历这三个阶段（如GPT-3只有预训练，GPT-3.5/4才加入RLHF）</li>
+<li>对齐难题：人类标注者的价值观偏差可能影响模型输出</li>
+<li>知识时效性：后训练不更新事实知识，模型仍可能输出过时信息 </li>
+</ol>
+<p><strong>大语言模型 = Transformer架构（骨架） + 算法（灵魂） + 数据与算力（血液与肌肉</strong></p>
+<p>Transformer确实是当前处理序列数据（尤其是自然语言处理）中最重要和广泛使用的架构之一</p>
+<p>但神经网络还有其他架构，如CNN、RNN等，不过在语言模型领域，Transformer确实占主导地位。</p>
+<h4 id="1️⃣-Transformer的独特优势"><a href="#1️⃣-Transformer的独特优势" class="headerlink" title="1️⃣ Transformer的独特优势"></a>1️⃣ <strong>Transformer的独特优势</strong></h4><ul>
+<li><strong>并行计算能力</strong>：传统RNN需逐词处理，Transformer可同时处理整个序列（训练速度大幅提升）；</li>
+<li><strong>长程依赖捕捉</strong>：自注意力机制（Self-Attention）直接计算任意两个词的关系，避免RNN的梯度消失问题；</li>
+<li><strong>可扩展性</strong>：通过堆叠更多层和注意力头，轻松扩展模型规模（如GPT-3有96层）。</li>
+</ul>
+<h4 id="2️⃣-算法组合的复杂性"><a href="#2️⃣-算法组合的复杂性" class="headerlink" title="2️⃣ 算法组合的复杂性"></a>2️⃣ <strong>算法组合的复杂性</strong></h4><ul>
+<li><strong>训练算法</strong>：<ul>
+<li><strong>预训练算法</strong>：掩码语言建模（BERT）、自回归预测（GPT）；</li>
+<li><strong>优化算法</strong>：AdamW优化器（带权重衰减的Adam）；</li>
+<li><strong>正则化算法</strong>：Dropout、层归一化（LayerNorm）。</li>
+</ul>
+</li>
+<li><strong>调优算法</strong>：<ul>
+<li><strong>人类反馈强化学习（RLHF）</strong>：ChatGPT对齐人类价值观的核心技术；</li>
+<li><strong>提示工程（Prompt Engineering）</strong>：设计输入模板引导模型输出。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3️⃣-其他必要条件"><a href="#3️⃣-其他必要条件" class="headerlink" title="3️⃣ 其他必要条件"></a>3️⃣ <strong>其他必要条件</strong></h4><ul>
+<li><strong>海量数据</strong>：GPT-3训练数据包含45TB文本（约5000亿词）；</li>
+<li><strong>超算级硬件</strong>：训练千亿参数模型需数千块GPU/TPU；</li>
+<li><strong>工程优化</strong>：分布式训练框架（如Megatron-LM）、混合精度计算。</li>
+</ul>
+<h2 id="如何让大模型减少幻觉"><a href="#如何让大模型减少幻觉" class="headerlink" title="如何让大模型减少幻觉"></a>如何让大模型减少幻觉</h2><h3 id="方法一：后训练让模型学会说”不知道”"><a href="#方法一：后训练让模型学会说”不知道”" class="headerlink" title="方法一：后训练让模型学会说”不知道”"></a><strong>方法一：后训练让模型学会说”不知道”</strong></h3><h3 id="方法二：联网搜索"><a href="#方法二：联网搜索" class="headerlink" title="方法二：联网搜索"></a>方法二：<strong>联网搜索</strong></h3><h1 id="为什么模型训练需要GPU-而不是CPU"><a href="#为什么模型训练需要GPU-而不是CPU" class="headerlink" title="为什么模型训练需要GPU 而不是CPU"></a>为什么模型训练需要GPU 而不是CPU</h1><p>模型训练（尤其是深度学习和大模型）依赖 GPU 而非 CPU，核心原因在于 <strong>GPU 的架构设计极度适合并行计算和矩阵运算</strong>，而这是神经网络训练的核心需求。以下从技术原理、硬件设计、实际效能三个层面详细解释：</p>
+<hr>
+<h3 id="一、硬件架构差异"><a href="#一、硬件架构差异" class="headerlink" title="一、硬件架构差异"></a><strong>一、硬件架构差异</strong></h3><h4 id="1️⃣-CPU：通用计算，擅长串行任务"><a href="#1️⃣-CPU：通用计算，擅长串行任务" class="headerlink" title="1️⃣ CPU：通用计算，擅长串行任务"></a>1️⃣ <strong>CPU：通用计算，擅长串行任务</strong></h4><ul>
+<li><strong>核心数量少</strong>（通常 4-32 核），但每个核心<strong>复杂度高</strong>（支持分支预测、乱序执行等）；</li>
+<li><strong>缓存大</strong>（MB 级），适合处理逻辑复杂的串行任务（如操作系统调度、数据库查询）；</li>
+<li><strong>延迟优化</strong>：快速完成单个任务。</li>
+</ul>
+<h4 id="2️⃣-GPU：专用并行计算，适合简单重复任务"><a href="#2️⃣-GPU：专用并行计算，适合简单重复任务" class="headerlink" title="2️⃣ GPU：专用并行计算，适合简单重复任务"></a>2️⃣ <strong>GPU：专用并行计算，适合简单重复任务</strong></h4><ul>
+<li><strong>核心数量极多</strong>（数千到数万 CUDA 核心），但每个核心<strong>极度简化</strong>（无复杂控制逻辑）；</li>
+<li><strong>缓存小</strong>（KB 级），但<strong>内存带宽高</strong>（如 NVIDIA A100 带宽 1.5TB/s，CPU 通常 &lt;100GB/s）；</li>
+<li><strong>吞吐优化</strong>：同时处理海量简单任务。</li>
+</ul>
+<h4 id="🎯-类比"><a href="#🎯-类比" class="headerlink" title="🎯 类比"></a>🎯 <strong>类比</strong></h4><ul>
+<li><strong>CPU</strong> 像一位数学教授，能快速解复杂方程，但一次只能处理一个问题；</li>
+<li><strong>GPU</strong> 像一万名小学生，每人只做简单算术，但合力可瞬间完成百万次计算。</li>
+</ul>
+<hr>
+<h3 id="二、神经网络训练的核心需求"><a href="#二、神经网络训练的核心需求" class="headerlink" title="二、神经网络训练的核心需求"></a><strong>二、神经网络训练的核心需求</strong></h3><h4 id="1️⃣-并行计算密集型"><a href="#1️⃣-并行计算密集型" class="headerlink" title="1️⃣ 并行计算密集型"></a>1️⃣ <strong>并行计算密集型</strong></h4><ul>
+<li><strong>矩阵乘法</strong>：神经网络前向传播和反向传播的核心操作（如 W⋅X+b<em>W</em>⋅<em>X</em>+<em>b</em>）；</li>
+<li><strong>示例</strong>：一个 1024x1024 的矩阵相乘，GPU 可分解为百万级并行乘加运算。</li>
+</ul>
+<h4 id="2️⃣-高内存带宽需求"><a href="#2️⃣-高内存带宽需求" class="headerlink" title="2️⃣ 高内存带宽需求"></a>2️⃣ <strong>高内存带宽需求</strong></h4><ul>
+<li><strong>参数规模大</strong>：大模型参数量达百亿级（如 GPT-3 175B），需快速存取；</li>
+<li><strong>数据吞吐高</strong>：训练时批量数据（Batch）需高速加载到计算单元。</li>
+</ul>
+<h4 id="3️⃣-浮点运算能力（FLOPs）"><a href="#3️⃣-浮点运算能力（FLOPs）" class="headerlink" title="3️⃣ 浮点运算能力（FLOPs）"></a>3️⃣ <strong>浮点运算能力（FLOPs）</strong></h4><ul>
+<li><strong>GPU 算力碾压</strong>：<ul>
+<li>NVIDIA H100 GPU：~ 67 TFLOPS（每秒 67 万亿次浮点运算）；</li>
+<li>Intel i9 CPU：~ 1 TFLOPS；</li>
+</ul>
+</li>
+<li><strong>训练速度差距</strong>：同一模型在 GPU 上可比 CPU 快 <strong>50-100 倍</strong>。</li>
+</ul>
+<hr>
+<h3 id="三、GPU-的关键技术优势"><a href="#三、GPU-的关键技术优势" class="headerlink" title="三、GPU 的关键技术优势"></a><strong>三、GPU 的关键技术优势</strong></h3><h4 id="1️⃣-CUDA-核心与-Tensor-Core"><a href="#1️⃣-CUDA-核心与-Tensor-Core" class="headerlink" title="1️⃣ CUDA 核心与 Tensor Core"></a>1️⃣ <strong>CUDA 核心与 Tensor Core</strong></h4><ul>
+<li><strong>CUDA 核心</strong>：专为并行计算优化，支持单精度（FP32）运算；</li>
+<li><strong>Tensor Core</strong>（NVIDIA 独有）：专为深度学习设计，支持混合精度（FP16/FP32）和稀疏计算，<strong>吞吐量再提升 8 倍</strong>。</li>
+</ul>
+<h4 id="2️⃣-显存（VRAM）容量与带宽"><a href="#2️⃣-显存（VRAM）容量与带宽" class="headerlink" title="2️⃣ 显存（VRAM）容量与带宽"></a>2️⃣ <strong>显存（VRAM）容量与带宽</strong></h4><ul>
+<li><strong>大显存</strong>：高端 GPU（如 A100）显存达 80GB，可容纳更大模型和批量数据；</li>
+<li><strong>高带宽</strong>：HBM2/HBM3 显存技术，数据传输速度远超 CPU 内存。</li>
+</ul>
+<h4 id="3️⃣-软件生态支持"><a href="#3️⃣-软件生态支持" class="headerlink" title="3️⃣ 软件生态支持"></a>3️⃣ <strong>软件生态支持</strong></h4><ul>
+<li><strong>CUDA 框架</strong>：NVIDIA 的并行计算平台，直接映射硬件能力；</li>
+<li><strong>深度学习框架优化</strong>：PyTorch、TensorFlow 等库对 GPU 计算有原生支持；</li>
+<li><strong>分布式训练</strong>：多 GPU 并行（如 NCCL 通信库）进一步加速训练。</li>
+</ul>
+<hr>
+<h3 id="四、实际训练效率对比"><a href="#四、实际训练效率对比" class="headerlink" title="四、实际训练效率对比"></a><strong>四、实际训练效率对比</strong></h3><table>
+<thead>
+<tr>
+<th align="left"><strong>任务</strong></th>
+<th align="left"><strong>CPU 训练时间</strong></th>
+<th align="left"><strong>GPU 训练时间</strong></th>
+<th align="left"><strong>加速比</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ResNet-50（ImageNet）</td>
+<td align="left">~30 天（24 核 CPU）</td>
+<td align="left">~1 天（1 块 V100）</td>
+<td align="left"><strong>30 倍</strong></td>
+</tr>
+<tr>
+<td align="left">GPT-3（175B 参数）</td>
+<td align="left">理论上需数十年</td>
+<td align="left">~34 天（1024 块 A100）</td>
+<td align="left"><strong>千倍级</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="五、为什么不用-CPU-集群？"><a href="#五、为什么不用-CPU-集群？" class="headerlink" title="五、为什么不用 CPU 集群？"></a><strong>五、为什么不用 CPU 集群？</strong></h3><p>即使使用多 CPU 并行：</p>
+<ol>
+<li><strong>通信成本高</strong>：CPU 间数据传输带宽远低于 GPU（如 PCIe 4.0 带宽 64GB/s，NVLink 达 600GB/s）；</li>
+<li><strong>能效比差</strong>：完成相同计算量，CPU 集群的功耗和成本远超 GPU；</li>
+<li><strong>扩展性差</strong>：千核 CPU 集群的协调复杂度指数级上升，而 GPU 可通过模型并行轻松扩展。</li>
+</ol>
+<hr>
+<h3 id="六、总结：GPU-不可替代的三大原因"><a href="#六、总结：GPU-不可替代的三大原因" class="headerlink" title="六、总结：GPU 不可替代的三大原因"></a><strong>六、总结：GPU 不可替代的三大原因</strong></h3><ol>
+<li><strong>并行架构</strong>：万级核心同时处理矩阵运算；</li>
+<li><strong>超高算力</strong>：TFLOPS 级浮点性能碾压 CPU；</li>
+<li><strong>深度学习生态</strong>：从硬件到框架的全栈优化。</li>
+</ol>
+<p><strong>例外情况</strong>：</p>
+<ul>
+<li><strong>小模型/轻量任务</strong>：CPU 可勉强应对（如训练一个 MNIST 分类器）；</li>
+<li><strong>推理阶段</strong>：部分场景可用 CPU（如低并发、低延迟需求）。</li>
+</ul>
+<p>但无论如何，<strong>大规模模型训练离开 GPU 将寸步难行</strong>。</p>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Waylon Yan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/posts/62587.html">http://yoursite.com/posts/62587.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/7755.html"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">AI-02-Agent</div></div></a></div><div class="next-post pull-right"><a href="/posts/24369.html"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">AI-01-Langchain构建RAG应用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/posts/52660.html" title="AI-01-LLM概述"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-17</div><div class="title">AI-01-LLM概述</div></div></a></div><div><a href="/posts/7755.html" title="AI-02-Agent"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-11</div><div class="title">AI-02-Agent</div></div></a></div><div><a href="/posts/23894.html" title="AI-02-通俗解释LLM"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-17</div><div class="title">AI-02-通俗解释LLM</div></div></a></div><div><a href="/posts/34613.html" title="AI-04-提示词工程"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-17</div><div class="title">AI-04-提示词工程</div></div></a></div><div><a href="/posts/64.html" title="AI-03-智能体概述"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-17</div><div class="title">AI-03-智能体概述</div></div></a></div><div><a href="/posts/24369.html" title="AI-01-Langchain构建RAG应用"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-23</div><div class="title">AI-01-Langchain构建RAG应用</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Waylon Yan</div><div class="author-info__description">tech life sharing</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Waylonwhynot" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:ywl1006@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">无止境</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%A7%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">什么是大模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%82%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">什么是参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-number">2.0.1.</span> <span class="toc-text">一句话总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E7%8E%B0%E5%AE%9E%E7%94%9F%E6%B4%BB%E5%BD%BB%E5%BA%95%E7%90%86%E8%A7%A3%E5%8F%82%E6%95%B0"><span class="toc-number">2.0.2.</span> <span class="toc-text">用现实生活彻底理解参数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-%E4%BE%8B%E5%AD%901%EF%BC%9A%E5%81%9A%E8%8F%9C%E9%A3%9F%E8%B0%B1"><span class="toc-number">2.0.2.1.</span> <span class="toc-text">1️⃣ 例子1：做菜食谱</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-%E4%BE%8B%E5%AD%902%EF%BC%9A%E8%80%83%E8%AF%95%E7%8C%9C%E7%AD%94%E6%A1%88"><span class="toc-number">2.0.2.2.</span> <span class="toc-text">2️⃣ 例子2：考试猜答案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%EF%B8%8F%E2%83%A3-%E4%BE%8B%E5%AD%903%EF%BC%9A%E4%B9%90%E9%AB%98%E7%A7%AF%E6%9C%A8"><span class="toc-number">2.0.2.3.</span> <span class="toc-text">3️⃣ 例子3：乐高积木</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%82%E6%95%B0%E8%A6%81%E9%82%A3%E4%B9%88%E5%A4%9A%EF%BC%9F"><span class="toc-number">2.0.3.</span> <span class="toc-text">为什么参数要那么多？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E6%98%AF%E6%80%8E%E4%B9%88%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F"><span class="toc-number">2.0.4.</span> <span class="toc-text">参数是怎么工作的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%82%E6%95%B0%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">2.0.5.</span> <span class="toc-text">1. 参数的本质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">2.0.6.</span> <span class="toc-text">2. 参数的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8F%82%E6%95%B0%E6%95%B0%E9%87%8F%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">2.0.7.</span> <span class="toc-text">3. 参数数量的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%8F%82%E6%95%B0%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%EF%BC%9F%E4%BB%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%BA%E4%BE%8B"><span class="toc-number">2.0.8.</span> <span class="toc-text">4. 参数如何工作？以神经网络为例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%8F%82%E6%95%B0-vs-%E8%B6%85%E5%8F%82%E6%95%B0"><span class="toc-number">2.0.9.</span> <span class="toc-text">5. 参数 vs. 超参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%9C%80%E8%A6%81%E5%A6%82%E6%AD%A4%E5%A4%9A%E7%9A%84%E5%8F%82%E6%95%B0%EF%BC%9F"><span class="toc-number">2.0.10.</span> <span class="toc-text">6. 为什么大模型需要如此多的参数？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%8F%82%E6%95%B0%E7%9A%84%E5%AE%9E%E9%99%85%E4%BE%8B%E5%AD%90"><span class="toc-number">2.0.11.</span> <span class="toc-text">7. 参数的实际例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.0.12.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%AE%AD%E7%BB%83%E5%A4%A7%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">什么是训练大模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Post-training-%E5%90%8E%E8%AE%AD%E7%BB%83%E9%98%B6%E6%AE%B5%EF%BC%88%E4%BA%BA%E7%B1%BB%E4%BB%8B%E5%85%A5%E7%9A%84%E5%85%B3%E9%94%AE%E6%AD%A5%E9%AA%A4%EF%BC%89"><span class="toc-number">3.0.1.</span> <span class="toc-text">Post-training 后训练阶段（人类介入的关键步骤）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%9B%91%E7%9D%A3%E5%BE%AE%E8%B0%83-SFT-Supervised-Fine-Tuning"><span class="toc-number">3.0.1.1.</span> <span class="toc-text">1. 监督微调 (SFT: Supervised Fine-Tuning)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%A5%96%E5%8A%B1%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83-RM-Reward-Model"><span class="toc-number">3.0.1.2.</span> <span class="toc-text">2. 奖励模型训练 (RM: Reward Model)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-RLHF-Reinforcement-Learning-from-Human-Feedback"><span class="toc-number">3.0.1.3.</span> <span class="toc-text">3. 强化学习 (RLHF: Reinforcement Learning from Human Feedback)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E9%A2%84%E8%AE%AD%E7%BB%83-vs-%E5%90%8E%E8%AE%AD%E7%BB%83"><span class="toc-number">3.0.2.</span> <span class="toc-text">对比预训练 vs 后训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B%E6%BC%94%E5%8F%98"><span class="toc-number">3.0.3.</span> <span class="toc-text">典型案例演变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">3.0.4.</span> <span class="toc-text">注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-Transformer%E7%9A%84%E7%8B%AC%E7%89%B9%E4%BC%98%E5%8A%BF"><span class="toc-number">3.0.4.1.</span> <span class="toc-text">1️⃣ Transformer的独特优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-%E7%AE%97%E6%B3%95%E7%BB%84%E5%90%88%E7%9A%84%E5%A4%8D%E6%9D%82%E6%80%A7"><span class="toc-number">3.0.4.2.</span> <span class="toc-text">2️⃣ 算法组合的复杂性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%EF%B8%8F%E2%83%A3-%E5%85%B6%E4%BB%96%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.0.4.3.</span> <span class="toc-text">3️⃣ 其他必要条件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%A9%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%87%8F%E5%B0%91%E5%B9%BB%E8%A7%89"><span class="toc-number">3.1.</span> <span class="toc-text">如何让大模型减少幻觉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%90%8E%E8%AE%AD%E7%BB%83%E8%AE%A9%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%BC%9A%E8%AF%B4%E2%80%9D%E4%B8%8D%E7%9F%A5%E9%81%93%E2%80%9D"><span class="toc-number">3.1.1.</span> <span class="toc-text">方法一：后训练让模型学会说”不知道”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2"><span class="toc-number">3.1.2.</span> <span class="toc-text">方法二：联网搜索</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E9%9C%80%E8%A6%81GPU-%E8%80%8C%E4%B8%8D%E6%98%AFCPU"><span class="toc-number">4.</span> <span class="toc-text">为什么模型训练需要GPU 而不是CPU</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B7%AE%E5%BC%82"><span class="toc-number">4.0.1.</span> <span class="toc-text">一、硬件架构差异</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-CPU%EF%BC%9A%E9%80%9A%E7%94%A8%E8%AE%A1%E7%AE%97%EF%BC%8C%E6%93%85%E9%95%BF%E4%B8%B2%E8%A1%8C%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.0.1.1.</span> <span class="toc-text">1️⃣ CPU：通用计算，擅长串行任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-GPU%EF%BC%9A%E4%B8%93%E7%94%A8%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%EF%BC%8C%E9%80%82%E5%90%88%E7%AE%80%E5%8D%95%E9%87%8D%E5%A4%8D%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.0.1.2.</span> <span class="toc-text">2️⃣ GPU：专用并行计算，适合简单重复任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%8E%AF-%E7%B1%BB%E6%AF%94"><span class="toc-number">4.0.1.3.</span> <span class="toc-text">🎯 类比</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E7%9A%84%E6%A0%B8%E5%BF%83%E9%9C%80%E6%B1%82"><span class="toc-number">4.0.2.</span> <span class="toc-text">二、神经网络训练的核心需求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E5%AF%86%E9%9B%86%E5%9E%8B"><span class="toc-number">4.0.2.1.</span> <span class="toc-text">1️⃣ 并行计算密集型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-%E9%AB%98%E5%86%85%E5%AD%98%E5%B8%A6%E5%AE%BD%E9%9C%80%E6%B1%82"><span class="toc-number">4.0.2.2.</span> <span class="toc-text">2️⃣ 高内存带宽需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%EF%B8%8F%E2%83%A3-%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97%E8%83%BD%E5%8A%9B%EF%BC%88FLOPs%EF%BC%89"><span class="toc-number">4.0.2.3.</span> <span class="toc-text">3️⃣ 浮点运算能力（FLOPs）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81GPU-%E7%9A%84%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF%E4%BC%98%E5%8A%BF"><span class="toc-number">4.0.3.</span> <span class="toc-text">三、GPU 的关键技术优势</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-CUDA-%E6%A0%B8%E5%BF%83%E4%B8%8E-Tensor-Core"><span class="toc-number">4.0.3.1.</span> <span class="toc-text">1️⃣ CUDA 核心与 Tensor Core</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-%E6%98%BE%E5%AD%98%EF%BC%88VRAM%EF%BC%89%E5%AE%B9%E9%87%8F%E4%B8%8E%E5%B8%A6%E5%AE%BD"><span class="toc-number">4.0.3.2.</span> <span class="toc-text">2️⃣ 显存（VRAM）容量与带宽</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%EF%B8%8F%E2%83%A3-%E8%BD%AF%E4%BB%B6%E7%94%9F%E6%80%81%E6%94%AF%E6%8C%81"><span class="toc-number">4.0.3.3.</span> <span class="toc-text">3️⃣ 软件生态支持</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%9E%E9%99%85%E8%AE%AD%E7%BB%83%E6%95%88%E7%8E%87%E5%AF%B9%E6%AF%94"><span class="toc-number">4.0.4.</span> <span class="toc-text">四、实际训练效率对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E7%94%A8-CPU-%E9%9B%86%E7%BE%A4%EF%BC%9F"><span class="toc-number">4.0.5.</span> <span class="toc-text">五、为什么不用 CPU 集群？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%BB%E7%BB%93%EF%BC%9AGPU-%E4%B8%8D%E5%8F%AF%E6%9B%BF%E4%BB%A3%E7%9A%84%E4%B8%89%E5%A4%A7%E5%8E%9F%E5%9B%A0"><span class="toc-number">4.0.6.</span> <span class="toc-text">六、总结：GPU 不可替代的三大原因</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/5677.html" title="AI-08-A2A"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-08-A2A"/></a><div class="content"><a class="title" href="/posts/5677.html" title="AI-08-A2A">AI-08-A2A</a><time datetime="2025-06-21T07:22:33.000Z" title="Created 2025-06-21 15:22:33">2025-06-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/18525.html" title="AI-07-MCP"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-07-MCP"/></a><div class="content"><a class="title" href="/posts/18525.html" title="AI-07-MCP">AI-07-MCP</a><time datetime="2025-06-08T06:19:30.000Z" title="Created 2025-06-08 14:19:30">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/65143.html" title="AI-06-dify"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-06-dify"/></a><div class="content"><a class="title" href="/posts/65143.html" title="AI-06-dify">AI-06-dify</a><time datetime="2025-06-08T06:19:08.000Z" title="Created 2025-06-08 14:19:08">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/45471.html" title="AI-05-coze"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-05-coze"/></a><div class="content"><a class="title" href="/posts/45471.html" title="AI-05-coze">AI-05-coze</a><time datetime="2025-05-17T15:16:48.000Z" title="Created 2025-05-17 23:16:48">2025-05-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/34613.html" title="AI-04-提示词工程"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-04-提示词工程"/></a><div class="content"><a class="title" href="/posts/34613.html" title="AI-04-提示词工程">AI-04-提示词工程</a><time datetime="2025-05-17T15:15:51.000Z" title="Created 2025-05-17 23:15:51">2025-05-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Waylon Yan</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

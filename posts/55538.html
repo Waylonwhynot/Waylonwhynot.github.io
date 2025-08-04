@@ -1,0 +1,581 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>py-cmdb | YouNeed</title><meta name="keywords" content="cmdb"><meta name="author" content="Waylon Yan"><meta name="copyright" content="Waylon Yan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="cmdb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="py-cmdb">
+<meta property="og:url" content="http://yoursite.com/posts/55538.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="cmdb">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2020-11-15T11:24:02.000Z">
+<meta property="article:modified_time" content="2025-08-04T15:41:26.909Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="cmdb">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/posts/55538"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'py-cmdb',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-08-04 23:41:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YouNeed</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">py-cmdb</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-11-15T11:24:02.000Z" title="Created 2020-11-15 19:24:02">2020-11-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-08-04T15:41:26.909Z" title="Updated 2025-08-04 23:41:26">2025-08-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/python/">python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="py-cmdb"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>cmdb</p>
+<a id="more"></a>
+
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/58259643">https://zhuanlan.zhihu.com/p/58259643</a></p>
+<h2 id="一-为什么要做cmdb？"><a href="#一-为什么要做cmdb？" class="headerlink" title="一. 为什么要做cmdb？"></a>一. 为什么要做cmdb？</h2><pre><code>1. 项目上线的流程： 
+    调研需求分析 ---》 开会确定日期 ---》 开发程序 ---》 项目测试人员 ---》代码上线（运维来负责）
+    a.代码上线
+    b.监控服务器
+    c.装机服务
+    d.年底统计
+    传统上线方式：
+        直接代码解压 ，启服务， 访问项目， 进行测试
+        弊端：
+          - 手工上线  运维来干预 
+          - 加机器， 需要重复进行代码的部署
+        优化策略：
+            代码上线系统 
+            必要条件：需要知道服务器的信息 （服务器的主机名， 硬盘大小。。。）
+
+2. 一个公司即将上市， 审查公司的资产 
+    传统方式,统计公司服务器资产的方式：
+        excel表格 
+            最后信息会变得不准确
+            导致年底进行审计的时候，资产变得无法进行准确的统计</code></pre>
+<p> CMDB：</p>
+<pre><code>CMDB包含的功能
+    用户管理，记录测试，开发，运维人员的用户表
+    业务线管理，需要记录业务的详情
+    项目管理，指定此项目用属于哪条业务线，以及项目详情
+    应用管理，指定此应用的开发人员，属于哪个项目，和代码地址，部署目录，部署集群，依赖的应用，软件等信息
+    主机管理，包括云主机，物理机，主机属于哪个集群，运行着哪些软件，主机管理员，连接哪些网络设备，云主机的资源池，存储等相关信息
+    主机变更管理，主机的一些信息变更，例如管理员，所属集群等信息更改，连接的网络变更等
+    网络设备管理，主要记录网络设备的详细信息，及网络设备连接的上级设备
+    IP管理，IP属于哪个主机，哪个网段, 是否被占用等</code></pre>
+<p>​            </p>
+<h2 id="二-cmdb实现的方案："><a href="#二-cmdb实现的方案：" class="headerlink" title="二. cmdb实现的方案："></a>二. cmdb实现的方案：</h2><pre><code>核心的代码：
+    - 1. linux相关的命令   megacli 
+    - 2. Python的代码执行linux命令， 得到结果返回给服务端      
+
+- agent方案
+  - 优点：速度快
+  - 缺点：每一台机器都需要部署，维护
+  - agent python代码去执行Linux命令，subprocess模块执行命令；request模块post方法
+
+- ssh类方案（paramiko 或者 ansible）
+  - 优点：只需要在中控机上部署paramiko；采集数据然后post到API
+  - 缺点：速度慢
+
+- salt方案
+  使用场景：公司正在使用saltstack
+
+目标：    
+    写一份代码， 通过改变配置实现三套方案       
+    客户端的采集</code></pre>
+<h2 id="三-CMDB实现的四种方式"><a href="#三-CMDB实现的四种方式" class="headerlink" title="三. CMDB实现的四种方式"></a><strong>三. CMDB实现的四种方式</strong></h2><ul>
+<li><strong>Agent实现方式</strong></li>
+</ul>
+<blockquote>
+<p>Agent方式，可以将服务器上面的Agent程序作定时任务，定时将资产信息提交到指定API录入数据库</p>
+</blockquote>
+<p><img src="/Users/waylonyan/Desktop/wechat_images/py-cmdb/v2-ef4ac7798055ddf6ce9d71169b4c103d_720w.jpg" alt="img"></p>
+<blockquote>
+<p>其本质上就是在各个服务器上执行<code>subprocess.getoutput()</code>命令，然后将每台机器上执行的结果，返回给主机API，然后主机API收到这些数据之后，放入到数据库中，最终通过web界面展现给用户</p>
+</blockquote>
+<p>优点：速度快 缺点：需要为每台服务器部署一个Agent程序</p>
+<hr>
+<ul>
+<li><strong>ssh实现方式 （基于Paramiko模块）</strong></li>
+</ul>
+<blockquote>
+<p>中控机通过Paramiko（py模块）登录到各个服务器上，然后执行命令的方式去获取各个服务器上的信息</p>
+</blockquote>
+<p><img src="/Users/waylonyan/Desktop/wechat_images/py-cmdb/v2-440fc1021819560eca1ae0ca13f737b2_720w.jpg" alt="img"></p>
+<p>优点：无Agent 缺点：速度慢</p>
+<p><strong>如果在服务器较少的情况下，可应用此方法</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建SSH对象</span></span><br><span class="line">ssh = paramiko.SSHClient()</span><br><span class="line"><span class="comment"># 允许连接不在know_hosts文件中的主机</span></span><br><span class="line">ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line"><span class="comment"># 连接服务器</span></span><br><span class="line">ssh.connect(hostname=<span class="string">&#x27;c1.salt.com&#x27;</span>, port=<span class="number">22</span>, username=<span class="string">&#x27;root&#x27;</span>, password=<span class="string">&#x27;123&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行命令</span></span><br><span class="line">stdin, stdout, stderr = ssh.exec_command(<span class="string">&#x27;df&#x27;</span>)</span><br><span class="line"><span class="comment"># 获取命令结果</span></span><br><span class="line">result = stdout.read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭连接</span></span><br><span class="line">ssh.close()</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li><strong>saltstack方式</strong></li>
+</ul>
+<p><img src="/Users/waylonyan/Desktop/wechat_images/py-cmdb/v2-238d79366584ddfce4e45ada20f72bf9_720w.jpg" alt="img"></p>
+<blockquote>
+<p>此方案本质上和第二种方案大致是差不多的流程，中控机发送命令给服务器执行。服务器将结果放入另一个队列中，中控机获取将服务信息发送到API进而录入数据库。</p>
+</blockquote>
+<p>优点：快，开发成本低 缺点：依赖于第三方工具</p>
+<p><strong>salstack的安装和配置</strong></p>
+<p>1.安装和配置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">master端：</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">1. 安装salt-master</span></span><br><span class="line"><span class="string">    yum install salt-master</span></span><br><span class="line"><span class="string">2. 修改配置文件：/etc/salt/master</span></span><br><span class="line"><span class="string">    interface: 0.0.0.0    # 表示Master的IP </span></span><br><span class="line"><span class="string">3. 启动</span></span><br><span class="line"><span class="string">    service salt-master start</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">slave端：</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">1. 安装salt-minion</span></span><br><span class="line"><span class="string">    yum install salt-minion</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2. 修改配置文件 /etc/salt/minion</span></span><br><span class="line"><span class="string">    master: 10.211.55.4           # master的地址</span></span><br><span class="line"><span class="string">    或</span></span><br><span class="line"><span class="string">    master:</span></span><br><span class="line"><span class="string">        - 10.211.55.4</span></span><br><span class="line"><span class="string">        - 10.211.55.5</span></span><br><span class="line"><span class="string">    random_master: True</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    id: c2.salt.com                    # 客户端在salt-master中显示的唯一ID</span></span><br><span class="line"><span class="string">3. 启动</span></span><br><span class="line"><span class="string">    service salt-minion start</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.授权</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">salt-key -L                    # 查看已授权和未授权的slave</span></span><br><span class="line"><span class="string">salt-key -a  salve_id      # 接受指定id的salve</span></span><br><span class="line"><span class="string">salt-key -r  salve_id      # 拒绝指定id的salve</span></span><br><span class="line"><span class="string">salt-key -d  salve_id      # 删除指定id的salve</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>3.执行命令</p>
+<p>在master服务器上对salve进行远程操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">salt <span class="string">&#x27;c2.salt.com&#x27;</span> cmd.run  <span class="string">&#x27;ifconfig&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>基于API的方式</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> salt.client</span><br><span class="line">local = salt.client.LocalClient()</span><br><span class="line">result = local.cmd(<span class="string">&#x27;c2.salt.com&#x27;</span>, <span class="string">&#x27;cmd.run&#x27;</span>, [<span class="string">&#x27;ifconfig&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="四-代码实现："><a href="#四-代码实现：" class="headerlink" title="四. 代码实现："></a>四. 代码实现：</h2><ul>
+<li><p>开发过程中遇到的问题<br>  解决的方案：</p>
+<pre><code>  - 采用的是高内聚低耦合的思想，对代码进行高度的封装和抽离
+  - 集成了默认的全局配置文件以及自定制配置文件
+  - Django 中间件的写法，对插件进行可插拔式的采集</code></pre>
+</li>
+<li><p>autoclient目录结构：</p>
+<ul>
+<li>bin  ： 核心的启动文件  start.py </li>
+<li>conf : 配置文件夹  </li>
+<li>lib  ：库文件 </li>
+<li>log  : 不建议将日志文件夹放在项目中   /var/log  mkidr /logs/cmdb/</li>
+<li>src  : 核心的源代码目录</li>
+<li>test : 开发的过程中， 需要进行代码的调试<br>​            </li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><p>高级配置文件的实现 ：</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">django的配置：</span><br><span class="line">    <span class="keyword">from</span> django.conf <span class="keyword">import</span> global_settings, settings</span><br><span class="line">    settings.TIME_ZONE</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 将自定制的配置和全局的配置集成在一个对象上， 之后想要使用任何属性的时候， 直接可以通过此对象获得</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>技术要点：</p>
+<ul>
+<li>getattr : 反射获取 对应的值</li>
+<li>setattr : 反射设置</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> config <span class="keyword">import</span> custom_settings</span><br><span class="line"><span class="keyword">from</span> lib.conf <span class="keyword">import</span> global_settings</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Setting</span>():</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment">### 全局配置</span></span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> dir(global_settings):</span><br><span class="line">            <span class="keyword">if</span> key.isupper():</span><br><span class="line">                setattr(self, key, getattr(global_settings, key))</span><br><span class="line">        <span class="comment">### 自定义配置</span></span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> dir(custom_settings):</span><br><span class="line">            <span class="keyword">if</span> key.isupper():</span><br><span class="line">                setattr(self, key, getattr(custom_settings, key))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">settings = Setting()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>编程思想：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">高内聚低耦合</span><br><span class="line">    1.面向过程的写法，代码不容易扩展，后续不好维护</span><br><span class="line">    2.写一个类或者一个函数的时候， 我们需要明确 函数或者此类主要负责干啥的，不要出现类无关的代码</span><br><span class="line"></span><br><span class="line">class User():</span><br><span class="line">    #### 和用户相关的一些逻辑</span><br><span class="line">    def getUserInfo():</span><br><span class="line">    #### 获取用户的信息</span><br><span class="line">    </span><br><span class="line">    ### 处理订单相关的业务逻辑</span><br></pre></td></tr></table></figure>
+
+<p>可插拔式的配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">settings.py:</span><br><span class="line">    PLUGINS_DICT = &#123;</span><br><span class="line">        <span class="string">&quot;basic&quot;</span> : <span class="string">&#x27;src.plugins.basic.Basic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;disk&quot;</span> : <span class="string">&#x27;src.plugins.disk.Disk&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;memory&quot;</span> : <span class="string">&#x27;src.plugins.memory.Memory&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;nic&quot;</span> : <span class="string">&#x27;src.plugins.nic.Nic&#x27;</span>,</span><br><span class="line">        <span class="string">&quot;cpu&quot;</span> : <span class="string">&#x27;src.plugins.cpu.Cpu&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    参考django的中间件</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">execute</span>(<span class="params">self</span>):</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.plugins_dict.items():</span><br><span class="line">            <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">            k: basic </span></span><br><span class="line"><span class="string">            v: src.plugins.basic.Basic  字符串</span></span><br><span class="line"><span class="string">            &#x27;&#x27;&#x27;</span></span><br><span class="line">            module_path, cls_name = v.rsplit(<span class="string">&#x27;.&#x27;</span>, <span class="number">1</span>)</span><br><span class="line">            module = importlib.import_module(module_path)  <span class="comment">#### 导入路径</span></span><br><span class="line">            cls = getattr(module, cls_name)   <span class="comment">##### 获取对应的类名</span></span><br><span class="line">            cls().process()    <span class="comment">#### 执行该类对应的方法</span></span><br></pre></td></tr></table></figure>
+<p>插件的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Memory</span>():</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;memory&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>插件代码重复：</p>
+<ul>
+<li>解决的方法：<ul>
+<li><ol>
+<li>base.py 写一个基类， 所有的插件继承这个基类， 只需要执行该基类中的方法</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>cmd_func 抽离出去，当做参数传给execute函数</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>并发采集服务器信息(agent方式不需要考虑，ssh方式需要考虑)</p>
+<ul>
+<li>并发采集<ul>
+<li>并发采集，采用线程池<ul>
+<li>Python2：线程池 无；进程池 有；</li>
+<li>Python3：线程池 有；进程池 有；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor，ProcessPoolExecutor</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment">### 线程池</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor，ProcessPoolExecutor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">i</span>):</span></span><br><span class="line"></span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line">    print(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p = ThreadPoolExecutor(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    <span class="comment"># run(i)</span></span><br><span class="line">    p.submit(run, i)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>遇到的问题</p>
+<ul>
+<li><p>唯一标识的问题</p>
+<ul>
+<li>需要选出一个唯一的字段，作为唯一标识来进行区分服务器信息</li>
+<li>sn 主板序列号<ul>
+<li>问题，虚拟机和物理机一个sn号，导致服务器信息采集不完整</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>解决</p>
+<ul>
+<li><ol>
+<li>如果公司不需要采集虚拟机的信息，使用sn没有问题</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>hostname做唯一标识</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>规范</li>
+</ol>
+<ul>
+<li><ol start="0">
+<li>1000台服务器，需要唯一的主机名</li>
+</ol>
+</li>
+<li><ol>
+<li>将服务器主机名，录入到后台管理数据库中（登记服务器）</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>再分配给技术之前，需要运行一次采集的client程序，此时收集上来的数据都是最原始的。可以将原始数据中过的hostname保存到一个文件当中，以后，我们再向后端post数据的时候，以文件中的hostname为一个标准</li>
+<li>ssh/salt方案是不用写hostname到文件中的，因为如果你hostname改了，就登录不上了，所以需要提前约定，可以临时改，但是要记得改回去<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Agent</span>(<span class="params">Base</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">collect</span>(<span class="params">self</span>):</span></span><br><span class="line">        res = PluginsManager().execute()</span><br><span class="line">        <span class="comment">###唯一标识的问题</span></span><br><span class="line">        hostname = res[<span class="string">&#x27;basic&#x27;</span>][<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;hostname&#x27;</span>]</span><br><span class="line">        info = open(os.path.join(settings.BASEDIR, <span class="string">&#x27;conf/cert&#x27;</span>), <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>).read()</span><br><span class="line"></span><br><span class="line">        <span class="comment">###第一次运行，需要将原始的主机名写入到文件中</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> info.strip():</span><br><span class="line">            <span class="keyword">with</span> open(os.path.join(settings.BASEDIR, <span class="string">&#x27;conf/cert&#x27;</span>), <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">                fp.write(hostname)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            res[<span class="string">&#x27;basic&#x27;</span>][<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;hostname&#x27;</span>] = info</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> res.items():</span><br><span class="line">            print(k, v)</span><br><span class="line">        self.postInfo(res)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>API验证</p>
+</li>
+</ol>
+<ul>
+<li>自定义的验证</li>
+<li>对称加密<ul>
+<li>缺点：key是明文传输的<ul>
+<li>解决方法：发过去的key加密</li>
+<li>要求每次加密的key都是动态的（时间）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>非对称加密</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">第一关：</span><br><span class="line">            验证时间是否超时</span><br><span class="line">            </span><br><span class="line">            server_time - client_time &gt; 3</span><br><span class="line">            </span><br><span class="line">        第二关：</span><br><span class="line">            </span><br><span class="line">            对数据由原来的的明文 加密成现在的密文 </span><br><span class="line">            </span><br><span class="line">            md5() : 不可逆的算法         sha256   sha128  </span><br><span class="line">            </span><br><span class="line">        第三关：</span><br><span class="line">            只允许 client_md5_token 只能用一次</span><br><span class="line">            </span><br><span class="line">            redis：</span><br><span class="line">                - 速度快</span><br><span class="line">                - 设置超时时间   10S</span><br><span class="line">            </span><br><span class="line">        JWT </span><br></pre></td></tr></table></figure>
+
+
+
+<ol>
+<li>第一种方式</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">对称加密</span><br><span class="line">client</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">key = <span class="string">&#x27;asdasdasd&#x27;</span></span><br><span class="line">res = requests.get(<span class="string">&#x27;http://127.0.0.1:8000/testapi&#x27;</span>, headers=&#123;<span class="string">&#x27;key&#x27;</span>:key&#125;)</span><br><span class="line">print(res.text)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">server</span><br><span class="line">server_key = <span class="string">&#x27;asdasdasds&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">testapi</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">        clent_key = request.META[<span class="string">&#x27;HTTP_KEY&#x27;</span>]</span><br><span class="line">        <span class="keyword">if</span> server_key != clent_key:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;非法请求&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(request.body)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>第二种方式，堆成加密，密文（1.时间，2.加密出错）</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#### client</span></span><br><span class="line">token = <span class="string">&#x27;xdrfdsfsdf&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">client_time = time.time()</span><br><span class="line">tmp = <span class="string">&quot;%s|%s&quot;</span> % (token, client_time)</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">m = hashlib.md5()</span><br><span class="line">m.update(bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">res = m.hexdigest()</span><br><span class="line"></span><br><span class="line">client_md5_token = <span class="string">&quot;%s|%s&quot;</span> % (res, client_time)</span><br><span class="line">res = requests.get(<span class="string">&quot;http://127.0.0.1:8000/server/&quot;</span>, headers=&#123;<span class="string">&quot;token&quot;</span>: client_md5_token&#125;)</span><br><span class="line"></span><br><span class="line">print(res.text)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#### server</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">getServer</span>(<span class="params">View</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        <span class="comment">### 连接数据获取主机名列表</span></span><br><span class="line">        token = request.META.get(<span class="string">&#x27;HTTP_TOKEN&#x27;</span>)</span><br><span class="line">        print(token)</span><br><span class="line">        client_md5_token, client_time = token.split(<span class="string">&#x27;|&#x27;</span>)</span><br><span class="line">        server_token = <span class="string">&#x27;xdrfdsfsdf&#x27;</span></span><br><span class="line"></span><br><span class="line">        client_time = float(client_time)</span><br><span class="line">        <span class="keyword">import</span> time</span><br><span class="line">        server_time = time.time()</span><br><span class="line">        <span class="keyword">if</span> server_time - client_time &gt; <span class="number">10</span> :</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;超时了&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        tmp = <span class="string">&quot;%s|%s&quot;</span> %(server_token, client_time)</span><br><span class="line">        <span class="keyword">import</span> hashlib</span><br><span class="line">        m = hashlib.md5()</span><br><span class="line">        m.update(bytes(tmp, encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">        server_md5_token = m.hexdigest()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> server_md5_token != client_md5_token:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;token值是错误的，被修改过了&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>连接redis，设置key的过期时间 20s</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>JWT</li>
+</ol>
+<h2 id="五-代码实现（Autoserver）"><a href="#五-代码实现（Autoserver）" class="headerlink" title="五. 代码实现（Autoserver）"></a>五. 代码实现（Autoserver）</h2><ol>
+<li><p>后台目录规划</p>
+<pre><code>    autoserver：
+        api:  接收数据并进行二次分析入库  API验证
+
+        backend ： 负责后台管理
+
+        repository：负责管理模型类 （数据表）</code></pre>
+</li>
+<li><p>设计后台数据表结构</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20220226003028165.png" alt="image-20220226003028165"></p>
+<p>一对多关系， 多对多关系，10张表）    </p>
+</li>
+<li><p>API进行数据清洗入库</p>
+</li>
+<li><p>数据入库<br>新的数据：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#39;0&#39;: &#123;&#39;slot&#39;: &#39;0&#39;, &#39;pd_type&#39;: &#39;SAS&#39;, &#39;capacity&#39;: &#39;279.396&#39;, &#39;model&#39;: &#39;SEAGATE ST300MM0006     LS08S0K2B5NV&#39;&#125;, </span><br><span class="line">    &#39;1&#39;: &#123;&#39;slot&#39;: &#39;1&#39;, &#39;pd_type&#39;: &#39;SAS&#39;, &#39;capacity&#39;: &#39;279.396&#39;, &#39;model&#39;: &#39;SEAGATE ST300MM0006     LS08S0K2B5AH&#39;&#125;, &#39;2&#39;: &#123;&#39;slot&#39;: &#39;2&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1SZNSAFA01085L     Samsung SSD 850 PRO 512GB               EXM01B6Q&#39;&#125;, </span><br><span class="line">    &#39;3&#39;: &#123;&#39;slot&#39;: &#39;3&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAF912433K     Samsung SSD 840 PRO Series              DXM06B0Q&#39;&#125;, </span><br><span class="line">    &#39;4&#39;: &#123;&#39;slot&#39;: &#39;4&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAF303909M     Samsung SSD 840 PRO Series              DXM05B0Q&#39;&#125;, </span><br><span class="line">    &#39;5&#39;: &#123;&#39;slot&#39;: &#39;5&#39;, &#39;pd_type&#39;: &#39;SATA&#39;, &#39;capacity&#39;: &#39;476.939&#39;, &#39;model&#39;: &#39;S1AXNSAFB00549A     Samsung SSD 840 PRO Series              DXM06B0Q&#39;&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>老数据：<br>    数据库中获取</p>
+<ol start="5">
+<li>页面展示</li>
+</ol>
+<ul>
+<li><p>分为两大块：<br>前后端不分离<br>  后端的程序和前端的Html页面全部放在一个项目之下</p>
+<p>  两种方式：</p>
+<pre><code>  - 纯粹的去手写html页面  加入Bootstrap美化页面
+  - 用别人写好的第三方框架
+      - layui
+      - xadmin admin的加强版</code></pre>
+<p>  图表：</p>
+<pre><code>  PC时代：
+      highcharts               
+      Echarts  
+  移动端：
+      antv</code></pre>
+<p>  前后端分离</p>
+<pre><code>  前端： vue、react、angular js
+      - vueAdmin-template
+      - iview-admin
+  后端：
+      - DRF </code></pre>
+</li>
+<li><p>redis：</p>
+<ol start="0">
+<li><p>非关系型数据库<br> mongodb memcache</p>
+<p> 国内用redis比较多的公司是：weibo</p>
+</li>
+<li><p>5大数据类型 </p>
+<p> 字符串类型<br> 列表<br> 集合<br> 有序集合<br> 哈希</p>
+</li>
+<li><p>python操作redis</p>
+<ul>
+<li>django连接redis</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>问题：<br>业务线调整，变换主机名，我需要提前注册到数据库里吗？<br>如果没有提前注册，数据库中没有我的这个hostname，就不会接收我的消息</p>
+<hr>
+<h3 id="采集"><a href="#采集" class="headerlink" title="采集"></a>采集</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">采集服务器数据，同步到运维平台</span><br><span class="line">1.API拿到数据</span><br><span class="line">2.检查MySQL里有没有这条记录</span><br><span class="line">  区分物理机还是会虚拟机</span><br><span class="line">  云厂商虚拟机  SN &#x3D;&#x3D; UUID ； SN 是空，也是虚拟机</span><br><span class="line">  SN   --&gt; 物理机</span><br><span class="line">  UUID --&gt; 虚拟机</span><br><span class="line">3.获取这条记录</span><br><span class="line">3.1. 存在这条记录</span><br><span class="line">3.1.1 更新这条记录</span><br><span class="line">      hostname</span><br><span class="line">      ip</span><br><span class="line">      os</span><br><span class="line">      mem</span><br><span class="line">      disk</span><br><span class="line">      cpu</span><br><span class="line">      network</span><br><span class="line">           多网卡多IP</span><br><span class="line">3.2. 不存在这条记录</span><br><span class="line">     server</span><br><span class="line">     服务器厂商</span><br><span class="line">     服务器型号</span><br><span class="line">     网卡</span><br><span class="line">     ip</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20211226234747584.png" alt="image-20211226234747584"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20211226235156722.png" alt="image-20211226235156722"></p>
+<p>信息采集: bash, ansible, salt, golang（推荐）</p>
+<h3 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h3><p>1.服务器</p>
+<p>2.业务线</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>地名</th>
+<th>简称</th>
+<th>pid</th>
+<th>path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>北京</td>
+<td>bj</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>昌平</td>
+<td>cp</td>
+<td>1</td>
+<td>1,2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>朝阳</td>
+<td>cy</td>
+<td>1</td>
+<td>1,3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>回龙观</td>
+<td>hlg</td>
+<td>2</td>
+<td>1,2,4</td>
+</tr>
+<tr>
+<td>5</td>
+<td>霍营</td>
+<td>hy</td>
+<td>4</td>
+<td>1,2,4,5</td>
+</tr>
+</tbody></table>
+<p>3.用户</p>
+<ul>
+<li>AD/LDAP; 把数据从AD同步过来;l通过AD/LDAP用户认证</li>
+<li>SSO</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20220117011701039.png" alt="image-20220117011701039"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20220117022054193.png" alt="image-20220117022054193"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20220117030944633.png" alt="image-20220117030944633"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20220117031536183.png" alt="image-20220117031536183"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20220117031616364.png" alt="image-20220117031616364"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20220118074840343.png" alt="image-20220118074840343"></p>
+<hr>
+<h2 id="六-数据库选型"><a href="#六-数据库选型" class="headerlink" title="六. 数据库选型"></a>六. 数据库选型</h2><h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><ol>
+<li>每一种类型都必须对应一张表, 字段定义类型的属性，每一行记录就是实例数据</li>
+<li>不同种类有不同的字段，每一个种类倒是字段相对固定<ul>
+<li>电商网站：不同种类的成千上万的种类，记录不同产品的数据</li>
+</ul>
+</li>
+<li>以后扩展字典便利性需要考量，很多情况下，有人额在表中定义n个现在不用的保留字段，x1，x2</li>
+<li>解决方案：<ul>
+<li>在关系型数据库上增加逻辑层，逻辑层上实现一套新的逻辑表，通过代码操作逻辑表</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>缺点<ul>
+<li>字段不确定，数据量大扩充麻烦</li>
+<li>种类多，就需要定义n张表</li>
+</ul>
+</li>
+</ul>
+<h3 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h3><blockquote>
+<p>存储海量数据，存储任意一个类型的n个字段；字段不确定，又可以扩充</p>
+</blockquote>
+<ol>
+<li><p>所有种类一张表，所有类型及其字段定义在一张表里面。类型表</p>
+<ul>
+<li>手机：品牌、型号、编号、长宽高、重量、颜色、屏幕尺寸、内存、内部存储、CPU、电池、价格、运营商</li>
+<li>书桌：品牌、型号、编号、长宽高、重量、颜色、几条腿</li>
+<li>杀毒软件：品牌、价格、平台、版本、使用时长</li>
+</ul>
+</li>
+<li><p>扩充字段，就在某个类别的文档中加入字段就行</p>
+</li>
+<li><p>全部资产表，也就是实例表</p>
+<ul>
+<li>{id:xxxx, 类别:手机, 品牌:华为, 型号: ‘mate20’, 颜色: 白色}</li>
+<li>{id:xxxx, 类别:手机, 品牌:华为, 型号: ‘mate30’, 颜色: 黑色}</li>
+<li>{id:xxxx, 类别:杀毒软件, 品牌:ESET, 平台: Win7}</li>
+<li>{id:xxxx, 类别:杀毒软件, 品牌:Norton, 平台: Mac}</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ul>
+<li>MongoDB每一条文档字段随意，正是这种特性，每一个文档同名字段数据类型可以不一致</li>
+<li>Collection应尽量放相同类型的数据</li>
+</ul>
+</li>
+</ol>
+<h2 id="七、-组织机构层级设计"><a href="#七、-组织机构层级设计" class="headerlink" title="七、 组织机构层级设计"></a>七、 组织机构层级设计</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># model</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OrgViewSet</span>(<span class="params">ModelViewSet</span>):</span></span><br><span class="line">    queryset = Orgnization.objects.all()</span><br><span class="line">    serializer_class = OrgSerializer</span><br><span class="line">    permission_classes = []  <span class="comment"># 权限自行完成</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 基本CRUD已经实现</span></span><br><span class="line">    <span class="comment"># list /jumpserver/orgs/ 分页</span></span><br><span class="line">    <span class="comment"># action 不分页list</span></span><br><span class="line"><span class="meta">    @action(detail=False)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">all</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">      </span><br><span class="line"><span class="comment"># views</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> rest_framework.viewsets <span class="keyword">import</span> ModelViewSet</span><br><span class="line"><span class="keyword">from</span> .serializers <span class="keyword">import</span> Orgnization, OrgSerializer</span><br><span class="line"><span class="keyword">from</span> rest_framework.decorators <span class="keyword">import</span> action</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OrgViewSet</span>(<span class="params">ModelViewSet</span>):</span></span><br><span class="line">    queryset = Orgnization.objects.all()</span><br><span class="line">    serializer_class = OrgSerializer</span><br><span class="line">    permission_classes = [] <span class="comment"># 权限自行完成</span></span><br><span class="line">    <span class="comment"># 基本CRUD已经实现</span></span><br><span class="line">    <span class="comment"># list /jumpserver/orgs/ 分页</span></span><br><span class="line">    <span class="comment"># action 不分页list</span></span><br><span class="line"><span class="meta">    @action(detail=False)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">all</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        <span class="comment"># 写什么，怎么查</span></span><br><span class="line">        queryset = self.filter_queryset(self.get_queryset())</span><br><span class="line">        nodes = &#123;&#125;</span><br><span class="line">        results = []</span><br><span class="line">        <span class="keyword">for</span> o <span class="keyword">in</span> queryset:</span><br><span class="line">            pid = o.parent_id</span><br><span class="line">            id = o.id</span><br><span class="line">            <span class="comment"># o是实例，目标是字典，要用 序列化器 转</span></span><br><span class="line">            data = self.get_serializer(o).data <span class="comment"># 字典</span></span><br><span class="line">            data.setdefault(<span class="string">&#x27;children&#x27;</span>, []) <span class="comment"># 保证一定有children，没有就创建缺省值</span></span><br><span class="line">            nodes[id] = data</span><br><span class="line">            <span class="keyword">if</span> pid:</span><br><span class="line">                <span class="comment"># 不是第一层，都要找爸爸</span></span><br><span class="line">                <span class="comment"># 怎么找 pid=1 id=3，遍历列表找到父做不到。问题在哪？定位id困难？ 什么数据结构定位id容易？hash表？</span></span><br><span class="line">                nodes[pid][<span class="string">&#x27;children&#x27;</span>].append(data)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                results.append(data) <span class="comment"># 第一级，列表中只能看到第一层节点</span></span><br><span class="line">        <span class="keyword">return</span> Response(&#123;<span class="string">&#x27;results&#x27;</span>: results&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分类形成层级的办法:</span></span><br><span class="line"><span class="comment"># all 方法已经返回所有分类数据，有parent_id 字段</span></span><br><span class="line"><span class="comment"># 1. 第一次去查pid为null，查到一批顶层节点; 再用这些节点的id作为pid去查第二级; null的子有1、2，再用1去查他的子；这样的话，不好，查询次数太多，查完之后，把分类组织成树状结构，放到内存cache里，因为类型变化很少；</span></span><br><span class="line"><span class="comment"># 2. select * from org 一次性查回来</span></span><br><span class="line">   <span class="comment"># 平等的数据到浏览器了, 成为了JS中间的数据结构了，为什么不在js的运行内存中调整它呢, </span></span><br><span class="line">   <span class="comment"># 一把查回, 全表扫描也可以cache</span></span><br><span class="line">   <span class="comment"># 利用浏览器所在的机器的cpu和内存构建树</span></span><br><span class="line">   <span class="comment"># 计算前移，适当的利用浏览器所在的主机</span></span><br><span class="line"><span class="comment"># 3.  select * from org 一次性查回来, 也可以利用cache</span></span><br><span class="line"><span class="comment">#   一把查回, 全表扫描， 但是构建层级树在后台做，如果可能，分类变化少，尽量cache</span></span><br><span class="line"><span class="comment">#   利用服务端的cpu和内存</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># select * from org 一次性查回来, 如果分类很多，这样不好，应该懒查询，甚至要用cache</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">os.environ.setdefault(<span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>, <span class="string">&#x27;mm39.settings&#x27;</span>)</span><br><span class="line">django.setup()</span><br><span class="line"><span class="comment">###################################</span></span><br><span class="line"><span class="keyword">from</span> jumpserver.models <span class="keyword">import</span> Orgnization</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">select * from js_org; </span></span><br><span class="line"><span class="string">results : [</span></span><br><span class="line"><span class="string">    &#123;id:1, name:&#x27;a1&#x27;, children:[]&#125;,</span></span><br><span class="line"><span class="string">    &#123;id:2, name:&#x27;a2&#x27;, children:[</span></span><br><span class="line"><span class="string">        &#123;id:3, name:&#x27;a3&#x27;, children:[</span></span><br><span class="line"><span class="string">            &#123;id:4, name:&#x27;a4&#x27;, children:[]&#125;,</span></span><br><span class="line"><span class="string">            &#123;id:5, name:&#x27;a5&#x27;, children:[]&#125;</span></span><br><span class="line"><span class="string">        ]&#125;</span></span><br><span class="line"><span class="string">    ]&#125;,</span></span><br><span class="line"><span class="string">] </span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> jumpserver.serializers <span class="keyword">import</span> OrgSerializer</span><br><span class="line">queryset = Orgnization.objects.all()</span><br><span class="line"></span><br><span class="line">results = []</span><br><span class="line">nodes = &#123;&#125; <span class="comment"># 辅助字典，用来快速定位，为什么呀？因为所有对象存在results、nodes中都是 地址</span></span><br><span class="line"><span class="comment"># &lt;QuerySet [&lt;Orgnization: [Org 1, 北京-&gt;None]&gt;, &lt;Orgnization: [Org 2, 南京-&gt;None]&gt;, &lt;Orgnization: [Org 3, 海淀-&gt;1]&gt;, &lt;Orgnization: [Org 4, 马哥教育-&gt;3]&gt;, &lt;Orgnization: [Org 5, python-&gt;4]&gt;, &lt;Orgnization: [Org 6, 玄武-&gt;2]&gt;]&gt;</span></span><br><span class="line"><span class="comment"># 遍历queryset，才能通过处理形成树状数据结构</span></span><br><span class="line"><span class="comment"># 思考如何得到results</span></span><br><span class="line"><span class="keyword">for</span> o <span class="keyword">in</span> queryset:</span><br><span class="line">    pid = o.parent_id</span><br><span class="line">    id = o.id</span><br><span class="line">    <span class="comment"># o是实例，目标是字典，要用 序列化器 转</span></span><br><span class="line">    data = OrgSerializer(o).data <span class="comment"># 字典</span></span><br><span class="line">    data.setdefault(<span class="string">&#x27;children&#x27;</span>, []) <span class="comment"># 保证一定有children，没有就创建缺省值</span></span><br><span class="line">    nodes[id] = data</span><br><span class="line">    <span class="keyword">if</span> pid:</span><br><span class="line">        <span class="comment"># 不是第一层，都要找爸爸</span></span><br><span class="line">        <span class="comment"># 怎么找 pid=1 id=3，遍历列表找到父做不到。问题在哪？定位id困难？ 什么数据结构定位id容易？hash表？</span></span><br><span class="line">        nodes[pid][<span class="string">&#x27;children&#x27;</span>].append(data)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        results.append(data) <span class="comment"># 第一级，列表中只能看到第一层节点</span></span><br><span class="line"></span><br><span class="line">print(results)</span><br><span class="line">print(<span class="string">&#x27;~&#x27;</span> * <span class="number">30</span>)</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line">print(json.dumps(results))</span><br><span class="line">print(<span class="string">&#x27;~&#x27;</span> * <span class="number">30</span>)</span><br><span class="line">print(nodes)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Waylon Yan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/posts/55538.html">http://yoursite.com/posts/55538.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/cmdb/">cmdb</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/28617.html"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">py-xadmin</div></div></a></div><div class="next-post pull-right"><a href="/posts/35215.html"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">pycharm使用</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Waylon Yan</div><div class="author-info__description">tech life sharing</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Waylonwhynot" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:ywl1006@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">无止境</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9Acmdb%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">一. 为什么要做cmdb？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-cmdb%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">二. cmdb实现的方案：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-CMDB%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">三. CMDB实现的四种方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">四. 代码实现：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88Autoserver%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">五. 代码实现（Autoserver）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%87%E9%9B%86"><span class="toc-number">5.1.</span> <span class="toc-text">采集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF"><span class="toc-number">5.2.</span> <span class="toc-text">信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD-%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B"><span class="toc-number">6.</span> <span class="toc-text">六. 数据库选型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL"><span class="toc-number">6.1.</span> <span class="toc-text">MySQL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB"><span class="toc-number">6.2.</span> <span class="toc-text">MongoDB</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81-%E7%BB%84%E7%BB%87%E6%9C%BA%E6%9E%84%E5%B1%82%E7%BA%A7%E8%AE%BE%E8%AE%A1"><span class="toc-number">7.</span> <span class="toc-text">七、 组织机构层级设计</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/5677.html" title="AI-08-A2A"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-08-A2A"/></a><div class="content"><a class="title" href="/posts/5677.html" title="AI-08-A2A">AI-08-A2A</a><time datetime="2025-06-21T07:22:33.000Z" title="Created 2025-06-21 15:22:33">2025-06-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/18525.html" title="AI-07-MCP"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-07-MCP"/></a><div class="content"><a class="title" href="/posts/18525.html" title="AI-07-MCP">AI-07-MCP</a><time datetime="2025-06-08T06:19:30.000Z" title="Created 2025-06-08 14:19:30">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/65143.html" title="AI-06-dify"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-06-dify"/></a><div class="content"><a class="title" href="/posts/65143.html" title="AI-06-dify">AI-06-dify</a><time datetime="2025-06-08T06:19:08.000Z" title="Created 2025-06-08 14:19:08">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/45471.html" title="AI-05-coze"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-05-coze"/></a><div class="content"><a class="title" href="/posts/45471.html" title="AI-05-coze">AI-05-coze</a><time datetime="2025-05-17T15:16:48.000Z" title="Created 2025-05-17 23:16:48">2025-05-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/34613.html" title="AI-04-提示词工程"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-04-提示词工程"/></a><div class="content"><a class="title" href="/posts/34613.html" title="AI-04-提示词工程">AI-04-提示词工程</a><time datetime="2025-05-17T15:15:51.000Z" title="Created 2025-05-17 23:15:51">2025-05-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Waylon Yan</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

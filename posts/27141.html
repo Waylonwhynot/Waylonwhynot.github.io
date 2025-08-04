@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>DRF-05-路由组件 | YouNeed</title><meta name="keywords" content="python"><meta name="author" content="Waylon Yan"><meta name="copyright" content="Waylon Yan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="路由Routers">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DRF-05-路由组件">
+<meta property="og:url" content="http://yoursite.com/posts/27141.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="路由Routers">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2021-06-11T15:11:52.000Z">
+<meta property="article:modified_time" content="2025-08-04T15:41:26.885Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/posts/27141"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DRF-05-路由组件',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-08-04 23:41:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YouNeed</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">DRF-05-路由组件</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-06-11T15:11:52.000Z" title="Created 2021-06-11 23:11:52">2021-06-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-08-04T15:41:26.885Z" title="Updated 2025-08-04 23:41:26">2025-08-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/DRF/">DRF</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="DRF-05-路由组件"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>路由Routers</p>
+<a id="more"></a>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.路由</span></span><br><span class="line"><span class="comment"># 2.3中写法</span></span><br><span class="line">  - django传统的路由(CBV路由), </span><br><span class="line">  path(<span class="string">&#x27;test/&#x27;</span>, views.TestView.as_view()),</span><br><span class="line">  - 只要继承ViewSetMixin: path(<span class="string">&#x27;books/&#x27;</span>, views.BookViewSet.as_view(&#123;<span class="string">&#x27;get&#x27;</span>:<span class="string">&#x27;list&#x27;</span>, <span class="string">&#x27;post&#x27;</span>:<span class="string">&#x27;create&#x27;</span>&#125;))</span><br><span class="line">  - 自动生成路由</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"><span class="comment">###### 只有视图继承 ViewSetMixin+ 9个视图子类 (原因是视图子类有对应的list create 等等方法),才能用router。 </span></span><br><span class="line"><span class="comment">###### 推荐用  include  可以加 前缀，比如 /api/v1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="前提-重点"><a href="#前提-重点" class="headerlink" title="前提  #######重点"></a>前提  #######重点</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.自动生成路由的前提:</span></span><br><span class="line">(<span class="number">1</span>) 只有视图继承 ViewSetMixin + <span class="number">9</span>个视图子类；才能用router。 </span><br><span class="line">              = ViewSetMixin + GenericAPIView或APIView + 扩展类 （扩展类需配合GenericAPIView使用）</span><br><span class="line">(原因是视图子类有数据库对应的方法+ 对应的list create 方法, 而SimpleRouter自动生成的映射关系是&#123;<span class="string">&#x27;get&#x27;</span>:<span class="string">&#x27;list&#x27;</span>, <span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;create&#x27;</span>&#125;,&#123;<span class="string">&#x27;get&#x27;</span>:<span class="string">&#x27;retrieve&#x27;</span>, <span class="string">&#x27;put&#x27;</span>:<span class="string">&#x27;update&#x27;</span>, <span class="string">&#x27;delete&#x27;</span>:<span class="string">&#x27;destroy&#x27;</span>&#125;)</span><br><span class="line">如果想自动生成路由，那就需要有对应的方法:</span><br><span class="line">比如 ModelViewSet: GenericViewSet(GenericAPIView + ViewsetMixin) + <span class="number">5</span>个扩展类ListModelMixin(提供了list，create等方法....)</span><br><span class="line">比如ViewsetMixin + ListAPIView 可以自动生成路由: ViewsetMixin重写了as_view有了映射关系，分发时找方法，找到了list方法。</span><br><span class="line"></span><br><span class="line">(<span class="number">2</span>)可以用装饰器自动生成路由的前提</span><br><span class="line">    ViewSetMixin+视图类（APIView。。。） -----&gt; 实际是通过装饰器修改了SimpleRouter里面的默认映射关系</span><br><span class="line">  </span><br><span class="line"><span class="comment">############### -- -- - --- - - - - -#############</span></span><br><span class="line"><span class="comment"># 2.推荐用  include  可以加 前缀，比如 /api/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 项目url配置</span></span><br><span class="line">eg:</span><br><span class="line">path(<span class="string">&#x27;&#x27;</span>, include(<span class="string">&#x27;app01.urls&#x27;</span>))</span><br><span class="line"></span><br><span class="line">后续可以这种形式</span><br><span class="line">path(<span class="string">&#x27;api/&#x27;</span>, include(<span class="string">&#x27;app01.urls&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<h1 id="一-路由Routers"><a href="#一-路由Routers" class="headerlink" title="一 路由Routers"></a>一 路由Routers</h1><p>对于视图集ViewSet，我们除了可以自己手动指明请求方式与动作action之间的对应关系外，还可以使用Routers来帮助我们快速实现路由信息。</p>
+<p>REST framework提供了两个router</p>
+<ul>
+<li><strong>SimpleRouter</strong></li>
+<li><strong>DefaultRouter</strong></li>
+</ul>
+<h2 id="1-1-使用方法"><a href="#1-1-使用方法" class="headerlink" title="1.1 使用方法"></a>1.1 使用方法</h2><p>1） 创建router对象，并注册视图集，例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> routers</span><br><span class="line"></span><br><span class="line">router = routers.SimpleRouter()</span><br><span class="line">router.register(<span class="string">r&#x27;router_stu&#x27;</span>, StudentModelViewSet, base_name=<span class="string">&#x27;student&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>register(prefix, viewset, base_name)</p>
+<ul>
+<li>prefix 该视图集的路由前缀</li>
+<li>viewset 视图集</li>
+<li>base_name 路由别名的前缀</li>
+</ul>
+<p>如上述代码会形成的路由如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">^books/$    name: book-list</span><br><span class="line">^books/&#123;pk&#125;/$   name: book-detail</span><br></pre></td></tr></table></figure>
+
+<p>2）添加路由数据</p>
+<p>可以有两种方式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = [</span><br><span class="line">    ...</span><br><span class="line">]</span><br><span class="line">urlpatterns += router.urls</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = [</span><br><span class="line">    ...</span><br><span class="line">    path(<span class="string">&#x27;&#x27;</span>, include(router.urls))</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这样可以加前缀</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-代码演示"><a href="#1-2-代码演示" class="headerlink" title="1.2 代码演示"></a>1.2 代码演示</h2><p>使用路由类给视图集生成了路由地址</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 必须是继承ModelViewSet的视图类才能自动生成路由</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.viewsets <span class="keyword">import</span> ModelViewSet,ReadOnlyModelViewSet</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StudentModelViewSet</span>(<span class="params">ModelViewSet</span>):</span></span><br><span class="line">    queryset = Student.objects.all()</span><br><span class="line">    serializer_class = StudentModelSerializer</span><br><span class="line">        <span class="comment"># 这种方法不会自动生成，需要用action配置</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">self,request</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;学生登录功能&quot;&quot;&quot;</span></span><br><span class="line">        print(self.action)</span><br><span class="line">        <span class="keyword">return</span> Response(&#123;<span class="string">&quot;message&quot;</span>:<span class="string">&quot;登录成功&quot;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>路由代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path, re_path</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br><span class="line">urlpatterns = [</span><br><span class="line">    ...</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;使用drf提供路由类router给视图集生成路由列表&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment"># 实例化路由类</span></span><br><span class="line"><span class="comment"># drf提供一共提供了两个路由类给我们使用,他们用法一致,功能几乎一样</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.routers <span class="keyword">import</span> DefaultRouter</span><br><span class="line">router = DefaultRouter()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注册视图集</span></span><br><span class="line"><span class="comment"># router.register(&quot;路由前缀&quot;,视图集类)</span></span><br><span class="line">router.register(<span class="string">&quot;router_stu&quot;</span>,views.StudentModelViewSet)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把生成的路由列表追加到urlpatterns</span></span><br><span class="line">print( router.urls )</span><br><span class="line">urlpatterns += router.urls</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码就成功生成了路由地址[增/删/改/查一条/查多条的功能]，但是不会自动我们在视图集自定义方法的路由。</p>
+<p>所以我们如果也要给自定义方法生成路由，则需要进行action动作的声明。</p>
+<h2 id="1-2-视图集中附加action的声明"><a href="#1-2-视图集中附加action的声明" class="headerlink" title="1.2 视图集中附加action的声明"></a>1.2 视图集中附加action的声明</h2><p>作用: <strong>视图类中继承视图类(APIView等)+ViewSetMixin 自定义的方法 添加路由</strong> </p>
+<p>在视图集中，如果想要让Router自动帮助我们为自定义的动作生成路由信息，需要使用<code>rest_framework.decorators.action</code>装饰器。</p>
+<p>以action装饰器装饰的方法名会作为action动作名，与list、retrieve等同。</p>
+<p>action装饰器可以接收两个参数：</p>
+<ul>
+<li><p><strong>methods</strong>: 声明该action对应的请求方式，列表传递</p>
+</li>
+<li><p>detail</p>
+<p>: 声明该action的路径是否与单一资源对应，及是否是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx/&lt;pk&gt;/action方法名/</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>True 带pk 表示路径格式是<code>xxx/&lt;pk&gt;/action方法名/</code></li>
+<li>False 不带pk 表示路径格式是<code>xxx/action方法名/</code></li>
+</ul>
+</li>
+<li><p>urlpath</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># url_path 定义action方法名</span><br><span class="line">@action(methods&#x3D;[&#39;GET&#39;], detail&#x3D;True, url_path&#x3D;&#39;xxx&#39;)</span><br><span class="line">^books&#x2F;(?P&lt;pk&gt;[^&#x2F;.]+)&#x2F;xxx&#x2F;$</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<p>举例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.viewsets <span class="keyword">import</span> ModelViewSet</span><br><span class="line"><span class="keyword">from</span> rest_framework.decorators <span class="keyword">import</span> action</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StudentModelViewSet</span>(<span class="params">ModelViewSet</span>):</span></span><br><span class="line">    queryset = Student.objects.all()</span><br><span class="line">    serializer_class = StudentModelSerializer</span><br><span class="line"></span><br><span class="line">    <span class="comment"># methods 设置当前方法允许哪些http请求访问当前视图方法</span></span><br><span class="line">    <span class="comment"># detail 设置当前视图方法是否是操作一个数据</span></span><br><span class="line">    <span class="comment"># detail为True，表示路径名格式应该为 router_stu/&#123;pk&#125;/login/</span></span><br><span class="line"><span class="meta">    @action(methods=[&#x27;get&#x27;], detail=False)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        <span class="keyword">return</span> Response(&#123;<span class="string">&#x27;msg&#x27;</span>:<span class="string">&#x27;登陆成功&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @action(methods=[&#x27;put&#x27;], detail=True)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_new_5</span>(<span class="params">self, request,pk</span>):</span></span><br><span class="line">        <span class="keyword">return</span> Response(&#123;<span class="string">&#x27;msg&#x27;</span>:<span class="string">&#x27;获取5条数据成功&#x27;</span>&#125;)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># @action(methods=[&#x27;get&#x27;], detail=False)</span></span><br><span class="line">detail=<span class="literal">False</span></span><br><span class="line">生成的路由 /students/login/</span><br><span class="line"></span><br><span class="line">detail=<span class="literal">True</span></span><br><span class="line">生成的路由 /students/pk/get_new_5/</span><br><span class="line"></span><br><span class="line">如果有url参数，则生成的路由不再试方法名称了，而是url提供的参数</span><br><span class="line"><span class="comment"># @action(methods=[&#x27;put&#x27;], detail=True, url_path=&#x27;new_5&#x27;)</span></span><br><span class="line">生层的路由 /students/pk/new_5/</span><br></pre></td></tr></table></figure>
+
+<p>由路由器自动为此视图集自定义action方法形成的路由会是如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">^router_stu&#x2F;&#123;pk&#125;&#x2F;get_new_5&#x2F;$    name: router_stu-get_new_5</span><br><span class="line">^router_stu&#x2F;login&#x2F;$   name: router_stu-login</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggjybu91d2j30zq054gmj.jpg" alt="image-20200708225123044"></p>
+<h2 id="1-3-路由router形成URL的方式"><a href="#1-3-路由router形成URL的方式" class="headerlink" title="1.3 路由router形成URL的方式"></a>1.3 路由router形成URL的方式</h2><p>1） SimpleRouter</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggghbmrvbij31940gwdj7.jpg" alt="SimpleRouter"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggjy4td5wlj30oy03gt94.jpg" alt="image-20200708224438048"></p>
+<p>2）DefaultRouter</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggghbqkmx1j318y0j4wii.jpg" alt="DefaultRouter"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/007S8ZIlgy1ggjy44i1y3j30v607otaa.jpg" alt="image-20200708224355882"></p>
+<p>DefaultRouter与SimpleRouter的区别是，DefaultRouter会多附带一个默认的API根视图，返回一个包含所有列表视图的超链接响应数据。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Waylon Yan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/posts/27141.html">http://yoursite.com/posts/27141.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/11207.html"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">DRF-06-认证权限频率</div></div></a></div><div class="next-post pull-right"><a href="/posts/55381.html"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Go-01-第一个Go程序</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/posts/29589.html" title="DRF-02-序列化组件"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-06</div><div class="title">DRF-02-序列化组件</div></div></a></div><div><a href="/posts/53666.html" title="DRF-03-请求与响应"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-06</div><div class="title">DRF-03-请求与响应</div></div></a></div><div><a href="/posts/48921.html" title="DRF-01-drf入门规范"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-03</div><div class="title">DRF-01-drf入门规范</div></div></a></div><div><a href="/posts/3622.html" title="DRF-04-视图组件"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-06</div><div class="title">DRF-04-视图组件</div></div></a></div><div><a href="/posts/22390.html" title="DRF-08-自动生成接口文档"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-05</div><div class="title">DRF-08-自动生成接口文档</div></div></a></div><div><a href="/posts/11207.html" title="DRF-06-认证权限频率"><img class="cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-11</div><div class="title">DRF-06-认证权限频率</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Waylon Yan</div><div class="author-info__description">tech life sharing</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">266</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">40</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">25</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Waylonwhynot" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:ywl1006@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">无止境</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E6%8F%90-%E9%87%8D%E7%82%B9"><span class="toc-number">1.</span> <span class="toc-text">前提  #######重点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E8%B7%AF%E7%94%B1Routers"><span class="toc-number">2.</span> <span class="toc-text">一 路由Routers</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E4%BB%A3%E7%A0%81%E6%BC%94%E7%A4%BA"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 代码演示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E8%A7%86%E5%9B%BE%E9%9B%86%E4%B8%AD%E9%99%84%E5%8A%A0action%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="toc-number">2.3.</span> <span class="toc-text">1.2 视图集中附加action的声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E8%B7%AF%E7%94%B1router%E5%BD%A2%E6%88%90URL%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">2.4.</span> <span class="toc-text">1.3 路由router形成URL的方式</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/5677.html" title="AI-08-A2A"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-08-A2A"/></a><div class="content"><a class="title" href="/posts/5677.html" title="AI-08-A2A">AI-08-A2A</a><time datetime="2025-06-21T07:22:33.000Z" title="Created 2025-06-21 15:22:33">2025-06-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/18525.html" title="AI-07-MCP"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-07-MCP"/></a><div class="content"><a class="title" href="/posts/18525.html" title="AI-07-MCP">AI-07-MCP</a><time datetime="2025-06-08T06:19:30.000Z" title="Created 2025-06-08 14:19:30">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/65143.html" title="AI-06-dify"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-06-dify"/></a><div class="content"><a class="title" href="/posts/65143.html" title="AI-06-dify">AI-06-dify</a><time datetime="2025-06-08T06:19:08.000Z" title="Created 2025-06-08 14:19:08">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/45471.html" title="AI-05-coze"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-05-coze"/></a><div class="content"><a class="title" href="/posts/45471.html" title="AI-05-coze">AI-05-coze</a><time datetime="2025-05-17T15:16:48.000Z" title="Created 2025-05-17 23:16:48">2025-05-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/34613.html" title="AI-04-提示词工程"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-04-提示词工程"/></a><div class="content"><a class="title" href="/posts/34613.html" title="AI-04-提示词工程">AI-04-提示词工程</a><time datetime="2025-05-17T15:15:51.000Z" title="Created 2025-05-17 23:15:51">2025-05-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Waylon Yan</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
