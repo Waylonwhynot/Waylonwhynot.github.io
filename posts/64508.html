@@ -327,7 +327,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# puppet cert list</span><br><span class="line">  &quot;server1.keer.com&quot; (SHA256) B5:67:51:30:5C:FB:45:BA:7A:73:D5:C5:87:D4:E3:1C:D7:02:BE:DD:CC:7A:E2:F0:28:34:87:86:EF:E7:1D:E4</span><br><span class="line">[root@master ~]# puppet cert sign server1.keer.com        #颁发证书</span><br><span class="line">Notice: Signed certificate request for server1.keer.com</span><br><span class="line">Notice: Removing file Puppet::SSL::CertificateRequest server1.keer.com at &#39;&#x2F;var&#x2F;lib&#x2F;puppet&#x2F;ssl&#x2F;ca&#x2F;requests&#x2F;server1.keer.com.pem&#39;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>master 端管理证书部署的命令语法如下：<br>puppet cert <action> [–all|-a] [<host>]<br>　　action：<br>　　　　list 列出证书请求<br>　　　　sign 签署证书<br>　　　　revoke 吊销证书<br>　　　　clean 吊销指定的客户端的证书，并删除与其相关的所有文件；</host></action></p>
+<p>master 端管理证书部署的命令语法如下：<br>puppet cert <action> [–all|-a] [<host>]<br>　　action：<br>　　　　list 列出证书请求<br>　　　　sign 签署证书<br>　　　　revoke 吊销证书<br>　　　　clean 吊销指定的客户端的证书，并删除与其相关的所有文件；</p>
 </blockquote>
 <p>注意：某agent证书手工吊销后重新生成一次；<br>　　On master host：<br>　　　　puppet cert revoke NODE_NAME<br>　　　　puppet cert clean NODE_NAME<br>　　On agent host：<br>　　　　重新生成的主机系统，直接启动agent；<br>　　　　变换私钥，建议先清理/var/lib/puppet/ssl/目录下的文件</p>
 <p>4）终止服务开启，再次开启</p>
@@ -374,7 +374,7 @@
 <p>source 参数是这样约定的： puppet:/// 之后的第一部分假定是一个 <strong>挂装点（mount point）</strong> 名称，其余部份被视为一个文件路径，如下所示：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puppet:&#x2F;&#x2F;&#x2F;&lt;mount point&gt;&#x2F;&lt;path&gt;</span><br></pre></td></tr></table></figure>
 
-<p>通常 <mount point> 的值是一个模块名称，如上例所示。在这个例子中， Puppet 将在如下的位置查找文件：</mount></p>
+<p>通常 <mount point> 的值是一个模块名称，如上例所示。在这个例子中， Puppet 将在如下的位置查找文件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">manifests&#x2F;modules&#x2F;app&#x2F;files&#x2F;app_production.conf</span><br></pre></td></tr></table></figure>
 
 <p>modules 是 Puppet 予以特别对待的一个挂装点：它期望接下来的路径组成是一个模块名， 并在模块的 files 目录下针对路径的其余部分寻找文件。</p>

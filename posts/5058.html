@@ -146,10 +146,10 @@
 <a id="more"></a>
 
 <h1 id="0-大纲"><a href="#0-大纲" class="headerlink" title="0. 大纲"></a>0. 大纲</h1><ul>
-<li><input disabled type="checkbox"> 正则表达式</li>
-<li><input disabled type="checkbox"> 三剑客grep</li>
-<li><input disabled type="checkbox"> 三剑客sed</li>
-<li><input checked disabled type="checkbox"> 三剑客awk</li>
+<li><input disabled="" type="checkbox"> 正则表达式</li>
+<li><input disabled="" type="checkbox"> 三剑客grep</li>
+<li><input disabled="" type="checkbox"> 三剑客sed</li>
+<li><input checked="" disabled="" type="checkbox"> 三剑客awk</li>
 </ul>
 <h1 id="1-正则表达式"><a href="#1-正则表达式" class="headerlink" title="1. 正则表达式"></a>1. 正则表达式</h1><h2 id="1-1-正则表达式？"><a href="#1-1-正则表达式？" class="headerlink" title="1.1 正则表达式？"></a>1.1 正则表达式？</h2><ul>
 <li>匹配有规律的东西，手机号，身份证，匹配日志</li>
@@ -205,7 +205,7 @@
 <tbody><tr>
 <td>正则（re）</td>
 <td>三剑客，高级语言，进行过滤（匹配字符）</td>
-<td>三剑客 <font color="red">grep，sed，awk</font>，find，rename（Ubuntu），expr</td>
+<td>三剑客 <font color=red>grep，sed，awk</font>，find，rename（Ubuntu），expr</td>
 </tr>
 <tr>
 <td>通配符（pathname extension 或glob）</td>
@@ -839,7 +839,7 @@
 <p>.任意0或多个字符</p>
 <p>.*代表匹配所有内容</p>
 <p>o普通字符，一直到字母o结束</p>
-<p>这种匹配相同字符到最后一个字符的特点，称之为<font color="red">贪婪匹配</font></p>
+<p>这种匹配相同字符到最后一个字符的特点，称之为<font color=red>贪婪匹配</font></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@chaogelinux data]<span class="comment"># grep &quot;I.*o&quot; luffy.txt</span></span><br><span class="line">I am oldboy teacher</span><br><span class="line">I like python.</span><br></pre></td></tr></table></figure>
 
 <h4 id="abc-中括号"><a href="#abc-中括号" class="headerlink" title="[abc]中括号"></a><code>[abc]中括号</code></h4><p>中括号表达式，[abc]表示匹配中括号中任意一个字符，a或b或c，常见形式如下</p>
@@ -1156,7 +1156,7 @@
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">root@pylinux tmp</span>]<span class="meta"># cat alex.txt</span></span><br><span class="line">alex1 alex2 alex3 alex4 alex5</span><br><span class="line">alex6 alex7 alex8 alex9 alex10</span><br><span class="line">alex11 alex12 alex13 alex14 alex15</span><br><span class="line">alex16 alex17 alex18 alex19 alex20</span><br><span class="line">alex21 alex22 alex23 alex24 alex25</span><br><span class="line">alex26 alex27 alex28 alex29 alex30</span><br><span class="line">alex31 alex32 alex33 alex34 alex35</span><br><span class="line">alex36 alex37 alex38 alex39 alex40</span><br><span class="line">alex41 alex42 alex43 alex44 alex45</span><br><span class="line">alex46 alex47 alex48 alex49 alex50</span><br><span class="line">[<span class="meta">root@pylinux tmp</span>]<span class="meta">#</span></span><br><span class="line">[<span class="meta">root@pylinux tmp</span>]<span class="meta">#</span></span><br><span class="line">[<span class="meta">root@pylinux tmp</span>]<span class="meta">#</span></span><br><span class="line">[<span class="meta">root@pylinux tmp</span>]<span class="meta">#</span></span><br><span class="line">[<span class="meta">root@pylinux tmp</span>]<span class="meta"># cat alex.txt |awk &#x27;&#123;print $2&#125;&#x27;</span></span><br><span class="line">alex2</span><br><span class="line">alex7</span><br><span class="line">alex12</span><br><span class="line">alex17</span><br><span class="line">alex22</span><br><span class="line">alex27</span><br><span class="line">alex32</span><br><span class="line">alex37</span><br><span class="line">alex42</span><br><span class="line">alex47</span><br></pre></td></tr></table></figure>
 
 <p>我们执行的命令是<code>awk &#39;&#123;print $2&#125;&#39;</code>，没有使用参数和模式，<code>$2</code>表示输出文本的<code>第二列</code>信息</p>
-<p>awk默认以<font color="red">空格为分隔符</font>，且多个空格也识别为一个空格，作为分隔符</p>
+<p>awk默认以<font color=red>空格为分隔符</font>，且多个空格也识别为一个空格，作为分隔符</p>
 <p>awk是按行处理文件，一行处理完毕，处理下一行，根据用户指定的分割符去工作，没有指定则默认空格</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">指定了分隔符后，awk把每一行切割后的数据对应到内置变量</span><br></pre></td></tr></table></figure>
 
@@ -1271,10 +1271,10 @@
 <p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20191107171821542.png" alt="image-20191107171821542"></p>
 <h3 id="awk-模式匹配"><a href="#awk-模式匹配" class="headerlink" title="awk 模式匹配"></a>awk 模式匹配</h3><ul>
 <li>模式：谁可以作为awk的<strong>条件</strong><ul>
-<li><input disabled type="checkbox"> 比较符号 <code>&gt; &lt; &gt;= &lt;= == !=</code></li>
-<li><input disabled type="checkbox"> 正则</li>
-<li><input disabled type="checkbox"> 范围表达式</li>
-<li><input disabled type="checkbox"> 特殊条件： BEGIN 和 END</li>
+<li><input disabled="" type="checkbox"> 比较符号 <code>&gt; &lt; &gt;= &lt;= == !=</code></li>
+<li><input disabled="" type="checkbox"> 正则</li>
+<li><input disabled="" type="checkbox"> 范围表达式</li>
+<li><input disabled="" type="checkbox"> 特殊条件： BEGIN 和 END</li>
 </ul>
 </li>
 </ul>
@@ -1359,7 +1359,7 @@
 <tr>
 <td><code>END&#123;&#125;</code></td>
 <td>里面的内容会再awk<strong>读取文件之后</strong>执行</td>
-<td>1)awk进行统计，一般过程：<font color="red">先进性计算,最后END里面输出结果</font><br>2)awk使用数组，用来输出数组结果（<strong>常见</strong>）</td>
+<td>1)awk进行统计，一般过程：<font color=red>先进性计算,最后END里面输出结果</font><br>2)awk使用数组，用来输出数组结果（<strong>常见</strong>）</td>
 </tr>
 </tbody></table>
 <ul>
@@ -1478,8 +1478,8 @@
 <td>常用</td>
 </tr>
 <tr>
-<td>If [ “wenliang” -eq 18 ];then<br>    echo ‘handsome young guy’<br>else<br>    echo “rest”<br>fi</td>
-<td>If(条件)<br>    print “young”<br>else<br>    print “old”</td>
+<td>If [ “wenliang” -eq 18 ];then<br/>    echo ‘handsome young guy’<br/>else<br>    echo “rest”<br>fi</td>
+<td>If(条件)<br/>    print “young”<br>else<br>    print “old”</td>
 <td></td>
 </tr>
 </tbody></table>

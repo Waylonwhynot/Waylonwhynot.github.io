@@ -431,7 +431,7 @@
 <h2 id="运算符-operators"><a href="#运算符-operators" class="headerlink" title="运算符 operators"></a>运算符 operators</h2><ul>
 <li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://prometheus.io/docs/prometheus/latest/querying/operators/">https://prometheus.io/docs/prometheus/latest/querying/operators/</a></li>
 </ul>
-<h2 id><a href="#" class="headerlink" title="+ - * /"></a>+ - * /</h2><blockquote>
+<h2 id=""><a href="#" class="headerlink" title="+ - * /"></a>+ - * /</h2><blockquote>
 <p>加</p>
 </blockquote>
 <figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看已用内存 = 总内存 - 可用内存</span></span><br><span class="line">node_memory_MemTotal_bytes&#123;instance=~&quot;$node&quot;&#125; - node_memory_MemAvailable_bytes&#123;instance=~&quot;$node&quot;&#125;</span><br></pre></td></tr></table></figure>

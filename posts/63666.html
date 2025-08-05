@@ -208,7 +208,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: id&#x3D;a3fWa; Expires&#x3D;Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly</span><br><span class="line">告诉浏览器端设置这个Cookie的键值对，有过期时间，使用HTTPS加密传输到服务器端，且不能被浏览器中JS脚本访问该Cookie</span><br><span class="line"></span><br><span class="line">Cookie的作用域：Domain和Path定义Cookie的作用域</span><br><span class="line"></span><br><span class="line">Domain</span><br><span class="line">domain&#x3D;www.magedu.com 表示只有该域的URL才能使用</span><br><span class="line">domain&#x3D;magedu.com 表示可以包含子域，例如www.magedu.com、python.magedu.com等</span><br><span class="line"></span><br><span class="line">Path</span><br><span class="line">path&#x3D;&#x2F; 所有&#x2F;的子路径可以使用</span><br><span class="line">domain&#x3D;www.magedu.com; path&#x3D;&#x2F;webapp 表示只有www.magedu.com&#x2F;webapp下的URL匹配，例如http:&#x2F;&#x2F;www.magedu.com&#x2F;webapp&#x2F;a.html就可以</span><br></pre></td></tr></table></figure>
 
 <h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><ul>
-<li><p>Cookie一般明文传输（Secure是加密传输），<font color="red">安全性极差，不要传输敏感数据</font></p>
+<li><p>Cookie一般明文传输（Secure是加密传输），<font color=red>安全性极差，不要传输敏感数据</font></p>
 </li>
 <li><p>有4kB大小限制</p>
 </li>

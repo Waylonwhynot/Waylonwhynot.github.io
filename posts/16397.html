@@ -186,7 +186,7 @@
 
 </li>
 </ul>
-<img src="https://images2015.cnblogs.com/blog/997599/201701/997599-20170113091806338-1978303584.png">
+<img src=https://images2015.cnblogs.com/blog/997599/201701/997599-20170113091806338-1978303584.png>
 
 
 <p>总结原理：当用户访问login页面的时候，会生成一个csrf的随机字符串，，并且cookie中也存放了这个随机字符串，当用户再次提交数据的时候会带着这个随机字符串提交，如果没有这个随机字符串则无法提交成功</p>
@@ -546,7 +546,7 @@
 <li>MySQL 事务 ACID</li>
 </ol>
 <p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/kismetv/p/10331633.html">https://www.cnblogs.com/kismetv/p/10331633.html</a></p>
-<p><strong>事务作用</strong>：<font color="red">保证数据库数据完整性和操作的安全性。</font></p>
+<p><strong>事务作用</strong>：<font color=red>保证数据库数据完整性和操作的安全性。</font></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 事务是MySQL等关系型数据库区别于NoSQL的重要方面，是保证数据一致性的重要手段。</span></span><br><span class="line"><span class="comment"># 按照严格的标准，只有同时满足ACID特性才是事务；</span></span><br><span class="line"><span class="comment"># 事务的ACID特性及其实现原理：</span></span><br><span class="line">原子性：语句要么全执行，要么全不执行，是事务最核心的特性，事务本身就是以原子性来定义的；实现主要基于undo log</span><br><span class="line">持久性：保证事务提交后不会因为宕机等原因导致数据丢失；实现主要基于redo log</span><br><span class="line">隔离性：保证事务执行尽可能不受其他事务影响；InnoDB默认的隔离级别是RR，RR的实现主要基于锁机制（包含next-key lock）、MVCC（包括数据的隐藏列、基于undo log的版本链、ReadView）</span><br><span class="line">一致性：一致性是指事务执行结束后，数据库的完整性约束没有被破坏，事务执行的前后都是合法的数据状态。；事务追求的最终目标，一致性的实现既需要数据库层面的保障，也需要应用层面的保障；</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">事务的回滚rollback</span><br><span class="line">事务的确认commit</span><br></pre></td></tr></table></figure>
 
 <p><strong>开启事务</strong>: </p>
