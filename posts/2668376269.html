@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>杂记01-怎么理解RPC? | YouNeed</title><meta name="keywords" content="develop"><meta name="author" content="Waylon Yan"><meta name="copyright" content="Waylon Yan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="怎么理解RPC？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杂记01-怎么理解RPC?">
+<meta property="og:url" content="http://yoursite.com/posts/2668376269.html">
+<meta property="og:site_name" content="YouNeed">
+<meta property="og:description" content="怎么理解RPC？">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2022-11-06T03:57:11.000Z">
+<meta property="article:modified_time" content="2025-08-05T18:19:15.797Z">
+<meta property="article:author" content="Waylon Yan">
+<meta property="article:tag" content="develop">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/posts/2668376269"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '杂记01-怎么理解RPC?',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-08-06 02:19:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">268</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">42</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YouNeed</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Catagroires</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">杂记01-怎么理解RPC?</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-11-06T03:57:11.000Z" title="Created 2022-11-06 11:57:11">2022-11-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-08-05T18:19:15.797Z" title="Updated 2025-08-06 02:19:15">2025-08-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="杂记01-怎么理解RPC?"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>怎么理解RPC？</p>
+<a id="more"></a>
+
+<p>RPC（romote procedure call）：远程过程调用，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。过程其实就是方法。所以PRC可以理解为远程方法调用。</p>
+<p>这里的远程调用是相对于本地调用的。<br>假如你有一个Calculator接口，以及他的实现类CalculatorImpl, 在单体应用中，要调用Calculator的add方法来执行一个加运算，你可以直接调用。这种方法，因为在同一个地址空间，或者在同一块内存，这个称为本地函数调用。</p>
+<p>现在系统被改造为分布式应用，接口调用和实现分别在两个子系统中。<br>服务A中并没有CalculatorImpl这个类，那它要怎么调用服务B的CalculatorImpl的add方法呢？</p>
+<p>应用调用另一个应用的解决方案，我们很容易的想到HTTP调用。如要想让服务A调用服务B中的方法，比如让服务B暴露Restful接口，然后让服务A通过这个Restful接口来间接调用CalculatorImpl的方法。<br>不过，像这种每次调用，都需要些一串发起http请求的代码。能不能去掉这些，像本地调用一样，去发起远程调用，让使用者感知不到远程调用的过程。</p>
+<p><strong>怎么实现这个过程呢？</strong></p>
+<p>首先，调用方调用的是接口，必须得为接口构造一个假的实现。显然，要使用动态代理。这样，调用方的调用就被动态代理接收到了。</p>
+<p>第二，动态代理接收到调用后，应该想办法调用远程的实际实现。这包括下面几步：</p>
+<p>识别具体要调用的远程方法的IP、端口。<br>将调用方法的入参进行序列化。<br>通过通信将请求发送到远程的方法中。<br>这样，远程的服务就接收到了调用方的请求。它应该：</p>
+<p>反序列化各个调用参数<br>定位到实际要调用的方法，然后输入参数，执行方法<br>按照调用的路径返回调用的结果<br>整个过程如下所示。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Waylonwhynot/whatyouneed_blog_pic@main/pic/image-20221106115853185.png" alt="image-20221106115853185"></p>
+<p>从上述的分析我们可以概括地讲，RPC就是让一个应用调用另一个应用中方法的一种实现方法。</p>
+<p>它的思路就是：使用代理模式，生成一个代理对象，在这个代理对象的内部，通过httpClient来实现RPC远程调用的过程。</p>
+<p>总结一下，RPC要解决的两个问题：</p>
+<p> 解决分布式系统中，服务之间的调用问题。<br>远程调用时，要能够像本地调用一样方便，让调用者感知不到远程调用的逻辑。<br>这也是很多RPC框架要解决的问题和解决的思路。</p>
+<p>在远程调用时，必然要涉及到通信协议选择的问题，其调用协议通常包含传输协议和序列化协议。</p>
+<p>传输协议包含: 如著名的 [gRPC](grpc / grpc.io) 使用的 http2 协议，也有如dubbo一类的自定义报文的tcp协议等。</p>
+<p>序列化协议包含: 如基于文本编码的 xml json，也有二进制编码的 protobuf hessian等。</p>
+<p>当然一个成熟的rpc框架是很全面的，除了通信协议外还有“服务注册发现”，错误重试，服务升级的灰度策略，服务调用的负载均衡等等的实现。</p>
+<p><strong>RPC和HTTP的区别是什么？</strong></p>
+<p>RPC=Remote Produce Call 是一种技术的概念名词，HTTP是一种协议。它们不是一个层面的东西。</p>
+<p>RPC可以通过 HTTP 来实现,也可以通过Socket自己实现一套协议（比如阿里的dubbo）来实现.所以题目可以换一种理解,为何 RPC 还有除 HTTP 之外的实现法,有何必要，毕竟除了HTTP实现外,私有协议不具备通用性。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Waylon Yan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/posts/2668376269.html">http://yoursite.com/posts/2668376269.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/develop/">develop</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/10379.html"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Service-Mesh01</div></div></a></div><div class="next-post pull-right"><a href="/posts/15165.html"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Linux-Puppet-03</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Waylon Yan</div><div class="author-info__description">tech life sharing</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">268</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">42</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Waylonwhynot" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:ywl1006@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">无止境</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/5677.html" title="AI-08-A2A"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-08-A2A"/></a><div class="content"><a class="title" href="/posts/5677.html" title="AI-08-A2A">AI-08-A2A</a><time datetime="2025-06-21T07:22:33.000Z" title="Created 2025-06-21 15:22:33">2025-06-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/18525.html" title="AI-07-MCP"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-07-MCP"/></a><div class="content"><a class="title" href="/posts/18525.html" title="AI-07-MCP">AI-07-MCP</a><time datetime="2025-06-08T06:19:30.000Z" title="Created 2025-06-08 14:19:30">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/65143.html" title="AI-06-dify"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-06-dify"/></a><div class="content"><a class="title" href="/posts/65143.html" title="AI-06-dify">AI-06-dify</a><time datetime="2025-06-08T06:19:08.000Z" title="Created 2025-06-08 14:19:08">2025-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/45471.html" title="AI-05-coze"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-05-coze"/></a><div class="content"><a class="title" href="/posts/45471.html" title="AI-05-coze">AI-05-coze</a><time datetime="2025-05-17T15:16:48.000Z" title="Created 2025-05-17 23:16:48">2025-05-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/34613.html" title="AI-04-提示词工程"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI-04-提示词工程"/></a><div class="content"><a class="title" href="/posts/34613.html" title="AI-04-提示词工程">AI-04-提示词工程</a><time datetime="2025-05-17T15:15:51.000Z" title="Created 2025-05-17 23:15:51">2025-05-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Waylon Yan</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
